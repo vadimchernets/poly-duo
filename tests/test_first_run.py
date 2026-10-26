@@ -23,7 +23,7 @@ def build(tmp_path, lang, builder='build_shortcut.py', name='Poly.shortcut'):
     return plistlib.loads((tmp_path / lang / name).read_bytes())['WFWorkflowActions']
 
 
-def assert_blank_guard(actions, ui, prompt):
+def assert_blank_guard(actions, ui, prompt, message=None):
     """Right after the question: If <the question> has no value → say so → stop → End If."""
     ask = next(i for i, a in enumerate(actions)
                if kind(a) == 'ask' and a['WFWorkflowActionParameters']['WFAskActionPrompt'] == prompt)
@@ -34,7 +34,7 @@ def assert_blank_guard(actions, ui, prompt):
     source = condition['WFInput']['Variable']['Value']
     assert (source['OutputUUID'], source['OutputName']) == \
         (actions[ask]['WFWorkflowActionParameters']['UUID'], 'Provided Input')
-    assert notification(guard[1]) == ui['notify']['empty_question']
+    assert notification(guard[1]) == (message or ui['notify']['empty_question'])
     assert guard[3]['WFWorkflowActionParameters']['WFControlFlowMode'] == 2
     return ask + 5
 
@@ -66,9 +66,15 @@ def test_first_minute(tmp_path, lang):
     # «done» and «empty» are the two branches of one check, never shown together
     done = next(i for i, a in enumerate(actions) if notification(a) == ui['notify']['tail_done'])
     empty = next(i for i, a in enumerate(actions) if notification(a) == ui['notify']['tail_empty'])
-    assert kind(actions[done - 1]) == 'conditional' and kind(actions[done + 1]) == 'conditional'
+    assert kind(actions[done - 2]) == 'conditional' and kind(actions[done - 1]) == 'setclipboard'
+    assert kind(actions[done + 1]) == 'conditional'
     assert actions[done + 1]['WFWorkflowActionParameters']['WFControlFlowMode'] == 1
     assert empty == done + 2
+
+
+def key_ask_of(actions, trio):
+    return next(a for a in actions
+                if kind(a) == 'ask' and a['WFWorkflowActionParameters']['WFAskActionPrompt'] == trio['ask.key'])
 
 
 @pytest.mark.parametrize('lang', TRIO_LANGS)
@@ -77,7 +83,29 @@ def test_trio_stops_on_empty_question(tmp_path, lang):
     trio = json.loads((ROOT / 'locales' / lang / 'trio.json').read_text(encoding='utf-8'))
     prompt = trio['ask.question']
     actions = build(tmp_path, lang, 'build_trio.py', 'Trio.shortcut')
-    assert_blank_guard(actions, ui, prompt)
+    assert_blank_guard(actions, ui, prompt, trio['notify.empty_question'])
+    assert 'Poly' not in trio['notify.empty_question'] or lang != 'en'
+    # an empty key field stops the run before poly-key.txt is written
+    ki = actions.index(key_ask_of(actions, trio))
+    # blank = nothing but spaces / line breaks: Match Text `\S` first, then the guard on «no match»
+    match = actions[ki + 1]
+    assert match['WFWorkflowActionIdentifier'].endswith('text.match')
+    assert match['WFWorkflowActionParameters']['WFMatchTextPattern'] == r'\S'
+    kg = actions[ki + 2:ki + 6]
+    assert [kind(a) for a in kg] == ['conditional', 'notification', 'exit', 'conditional']
+    assert kg[0]['WFWorkflowActionParameters']['WFCondition'] == 101
+    assert notification(kg[1]) == trio['notify.empty_key']
+    assert kind(actions[ki + 6]) == 'save'
+    # the keyed Trio warns about the permission windows first thing in its key prompt, adding no screen
+    key_ask = next(a for a in actions
+                   if kind(a) == 'ask' and a['WFWorkflowActionParameters']['WFAskActionPrompt'] == trio['ask.key'])
+    assert '4–6' in '\n\n'.join(trio['ask.key'].split('\n\n')[:2])  # the warning is in the first two paragraphs
+    assert actions.index(key_ask) < actions.index(next(a for a in actions if kind(a) == 'ask'
+                                                      and a['WFWorkflowActionParameters']['WFAskActionPrompt'] == prompt))
     nokey = tmp_path / lang / 'nokey' / 'Trio.shortcut'
     if nokey.exists():  # Trio without a key is built only where trio.json has its words
-        assert_blank_guard(plistlib.loads(nokey.read_bytes())['WFWorkflowActions'], ui, prompt)
+        nk = plistlib.loads(nokey.read_bytes())['WFWorkflowActions']
+        ask = assert_blank_guard(nk, ui, prompt, trio['notify.empty_question']) - 5
+        # asks nothing before the question, so it warns once with Duo's window
+        alerts = [a['WFWorkflowActionParameters']['WFAlertActionTitle'] for a in nk[:ask] if kind(a) == 'alert']
+        assert alerts == [ui['alert']['first_run_title']]

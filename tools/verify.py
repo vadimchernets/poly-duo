@@ -65,7 +65,8 @@ def check_locales():
             note = f', {len(overrides)} prompt overrides' if overrides else ', shared prompts'
             ok(f'{locale.name}: {len(base_keys)} ui keys{note}')
 
-        for name, items in (('main_items', 7), ('extra_items', 7)):
+        for name, items in (('main_items', 7), ('extra_items', 10), ('finale_items', 3),
+                            ('finale_more_items', 4), ('recipes_items', 5), ('recipes_texts', 5)):
             if len(ui['menu'][name]) != items:
                 fail(f'{locale.name}: menu.{name} must hold exactly {items} entries')
 
@@ -184,14 +185,29 @@ def tokens(node, found=None):
 
 
 def signature(actions):
-    """Structural fingerprint that ignores freshly generated ids."""
-    out = []
-    for action in actions:
-        params = action['WFWorkflowActionParameters']
-        item = [action['WFWorkflowActionIdentifier'], params.get('WFControlFlowMode'),
-                params.get('WFMenuItemTitle'), params.get('WFVariableName')]
-        out.append(tuple(item))
-    return out
+    """Full action list with freshly generated ids made canonical.
+
+    Every UUID / OutputUUID / GroupingIdentifier is replaced by an ordinal label in order of first
+    appearance, so two builds of the same sources compare equal while any change in a URL, model,
+    body, header, text or reference differs. Signing (AEA) wraps the plist without rewriting it,
+    so nothing else is excluded."""
+    labels = {}
+
+    def label(value):
+        return labels.setdefault(value, f'#{len(labels)}')
+
+    def walk(node):
+        if isinstance(node, dict):
+            return {k: (label(v) if k in ID_KEYS and isinstance(v, str) else walk(v))
+                    for k, v in node.items()}
+        if isinstance(node, list):
+            return [walk(v) for v in node]
+        return node
+
+    return walk(actions)
+
+
+ID_KEYS = {'UUID', 'OutputUUID', 'GroupingIdentifier'}
 
 
 def check_sources_build(langs):
@@ -211,11 +227,11 @@ def check_sources_build(langs):
                     fail(f'{lang}: {builder} failed: {result.stderr.strip().splitlines()[-1:]}')
                     break
             else:
-                built = sorted((Path(tmp) / lang).glob('*.shortcut'))
+                built = sorted((Path(tmp) / lang).rglob('*.shortcut'))
                 problems = []
                 for path in built:
                     actions = plistlib.loads(path.read_bytes())['WFWorkflowActions']
-                    problems += [f'{path.name}: {p}' for p in structure_report(actions)]
+                    problems += [f'{path.relative_to(Path(tmp) / lang)}: {p}' for p in structure_report(actions)]
                 if problems:
                     for problem in problems[:3]:
                         fail(f'{lang}: {problem}')
@@ -227,13 +243,13 @@ def check_shortcuts(langs):
     have_tools = shutil.which('aea') and shutil.which('aa')
     for lang in langs:
         dist = ROOT / 'dist' / lang
-        files = sorted(dist.glob('*.shortcut'))
+        files = sorted(dist.rglob('*.shortcut'))
         if not files:
             continue
         print(f'shortcuts [{lang}]')
         for path in files:
             if path.read_bytes()[:4] != b'AEA1':
-                fail(f'{lang}: {path.name} is not signed')
+                fail(f'{lang}: {path.relative_to(dist)} is not signed')
         if not have_tools:
             ok(f'{lang}: {len(files)} shortcuts signed (structure check skipped: aea/aa missing)')
             continue
@@ -249,15 +265,16 @@ def check_shortcuts(langs):
                            check=True, capture_output=True, cwd=ROOT, env=env)
 
             for path in files:
-                work = Path(tmp) / path.stem
+                rel = path.relative_to(dist)
+                work = Path(tmp) / 'unpack' / rel.with_suffix('')
                 work.mkdir(parents=True, exist_ok=True)
                 try:
                     shipped = unpack(path, work)['WFWorkflowActions']
                 except Exception as error:  # noqa: BLE001
-                    fail(f'{lang}: cannot read {path.name}: {error}')
+                    fail(f'{lang}: cannot read {rel}: {error}')
                     continue
                 problems = structure_report(shipped)
-                fresh_path = Path(tmp) / lang / path.name
+                fresh_path = Path(tmp) / lang / rel
                 if fresh_path.exists():
                     fresh = plistlib.loads(fresh_path.read_bytes())['WFWorkflowActions']
                     if signature(fresh) != signature(shipped):
@@ -266,9 +283,9 @@ def check_shortcuts(langs):
                     problems.append('sources do not produce this file')
                 if problems:
                     for problem in problems[:3]:
-                        fail(f'{lang}/{path.name}: {problem}')
+                        fail(f'{lang}/{rel}: {problem}')
                 else:
-                    ok(f'{lang}: {path.name} — {len(shipped)} actions, matches sources')
+                    ok(f'{lang}: {rel} — {len(shipped)} actions, matches sources')
 
 
 # ---------------------------------------------------------------- kits
@@ -340,11 +357,53 @@ def check_android():
             ok(f'android/{lang}: {len(have)} projects, in sync with locales/{lang}/tasker.json')
 
 
+def check_release_sums():
+    """releases/SHA256SUMS, if present, lists exactly the released files and every hash matches."""
+    import hashlib
+    releases = ROOT / 'releases'
+    sums = releases / 'SHA256SUMS'
+    if not sums.exists():
+        if releases.exists() and any(releases.iterdir()):
+            fail('releases/SHA256SUMS is missing although releases/ is not empty '
+                 '(regenerate on purpose: python3 tools/verify.py --write-release-sums)')
+        return
+    listed = {}
+    for line in sums.read_text(encoding='utf-8').splitlines():
+        if line.strip():
+            digest, _, name = line.partition('  ')
+            listed[name] = digest
+    actual = {p.relative_to(releases).as_posix() for p in releases.rglob('*.shortcut')} | {'version.json'}
+    actual = {n for n in actual if (releases / n).exists()}
+    problems = [f'{n}: not in SHA256SUMS' for n in sorted(actual - set(listed))]
+    problems += [f'{n}: listed but missing' for n in sorted(set(listed) - actual)]
+    problems += [f'{n}: hash differs from SHA256SUMS' for n in sorted(actual & set(listed))
+                 if hashlib.sha256((releases / n).read_bytes()).hexdigest() != listed[n]]
+    if problems:
+        for problem in problems:
+            fail(f'releases/{problem}')
+    else:
+        ok(f'releases/SHA256SUMS: {len(listed)} files match')
+
+
+def write_release_sums():
+    """Explicit release step: record the hashes of the files now in releases/ (never run by build.sh)."""
+    import hashlib
+    releases = ROOT / 'releases'
+    names = sorted(['version.json'] + [p.relative_to(releases).as_posix() for p in releases.rglob('*.shortcut')])
+    lines = [f"{hashlib.sha256((releases / n).read_bytes()).hexdigest()}  {n}\n" for n in names]
+    (releases / 'SHA256SUMS').write_text(''.join(lines), encoding='utf-8')
+    print(f'releases/SHA256SUMS written: {len(names)} files')
+
+
 def main():
+    if '--write-release-sums' in sys.argv[1:]:
+        write_release_sums()
+        return 0
     langs = sys.argv[1:] or [d.name for d in sorted((ROOT / 'locales').iterdir()) if d.is_dir()]
     check_locales()
     check_language()
     check_android()
+    check_release_sums()
     check_sources_build(langs)
     check_shortcuts(langs)
     check_kits(langs)

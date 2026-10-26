@@ -1,0 +1,60 @@
+{
+  "_comment": "The one list of provider endpoints and model ids, in the order they are tried. src/build_trio.py reads it; tools/check_models.py checks it against each provider's /models. `us_models`: the US-only chain of Trio without a key. Android (poly-a1/src/duoAuto.ts) still keeps its own copy.",
+  "gemini_search": {
+    "_comment": "Third voice with web search: Google's native generateContent + google_search tool. Free tier ~500 grounded requests a day on these two only (research 2026-10-26). Order = tried order.",
+    "base_url": "https://generativelanguage.googleapis.com/v1beta/models",
+    "models": ["gemini-2.5-flash", "gemini-2.5-flash-lite"],
+    "max_sources": 5
+  },
+  "providers": {
+    "nvidia": {
+      "url": "https://integrate.api.nvidia.com/v1/chat/completions",
+      "models_url": "https://integrate.api.nvidia.com/v1/models",
+      "key_env": "NVIDIA_API_KEY",
+      "models": ["moonshotai/kimi-k3", "moonshotai/kimi-k2.6", "z-ai/glm-5.3",
+                 "deepseek-ai/deepseek-v4.1-flash"],
+      "us_models": ["nvidia/nemotron-3-ultra-550b-a55b", "openai/gpt-oss-20b",
+                    "meta/llama-3.2-90b-vision-instruct", "google/gemma-4-31b-it"]
+    },
+    "gemini": {
+      "url": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+      "models_url": "https://generativelanguage.googleapis.com/v1beta/openai/models",
+      "key_env": "GEMINI_API_KEY",
+      "models": ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash",
+                 "gemini-2.5-flash"]
+    },
+    "openrouter": {
+      "url": "https://openrouter.ai/api/v1/chat/completions",
+      "models_url": "https://openrouter.ai/api/v1/models",
+      "key_env": "OPENROUTER_API_KEY",
+      "models": ["nvidia/nemotron-3-super-120b-a12b:free", "nvidia/nemotron-3.5-lightning:free",
+                 "google/gemma-4-31b-it:free", "openrouter/free"],
+      "us_models": ["nvidia/nemotron-3-ultra-550b-a55b:free", "google/gemma-4-26b-a4b-it:free",
+                    "thinkingmachines/inkling:free", "thinkingmachines/inkling-small:free",
+                    "nvidia/nemotron-3-super-120b-a12b:free", "nvidia/nemotron-3.5-lightning:free"]
+    },
+    "groq": {
+      "url": "https://api.groq.com/openai/v1/chat/completions",
+      "models_url": "https://api.groq.com/openai/v1/models",
+      "key_env": "GROQ_API_KEY",
+      "models": ["qwen/qwen3.8-27b", "openai/gpt-oss-120b", "openai/gpt-oss-20b"],
+      "us_models": ["openai/gpt-oss-120b", "openai/gpt-oss-20b"]
+    },
+    "anthropic": {
+      "url": "https://api.anthropic.com/v1/messages",
+      "models": ["claude-opus-5", "claude-sonnet-5"]
+    },
+    "openai": {
+      "url": "https://api.openai.com/v1/chat/completions",
+      "models": ["gpt-6-astra", "gpt-6.1-sol"]
+    },
+    "xai": {
+      "url": "https://api.x.ai/v1/chat/completions",
+      "models": ["grok-4.7", "grok-4.6"]
+    },
+    "deepseek": {
+      "url": "https://api.deepseek.com/chat/completions",
+      "models": ["deepseek-v4-pro", "deepseek-flash"]
+    }
+  }
+}

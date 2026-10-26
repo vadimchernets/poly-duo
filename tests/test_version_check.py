@@ -40,14 +40,17 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
     urls = [p['WFURL'] for p in params(actions, 'downloadurl') if isinstance(p['WFURL'], str)]
     assert urls == ['https://raw.githubusercontent.com/vadimchernets/c1m-duo/main/releases/version.json',
                     'https://polyhelper.ai/duo/version.json']
-    weekly = [p for p in params(actions, 'conditional') if p.get('WFCondition') == 1003]
+    weekly = [p for p in params(actions, 'conditional') if p.get('WFCondition') == 1003
+              and p['WFAnotherNumber'] == 7]  # the 15-minute draft window of Critique is another check
     assert [(p['WFNumberValue'], p['WFAnotherNumber']) for p in weekly] == [(-7, 7)]
-    assert [p['WFTimeUntilUnit'] for p in params(actions, 'gettimebetweendates')] == ['Days']
-    newer = [p['WFNumberValue'] for p in params(actions, 'conditional') if p.get('WFCondition') == 2]
+    assert [p['WFTimeUntilUnit'] for p in params(actions, 'gettimebetweendates')
+            if p['WFTimeUntilUnit'] == 'Days'] == ['Days']
+    newer = [p['WFNumberValue'] for p in params(actions, 'conditional') if p.get('WFCondition') == 2
+             and p['WFNumberValue'] != 6000]  # 6000 = the long-text threshold for Claude
     assert newer == [VERSION[key]]
     keys = [p['WFDictionaryKey'] for p in params(actions, 'getvalueforkey')]
     assert f'{key}_{lang}' in keys
-    assert len(params(actions, 'openurl')) == 1
+    assert len([p for p in params(actions, 'openurl') if 'run-report' not in str(p)]) == 1  # + the report link
     # the network goes first, by actions that never throw; a non-JSON answer is «no update»
     nets = [p['WFNetworkDetailsNetwork'] for p in params(actions, 'getwifi')]
     assert nets == ['Wi-Fi', 'Cellular']
@@ -64,4 +67,4 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
 @pytest.mark.parametrize('lang', LANGS)
 def test_another_mode_calls_the_released_name(tmp_path, lang):
     actions = build(tmp_path, 'build_shortcut.py', lang, 'Poly.shortcut')
-    assert [p['WFWorkflowName'] for p in params(actions, 'runworkflow')] == ['Duo']
+    assert {p['WFWorkflowName'] for p in params(actions, 'runworkflow')} == {'Duo'}  # Another mode and Recipes

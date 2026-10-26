@@ -33,7 +33,7 @@ Japanese menu and a Japanese answer from the same English prompt.
 1. Copy `locales/en/ui.json` to `locales/<lang>/ui.json` (ISO 639-1 code: `de`, `ja`, `pt`…).
 2. Translate it — about 90 strings.
 3. Translate the three user documents into `docs/<lang>/`: `install.md`, `what-is-c1.md`, `recipes.md`.
-4. Build and check: `./tools/build.sh <lang>` — it builds, signs, packages and verifies.
+4. Build and check: `./tools/build.sh <lang>` — it builds, signs, packages and verifies. It never rewrites `releases/SHA256SUMS`; when preparing a release, copy the files into `releases/` and run `python3 tools/verify.py --write-release-sums`.
 5. Add your language to the table in `README.md`.
 
 Not translated: source code, `README.md`, this file — those are for developers.
@@ -47,8 +47,8 @@ If a prompt genuinely needs to differ in your language, drop just that one file 
 `{GPT_ANSWER}`, `{CLAUDE_ANSWER}`, `{ANCHOR}`, `{DRAFT}`… — is wired to a value by the builder.
 Keep the same names in the same structural places; move the surrounding words freely.
 
-**Menu arrays keep their length and order.** `menu.main_items` has exactly 7 entries and
-`menu.extra_items` exactly 7; the builder indexes into them. Translate the labels, keep the emoji
+**Menu arrays keep their length and order.** `menu.main_items` has exactly 7 entries,
+`menu.extra_items` 10, `menu.finale_items` 3, `menu.finale_more_items` 4 and `menu.recipes_items` / `menu.recipes_texts` 5 each; the builder indexes into them. Translate the labels, keep the emoji
 and the `· N✉` cost badge — that badge is how a user sees the price before choosing.
 
 **Prompt structure survives translation.** Numbered lists, section headers (`ORIGINAL QUESTION:`),

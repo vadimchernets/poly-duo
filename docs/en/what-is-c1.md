@@ -71,3 +71,5 @@ pair feels natural.
 ## In one sentence
 
 A free button that puts two AIs you already have to work together, checking each other: one price — 1 to 8 messages per run — and one habit — tap, then leave your phone alone for a minute and a half.
+
+Research: [The research behind it](evidence.md#the-research-behind-it).

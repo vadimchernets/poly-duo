@@ -58,3 +58,5 @@ C’est là que va le projet : plus de chœur, moins de manuel, à mesure que le
 ## En une phrase
 
 Un bouton gratuit qui met deux de tes abonnements payants au travail ensemble, à se vérifier l’un l’autre : un seul prix — de 1 à 8 messages par exécution — et une seule habitude : appuyer, puis laisser le téléphone tranquille une minute et demie.
+
+Socle scientifique : [research.md](research.md).

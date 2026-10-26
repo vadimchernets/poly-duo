@@ -1,0 +1,220 @@
+{
+  "_meta": {
+    "language": "ko",
+    "english_name": "Korean",
+    "native_name": "한국어",
+    "note": "번역. 기본 언어는 en입니다. 단축어와 파일 이름은 번역하지 않습니다(브랜드와 파일명). 중괄호 자리표시자({Q}, {R}, {D}, {X}…)는 그대로 두세요. menu.main_items와 menu.extra_items의 순서와 길이는 고정이며 빌더가 인덱스로 가져옵니다. 프롬프트는 영어(locales/en/prompts)입니다.",
+    "translator": "Claude, 2026-10-26"
+  },
+  "shortcut_names": {
+    "main": "Poly",
+    "voice": "Poly Voice",
+    "photo": "Poly Photo",
+    "quiet": "Poly Quiet",
+    "compress": "Poly Compress",
+    "multi": "Poly Multi"
+  },
+  "files": {
+    "journal": "Poly-journal.md",
+    "image_html": "Poly-image.html",
+    "pc_notice": "Poly-pc-notice.txt"
+  },
+  "comment": {
+    "main": "Poly — ChatGPT와 Claude 듀오. Claude/ChatGPT 동작이 회색으로 보이면: 삭제하고 «Ask Claude» / «Ask ChatGPT»를 검색해서 같은 자리에 다시 넣으세요. Claude는 message 필드의 텍스트를 받습니다. ChatGPT: Start new chat 켜기, Continuous 끄기, «실행 시 보기» 끄기. 전체 안내: 키트의 INSTALL.md.",
+    "photo": "Poly Photo: 여기로 사진이나 PDF를 공유하면 기기 안에서 글자를 인식해 Poly로 넘겨요.",
+    "multi": "PRO 확장(수동 합창). 이것은 기본 Poly가 아니에요. 먼저 자동 듀오부터 익히세요. Poly Multi: AI 합창. ChatGPT와 Claude는 알아서 답하고(앱 인텐트), 나머지(Gemini, Grok, DeepSeek…)는 직접 물어봐요. 프롬프트는 이미 클립보드에 있으니, 복사할 때마다 돌아와서 확인을 누르세요. 마지막에 Claude가 모두 합쳐요."
+  },
+  "ask": {
+    "question": "ChatGPT와 Claude에게 물어볼 질문 (어떤 언어든 괜찮아요):",
+    "clarify_suffix": "\n\n이 질문들에 한 번에 답해 주세요 (또는 «건너뛰기»를 입력하세요):",
+    "clarify_default": "건너뛰기",
+    "voice_question": "Poly에게 물어볼 질문을 말해 주세요",
+    "quiet_question": "질문 (조용한 모드 — 결과는 클립보드와 저널로 가요)",
+    "multi_question": "AI 합창단에게 무엇을 물어볼까요?",
+    "multi_count": "프롬프트가 이미 클립보드에 있어요. 직접 몇 개의 AI에게 더 물어볼까요(Gemini, Grok, DeepSeek…)? 0이면 자동 듀오만 써요."
+  },
+  "menu": {
+    "main_title": "모드를 고르세요 · 처음이라면 ⚖️ 검토",
+    "main_items": [
+      "⚖️ 검토 · 3✉",
+      "🤝 합의까지 토론 · 3–8✉",
+      "🩺 조언자 · 1✉",
+      "👀 나란히 보기 · 2✉",
+      "🔀 종합 · 3✉",
+      "🧭 자동 · +1✉",
+      "📂 더 보기…"
+    ],
+    "extra_title": "다른 모드",
+    "extra_items": [
+      "⚔️ 결정 · 3✉",
+      "🗺 쟁점 지도 · 3✉",
+      "🥊 논쟁 · 4✉",
+      "❓ 되묻기 · 2✉",
+      "🎨 그림 · 2–3✉",
+      "➕ 추가분 (Delta) · 2✉",
+      "ℹ️ Poly란",
+      "📖 활용법",
+      "✍️ Claude가 쓰고 ChatGPT가 확인 · 3✉",
+      "📝 나만의 확인 규칙 · 3✉"
+    ],
+    "anchor_title": "최종 답의 기준은 어느 쪽인가요?",
+    "anchor_items": [
+      "Claude — 사실과 구조",
+      "ChatGPT — 어조와 창의성"
+    ],
+    "image_title": "어떻게 보여 드릴까요?",
+    "image_items": [
+      "스케치만 · 2✉",
+      "스케치 + 심판의 판정 · 3✉"
+    ],
+    "finale_title": "다음은 무엇을 할까요?",
+    "finale_items": [
+      "✅ 완료",
+      "🔁 다른 모드 — 같은 질문",
+      "➕ 더 보기…"
+    ],
+    "multi_merge_title": "어떤 병합을 할까요?",
+    "multi_merge_items": [
+      "표준 병합",
+      "동서양 병합"
+    ],
+    "finale_more_title": "더 할 수 있는 일",
+    "finale_more_items": [
+      "🔍 ChatGPT에게 최종 결과 확인 요청 · 1✉",
+      "📝 메모에 저장",
+      "☑️ 확인할 것 → 미리 알림",
+      "🐞 이번 실행 신고"
+    ],
+    "recipes_title": "무엇이 필요하세요?",
+    "recipes_items": [
+      "📄 계약서나 편지 검토",
+      "✉️ 어려운 메시지에 답하기",
+      "⚖️ 두 가지 중 어느 쪽?",
+      "🧐 무엇을 다시 확인할까요?",
+      "🧒 쉽게 설명해 줘요"
+    ],
+    "recipes_texts": [
+      "위험한 부분, 불분명하거나 한쪽으로 치우친 표현, 서명하기 전에 물어봐야 할 것을 확인해 주세요:\n\n",
+      "제가 받은 메시지예요. 어조를 설명하고, 의도로 볼 수 있는 가장 그럴듯한 해석들과 각각을 뒷받침하는 표현을 짚어 주세요. 그리고 서로 다른 어조로 답장 세 가지를 제안해 주세요:\n\n",
+      "두 가지 선택지 중에서 고민하고 있어요. 비교해서 저에게 어느 쪽이 더 나은지, 그 이유와 함께 알려 주세요. 선택지 A: … 선택지 B: … 제 상황: …",
+      "의심스러운 주장을 표시하고, 왜 의심스러운지 설명해 주세요. 그리고 제가 어떤 1차 출처를 확인해야 하는지도 알려 주세요:\n\n",
+      "전문가가 아닌 사람도 알 수 있게 전문 용어 없이 쉬운 말로 설명해 주세요:\n\n"
+    ],
+    "claude_down_title": "Claude가 답하지 않았습니다. 다음으로 확인…",
+    "claude_down_items": [
+      "🔑 제공업체 무료 키 — 설정 필요",
+      "📱 이 iPhone — Apple Intelligence (iPhone 15 Pro 이상)",
+      "📋 Gemini 또는 Meta AI에서 직접"
+    ]
+  },
+  "notify": {
+    "critique_start": "⚖️ 검토: ChatGPT가 답하고 → Claude가 따로 답하고 → Claude가 둘을 비교해요. 약 1분, 휴대폰을 만지지 마세요. ChatGPT가 «logged out»이라고 하면 ChatGPT 앱을 열고 Poly를 다시 실행하세요.",
+    "critique_step2": "[2/3] Claude가 확인하고 최종 답을 만들고 있어요…",
+    "critique_blind": "[2/3] Claude가 ChatGPT의 답을 보지 않고 따로 답하고 있어요…",
+    "critique_step3": "[3/3] Claude가 둘을 비교하고 있어요: 따로 해도 같은 점 / 다른 점 / 직접 확인할 것, 그리고 최종 답…",
+    "critique_summary": "[3/3] Claude가 두 답을 정리하고 있어요: 둘 다 같은 점 / 다른 점 / 직접 확인할 것… (확인된 답은 이미 클립보드에 있어요)",
+    "advisor_start": "🩺 조언자: Claude가 글을 고쳐 쓰지 않고 검토해요. 약 40초, 화면을 만지지 마세요.",
+    "survey_start": "👀 나란히 보기: 두 AI에게 따로 묻고 있어요. 약 1분, 휴대폰을 만지지 마세요. ChatGPT가 «logged out»이라고 하면 ChatGPT 앱을 열고 Poly를 다시 실행하세요.",
+    "synthesis_claude_start": "🔀 종합(Claude 기준): 서로 보지 않은 두 답 → 조립. 약 1분 30초, 휴대폰을 만지지 마세요. ChatGPT가 «logged out»이라고 하면 ChatGPT 앱을 열고 Poly를 다시 실행하세요.",
+    "synthesis_gpt_start": "🔀 종합(ChatGPT 기준): 서로 보지 않은 두 답 → 조립. 약 1분 30초, 휴대폰을 만지지 마세요. ChatGPT가 «logged out»이라고 하면 ChatGPT 앱을 열고 Poly를 다시 실행하세요.",
+    "auto_start": "🧭 자동: 질문에 맞는 모드를 고르고 있어요… (ChatGPT 메시지 +1)",
+    "decision_start": "⚔️ 결정: 빠른 견해 → 신중한 견해 → 심판. 약 1분 30초, 휴대폰을 만지지 마세요. ChatGPT가 «logged out»이라고 하면 ChatGPT 앱을 열고 Poly를 다시 실행하세요.",
+    "decision_step2": "[2/3] Claude — 신중한 견해…",
+    "decision_step3": "[3/3] 심판 Claude가 권고안을 쓰고 있어요…",
+    "disputemap_start": "🗺 쟁점 지도: 서로 보지 않은 두 답 → 일치와 충돌 지도. 약 1분 30초.",
+    "debate_start": "🥊 논쟁: 초안 → Claude가 초안을 보지 않고 답변 → 수정 → 판정. 약 2분, 휴대폰을 만지지 마세요. ChatGPT가 «logged out»이라고 하면 ChatGPT 앱을 열고 Poly를 다시 실행하세요.",
+    "debate_step2": "[2/4] Claude가 초안을 보지 않고 직접 답하고 있어요…",
+    "debate_step3": "[3/4] ChatGPT가 두 답을 비교해 고치고 있어요…",
+    "debate_step4": "[4/4] 심판 Claude가 판정을 내리고 있어요…",
+    "clarify_step1": "❓ 되묻기 [1/2]: ChatGPT가 부족한 점을 찾고 있어요…",
+    "clarify_step2": "[2/2] Claude가 보충해 주신 내용으로 답하고 있어요…",
+    "image_step1": "🎨 그림 [1/2]: ChatGPT가 SVG를 먼저 그리고 있어요… ChatGPT가 «logged out»이라고 하면 ChatGPT 앱을 열고 Poly를 다시 실행하세요.",
+    "image_step2": "[2/2] Claude가 자기 버전을 그리고 있어요…",
+    "image_judge": "[3/3] 심판 Claude가 스케치를 비교하고 있어요…",
+    "delta_step1": "➕ 보탬 [1/2]: Claude가 기준 답을 쓰고 있어요…",
+    "delta_step2": "[2/2] ChatGPT가 보탤 점을 찾고 있어요… «logged out»이라고 하면 ChatGPT 앱을 열고 Poly를 다시 실행하세요.",
+    "help": "ℹ️ Poly 도움말 — AI를 부르지 않아서 무료예요.",
+    "tail_done": "✅ 완료. 답은 클립보드에도 있어요. 어디에든 붙여 넣으세요.",
+    "tail_empty": "⚠️ 돌아온 답이 없어요. Claude 앱을 확인해 보세요. 초안은 저널에 저장되어 있어요.",
+    "voice_start": "🎧 Poly Voice: ChatGPT → Claude, 최종 답은 소리 내어 읽어 드려요. 약 1분. ChatGPT가 «logged out»이라고 하면 ChatGPT 앱을 열고 다시 시작하세요.",
+    "photo_done": "📸 글자를 인식했어요 — Poly를 여는 중이에요.",
+    "multi_step1": "🎼 합창 [1/3]: ChatGPT와 Claude가 각자 답하고 있어요…",
+    "multi_step3": "[3/3] Claude가 합창을 병합하고 있어요…",
+    "argue_start": "🤝 합의까지 토론: 먼저 둘이 서로의 답을 보지 않고 각자 의견을 내고, 그다음 서로를 보며 토론해요. 한쪽이 양보할 때까지 최대 3라운드. 약 2–4분, 휴대폰을 만지지 마세요. ChatGPT가 «logged out»이라고 하면 ChatGPT 앱을 열고 Poly를 다시 실행하세요.",
+    "argue_blind": "[{N}/3] Claude가 ChatGPT의 답을 보지 않고 자기 입장을 쓰고 있어요…",
+    "argue_object": "[{N}/3] Claude가 반론하고 있어요…",
+    "argue_reply": "[{N}/3] ChatGPT가 반론에 답하고 있어요…",
+    "argue_verdict": "Claude가 결과를 쓰고 있어요: 합의한 것 / 아직 다투는 것 / 직접 정할 것…",
+    "empty_question": "질문이 없어서 아무것도 보내지 않았어요. Poly를 다시 실행하고 질문을 입력하세요.",
+    "long_text": "긴 글이라 시간이 더 걸려요. 화면을 만지지 마세요.",
+    "claude_retry": "Claude가 답을 보내지 않았어요 — 더 짧은 글로 한 번 더 시도해요…",
+    "resume": "저장된 ChatGPT 답에서 이어 가요 — ChatGPT 메시지를 새로 쓰지 않아요.",
+    "reverse_start": "✍️ Claude가 쓰고 ChatGPT가 확인해요: Claude가 답하고 → ChatGPT가 어조와 표현을 다듬어요(교정이지 사실 확인은 아니에요). 약 1분, 휴대폰을 만지지 마세요. ChatGPT가 «logged out»이라고 하면 ChatGPT 앱을 열고 Poly를 다시 실행하세요.",
+    "my_mode_missing": "iCloud Drive의 단축어 폴더에 «Poly-my-mode.txt» 파일이 없어요. 검토자를 위한 한 줄을 적어 만든 다음(예: «숫자와 날짜만 확인해 줘») Poly를 다시 실행하세요.",
+    "ratify": "ChatGPT가 최종 결과에서 실수를 찾고 있어요…",
+    "manual_copied": "확인 요청이 클립보드에 있습니다. Gemini 또는 Meta AI에 붙여넣으세요.",
+    "no_key_file": "iCloud Drive의 단축어 폴더에 poly-key.txt가 없습니다. 무료 키를 저장하거나(설치 안내 참고) 다른 항목을 선택하세요.",
+    "resume_debate": "중단된 지점부터 토론을 이어갑니다. 이미 끝난 라운드에는 ChatGPT 메시지가 새로 소모되지 않습니다."
+  },
+  "alert": {
+    "multi_next_title": "Poly Multi — 다음 AI",
+    "multi_next_body": "다음 AI 앱을 직접 열고 → 클립보드의 프롬프트를 붙여 넣고 → 보낸 다음 → 그 답을 복사하고 → 여기로 돌아와서 → 확인을 누르세요.",
+    "pc_notice_title": "노트북이나 PC에서는 더 많이 해요",
+    "pc_notice_body": "💻 노트북이나 PC에서는 PolyHelper가 더 많은 일을 해요: 폴더, 에이전트, 채널, 일정, 여러 AI의 협의회. 휴대폰의 Poly는 PC 기능이 없는 가벼운 버전이에요.",
+    "first_run_title": "첫 질문 전에",
+    "first_run_body": "이제 iPhone이 ChatGPT와 Claude 접근 권한을 4–6번 물어봐요. 매번 바로 «항상 허용»(또는 «허용»)을 누르세요. 딱 한 번만 하면 돼요."
+  },
+  "output": {
+    "critique": "{S}\n\n■ 확인된 답 (Claude)\n{C}",
+    "critique_reverse": "{S}\n\n■ 확인된 답 (ChatGPT)\n{C}",
+    "survey": "■ CHATGPT\n{G}\n\n■ CLAUDE\n{C}",
+    "delta": "■ 기준 (Claude)\n{C}\n\n➕ 보탬 (ChatGPT)\n{G}",
+    "auto": "🧭 Poly가 이 질문에 추천하는 모드: «{R}».\n\n다음 화면에서 «🔁 다른 모드 — 같은 질문»을 고르세요. Poly가 같은 질문으로 다시 시작하니, 메뉴에서 추천된 모드를 고르면 돼요.",
+    "image_codes": "■ CLAUDE 스케치 (SVG 코드)\n{C}\n\n■ CHATGPT 스케치 (SVG 코드)\n{G}",
+    "image_codes_judged": "⚖️ 심판의 판정\n{J}\n\n■ CLAUDE 스케치 (SVG 코드)\n{C}\n\n■ CHATGPT 스케치 (SVG 코드)\n{G}",
+    "image_html_title": "🎨 스케치 두 장 — 마음에 드는 쪽을 고르세요",
+    "image_html_claude": "◆ CLAUDE",
+    "image_html_gpt": "◆ CHATGPT",
+    "argue": "{V}\n\n■■ 토론이 진행된 과정\n{L}",
+    "argue_side_a": "■ ChatGPT (A 입장)",
+    "argue_side_b_round": "■ Claude (B 입장), {N}라운드",
+    "argue_side_a_round": "■ ChatGPT (A 입장), {N}라운드",
+    "ratify": "{R}\n\n— — —\n🔍 ChatGPT의 두 번째 확인:\n{X}"
+  },
+  "journal": {
+    "entry": "\n════════ {D} ════════\n{JX}\n질문: {Q}\n\n{R}\n",
+    "entry_simple": "\n════════ {D} ════════\n{M}\n질문: {Q}\n\n{R}\n",
+    "critique": "모드: ⚖️ 검토\n—— 원본: ChatGPT의 답 ——\n{X}",
+    "critique_reverse": "모드: ⚖️ 검토\n—— 원본: Claude의 답 ——\n{X}",
+    "advisor": "모드: 🩺 조언자",
+    "survey": "모드: 👀 나란히 보기 (결과 자체가 원본이에요)",
+    "decision": "모드: ⚔️ 결정\n—— 원본: 빠른 견해 (ChatGPT) ——\n{X}\n—— 신중한 견해 (Claude) ——\n{Y}",
+    "synthesis_claude": "모드: 🔀 종합 (Claude 기준)\n—— 원본: ChatGPT ——\n{X}\n—— Claude ——\n{Y}",
+    "synthesis_gpt": "모드: 🔀 종합 (ChatGPT 기준)\n—— 원본: ChatGPT ——\n{X}\n—— Claude ——\n{Y}",
+    "disputemap": "모드: 🗺 쟁점 지도\n—— 원본: ChatGPT ——\n{X}\n—— Claude ——\n{Y}",
+    "debate": "모드: 🥊 논쟁\n—— 초안 (ChatGPT) ——\n{X}\n—— 독립 답변 (Claude) ——\n{Y}\n—— 수정 (ChatGPT) ——\n{Z}",
+    "clarify": "모드: ❓ 되묻기\n—— 질문 (ChatGPT) ——\n{X}\n—— 보충해 주신 답 ——\n{Y}",
+    "image": "모드: 🎨 그림 (두 그림 모두: 파일 → iCloud Drive → Shortcuts → Poly-image.html, SVG 코드는 결과에 있어요)",
+    "delta": "모드: ➕ 보탬",
+    "auto": "모드: 🧭 자동 (추천)",
+    "help": "모드: ℹ️ 도움말 (AI 호출 없음)",
+    "voice": "모드: 🎧 음성",
+    "quiet": "모드: 🤫 조용히 (검토)",
+    "multi": "모드: 🎼 Multi 합창",
+    "argue": "모드: 🤝 합의까지 토론 (토론 전체가 결과에 있어요)"
+  },
+  "variables": {
+    "result": "결과",
+    "journal_extra": "JournalExtra",
+    "extra_answers": "ExtraAnswers",
+    "final_prompt": "FinalPrompt",
+    "pc_notice_seen": "PCNoticeSeen",
+    "argue_log": "DebateLog"
+  },
+  "help": "ℹ️ POLY란\n\n질문 하나에 두 AI(ChatGPT와 Claude)가 짝을 이뤄 답해요. 여러분의 구독으로 돌아가고, 모드에 붙은 ✉ 표시는 메시지가 몇 개 쓰이는지 알려 줘요.\n\n자주 쓰는 모드 (메인 메뉴):\n⚖️ 검토 — ChatGPT와 Claude가 서로 보지 않고 따로 답한 뒤, Claude가 비교해요: 따로 해도 같은 점 / 다른 점 / 직접 확인할 것, 그리고 최종 답을 써요. 기본으로 쓰기 좋아요.\n🤝 합의까지 토론 — 정답이 없는 삶의 선택(«뭘 고를까», «동의할까»)에 알맞아요. 먼저 둘이 서로의 답을 보지 않고 각자 의견을 내고, 그다음 서로를 보며 토론해요. 한쪽이 양보할 때까지 최대 3라운드를 해요. 마지막에 합의한 것, 아직 다투는 것, 직접 정할 것을 알려 줘요.\n🩺 조언자 — Claude가 여러분의 글을 고쳐 쓰지 않고 검토해요. 가장 저렴해요.\n👀 나란히 보기 — 서로 독립된 의견 두 개를 섞지 않고 보여 줘요.\n🔀 종합 — 둘이 서로 보지 않고 답한 뒤 가장 좋은 부분을 조립해요. 중요한 일에 알맞아요.\n🧭 자동 — 뭘 고를지 모르겠나요? Poly가 모드를 골라 줘요.\n\n«📂 더 보기…» 안에는:\n⚔️ 결정 — 첫 단계와 위험. 🗺 쟁점 지도 — AI들이 어디서 같고 어디서 다른지.\n🥊 논쟁 — ChatGPT의 초안과 Claude의 따로 쓴 답 → ChatGPT가 비교해 수정 → 판정. 가장 어려운 질문용이고 비싸요.\n❓ 되묻기 — 먼저 추가 질문을 해요(실행 도중 화면을 만져야 하는 유일한 모드예요 — 그 대화 상자만요).\n➕ 추가분 (Delta) — 종합의 저렴한 대안: 기준 답 + 보탤 점 목록. 🎨 그림 — 고를 수 있는 벡터 스케치 두 장.\n✍️ Claude가 쓰고 ChatGPT가 확인 — Claude가 초안을 쓰고 ChatGPT가 어조와 표현을 다듬어요(교정이지 사실 확인은 아니에요). 📝 나만의 확인 규칙 — 같은 방식에 확인하는 쪽에게 줄 나만의 한 줄 지시를 Poly-my-mode.txt 파일에서 읽어요(파일 → iCloud Drive → 단축어).\n\n결과는 항상 세 곳으로 도착해요: 화면, 클립보드(어디에든 붙여 넣으세요), 그리고 저널 Poly-journal.md(파일 → iCloud Drive → Shortcuts).\nPoly가 실행되는 동안에는 휴대폰을 만지지 마세요. 탭하면 단축어가 취소돼요. 자세한 내용과 문제 해결: 키트의 INSTALL.md.\n\n💻 노트북이나 PC에서는 PolyHelper가 더 많은 일을 해요: 폴더, 에이전트, 채널, 일정, 여러 AI의 협의회. 휴대폰의 Poly는 PC 기능이 없는 가벼운 버전이에요.\n\n아래의 «완료»를 누른 다음, 다음 화면에서 «🔁 다른 모드 — 같은 질문»을 고르세요. Poly가 같은 질문으로 다시 시작하고, 모드는 직접 고르면 돼요.",
+  "update": {
+    "prompt": "{NAME}의 새 버전이 나왔어요 — 설치할까요?",
+    "install": "설치",
+    "later": "나중에"
+  }
+}

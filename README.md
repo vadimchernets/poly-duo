@@ -1,6 +1,8 @@
 # C1M Duo
 
-**C1M Duo — ChatGPT + Claude on iPhone.** Nothing like this exists on phones yet: ChatGPT and Claude work as a pair, ChatGPT answers and Claude checks, on the accounts you already have. Free ones are enough. No server of ours, no API key, no card, no computer. You run the strongest models of two companies together, and a paid plan adds no extra fee.
+**C1M Duo — ChatGPT + Claude on iPhone.** Nothing like this exists on phones yet: ChatGPT and Claude work as a pair, each answers on its own and then the answers are compared, on the accounts you already have. Free ones are enough. No server of ours, no API key, no card, no computer. You can run the strongest models of two companies together, and a paid plan adds no extra fee.
+
+Built by the author of two papers on AI verification accepted at NeurIPS 2026 workshops. In our data on the 5 August 2026 flagships (a re-analysis of our companion study's data), when ChatGPT (gpt-5.6-sol) and Claude (claude-fable-5) answered 1,459 factual questions independently and agreed, they were right 98% of the time (985 of 1,004). [The research behind it](#the-research-behind-it).
 
 Why "nothing like it": the multi-AI tools we found (search of 2026-10-25) need a server, your own API keys, credits or a computer. Details and sources: [docs/en/evidence.md](docs/en/evidence.md#who-else-does-this).
 
@@ -25,15 +27,16 @@ Have ChatGPT and Claude? Start right away. Have one? It helps you install the ot
 
 ## Duo and Trio
 
-- **Duo** — the pair. ChatGPT answers, Claude checks and corrects it, and you get one answer on the
-  screen and in the clipboard, in about a minute. In the default mode, **Critique**, the answer
-  opens with three blocks: both agree / where they differ / what to check yourself. Eleven more
+- **Duo** — the pair. ChatGPT and Claude each answer on their own, without seeing each other; then
+  Claude compares the two and writes one answer, on the screen and in the clipboard, in about a
+  minute. In the default mode, **Critique**, it opens with three blocks: matched independently /
+  did not match / what to check yourself. Eleven more
   modes (debate to agreement, side by side, dispute map, decision, …) sit in the same menu or under
   📂 More… — twelve in all. Spends 1–8 messages from your own ChatGPT and Claude plans per run; the ✉ price is shown
   before you choose.
-- **Trio** — Duo plus a third voice from a third company. After Claude's check, a free AI names
-  only the errors and gaps both of them missed; its words come as a separate block under Claude's
-  answer. It runs on any **free** key — NVIDIA first (Kimi K3, GLM-5.3, DeepSeek V4.1 Flash), then
+- **Trio** — Duo plus a third voice from a third company. ChatGPT and Claude answer separately, a free AI
+  names only the errors and gaps both of them missed, then Claude compares all three and writes the
+  final answer; the third voice's words come as a separate block under it. It runs on any **free** key — NVIDIA first (Kimi K3, GLM-5.3, DeepSeek V4.1 Flash), then
   Google AI Studio (Gemini), OpenRouter (its free models) or Groq — or several of them: Trio
   tries every key and every free model until one answers. Limits are counted per account, not per
   key, so extra keys help only when they come from different companies. Keys are never inside the shortcut: asked once on the first run and kept in your iCloud
@@ -75,8 +78,9 @@ find the shortcut by that name.
 - The **ChatGPT** and **Claude** apps, installed and signed in.
 - Your own ChatGPT and Claude accounts — free ones are enough: free Claude runs Sonnet 5.5 — the same
   Sonnet 5.5 as on the paid plan (paid plans also have stronger models); the Ask Claude action uses
-  whichever model is set in your Claude app, and ChatGPT runs on `auto`, so with Plus or Pro you
-  get the strongest models of both companies at no extra charge.
+  whichever model is set in your Claude app, and ChatGPT runs on `auto` (the app picks the model).
+  Two $20 plans, ChatGPT Plus and Claude Pro, give you access to GPT-6 Sol and Claude Opus 5.5 at no
+  extra charge from Duo; Duo uses the model each app picks (plans as of 26 October 2026).
 - For **Trio**: any free key (no card) — [NVIDIA](https://build.nvidia.com/settings/api-keys) first
   (email, password, then an SMS code); no SMS? [Groq](https://console.groq.com/keys) or
   [Google AI Studio](https://aistudio.google.com/apikey) — sign in with your Google account, no
@@ -101,9 +105,25 @@ where it describes the sources.*
 
 ## Why a pair
 
+Two AIs agreeing means little unless both are strong. In our data (a re-analysis of our companion study's data, 1,459 factual questions), when mid-tier models from OpenAI and Anthropic (GPT-5 mini + Claude Haiku 4.5, July 2026) agreed, they were right only 37% of the time; when the two companies' flagships (gpt-5.6-sol + claude-fable-5, 5 August 2026) agreed, 98% — and they made the same confident mistake on only 1 question in 100. Which models you can use is set by your plan — two $20 plans (ChatGPT Plus and Claude Pro) already give you access to GPT-6 Sol and Claude Opus 5.5.
+Two measured pairs (different months and GPT reasoning settings); plans as of 26 October 2026 (claude.com/pricing, help.openai.com); plan pairs were not measured.
+
+### The research behind it
+
+Duo builds on two papers accepted at NeurIPS 2026 workshops and on a re-analysis of our companion study's data. (1) Self-confidence is a weak signal (TAE workshop, doi:10.5281/zenodo.23197651): across nine API models of a 16-model blind collection (late July 2026; claude-haiku-4-5, gpt-5-mini, gemini-3.6-flash, grok-4-fast, deepseek-chat, qwen-plus, kimi-k3, glm-4.5, mistral-small-latest), stated confidence predicts a model's own correctness at AUROC 0.53–0.79; on the pre-specified headline panel (CN: DeepSeek, Alibaba, Moonshot), agreement with blindly elicited models reaches 0.83 vs 0.55 for self-confidence (Δ +0.29; 0.775 vs 0.545 under a label-free recoding). (2) Verification must be blind-first (Who Verifies the Agents? workshop, doi:10.5281/zenodo.23197641): in an exploratory conformity arm with six July 2026 API verifiers (Anthropic, OpenAI, Google, DeepSeek, Alibaba, Moonshot), verifiers that had disagreed blind endorsed the answer once shown it as a colleague's in 38.5% of cases (168/436); Duo collects both answers blind before comparing them in Synthesis and Side by side — and, from Duo 6, in its default mode, Critique. In the same paper, on the hardest quintile by population difficulty, the July 2026 API panels (one model per lab, labelled "frontier" there, budget/mid-tier for eight of nine) replicated 342 answers across 106 questions and, as originally graded, none was correct. (3) Post-hoc re-analysis (26 Oct 2026) of the released flagship-wave data of the companion study (doi:10.5281/zenodo.22166995; one flagship per lab, 5 Aug 2026 snapshot): the pair gpt-5.6-sol + claude-fable-5, 1,459 SimpleQA items, blind answers, GPT's answer emitted only on deterministic-equivalence agreement — coverage 69.6%, emitted answers correct 98.1% (985/1,004) [97.2, 98.9] vs 95.3% for GPT alone; confident-failure rate (conf ≥ 80, of confident answers) 4.6% → 1.9% for GPT and 10.3% → 2.8% for Claude; the two flagships made the same confident mistake on only 1 question in 100 (1.0%). On the 106 WVA items (hard for the July models) the flagship pair agreed on 37 and was right on 34. The mid-tier pair of the same labs (gpt-5-mini + claude-haiku-4-5, July 2026): coverage 8.6%, emitted answers correct 36.6%, 0/13 on the 106. A stronger pair wins on every practical axis: coverage ×8, emitted accuracy 37% → 98%, shared confident failures among emitted answers 8% → 1.5%. With ChatGPT Plus/Pro and Claude Pro/Max, Duo runs the strongest models those plans offer at no extra cost; the figures above are for the 5 Aug 2026 pair.
+
+Limits: SimpleQA is public, and gpt-5.6-sol echoes the gold string on 61.6% of answers; on the 106 items it is 95.2% correct alone and echoes gold on 64.2% — hard for July models, not for it. The gate removes a smaller share of GPT's confident failures than the mid-tier gate (70.8% vs 92.3%). Flagship vs mid-tier is two measured points (different months; GPT reasoning effort medium vs minimal). Pair figures describe blind answers compared afterwards, the scheme Duo uses in Synthesis and Side by side and, from Duo 6, in Critique; they are not a measured accuracy of any Duo mode or of today's models. The WVA zero holds under population difficulty; under leave-panel-out difficulty it persists for the cross-bloc panel (0/116), not pooled (78/354). Crediting the defensible answers found by WVA's manual gold adjudication moves that zero to at most 13/342 (lift 0.98×). The conformity arm's reverse-prompt control ran on six local models. On TAE's US panel, pooled self-confidence leads (0.84 vs 0.70), a between-model effect (0.67 rank-normalised). Claude runs the app's default model; ChatGPT runs with `model: auto`, which on paid plans picks the plan's model. Today's flagships are not yet measured. Data and papers: github.com/vadimchernets/papers · polyhelper.ai/research
+
+- **Verification Theater** (accepted at a NeurIPS 2026 workshop, «Who Verifies the Agents?»): [doi:10.5281/zenodo.23197641](https://doi.org/10.5281/zenodo.23197641) · [OpenReview](https://openreview.net/forum?id=Mg9RtDWcK4) · [NeurIPS](https://neurips.cc/virtual/2026/loc/sydney/173020)
+- **Self-Confidence in LLM Evaluation** (accepted at a NeurIPS 2026 workshop, TAE): [doi:10.5281/zenodo.23197651](https://doi.org/10.5281/zenodo.23197651) · [OpenReview](https://openreview.net/forum?id=OyuZAAtv2q) · [NeurIPS](https://neurips.cc/virtual/2026/178299)
+- **Companion study, Architectural Trust:** [SSRN](https://ssrn.com/abstract=7191261) · [doi:10.5281/zenodo.22166995](https://doi.org/10.5281/zenodo.22166995)
+- All papers: [polyhelper.ai/research](https://polyhelper.ai/research/)
+
+### What a second model catches
+
 One model answering alone is confident about everything, including the parts it gets wrong. A
-second model reading the first one's answer catches factual slips, missing angles and
-overconfident claims — and it costs one extra message.
+second model from another company, answering the same question on its own, slips in different
+places — so where the two answers do not match, you see exactly what to check.
 
 Poly runs on the Shortcuts actions the ChatGPT and Claude apps publish themselves, so a run
 spends messages from your own plan, exactly like asking the question by hand.
@@ -116,15 +136,18 @@ without the tabs.
 
 **And it keeps the argument.** When the two models disagree, Poly says so instead of averaging
 them into one smooth paragraph: what each one claimed, which part is checkable, what to verify.
-Two AIs agreeing is a weak signal — they read the same internet — so agreement is never presented
-as proof.
+Two answers that matched independently are a stronger signal than either model's own confidence:
+in our data on the 5 Aug 2026 flagships, the two made the same confident mistake on only 1 question
+in 100. Agreement is still never presented as proof.
 
 ```
 your question
      │
-     ├──→  ChatGPT drafts the answer
+     ├──→  ChatGPT answers on its own
      │
-     └──→  Claude verifies it and fixes what's wrong
+     ├──→  Claude answers on its own, without seeing ChatGPT
+     │
+     └──→  Claude compares the two: matched / did not match / what to check
                     │
                     └──→  one final answer  →  screen · clipboard · journal
 ```
@@ -138,15 +161,15 @@ where they disagree — and they stay out of your way until you want them.
 
 | Mode | What happens | Cost |
 |---|---|---|
-| ⚖️ **Critique** | ChatGPT answers, Claude verifies and delivers the improved final, opened by three blocks: both agree / where they differ / what to check yourself. Your default. | 3 messages |
-| 🤝 **Debate to agreement** | ChatGPT takes a side, Claude objects, up to 3 rounds until one concedes; then where they agreed, what is still disputed, what is yours to decide. For life choices with no right answer. | 3–8 messages |
+| ⚖️ **Critique** | ChatGPT and Claude each answer without seeing the other; Claude compares both and delivers the final, opened by three blocks: matched independently / did not match / what to check yourself. Your default. | 3 messages |
+| 🤝 **Debate to agreement** | ChatGPT and Claude each state a position without seeing the other, then argue up to 3 rounds until one concedes with a named reason; then where they agreed, what is still disputed, what is yours to decide. For life choices with no right answer. | 3–8 messages |
 | 🩺 **Advisor** | Claude reviews *your own* text without rewriting it: verdict, strongest objection first. | 1 message |
 | 👀 **Side by side** | Both answer independently, answers shown next to each other, nothing blended. | 2 messages |
 | 🔀 **Synthesis** | Both answer blind, then one answer anchors the assembly and the other adds only what's missing. | 3 messages |
 | 🧭 **Auto** | Not sure which mode fits? One classification call recommends one. | 1 + the mode |
 | ⚔️ **Decision** | Fast view vs cautious view, then a referee: first steps, risks, confidence. | 3 messages |
 | 🗺 **Dispute map** | Where the two agree, where they disagree, what is checkable — no verdict imposed on you. | 3 messages |
-| 🥊 **Debate** | Draft → opponent attacks it → revision → judge. For the hard ones. | 4 messages |
+| 🥊 **Debate** | ChatGPT drafts, Claude answers on its own → ChatGPT compares and revises → judge. For the hard ones. | 4 messages |
 | ❓ **Clarify** | The model asks you what's missing first, then answers. | 2 messages |
 | 🎨 **Image** | Both draw the same brief blind as vector art; you get a gallery and pick. | 2–3 messages |
 | ➕ **Delta** | Claude anchors, ChatGPT returns only what it would add. A cheap stand-in for Synthesis. | 2 messages |
@@ -160,14 +183,16 @@ badge on each entry shows the price (1–8 messages) before you choose. Which mo
 
 ## Trio — a third voice on a free key
 
-**Trio** is the Critique pair plus a third AI from a third company. ChatGPT answers, Claude checks
-and writes the final answer — exactly as in Poly — and then a third model reads the question and
-both answers and names **only the errors and gaps both of them missed**. If there are none, it says
-so in one line («Agree with the final answer»). Its words come back as a separate block under
-Claude's answer, never merged into it, and end with a confidence line.
+**Trio** is the Critique pair plus a third AI from a third company. ChatGPT answers, Claude answers the
+same question on its own without seeing ChatGPT's answer (the blind Critique scheme) — then a third
+model reads the question and both independent answers and names **only the errors and gaps both of them missed**. If there are none, it says
+so in one line («Nothing both missed»). One more Claude message then compares the three answers (matched
+independently / did not match / what to check yourself, then the final answer); the third voice's words
+come back as a separate block under it, never merged into it, and end with a confidence line.
+Messages from your plans: ChatGPT 1, Claude 2.
 
 ```
-ChatGPT answers → Claude checks → third voice (NVIDIA → Gemini → OpenRouter → Groq): only what both missed
+ChatGPT answers · Claude answers blind → third voice (NVIDIA → Gemini → OpenRouter → Groq): only what both missed → Claude compares all three
 ```
 
 - **Free.** The third voice runs on free keys, no card, in this order: NVIDIA (Kimi K3, GLM-5.3,
@@ -286,7 +311,7 @@ answer in the last frame is the real output of the run shown, copied from the ph
 both menu levels, the finale menu, the result screen, clipboard delivery, the journal and the
 permission flow. That was one phone in two of the ten languages; the other eight are built from
 the same sources and machine-checked against them, and the old Tasker path for Android has never been run on a phone (the Poly A1 Android Duo was run on an emulator on 2026-10-01). Duo was also run end to end on free ChatGPT and Claude accounts (free Claude, Sonnet 5.5) on 2026-10-01.
-`tools/verify.py` unpacks each signed shortcut and compares its prompts and texts with the open source files in `locales/`; it checks that the file matches the sources, not that the AIs answer well. Verified in the live run: Duo and Trio of 2026-10-01 (before Duo 5 / Trio 4); a fresh run on current iOS and app versions is still to be done and dated here. Everything known to be unverified is in Limitations above and in the [FAQ](docs/en/faq.md).
+`tools/verify.py` unpacks each signed shortcut and compares its prompts and texts with the open source files in `locales/`; it checks that the file matches the sources, not that the AIs answer well. Verified in the live run: Duo and Trio of 2026-10-01 (before Duo 5 / Trio 4); a fresh run on current iOS and app versions is still to be done and dated here. Blind Critique (2026-10-26) is in the source and not yet in the iCloud links above — the Duo 5 file there still runs the earlier Critique, where Claude checks ChatGPT's answer — and it has not been run on a phone yet. Everything known to be unverified is in Limitations above and in the [FAQ](docs/en/faq.md).
 
 ## Build from source
 

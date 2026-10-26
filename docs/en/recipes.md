@@ -34,7 +34,7 @@ C1M Duo is a generalist: any task boils down to the right phrasing plus the righ
 ## Technique notes
 
 - **Debate is a rare tool, not a default.** Save it for when you specifically need someone to try to break the conclusion: critical code, decisions where a mistake is expensive. Everyday writing goes through Critique or Advisor; high-stakes questions go through Synthesis.
-- **When getting it right matters most, let both answer first.** In ⚖️ Critique, Claude reads ChatGPT's answer before it checks it, and a reviewer who has seen an answer tends to agree with it. So "both agree" there means less than it looks. In 👀 Side by side and 🔀 Synthesis, each AI answers on its own before either sees the other, so when they agree, that agreement counts for more.
+- **Why the AIs answer before they see each other.** A reviewer who has read an answer tends to agree with it, even when on its own it would not have. So in ⚖️ Critique, 👀 Side by side, 🔀 Synthesis and the debates, each AI first answers on its own; only then are the answers compared. When two answers match that way, it counts for more than an agreement reached after reading. ➕ Delta and ✍️ «Claude writes, ChatGPT checks» are for editing and additions, not for checking facts.
 - **The microphone key** on the keyboard in the question box gives you voice input with no setup.
 - **Modifier words** at the end of a question work: "answer concisely," "in detail," "in bullet points only" — the models follow them.
 - For a recipe you use often, you can build a **small dedicated shortcut**: a block of text with the task already written, followed by "Run Shortcut" pointing at Duo (the task becomes the pre-filled question).

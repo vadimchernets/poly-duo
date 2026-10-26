@@ -51,8 +51,11 @@
       "🥊 辩论 · 4✉",
       "❓ 追问 · 2✉",
       "🎨 绘图 · 2–3✉",
-      "➕ 增补 · 2✉",
-      "ℹ️ Poly 是什么"
+      "➕ 补充 (Delta) · 2✉",
+      "ℹ️ Poly 是什么",
+      "📖 食谱",
+      "✍️ Claude 撰写，ChatGPT 核对 · 3✉",
+      "📝 我自己的检查规则 · 3✉"
     ],
     "anchor_title": "以哪一份回答作为主干？",
     "anchor_items": [
@@ -67,17 +70,48 @@
     "finale_title": "接下来做什么？",
     "finale_items": [
       "✅ 完成",
-      "🔁 换个模式 —— 同一个问题"
+      "🔁 换个模式 —— 同一个问题",
+      "➕ 更多…"
     ],
     "multi_merge_title": "用哪种合并？",
     "multi_merge_items": [
       "标准合并",
       "东西方合并"
+    ],
+    "finale_more_title": "更多操作",
+    "finale_more_items": [
+      "🔍 让 ChatGPT 核对最终结果 · 1✉",
+      "📝 存入“备忘录”",
+      "☑️ 待核实事项 → “提醒事项”",
+      "🐞 报告本次运行"
+    ],
+    "recipes_title": "您需要什么？",
+    "recipes_items": [
+      "📄 检查合同或信件",
+      "✉️ 回复一条难回的消息",
+      "⚖️ 两个选项——选哪个？",
+      "🧐 哪些需要再核实？",
+      "🧒 用简单的话解释"
+    ],
+    "recipes_texts": [
+      "请检查这段内容中的风险、含糊或偏向一方的措辞，并告诉我签字前应该问什么：\n\n",
+      "这是我收到的一条消息。请分析它的语气，给出对其意图最可能的几种解读并指出各自依据的措辞，再给出三种不同语气的回复：\n\n",
+      "我在两个选项之间犹豫。请比较它们，告诉我哪个对我更好，为什么。选项A：… 选项B：… 我的情况：…",
+      "请标出可疑的说法，说明为什么可疑，并告诉我应该去核对哪个一手来源：\n\n",
+      "请用通俗的话向外行解释这个，不要用行话：\n\n"
+    ],
+    "claude_down_title": "Claude 没有回复。改用…核查",
+    "claude_down_items": [
+      "🔑 使用服务商的免费密钥——需要先设置",
+      "📱 本机 iPhone — Apple Intelligence（iPhone 15 Pro 及更新机型）",
+      "📋 手动用 Gemini 或 Meta AI"
     ]
   },
   "notify": {
-    "critique_start": "⚖️ 审校：ChatGPT 先答 → Claude 复核。约 1 分钟，别碰手机。如果 ChatGPT 说“logged out” —— 打开它的 App，再重新运行 Poly。",
+    "critique_start": "⚖️ 审校：ChatGPT 先答 → Claude 独立作答 → Claude 对比两份。约 1 分钟，别碰手机。如果 ChatGPT 说“logged out” —— 打开它的 App，再重新运行 Poly。",
     "critique_step2": "[2/3] Claude 正在复核并整理最终答案……",
+    "critique_blind": "[2/3] Claude 在看不到 ChatGPT 回答的情况下独立作答……",
+    "critique_step3": "[3/3] Claude 正在对比两份回答：独立一致之处／不一致之处／需要你自己核实的内容，然后给出最终答案……",
     "critique_summary": "[3/3] Claude 正在整理两份回答：一致之处／分歧之处／需要你自己核实的内容……（复核后的答案已在剪贴板中）",
     "advisor_start": "🩺 顾问：Claude 只点评你的文字，不改写。约 40 秒，别碰屏幕。",
     "survey_start": "👀 并排对照：分别独立地问两边。约 1 分钟，别碰手机。如果 ChatGPT 说“logged out” —— 打开它的 App，再重新运行 Poly。",
@@ -88,9 +122,9 @@
     "decision_step2": "[2/3] Claude —— 谨慎的那一边……",
     "decision_step3": "[3/3] 担任仲裁的 Claude 正在写建议……",
     "disputemap_start": "🗺 分歧地图：两份盲答 → 一张共识与冲突的地图。约 1.5 分钟。",
-    "debate_start": "🥊 辩论：初稿 → 挑刺 → 修订 → 裁决。约 2 分钟，别碰手机。如果 ChatGPT 说“logged out” —— 打开它的 App，再重新运行 Poly。",
-    "debate_step2": "[2/4] 担任对手的 Claude 正在找漏洞……",
-    "debate_step3": "[3/4] ChatGPT 正在修订初稿……",
+    "debate_start": "🥊 辩论：初稿 → Claude 不看初稿独立作答 → 修订 → 裁决。约 2 分钟，别碰手机。如果 ChatGPT 说“logged out” —— 打开它的 App，再重新运行 Poly。",
+    "debate_step2": "[2/4] Claude 在不看初稿的情况下独立作答……",
+    "debate_step3": "[3/4] ChatGPT 正在对比两份回答并修订……",
     "debate_step4": "[4/4] 担任裁判的 Claude 正在给出裁决……",
     "clarify_step1": "❓ 追问 [1/2]：ChatGPT 正在梳理还缺什么……",
     "clarify_step2": "[2/2] Claude 正在结合你的补充作答……",
@@ -106,11 +140,21 @@
     "photo_done": "📸 文字已识别 —— 正在打开 Poly。",
     "multi_step1": "🎼 合唱 [1/3]：ChatGPT 和 Claude 正在各自作答……",
     "multi_step3": "[3/3] Claude 正在合并整个合唱团的回答……",
-    "argue_start": "🤝 辩论到共识：ChatGPT 选定立场，Claude 反驳，最多 3 轮，直到一方让步。约 2–4 分钟，请勿触碰手机。若 ChatGPT 提示“已退出登录”，请打开其 App 后重新运行 Poly。",
+    "argue_start": "🤝 辩论到共识：先各自在看不到对方的情况下表态，再互相查看并争论，最多 3 轮，直到一方让步。约 2–4 分钟，请勿触碰手机。若 ChatGPT 提示“已退出登录”，请打开其 App 后重新运行 Poly。",
+    "argue_blind": "[{N}/3] Claude 在不看 ChatGPT 回答的情况下陈述自己的立场……",
     "argue_object": "[{N}/3] Claude 正在反驳…",
     "argue_reply": "[{N}/3] ChatGPT 正在回应反驳…",
     "argue_verdict": "Claude 正在写结论：共识 / 仍有分歧 / 由你决定…",
-    "empty_question": "没有问题，因此什么也没有发送。请再次运行 Poly 并输入你的问题。"
+    "empty_question": "没有问题，因此什么也没有发送。请再次运行 Poly 并输入你的问题。",
+    "long_text": "文本较长，需要更久一些。请不要触碰屏幕。",
+    "claude_retry": "Claude 没有回复，正在用更短的文本再试一次…",
+    "resume": "从已保存的 ChatGPT 回答继续，不会消耗新的 ChatGPT 消息。",
+    "reverse_start": "✍️ Claude 撰写，ChatGPT 核对：Claude 先回答 → ChatGPT 润色语气和措辞（这是编辑，不是事实核查）。约1分钟，请不要触碰手机。如果 ChatGPT 提示“logged out”，请打开它的应用后重新运行 Poly。",
+    "my_mode_missing": "iCloud Drive 的“快捷指令”文件夹里没有“Poly-my-mode.txt”。请新建这个文件，只写一行给核查者的要求（例如：“只核对数字和日期”），然后再次运行 Poly。",
+    "ratify": "ChatGPT 正在检查最终结果中的错误…",
+    "manual_copied": "核查请求已放入剪贴板，请粘贴到 Gemini 或 Meta AI。",
+    "no_key_file": "iCloud Drive 的“快捷指令”文件夹里没有 poly-key.txt。请在那里保存一个免费密钥（见安装指南），或选择其他选项。",
+    "resume_debate": "从中断处继续辩论，已完成的轮次不会消耗新的 ChatGPT 消息。"
   },
   "alert": {
     "multi_next_title": "Poly Multi —— 下一个 AI",
@@ -122,6 +166,7 @@
   },
   "output": {
     "critique": "{S}\n\n■ 复核后的答案（Claude）\n{C}",
+    "critique_reverse": "{S}\n\n■ 复核后的答案（ChatGPT）\n{C}",
     "survey": "■ CHATGPT\n{G}\n\n■ CLAUDE\n{C}",
     "delta": "■ 主干（Claude）\n{C}\n\n➕ 补充（ChatGPT）\n{G}",
     "auto": "🧭 针对你的问题，Poly 推荐这个模式：“{R}”（模式名可能是英文的）。\n\n在下一屏选择“🔁 换个模式 —— 同一个问题” —— Poly 会带着同一个问题重新开始；然后在菜单里选推荐的那个模式。",
@@ -133,19 +178,21 @@
     "argue": "{V}\n\n■■ 辩论经过\n{L}",
     "argue_side_a": "■ ChatGPT（A 方）",
     "argue_side_b_round": "■ Claude（B 方），第 {N} 轮",
-    "argue_side_a_round": "■ ChatGPT（A 方），第 {N} 轮"
+    "argue_side_a_round": "■ ChatGPT（A 方），第 {N} 轮",
+    "ratify": "{R}\n\n— — —\n🔍 ChatGPT 的第二次检查：\n{X}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\n问题：{Q}\n\n{R}\n",
     "entry_simple": "\n════════ {D} ════════\n{M}\n问题：{Q}\n\n{R}\n",
     "critique": "模式：⚖️ 审校\n—— 原始：ChatGPT 的回答 ——\n{X}",
+    "critique_reverse": "模式：⚖️ 审校\n—— 原始：Claude 的回答 ——\n{X}",
     "advisor": "模式：🩺 顾问",
     "survey": "模式：👀 并排对照（结果本身就是原始材料）",
     "decision": "模式：⚔️ 决策\n—— 原始：快判（ChatGPT）——\n{X}\n—— 慎判（Claude）——\n{Y}",
     "synthesis_claude": "模式：🔀 综合（以 Claude 为主干）\n—— 原始：ChatGPT ——\n{X}\n—— Claude ——\n{Y}",
     "synthesis_gpt": "模式：🔀 综合（以 ChatGPT 为主干）\n—— 原始：ChatGPT ——\n{X}\n—— Claude ——\n{Y}",
     "disputemap": "模式：🗺 分歧地图\n—— 原始：ChatGPT ——\n{X}\n—— Claude ——\n{Y}",
-    "debate": "模式：🥊 辩论\n—— 初稿（ChatGPT）——\n{X}\n—— 挑刺（Claude）——\n{Y}\n—— 修订（ChatGPT）——\n{Z}",
+    "debate": "模式：🥊 辩论\n—— 初稿（ChatGPT）——\n{X}\n—— 独立回答（Claude）——\n{Y}\n—— 修订（ChatGPT）——\n{Z}",
     "clarify": "模式：❓ 追问\n—— 提问（ChatGPT）——\n{X}\n—— 你的回答 ——\n{Y}",
     "image": "模式：🎨 绘图（两张图都在：文件 → iCloud 云盘 → 快捷指令 → Poly-image.html；SVG 代码在结果里）",
     "delta": "模式：➕ 增补",
@@ -164,7 +211,7 @@
     "pc_notice_seen": "电脑提示",
     "argue_log": "辩论经过"
   },
-  "help": "ℹ️ POLY 是什么\n\n一个问题 —— 两个 AI（ChatGPT 和 Claude）搭档处理它。它跑在你自己的订阅上；每个模式后面的 ✉ 标记告诉你这一次会花掉几条消息。\n\n日常模式（主菜单）：\n⚖️ 审校 —— ChatGPT 先答，Claude 复核并改进，再把两份回答整理成：一致之处／分歧之处／需要你自己核实的内容。你的默认选择。\n🤝 辩论到共识 —— 用于没有标准答案的人生选择（“选哪个”“要不要答应”）：ChatGPT 选定立场，Claude 反驳，最多 3 轮直到一方让步；最后给出：共识、仍存分歧、需要你自己决定的事。\n🩺 顾问 —— Claude 点评你自己的文字，不改写。最便宜的模式。\n👀 并排对照 —— 两份独立意见，不做融合。\n🔀 综合 —— 两边盲答，然后把最好的部分合成一份。用在要紧的事情上。\n🧭 自动 —— 不知道选哪个？让 Poly 替你挑模式。\n\n在“📂 更多…”里：\n⚔️ 决策 —— 第一步该做什么，风险在哪。🗺 分歧地图 —— 两个 AI 在哪里一致，在哪里不一致。\n🥊 辩论 —— 初稿 → 对手挑刺 → 修订 → 裁决。留给最难的问题；很贵。\n❓ 追问 —— 先反过来问你几个问题（唯一需要你在运行途中碰屏幕的模式 —— 只在它自己的对话框里）。\n➕ 增补 —— 综合的廉价替代：主干答案 + 一份补充清单。🎨 绘图 —— 两张矢量草图任你挑。\n\n结果始终有三个去处：屏幕上、剪贴板里（想粘到哪儿都行）、以及日志 Poly-journal.md（文件 → iCloud 云盘 → 快捷指令）。\nPoly 运行期间 —— 别碰手机：碰一下屏幕就会取消这条快捷指令。细节和排障：工具包里的 install.md。\n\n💻 在笔记本或台式电脑上，PolyHelper 能做得更多：文件夹、智能体、频道、定时任务、由多个 AI 组成的评审团。手机上的 Poly 是轻量版，不含电脑端功能。\n\n点下面的“完成”，然后在下一屏选“🔁 换个模式 —— 同一个问题” —— Poly 会带着你的问题重新开始，由你来挑模式。",
+  "help": "ℹ️ POLY 是什么\n\n一个问题 —— 两个 AI（ChatGPT 和 Claude）搭档处理它。它跑在你自己的订阅上；每个模式后面的 ✉ 标记告诉你这一次会花掉几条消息。\n\n日常模式（主菜单）：\n⚖️ 审校 —— ChatGPT 和 Claude 互不可见、各自作答；然后 Claude 对比：独立一致之处／不一致之处／需要你自己核实的内容，并给出最终答案。你的默认选择。\n🤝 辩论到共识 —— 用于没有标准答案的人生选择（“选哪个”“要不要答应”）：先各自在看不到对方的情况下表态，再互相查看并争论，最多 3 轮直到一方让步；最后给出：共识、仍存分歧、需要你自己决定的事。\n🩺 顾问 —— Claude 点评你自己的文字，不改写。最便宜的模式。\n👀 并排对照 —— 两份独立意见，不做融合。\n🔀 综合 —— 两边盲答，然后把最好的部分合成一份。用在要紧的事情上。\n🧭 自动 —— 不知道选哪个？让 Poly 替你挑模式。\n\n在“📂 更多…”里：\n⚔️ 决策 —— 第一步该做什么，风险在哪。🗺 分歧地图 —— 两个 AI 在哪里一致，在哪里不一致。\n🥊 辩论 —— ChatGPT 的初稿和 Claude 单独写的回答 → ChatGPT 对比并修订 → 裁决。留给最难的问题；很贵。\n❓ 追问 —— 先反过来问你几个问题（唯一需要你在运行途中碰屏幕的模式 —— 只在它自己的对话框里）。\n➕ 补充 (Delta) —— 综合的廉价替代：主干答案 + 一份补充清单。🎨 绘图 —— 两张矢量草图任你挑。\n✍️ Claude 撰写，ChatGPT 核对 — Claude 写初稿，ChatGPT 润色语气和措辞（这是编辑，不是事实核查）。📝 我自己的检查规则 — 同样流程，但用你自己写给核对者的一行指令，从文件 Poly-my-mode.txt 读取（文件 → iCloud Drive → 快捷指令）。\n\n结果始终有三个去处：屏幕上、剪贴板里（想粘到哪儿都行）、以及日志 Poly-journal.md（文件 → iCloud 云盘 → 快捷指令）。\nPoly 运行期间 —— 别碰手机：碰一下屏幕就会取消这条快捷指令。细节和排障：工具包里的 install.md。\n\n💻 在笔记本或台式电脑上，PolyHelper 能做得更多：文件夹、智能体、频道、定时任务、由多个 AI 组成的评审团。手机上的 Poly 是轻量版，不含电脑端功能。\n\n点下面的“完成”，然后在下一屏选“🔁 换个模式 —— 同一个问题” —— Poly 会带着你的问题重新开始，由你来挑模式。",
   "update": {
     "prompt": "{NAME} 有新版本了——要安装吗？",
     "install": "安装",

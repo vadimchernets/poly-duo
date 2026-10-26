@@ -51,8 +51,11 @@
       "🥊 Debate · 4✉",
       "❓ Esclarecer · 2✉",
       "🎨 Imagem · 2–3✉",
-      "➕ Delta · 2✉",
-      "ℹ️ O que é o Poly"
+      "➕ Acréscimos (Delta) · 2✉",
+      "ℹ️ O que é o Poly",
+      "📖 Receitas",
+      "✍️ O Claude escreve, o ChatGPT revisa · 3✉",
+      "📝 Minha própria regra de verificação · 3✉"
     ],
     "anchor_title": "Qual resposta ancora o resultado final?",
     "anchor_items": [
@@ -67,17 +70,48 @@
     "finale_title": "E agora?",
     "finale_items": [
       "✅ Pronto",
-      "🔁 Outro modo — mesma pergunta"
+      "🔁 Outro modo — mesma pergunta",
+      "➕ Mais…"
     ],
     "multi_merge_title": "Qual fusão?",
     "multi_merge_items": [
       "Fusão padrão",
       "Fusão Oriente–Ocidente"
+    ],
+    "finale_more_title": "Mais ações",
+    "finale_more_items": [
+      "🔍 Pedir ao ChatGPT que verifique o final · 1✉",
+      "📝 Salvar em Notas",
+      "☑️ O que verificar → Lembretes",
+      "🐞 Relatar esta execução"
+    ],
+    "recipes_title": "O que o senhor precisa?",
+    "recipes_items": [
+      "📄 Verificar um contrato ou uma carta",
+      "✉️ Responder a uma mensagem difícil",
+      "⚖️ Duas opções: qual escolher?",
+      "🧐 O que vale conferir?",
+      "🧒 Explicar de forma simples"
+    ],
+    "recipes_texts": [
+      "Verifique isto quanto a riscos, redação confusa ou unilateral, e diga o que perguntar antes de assinar:\n\n",
+      "Esta é uma mensagem que recebi. Explique o tom, dê as interpretações mais prováveis da intenção apontando as palavras que sustentam cada uma e sugira três respostas em tons diferentes:\n\n",
+      "Estou escolhendo entre duas opções. Compare-as e diga qual é melhor para mim e por quê. Opção A: … Opção B: … Minha situação: …",
+      "Aponte as afirmações duvidosas, explique por que são duvidosas e diga qual fonte primária eu devo consultar:\n\n",
+      "Explique isto com palavras simples para um não especialista, sem jargão:\n\n"
+    ],
+    "claude_down_title": "O Claude não respondeu. Verificar com…",
+    "claude_down_items": [
+      "🔑 Uma chave gratuita de provedor — exige configuração",
+      "📱 Este iPhone: Apple Intelligence (iPhone 15 Pro ou mais novo)",
+      "📋 À mão no Gemini ou no Meta AI"
     ]
   },
   "notify": {
-    "critique_start": "⚖️ Crítica: o ChatGPT responde → o Claude verifica. ≈1 min, não mexa no telefone. Se o ChatGPT disser «logged out» — abra o app dele e rode o Poly de novo.",
+    "critique_start": "⚖️ Crítica: o ChatGPT responde → o Claude responde por conta própria → o Claude compara as duas. ≈1 min, não mexa no telefone. Se o ChatGPT disser «logged out» — abra o app dele e rode o Poly de novo.",
     "critique_step2": "[2/3] O Claude está verificando e montando a resposta final…",
+    "critique_blind": "[2/3] O Claude responde por conta própria, sem ver a resposta do ChatGPT…",
+    "critique_step3": "[3/3] O Claude compara as duas: coincidiram de forma independente / não coincidiram / o que conferir você mesmo, e depois a resposta final…",
     "critique_summary": "[3/3] O Claude está organizando as duas respostas: em que concordam / onde divergem / o que conferir você mesmo… (a resposta verificada já está na área de transferência)",
     "advisor_start": "🩺 Consultor: o Claude analisa o seu texto sem reescrevê-lo. ≈40 s, não toque na tela.",
     "survey_start": "👀 Lado a lado: perguntando aos dois separadamente. ≈1 min, não mexa no telefone. Se o ChatGPT disser «logged out» — abra o app dele e rode o Poly de novo.",
@@ -88,9 +122,9 @@
     "decision_step2": "[2/3] Claude — o olhar cauteloso…",
     "decision_step3": "[3/3] O Claude árbitro está escrevendo a recomendação…",
     "disputemap_start": "🗺 Mapa de divergências: duas respostas às cegas → um mapa de acordos e conflitos. ≈1,5 min.",
-    "debate_start": "🥊 Debate: rascunho → crítica → revisão → juiz. ≈2 min, não mexa no telefone. Se o ChatGPT disser «logged out» — abra o app dele e rode o Poly de novo.",
-    "debate_step2": "[2/4] O Claude oponente está caçando pontos fracos…",
-    "debate_step3": "[3/4] O ChatGPT está revisando o rascunho…",
+    "debate_start": "🥊 Debate: rascunho → o Claude responde às cegas → revisão → juiz. ≈2 min, não mexa no telefone. Se o ChatGPT disser «logged out» — abra o app dele e rode o Poly de novo.",
+    "debate_step2": "[2/4] O Claude responde por conta própria, sem ver o rascunho…",
+    "debate_step3": "[3/4] O ChatGPT compara as duas respostas e revisa…",
     "debate_step4": "[4/4] O Claude juiz está dando o veredicto…",
     "clarify_step1": "❓ Esclarecer [1/2]: o ChatGPT está descobrindo o que falta…",
     "clarify_step2": "[2/2] O Claude está respondendo com os seus esclarecimentos…",
@@ -106,11 +140,21 @@
     "photo_done": "📸 Texto reconhecido — abrindo o Poly.",
     "multi_step1": "🎼 Coro [1/3]: ChatGPT e Claude estão respondendo por conta própria…",
     "multi_step3": "[3/3] O Claude está fundindo o coro…",
-    "argue_start": "🤝 Debate até o acordo: o ChatGPT escolhe um lado, o Claude contesta, até 3 rodadas até que um ceda. ≈2–4 min, não toque no telefone. Se o ChatGPT disser «sessão encerrada», abra o app dele e rode o Poly de novo.",
+    "argue_start": "🤝 Debate até o acordo: primeiro cada um dá a sua opinião sem ver a do outro; depois eles se veem e debatem, até 3 rodadas até que um ceda. ≈2–4 min, não toque no telefone. Se o ChatGPT disser «sessão encerrada», abra o app dele e rode o Poly de novo.",
+    "argue_blind": "[{N}/3] O Claude expõe a própria posição, sem ver a do ChatGPT…",
     "argue_object": "[{N}/3] O Claude está contestando…",
     "argue_reply": "[{N}/3] O ChatGPT responde às objeções…",
     "argue_verdict": "O Claude escreve o resultado: onde concordaram / o que segue em disputa / o que você decide…",
-    "empty_question": "Sem pergunta, nada foi enviado. Abra o Poly de novo e digite sua pergunta."
+    "empty_question": "Sem pergunta, nada foi enviado. Abra o Poly de novo e digite sua pergunta.",
+    "long_text": "Texto longo: vai demorar mais. Por favor, não toque na tela.",
+    "claude_retry": "O Claude não respondeu: tentando mais uma vez com um texto mais curto…",
+    "resume": "Continuando com a resposta do ChatGPT já salva: nenhuma mensagem nova do ChatGPT é gasta.",
+    "reverse_start": "✍️ O Claude escreve, o ChatGPT revisa: o Claude responde → o ChatGPT ajusta tom e redação (é edição, não checagem de fatos). ≈1 min, por favor não toque no celular. Se o ChatGPT disser «logged out», abra o app dele e execute o Poly de novo.",
+    "my_mode_missing": "Não há «Poly-my-mode.txt» na pasta Atalhos do iCloud Drive. Crie o arquivo com uma única linha para o verificador (por exemplo: «Verifique apenas os números e as datas») e execute o Poly de novo.",
+    "ratify": "O ChatGPT está procurando erros no resultado final…",
+    "manual_copied": "O pedido de verificação está na área de transferência. Cole-o no Gemini ou no Meta AI.",
+    "no_key_file": "Não há poly-key.txt na pasta Atalhos do iCloud Drive. Salve lá uma chave gratuita (veja o guia de instalação) ou escolha outra opção.",
+    "resume_debate": "Continuando o debate de onde parou: nenhuma mensagem nova do ChatGPT é gasta com as rodadas já feitas."
   },
   "alert": {
     "multi_next_title": "Poly Multi — próxima IA",
@@ -122,6 +166,7 @@
   },
   "output": {
     "critique": "{S}\n\n■ RESPOSTA VERIFICADA (Claude)\n{C}",
+    "critique_reverse": "{S}\n\n■ RESPOSTA VERIFICADA (ChatGPT)\n{C}",
     "survey": "■ CHATGPT\n{G}\n\n■ CLAUDE\n{C}",
     "delta": "■ ÂNCORA (Claude)\n{C}\n\n➕ ACRÉSCIMOS (ChatGPT)\n{G}",
     "auto": "🧭 O Poly recomenda este modo para a sua pergunta: «{R}» (o nome pode chegar em inglês).\n\nNa próxima tela escolha «🔁 Outro modo — mesma pergunta» — o Poly recomeça com a mesma pergunta; escolha no menu o modo recomendado.",
@@ -133,19 +178,21 @@
     "argue": "{V}\n\n■■ COMO FOI O DEBATE\n{L}",
     "argue_side_a": "■ ChatGPT (lado A)",
     "argue_side_b_round": "■ Claude (lado B), rodada {N}",
-    "argue_side_a_round": "■ ChatGPT (lado A), rodada {N}"
+    "argue_side_a_round": "■ ChatGPT (lado A), rodada {N}",
+    "ratify": "{R}\n\n— — —\n🔍 Segunda verificação do ChatGPT:\n{X}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\nPERGUNTA: {Q}\n\n{R}\n",
     "entry_simple": "\n════════ {D} ════════\n{M}\nPERGUNTA: {Q}\n\n{R}\n",
     "critique": "MODO: ⚖️ Crítica\n—— bruto: resposta do ChatGPT ——\n{X}",
+    "critique_reverse": "MODO: ⚖️ Crítica\n—— bruto: resposta do Claude ——\n{X}",
     "advisor": "MODO: 🩺 Consultor",
     "survey": "MODO: 👀 Lado a lado (o resultado É o material bruto)",
     "decision": "MODO: ⚔️ Decisão\n—— bruto: olhar rápido (ChatGPT) ——\n{X}\n—— olhar cauteloso (Claude) ——\n{Y}",
     "synthesis_claude": "MODO: 🔀 Síntese (âncora: Claude)\n—— bruto: ChatGPT ——\n{X}\n—— Claude ——\n{Y}",
     "synthesis_gpt": "MODO: 🔀 Síntese (âncora: ChatGPT)\n—— bruto: ChatGPT ——\n{X}\n—— Claude ——\n{Y}",
     "disputemap": "MODO: 🗺 Mapa de divergências\n—— bruto: ChatGPT ——\n{X}\n—— Claude ——\n{Y}",
-    "debate": "MODO: 🥊 Debate\n—— rascunho (ChatGPT) ——\n{X}\n—— crítica (Claude) ——\n{Y}\n—— revisão (ChatGPT) ——\n{Z}",
+    "debate": "MODO: 🥊 Debate\n—— rascunho (ChatGPT) ——\n{X}\n—— resposta independente (Claude) ——\n{Y}\n—— revisão (ChatGPT) ——\n{Z}",
     "clarify": "MODO: ❓ Esclarecer\n—— perguntas (ChatGPT) ——\n{X}\n—— suas respostas ——\n{Y}",
     "image": "MODO: 🎨 Imagem (as duas imagens: Arquivos → iCloud Drive → Atalhos → Poly-image.html; o código SVG está no resultado)",
     "delta": "MODO: ➕ Delta",
@@ -164,7 +211,7 @@
     "pc_notice_seen": "AvisoPC",
     "argue_log": "CursoDebate"
   },
-  "help": "ℹ️ O QUE É O POLY\n\nUma pergunta — e duas IAs (ChatGPT e Claude) trabalham nela em dupla. Funciona com as suas próprias assinaturas; o selo ✉ de cada modo mostra quantas mensagens ele vai gastar.\n\nMODOS DO DIA A DIA (menu principal):\n⚖️ Crítica — o ChatGPT responde, o Claude verifica e melhora e depois organiza as duas respostas: em que concordam / onde divergem / o que conferir você mesmo. Seu modo padrão.\n🤝 Debate até o acordo — para decisões de vida sem resposta certa («o que escolher», «se devo aceitar»): o ChatGPT escolhe um lado, o Claude contesta, até 3 rodadas até que um ceda; no fim: onde concordaram, o que segue em disputa e o que cabe a você decidir.\n🩺 Consultor — o Claude analisa o SEU texto sem reescrevê-lo. O modo mais barato.\n👀 Lado a lado — duas opiniões independentes, sem misturar.\n🔀 Síntese — os dois respondem às cegas e depois o melhor é montado. Para o que importa.\n🧭 Auto — não sabe o que escolher? O Poly escolhe o modo por você.\n\nEm «📂 Mais…»:\n⚔️ Decisão — primeiros passos e riscos. 🗺 Mapa de divergências — onde as IAs concordam e onde não.\n🥊 Debate — rascunho → o oponente ataca → revisão → juiz. Para as perguntas mais difíceis; caro.\n❓ Esclarecer — primeiro ele te faz perguntas de acompanhamento (o único modo em que você precisa tocar na tela no meio da execução — só no diálogo dele).\n➕ Delta — um substituto barato da Síntese: âncora + lista de acréscimos. 🎨 Imagem — dois esboços vetoriais para escolher.\n\nO resultado sempre chega por três caminhos: na tela, na área de transferência (cole onde quiser) e no diário Poly-journal.md (Arquivos → iCloud Drive → Atalhos).\nEnquanto o Poly trabalha — não mexa no telefone: um toque cancela o atalho. Detalhes e solução de problemas: install.md, no kit.\n\n💻 Em um notebook ou PC, o PolyHelper faz mais: pastas, agentes, canais, agendamentos, um conselho de várias IAs. O Poly no telefone é a versão leve, sem as funções de PC.\n\nToque em «Pronto» abaixo e, na tela seguinte, escolha «🔁 Outro modo — mesma pergunta» — o Poly recomeça com a sua pergunta e você escolhe um modo.",
+  "help": "ℹ️ O QUE É O POLY\n\nUma pergunta — e duas IAs (ChatGPT e Claude) trabalham nela em dupla. Funciona com as suas próprias assinaturas; o selo ✉ de cada modo mostra quantas mensagens ele vai gastar.\n\nMODOS DO DIA A DIA (menu principal):\n⚖️ Crítica — o ChatGPT e o Claude respondem separadamente, sem se ver; depois o Claude compara: coincidiram de forma independente / não coincidiram / o que conferir você mesmo, e escreve a resposta final. Seu modo padrão.\n🤝 Debate até o acordo — para decisões de vida sem resposta certa («o que escolher», «se devo aceitar»): primeiro cada um dá a sua opinião sem ver a do outro; depois eles se veem e debatem, até 3 rodadas até que um ceda; no fim: onde concordaram, o que segue em disputa e o que cabe a você decidir.\n🩺 Consultor — o Claude analisa o SEU texto sem reescrevê-lo. O modo mais barato.\n👀 Lado a lado — duas opiniões independentes, sem misturar.\n🔀 Síntese — os dois respondem às cegas e depois o melhor é montado. Para o que importa.\n🧭 Auto — não sabe o que escolher? O Poly escolhe o modo por você.\n\nEm «📂 Mais…»:\n⚔️ Decisão — primeiros passos e riscos. 🗺 Mapa de divergências — onde as IAs concordam e onde não.\n🥊 Debate — rascunho do ChatGPT e resposta separada do Claude → o ChatGPT compara e revisa → juiz. Para as perguntas mais difíceis; caro.\n❓ Esclarecer — primeiro ele te faz perguntas de acompanhamento (o único modo em que você precisa tocar na tela no meio da execução — só no diálogo dele).\n➕ Acréscimos (Delta) — um substituto barato da Síntese: âncora + lista de acréscimos. 🎨 Imagem — dois esboços vetoriais para escolher.\n✍️ O Claude escreve, o ChatGPT revisa — o Claude redige, o ChatGPT ajusta tom e redação (edição, não checagem de fatos). 📝 Minha própria regra de verificação — o mesmo, com a sua própria linha para o verificador, lida do arquivo Poly-my-mode.txt (Arquivos → iCloud Drive → Atalhos).\n\nO resultado sempre chega por três caminhos: na tela, na área de transferência (cole onde quiser) e no diário Poly-journal.md (Arquivos → iCloud Drive → Atalhos).\nEnquanto o Poly trabalha — não mexa no telefone: um toque cancela o atalho. Detalhes e solução de problemas: install.md, no kit.\n\n💻 Em um notebook ou PC, o PolyHelper faz mais: pastas, agentes, canais, agendamentos, um conselho de várias IAs. O Poly no telefone é a versão leve, sem as funções de PC.\n\nToque em «Pronto» abaixo e, na tela seguinte, escolha «🔁 Outro modo — mesma pergunta» — o Poly recomeça com a sua pergunta e você escolhe um modo.",
   "update": {
     "prompt": "Saiu uma nova versão do {NAME} — quer instalar?",
     "install": "Instalar",

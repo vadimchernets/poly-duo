@@ -6,6 +6,87 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed (2026-10-26, the strengthening plan; not yet in the iCloud links)
+- **Duo: the checker no longer rewrites a correct draft.** critique, advisor and argue-2 (en, ru)
+  ask it to say first that the draft is right, to list only real errors and to suggest removing
+  before adding. Every prompt (en 29, ru 22) also asks ChatGPT and Claude not to save the request
+  to the person's memory.
+- **Duo: the question box comes pre-filled** with the shared text, or else with the clipboard
+  when it holds a real sentence.
+- **Duo Critique survives a hiccup.** An empty ChatGPT answer is asked once more after 3 s; the
+  answer is saved as a draft next to the journal, and a run that broke off resumes from it within
+  15 minutes for the same question, without asking ChatGPT again. A request over 6000 characters
+  shows one notification; an empty Claude answer gets one retry with the text cut to 6000.
+  None of these steps has been run on a phone yet.
+- **Duo: more after the answer, without a longer menu.** The final menu is «✅ Done / 🔁 Another
+  mode / ➕ More…»; More… holds «check the result once more» (ChatGPT looks for errors in Claude's
+  final, prompt `ratify.txt`, 1✉), «save to Notes», «what to check → Reminders» (one reminder per
+  ☐ line, Critique) and «report this run» (opens a GitHub issue form with iPhone, iOS, Duo version
+  and mode, never the question). The main menu's More… gains Recipes (five ready questions),
+  «Critique ⇄» (Claude writes, ChatGPT checks; `critique-reverse.txt`, `summary-reverse.txt`, known
+  to Auto) and «My mode» (one line of your own for the checker, from `Poly-my-mode.txt`). In
+  Critique, numbers from ChatGPT's answer that are missing from Claude's final reach the summary as
+  data. Menu lengths in `tools/verify.py`, BUILD.md, CONTRIBUTING.md. Not run on a phone yet.
+- **Duo: when Claude gives no answer, there is a way on.** Instead of a dead end, a small menu
+  offers a free key (if `poly-key.txt` has one), Apple Intelligence on this iPhone (15 Pro or
+  newer), or doing it by hand in Gemini or Meta AI with the check request already copied. The
+  usual path is unchanged.
+- **Duo takes a picture or a PDF from Share**: the text is read on the phone and lands in the
+  question box. Debate to agreement resumes from its last finished round within 15 minutes; in
+  every mode where ChatGPT speaks first, an empty answer is asked once more after 3 s.
+- **Critique now starts blind, at the same 3 messages.** ChatGPT answers; Claude answers the same
+  question on its own, without seeing ChatGPT; then Claude compares the two and writes the final,
+  opened by «Matched independently / Did not match / What to check yourself»
+  (`critique-blind.txt`). Debate to agreement and Debate also open with independent answers.
+  Why: a reviewer who has read an answer tends to agree with it (the owner's «Verification
+  Theater» study). Our own check (2026-10-26, CLI models, not the phone apps; blind
+  judges): on 67 tasks with known answers the review turned none of 66 correct drafts wrong; on 38
+  tasks picked where ChatGPT was wrong (plus controls), the review repaired 18 of 18 and harmed 1 of
+  20. Between the blind and the earlier Critique no difference was established (McNemar p = 1.0;
+  p = 0.25 on all 46 tasks, the three split pairs against the blind one), so we keep measuring.
+- **Trio goes blind too, still 3 messages from your plans.** ChatGPT answers; Claude answers on its
+  own; the third voice reads both independent answers and names only what both missed; then one
+  Claude message compares all three (`trio-compare.txt`): matched independently / did not match /
+  check yourself, then the final answer.
+- **Fewer «confident» words, more of what was actually checked.** Prompts replace
+  «Confidence: high/medium/low» with «Checked against … / Not checked …»; a side in a debate
+  concedes only with a named reason (`[[CONCEDE]] because: …`); the checker changes its view only
+  for a specific, checkable reason; Delta and Critique ⇄ present themselves as editing, not as fact
+  checks; Auto sends facts, figures, law and medicine to Synthesis or Dispute map, where both AIs
+  answer on their own first. Based on the owner's «Verification Theater» study: a reviewer who has
+  seen an answer tends to agree with it.
+- **Duo with Apple Intelligence** (a separate file, `dist/<lang>/ai/`, en/es/pt): Auto and
+  Clarify's questions run on the iPhone itself and no longer spend a ChatGPT message.
+- **Trio: the third voice can cite sources.** With a Google key, it first asks Gemini 2.5 Flash
+  with Google Search (free tier) and adds up to five «Sources» under its words; any failure falls
+  back silently to the usual chain. The live response format has not been seen yet.
+- **Korean:** `locales/ko` (Duo and Trio, Trio without a key too) and `docs/ko`; Ukrainian docs
+  (`docs/uk`). Docs now exist in twelve languages.
+- **Docs call the shortcut by the name people see, «Duo»**, and say plainly that the companions
+  (Voice, Photo, Quiet, Compress, Multi) are built from source and not in the iCloud links yet.
+- **Trio: plainer words.** The key window went from 240 to 118 words (en), Groq and Google first
+  (no SMS), NVIDIA, OpenRouter and your own paid key still there; shorter notifications; «Run Trio
+  again» instead of the shared «Run Poly again»; an empty key field stops before anything is saved;
+  Trio without a key says plainly when the iPhone has no Apple Intelligence. The install page puts
+  «no key at all» first.
+- **Trio: the first run warns about the permission windows.** With a key, the warning is now the
+  first paragraph of the key window (no extra screen); without a key, the same one-time window as
+  Duo's.
+- **Trio in six more languages:** ar, de, fr, hi, ja, zh (`locales/<lang>/trio.json`); Trio without
+  a key also in de, fr, ja, zh, where Apple Intelligence speaks the language.
+- **One list of models:** `src/models.json`, read by `build_trio.py`; `tools/check_models.py`
+  checks it against each provider's `/models` (keys from the environment). It found
+  `qwen/qwen3.8-27b:free` gone from OpenRouter: removed; Kimi K2.6 (NVIDIA) and gpt-oss-20b (Groq)
+  added, as on Android.
+- **Release hashes:** `releases/SHA256SUMS`, written by `tools/build.sh` and checked by
+  `tools/verify.py`; how to check a file in `docs/en/install.md`.
+- **Docs match Duo 5 / Trio 4:** twelve modes, 1–8 messages with the price shown before you choose,
+  Trio without a key, Android first through Poly A1 (Tasker is the older, untested path), «C1M Duo»
+  as the full name, «If it doesn't work» in all ten docs languages, «Who else does this» in
+  evidence.md; the 71.6→89.7% figure is marked as someone else's result, not measured on Duo.
+  New: `docs/en/launch.md` (Siri, Back Tap, Control Center, Lock Screen, Action Button), issue
+  forms «Run report» and «Worse after review», `docs/en/compat.md`.
+
 ### Changed (2026-10-26, the first minute; not yet in the iCloud links)
 - **Duo: the first run warns before the permission prompts.** One window: iPhone will ask 4–6 times
   for access to ChatGPT and Claude, tap «Always Allow» (or «Allow») right away. It replaces the

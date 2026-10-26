@@ -6,7 +6,7 @@
 #
 # Signing uses the macOS `shortcuts` CLI in "anyone" mode, so the resulting files
 # install on any device and any Apple ID.
-set -u
+set -euo pipefail
 cd "$(dirname "$0")/.."
 
 LANGS=${@:-$(ls locales)}
@@ -18,7 +18,7 @@ for lang in $LANGS; do
   python3 src/build_trio.py "$lang"       || exit 1   # skipped where locales/<lang>/trio.json is absent
 
   # sign every shortcut in place
-  for file in "dist/$lang"/*.shortcut; do
+  for file in "dist/$lang"/*.shortcut "dist/$lang"/*/*.shortcut; do
     [ -f "$file" ] || continue
     case "$file" in *.signed.shortcut) continue;; esac
     tmp="$(mktemp -d)/$(basename "$file")"
@@ -62,6 +62,14 @@ with zipfile.ZipFile(archive, 'w', zipfile.ZIP_DEFLATED) as z:
 print(f'{lang}: {archive.relative_to(root)} — {len(entries)} entries')
 PYZIP
 done
+
+# Checksums. Signing is not byte-for-byte repeatable, so a hash belongs to the exact file that is handed out:
+#   dist/SHA256SUMS      — the files this run has just signed (what you are about to copy into releases/)
+#   releases/SHA256SUMS  — NOT touched here: a build must not vouch for the files it is checking.
+#                          Preparing a release: copy the files into releases/, then run
+#                          python3 tools/verify.py --write-release-sums
+echo "== checksums =="
+( cd dist && find . -name '*.shortcut' -print0 | LC_ALL=C sort -z | xargs -0 shasum -a 256 | sed 's#  \./#  #' > SHA256SUMS )
 
 echo "== verify =="
 python3 tools/verify.py

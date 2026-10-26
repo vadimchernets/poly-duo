@@ -5,10 +5,13 @@ Usage:  python3 src/build_trio.py <lang>
 Output: dist/<lang>/Trio.shortcut  (unsigned; tools/build.sh signs it)
 
 Trio is the Critique pair plus a third voice from a third company:
-  1. ChatGPT answers (Ask ChatGPT, the person's own app);
-  2. Claude checks and writes the final answer (Ask Claude, prompt critique.txt) — exactly as in Poly;
-  3. a third model, reached with «Get Contents of URL» on a FREE key, names only the errors and gaps
-     that BOTH missed (prompt trio.txt). Its words come back as a separate block, never merged.
+  1. ChatGPT answers the wrapped question (Ask ChatGPT, the person's own app);
+  2. Claude answers the SAME wrapped question on its own, without seeing ChatGPT's answer (blind, as Critique in Duo);
+  3. a third model, reached with «Get Contents of URL» on a FREE key, reads the question and BOTH independent
+     answers and names only the errors and gaps that BOTH missed (prompt trio.txt). Its words come back as a
+     separate block, never merged;
+  4. one Claude message compares the three (prompt trio-compare.txt): «matched independently / did not match /
+     what to check yourself», then «■ FINAL ANSWER». ChatGPT + Claude messages: 1 + 2 = 3, as before the blind scheme.
 
 The third voice speaks the OpenAI chat-completions dialect, so one request template serves every
 free provider: NVIDIA build (Kimi K3, GLM-5.3, DeepSeek V4.1), Google AI Studio (Gemini Flash),
@@ -36,9 +39,9 @@ content block is the text), gpt-6-astra → gpt-6.1-sol (Chat Completions, `max_
 
 Locales without locales/<lang>/trio.json are skipped: Trio ships where its words exist.
 
-The result comes in three blocks first (plan item 4, owner 2026-10-11, as in the Android Duo): after the
-third voice, Claude — as a neutral recorder — sorts the three answers into «all agree / where they differ /
-what to check yourself» (prompt summary-trio.txt); Claude's checked answer and the third voice follow in full.
+The result comes in three blocks first, then Claude's final answer (both from the one comparing message,
+prompt trio-compare.txt); the third voice follows in full as its own block. If the comparison does not come,
+the person gets Claude's own independent answer in its place. (summary-trio.txt is no longer used by Trio.)
 
 TRIO WITHOUT A KEY (plan item 12, owner 2026-10-11; `build(lang, nokey=True)` → dist/<lang>/nokey/Trio.shortcut,
 only for locales whose trio.json has `nokey.comment` — Apple Intelligence languages: en, es, pt). The same
@@ -58,39 +61,40 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_shortcut import (  # noqa: E402
     ROOT, Locale, new_uuid, text_token, attachment, variable, validate,
     act_ask, act_gpt, act_claude, act_text, act_set_variable, act_get_variable,
-    act_comment, act_clipboard, act_quick_look, act_get_file, act_save_file,
+    act_comment, act_clipboard, act_quick_look, act_get_file, act_save_file, act_alert,
     if_has_value, if_else, if_close, if_output, version_check,
+    act_delay, act_first_match, act_first_chars, repeat_open, repeat_close, if_item_missing, if_no_value, LONG_TEXT,
 )
 
+# Endpoints and model ids live in src/models.json (tools/check_models.py checks them against the providers).
+_P = json.loads((Path(__file__).resolve().parent / 'models.json').read_text(encoding='utf-8'))['providers']
 # NVIDIA build first: the strongest free models today, three companies on one key without a card
 # (Kimi K3 — Moonshot, DeepSeek V4.1 — DeepSeek, GLM-5.3 — Zhipu; integrate.api.nvidia.com/v1/models,
 # 2026-10-01). About 40 requests a minute per account, no daily cap. Sign-up asks for a phone (SMS).
-NVIDIA_URL = 'https://integrate.api.nvidia.com/v1/chat/completions'
+NVIDIA_URL = _P['nvidia']['url']
 # Order Kimi → GLM → DeepSeek: live on 2026-10-01 GLM-5.3 answered in 12 s, DeepSeek V4.1 stayed
 # silent for 90–120 s — the slow one goes last. «Get Contents of URL» has no timeout setting, so a
 # silent model holds Trio until the system gives up; only order protects the person.
-NVIDIA_MODELS = ['moonshotai/kimi-k3', 'z-ai/glm-5.3', 'deepseek-ai/deepseek-v4.1-flash']
+NVIDIA_MODELS = _P['nvidia']['models']
 # Service tokens a model may leak into its text: Kimi K3 on NVIDIA ended a live answer (2026-10-01)
 # with `<|close|>message`. A trailing «token + word» goes whole, any other token alone.
 TOKEN_TAIL_RE = r'(?:<\|[^|>\n]{1,40}\|>[A-Za-z_]{0,20}\s*)+$'
 TOKEN_RE = r'<\|[^|>\n]{1,40}\|>'
 NVIDIA_KEY_RE = r'nvapi-[0-9A-Za-z_-]{20,}'
-GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions'
+GEMINI_URL = _P['gemini']['url']
 # Free quota is counted per model (~20 a day each), and a model may be «high demand» (503) while the
 # next one answers — so one key walks a chain. Checked live 2026-10-01: 3.8 answered 503, 3.6 and 2.5
 # answered; a key with a spent prepaid balance answers 402 on every model.
 # Gemini Pro is not free any more (3.1-pro: 429 «limit 0», 2.5-pro: 404 «no longer available to new
 # users» — live, 2026-10-01), so every free Flash, each with its own daily quota.
-GEMINI_MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.6-flash', 'gemini-3.5-flash',
-                 'gemini-2.5-flash']
-OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
+GEMINI_MODELS = _P['gemini']['models']
+OPENROUTER_URL = _P['openrouter']['url']
 # OpenRouter's free models (`:free`, price 0), four companies; checked against /api/v1/models and
 # with real requests on 2026-10-01. `openrouter/free` is OpenRouter's own router over whichever free
 # model is up — the last resort. Nemotron Ultra (empty replies) and Inkling (agent apps only) left out.
-OPENROUTER_MODELS = ['nvidia/nemotron-3-super-120b-a12b:free', 'qwen/qwen3.8-27b:free',
-                     'google/gemma-4-31b-it:free', 'openrouter/free']
-GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions'
-GROQ_MODELS = ['qwen/qwen3.8-27b', 'openai/gpt-oss-120b']   # checked against /openai/v1/models
+OPENROUTER_MODELS = _P['openrouter']['models']
+GROQ_URL = _P['groq']['url']
+GROQ_MODELS = _P['groq']['models']   # checked against /openai/v1/models
 # Keys are picked out of poly-key.txt by how they begin, so the person may paste any number of keys,
 # in any order, with any spaces or line breaks around them: nvapi-… → NVIDIA, AIza… / AQ.… → Google
 # AI Studio, sk-or-… → OpenRouter, gsk_… → Groq.
@@ -104,14 +108,14 @@ ANTHROPIC_KEY_RE = _EDGE_L + r'sk-ant-[0-9A-Za-z_-]{20,}'
 XAI_KEY_RE = _EDGE_L + r'xai-[0-9A-Za-z_-]{20,}'
 DEEPSEEK_KEY_RE = _EDGE_L + r'sk-[0-9a-f]{32}' + _EDGE_R
 OPENAI_KEY_RE = _EDGE_L + r'sk-(?!ant-|or-)(?![0-9a-f]{32}' + _EDGE_R + r')[0-9A-Za-z_-]{20,}'
-ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages'
-ANTHROPIC_MODELS = ['claude-opus-5', 'claude-sonnet-5']
-OPENAI_URL = 'https://api.openai.com/v1/chat/completions'
-OPENAI_MODELS = ['gpt-6-astra', 'gpt-6.1-sol']
-XAI_URL = 'https://api.x.ai/v1/chat/completions'
-XAI_MODELS = ['grok-4.7', 'grok-4.6']
-DEEPSEEK_URL = 'https://api.deepseek.com/chat/completions'
-DEEPSEEK_MODELS = ['deepseek-v4-pro', 'deepseek-flash']
+ANTHROPIC_URL = _P['anthropic']['url']
+ANTHROPIC_MODELS = _P['anthropic']['models']
+OPENAI_URL = _P['openai']['url']
+OPENAI_MODELS = _P['openai']['models']
+XAI_URL = _P['xai']['url']
+XAI_MODELS = _P['xai']['models']
+DEEPSEEK_URL = _P['deepseek']['url']
+DEEPSEEK_MODELS = _P['deepseek']['models']
 ANTHROPIC_MAX_TOKENS = '4096'
 # OpenAI's reasoning models count their thinking against max_completion_tokens.
 OPENAI_MAX_TOKENS = '8000'
@@ -275,11 +279,6 @@ def set_text(var_name, template, uid, refs=None):
             act_set_variable(var_name, uid, 'Text')]
 
 
-def act_wait(seconds):
-    return {'WFWorkflowActionIdentifier': 'is.workflow.actions.delay',
-            'WFWorkflowActionParameters': {'WFDelayTime': seconds}}
-
-
 def act_replace(src_uid, src_name, find, repl, uid):
     return {'WFWorkflowActionIdentifier': 'is.workflow.actions.text.replace',
             'WFWorkflowActionParameters': {'WFInput': text_token('{T}', {'T': (src_uid, src_name)}),
@@ -372,11 +371,9 @@ PROVIDERS = [  # (locale name key, url, key regex, models, max_tokens)
 # USA mode too). So its saved-keys chain is the USA Trio's chain (poly-a1 scripts/trio-usa.py, ids checked
 # 2026-10-07 against integrate.api.nvidia.com/v1/models and openrouter.ai/api/v1/models): US companies only,
 # no DeepSeek paid key, no `openrouter/free` (OpenRouter picks that model itself, and it can be anyone's).
-US_NVIDIA_MODELS = ['nvidia/nemotron-3-ultra-550b-a55b', 'openai/gpt-oss-20b',
-                    'meta/llama-3.2-90b-vision-instruct', 'google/gemma-4-31b-it']
-US_GROQ_MODELS = ['openai/gpt-oss-120b', 'openai/gpt-oss-20b']
-US_OPENROUTER_MODELS = ['nvidia/nemotron-3-ultra-550b-a55b:free', 'google/gemma-4-26b-a4b-it:free',
-                        'thinkingmachines/inkling:free', 'nvidia/nemotron-3-super-120b-a12b:free']
+US_NVIDIA_MODELS = _P['nvidia']['us_models']
+US_GROQ_MODELS = _P['groq']['us_models']
+US_OPENROUTER_MODELS = _P['openrouter']['us_models']
 
 
 def us_providers(providers):
@@ -439,7 +436,125 @@ def pause_actions(u, V, paused_v):
     ]
 
 
-def third_voice(T, V, prompt_uid, keys_uid, keys_name='Variable', providers=None):
+# ---------------------------------------------------------------- third voice with web search (plan item 12, 2026-10-26)
+# Gemini's native generateContent with the google_search tool: free Flash models can ground an answer in a
+# search and return the pages (groundingMetadata.groundingChunks[].web.{uri,title}). The OpenAI-compatible
+# Gemini endpoint of PROVIDERS cannot do that, so this is a separate, first, silent attempt: any failure
+# (4xx — e.g. a new key without 2.5 access —, 429, empty text, no network) leaves V['third'] empty and
+# the ordinary chain below runs exactly as before.
+# NOTE: a sample of a LIVE generateContent reply with groundingMetadata was not obtained (no Google key was
+# used on this Mac); the paths below follow ai.google.dev docs. Verify with ONE real request.
+_GS = json.loads((Path(__file__).resolve().parent / 'models.json').read_text(encoding='utf-8'))['gemini_search']
+GEMINI_SEARCH_URL = _GS['base_url']
+GEMINI_SEARCH_MODELS = _GS['models']
+GEMINI_SEARCH_MAX_SOURCES = _GS['max_sources']
+
+
+def act_post_gemini_search(url, key_uid, prompt_uid, uid):
+    """POST {contents:[{role:user, parts:[{text}]}], tools:[{google_search:{}}]} with x-goog-api-key."""
+    def array(key, dicts):
+        return {'WFItemType': 2, 'WFKey': plain(key),
+                'WFValue': {'Value': [{'WFItemType': 1, 'WFValue': d} for d in dicts],
+                            'WFSerializationType': 'WFArrayParameterState'}}
+    body = top_dict([
+        array('contents', [nested_dict([
+            item_text('role', plain('user')),
+            array('parts', [nested_dict([
+                item_text('text', text_token('{P}', {'P': (prompt_uid, 'Text')}))])]),
+        ])]),
+        array('tools', [nested_dict([{'WFItemType': 1, 'WFKey': plain('google_search'),
+                                      'WFValue': nested_dict([])}])]),
+    ])
+    headers = top_dict([
+        item_text('x-goog-api-key', text_token('{K}', {'K': (key_uid, 'Variable')})),
+        item_text('Content-Type', plain('application/json')),
+    ])
+    return {'WFWorkflowActionIdentifier': 'is.workflow.actions.downloadurl',
+            'WFWorkflowActionParameters': {'WFURL': plain(url), 'WFHTTPMethod': 'POST',
+                                           'ShowHeaders': True, 'WFHTTPHeaders': headers,
+                                           'WFHTTPBodyType': 'JSON', 'WFJSONValues': body,
+                                           'UUID': uid}}
+
+
+def act_first_items(src_uid, src_name, count, uid):
+    """Get Items from List → «Items in Range» 1…count (the standard parameters WFItemRangeStart/End)."""
+    return {'WFWorkflowActionIdentifier': 'is.workflow.actions.getitemfromlist',
+            'WFWorkflowActionParameters': {'WFItemSpecifier': 'Items in Range', 'WFItemRangeStart': 1,
+                                           'WFItemRangeEnd': count,
+                                           'WFInput': attachment(src_uid, src_name), 'UUID': uid}}
+
+
+def search_voice(T, V, prompt_uid, keys_uid, keys_name='Variable'):
+    """If a Google key is among the keys: ask Gemini with search; on success V['third'] = text + «Sources:» lines."""
+    u = new_uuid
+    gkey_v = V.get('gkey', 'GoogleKey')
+    srcs_v = V.get('sources', 'Sources')
+    chunk_v = V.get('chunk', 'SearchChunk')
+    found, g_loop = u(), u()
+    # every Google key in turn (a revoked first one must not hide a working second one); once a model
+    # has answered, V['third'] has a value and every later attempt is skipped by its own guard
+    actions = [act_match(GOOGLE_KEY_RE, keys_uid, keys_name, found),
+               repeat_each(g_loop, found, 'Matches'),
+               act_set_from_repeat_item(gkey_v)]
+    for model in GEMINI_SEARCH_MODELS:
+        todo, k_get, post, raw, ok = u(), u(), u(), u(), u()
+        cands, cand, content, parts, part, text, has_text = (u() for _ in range(7))
+        meta, chunks, five, loop = u(), u(), u(), u()
+        c_get, web, uri, title, s_old, s_new = (u() for _ in range(6))
+        s_has, s_get, joined_t, joined, g_chunks = u(), u(), u(), u(), u()
+        actions += [
+            if_no_value(todo, V['third']),
+            act_get_variable(gkey_v, k_get),
+            act_post_gemini_search(f'{GEMINI_SEARCH_URL}/{model}:generateContent', k_get, prompt_uid, post),
+            act_text(text_token('{R}', {'R': (post, 'Contents of URL')}), raw),
+            act_set_variable(V['raw'], raw, 'Text'),
+            # an answer carries "candidates"; every error (4xx, 429, 5xx) does not → fall through quietly
+            if_contains(ok, V['raw'], '"candidates"'),
+            act_value('candidates', post, 'Contents of URL', cands),
+            act_first_item(cands, 'Dictionary Value', cand),
+            act_value('content', cand, 'Item from List', content),
+            act_value('parts', content, 'Dictionary Value', parts),
+            act_first_item(parts, 'Dictionary Value', part),
+            act_value('text', part, 'Item from List', text),
+            if_output_has_value(has_text, text, 'Dictionary Value'),
+            act_set_variable(V['third'], text, 'Dictionary Value'),
+            act_text(text_token(T['provider.gemini_search'] + ' · ' + model), joined_t),
+            act_set_variable(V['provider'], joined_t, 'Text'),
+            # sources: up to N «title — uri» lines from groundingChunks
+            act_value('groundingMetadata', cand, 'Item from List', meta),
+            act_value('groundingChunks', meta, 'Dictionary Value', chunks),
+            # no groundingChunks (Gemini chose not to search): the answer is already written, skip the sources
+            if_output_has_value(g_chunks, chunks, 'Dictionary Value'),
+            act_first_items(chunks, 'Dictionary Value', GEMINI_SEARCH_MAX_SOURCES, five),
+            *set_text(srcs_v, '', u()),
+            repeat_each(loop, five, 'Items from List'),
+            act_set_from_repeat_item(chunk_v),
+            act_get_variable(chunk_v, c_get),
+            act_value('web', c_get, 'Variable', web),
+            act_value('uri', web, 'Dictionary Value', uri),
+            act_value('title', web, 'Dictionary Value', title),
+            act_get_variable(srcs_v, s_old),
+            act_text(text_token('{S}\n• {T} — {U}', {'S': (s_old, 'Variable'), 'T': (title, 'Dictionary Value'),
+                                                    'U': (uri, 'Dictionary Value')}), s_new),
+            act_set_variable(srcs_v, s_new, 'Text'),
+            repeat_each_close(loop),
+            if_has_value(s_has, srcs_v),
+            act_get_variable(srcs_v, s_get),
+            act_get_variable(V['third'], joined),
+            *set_text(V['third'], '{R}\n\n' + T['search.sources'] + '{S}', u(),
+                      {'R': (joined, 'Variable'), 'S': (s_get, 'Variable')}),
+            if_close(s_has),
+            if_close(g_chunks),
+            if_close(has_text),
+            if_close(ok),
+            if_close(todo),
+        ]
+    actions.append(repeat_each_close(g_loop))
+    return actions
+
+
+def third_voice(T, V, prompt_uid, keys_uid, keys_name='Variable', providers=None, notify_silent=None, search=True,
+                light=False):
     """From the finished trio prompt and the saved keys text to V['third'] holding the third voice.
 
     Every key the person saved is tried with every model of its provider until one answers; a key
@@ -453,6 +568,9 @@ def third_voice(T, V, prompt_uid, keys_uid, keys_name='Variable', providers=None
                                          var('dead', 'DeadKeys'), var('why', 'Why'))
     paused_v = var('paused', 'Paused')
     actions = []
+    if search:
+        # first, silently: Gemini with web search (sources); on any failure V['third'] stays empty
+        actions += search_voice(T, V, prompt_uid, keys_uid, keys_name)
 
     # ---- the attempt list: one line «url|model|key|provider|max_tokens» per (model, key)
     parts = {}
@@ -469,6 +587,51 @@ def third_voice(T, V, prompt_uid, keys_uid, keys_name='Variable', providers=None
     all_lines, lines = u(), u()
     actions += [act_text(text_token('\n'.join('{%s}' % k for k in parts), parts), all_lines),
                 act_match(r'[^\n]+', all_lines, 'Text', lines)]
+
+    if light:
+        # The light chain, for Duo's «Claude did not answer» menu (about a fifth of the actions): the caller passes
+        # free providers with one model each; only the OpenAI-style dialect, no dead-key or pause bookkeeping, no
+        # per-attempt log. The first answer wins; if none comes, V['third'] says there is no usable key.
+        loop, skip_done, ok, has_text = u(), u(), u(), u()
+        attempt, split, f_url, f_model, f_key, f_name, f_max = (u() for _ in range(7))
+        post, raw, data, choices, first, message, content, c_tail, c_clean = (u() for _ in range(9))
+        none = u()
+        actions += [
+            repeat_each(loop, lines, 'Matches'),
+            act_set_from_repeat_item(attempts_v),
+            if_no_value(skip_done, V['third']),
+            act_get_variable(attempts_v, attempt),
+            act_split(attempt, 'Variable', '|', split),
+            act_item_at(split, 'Split Text', 1, f_url),
+            act_item_at(split, 'Split Text', 2, f_model),
+            act_item_at(split, 'Split Text', 3, f_key),
+            act_item_at(split, 'Split Text', 4, f_name),
+            act_item_at(split, 'Split Text', 5, f_max),
+            act_post_json(f_url, f_key, f_model, prompt_uid, post, max_uid=f_max),
+            act_set_variable(V['data'], post, 'Contents of URL'),
+            act_text(text_token('{R}', {'R': (post, 'Contents of URL')}), raw),
+            act_set_variable(V['raw'], raw, 'Text'),
+            if_contains(ok, V['raw'], '"choices"'),
+            act_get_variable(V['data'], data),
+            act_value('choices', data, 'Variable', choices),
+            act_first_item(choices, 'Dictionary Value', first),
+            act_value('message', first, 'Item from List', message),
+            act_value('content', message, 'Dictionary Value', content),
+            if_output_has_value(has_text, content, 'Dictionary Value'),
+            act_replace(content, 'Dictionary Value', TOKEN_TAIL_RE, '', c_tail),
+            act_replace(c_tail, 'Updated Text', TOKEN_RE, '', c_clean),
+            act_set_variable(V['third'], c_clean, 'Updated Text'),
+            act_set_variable(V['provider'], f_name, 'Item from List'),
+            if_close(has_text),
+            if_close(ok),
+            if_close(skip_done),
+            repeat_each_close(loop),
+            if_no_value(none, V['third']),
+            *set_text(V['third'], T['error.nokeys'], u()),
+            *set_text(V['provider'], T['provider.none'], u()),
+            if_close(none),
+        ]
+        return actions
 
     loop, skip_done, skip_dead, ok, has_text = u(), u(), u(), u(), u()
     attempt, split = u(), u()
@@ -607,6 +770,8 @@ def third_voice(T, V, prompt_uid, keys_uid, keys_name='Variable', providers=None
         if_else(any_log),
         *set_text(V['third'], T['error.nokeys'], u()),
         if_close(any_log),
+        # the block keeps the full reason; the banner only says, shortly, that the pair's answer is whole
+        *([act_notify(notify_silent[0], notify_silent[1])] if notify_silent else []),
         *set_text(V['provider'], T['provider.none'], u()),
         if_close(none),
     ]
@@ -614,14 +779,6 @@ def third_voice(T, V, prompt_uid, keys_uid, keys_name='Variable', providers=None
 
 
 # ---------------------------------------------------------------- build
-
-def body_template(output):
-    """trio.json `output` without its leading summary block `{S}`: Claude's answer and the third voice."""
-    head = '{S}\n\n'
-    if not output.startswith(head):
-        raise ValueError(f'trio.json output must start with {head!r}: {output[:40]!r}')
-    return output[len(head):]
-
 
 def build(lang, nokey=False):
     trio_file = ROOT / 'locales' / lang / 'trio.json'
@@ -637,16 +794,35 @@ def build(lang, nokey=False):
     V = T['variables']
 
     ids = lambda n: [new_uuid() for _ in range(n)]
-    k_get, k_file, k_ask, k_save, k_var = ids(5)
-    question, wrap, gpt, critique, claude = ids(5)
+    k_get, k_file, k_ask, k_save, k_var, k_visible = ids(6)
+    question, wrap, gpt, gpt2, claude, claude2, claude_own, claude_own2 = ids(8)
+    gpt_f, own_f, own_f2, own_g, gpt_g = ids(5)
+    n0, n_get, n_f, n_g = ids(4)
+    nums_a, nums_b, item_a, item_b, nget_a, nget_b, nadd_a, nadd_b = ids(8)
+    g_retry, g_oretry, g_cretry, g_cfail, g_n1, g_n2, g_rep, g_miss, g_rep2, g_miss2 = ids(10)
+    c_prompt, c_cut, c_fail = ids(3)
+    GPT_VAR, OWN_VAR, NUMS_VAR, CMP_VAR = 'TrioGpt', 'TrioClaudeOwn', 'TrioNums', 'TrioCompare'
     t_prompt, n_prompt, apple = ids(3)
-    f_third, f_provider, f_claude, f_out, f_body = ids(5)
-    s_prompt, s_claude = ids(2)
-    g_key, g_apple, g_blank = ids(3)
+    f_third, f_provider, f_out, f_body = ids(4)
+    s_claude = new_uuid()
+    g_key, g_apple, g_blank, g_first, g_nokey, g_noai = ids(6)
+    g_own_clip, g_dup_a, g_dup_b, g_dup_c = ids(4)
+    r_get, r_text, r_save = ids(3)
     Q = {'Q': (question, 'Provided Input')}
 
     if nokey:
-        keys_first = []
+        # Nothing is asked before the question here, so the first run warns once about the permission
+        # windows, with Duo's words; the keyed Trio says the same at the top of its key prompt instead
+        keys_first = [
+            act_get_file(T['files.first_run'], r_get),
+            act_set_variable(L['variables.pc_notice_seen'], r_get, 'File'),
+            if_has_value(g_first, L['variables.pc_notice_seen']),
+            if_else(g_first),
+            act_alert(L['alert.first_run_title'], L['alert.first_run_body']),
+            act_text(text_token(L['alert.first_run_body']), r_text),
+            act_save_file(T['files.first_run'], r_text, r_save),
+            if_close(g_first),
+        ]
     else:
         keys_first = [
             # ---- the keys: from iCloud Drive → Shortcuts → poly-key.txt, or asked once and saved there.
@@ -658,6 +834,14 @@ def build(lang, nokey=False):
             if_else(g_key),
             dict(act_ask(T['ask.key'], k_ask), WFWorkflowActionParameters={
                 **act_ask(T['ask.key'], k_ask)['WFWorkflowActionParameters'], 'WFAllowsMultilineText': True}),
+            # an empty field (Done with nothing typed) must not become an empty poly-key.txt: the key
+            # would never be asked for again. (Cancel stops the shortcut by itself, before this line.)
+            # …and neither must spaces or blank lines alone: a non-whitespace character has to be there
+            act_match(r'\S', k_ask, 'Provided Input', k_visible),
+            if_output(g_nokey, k_visible, 'Matches', 101),
+            act_notify(NAME, T['notify.empty_key']),
+            {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
+            if_close(g_nokey),
             act_save_file(T['files.key'], k_ask, k_save),
             act_set_variable(V['keys'], k_ask, 'Provided Input'),
             if_close(g_key),
@@ -666,11 +850,14 @@ def build(lang, nokey=False):
 
     trio_prompt = act_text(text_token(L.prompt('trio'),
                                       {'QUESTION': (question, 'Provided Input'),
-                                       'GPT_ANSWER': (gpt, 'Ask ChatGPT'),
-                                       'CLAUDE_ANSWER': (claude, 'Ask Claude')}), t_prompt)
+                                       'GPT_ANSWER': (gpt_g, 'Variable'),
+                                       'CLAUDE_ANSWER': (own_g, 'Variable')}), t_prompt)
+    # both independent answers are read from variables (a retry may have filled them from a second call)
+    both = [act_get_variable(GPT_VAR, gpt_g), act_get_variable(OWN_VAR, own_g)]
     if nokey:
         third = [
             # ---- the third voice: saved keys first (never asked for), else Apple Intelligence
+            *both,
             act_get_file(T['files.key'], k_get),
             act_set_variable(V['key_file'], k_get, 'File'),
             if_has_value(g_key, V['key_file']),
@@ -688,69 +875,143 @@ def build(lang, nokey=False):
             act_notify(NAME, T['nokey.notify.step3']),
             act_text(text_token(L.prompt('trio-nokey'),
                                 {'QUESTION': (question, 'Provided Input'),
-                                 'GPT_ANSWER': (gpt, 'Ask ChatGPT'),
-                                 'CLAUDE_ANSWER': (claude, 'Ask Claude')}), n_prompt),
+                                 'GPT_ANSWER': (gpt_g, 'Variable'),
+                                 'CLAUDE_ANSWER': (own_g, 'Variable')}), n_prompt),
             act_use_model(n_prompt, apple),
             act_set_variable(V['third'], apple, 'Response'),
+            # «Use Model» gave nothing (an iPhone without Apple Intelligence): say so, in words a person understands
+            if_output(g_noai, apple, 'Response', 101),
+            act_notify(NAME, T.get('nokey.no_ai', T['provider.none'])),
+            *set_text(V['third'], T.get('nokey.no_ai', T['provider.none']), new_uuid()),
+            *set_text(V['provider'], T['provider.none'], new_uuid()),
+            if_else(g_noai),
             *set_text(V['provider'], T['provider.apple'], new_uuid()),
+            if_close(g_noai),
             if_close(g_apple),
         ]
     else:
         third = [
             # ---- the third voice
             act_notify(NAME, T['notify.step3']),
+            *both,
             trio_prompt,
-            *third_voice(T, V, t_prompt, k_var),
+            *third_voice(T, V, t_prompt, k_var, notify_silent=(NAME, T['notify.third_silent'])),
         ]
 
     actions = [
         act_comment(T['nokey.comment'] if nokey else T['comment']),
         *keys_first,
 
-        # ---- the pair, exactly as Critique in Poly: ChatGPT answers, Claude checks
+        # ---- the pair: blind, as Critique in Duo
         act_ask(T['ask.question'], question, prefill_from_share=True),
         # an empty question would spend messages and a key's quota on nothing: say so and stop
         if_output(g_blank, question, 'Provided Input', 101),
-        act_notify(NAME, L['notify.empty_question']),
+        act_notify(NAME, T.get('notify.empty_question', L['notify.empty_question'])),
         {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
         if_close(g_blank),
         act_notify(NAME, T['notify.start']),
         act_text(text_token(L.prompt('wrap'), Q), wrap),
+        act_text(text_token(''), n0),
+        act_set_variable(GPT_VAR, n0, 'Text'),
+        act_text(text_token(''), n_get),
+        act_set_variable(OWN_VAR, n_get, 'Text'),
+        # ---- Step 1: ChatGPT answers the wrapped question. An empty answer (often a false «logged out» or a
+        # dropped call): wait 3 s, ask once more, as in Duo.
         act_gpt(text_token('{P}', {'P': (wrap, 'Text')}), gpt),
-        act_text(text_token(L.prompt('critique'),
-                            {'QUESTION': (question, 'Provided Input'),
-                             'GPT_ANSWER': (gpt, 'Ask ChatGPT')}), critique),
+        act_set_variable(GPT_VAR, gpt, 'Ask ChatGPT'),
+        if_no_value(g_retry, GPT_VAR),
+        act_delay(3),
+        act_gpt(text_token('{P}', {'P': (wrap, 'Text')}), gpt2),
+        act_set_variable(GPT_VAR, gpt2, 'Ask ChatGPT'),
+        if_close(g_retry),
+        # ---- Step 2: Claude answers the SAME wrapped question without ChatGPT's answer (blind); one retry.
         act_notify(NAME, T['notify.step2']),
-        act_claude(text_token('{P}', {'P': (critique, 'Text')}), claude),
-        # Claude's answer reaches the clipboard before the network call: if the third voice fails
-        # in any way, the person still holds the checked answer.
-        act_clipboard(attachment(claude, 'Ask Claude')),
+        act_claude(text_token('{P}', {'P': (wrap, 'Text')}), claude_own),
+        act_set_variable(OWN_VAR, claude_own, 'Ask Claude'),
+        if_no_value(g_oretry, OWN_VAR),
+        act_notify(NAME, L['notify.claude_retry']),
+        act_claude(text_token('{P}', {'P': (wrap, 'Text')}), claude_own2),
+        act_set_variable(OWN_VAR, claude_own2, 'Ask Claude'),
+        if_close(g_oretry),
+        # Claude's own answer reaches the clipboard before the network call: if the third voice fails
+        # in any way, the person still holds an answer.
+        # (an empty answer must not wipe what the person already has on the clipboard)
+        if_has_value(g_own_clip, OWN_VAR),
+        act_get_variable(OWN_VAR, own_f),
+        act_clipboard(attachment(own_f, 'Variable')),
+        if_close(g_own_clip),
 
+        # ---- Step 3: the third voice reads the question and both independent answers
         *third,
 
-        # ---- the result in three blocks: Claude, as a neutral recorder, sorts the three answers
-        # (all agree / where they differ / what to check yourself)
+        # ---- Step 4: numbers that stand in only one of the two answers are found by rule, not by Claude's
+        # attention, and handed over as data (as in Duo's Critique; only when both answers exist).
+        act_get_variable(GPT_VAR, gpt_f),
+        act_get_variable(OWN_VAR, own_f2),
+        act_text(text_token(''), n_f),
+        act_set_variable(NUMS_VAR, n_f, 'Text'),
+        if_has_value(g_n1, OWN_VAR),
+        if_has_value(g_n2, GPT_VAR),
+        act_first_match(gpt_f, 'Variable', r'\d+(?:[.,:/-]\d+)*', nums_a),
+        repeat_open(g_rep, nums_a, 'Matches'),
+        act_get_variable('Repeat Item', item_a),
+        if_item_missing(g_miss, OWN_VAR, item_a),
+        if_item_missing(g_dup_a, NUMS_VAR, item_a),
+        act_get_variable(NUMS_VAR, nget_a),
+        act_text(text_token('{N} {I}', {'N': (nget_a, 'Variable'), 'I': (item_a, 'Variable')}), nadd_a),
+        act_set_variable(NUMS_VAR, nadd_a, 'Text'),
+        if_close(g_dup_a),
+        if_close(g_miss),
+        repeat_close(g_rep),
+        act_first_match(own_f2, 'Variable', r'\d+(?:[.,:/-]\d+)*', nums_b),
+        repeat_open(g_rep2, nums_b, 'Matches'),
+        act_get_variable('Repeat Item', item_b),
+        if_item_missing(g_miss2, GPT_VAR, item_b),
+        if_item_missing(g_dup_b, NUMS_VAR, item_b),
+        act_get_variable(NUMS_VAR, nget_b),
+        act_text(text_token('{N} {I}', {'N': (nget_b, 'Variable'), 'I': (item_b, 'Variable')}), nadd_b),
+        act_set_variable(NUMS_VAR, nadd_b, 'Text'),
+        if_close(g_dup_b),
+        if_close(g_miss2),
+        repeat_close(g_rep2),
+        if_close(g_n2),
+        if_close(g_n1),
+        act_get_variable(NUMS_VAR, n_g),
+
         act_get_variable(V['third'], f_third),
         act_get_variable(V['provider'], f_provider),
-        # Claude's answer + the third voice reach the clipboard BEFORE the summary call: if Claude hits
-        # its limit on the summary, the person still holds the third voice (it always arrived before
-        # the summary step existed). The same document as below, without the three blocks.
-        act_text(text_token(body_template(T['output']), {'C': (claude, 'Ask Claude'),
-                                                         'P': (f_provider, 'Variable'),
-                                                         'T': (f_third, 'Variable')}), f_body),
+        # Claude's own answer + the third voice reach the clipboard BEFORE the comparing call: if Claude hits
+        # its limit there, the person still holds the third voice (output.draft = the document without the
+        # comparison).
+        act_text(text_token(T['output.draft'], {'C': (own_f2, 'Variable'),
+                                                'P': (f_provider, 'Variable'),
+                                                'T': (f_third, 'Variable')}), f_body),
         act_clipboard(attachment(f_body, 'Text')),
         act_notify(NAME, T['notify.summary']),
-        act_text(text_token(L.prompt('summary-trio'),
+        act_text(text_token(L.prompt('trio-compare'),
                             {'QUESTION': (question, 'Provided Input'),
-                             'GPT_ANSWER': (gpt, 'Ask ChatGPT'),
-                             'CLAUDE_ANSWER': (claude, 'Ask Claude'),
+                             'GPT_ANSWER': (gpt_f, 'Variable'),
+                             'CLAUDE_OWN': (own_f2, 'Variable'),
+                             'NUMS': (n_g, 'Variable'),
                              'PROVIDER': (f_provider, 'Variable'),
-                             'THIRD': (f_third, 'Variable')}), s_prompt),
-        act_claude(text_token('{P}', {'P': (s_prompt, 'Text')}), s_claude),
+                             'THIRD': (f_third, 'Variable')}), c_prompt),
+        act_claude(text_token('{P}', {'P': (c_prompt, 'Text')}), claude),
+        act_set_variable(CMP_VAR, claude, 'Ask Claude'),
+        # empty comparison: one retry with the request cut to the first LONG_TEXT characters (as in Duo)
+        if_no_value(g_cretry, CMP_VAR),
+        act_notify(NAME, T.get('notify.compare_retry', L['notify.claude_retry'])),
+        act_first_chars(c_prompt, 'Text', LONG_TEXT, c_cut),
+        act_claude(text_token('{P}', {'P': (c_cut, 'Matches')}), claude2),
+        act_set_variable(CMP_VAR, claude2, 'Ask Claude'),
+        if_close(g_cretry),
+        # still empty: Claude's own independent answer takes the place of the comparison, with a line saying so
+        if_no_value(g_cfail, CMP_VAR),
+        *set_text(CMP_VAR, T['error.compare'], c_fail, {'C': (own_f2, 'Variable')}),
+        if_close(g_cfail),
+        act_get_variable(CMP_VAR, s_claude),
 
-        # ---- one document: the three blocks, Claude's checked answer, then the third voice as its own block
-        act_text(text_token(T['output'], {'S': (s_claude, 'Ask Claude'),
-                                          'C': (claude, 'Ask Claude'),
+        # ---- one document: the three blocks and the final answer, then the third voice as its own block
+        act_text(text_token(T['output'], {'S': (s_claude, 'Variable'),
                                           'P': (f_provider, 'Variable'),
                                           'T': (f_third, 'Variable')}), f_out),
         act_clipboard(attachment(f_out, 'Text')),

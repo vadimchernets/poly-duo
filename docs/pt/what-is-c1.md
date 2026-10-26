@@ -58,3 +58,5 @@ Ou seja, não é "o Duo comanda os seus outros apps" — aqui nada de alheio é 
 ## Em uma frase
 
 Um botão gratuito que põe duas IAs que você já tem para trabalhar juntas, conferindo uma à outra: um preço — de 1 a 8 mensagens por execução — e um hábito: tocar e deixar o telefone quieto por um minuto e meio.
+
+Base científica: [research.md](research.md).

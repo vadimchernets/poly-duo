@@ -58,3 +58,5 @@ Dahin geht das Projekt: mehr Chor, weniger Handarbeit, in dem Maß, wie sich die
 ## In einem Satz
 
 Ein kostenloser Knopf, der zwei deiner bezahlten Abos zusammenarbeiten und einander prüfen lässt: ein Preis — 1 bis 8 Nachrichten pro Lauf — und eine Gewohnheit — antippen und das Handy anderthalb Minuten in Ruhe lassen.
+
+Wissenschaftliche Grundlage: [research.md](research.md).

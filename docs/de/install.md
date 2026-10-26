@@ -28,7 +28,7 @@ Symbol antippen → „Was möchtest du Duo fragen?“ → Frage eintippen → �
 
 | Modus | Was passiert | Kosten |
 |---|---|---|
-| **⚖️ Kritik · 3✉** | ChatGPT antwortet, Claude prüft nach und liefert eine verbesserte Endfassung. Dein Alltagswerkzeug. | 3 Nachrichten |
+| **⚖️ Kritik · 3✉** | ChatGPT und Claude antworten jeweils für sich, ohne einander zu sehen; Claude vergleicht beide und liefert die Endfassung, eröffnet von drei Blöcken: unabhängig übereinstimmend / nicht übereinstimmend / was du selbst prüfen solltest. Dein Alltagswerkzeug. | 3 Nachrichten |
 | **🩺 Berater · 1✉** | Claude prüft DEINEN fertigen Text, ohne ihn umzuschreiben: ein Urteil in einer Zeile, der stärkste Einwand zuerst, was du gegenprüfen solltest. Der günstigste Modus. | 1 Nachricht |
 | **👀 Nebeneinander · 2✉** | Beide antworten unabhängig; die Antworten stehen nebeneinander. | 2 Nachrichten |
 | **🔀 Synthese · 3✉** | Beide antworten blind, dann wird daraus ein Ergebnis aus „Anker + Ergänzung“ gebaut. Du wirst gefragt, wer verankert: Claude (Fakten/Struktur) oder ChatGPT (Ton/Kreativität). Für alles, was zählt. | 3 Nachrichten |

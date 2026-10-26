@@ -58,3 +58,5 @@ Hacia ahí va el proyecto: más coro y menos parte manual, a medida que las apps
 ## En una frase
 
 Un botón gratuito que pone a trabajar juntas dos IAs que ya tiene, comprobándose la una a la otra: un solo precio — de 1 a 8 mensajes por ejecución — y una sola costumbre: tocar y después dejar el teléfono en paz durante minuto y medio.
+
+Base científica: [research.md](research.md).

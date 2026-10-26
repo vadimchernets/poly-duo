@@ -34,7 +34,7 @@ O C1M Duo é generalista: qualquer tarefa se resume à formulação certa mais o
 ## Notas de técnica
 
 - **O Debate é uma ferramenta rara, não um padrão.** Guarde-o para quando você precisar mesmo que alguém tente quebrar a conclusão: código crítico, decisões em que o erro sai caro. A escrita do dia a dia passa pela Crítica ou pelo Consultor; perguntas de alto risco passam pela Síntese.
-- **Quando acertar é o mais importante, deixe os dois responderem primeiro.** Na ⚖️ Crítica, o Claude lê a resposta do ChatGPT antes de conferi-la, e um revisor que já viu uma resposta tende a concordar com ela. Por isso, "os dois concordam" ali vale menos do que parece. Em 👀 Lado a lado e 🔀 Síntese, cada IA responde por conta própria antes de uma ver a outra; quando elas concordam, essa concordância pesa mais.
+- **Por que as IAs respondem antes de se verem.** Um revisor que já leu uma resposta tende a concordar com ela, mesmo que sozinho não chegasse lá. Por isso, na ⚖️ Crítica, em 👀 Lado a lado, em 🔀 Síntese e nos debates, cada IA responde primeiro por conta própria; só depois as respostas são comparadas. Quando duas respostas batem assim, isso pesa mais do que uma concordância depois da leitura. ➕ Delta e ✍️ O Claude escreve, o ChatGPT revisa servem para editar e complementar, não para checar fatos.
 - **A tecla de microfone** do teclado, na caixa de pergunta, dá entrada por voz sem nenhuma configuração.
 - **Palavras modificadoras** no fim da pergunta funcionam: "responda de forma concisa", "em detalhe", "só em tópicos" — os modelos obedecem.
 - Para uma receita que você usa sempre, dá para montar um **pequeno atalho dedicado**: um bloco de texto com a tarefa já escrita, seguido de "Executar Atalho" apontando para o Duo (a tarefa vira a pergunta pré-preenchida).
