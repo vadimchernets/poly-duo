@@ -318,7 +318,7 @@ The demo above is a rendering of the interface — the labels come from the Engl
 answer in the last frame is the real output of the run shown, copied from the phone. Every mode except Debate to agreement (added on
 2026-10-07) was run end to end on a live iPhone with paid ChatGPT and Claude accounts —
 both menu levels, the finale menu, the result screen, clipboard delivery, the journal and the
-permission flow. That was one phone in two of the ten languages; the other eight are built from
+permission flow. That was one phone in two of the eleven languages; the other nine are built from
 the same sources and machine-checked against them, and the old Tasker path for Android has never been run on a phone (the Poly A1 Android Duo was run on an emulator on 2026-10-01). Duo was also run end to end on free ChatGPT and Claude accounts (free Claude, Sonnet 5.5) on 2026-10-01.
 `tools/verify.py` unpacks each signed shortcut and compares its prompts and texts with the open source files in `locales/`; it checks that the file matches the sources, not that the AIs answer well. Verified in the live run: Duo and Trio of 2026-10-01 (before Duo 5 / Trio 4); a fresh run on current iOS and app versions is still to be done and dated here. The blind Critique of Duo 6 / Trio 5 (2026-10-26) has not been run on a phone yet. Everything known to be unverified is in Limitations above and in the [FAQ](docs/en/faq.md).
 
