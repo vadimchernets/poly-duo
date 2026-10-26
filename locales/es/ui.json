@@ -17,7 +17,8 @@
   "files": {
     "journal": "Poly-journal.md",
     "image_html": "Poly-image.html",
-    "pc_notice": "Poly-pc-notice.txt"
+    "pc_notice": "Poly-pc-notice.txt",
+    "last_answer": "Poly-last-answer.txt"
   },
   "comment": {
     "main": "Poly — el dúo ChatGPT + Claude. Si las acciones de Claude/ChatGPT aparecen en gris: bórrelas, busque «Ask Claude» (o «Preguntar a Claude») / «Ask ChatGPT» y vuelva a ponerlas en los mismos sitios. En Claude el texto va al campo message. En ChatGPT: Start new chat ACTIVADO, Continuous DESACTIVADO, «Mostrar al ejecutar» DESACTIVADO. Guía completa: install.md, en el kit.",
@@ -31,7 +32,9 @@
     "voice_question": "Dicte su pregunta para Poly",
     "quiet_question": "Pregunta (modo silencioso — el resultado va al portapapeles y al diario)",
     "multi_question": "¿Qué quiere preguntarle al coro de IA?",
-    "multi_count": "El prompt ya está en su PORTAPAPELES. ¿A cuántas IA más va a consultar a mano (Gemini, Grok, DeepSeek…)? 0 — solo la pareja automática."
+    "multi_count": "El prompt ya está en su PORTAPAPELES. ¿A cuántas IA más va a consultar a mano (Gemini, Grok, DeepSeek…)? 0 — solo la pareja automática.",
+    "my_rule": "Una línea para el revisor. Se guarda en Poly-my-mode.txt (Archivos → iCloud Drive → Atajos) y empieza la revisión:",
+    "my_rule_sample": "Revisa solo las cifras y las fechas"
   },
   "menu": {
     "main_title": "Elija un modo · ¿primera vez? ⚖️ Crítica",
@@ -100,6 +103,12 @@
       "Señala las afirmaciones dudosas, explica por qué lo son y dime qué fuente primaria debería consultar:\n\n",
       "Explica esto con palabras sencillas para alguien no especialista, sin jerga:\n\n"
     ],
+    "empty_title": "No hay pregunta, así que no se envió nada. Elija una tarea preparada:",
+    "my_mode_missing_title": "Aún no tiene su propia regla de revisión (el archivo Poly-my-mode.txt). No se envió nada.",
+    "my_mode_missing_items": [
+      "📝 Escribirla ahora a partir de un ejemplo",
+      "↩️ Volver a la pregunta y los modos"
+    ],
     "claude_down_title": "Claude no respondió. Comprobar con…",
     "claude_down_items": [
       "🔑 Una clave gratuita de proveedor — requiere configuración",
@@ -150,7 +159,6 @@
     "claude_retry": "Claude no respondió: lo intento una vez más con un texto más corto…",
     "resume": "Continúo con la respuesta de ChatGPT ya guardada: no se gasta ningún mensaje nuevo de ChatGPT.",
     "reverse_start": "✍️ Claude escribe, ChatGPT revisa: responde Claude → ChatGPT pule tono y redacción (es edición, no verificación de hechos). ≈1 min, no toque el teléfono. Si ChatGPT dice «logged out», abra su app y vuelva a ejecutar Poly.",
-    "my_mode_missing": "No hay ningún archivo «Poly-my-mode.txt» en la carpeta Atajos de iCloud Drive. Créelo con una sola línea para el revisor (por ejemplo: «Revisa solo las cifras y las fechas») y vuelva a ejecutar Poly.",
     "ratify": "ChatGPT busca errores en el resultado final…",
     "manual_copied": "La petición de comprobación está en el portapapeles. Péguela en Gemini o Meta AI.",
     "no_key_file": "No hay ningún poly-key.txt en la carpeta Atajos de iCloud Drive. Guarde allí una clave gratuita (vea la guía de instalación) o elija otra opción.",

@@ -17,7 +17,8 @@
   "files": {
     "journal": "Poly-journal.md",
     "image_html": "Poly-image.html",
-    "pc_notice": "Poly-pc-notice.txt"
+    "pc_notice": "Poly-pc-notice.txt",
+    "last_answer": "Poly-last-answer.txt"
   },
   "comment": {
     "main": "Poly — the ChatGPT + Claude duo. If the Claude/ChatGPT actions appear greyed out: delete them, search for «Ask Claude» / «Ask ChatGPT» and drop them back in the same places. Claude takes the text in its message field. ChatGPT: Start new chat ON, Continuous OFF, «Show When Run» OFF. Full guide: INSTALL.md in the kit.",
@@ -31,7 +32,9 @@
     "voice_question": "Dictate your question for Poly",
     "quiet_question": "Question (quiet mode — result goes to clipboard and journal)",
     "multi_question": "What do you want to ask the AI choir?",
-    "multi_count": "The prompt is already in your CLIPBOARD. How many more AIs will you poll by hand (Gemini, Grok, DeepSeek…)? 0 — just the automatic pair."
+    "multi_count": "The prompt is already in your CLIPBOARD. How many more AIs will you poll by hand (Gemini, Grok, DeepSeek…)? 0 — just the automatic pair.",
+    "my_rule": "One line for the checker. It is saved to Poly-my-mode.txt (Files → iCloud Drive → Shortcuts), then the check starts:",
+    "my_rule_sample": "Check only the numbers and dates"
   },
   "menu": {
     "main_title": "Pick a mode · first time? ⚖️ Critique",
@@ -100,6 +103,12 @@
       "Flag the doubtful claims here, explain why each is doubtful, and tell me which primary source I should check:\n\n",
       "Explain this in plain words for a non-specialist, no jargon:\n\n"
     ],
+    "empty_title": "No question, so nothing was sent. Pick a ready task:",
+    "my_mode_missing_title": "You have no checking rule yet (the file Poly-my-mode.txt). Nothing was sent.",
+    "my_mode_missing_items": [
+      "📝 Write it now from a sample",
+      "↩️ Back to the question and modes"
+    ],
     "claude_down_title": "Claude did not answer. Check with…",
     "claude_down_items": [
       "🔑 Use a free provider key — setup needed",
@@ -150,7 +159,6 @@
     "claude_retry": "Claude sent no answer — trying once more with a shorter text…",
     "resume": "Continuing from the saved ChatGPT answer — no new ChatGPT message is spent.",
     "reverse_start": "✍️ Claude writes, ChatGPT checks: Claude answers → ChatGPT edits tone and wording (editing, not a fact-check). ≈1 min, don't touch the phone. If ChatGPT says «logged out» — open its app and rerun Poly.",
-    "my_mode_missing": "There is no «Poly-my-mode.txt» in the Shortcuts folder of iCloud Drive. Create it with one line for the checker (for example: «Check only the numbers and dates»), then run Poly again.",
     "ratify": "ChatGPT is looking for mistakes in the final result…",
     "manual_copied": "The check request is in the clipboard. Paste it into Gemini or Meta AI.",
     "no_key_file": "There is no poly-key.txt in the Shortcuts folder of iCloud Drive. Save a free key there (see the install guide) or pick another option.",

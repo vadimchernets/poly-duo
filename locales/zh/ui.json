@@ -17,7 +17,8 @@
   "files": {
     "journal": "Poly-journal.md",
     "image_html": "Poly-image.html",
-    "pc_notice": "Poly-pc-notice.txt"
+    "pc_notice": "Poly-pc-notice.txt",
+    "last_answer": "Poly-last-answer.txt"
   },
   "comment": {
     "main": "Poly：ChatGPT + Claude 双 AI 组合。如果 Claude/ChatGPT 的操作变成灰色：把它们删掉，搜索“Ask Claude”（询问 Claude）/“Ask ChatGPT”，再放回原来的位置。Claude 的文本放进它的 message 字段。ChatGPT：Start new chat 打开，Continuous 关闭，“运行时显示”关闭。完整指南：工具包里的 install.md。",
@@ -31,7 +32,9 @@
     "voice_question": "请口述你要问 Poly 的问题",
     "quiet_question": "问题（静默模式 —— 结果只进剪贴板和日志）",
     "multi_question": "你想问 AI 合唱团什么？",
-    "multi_count": "提示词已经在你的剪贴板里。你还要手动去问几个 AI（Gemini、Grok、DeepSeek……）？0 —— 只用自动的这一对。"
+    "multi_count": "提示词已经在你的剪贴板里。你还要手动去问几个 AI（Gemini、Grok、DeepSeek……）？0 —— 只用自动的这一对。",
+    "my_rule": "给核查者的一行要求。它会保存到 Poly-my-mode.txt（文件 → iCloud Drive → 快捷指令），然后开始检查：",
+    "my_rule_sample": "只核对数字和日期"
   },
   "menu": {
     "main_title": "选择模式 · 第一次？⚖️ 审校",
@@ -100,6 +103,12 @@
       "请标出可疑的说法，说明为什么可疑，并告诉我应该去核对哪个一手来源：\n\n",
       "请用通俗的话向外行解释这个，不要用行话：\n\n"
     ],
+    "empty_title": "你没有输入问题，所以什么也没发送。选一个现成的任务：",
+    "my_mode_missing_title": "你还没有自己的检查规则（文件 Poly-my-mode.txt）。什么也没有发送。",
+    "my_mode_missing_items": [
+      "📝 参照示例现在写",
+      "↩️ 回到问题和模式选择"
+    ],
     "claude_down_title": "Claude 没有回复。改用…核查",
     "claude_down_items": [
       "🔑 使用服务商的免费密钥——需要先设置",
@@ -150,7 +159,6 @@
     "claude_retry": "Claude 没有回复，正在用更短的文本再试一次…",
     "resume": "从已保存的 ChatGPT 回答继续，不会消耗新的 ChatGPT 消息。",
     "reverse_start": "✍️ Claude 撰写，ChatGPT 核对：Claude 先回答 → ChatGPT 润色语气和措辞（这是编辑，不是事实核查）。约1分钟，请不要触碰手机。如果 ChatGPT 提示“logged out”，请打开它的应用后重新运行 Poly。",
-    "my_mode_missing": "iCloud Drive 的“快捷指令”文件夹里没有“Poly-my-mode.txt”。请新建这个文件，只写一行给核查者的要求（例如：“只核对数字和日期”），然后再次运行 Poly。",
     "ratify": "ChatGPT 正在检查最终结果中的错误…",
     "manual_copied": "核查请求已放入剪贴板，请粘贴到 Gemini 或 Meta AI。",
     "no_key_file": "iCloud Drive 的“快捷指令”文件夹里没有 poly-key.txt。请在那里保存一个免费密钥（见安装指南），或选择其他选项。",

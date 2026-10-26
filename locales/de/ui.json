@@ -17,7 +17,8 @@
   "files": {
     "journal": "Poly-journal.md",
     "image_html": "Poly-image.html",
-    "pc_notice": "Poly-pc-notice.txt"
+    "pc_notice": "Poly-pc-notice.txt",
+    "last_answer": "Poly-last-answer.txt"
   },
   "comment": {
     "main": "Poly — das Duo aus ChatGPT + Claude. Sind die Claude-/ChatGPT-Aktionen ausgegraut: löschen, nach „Claude fragen“ / „Ask ChatGPT“ suchen und an denselben Stellen wieder einsetzen. Bei Claude gehört der Text ins Feld message. Bei ChatGPT: Start new chat AN, Continuous AUS, „Beim Ausführen anzeigen“ AUS. Vollständige Anleitung: install.md im Kit.",
@@ -31,7 +32,9 @@
     "voice_question": "Diktiere deine Frage an Poly",
     "quiet_question": "Frage (stiller Modus — das Ergebnis geht in Zwischenablage und Journal)",
     "multi_question": "Was möchtest du den KI-Chor fragen?",
-    "multi_count": "Der Prompt liegt schon in deiner ZWISCHENABLAGE. Wie viele weitere KIs fragst du von Hand ab (Gemini, Grok, DeepSeek…)? 0 — nur das automatische Paar."
+    "multi_count": "Der Prompt liegt schon in deiner ZWISCHENABLAGE. Wie viele weitere KIs fragst du von Hand ab (Gemini, Grok, DeepSeek…)? 0 — nur das automatische Paar.",
+    "my_rule": "Eine Zeile für den Prüfer. Sie wird in Poly-my-mode.txt gespeichert (Dateien → iCloud Drive → Kurzbefehle), dann startet die Prüfung:",
+    "my_rule_sample": "Prüfe nur Zahlen und Datumsangaben"
   },
   "menu": {
     "main_title": "Modus wählen · zum ersten Mal? ⚖️ Kritik",
@@ -100,6 +103,12 @@
       "Markiere zweifelhafte Behauptungen, erkläre, warum sie zweifelhaft sind, und sage, welche Primärquelle ich prüfen sollte:\n\n",
       "Erkläre das in einfachen Worten für Laien, ohne Fachjargon:\n\n"
     ],
+    "empty_title": "Keine Frage, also wurde nichts gesendet. Wähle eine fertige Aufgabe:",
+    "my_mode_missing_title": "Du hast noch keine eigene Prüfregel (Datei Poly-my-mode.txt). Es wurde nichts gesendet.",
+    "my_mode_missing_items": [
+      "📝 Jetzt nach Vorlage schreiben",
+      "↩️ Zurück zur Frage und zu den Modi"
+    ],
     "claude_down_title": "Claude hat nicht geantwortet. Prüfen mit…",
     "claude_down_items": [
       "🔑 Kostenloser Anbieter-Schlüssel – Einrichtung nötig",
@@ -150,7 +159,6 @@
     "claude_retry": "Claude hat nicht geantwortet — ich versuche es noch einmal mit einem kürzeren Text…",
     "resume": "Weiter mit der gespeicherten ChatGPT-Antwort — es wird keine neue ChatGPT-Nachricht verbraucht.",
     "reverse_start": "✍️ Claude schreibt, ChatGPT prüft: Claude antwortet → ChatGPT verbessert Ton und Formulierung (Lektorat, keine Faktenprüfung). ≈1 Min., bitte das Handy nicht berühren. Meldet ChatGPT «logged out», öffnen Sie dessen App und starten Poly neu.",
-    "my_mode_missing": "Im Ordner «Kurzbefehle» von iCloud Drive gibt es keine Datei «Poly-my-mode.txt». Legen Sie sie mit einer einzigen Zeile für den Prüfer an (zum Beispiel: «Prüfe nur Zahlen und Daten») und starten Sie Poly neu.",
     "ratify": "ChatGPT sucht Fehler im Endergebnis…",
     "manual_copied": "Die Prüfanfrage liegt in der Zwischenablage. Fügen Sie sie in Gemini oder Meta AI ein.",
     "no_key_file": "Im Ordner «Kurzbefehle» von iCloud Drive gibt es keine poly-key.txt. Speichern Sie dort einen kostenlosen Schlüssel (siehe Installationsanleitung) oder wählen Sie eine andere Option.",

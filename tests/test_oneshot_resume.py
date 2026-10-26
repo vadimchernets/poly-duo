@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from test_first_run import LANGS, ROOT, assert_blank_guard, build, kind
+from test_first_run import LANGS, ROOT, assert_blank_guard, assert_duo_blank_guard, build, kind
 
 
 def params(a):
@@ -56,7 +56,9 @@ def test_oneshot_resume_long(tmp_path, lang):
             assert params(a)['text']['WFSerializationType'] == 'WFTextTokenString'
     default = params(actions[ask])['WFAskActionDefaultAnswer']['Value']
     assert list(default['attachmentsByRange'].values())[0]['OutputUUID'] == params(actions[ask - 1])['UUID']
-    assert assert_blank_guard(actions, ui, ui['ask']['question']) == kinds.index('choosefrommenu')
+    main = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
+                and params(a).get('WFMenuPrompt') == ui['menu']['main_title'])
+    assert assert_duo_blank_guard(actions, ui) == main
 
     # --- U-05: resume block, one retry after 3 s, draft saved after the answer
     n = ui['notify']
@@ -75,7 +77,7 @@ def test_oneshot_resume_long(tmp_path, lang):
     # the age window is 15 minutes and the question must be the same one
     assert any(params(a).get('WFTimeUntilUnit') == 'Minutes' for a in actions)
     same = [a for a in actions if kind(a) == 'conditional' and params(a).get('WFCondition') == 4]
-    assert len(same) == 3  # Critique, My mode (shares its block) and the debate
+    assert len(same) == 4  # Critique, My mode (shares its block), the debate, and Duo's own answer (test_duo61)
 
     # --- U-08: one notification (no alert) for a long request, one retry with the cut text
     long_note = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == n['long_text'])

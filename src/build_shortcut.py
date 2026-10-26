@@ -413,6 +413,8 @@ REPORT_MODES = {'critique': 'Critique', 'argue': 'Debate%20to%20agreement', 'sur
                 'synthesis_claude': 'Synthesis', 'synthesis_gpt': 'Synthesis', 'advisor': 'Advisor',
                 None: 'Another%20mode%20from%20the%20menu'}
 MY_MODE_FILE = 'Poly-my-mode.txt'
+# How much of the answer Duo left in the clipboard is remembered (files.last_answer), to recognise it next run
+LAST_ANSWER_CHARS = 200
 REPORT_URL = 'https://github.com/vadimchernets/poly-duo/issues/new?template=run-report.yml'
 LONG_TEXT = 6000
 
@@ -626,6 +628,7 @@ def build(lang, ai=False):
     st_clip, st_share, st_get, st_empty, st_words, g_words = ids(6)
     st_img, st_ocr, st_dtext, g_img = ids(4)
     st_fn, st_clr, g_fn, g_nostart = ids(4)
+    st_last, st_last_t, st_mine, g_last, g_mine, g_rec0, st_ccut, st_ctext = ids(8)
     START_VAR = 'PolyStartText'
     GPT_VAR, CLAUDE_VAR = 'PolyChatGPTAnswer', 'PolyClaudeAnswer'
     OWN_VAR = 'PolyClaudeOwn'   # Critique: Claude's blind answer (step 2); CLAUDE_VAR is the step-3 comparison
@@ -635,11 +638,11 @@ def build(lang, ai=False):
     RETRY_SKIP = set()   # ChatGPT calls that have their own retry or are not a mode's first call (see with_gpt_retry)
     NUMS_VAR, MODE_VAR, MY_RULE = 'PolyOnlyInOne', 'PolyMode', 'PolyMyRule'
     g_rec, g_mm, g_more = ids(3)
-    rc_text = ids(5)
     rv_wrap, rv_claude, rv_prompt, rv_gpt, rv_sum_prompt, rv_sum, rv_out, mm_file, mm_rule = ids(9)
     (fn_get, fn_prompt, fn_gpt, fn_out, nt_get, rm_get, rm_match, rm_item, dv_model, dv_ios, ue_model, ue_ios,
      md_get, rp_get, rp_title) = ids(15)
     g_rat, g_rem = ids(2)
+    g_mmenu, mm_ask, mm_new, mm_save, tl_rget, g_tlrem, g_mmempty, mm_chars = ids(8)
     fn_date, fn_jx, fn_entry = ids(3)
 
     def journal_note(entry, refs=None):
@@ -651,6 +654,29 @@ def build(lang, ai=False):
                 act_set_variable(JOURNAL_EXTRA, uid, 'Text'),
                 act_text(text_token(REPORT_MODES.get(mode, REPORT_MODES[None])), mid),
                 act_set_variable(MODE_VAR, mid, 'Text')]
+
+    def remember_answer(src_uid, src_name):
+        """Duo 6.1: the first LAST_ANSWER_CHARS characters of what Duo just put into the clipboard go to a small
+        file next to the journal, right after each clipboard write (before any screen that waits for the person or
+        any further AI call, so a run cut off later still leaves the file in step with the clipboard). On the next
+        run a clipboard whose first LAST_ANSWER_CHARS characters are the same text is Duo's own answer, not a new
+        question, and is NOT put into the question field (one «Done» would otherwise spend 2–4 messages on it)."""
+        cut, txt, save = new_uuid(), new_uuid(), new_uuid()
+        return [act_first_chars(src_uid, src_name, LAST_ANSWER_CHARS, cut),
+                act_text(text_token('{M}', {'M': (cut, 'Matches')}), txt),
+                act_save_file(L['files.last_answer'], txt, save)]
+
+    def recipes_menu(group, title):
+        """Recipes: a ready task → the question box opens pre-filled with its wording (Duo runs itself with that
+        text as its input, the same way the Share Sheet does), the person edits it and picks a mode."""
+        items, out = L['menu.recipes_items'], [menu_open(group, title, L['menu.recipes_items'])]
+        for i, item in enumerate(items):
+            uid = new_uuid()
+            out += [menu_case(group, item),
+                    act_text(text_token(L['menu.recipes_texts'][i]), uid),
+                    act_run_shortcut(RELEASE_NAME, uid, 'Text'),
+                    {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}}]
+        return out + [menu_close(group)]
 
     # --- Critique
     # --- Debate until agreement (see argue_round below)
@@ -978,6 +1004,7 @@ def build(lang, ai=False):
             menu_case(g_down, items[2]),
             act_get_variable(CHECK_VAR, man_get),
             act_clipboard(attachment(man_get, 'Variable')),
+            *remember_answer(man_get, 'Variable'),
             act_notify(L['notify.manual_copied']),
             menu_close(g_down),
             if_close(g_chk),
@@ -1034,13 +1061,32 @@ def build(lang, ai=False):
         act_first_match(st_clip, 'Clipboard', r'\S+\s+\S+\s+\S+', st_words),
         if_output(g_words, st_words, 'Matches', 100),
         act_set_variable(START_VAR, st_clip, 'Clipboard'),
+        # Duo 6.1: Duo leaves its answer in the clipboard. If the person copied nothing new, that answer must not
+        # come back as the next question: when the clipboard's first LAST_ANSWER_CHARS characters are the same text
+        # as the start of Duo's last clipboard write (files.last_answer, see remember_answer; both sides cut by the
+        # same Match Text → Text), the field stays empty. «Is», not «contains»: a text that starts differently, or one
+        # that merely includes a short answer such as «Yes.», is still offered; a text that begins with the same 200
+        # characters (a Duo answer with the person's lines added after it) counts as Duo's and must be pasted. A
+        # missing file (first run) is no value, and the clipboard is used as before. Same screens, same taps.
+        act_get_file(L['files.last_answer'], st_last),
+        act_text(text_token('{F}', {'F': (st_last, 'File')}), st_last_t),
+        if_output(g_last, st_last_t, 'Text', 100),
+        act_first_chars(st_clip, 'Clipboard', LAST_ANSWER_CHARS, st_ccut),
+        act_text(text_token('{M}', {'M': (st_ccut, 'Matches')}), st_ctext),
+        if_output(g_mine, st_ctext, 'Text', 4, WFConditionalActionString=text_token('{F}', {'F': (st_last_t, 'Text')})),
+        act_text(text_token(''), st_mine),
+        act_set_variable(START_VAR, st_mine, 'Text'),
+        if_close(g_mine),
+        if_close(g_last),
         if_close(g_words),
         if_close(g_start),
         act_get_variable(START_VAR, st_get),
         act_ask(L['ask.question'], question, default_from=(st_get, 'Variable')),
-        # An empty question would spend 1–8 messages on nothing: say so and stop before any AI is asked
+        # An empty question would spend 1–8 messages on nothing, so no AI is asked. Instead of a dead end the person
+        # gets the Recipes (ready tasks): «I don't know what to ask» is one tap from a recipe; the menu's own Cancel
+        # ends the run, as the old stop did. Recipes run Duo again with their wording in the question field.
         if_output(g_blank, question, 'Provided Input', 101),
-        act_notify(L['notify.empty_question']),
+        *recipes_menu(g_rec0, L['menu.empty_title']),
         {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
         if_close(g_blank),
         menu_open(g_main, L['menu.main_title'], MAIN),
@@ -1276,6 +1322,7 @@ def build(lang, ai=False):
                             {'C': (i1_claude, 'Ask Claude'), 'G': (i1_gpt, 'Ask ChatGPT')}), i1_codes),
         # the raw SVG code reaches the clipboard before the file is written
         act_clipboard(attachment(i1_codes, 'Text')),
+        *remember_answer(i1_codes, 'Text'),
         act_save_file(L['files.image_html'], i1_html, i1_file),
         act_quick_look(attachment(i1_file, 'Saved File')),
         act_set_variable(RESULT, i1_codes, 'Text'),
@@ -1294,6 +1341,7 @@ def build(lang, ai=False):
         act_text(text_token(L['output.image_codes'],
                             {'C': (i2_claude, 'Ask Claude'), 'G': (i2_gpt, 'Ask ChatGPT')}), i2_raw),
         act_clipboard(attachment(i2_raw, 'Text')),
+        *remember_answer(i2_raw, 'Text'),
         act_save_file(L['files.image_html'], i2_html, i2_file),
         act_quick_look(attachment(i2_file, 'Saved File')),
         act_notify(L['notify.image_judge']),
@@ -1329,16 +1377,9 @@ def build(lang, ai=False):
         act_set_variable(RESULT, hp_text, 'Text'),
         *journal_note(('help', L['journal.help'])),
 
-        # ---- Recipes: a ready task → the question box opens pre-filled with its wording (Duo runs itself with
-        # that text as its input, the same way the Share Sheet does), the person edits it and picks a mode.
+        # ---- Recipes (also offered when the question is left empty, see above)
         menu_case(g_extra, EXTRA[7]),
-        menu_open(g_rec, L['menu.recipes_title'], L['menu.recipes_items']),
-        *[x for i in range(len(L['menu.recipes_items'])) for x in (
-            menu_case(g_rec, L['menu.recipes_items'][i]),
-            act_text(text_token(L['menu.recipes_texts'][i]), rc_text[i]),
-            act_run_shortcut(RELEASE_NAME, rc_text[i], 'Text'),
-            {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}})],
-        menu_close(g_rec),
+        *recipes_menu(g_rec, L['menu.recipes_title']),
 
         # ---- Critique ⇄: Claude writes first, ChatGPT checks (texts, tone, strategy)
         menu_case(g_extra, EXTRA[8]),
@@ -1350,6 +1391,7 @@ def build(lang, ai=False):
         act_notify(L['notify.critique_step2']),
         act_gpt(text_token('{P}', {'P': (rv_prompt, 'Text')}), rv_gpt),
         act_clipboard(attachment(rv_gpt, 'Ask ChatGPT')),
+        *remember_answer(rv_gpt, 'Ask ChatGPT'),
         act_notify(L['notify.critique_summary']),
         act_text(text_token(L.prompt('summary-reverse'),
                             {**QUESTION, 'CLAUDE_ANSWER': (rv_claude, 'Ask Claude'),
@@ -1361,14 +1403,30 @@ def build(lang, ai=False):
         *journal_note(('critique_reverse', L['journal.critique_reverse']), {'X': (rv_claude, 'Ask Claude')}),
 
         # ---- My mode: Critique with the person's own one-line instruction to the checker, read from
-        # Poly-my-mode.txt next to the journal; without the file, say how to make it and stop (nothing spent)
+        # Poly-my-mode.txt next to the journal. Without the file (Duo 6.1): a two-item menu instead of a dead end —
+        # write the rule now from a sample (the field opens pre-filled; Done saves the file and the check goes on with
+        # it, nothing spent before that), or go back: Duo runs again with the same question in the field, then the
+        # mode menu.
         menu_case(g_extra, EXTRA[9]),
         *critique_block(pre=[
             act_get_file(MY_MODE_FILE, mm_file),
             act_set_variable(MY_RULE, mm_file, 'File'),
             if_no_value(g_mm, MY_RULE),
-            act_notify(L['notify.my_mode_missing']),
+            menu_open(g_mmenu, L['menu.my_mode_missing_title'], L['menu.my_mode_missing_items']),
+            menu_case(g_mmenu, L['menu.my_mode_missing_items'][0]),
+            act_ask(L['ask.my_rule'], mm_ask, default=L['ask.my_rule_sample']),
+            # a cleared (or blank) field saves no empty rule file (it would hide this menu for good) and spends nothing
+            act_first_match(mm_ask, 'Provided Input', r'\S', mm_chars),
+            if_output(g_mmempty, mm_chars, 'Matches', 101),
             {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
+            if_close(g_mmempty),
+            act_text(text_token('{A}', {'A': (mm_ask, 'Provided Input')}), mm_new),
+            act_save_file(MY_MODE_FILE, mm_new, mm_save),
+            act_set_variable(MY_RULE, mm_new, 'Text'),
+            menu_case(g_mmenu, L['menu.my_mode_missing_items'][1]),
+            act_run_shortcut(RELEASE_NAME, question, 'Provided Input'),
+            {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
+            menu_close(g_mmenu),
             if_close(g_mm),
             act_get_variable(MY_RULE, mm_rule)], rule_uid=mm_rule),
         menu_close(g_extra),
@@ -1382,6 +1440,12 @@ def build(lang, ai=False):
         act_notify(L['notify.tail_empty']),
         *claude_down_menu(),
         if_close(g_empty),
+        # what the clipboard now holds (the result above, or the one the «Claude did not answer» menu delivered) is
+        # remembered before the result screen, so the next run does not offer it back as a question
+        if_has_value(g_tlrem, RESULT),
+        act_get_variable(RESULT, tl_rget),
+        *remember_answer(tl_rget, 'Variable'),
+        if_close(g_tlrem),
         # ONE Quick Look, after the «Claude did not answer» menu too, and only when there is something to show
         if_has_value(g_show, RESULT),
         act_quick_look(variable(RESULT)),
@@ -1410,6 +1474,7 @@ def build(lang, ai=False):
         act_text(text_token(L['output.ratify'], {'R': (fn_get, 'Variable'), 'X': (fn_gpt, 'Ask ChatGPT')}), fn_out),
         act_set_variable(RESULT, fn_out, 'Text'),
         act_clipboard(variable(RESULT)),
+        *remember_answer(fn_out, 'Text'),
         act_quick_look(variable(RESULT)),
         # the corrected final answer goes into the journal as its own entry (the main entry above was written before
         # this menu and holds the earlier version)

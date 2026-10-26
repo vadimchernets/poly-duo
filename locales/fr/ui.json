@@ -17,7 +17,8 @@
   "files": {
     "journal": "Poly-journal.md",
     "image_html": "Poly-image.html",
-    "pc_notice": "Poly-pc-notice.txt"
+    "pc_notice": "Poly-pc-notice.txt",
+    "last_answer": "Poly-last-answer.txt"
   },
   "comment": {
     "main": "Poly — le duo ChatGPT + Claude. Si les actions Claude/ChatGPT sont grisées : supprime-les, cherche « Ask Claude » (ou « Demander à Claude ») / « Ask ChatGPT » et remets-les aux mêmes endroits. Chez Claude, le texte va dans le champ message. Chez ChatGPT : Start new chat ACTIVÉ, Continuous DÉSACTIVÉ, « Afficher lors de l’exécution » DÉSACTIVÉ. Guide complet : install.md, dans le kit.",
@@ -31,7 +32,9 @@
     "voice_question": "Dicte ta question pour Poly",
     "quiet_question": "Question (mode discret — le résultat part dans le presse-papiers et le journal)",
     "multi_question": "Que veux-tu demander au chœur d’IA ?",
-    "multi_count": "Le prompt est déjà dans ton PRESSE-PAPIERS. Combien d’IA vas-tu encore interroger à la main (Gemini, Grok, DeepSeek…) ? 0 — seulement le duo automatique."
+    "multi_count": "Le prompt est déjà dans ton PRESSE-PAPIERS. Combien d’IA vas-tu encore interroger à la main (Gemini, Grok, DeepSeek…) ? 0 — seulement le duo automatique.",
+    "my_rule": "Une ligne pour le vérificateur. Elle est enregistrée dans Poly-my-mode.txt (Fichiers → iCloud Drive → Raccourcis), puis la vérification commence :",
+    "my_rule_sample": "Vérifie seulement les chiffres et les dates"
   },
   "menu": {
     "main_title": "Choisis un mode · première fois ? ⚖️ Critique",
@@ -100,6 +103,12 @@
       "Signale les affirmations douteuses, explique pourquoi elles le sont et dis-moi quelle source primaire je devrais consulter :\n\n",
       "Explique ceci avec des mots simples pour un non-spécialiste, sans jargon :\n\n"
     ],
+    "empty_title": "Pas de question, rien n’a été envoyé. Choisis une tâche toute prête :",
+    "my_mode_missing_title": "Tu n’as pas encore de règle de vérification (le fichier Poly-my-mode.txt). Rien n’a été envoyé.",
+    "my_mode_missing_items": [
+      "📝 L’écrire maintenant d’après un modèle",
+      "↩️ Retour à la question et aux modes"
+    ],
     "claude_down_title": "Claude n'a pas répondu. Vérifier avec…",
     "claude_down_items": [
       "🔑 Une clé gratuite d'un fournisseur — configuration requise",
@@ -150,7 +159,6 @@
     "claude_retry": "Claude n'a pas répondu : j'essaie une fois de plus avec un texte plus court…",
     "resume": "Je continue avec la réponse de ChatGPT déjà enregistrée : aucun nouveau message ChatGPT n'est dépensé.",
     "reverse_start": "✍️ Claude écrit, ChatGPT relit : Claude répond → ChatGPT corrige le ton et la formulation (de la relecture, pas une vérification des faits). ≈1 min, ne touche pas au téléphone. Si ChatGPT dit « logged out », ouvre son app et relance Poly.",
-    "my_mode_missing": "Il n'y a pas de fichier « Poly-my-mode.txt » dans le dossier Raccourcis d'iCloud Drive. Crée-le avec une seule ligne pour le vérificateur (par exemple : « Vérifie seulement les chiffres et les dates »), puis relance Poly.",
     "ratify": "ChatGPT cherche des erreurs dans le résultat final…",
     "manual_copied": "La demande de vérification est dans le presse-papiers. Colle-la dans Gemini ou Meta AI.",
     "no_key_file": "Il n'y a pas de poly-key.txt dans le dossier Raccourcis d'iCloud Drive. Enregistre-y une clé gratuite (voir le guide d'installation) ou choisis une autre option.",

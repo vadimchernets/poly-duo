@@ -17,7 +17,8 @@
   "files": {
     "journal": "Poly-journal.md",
     "image_html": "Poly-image.html",
-    "pc_notice": "Poly-pc-notice.txt"
+    "pc_notice": "Poly-pc-notice.txt",
+    "last_answer": "Poly-last-answer.txt"
   },
   "comment": {
     "main": "Poly — ChatGPT + Claude のデュオ。Claude / ChatGPT のアクションがグレーアウトしていたら、いったん削除し、「Ask Claude」（「Claudeに質問」）/「Ask ChatGPT」で検索して同じ場所に入れ直してください。Claude ではテキストを message フィールドに入れます。ChatGPT では Start new chat をオン、Continuous をオフ、「実行時に表示」をオフに。詳しい手順はキット内の install.md。",
@@ -31,7 +32,9 @@
     "voice_question": "Poly への質問を話してください",
     "quiet_question": "質問（サイレントモード — 結果はクリップボードと記録へ）",
     "multi_question": "AI の合唱に何を聞きますか？",
-    "multi_count": "プロンプトはすでにクリップボードにあります。あと何個の AI を手作業で聞きますか（Gemini、Grok、DeepSeek…）？ 0 — 自動のペアだけ。"
+    "multi_count": "プロンプトはすでにクリップボードにあります。あと何個の AI を手作業で聞きますか（Gemini、Grok、DeepSeek…）？ 0 — 自動のペアだけ。",
+    "my_rule": "チェック役への指示を1行で。Poly-my-mode.txt（ファイル → iCloud Drive → ショートカット）に保存され、チェックが始まります：",
+    "my_rule_sample": "数字と日付だけを確認"
   },
   "menu": {
     "main_title": "モードを選択 · 初めてなら ⚖️ 批評",
@@ -100,6 +103,12 @@
       "疑わしい主張に印を付け、なぜ疑わしいのかを説明し、私がどの一次情報源を確認すべきか教えてください：\n\n",
       "専門家でない人向けに、専門用語を使わずやさしい言葉で説明してください：\n\n"
     ],
+    "empty_title": "質問がないため、何も送信していません。用意されたタスクを選んでください：",
+    "my_mode_missing_title": "自分のチェックルールがまだありません（ファイル Poly-my-mode.txt）。何も送信していません。",
+    "my_mode_missing_items": [
+      "📝 見本をもとに今すぐ書く",
+      "↩️ 質問とモードの選択に戻る"
+    ],
     "claude_down_title": "Claude から返答がありませんでした。確認方法は…",
     "claude_down_items": [
       "🔑 プロバイダーの無料キー — 設定が必要",
@@ -150,7 +159,6 @@
     "claude_retry": "Claude から返答がありませんでした。もっと短い文章でもう一度試します…",
     "resume": "保存済みの ChatGPT の回答から続けます。ChatGPT のメッセージは新たに消費されません。",
     "reverse_start": "✍️ Claude が書き、ChatGPT が確認：Claude が回答 → ChatGPT がトーンと表現を整えます（校正であり、事実確認ではありません）。約1分、スマホには触れないでください。ChatGPT が「logged out」と出したら、そのアプリを開いて Poly をもう一度実行してください。",
-    "my_mode_missing": "iCloud Drive の「ショートカット」フォルダに「Poly-my-mode.txt」がありません。チェック役への指示を1行だけ書いて作成し（例：「数字と日付だけを確認」）、Poly をもう一度実行してください。",
     "ratify": "ChatGPT が最終結果の誤りを探しています…",
     "manual_copied": "確認用のリクエストをクリップボードにコピーしました。Gemini または Meta AI に貼り付けてください。",
     "no_key_file": "iCloud Drive の「ショートカット」フォルダに poly-key.txt がありません。無料のキーを保存するか（インストールガイド参照）、別の項目を選んでください。",

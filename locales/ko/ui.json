@@ -17,7 +17,8 @@
   "files": {
     "journal": "Poly-journal.md",
     "image_html": "Poly-image.html",
-    "pc_notice": "Poly-pc-notice.txt"
+    "pc_notice": "Poly-pc-notice.txt",
+    "last_answer": "Poly-last-answer.txt"
   },
   "comment": {
     "main": "Poly — ChatGPT와 Claude 듀오. Claude/ChatGPT 동작이 회색으로 보이면: 삭제하고 «Ask Claude» / «Ask ChatGPT»를 검색해서 같은 자리에 다시 넣으세요. Claude는 message 필드의 텍스트를 받습니다. ChatGPT: Start new chat 켜기, Continuous 끄기, «실행 시 보기» 끄기. 전체 안내: 키트의 INSTALL.md.",
@@ -31,7 +32,9 @@
     "voice_question": "Poly에게 물어볼 질문을 말해 주세요",
     "quiet_question": "질문 (조용한 모드 — 결과는 클립보드와 저널로 가요)",
     "multi_question": "AI 합창단에게 무엇을 물어볼까요?",
-    "multi_count": "프롬프트가 이미 클립보드에 있어요. 직접 몇 개의 AI에게 더 물어볼까요(Gemini, Grok, DeepSeek…)? 0이면 자동 듀오만 써요."
+    "multi_count": "프롬프트가 이미 클립보드에 있어요. 직접 몇 개의 AI에게 더 물어볼까요(Gemini, Grok, DeepSeek…)? 0이면 자동 듀오만 써요.",
+    "my_rule": "검토자를 위한 한 줄. Poly-my-mode.txt(파일 → iCloud Drive → 단축어)에 저장되고 확인이 시작돼요:",
+    "my_rule_sample": "숫자와 날짜만 확인해 줘"
   },
   "menu": {
     "main_title": "모드를 고르세요 · 처음이라면 ⚖️ 검토",
@@ -100,6 +103,12 @@
       "의심스러운 주장을 표시하고, 왜 의심스러운지 설명해 주세요. 그리고 제가 어떤 1차 출처를 확인해야 하는지도 알려 주세요:\n\n",
       "전문가가 아닌 사람도 알 수 있게 전문 용어 없이 쉬운 말로 설명해 주세요:\n\n"
     ],
+    "empty_title": "질문이 없어서 아무것도 보내지 않았어요. 준비된 작업을 고르세요:",
+    "my_mode_missing_title": "아직 나만의 확인 규칙이 없어요 (파일 Poly-my-mode.txt). 아무것도 보내지 않았어요.",
+    "my_mode_missing_items": [
+      "📝 예시를 보고 지금 쓰기",
+      "↩️ 질문과 모드 선택으로 돌아가기"
+    ],
     "claude_down_title": "Claude가 답하지 않았습니다. 다음으로 확인…",
     "claude_down_items": [
       "🔑 제공업체 무료 키 — 설정 필요",
@@ -150,7 +159,6 @@
     "claude_retry": "Claude가 답을 보내지 않았어요 — 더 짧은 글로 한 번 더 시도해요…",
     "resume": "저장된 ChatGPT 답에서 이어 가요 — ChatGPT 메시지를 새로 쓰지 않아요.",
     "reverse_start": "✍️ Claude가 쓰고 ChatGPT가 확인해요: Claude가 답하고 → ChatGPT가 어조와 표현을 다듬어요(교정이지 사실 확인은 아니에요). 약 1분, 휴대폰을 만지지 마세요. ChatGPT가 «logged out»이라고 하면 ChatGPT 앱을 열고 Poly를 다시 실행하세요.",
-    "my_mode_missing": "iCloud Drive의 단축어 폴더에 «Poly-my-mode.txt» 파일이 없어요. 검토자를 위한 한 줄을 적어 만든 다음(예: «숫자와 날짜만 확인해 줘») Poly를 다시 실행하세요.",
     "ratify": "ChatGPT가 최종 결과에서 실수를 찾고 있어요…",
     "manual_copied": "확인 요청이 클립보드에 있습니다. Gemini 또는 Meta AI에 붙여넣으세요.",
     "no_key_file": "iCloud Drive의 단축어 폴더에 poly-key.txt가 없습니다. 무료 키를 저장하거나(설치 안내 참고) 다른 항목을 선택하세요.",

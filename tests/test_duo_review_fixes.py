@@ -163,7 +163,7 @@ def test_resume_compares_text_not_file_objects(tmp_path, lang):
     actions = build(tmp_path, lang)
     same = [a for a in actions if kind(a) == 'conditional' and params(a).get('WFCondition') == 4
             and 'WFConditionalActionString' in params(a)]
-    assert len(same) == 3
+    assert len(same) == 4  # + Duo 6.1: the clipboard's start against Duo's last answer (test_duo61)
     by_uid = {params(a).get('UUID'): a for a in actions}
     for c in same:
         node = params(c)['WFInput']['Variable']['Value']

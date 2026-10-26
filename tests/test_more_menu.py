@@ -38,13 +38,10 @@ def test_more_menu(tmp_path, lang):
             for v in params(a)['WFInput']['Value']['attachmentsByRange'].values()]
     assert len(refs) == 3 and not any(r.get('OutputName') == 'Provided Input' for r in refs)
 
-    # Recipes put a ready wording into the question box by running Duo with it as input; My mode stops
-    # without its file; Critique ⇄ asks Claude first and ChatGPT second
+    # Recipes put a ready wording into the question box by running Duo with it as input; Critique ⇄ asks Claude first and ChatGPT second
     texts = [params(a)['WFTextActionText']['Value']['string'] for a in actions if kind(a) == 'gettext']
     assert all(r in texts for r in m['recipes_texts'])
-    note = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody')
-                == ui['notify']['my_mode_missing'])
-    assert kind(actions[note + 1]) == 'exit'
+    assert 'my_mode_missing' not in ui['notify']   # Duo 6.1: a menu, not a dead-end notice (test_duo61)
     rev = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody')
                == ui['notify']['reverse_start'])
     order = [kind(a) for a in actions[rev:rev + 14] if kind(a) in ('AskIntent', 'ClaudeAppIntentsExtension')]

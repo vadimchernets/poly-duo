@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed (Duo 6.1, 2026-10-26)
+- **Duo no longer offers its own last answer as the next question.** Duo leaves its answer in the
+  clipboard; the next run pre-filled the question box with it, and one «Done» spent 3 messages on
+  it. Now, right after each time Duo writes to the clipboard, the first 200 characters go to
+  `Poly-last-answer.txt` next to the journal; a clipboard whose first 200 characters are the same
+  text leaves the box empty. A text that starts differently, or one that merely includes a short
+  answer, is still offered; a text that begins with the same 200 characters (a Duo answer with
+  your own lines added after it) counts as Duo's, so paste it (one tap), as when running Duo's
+  own answer again on purpose. No new menu or tap. Not checked on a phone: whether iOS asks once
+  for access to the new file (it sits in the same folder as the journal); the first save comes
+  before the result screen, so a missed request there would end that run before the screen
+  (the answer is already in the clipboard). The iPhone check before the links should cover the
+  first run after updating from Duo 6, and a second run without copying anything new.
+- **Recipes without typing a question.** An empty question still spends nothing, but instead of
+  stopping it opens the Recipes; the menu's Cancel ends the run (one tap more than the old stop).
+- **«My own checking rule» without its file is no longer a dead end.** A two-item menu: write
+  the rule now (the field opens with a sample; Done saves `Poly-my-mode.txt` and the check goes
+  on; a cleared or blank field saves nothing and stops) or go back to the question and the mode menu.
+
 ### Changed (2026-10-26, the strengthening plan; not yet in the iCloud links)
 - **Duo: the checker no longer rewrites a correct draft.** critique, advisor and argue-2 (en, ru)
   ask it to say first that the draft is right, to list only real errors and to suggest removing

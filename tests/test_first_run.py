@@ -39,6 +39,31 @@ def assert_blank_guard(actions, ui, prompt, message=None):
     return ask + 5
 
 
+def assert_duo_blank_guard(actions, ui):
+    """Duo 6.1: right after the question, If <the question> has no value → the Recipes menu (a ready task runs Duo
+    again with its wording; the menu's own Cancel ends the run) → stop → End If. No AI is asked in this branch."""
+    prompt = ui['ask']['question']
+    ask = next(i for i, a in enumerate(actions)
+               if kind(a) == 'ask' and a['WFWorkflowActionParameters']['WFAskActionPrompt'] == prompt)
+    condition = actions[ask + 1]['WFWorkflowActionParameters']
+    assert kind(actions[ask + 1]) == 'conditional' and condition['WFCondition'] == 101
+    source = condition['WFInput']['Variable']['Value']
+    assert (source['OutputUUID'], source['OutputName']) == \
+        (actions[ask]['WFWorkflowActionParameters']['UUID'], 'Provided Input')
+    menu = actions[ask + 2]['WFWorkflowActionParameters']
+    assert menu['WFMenuPrompt'] == ui['menu']['empty_title']
+    assert menu['WFMenuItems'] == ui['menu']['recipes_items']
+    n = len(ui['menu']['recipes_items'])
+    body = [kind(a) for a in actions[ask + 3:ask + 3 + 4 * n]]
+    assert body == ['choosefrommenu', 'gettext', 'runworkflow', 'exit'] * n
+    end = ask + 3 + 4 * n
+    assert [kind(a) for a in actions[end:end + 3]] == ['choosefrommenu', 'exit', 'conditional']
+    assert actions[end + 2]['WFWorkflowActionParameters']['GroupingIdentifier'] == condition['GroupingIdentifier']
+    branch = actions[ask + 1:end + 3]
+    assert not any(kind(a) in ('AskIntent', 'ClaudeAppIntentsExtension', 'askllm') for a in branch)
+    return end + 3
+
+
 def kind(action):
     return action['WFWorkflowActionIdentifier'].rsplit('.', 1)[-1]
 
@@ -60,8 +85,10 @@ def test_first_minute(tmp_path, lang):
     assert [a['WFAlertActionTitle'] for a in alerts] == [ui['alert']['first_run_title']]
     assert not any(k in ('AskIntent', 'ClaudeAppIntentsExtension') for k in kinds[:ask])
 
-    # an empty question stops the run before the mode menu, so it spends nothing
-    assert assert_blank_guard(actions, ui, ui['ask']['question']) == kinds.index('choosefrommenu')
+    # an empty question never reaches the mode menu, so it spends nothing; it offers the Recipes instead (Duo 6.1)
+    main = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
+                and a['WFWorkflowActionParameters'].get('WFMenuPrompt') == ui['menu']['main_title'])
+    assert assert_duo_blank_guard(actions, ui) == main
 
     # «done» and «empty» are the two branches of one check, never shown together
     done = next(i for i, a in enumerate(actions) if notification(a) == ui['notify']['tail_done'])
