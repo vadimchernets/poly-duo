@@ -1,0 +1,16 @@
+**Bottom line: $18,000 per recipient for 2024. The colleague's figure is correct.**
+
+I read the question as asking about the §2503(b) annual exclusion for gifts made in calendar year 2024. The IRS set the figure in Rev. Proc. 2023-34.
+
+- **Per donor:** each donor can give $18,000 to each recipient. That was $17,000 in 2023 and is $19,000 in 2025.
+- **Married couples:** spouses can elect gift-splitting under §2513 to give $36,000 per recipient. Both spouses must consent, and a Form 709 must be filed even if no tax is due.
+- **Present interest only:** the exclusion covers only gifts the recipient can use now. Gifts in trust usually need Crummey withdrawal rights or similar terms to qualify.
+- **Gifts above the limit:** the excess isn't taxed right away. You file Form 709, and the excess reduces your lifetime exemption, which was $13.61 million per person in 2024.
+- **Gifts that don't count at all:**
+  - Tuition paid directly to a school and medical expenses paid directly to a provider don't count toward the $18,000.
+  - Gifts to a US-citizen spouse are unlimited under the marital deduction.
+  - For a non-citizen spouse, the 2024 annual limit was $185,000.
+
+Confidence: high
+
+No errors in the colleague's answer

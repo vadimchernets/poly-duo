@@ -1,0 +1,17 @@
+**Bottom line: 12 workweeks.** An eligible employee can take up to 12 workweeks of unpaid, job-protected leave in a 12-month period for their own serious health condition (29 U.S.C. § 2612(a)(1)(D)).
+
+The colleague's answer is correct but very thin. Here is the context it left out:
+
+- **Eligibility:** The employer must be covered. That means a private employer with 50 or more employees, or any public agency or school. The employee must have worked there at least 12 months and at least 1,250 hours in the prior 12 months. They must also work at a site with 50 or more employees within 75 miles.
+- **Pay:** The leave is unpaid. The employee may choose to use accrued paid leave during it, or the employer may require it.
+- **Format:** The leave can be taken all at once, intermittently, or on a reduced schedule when medically necessary.
+- **The 12-month period:** The employer chooses how to measure it. The options are a calendar year, a fixed fiscal year, a rolling period measured forward, or a rolling period measured backward.
+- **Protections:** The employee returns to the same job or an equivalent one. Group health coverage continues on the same terms as if they were working.
+- **The 26-week figure:** This is a separate entitlement for military caregiver leave. It does not apply to the employee's own condition.
+- **State law:** Some states give more leave or paid leave, such as California and New York. That is separate from the federal FMLA.
+
+I did not check for amendments to the statute or regulations. The 12-week figure has been stable for decades.
+
+Confidence: high
+
+Corrections to the colleague's answer: No errors in the colleague's answer.

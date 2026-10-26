@@ -1,0 +1,5 @@
+• W: Gives 3 with the reference-valid sequence wolf+cabbage, return alone, goat.  
+  X: Final answer is 3 and its stated sequence is valid, despite extra commentary.  
+  Y: Final answer is 3 and its alternative valid sequence also achieves 3.  
+  Z: Final answer is 3 and both presented sequences are valid.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

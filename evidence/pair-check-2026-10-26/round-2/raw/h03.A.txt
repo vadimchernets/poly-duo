@@ -1,0 +1,5 @@
+Yes—switch to door 2. Your chance of winning is 100%, because you can directly see the car behind it.
+
+Facts: The host’s action and the usual Monty Hall probabilities are irrelevant once the car’s location is visible.
+
+Conclusion: Switching from door 1 to door 2 guarantees the car.

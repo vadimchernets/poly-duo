@@ -1,0 +1,10 @@
+**2^16 = 65 536.**
+
+Reading chosen: ordinary exponentiation of integers (2 multiplied by itself 16 times).
+
+Facts:
+- 2^8 = 256
+- 2^16 = 256 × 256 = 65 536
+- It is also the number of distinct values in 16 bits (0 to 65 535).
+
+Conclusion: 65 536. I am sure of this result.

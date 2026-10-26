@@ -1,0 +1,6 @@
+- **W:** It says 12 workweeks and mentions 26 weeks only for military caregiver leave, so it matches the reference.
+- **X:** It says 12 workweeks for one's own serious health condition and correctly keeps the 26-week figure separate.
+- **Y:** It gives "up to 12 workweeks" for the employee's own serious health condition, which matches the reference.
+- **Z:** It says 12 workweeks, cites 29 U.S.C. § 2612(a)(1)(D), and treats 26 weeks as separate military caregiver leave, so it matches.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

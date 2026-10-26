@@ -1,0 +1,20 @@
+**14**, and the colleague's answer is correct.
+
+Count per word:
+- tattered: 2
+- banner: 1
+- fluttered: 2
+- above: 1
+- the: 1
+- battered: 2
+- battlements: 2
+- the: 1
+- tattooed: 1
+- attacked: 1
+- A, as, knight: 0
+
+Total: 2+1+2+1+1+2+2+1+1+1 = 14.
+
+Confidence: high
+
+No errors in the colleague's answer

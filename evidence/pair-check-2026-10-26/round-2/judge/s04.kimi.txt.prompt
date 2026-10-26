@@ -1,0 +1,54 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is the sum of the decimal digits of 11^86?
+
+REFERENCE:
+454
+
+CRITERION:
+Correct iff exactly this number.
+
+=== ANSWER W ===
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "n=11**86; print(n); print(sum(map(int,str(n))))"</parameter>
+</invoke>
+
+=== ANSWER X ===
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "n=11**86;print(n,len(str(n)),sum(map(int,str(n))))"</parameter>
+</invoke>
+to=
+
+
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "n=11**86;print(n);print(len(str(n)));print(sum(map(int,str(n))))"</parameter>
+</invoke>
+
+=== ANSWER Y ===
+The colleague's number looks wrong (11^86 should have about 90 digits, theirs has 45), so I'll compute it directly.
+
+
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "n=11**86; print(n); print(len(str(n))); print(sum(map(int,str(n))))"</parameter>
+</invoke>
+
+=== ANSWER Z ===
+The sum of the decimal digits of \(11^{86}\) is **439**.
+
+\[
+11^{86}=484851478020272049990232001203901432179349361
+\]
+
+Adding its decimal digits gives:
+
+\[
+4+8+4+\cdots+6+1=\boxed{439}.
+\]
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

@@ -1,0 +1,9 @@
+**130°** — the colleague's answer is correct.
+
+Hour hand: 3:40 is 3 h 40 min = 3⅔ h, and 3⅔ × 30° = 110°.
+Minute hand: 40 × 6° = 240°.
+Difference: 240° − 110° = 130°. This is under 180°, so it is already the smaller angle.
+
+Confidence: high
+
+No errors in the colleague's answer

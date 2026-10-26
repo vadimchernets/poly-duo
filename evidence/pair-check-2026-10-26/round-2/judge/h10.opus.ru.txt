@@ -1,0 +1,6 @@
+- W: Final answer is 5 cats, matching the reference; the assumptions caveat does not contradict it.
+- X: Final answer is 5 cats, matching the reference; the mention of the common wrong answer (100) is explanatory, not endorsed.
+- Y: Final answer is 5 cats, matching the reference.
+- Z: Final answer is 5 cats ("5 кошек"), matching the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

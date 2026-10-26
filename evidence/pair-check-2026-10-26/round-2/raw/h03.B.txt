@@ -1,0 +1,13 @@
+**Yes, switch to door 2: you win with 100% probability.** The colleague's answer is correct.
+
+Reading chosen: the glass is fully transparent, so the car is visibly behind door 2, and the host's reveal of a goat behind door 3 is consistent with that.
+
+- The classic 1/3 vs 2/3 split exists only because the car's location is hidden. Here it is visible, so there is nothing to estimate.
+- Only one car exists and it is behind door 2, so door 1 (your pick) has a goat. Switching therefore wins every time.
+- This holds whatever the host does. You would have switched even if the host had opened nothing.
+
+The only way the answer falls below 100% is if you doubt what you see (a mirror trick, say) or the rules let the car be moved after the reveal. Nothing in the question suggests either.
+
+Confidence: high
+
+No errors in the colleague's answer

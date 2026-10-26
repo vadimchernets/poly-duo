@@ -1,0 +1,55 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+A recipe needs 2.5 US cups of milk. How many millilitres is that, to the nearest millilitre? (1 US cup = 236.588 ml)
+
+REFERENCE:
+591 ml
+
+CRITERION:
+Correct iff 591 ml.
+
+=== ANSWER W ===
+**591 ml.**
+
+2.5 × 236.588 = 591.47 ml, which rounds to 591 ml because the first decimal (4) is below 5.
+
+The colleague's answer has an internal contradiction. It states 592 ml at the top, but its own calculation gives 591.47, which rounds to 591.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The headline answer "592 ml" is wrong. Its own calculation (591.47 ml) and its own final rounding step both give 591 ml, so the headline contradicts the working.
+
+=== ANSWER X ===
+**591 ml**
+
+Reading chosen: US customary cups, with the given factor of 236.588 ml per cup.
+
+Calculation: 2.5 × 236.588 = 591.47 ml. The fractional part, 0.47, is below 0.5, so it rounds down to 591 ml.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The colleague's headline answer of "592 ml" is wrong. Their own calculation gives 591.47 ml, which they then correctly rounded to 591 ml. The headline contradicts that, so the final answer is 591 ml, not 592 ml.
+
+=== ANSWER Y ===
+592 ml.
+
+Calculation: 2.5 × 236.588 = 591.47 ml, which rounds to 591 ml.
+
+=== ANSWER Z ===
+**591 ml** (to the nearest millilitre)
+
+Reading chosen: US customary cups, using the given 236.588 ml per cup.
+
+Calculation: 2.5 × 236.588 = 591.47 ml. The fractional part, 0.47, is below 0.5, so it rounds down to 591.
+
+Not in doubt: the arithmetic. The only assumption is the supplied conversion factor. A "metric cup" of 250 ml would give 625 ml, but that is not what the question specifies.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

@@ -1,0 +1,9 @@
+**W:** The final answer is $0.10, and the $0.05 only answers a differently worded riddle, so it doesn't hedge on this question.
+
+**X:** It commits to $0.10. The "Not sure" note is about whether the user meant the classic riddle, not about the answer to the question as written.
+
+**Y:** It states $0.10 (10 cents) directly.
+
+**Z:** It commits to $0.10 with high confidence and gives 5 cents only for the other version of the puzzle.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

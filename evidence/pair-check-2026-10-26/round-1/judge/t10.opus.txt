@@ -1,0 +1,9 @@
+**W:** It concludes Mary with high confidence; it mentions "Nunu" only to reject it.
+
+**X:** It answers Mary and stays with Mary; the other readings it mentions are caveats, not a second answer.
+
+**Y:** It answers Mary, with the right reasoning.
+
+**Z:** It answers Mary directly.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,5 @@
+• W: Gives 86,400 as the answer and its caveats don't contradict it — correct.
+  X: Final answer is 86,400 with non-conflicting caveats — correct.
+  Y: States 86,400 clearly and only adds compatible caveats — correct.
+  Z: Plainly answers 86,400 — correct.
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

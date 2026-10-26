@@ -1,0 +1,6 @@
+- **W:** Its final answer is Saturday, which matches the reference.
+- **X:** Its final answer is Saturday, reached by two consistent routes, which matches the reference.
+- **Y:** Its final answer is Saturday, which matches the reference.
+- **Z:** It answers Friday, which contradicts the reference of Saturday.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=incorrect

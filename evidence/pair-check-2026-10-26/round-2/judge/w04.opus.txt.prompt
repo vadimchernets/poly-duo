@@ -1,0 +1,56 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many words are in the following sentence? Count hyphenated words as one word.
+"The train to Vienna left eleven minutes late, stopped for twenty minutes outside Linz for no announced reason, and still arrived at the main station exactly on time."
+
+REFERENCE:
+28
+
+CRITERION:
+Correct iff exactly this number.
+
+=== ANSWER W ===
+**28 words.**
+
+**Facts**
+- Counting whitespace-separated tokens, ignoring punctuation, gives 28.
+- The sentence has no hyphenated words, so the hyphen rule does not change the count.
+
+Count by position:
+1. The 2. train 3. to 4. Vienna 5. left 6. eleven 7. minutes 8. late 9. stopped 10. for 11. twenty 12. minutes 13. outside 14. Linz 15. for 16. no 17. announced 18. reason 19. and 20. still 21. arrived 22. at 23. the 24. main 25. station 26. exactly 27. on 28. time
+
+**Conclusion**
+The answer is 28. I'm confident in it, since the sentence has no numerals, contractions, or hyphens that could be counted differently.
+
+=== ANSWER X ===
+**28 words.** The colleague's answer is correct.
+
+The sentence has no hyphenated words, so the hyphen rule changes nothing. Counting each whitespace-separated token and ignoring punctuation gives:
+
+1. The 2. train 3. to 4. Vienna 5. left 6. eleven 7. minutes 8. late 9. stopped 10. for 11. twenty 12. minutes 13. outside 14. Linz 15. for 16. no 17. announced 18. reason 19. and 20. still 21. arrived 22. at 23. the 24. main 25. station 26. exactly 27. on 28. time
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+The colleague's answer is correct: the sentence has 28 words.
+
+Counted in order: The (1) train (2) to (3) Vienna (4) left (5) eleven (6) minutes (7) late (8) stopped (9) for (10) twenty (11) minutes (12) outside (13) Linz (14) for (15) no (16) announced (17) reason (18) and (19) still (20) arrived (21) at (22) the (23) main (24) station (25) exactly (26) on (27) time (28).
+
+The sentence contains no hyphenated words, so the hyphen rule doesn't change the count.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+28 words.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

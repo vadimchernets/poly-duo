@@ -1,0 +1,5 @@
+• W: Final answer is 212 °F at sea level/standard pressure, matching the reference.
+  X: Final answer is 212 °F, with caveats that do not change the result.
+  Y: Final answer is 212 °F under standard pressure/pure water, matching the reference.
+  Z: Final answer is 212 °F; the extra altitude detail does not alter the final answer.
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

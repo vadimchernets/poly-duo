@@ -1,0 +1,7 @@
+The draft is correct: there were 53 Sundays in 2023.
+
+January 1, 2023 was a Sunday, and 2023 was not a leap year, so it had 365 days. That is 52 full weeks plus one extra day. The extra day is December 31, which is also a Sunday, since it falls on the same weekday as January 1. The first Sunday was January 1 and the last was December 31, so Sunday occurred 53 times.
+
+Confidence: high
+
+No errors in the colleague's answer

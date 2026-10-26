@@ -1,0 +1,11 @@
+**26.4 hours.** The colleague's answer is correct.
+
+I assumed the pool starts empty, the 1.5 m depth is the average over the whole pool, and the hose runs continuously with no losses.
+
+- Volume: 12 × 6 × 1.5 = 108 m³
+- In US gallons: 108 × 264.172 ≈ 28,531 gal
+- Time: 28,531 ÷ 18 ≈ 1,585 min, which is about 26.42 h, so 26.4 h (about 26 h 25 min)
+
+Confidence: high
+
+No errors in the colleague's answer

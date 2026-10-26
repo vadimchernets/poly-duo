@@ -1,0 +1,10 @@
+**1296 rectangles** (including 204 squares). Reading chosen: an 8×8 board of squares, so 9 horizontal and 9 vertical grid lines, counting every axis-aligned rectangle whose sides lie on those lines.
+
+**Facts**
+- A rectangle is fixed by choosing 2 of the 9 horizontal lines and 2 of the 9 vertical lines.
+- C(9,2) × C(9,2) = 36 × 36 = 1296.
+- Squares: the number of k×k squares is (9−k)², so the total is Σ_{k=1..8} (9−k)² = 64+49+36+25+16+9+4+1 = 204.
+- Non-square rectangles: 1296 − 204 = 1092.
+
+**Conclusion**
+The answer to "rectangles of any size, including squares" is 1296. I'm sure of the arithmetic. The only ambiguity is the reading. If the question meant only rectangles that aren't squares, the answer would be 1092. Tilted rectangles (not aligned with the grid) are not counted under the standard reading.

@@ -1,0 +1,5 @@
+• W is correct because it concludes 12 and adds only consistent supporting facts.
+  X is correct because it states exactly 12 with no contradiction.
+  Y is correct because its final answer is 12 and the extra grading note does not contradict the reference.
+  Z is correct because it states 12, confirms the colleague, and adds no incompatible result.
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

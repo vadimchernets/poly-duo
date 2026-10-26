@@ -1,0 +1,9 @@
+**5 minutes.**
+
+Each machine makes 1 widget in 5 minutes, since 5 machines make 5 widgets in 5 minutes. The machines work in parallel, so 100 machines make 100 widgets in the same 5 minutes.
+
+This assumes each machine works at the same constant rate and independently.
+
+Confidence: high
+
+No errors in the colleague's answer.

@@ -1,0 +1,5 @@
+None—Darwin neither coined nor used “survival of the fittest” in the 1859 first edition.
+
+Facts: Herbert Spencer coined the phrase in *Principles of Biology* (1864). Darwin adopted it in the fifth edition of *On the Origin of Species* (1869), notably in Chapter IV, retitled “Natural Selection; or the Survival of the Fittest.” Compare the [1859 first-edition text](https://darwin-online.org.uk/converted/published/1859_Origin_F373/1859_Origin_F373.html) with the [1869 fifth edition](https://darwin-online.org.uk/content/contentblock?basepage=1&hitpage=427&itemID=F387&viewtype=side).
+
+Conclusion: if the intended question is where the phrase first appeared in Darwin’s book, the answer is **Chapter IV of the fifth edition—not the first edition**.

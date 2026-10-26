@@ -1,0 +1,9 @@
+**1,235 integers.**
+
+Using inclusion–exclusion:
+
+- Divisible by 3 or 8:  
+  \(\lfloor3704/3\rfloor+\lfloor3704/8\rfloor-\lfloor3704/24\rfloor=1234+463-154=1543\)
+- Divisible by 12: \(\lfloor3704/12\rfloor=308\)
+
+Therefore, \(1543-308=\boxed{1235}\).

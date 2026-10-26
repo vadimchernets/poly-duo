@@ -1,0 +1,14 @@
+**Bottom line: the premise is contradictory, because you can't overtake the person in last place. To pass someone you must be behind them, and then you would be last, not them. If you still want a number, the practical answer is second to last.**
+
+**Reading chosen:** "last place" means last among the other runners, not counting you.
+
+- Before the pass, you are behind that runner, so you are last overall.
+- After the pass, you are ahead of them and behind everyone else, so you are **second to last**. They are now last.
+
+Read strictly, with "last place" meaning last in the whole field including you, the situation can't happen. The only exception is lapping: in a multi-lap race you can overtake the last-place runner by lapping them, but then you are usually leading or near the front, not second to last.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- "You must already be behind them and therefore not in the race's ranking" is wrong. If you are behind them, you are in the ranking, and you are the one in last place. That is exactly why the premise contradicts itself.
+- It gives no usable answer. It leaves out the charitable reading (second to last) that the question is almost certainly after, and it ignores the lapping case.

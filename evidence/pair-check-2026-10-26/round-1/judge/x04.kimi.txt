@@ -1,0 +1,5 @@
+• W: It concludes that two kilograms of steel outweigh one kilogram of feathers.  
+  X: It concludes the same and its buoyancy caveat does not change the result.  
+  Y: It explicitly rejects the equal-mass trick and says the 2 kg steel is heavier.  
+  Z: It concludes steel is heavier by about a factor of two despite extra detail.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

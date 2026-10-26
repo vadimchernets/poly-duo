@@ -1,0 +1,19 @@
+Einstein did not win the Nobel Prize for relativity. The 1921 Nobel Prize in Physics (awarded in 1922) went to him "for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect."
+
+**Why not relativity:**
+- The Nobel Committee was cautious about theoretical work that lacked firm experimental confirmation. Several members, including Allvar Gullstrand, an influential ophthalmologist on the committee, doubted relativity.
+- General relativity gained fame after the 1919 eclipse expeditions, but the results were still debated. Some physicists also objected to relativity on philosophical grounds.
+- The photoelectric effect had solid experimental backing, notably Robert Millikan's measurements in 1914–16. It was therefore a safe choice.
+
+**What the prize recognized:** Einstein's 1905 proposal that light is absorbed and emitted in discrete quanta (later called photons). This helped lay the foundation of quantum theory.
+
+**Other details:**
+- Einstein was nominated many times before 1921 and was passed over repeatedly. The 1921 prize was initially reserved because no nominee was judged suitable. It was awarded to Einstein the following year.
+- The citation's phrase "services to Theoretical Physics" is a wide formula that let the committee honor him without endorsing relativity.
+- When he gave his Nobel lecture in 1923, Einstein spoke about relativity, not the photoelectric effect.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- Minor: the answer says the committee "did not explicitly recognize" relativity. This is correct, but it omits the reasoning about the lack of experimental support and the committee's internal skepticism. I have added these.
+- The answer's claim that the 1919 observations were "still disputed" is fair, but the committee's decision rested more on its general conservatism toward theory than on a specific dispute over those results.

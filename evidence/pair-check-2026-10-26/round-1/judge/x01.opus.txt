@@ -1,0 +1,6 @@
+W: Gives 1 crossing. It mentions 7 only for the different wolf-goat-cabbage version, so it doesn't hedge.
+X: Gives 1 crossing, which matches the reference.
+Y: Gives 1 crossing. The 7 applies only to a different puzzle and doesn't hedge the answer.
+Z: Gives 1 crossing. The note about the classic version and the request to clarify don't change its answer.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

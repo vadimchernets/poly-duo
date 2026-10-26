@@ -1,0 +1,18 @@
+**300**
+
+**Reading chosen:** count every occurrence of the digit 7 in the decimal writing of 1 through 1000. The 7 in "17" counts once, and "77" counts twice.
+
+**Facts:**
+- 1000 contains no 7, so the range is effectively 1–999, or 000–999 padded to three digits. Padding adds only zeros, so it doesn't change the count of 7s.
+- Each of the 3 digit positions (units, tens, hundreds) takes each value 0–9 equally often across 000–999, which is 100 times each.
+- So each position shows a 7 exactly 100 times.
+
+**Conclusion:** 3 × 100 = 300.
+
+**Check by place:**
+- Units digit 7: 100 numbers (7, 17, …, 997).
+- Tens digit 7: 100 numbers (70–79, 170–179, …).
+- Hundreds digit 7: 100 numbers (700–799).
+- 100 + 100 + 100 = 300.
+
+I'm sure of this result. The only way to get a different number is to read the question differently. For example, counting the numbers that contain a 7 gives 271, not 300.

@@ -1,0 +1,10 @@
+1
+
+By Fermat’s theorem, \(17^{100}\equiv1\pmod{101}\), so
+\[
+17^{460}\equiv17^{60}\pmod{101}.
+\]
+Using repeated squaring gives
+\[
+17^{60}=17^{32+16+8+4}\equiv87\cdot84\cdot36\cdot95\equiv1\pmod{101}.
+\]

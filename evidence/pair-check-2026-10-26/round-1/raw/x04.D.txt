@@ -1,0 +1,7 @@
+Two kilograms of steel weigh more: 2 kg is twice 1 kg, whatever the material.
+
+The colleague's answer is correct. The question is a variant of the classic riddle "what weighs more, a kilogram of feathers or a kilogram of steel?" (the answer there is "they weigh the same"). Here the masses differ, so there is no trick.
+
+Confidence: high
+
+No errors in the colleague's answer

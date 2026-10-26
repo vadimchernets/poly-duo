@@ -1,0 +1,6 @@
+W: Gives 90 as the final answer, which matches the reference.
+X: Gives 90 as the final answer, and its supporting value and digit sum are correct.
+Y: Gives 90 as the final answer; its note that the value came from memory does not hedge the result.
+Z: Gives 90 as the final answer; it says it checked "two ways" but lists three checks, which is a style slip only and does not change the answer.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

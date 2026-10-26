@@ -1,0 +1,77 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Under the US Family and Medical Leave Act (FMLA), how many weeks of unpaid, job-protected leave can an eligible employee take in a 12-month period for their own serious health condition?
+
+REFERENCE:
+12 weeks (29 U.S.C. 2612)
+
+CRITERION:
+Correct iff 12 weeks (mentioning 26 weeks only for military caregiver leave is fine).
+
+=== ANSWER W ===
+**12 workweeks** of unpaid, job-protected leave in a 12-month period, as the colleague said. The draft is correct.
+
+Details:
+- **Eligibility:** The employee must work for a covered employer. That means a private employer with 50 or more employees, or any public agency or school. The employee must also have worked for the employer for at least 12 months and at least 1,250 hours in the previous 12 months. They must work at a site with 50 or more employees within 75 miles.
+- **Reinstatement:** The employee is entitled to return to the same job or an equivalent one. Group health coverage must continue on the same terms during the leave.
+- **Other uses of the 12 weeks:** The same 12-week limit covers the employee's own serious health condition, the birth and bonding with a child, adoption or foster placement, and care for a spouse, child, or parent with a serious health condition. Leave for a qualifying exigency tied to a family member's military deployment also falls under it.
+- **Military caregiver leave:** A separate entitlement of up to 26 workweeks in a single 12-month period applies to care for a covered servicemember. It is not part of the 12-week figure.
+- **Intermittent leave:** Leave can be taken in blocks or on a reduced schedule when medically necessary.
+- **Employer options:** The employer may require the employee to use accrued paid leave at the same time. It may also choose how the 12-month period is measured, for example by calendar year or a rolling period.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**Bottom line: 12 workweeks of unpaid, job-protected leave in a 12-month period.**
+
+Reading chosen: leave for the employee's own serious health condition under 29 U.S.C. § 2612(a)(1)(D), which is the standard FMLA entitlement.
+
+**Facts**
+- The entitlement is 12 workweeks in a 12-month period. It is unpaid, though the employee may choose to use accrued paid leave, or the employer may require it, to run concurrently.
+- The employee must be eligible:
+  - They have worked for the employer for at least 12 months. The months need not be consecutive, and some earlier service can be excluded.
+  - They have worked at least 1,250 hours in the 12 months before the leave starts.
+  - They work at a site with 50 or more employees within 75 miles.
+  - The employer is covered: a private employer with 50 or more employees, or a public agency or school.
+- The leave can be taken all at once, intermittently, or on a reduced schedule when medically necessary.
+- The employer chooses how to measure the 12-month period: calendar year, fixed fiscal year, rolling period measured forward, or rolling period measured backward.
+- The employee is entitled to return to the same job or an equivalent one. Group health coverage continues on the same terms as if they were working.
+- A separate entitlement of up to 26 workweeks in a single 12-month period applies to military caregiver leave. It does not apply to the employee's own condition.
+
+**Conclusion**
+For one's own serious health condition, the cap is 12 weeks. States may give more through their own laws, such as California and New York, and some of those state programs offer paid leave. That is separate from the federal FMLA.
+
+**Not sure**
+I'm not sure whether the rules have changed since my knowledge cutoff. I haven't checked for amendments to the statute or the regulations.
+
+=== ANSWER Y ===
+**Up to 12 workweeks** of unpaid, job-protected leave in a 12-month period for the employee’s own serious health condition. [U.S. Department of Labor](https://www.dol.gov/agencies/whd/fact-sheets/28p-taking-leave-when-you-or-family-has-health-condition)
+
+=== ANSWER Z ===
+**Bottom line: 12 workweeks.** An eligible employee can take up to 12 workweeks of unpaid, job-protected leave in a 12-month period for their own serious health condition (29 U.S.C. § 2612(a)(1)(D)).
+
+The colleague's answer is correct but very thin. Here is the context it left out:
+
+- **Eligibility:** The employer must be covered. That means a private employer with 50 or more employees, or any public agency or school. The employee must have worked there at least 12 months and at least 1,250 hours in the prior 12 months. They must also work at a site with 50 or more employees within 75 miles.
+- **Pay:** The leave is unpaid. The employee may choose to use accrued paid leave during it, or the employer may require it.
+- **Format:** The leave can be taken all at once, intermittently, or on a reduced schedule when medically necessary.
+- **The 12-month period:** The employer chooses how to measure it. The options are a calendar year, a fixed fiscal year, a rolling period measured forward, or a rolling period measured backward.
+- **Protections:** The employee returns to the same job or an equivalent one. Group health coverage continues on the same terms as if they were working.
+- **The 26-week figure:** This is a separate entitlement for military caregiver leave. It does not apply to the employee's own condition.
+- **State law:** Some states give more leave or paid leave, such as California and New York. That is separate from the federal FMLA.
+
+I did not check for amendments to the statute or regulations. The 12-week figure has been stable for decades.
+
+Confidence: high
+
+Corrections to the colleague's answer: No errors in the colleague's answer.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

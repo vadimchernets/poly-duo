@@ -1,0 +1,16 @@
+**Bottom line: 5:00 AM on January 16, London time (GMT).**
+
+**Reading chosen:** the flight departs at 10:00 PM New York time, lasts 7 hours of real elapsed time, and the question asks for London local time on landing.
+
+**Facts:**
+- 10:00 PM EST on Jan 15 is 22:00 + 5 h = 03:00 UTC on Jan 16.
+- Adding the 7-hour flight gives 10:00 UTC on Jan 16.
+- London is on GMT (UTC+0) in January, so local time equals UTC.
+
+**Conclusion:** The result is **10:00 AM on January 16**, not 5:00 AM. My bottom line above was wrong, and the correct answer is **10:00 AM, January 16, London time**.
+
+The mistake was in the first line. I added the 5-hour offset and then forgot to add the 7 hours of flight. The step-by-step calculation is the correct one.
+
+Check: New York 10:00 PM + 7 h = 5:00 AM on Jan 16 New York time. London is 5 hours ahead, so 5:00 AM + 5 h = 10:00 AM.
+
+No uncertainty remains. The only assumption is that the 7 hours is actual flight duration, as the question states.

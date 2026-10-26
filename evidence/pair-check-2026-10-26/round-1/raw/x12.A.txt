@@ -1,0 +1,3 @@
+Sally has 1 sister.
+
+Each brother’s two sisters are Sally and the same other sister. Therefore, there are two girls in the family, so Sally has one sister.

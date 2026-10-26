@@ -1,0 +1,93 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many times does the letter "e" (lowercase or uppercase) appear in this sentence?
+"A tattered banner fluttered above the battered battlements as the tattooed knight attacked"
+
+REFERENCE:
+14
+
+CRITERION:
+Correct iff exactly this number.
+
+=== ANSWER W ===
+**Answer: 14**
+
+Reading chosen: count every "e" or "E" in the sentence as quoted, with no other interpretation.
+
+**Count by word:**
+- A: 0
+- tattered: 2
+- banner: 1
+- fluttered: 2
+- above: 1
+- the: 1
+- battered: 2
+- battlements: 2
+- as: 0
+- the: 1
+- tattooed: 1
+- knight: 0
+- attacked: 1
+
+**Total:** 2+1+2+1+1+2+2+1+1+1 = 14
+
+I counted by hand and did not run code. The per-word tallies are above if you want to check any of them.
+
+=== ANSWER X ===
+**14**, and the colleague's answer is correct.
+
+Count per word:
+- tattered: 2
+- banner: 1
+- fluttered: 2
+- above: 1
+- the: 1
+- battered: 2
+- battlements: 2
+- the: 1
+- tattooed: 1
+- attacked: 1
+- A, as, knight: 0
+
+Total: 2+1+2+1+1+2+2+1+1+1 = 14.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+14.
+
+Counting both lowercase and uppercase “e”, the sentence contains **14** occurrences.
+
+=== ANSWER Z ===
+**14** — the colleague's answer is correct.
+
+Reading used: count every "e" or "E" in the sentence exactly as quoted.
+
+Counts per word:
+- tattered: 2
+- banner: 1
+- fluttered: 2
+- above: 1
+- the: 1
+- battered: 2
+- battlements: 2
+- the: 1
+- tattooed: 1
+- attacked: 1
+- A, as, knight: 0
+
+Total: 2+1+2+1+1+2+2+1+1+1 = 14. The sentence has no uppercase "E", so all 14 are lowercase.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

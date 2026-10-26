@@ -1,0 +1,10 @@
+**86,400 seconds** in one day (24 × 60 × 60).
+
+Reading chosen: a standard civil day, meaning 24 hours.
+
+Facts:
+- 1 day = 24 hours, 1 hour = 60 minutes, 1 minute = 60 seconds. That gives 24 × 3600 = 86,400.
+- A day can differ from this. A UTC day with a leap second has 86,401 seconds, though leap seconds haven't been added since 2016. Days with a daylight-saving change in local time have 82,800 or 90,000 seconds.
+- A sidereal day (the Earth's rotation relative to the stars) is about 86,164 seconds.
+
+Conclusion: use 86,400 unless you specifically mean a sidereal day or are handling leap seconds or DST.

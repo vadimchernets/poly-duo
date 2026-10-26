@@ -1,0 +1,59 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What day of the week will 13 August 2169 be (Gregorian calendar)?
+
+REFERENCE:
+Sunday
+
+CRITERION:
+Correct iff this weekday.
+
+=== ANSWER W ===
+**13 August 2169 will be a Sunday.** The colleague's answer is correct.
+
+I checked it with the Doomsday method (using the 2100s anchor):
+- The anchor day for the 2100s is Sunday.
+- For the year 69: 69 = 5×12 + 9, and ⌊9/4⌋ = 2. The sum is 5 + 9 + 2 = 16, which is 2 mod 7. So the doomsday for 2169 is Sunday + 2 = Tuesday.
+- 8 August is always a doomsday (8/8), so 8 August 2169 is a Tuesday.
+- 13 August is 5 days later, which is Sunday.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**13 August 2169 will be a Sunday.** The colleague's answer is correct.
+
+Reading chosen: the Gregorian calendar, date as day 13, month August, year 2169.
+
+Two independent checks agree:
+- **Doomsday method:** the anchor day for 2100–2199 is Sunday. For year 69, 5 + 9 + 2 = 16, and 16 mod 7 = 2, so the 2169 doomsday is Tuesday. 8 August is a doomsday, so 13 August falls 5 days later, on a Sunday.
+- **Day count:** 1 January 2000 was a Saturday. From it to 1 January 2169 is 169×365 + 42 leap days (43 leap years from 2000 to 2168, minus 2100) = 61,727 days. That is 1 mod 7, so 1 January 2169 is a Sunday. 13 August is day 225 of the non-leap year, 224 days later, which is exactly 32 weeks, so it is again a Sunday.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**13 August 2169 is a Sunday.**
+
+Reading chosen: the proleptic Gregorian calendar, with the date as day 13, month August, year 2169.
+
+**Facts (checked two independent ways):**
+- Doomsday method: the anchor day for 2100–2199 is Sunday. Year 69 gives 5 + 9 + 2 = 16, and 16 mod 7 = 2, so the 2169 doomsday is Tuesday. 8 August is a doomsday, so 8 August is a Tuesday and 13 August is five days later, a Sunday.
+- Day count: 1 January 2000 was a Saturday. From it to 1 January 2169 is 169×365 + 42 leap days (43 leap years from 2000 to 2168, minus 2100) = 61,727 days. 61,727 mod 7 = 1, so 1 January 2169 is a Sunday. 13 August is day 225 of the year, which is 224 days later, exactly 32 weeks, so it is again a Sunday.
+
+**Conclusion:** Sunday. The two methods agree, and I have no doubt about the result.
+
+=== ANSWER Z ===
+Sunday.
+
+13 August 2169 in the Gregorian calendar will fall on a **Sunday**.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

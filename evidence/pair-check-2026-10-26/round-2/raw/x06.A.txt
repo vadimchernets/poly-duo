@@ -1,0 +1,23 @@
+221
+
+Since \(29^{20}\equiv 1\pmod{1000}\), reduce the exponent:
+
+\[
+546\equiv 6\pmod{20}.
+\]
+
+Thus,
+
+\[
+29^{546}\equiv 29^6\pmod{1000}.
+\]
+
+Calculating modulo \(1000\):
+
+\[
+29^2\equiv841,\quad
+29^4\equiv281,\quad
+29^6\equiv281\cdot841\equiv221.
+\]
+
+Therefore, \(\boxed{221}\).

@@ -1,0 +1,5 @@
+• W: correct — it gives 300 and the place-value count matches the reference.  
+  X: correct — it gives 300 with valid reasoning and no competing final answer.  
+  Y: correct — it gives 300 and its counting argument is sound.  
+  Z: correct — it gives 300 and the per-position count totals 300.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

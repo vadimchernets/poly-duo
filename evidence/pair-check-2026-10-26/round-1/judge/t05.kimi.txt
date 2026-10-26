@@ -1,0 +1,5 @@
+• W: Correct — it states the premise is false and names the photoelectric effect.  
+  X: Correct — it clearly rejects the premise and names the photoelectric effect; the “cited relativity indirectly” wording is imprecise but does not make relativity the final reason.  
+  Y: Correct — it explicitly says Einstein did not win for relativity and identifies the photoelectric effect.  
+  Z: Correct — it states he did not win for relativity and names the photoelectric effect as the cited achievement.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

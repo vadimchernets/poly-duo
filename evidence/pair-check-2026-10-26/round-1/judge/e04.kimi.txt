@@ -1,0 +1,9 @@
+• **W:** States 750 g flour and 7.5 eggs, with 7 or 8 in practice — exactly the reference. Correct.
+
+  **X:** States 750 g flour and 7.5 eggs, and "7 eggs plus half of one beaten egg" is just 7.5 realized in practice — matches the reference. Correct.
+
+  **Y:** States 750 g flour and 7.5 eggs with 7–8 eggs in practice — matches the reference; the meta-commentary about the colleague doesn't contradict it. Correct.
+
+  **Z:** States 750 g flour and 7.5 eggs, realized as 7 plus half a beaten egg (or 8 whole) — matches the reference. Correct.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

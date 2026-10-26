@@ -1,0 +1,5 @@
+W: Its final answer is 86,400, which matches the reference, and the leap-second and DST caveats don't contradict it.
+X: It states 86,400 seconds as the main answer, and the exceptions it lists are extra detail rather than a competing result.
+Y: It gives 86,400 with the correct derivation and recommends that value for a standard day.
+Z: It states 86,400 directly with the correct calculation.
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

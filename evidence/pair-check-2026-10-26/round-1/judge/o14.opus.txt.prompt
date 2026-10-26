@@ -1,0 +1,45 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many sides does a dodecagon have?
+
+REFERENCE:
+12
+
+CRITERION:
+Correct iff 12.
+
+=== ANSWER W ===
+A dodecagon has 12 sides.
+
+**Facts:** The name comes from the Greek *dōdeka* ("twelve") and *gōnia* ("angle"). A dodecagon also has 12 vertices. A regular dodecagon has interior angles of 150° each, and its interior angles sum to 1800°.
+
+**Conclusion:** 12. I'm sure of this.
+
+=== ANSWER X ===
+A dodecagon has 12 sides.
+
+=== ANSWER Y ===
+A dodecagon has 12 sides.
+
+Its name comes from the Greek *dōdeka* ("twelve") and *gōnia* ("angle"). It also has 12 vertices. A regular dodecagon has interior angles of 150° each, which sum to 1800°.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+A dodecagon has 12 sides. The colleague's answer is correct.
+
+For context, "dodeca" is Greek for twelve. A dodecagon also has 12 vertices and 12 interior angles. For a regular dodecagon, each interior angle is 150°.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

@@ -1,0 +1,11 @@
+29 February 2096 is a **Wednesday**. The colleague's answer is correct.
+
+2096 is a leap year, since it is divisible by 4 and is not a century year, so the date exists.
+
+1 January 2000 was a Saturday. From then to 1 January 2096 is 96 years containing 24 leap days. That is 96·365 + 24 = 35,064 days, which leaves a remainder of 1 when divided by 7. So 1 January 2096 is a Sunday.
+
+29 February is day 60 of the year, which is 59 days after 1 January. Since 59 leaves a remainder of 3 when divided by 7, the date falls three days after Sunday, on Wednesday.
+
+Confidence: high
+
+No errors in the colleague's answer

@@ -1,0 +1,54 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Mary's father has five daughters: Nana, Nene, Nini, Nono. What is the name of the fifth daughter?
+
+REFERENCE:
+Mary
+
+CRITERION:
+Correct iff Mary.
+
+=== ANSWER W ===
+The fifth daughter is Mary. The question says Mary's father has five daughters, and Mary is one of them. The other four are Nana, Nene, Nini and Nono.
+
+This is a classic riddle. The pattern of the names (Na, Ne, Ni, No) suggests the missing one is "Nunu". But the question already names the daughter: Mary is the father's daughter.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+Bottom line: the fifth daughter is named Mary.
+
+Reading chosen: the question is a riddle, and "Mary's father" means Mary is one of his five daughters.
+
+Facts:
+- The question lists four names: Nana, Nene, Nini, Nono.
+- It says the father has five daughters.
+- The father is described as Mary's father, so Mary is his daughter.
+
+Conclusion: the four listed names plus Mary make five, so Mary is the fifth.
+
+Not sure: the question doesn't say outright that Mary is his daughter. A different reading is possible, for example that Mary is the father's wife's friend, or that his fifth daughter is unnamed. I'm going with Mary because the riddle is built to point that way.
+
+=== ANSWER Y ===
+The fifth daughter is Mary. The draft is correct, and nothing in it needs changing.
+
+I read this as a riddle in which "Mary's father" makes Mary one of his five daughters. The four names listed (Nana, Nene, Nini, Nono) plus Mary make five.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+Mary.
+
+Mary’s father has five daughters; four are Nana, Nene, Nini, and Nono, so the fifth is Mary.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

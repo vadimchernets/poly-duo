@@ -1,0 +1,12 @@
+31.
+
+Trailing zeros come from factors of 10, each requiring a pair \(2 \times 5\). There are more factors of 2 than 5, so count factors of 5:
+
+\[
+\left\lfloor \frac{125}{5} \right\rfloor+
+\left\lfloor \frac{125}{25} \right\rfloor+
+\left\lfloor \frac{125}{125} \right\rfloor
+=25+5+1=31.
+\]
+
+Therefore, \(125!\) has **31 trailing zeros**.

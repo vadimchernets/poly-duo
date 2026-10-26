@@ -1,0 +1,5 @@
+• W: Correct — despite mentioning the “Nunu” pattern, its final answer is Mary.  
+  X: Correct — it hedges but concludes the fifth daughter is Mary.  
+  Y: Correct — it directly answers Mary.  
+  Z: Correct — it directly answers Mary.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

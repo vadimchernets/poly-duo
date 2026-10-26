@@ -1,0 +1,15 @@
+**The average speed is 45 km/h.** The colleague's answer is correct.
+
+Average speed is total distance divided by total time, not the mean of the two speeds.
+
+- Time for the first leg: 60 / 30 = 2 h
+- Time for the second leg: 60 / 90 = 2/3 h
+- Total distance: 120 km
+- Total time: 2 + 2/3 = 8/3 h
+- Average speed: 120 / (8/3) = 45 km/h
+
+The simple average of 30 and 90 would be 60 km/h. That is wrong here because the car spends more time at the slower speed. For equal distances, the harmonic mean applies: 2·30·90 / (30 + 90) = 45 km/h.
+
+Confidence: high
+
+No errors in the colleague's answer

@@ -1,0 +1,9 @@
+Yes, switch to door 2: if the glass is truly clear and the car is visibly behind it, your chance of winning by switching is 100%.
+
+Reading chosen: the car is actually behind door 2 and you can see it, so this is an observation, not a probability puzzle. The usual 2/3 vs 1/3 Monty Hall reasoning applies only when the car's location is hidden. Here the host's opening of door 3 adds no information, because you already know where the car is.
+
+The colleague's answer is correct. One caveat: the 100% assumes you trust what you see (no mirror, trick glass, or misleading setup). Under the stated premise, it holds.
+
+Confidence: high
+
+No errors in the colleague's answer

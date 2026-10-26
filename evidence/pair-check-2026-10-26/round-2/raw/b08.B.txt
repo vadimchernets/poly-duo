@@ -1,0 +1,14 @@
+**14,077 days** from 15 June 2010 to 29 December 2048, counting the end date and not the start date. The colleague's answer is correct.
+
+Reading chosen: the result is the plain difference between the two dates.
+
+- 15 June 2010 to 15 June 2048 is 38 years, so 38 × 365 = 13,870 days.
+- Leap days (29 Feb) fall in 2012, 2016, 2020, 2024, 2028, 2032, 2036, 2040, 2044 and 2048. That is 10 extra days, giving 13,880.
+- 15 June 2048 is day 167 of that leap year and 29 December is day 364, so the last leg is 197 days.
+- Total: 13,880 + 197 = 14,077.
+
+I worked this out by hand and did not run it through a tool.
+
+Confidence: high
+
+No errors in the colleague's answer

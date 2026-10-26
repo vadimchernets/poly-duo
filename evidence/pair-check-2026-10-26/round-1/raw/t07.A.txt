@@ -1,0 +1,13 @@
+**Bottom line: 9,368.**
+
+Using inclusion–exclusion:
+
+- Multiples of 3: \(3(1+\cdots+66)=6{,}633\)
+- Multiples of 5: \(5(1+\cdots+40)=4{,}100\)
+- Multiples of both (15), counted twice: \(15(1+\cdots+13)=1{,}365\)
+
+Therefore:
+
+\[
+6{,}633+4{,}100-1{,}365=\boxed{9{,}368}
+\]

@@ -1,0 +1,11 @@
+**The 3000th prime is 27449.**
+
+I'm reading "3000th" as counting from 2 as the 1st prime.
+
+**Facts**
+- I took this from memory of the standard table of milestone primes, not from a computation in this session. That table gives: 1000th = 7919, 2000th = 17389, 3000th = 27449, 4000th = 37813, 5000th = 48611.
+- 27449 is not divisible by any prime up to its square root (about 165.7). I did not run that check here.
+
+**Conclusion**
+- I'm fairly confident in 27449. My one doubt is that it comes from memory and I haven't recomputed it.
+- A sieve of Eratosthenes up to 28000 would confirm it. Check that the 3000th prime found is 27449.

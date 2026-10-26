@@ -1,0 +1,5 @@
+W gives 80 mg/100 ml for England (and Wales), which matches the reference.
+X gives 80 milligrams per 100 ml, which matches the reference.
+Y gives 80 mg/100 ml for England and correctly puts Scotland at 50, which matches the reference.
+Z gives 80 mg/100 ml for England under the Road Traffic Act 1988, which matches the reference.
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

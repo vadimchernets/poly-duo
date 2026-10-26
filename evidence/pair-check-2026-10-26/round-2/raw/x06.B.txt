@@ -1,0 +1,24 @@
+**29^546 mod 1000 = 121.** The colleague's answer of 221 is wrong.
+
+**Reading chosen:** the ordinary integer power 29^546, reduced mod 1000.
+
+**Method (direct squaring mod 1000):**
+- 29² = 841
+- 29⁴ = 841² = 707281 ≡ 281
+- 29⁵ = 281·29 = 8149 ≡ 149
+- 29¹⁰ = 149² = 22201 ≡ 201
+- 29²⁰ = 201² = 40401 ≡ 401
+- 29⁴⁰ = 401² = 160801 ≡ 801
+- 29⁵⁰ = 29⁴⁰·29¹⁰ = 801·201 = 161001 ≡ 1
+
+So the order of 29 mod 1000 divides 50, and 546 ≡ 46 (mod 50). Then:
+- 29⁶ = 281·841 = 236321 ≡ 321
+- 29⁴⁶ = 29⁴⁰·29⁶ = 801·321 = 257121 ≡ **121**
+
+**Cross-check (CRT):** mod 8, 29² ≡ 1 and 546 is even, so the result is ≡ 1. Mod 125, 29^46 ≡ 121. The number 121 satisfies both, since 121 = 15·8 + 1.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The claim 29²⁰ ≡ 1 (mod 1000) is false. 29²⁰ ≡ 401, and the actual order of 29 divides 50, not 20. Reducing the exponent mod 20 was therefore invalid.
+- Even within their own reduction, 29⁶ ≡ 281·841 = 236321 ≡ 321, not 221.

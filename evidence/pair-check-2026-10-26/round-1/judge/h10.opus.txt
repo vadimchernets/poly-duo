@@ -1,0 +1,6 @@
+W: Its final answer is 1/8 (27/216), which matches the reference, and the oddly worded cross-check doesn't change that result.
+X: It gives 1/8 (27/216) with a correct enumeration, so it matches the reference.
+Y: It gives 1/8 from 27/216, which matches the reference.
+Z: It gives 1/8 from 27 of 216 outcomes, which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

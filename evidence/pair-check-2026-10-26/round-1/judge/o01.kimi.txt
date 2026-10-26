@@ -1,0 +1,11 @@
+• All four answers give 29 as the final answer, which matches the reference (2028 is a leap year).
+
+  **W:** States February 2028 has 29 days because 2028 is a leap year — matches the reference exactly, so correct.
+
+  **X:** States 29 days with extra reasoning and a day-of-week claim, but its final answer of 29 matches the reference, so correct.
+
+  **Y:** States 29 days with extra filler text, but the final answer of 29 matches the reference, so correct.
+
+  **Z:** States February 2028 has 29 days because 2028 is a leap year — matches the reference, so correct.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

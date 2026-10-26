@@ -1,0 +1,10 @@
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "
+n=30000
+s=bytearray([1])*(n+1);s[0]=s[1]=0
+for i in range(2,int(n**.5)+1):
+    if s[i]: s[i*i::i]=bytearray(len(s[i*i::i]))
+p=[i for i in range(n+1) if s[i]]
+print(p[2999])"</parameter>
+</invoke>
+js

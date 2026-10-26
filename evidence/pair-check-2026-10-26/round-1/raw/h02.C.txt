@@ -1,0 +1,15 @@
+**Wednesday.**
+
+Reading I chose: the Gregorian calendar, with the date being 29 February 2096.
+
+**Facts**
+- 2096 is a leap year (divisible by 4 and not a century year), so 29 February exists.
+- 1 January 2000 was a Saturday.
+- From 1 Jan 2000 to 1 Jan 2096 is 96 years with 24 leap days (2000, 2004, …, 2092). That is 96·365 + 24 = 35,064 days, which is 1 mod 7. So 1 January 2096 is a Sunday.
+- 29 February is the 60th day of the year, 59 days after 1 January. 59 mod 7 = 3, and Sunday + 3 days = Wednesday.
+
+**Cross-check**
+- 29 February 2024 was a Thursday.
+- From there to 2096 is 72 years plus 18 leap days (2028, …, 2096), which is 90 days. 90 mod 7 = 6, and Thursday + 6 days = Wednesday.
+
+I'm not unsure of the result. I did the arithmetic by hand and didn't run code.

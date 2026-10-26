@@ -1,0 +1,53 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is the sum of the decimal digits of 11^78?
+
+REFERENCE:
+361
+
+CRITERION:
+Correct iff exactly this number.
+
+=== ANSWER W ===
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "n=11**78; print(n, sum(map(int,str(n))))"</parameter>
+</invoke>
+
+
+
+<invoke name="Bash">
+<parameter name="command">echo "11^78" | python3 -I -c "print(sum(map(int,str(11**78))))"</parameter>
+</invoke>
+
+=== ANSWER X ===
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "n=11**78; print(n, sum(map(int,str(n))))"</parameter>
+</invoke>
+
+=== ANSWER Y ===
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "n=11**78; print(n, sum(map(int,str(n))))"</parameter>
+</invoke>
+
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "print(sum(map(int,str(11**78))))"</parameter>
+</invoke>
+
+<invoke name="Bash">
+<parameter name="command">python3 -c "print(sum(map(int,str(11**78))))"</parameter>
+</invoke>
+
+<invoke name="Bash">
+<parameter name="command">echo "11^78" | bc | tr -d '\\\n' | fold -w1 | paste -sd+ - | bc</parameter>
+</invoke>
+
+=== ANSWER Z ===
+**The sum of the decimal digits of \(11^{78}\) is \(\boxed{400}\).**
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

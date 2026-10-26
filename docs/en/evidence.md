@@ -237,6 +237,14 @@ when both members are strong, which is why Poly uses the two flagship apps and n
 27. Cross-Model LLM Code Review: Should you use Claude to review Codex or vice versa? arXiv
     2607.21656, 22 Jul 2026. https://arxiv.org/abs/2607.21656
 
+## Our own check of the pair (26 Oct 2026)
+
+We ran a blind check of the pair ourselves, through the command-line tools (ChatGPT via Codex CLI, Claude Sonnet via `claude -p`), not the phone apps.
+- Round 1, 67 tasks with a reference answer: the Claude review made a correct draft wrong in 0 of 66 cases (95% CI 0-6%); ChatGPT alone was right on 66 of 67, so the set cannot show how often the pair catches real mistakes.
+- Round 2, tasks chosen because ChatGPT got them wrong (not a measure of its error rate): when ChatGPT was wrong, the review fixed it in 18 of 18 cases; it made a correct answer worse in 1 of 20. Errors were mostly computational.
+- Blind Critique against the earlier Critique: no difference established (p = 1.0; on 46 tasks p = 0.25, three disagreements, all against the blind variant). Anchoring on the draft could not be tested on these sets.
+- One attempt per task, second judge of the same family as Claude, models without tools. Data, prompts and limits: [evidence/pair-check-2026-10-26/](../../evidence/pair-check-2026-10-26/README.md).
+
 27 sources. Collected 4 September 2026; sources [20]–[27] added on that date after an independent
 search for 2026 work on model pairs. Numbers are quoted from the abstracts and published summaries
 of the papers; where a paper's full text was not reachable, the abstract's own wording is used.

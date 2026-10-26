@@ -1,0 +1,56 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+In which year did the Great Wall of China become visible from the Moon with the naked eye?
+
+REFERENCE:
+False premise: it has never been visible from the Moon with the naked eye.
+
+CRITERION:
+Correct iff it rejects the premise (never visible). Giving a year = incorrect.
+
+=== ANSWER W ===
+**Ни в каком году: с Луны невооружённым глазом Великую Китайскую стену увидеть нельзя, это миф.** Вопрос исходит из ложной предпосылки.
+
+**Почему:**
+- До Луны около 384 000 км. Предел разрешения глаза примерно 1 угловая минута, то есть на таком расстоянии около 110 км. Стена шириной 5–9 м оказывается на порядки меньше этого предела. С Луны Земля видна как диск, а детали различимы лишь на уровне облаков, океанов и крупных материков.
+- Даже с низкой орбиты (около 400 км, МКС) стена практически не видна без оптики. Она узкая и по цвету сливается с местностью. Первый китайский космонавт Ян Ливэй после полёта на «Шэньчжоу-5» (2003) сказал, что стены не увидел.
+- Миф старше космической эры. Утверждения о том, что стену видно «с Луны» или «из космоса», встречались в печати ещё в первой половине XX века, например в «Ripley's Believe It or Not!» (1932). Какой текст был самым ранним, я точно не помню.
+
+Confidence: high
+
+Corrections to the colleague's answer: No errors in the colleague's answer. Его ответ верен, но слишком краток: в нём нет обоснования.
+
+=== ANSWER X ===
+Never. The Great Wall of China is not visible from the Moon with the naked eye; the claim that it is is a myth.
+
+=== ANSWER Y ===
+**Ни в каком — она не становится видимой с Луны невооружённым глазом ни в каком году.** Вопрос содержит ложную предпосылку.
+
+**Факты:**
+- С Луны (≈384 000 км) невооружённым глазом не видны даже целые континенты в деталях; различимы лишь крупные облачные и океанические структуры, сам Земной шар выглядит диском. Стена шириной ~5–9 м на таком расстоянии на порядки меньше предела разрешения глаза (~1 угловая минута ≈ 110 км на расстоянии Луны).
+- С низкой околоземной орбиты (≈400 км, МКС) стена тоже практически не различима невооружённым глазом: она узкая и цветом сливается с местностью. Ян Лиwei не увидел её с «Шэньчжоу-5» (2003), Ян Ливэй сам это подтвердил; другие астронавты сообщали, что видели её лишь с оптикой или при особых условиях, часто спорно.
+- Миф старше космической эры: упоминания встречаются ещё в 1932 («Ripley's Believe It or Not!») и в более ранних текстах 1900-х.
+
+**Вывод:** дата «когда стала видимой» не существует; утверждение неверно для любой эпохи.
+
+**Оговорка:** не уверен в точной первой публикации мифа (какой текст самый ранний) — это я помню менее надёжно, чем физику вопроса. Также в тексте выше опечатка в имени: имелся в виду Ян Ливэй (первый китайский космонавт).
+
+=== ANSWER Z ===
+Never: the Great Wall has never been visible from the Moon with the naked eye, so there is no such year. The claim is a myth.
+
+- **Distance:** The Moon is about 384,000 km away. From there, the whole Earth looks like a small disk, and no individual human structure can be made out, the Wall included. It is long but only about 5–9 m wide.
+- **Astronauts:** Apollo crews reported seeing no man-made structures from lunar distance.
+- **Low Earth orbit:** Even from the ISS (about 400 km up), the Wall is very hard to pick out with the naked eye. It is similar in color to the terrain around it. Some astronauts say they have glimpsed it under ideal conditions, and others say they could not see it at all. Chinese astronaut Yang Liwei said he could not see it in 2003.
+- **Origin of the myth:** The idea appeared in print before spaceflight. Ripley's "Believe It or Not!" (1932) and earlier writings claimed the Wall would be visible from the Moon or Mars.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

@@ -1,0 +1,18 @@
+**Для 10 порций нужно 750 г муки и 7,5 яйца. Практически — 750 г муки и 7–8 яиц.**
+
+(Язык вопроса — английский, поэтому ниже на английском.)
+
+**Final answer: 750 g of flour and 7.5 eggs. In practice, use 750 g of flour and 7–8 eggs.**
+
+The scale factor is 10 ÷ 4 = 2.5.
+
+- Flour: 300 g × 2.5 = 750 g
+- Eggs: 3 × 2.5 = 7.5 eggs
+
+Half an egg is awkward to measure. Beat one egg, then add about half of it (roughly 25 g). Or round to 8 medium eggs for a slightly richer result, or 7 for a slightly drier one. Rounding barely matters for most batters and doughs. For precision-sensitive bakes such as sponge cake, use the beaten-egg method.
+
+Other ingredients (liquids, sugar, fat) scale by the same 2.5× factor. Leavening, spices and salt can be scaled slightly less. Baking time and pan size may also need adjusting.
+
+Confidence: high
+
+Corrections to the colleague's answer: No errors in the colleague's answer. The "7 eggs plus half of one beaten egg" suggestion is a bit imprecise: it should be 7 whole eggs plus half of a beaten egg (7.5 total). I've clarified that and added the rounding options.

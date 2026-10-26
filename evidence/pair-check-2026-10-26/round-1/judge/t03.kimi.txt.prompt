@@ -1,0 +1,61 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Which number is larger: 9.11 or 9.9?
+
+REFERENCE:
+9.9
+
+CRITERION:
+Correct iff 9.9.
+
+=== ANSWER W ===
+**9.9 is larger.** The draft is correct.
+
+Reading chosen: both are ordinary decimal numbers, not version numbers or dates.
+
+- The whole parts are equal (9), so compare the fractions. Pad 9.9 to 9.90. The tenths digits are 9 and 1, so 9.90 > 9.11.
+- The difference is 9.9 − 9.11 = 0.79.
+- The usual mistake is to read the digits after the point as a whole number (11 > 9). That doesn't work for decimals.
+- If these were software version numbers, 9.11 would come after 9.9. That is the only reading where the answer flips.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**9.9 is larger.**
+
+Reading chosen: both are ordinary decimal numbers (not version numbers or dates).
+
+Facts:
+- Compare the whole parts first: 9 = 9, so they tie.
+- Then compare the fractional parts. Pad to the same length: 9.11 vs 9.90. The tenths digits are 1 and 9, and 9 > 1, so 9.90 > 9.11.
+- The difference is 9.9 − 9.11 = 0.79.
+
+Conclusion: 9.9 > 9.11. The common mistake is to treat the digits after the point as a whole number, which would make 11 > 9. That doesn't apply to decimals.
+
+Caveat: if these were version numbers (like software releases), 9.11 would come after 9.9. I'm sure of the decimal answer, and the version-number reading is the only one where the answer flips.
+
+=== ANSWER Y ===
+9.9 is larger.
+
+As decimals, 9.11 < 9.90, so 9.9 > 9.11.
+
+=== ANSWER Z ===
+**9.9 is larger.** The draft is correct.
+
+Compare the digits after the decimal point by padding to the same length: 9.9 = 9.90, and 90 > 11. So 9.90 > 9.11.
+
+The common mistake is reading "11" as bigger than "9", as in version numbers or software releases. Decimals don't work that way: 9.11 means 9 + 0.11, while 9.9 means 9 + 0.9.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

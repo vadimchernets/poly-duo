@@ -1,0 +1,6 @@
+• - **W**: It ultimately lands on the correct 3⅓ cents, but it boldly opens with "The ball costs $0.275 (27.5 cents)" as the answer before correcting itself — committing to two incompatible results, so it only partially matches.
+  - **X**: Headline and derivation both give 1/30 ≈ $0.0333 (3⅓ cents), and the classic-5¢ contrast doesn't contradict the reference — matches.
+  - **Y**: States exactly $0.10/3 ≈ $0.0333 with the 5¢/10¢ intuition explicitly rejected — matches.
+  - **Z**: Opens and closes with 1/30 of a dollar ≈ 3.33 cents — matches.
+
+  VERDICT: W=partial; X=correct; Y=correct; Z=correct

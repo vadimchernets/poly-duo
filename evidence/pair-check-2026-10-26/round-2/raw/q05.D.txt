@@ -1,0 +1,17 @@
+**The final price is $6,505.57, so the colleague's $5,783.30 is wrong.**
+
+I applied the four changes in order, without rounding in between:
+
+1. 5,383.99 × 1.17 = 6,299.2683
+2. 6,299.2683 × 1.125 = 7,086.6768375
+3. 7,086.6768375 × 1.08 = 7,653.6109845
+4. 7,653.6109845 × 0.85 = 6,505.5693368, which rounds to **$6,505.57**
+
+The overall factor is 1.17 × 1.125 × 1.08 × 0.85 = 1.20832, about +20.8%. That is above 5,383.99, while the colleague's result is only about +7.4%.
+
+Rounding to the cent after each step gives 6,299.27 → 7,086.68 → 7,653.61 → 6,505.57. That is the same result.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The product 5,383.99 × 1.17 × 1.125 × 1.08 × 0.85 is $6,505.57, not $5,783.30. The stated multipliers are correct, but the arithmetic is wrong.

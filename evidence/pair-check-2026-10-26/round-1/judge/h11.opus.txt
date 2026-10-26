@@ -1,0 +1,6 @@
+W: The final answer is 1,296, which matches the reference.
+X: The final answer is 1,296, which matches the reference; the extra square count (204) does not change it.
+Y: The final answer is 1,296; the 1,092 figure is offered only for a different question (non-square rectangles), so it is not a hedge.
+Z: The answer commits to 1,296 for the question as asked; 1,092 is mentioned only for a reading the question rules out by saying "including squares".
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

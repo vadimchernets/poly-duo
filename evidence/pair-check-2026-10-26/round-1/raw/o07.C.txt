@@ -1,0 +1,9 @@
+**212 °F** (100 °C) at standard sea-level pressure (1 atm = 101.325 kPa).
+
+**Facts**
+- The 212 °F figure follows from 100 °C × 9/5 + 32.
+- It holds only at 1 atm. Real sea-level pressure varies with weather, so the actual boiling point shifts by a fraction of a degree. It drops about 1 °F for each ~500 m of altitude gained.
+- Dissolved solutes such as salt raise the boiling point slightly. The 212 °F figure is for pure water.
+
+**Conclusion**
+212 °F is the standard answer. I read "sea level" as standard atmospheric pressure and pure water.

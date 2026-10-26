@@ -1,0 +1,9 @@
+**W:** It opens by calling the premise impossible, then says it is "not strictly impossible" and gives "second to last" as a forced answer, so it hedges between the right and a wrong result.
+
+**X:** It calls the situation impossible as stated but recommends "second to last" as the practical answer, so it hedges between the reference and a wrong result.
+
+**Y:** It states plainly that the premise is impossible, which matches the reference; its side reasoning is imperfect but does not change that final answer.
+
+**Z:** It calls the premise contradictory but then gives "second to last" as the practical answer it expects the question wants, so it hedges between the right and a wrong result.
+
+VERDICT: W=partial; X=partial; Y=correct; Z=partial

@@ -1,0 +1,12 @@
+**16857 days**
+
+Reading chosen: the plain calendar-day difference, i.e. the end date minus the start date.
+
+**Facts**
+- 5 June 2000 → 5 June 2046 is 46 years, which is 46 × 365 = 16 790 days, plus leap days.
+- Leap days falling in that span: 29 Feb of 2004, 2008, …, 2044, which is 11 of them. The 29 Feb 2000 is before the start date, and 2046 is not a leap year.
+- That gives 16 790 + 11 = 16 801 days to 5 June 2046.
+- 5 June → 5 July 2046 is 30 days, and 5 July → 31 July is 26 days, so 56 days.
+
+**Conclusion**
+16 801 + 56 = 16 857. I am confident in this figure. I did the arithmetic by hand and did not run a calculation tool.

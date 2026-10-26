@@ -1,0 +1,8 @@
+• Verification of the reference: by CRT, 18^136 ≡ 0 (mod 8), and mod 125 Euler gives 18^136 ≡ 18^36 ≡ 26, which combines to 776; also directly 18^16 ≡ 776 and 576 = 18^8, confirming Y's error.
+
+  - **W**: Final answer is exactly 776 and it correctly rejects 576, so it matches the reference. (Its side claim that the period-20 reduction is valid is also mathematically true for exponents ≥ 3, and doesn't contradict the reference.)
+  - **X**: Final answer is exactly 776 via a sound CRT derivation, matching the reference.
+  - **Y**: Final answer is 576, which equals 18^8 mod 1000, not 18^136; contradicts the reference and endorses the false premise of a period-20 cycle.
+  - **Z**: Final answer is exactly 776 with a correct CRT computation and a valid direct mod-1000 check, matching the reference.
+
+  VERDICT: W=correct; X=correct; Y=incorrect; Z=correct

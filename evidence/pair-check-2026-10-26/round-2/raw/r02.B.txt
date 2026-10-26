@@ -1,0 +1,13 @@
+**The 9th character of the reversed string is "o".** The colleague's answer "q" is wrong.
+
+- The original has 24 characters: `x r i q y j f l w k w w m q n o g q l n u v k x`.
+- Reversed: `xkvunlqgonqmwwkwlfjyqirx`.
+- Counting from 1: x(1) k(2) v(3) u(4) n(5) l(6) q(7) g(8) **o(9)**.
+- The 9th character from the end corresponds to original position 16, which is "o".
+
+I read "9th" as 1-indexed. If it were 0-indexed (the 9th index), the answer would be "n".
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- "q" is incorrect. It is the 7th character of the reversed string (and the 18th of the original), not the 9th. The correct answer is "o".

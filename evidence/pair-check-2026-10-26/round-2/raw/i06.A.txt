@@ -1,0 +1,9 @@
+**892 integers.**
+
+Using inclusion–exclusion:
+
+- Divisible by 3 or 8:  
+  \(\lfloor2678/3\rfloor+\lfloor2678/8\rfloor-\lfloor2678/24\rfloor=892+334-111=1115\).
+- Divisible by 12: \(\lfloor2678/12\rfloor=223\).
+
+Therefore, \(1115-223=\boxed{892}\).

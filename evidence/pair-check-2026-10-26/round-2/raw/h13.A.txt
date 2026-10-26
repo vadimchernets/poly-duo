@@ -1,0 +1,3 @@
+(b) At least one student did not pass.
+
+“Not every student passed” means there is at least one student who did not pass. It does not imply that nobody passed or that somebody passed.

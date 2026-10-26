@@ -1,0 +1,6 @@
+• W: Gives 42 as the square root and correctly notes −42 also squares to 1,764 while taking +42 as the principal root, matching the reference.
+  X: States 42 with the same check and −42 caveat, matching the reference.
+  Y: States 42 with the same check and −42/principal-root caveat, matching the reference.
+  Z: States √1,764 = 42 with 42² = 1,764, matching the reference.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

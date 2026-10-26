@@ -1,0 +1,6 @@
+W: States $7,000 for 2024, which matches the reference.
+X: Gives $7,000 as the bottom line, which matches the reference.
+Y: Gives $7,000 as the bottom line, which matches the reference.
+Z: States $7,000 as the 2024 maximum for someone under 50, which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

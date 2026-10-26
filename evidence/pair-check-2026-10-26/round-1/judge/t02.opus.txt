@@ -1,0 +1,6 @@
+W: The final answer is 3 and the spelling breakdown supports it, so it matches the reference.
+X: The final answer is 3 and the conclusion is stated without hedging, so it matches the reference.
+Y: The answer directly says 3.
+Z: It says "the draft is wrong" while also calling the draft's 3 correct, but that contradiction is about the draft; its own count is consistently 3.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

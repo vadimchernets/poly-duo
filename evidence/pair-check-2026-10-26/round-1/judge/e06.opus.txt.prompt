@@ -1,0 +1,76 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+A medication is taken every 8 hours. The first dose is at 7:00 AM on Monday. When is the 5th dose?
+
+REFERENCE:
+3:00 PM Tuesday (doses: Mon 7 AM, Mon 3 PM, Mon 11 PM, Tue 7 AM, Tue 3 PM)
+
+CRITERION:
+Correct iff 3:00 PM Tuesday.
+
+=== ANSWER W ===
+The 5th dose is at **3:00 PM on Tuesday**. The colleague's answer is correct.
+
+The first dose is at 7:00 AM Monday, and 4 intervals of 8 hours (32 hours) separate the 1st and 5th doses. 7:00 AM Monday + 32 hours = 3:00 PM Tuesday.
+
+Schedule: Mon 7:00 AM, Mon 3:00 PM, Mon 11:00 PM, Tue 7:00 AM, Tue 3:00 PM.
+
+I read "5th dose" as counting the first dose as dose 1.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**The 5th dose is at 3:00 PM on Tuesday.** The colleague's answer is correct.
+
+Reading chosen: the first dose counts as dose 1, and the interval is a fixed 8 hours.
+
+- Dose 1: Monday 7:00 AM
+- Dose 2: Monday 3:00 PM
+- Dose 3: Monday 11:00 PM
+- Dose 4: Tuesday 7:00 AM
+- Dose 5: Tuesday 3:00 PM
+
+The 5th dose comes 4 × 8 = 32 hours after the first, and 7:00 AM Monday plus 32 hours is 3:00 PM Tuesday.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**The 5th dose is at 11:00 PM on Monday.**
+
+Reading chosen: the first dose counts as dose 1, and the interval is a fixed 8 hours.
+
+Facts:
+- Dose 1: 7:00 AM Monday
+- Dose 2: 3:00 PM Monday
+- Dose 3: 11:00 PM Monday
+- Dose 4: 7:00 AM Tuesday
+- Dose 5: 3:00 PM Tuesday
+
+The 5th dose is 4 × 8 = 32 hours after the first. 7:00 AM Monday plus 32 hours is 3:00 PM Tuesday.
+
+**Correction:** the line at the top is wrong. 11:00 PM Monday is dose 3. The 5th dose is at **3:00 PM on Tuesday**.
+
+Not sure: if "5th dose" were read as the 5th dose after the first (so 6 doses in total), it would be 11:00 PM Tuesday. That is not the standard reading.
+
+=== ANSWER Z ===
+The 5th dose is at **3:00 PM on Tuesday**.
+
+Schedule:
+
+1. Monday, 7:00 AM  
+2. Monday, 3:00 PM  
+3. Monday, 11:00 PM  
+4. Tuesday, 7:00 AM  
+5. Tuesday, 3:00 PM
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

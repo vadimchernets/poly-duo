@@ -1,0 +1,7 @@
+You have 3 apples now.
+
+Reading chosen: the 3 apples are your count today, and the apple you ate yesterday is already reflected in that number. If you meant "3 apples yesterday, ate one, so how many are left?", the answer would be 2.
+
+Confidence: high
+
+No errors in the colleague's answer

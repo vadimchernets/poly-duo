@@ -1,0 +1,11 @@
+**13 August 2169 will be a Sunday.** The colleague's answer is correct.
+
+I checked it with the Doomsday method (using the 2100s anchor):
+- The anchor day for the 2100s is Sunday.
+- For the year 69: 69 = 5×12 + 9, and ⌊9/4⌋ = 2. The sum is 5 + 9 + 2 = 16, which is 2 mod 7. So the doomsday for 2169 is Sunday + 2 = Tuesday.
+- 8 August is always a doomsday (8/8), so 8 August 2169 is a Tuesday.
+- 13 August is 5 days later, which is Sunday.
+
+Confidence: high
+
+No errors in the colleague's answer

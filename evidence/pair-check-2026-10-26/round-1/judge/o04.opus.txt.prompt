@@ -1,0 +1,53 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is the chemical symbol for tungsten?
+
+REFERENCE:
+W
+
+CRITERION:
+Correct iff W.
+
+=== ANSWER W ===
+W
+
+Tungsten’s chemical symbol is **W**, derived from its former name, **wolfram**.
+
+=== ANSWER X ===
+The chemical symbol for tungsten is **W**. It comes from "wolframium," the Latin name for the element, which is also called wolfram. Its atomic number is 74.
+
+The colleague's answer is correct. The only change is that the origin is stated more precisely.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**W** is the chemical symbol for tungsten. The colleague's answer is correct.
+
+- The symbol comes from *wolfram*, the element's name in German and some other languages. That name comes from the mineral wolframite.
+- The English name "tungsten" comes from the Swedish *tung sten*, "heavy stone".
+- Its atomic number is 74.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+**W** — the symbol for tungsten is W.
+
+**Facts:**
+- Atomic number 74.
+- The symbol comes from *Wolfram*, the Latin/German name for the element (from the mineral wolframite). "Tungsten" comes from the Swedish *tung sten* ("heavy stone").
+
+**Conclusion:** W, not "T" or "Tu".
+
+I'm confident in this one.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

@@ -1,0 +1,5 @@
+• W: Its final answer is “v,” matching the reference, with consistent counting.
+  X: Its final answer is “v,” matching the reference, and the extra “colleague” note does not contradict it.
+  Y: It states exactly “v,” which matches the reference.
+  Z: Its final answer is “v,” matching the reference, with consistent reasoning and no incompatible result.
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

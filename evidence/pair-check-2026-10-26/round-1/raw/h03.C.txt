@@ -1,0 +1,12 @@
+**Bottom line:** The question has a false premise. Darwin did not coin the phrase, and it is not in the 1859 first edition, so no chapter of that edition is the answer.
+
+**Facts**
+- Herbert Spencer coined "survival of the fittest" in *Principles of Biology* (1864), after reading Darwin.
+- Alfred Russel Wallace suggested in 1866 that Darwin adopt it.
+- Darwin first used it in the 5th edition of the *Origin* (1869). He credited Spencer, and he kept the phrase in the 6th edition (1872).
+- In the 1859 edition, the relevant chapters are III ("Struggle for Existence") and IV ("Natural Selection"). Both use only "natural selection" and "struggle for existence".
+- In the later editions, the phrase appears in Chapter IV ("Natural Selection"). Darwin wrote there that natural selection is "what Mr. Herbert Spencer has well expressed by the Survival of the Fittest". The 6th edition's chapter title adds "or the Survival of the Fittest".
+
+**Conclusion:** If you want where Darwin used the phrase, the answer is Chapter IV of the 5th and later editions, and he borrowed it from Spencer. In the 1859 edition, it appears nowhere.
+
+**Not sure:** Whether the 5th edition also has the phrase in Chapter III. I recall it in Chapter IV and in the 6th edition's chapter title, but I have not checked the 1869 text line by line.

@@ -1,0 +1,85 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many words are in the following sentence? Count hyphenated words as one word.
+"When the library finally reopened after the renovation, the reading room had new lamps, wider desks, quieter chairs, and a strict rule against eating anything at all."
+
+REFERENCE:
+27
+
+CRITERION:
+Correct iff exactly this number.
+
+=== ANSWER W ===
+**The sentence has 27 words, so the colleague's answer of 28 is off by one.**
+
+Counting in order: When (1) the (2) library (3) finally (4) reopened (5) after (6) the (7) renovation (8) the (9) reading (10) room (11) had (12) new (13) lamps (14) wider (15) desks (16) quieter (17) chairs (18) and (19) a (20) strict (21) rule (22) against (23) eating (24) anything (25) at (26) all (27).
+
+The sentence contains no hyphenated words, so the hyphen rule doesn't change the count.
+
+Confidence: high
+
+Corrections to the colleague's answer
+- It said 28 words; the correct count is 27.
+
+=== ANSWER X ===
+**27 words.**
+
+Reading chosen: standard whitespace-separated words, with punctuation not counted separately.
+
+**Count:**
+When (1) the (2) library (3) finally (4) reopened (5) after (6) the (7) renovation (8) the (9) reading (10) room (11) had (12) new (13) lamps (14) wider (15) desks (16) quieter (17) chairs (18) and (19) a (20) strict (21) rule (22) against (23) eating (24) anything (25) at (26) all (27)
+
+**Facts:** The sentence contains no hyphenated words, so the hyphen rule changes nothing here. The commas do not affect the count.
+
+**Conclusion:** 27. I'm confident in this count.
+
+=== ANSWER Y ===
+28 words.
+
+=== ANSWER Z ===
+**The sentence has 27 words.** The colleague's answer of 28 is off by one.
+
+Reading chosen: words are whitespace-separated tokens, and punctuation is not counted.
+
+1. When
+2. the
+3. library
+4. finally
+5. reopened
+6. after
+7. the
+8. renovation
+9. the
+10. reading
+11. room
+12. had
+13. new
+14. lamps
+15. wider
+16. desks
+17. quieter
+18. chairs
+19. and
+20. a
+21. strict
+22. rule
+23. against
+24. eating
+25. anything
+26. at
+27. all
+
+The sentence contains no hyphenated words, so the hyphen rule changes nothing. The commas don't affect the count. Counting "anything at all" or "reading room" as single units would lower the total, not raise it, so no reasonable reading gives 28.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The answer of 28 is wrong. The correct count is 27, and the draft gave no breakdown to show where the extra word came from.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

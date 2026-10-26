@@ -1,0 +1,9 @@
+**W:** It gives 597 as the final answer, with a correct breakdown (365 + 232), which matches the reference.
+
+**X:** It gives 597 as the final answer, and mentions 598 only as what a different counting convention would give, not as its own answer.
+
+**Y:** It gives 597 as the final answer, and refers to 598 only as the result of a different reading.
+
+**Z:** It states 597 days, which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

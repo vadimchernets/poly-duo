@@ -1,0 +1,18 @@
+**C is a knight.**
+
+Reading chosen: the puzzle is a standard knight/knave logic puzzle where each person is exactly one type.
+
+**Facts (case analysis):**
+
+- Case 1: A is a knight. Then "B is a knave" is true, so B is a knave. B's statement is then false, so A and C are of different types. A is a knight, so C is a knave.
+- Case 2: A is a knave. Then "B is a knave" is false, so B is a knight. B's statement is then true, so A and C are the same type. A is a knave, so C is a knave.
+
+**Check that I did not make a mistake:** In case 1, C is a knave, not a knight. I need to correct my bottom line.
+
+**Corrected bottom line: C is a knave.**
+
+Both cases lead to the same result:
+- Case 1 (A knight, B knave, C knave): A's statement is true, which is consistent. B's statement ("A and C are the same type") is false because A is a knight and C is a knave, so the knave B lies. Consistent.
+- Case 2 (A knave, B knight, C knave): A's statement is false, which is consistent. B's statement is true because A and C are both knaves, so the knight B tells the truth. Consistent.
+
+**Conclusion:** Whichever type A is, C is a knave. A and B cannot be determined, but they are of opposite types.

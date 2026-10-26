@@ -1,0 +1,15 @@
+**The 18th character is "y".**
+
+Reading chosen: 1-based position in the reversed string.
+
+- Original (24 characters): `vsjocgymslrzneoitolgvwus`
+- Reversed: `suwvglotioenzrlsmygcojsv`
+- Counting: s1 u2 w3 v4 g5 l6 o7 t8 i9 o10 e11 n12 z13 r14 l15 s16 m17 **y18**
+- Cross-check: reversed position 18 is original position 24 − 18 + 1 = 7, which is "y" (v s j o c g **y**).
+
+Confidence: high
+
+Corrections to the colleague's answer
+- The answer "n" is wrong. In the reversed string, "n" is at position 12, not 18.
+- The colleague's reversed string `suwvglotioenrzlsmygcojsv` has "rz" where it should be "zr" (the original contains "rzne", which reverses to "enzr").
+- Even with that string, counting to position 18 gives "y", so the stated answer doesn't follow from their own string.

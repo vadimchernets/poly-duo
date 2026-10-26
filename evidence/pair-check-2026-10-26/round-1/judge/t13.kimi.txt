@@ -1,0 +1,6 @@
+• **W:** Concludes day 18 with sound reasoning (17 feet after night 17, climbs to 20 on day 18) — matches the reference.
+  **X:** Concludes day 18 and explicitly rejects the common wrong answer of 20 — matches the reference.
+  **Y:** States day 18 and confirms the snail reaches 20 feet and exits on that day; the odd "bottom of the well" header doesn't change the committed answer — matches the reference.
+  **Z:** Concludes Day 18 with a correct algebraic check (n + 2 ≥ 20 → n = 18) — matches the reference.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

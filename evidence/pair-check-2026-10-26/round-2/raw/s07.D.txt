@@ -1,0 +1,9 @@
+**162** is correct, and the colleague's answer has no errors.
+
+I recomputed 3^77 independently as 3^64 · 3^13 = 3433683820292512484657849089281 × 1594323. That gives 5474401089420219382077155933569751763, the same 37-digit number as the draft.
+
+Summing its digits in blocks of ten gives 42 + 31 + 51 + 38 = 162. As a consistency check, 162 is divisible by 9, as it must be, because 3^77 is divisible by 9.
+
+Confidence: high
+
+No errors in the colleague's answer

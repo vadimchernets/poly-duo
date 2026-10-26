@@ -1,0 +1,3 @@
+The 14th character is **c**.
+
+The original string has 24 characters, so the 14th character when reversed corresponds to the 11th character of the original string: **c**.

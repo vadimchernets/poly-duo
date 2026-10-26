@@ -1,0 +1,5 @@
+**29 days.** 2028 is divisible by 4 and isn't a century year, so it's a leap year and February has 29 days. The last day is Tuesday, 29 February 2028.
+
+Confidence: high
+
+No errors in the colleague's answer

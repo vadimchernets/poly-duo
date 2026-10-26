@@ -1,0 +1,6 @@
+- **W:** It states 212 °F at standard sea-level pressure, which matches the reference.
+- **X:** Its final answer is 212 °F, which matches the reference; the extra altitude detail ("~500 m" per 1 °F, where ~500 ft is closer) doesn't change that answer.
+- **Y:** Its final answer is 212 °F, which matches the reference, and its caveats don't contradict it.
+- **Z:** Its final answer is 212 °F, which matches the reference, and its caveats are consistent with it.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

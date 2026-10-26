@@ -1,0 +1,6 @@
+• **W:** Correct — explicitly rejects the premise, states she won exactly two prizes (1903 Physics, 1911 Chemistry), and gives no year for a third.
+  **X:** Correct — clearly rejects the premise and lists only the two real Nobel Prizes without hedging or giving a third year.
+  **Y:** Correct — rejects the premise and confirms two prizes, matching the reference; the extra family details don't contradict it.
+  **Z:** Correct — plainly states there was no third prize and names only the two real ones, which fully satisfies the criterion.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

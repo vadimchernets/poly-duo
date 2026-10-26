@@ -1,0 +1,5 @@
+W: Gives 750 g flour and 7.5 eggs, rounded to 7 or 8, which matches the reference.
+X: Gives 750 g flour and 7.5 eggs, made as 7 eggs plus half a beaten egg, which matches the reference.
+Y: Gives 750 g flour and 7.5 eggs, or 7–8 in practice, which matches the reference despite the extra Russian line and the redundant "correction".
+Z: Gives 750 g flour and 7.5 eggs, made as 7 eggs plus half a beaten egg, which matches the reference.
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

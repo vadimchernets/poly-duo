@@ -1,0 +1,13 @@
+The ball costs **$0.05 (5 cents)**, and the bat costs $1.05.
+
+Let the ball cost x. Then the bat costs x + 1.00, and:
+
+x + (x + 1.00) = 1.10
+2x = 0.10
+x = 0.05
+
+Check: $1.05 + $0.05 = $1.10, and $1.05 − $0.05 = $1.00. The common intuitive answer of 10 cents is wrong. If the ball cost $0.10, the bat would cost $1.10 and the total would be $1.20.
+
+Confidence: high
+
+No errors in the colleague's answer.

@@ -1,0 +1,9 @@
+The colleague's answer is correct: the sentence has 28 words.
+
+Counted in order: The (1) train (2) to (3) Vienna (4) left (5) eleven (6) minutes (7) late (8) stopped (9) for (10) twenty (11) minutes (12) outside (13) Linz (14) for (15) no (16) announced (17) reason (18) and (19) still (20) arrived (21) at (22) the (23) main (24) station (25) exactly (26) on (27) time (28).
+
+The sentence contains no hyphenated words, so the hyphen rule doesn't change the count.
+
+Confidence: high
+
+No errors in the colleague's answer

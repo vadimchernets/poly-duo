@@ -1,0 +1,64 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+In a Monty Hall game the doors are made of clear glass and you can see the car behind door 2. You pick door 1, and the host opens door 3 to show a goat. Should you switch, and what is your chance of winning if you switch to door 2?
+
+REFERENCE:
+Yes, switch: probability 1 (you can see the car).
+
+CRITERION:
+Correct iff switching wins with probability 1 / certainty. 2/3 = incorrect.
+
+=== ANSWER W ===
+**Yes, switch to door 2: you win with 100% probability.** The colleague's answer is correct.
+
+Reading chosen: the glass is fully transparent, so the car is visibly behind door 2, and the host's reveal of a goat behind door 3 is consistent with that.
+
+- The classic 1/3 vs 2/3 split exists only because the car's location is hidden. Here it is visible, so there is nothing to estimate.
+- Only one car exists and it is behind door 2, so door 1 (your pick) has a goat. Switching therefore wins every time.
+- This holds whatever the host does. You would have switched even if the host had opened nothing.
+
+The only way the answer falls below 100% is if you doubt what you see (a mirror trick, say) or the rules let the car be moved after the reveal. Nothing in the question suggests either.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+Yes—switch to door 2. Your chance of winning is 100%, because you can directly see the car behind it.
+
+Facts: The host’s action and the usual Monty Hall probabilities are irrelevant once the car’s location is visible.
+
+Conclusion: Switching from door 1 to door 2 guarantees the car.
+
+=== ANSWER Y ===
+**Bottom line: Yes, switch to door 2. Your chance of winning is 100%.**
+
+Reading chosen: the glass is fully transparent, so you reliably see the car behind door 2, and the host's reveal of door 3 shows a goat, which is consistent with what you see.
+
+**Facts:**
+- Because you can see the car behind door 2, there is no uncertainty about where it is. The usual 1/3 vs 2/3 probabilities from the standard Monty Hall problem apply only when the car's location is hidden.
+- Door 3 showing a goat is consistent with the car being behind door 2, so it gives no contradictory information.
+- Door 1 therefore has a goat (the car is behind door 2, and there is only one car).
+
+**Conclusion:** Switching to door 2 wins with certainty, assuming the glass is truly transparent and you are not misperceiving it (for example, a reflection or a mirror trick). The 2/3 figure from the classic problem is irrelevant here, since it comes from the information you lack in that version.
+
+**Caveat:** The only way the answer is not 100% is if you doubt your observation (the glass is deceptive, or the rules allow the car to be moved after the reveal). Nothing in the question suggests either, so I treat it as certain.
+
+=== ANSWER Z ===
+Yes, switch to door 2: if the glass is truly clear and the car is visibly behind it, your chance of winning by switching is 100%.
+
+Reading chosen: the car is actually behind door 2 and you can see it, so this is an observation, not a probability puzzle. The usual 2/3 vs 1/3 Monty Hall reasoning applies only when the car's location is hidden. Here the host's opening of door 3 adds no information, because you already know where the car is.
+
+The colleague's answer is correct. One caveat: the 100% assumes you trust what you see (no mirror, trick glass, or misleading setup). Under the stated premise, it holds.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

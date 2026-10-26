@@ -1,0 +1,19 @@
+**Bottom line: the premise is impossible. You can't overtake the person in last place, because overtaking means passing someone who is ahead of you, and nobody is ahead of you if you are already behind the last-place runner.**
+
+Reading chosen: the question is the classic trick riddle, meant as a logic check rather than a trap with a numeric answer.
+
+Details:
+- To overtake someone, you must start behind them. The last-place runner has no one behind them, so you can't be behind them while still being a ranked participant.
+- The common "wrong" answers are "second to last" (which would mean passing the last-place runner and still being behind everyone else) and "first" (a different riddle, "you overtake the person in second place" gives second).
+- If the question is loosely worded, the only consistent interpretations are:
+  - You are lapped or trailing the field, outside the ranking: you aren't in last place in the standings yet, so overtaking the "last" runner would put you ahead of them, making you second to last (and that runner last).
+  - Multi-lap races: if you are a lap down, passing the last-place runner on the track does not change your position in the standings until the race ends.
+
+So the direct answer: under normal rules, the scenario can't happen; if you force it, passing the last-place runner makes you **second to last**, with them in last.
+
+Confidence: medium
+
+**Corrections to the colleague's answer**
+- "You must already be behind them and therefore not in the race's ranking" is overstated. You can be unranked or a lap down and still pass the last-ranked runner, ending up second to last. The premise is not strictly impossible, only contradictory under a strict reading, and the draft omits the "second to last" answer that most people expect.
+
+Worth clarifying: whether the question intends the strict logic-trick reading or the playful "second to last" answer.

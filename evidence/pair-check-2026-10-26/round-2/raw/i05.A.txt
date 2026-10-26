@@ -1,0 +1,12 @@
+**1,107 integers.**
+
+Count separately:
+
+- Divisible by 3 but not 12: \(\lfloor3320/3\rfloor-\lfloor3320/12\rfloor=1106-276=830\).
+- Divisible by 8 but not 12: \(\lfloor3320/8\rfloor-\lfloor3320/24\rfloor=415-138=277\).
+
+The two groups do not overlap: numbers divisible by both 3 and 8 are divisible by 24, hence by 12.
+
+\[
+830+277=\boxed{1107}
+\]

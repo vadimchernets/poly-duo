@@ -1,0 +1,17 @@
+**The ball costs about $0.03 (exactly $0.10/3 ≈ $0.0333).**
+
+Reading chosen: "bat = 2 × ball + $1.00", total = $1.10.
+
+**Facts (the arithmetic):**
+- Let ball = b. Then bat = 2b + 1.00.
+- Total: b + 2b + 1.00 = 1.10, so 3b = 0.10, so b = 0.10/3 ≈ $0.0333.
+- Check: bat = 2(0.0333) + 1.00 = $1.0667. Total = $1.0667 + $0.0333 = $1.10. ✓
+
+**Conclusion:**
+- The exact answer is 1/30 of a dollar. It is not a whole number of cents.
+- If prices must be whole cents, there is no exact solution. Ball = 3¢ gives bat = $1.06 and total $1.09. Ball = 4¢ gives bat = $1.08 and total $1.12. Neither equals $1.10.
+- The answer is therefore $0.0333…, which rounds to 3¢ if you must round.
+
+**Contrast with the classic puzzle:** The original says "$1.00 more than the ball," which gives 5¢. The "twice" here changes the answer. The intuitive 10¢ or 5¢ is wrong for this version.
+
+Not unsure about the math. The only open point is how you want the fractional cent handled.

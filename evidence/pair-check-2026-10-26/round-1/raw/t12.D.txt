@@ -1,0 +1,7 @@
+The smallest prime greater than 1,000 is **1009**. The colleague's answer is correct.
+
+Check: 1001 = 7·11·13, 1002 is even, 1003 = 17·59, 1004 is even, 1005 is divisible by 5, 1006 is even, 1007 = 19·53, and 1008 is even. 1009 isn't divisible by any prime up to 31 (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31). √1009 ≈ 31.8, so those are the only primes that need testing.
+
+Confidence: high
+
+No errors in the colleague's answer

@@ -1,0 +1,13 @@
+**The 5th character is "f".**
+
+Reading chosen: counting from 1, in the reversed string.
+
+The original has 24 characters. Numbered, they are: d1 s2 r3 z4 v5 c6 r7 q8 z9 s10 x11 j12 d13 p14 w15 y16 o17 r18 e19 f20 n21 t22 z23 v24.
+
+The reversed string is `vztnferoywpdjxszqrcvzrsd`. Its first five characters are v, z, t, n, f. The 5th is the 20th character of the original.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The headline says the 5th character is "t", which is wrong. "t" is the 3rd character. The body of the answer then arrives at "f", so the answer contradicts itself, and only the second result is correct.
+- The reversed string is given as `vzt nferoywpdjxszqrcvzrsd`. Apart from the stray space, it is correct.

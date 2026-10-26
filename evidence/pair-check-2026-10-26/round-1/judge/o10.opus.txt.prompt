@@ -1,0 +1,53 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is the capital of Australia?
+
+REFERENCE:
+Canberra
+
+CRITERION:
+Correct iff Canberra.
+
+=== ANSWER W ===
+Canberra is the capital of Australia. The colleague's answer is correct.
+
+Sydney and Melbourne are larger cities, and people often assume one of them is the capital. Canberra was purpose-built as the capital and sits in the Australian Capital Territory.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**Canberra is the capital of Australia.** The colleague's answer is correct.
+
+- Canberra is the seat of the federal Parliament and government. It lies in the Australian Capital Territory, between Sydney and Melbourne.
+- It was founded in 1913 as a planned capital, a compromise between the rival cities Sydney and Melbourne. Melbourne was the interim seat of government until 1927.
+- Sydney, the largest city, and Melbourne are the common wrong answers.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**Canberra.**
+
+**Facts:**
+- Canberra is the capital of Australia and the seat of the federal Parliament and government.
+- It lies in the Australian Capital Territory (ACT), between Sydney and Melbourne.
+- It was founded in 1913 as a planned capital, a compromise between the rival cities Sydney and Melbourne. Melbourne served as the interim seat of government until 1927.
+
+**Conclusion:**
+- Sydney (the largest city) and Melbourne are common wrong answers. Canberra is the correct one.
+
+I'm not unsure about any part of this.
+
+=== ANSWER Z ===
+Canberra is the capital of Australia.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

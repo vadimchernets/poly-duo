@@ -1,0 +1,6 @@
+- **W:** Its final answer is 350 g water and 10 g salt, which matches the reference.
+- **X:** It gives 350 g water and 10 g salt, and its extra notes don't contradict the reference.
+- **Y:** It gives 350 g water and 10 g salt; the mention of a colleague's answer doesn't change that result.
+- **Z:** It gives 350 g water and 10 g salt, which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

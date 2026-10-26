@@ -1,0 +1,5 @@
+• W: It states 27,449, exactly the reference, and its memory caveat does not contradict it.
+  X: It concludes 27449 and only hedges about not recomputing, not about the value.
+  Y: It states 27,449 exactly, matching the reference.
+  Z: It provides only a tool invocation/code with no stated final answer, so the required number is missing.
+  VERDICT: W=correct; X=correct; Y=correct; Z=incorrect

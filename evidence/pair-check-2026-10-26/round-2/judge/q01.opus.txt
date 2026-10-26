@@ -1,0 +1,6 @@
+- **W:** It gives $19,308.01, which matches the reference exactly (7,796 × 1.40 × 1.17 × 1.08 × 1.40 = 19,308.010176).
+- **X:** It commits to $19,308.01. It mentions $19,308.02 under step-by-step rounding only as an explained alternative, not as a competing answer.
+- **Y:** It gives $19,307.02, which comes from an arithmetic error and is about $1 off the reference.
+- **Z:** It gives $19,308.01 with correct arithmetic and clearly rejects the per-step rounding alternative.
+
+VERDICT: W=correct; X=correct; Y=incorrect; Z=correct

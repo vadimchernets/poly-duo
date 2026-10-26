@@ -1,0 +1,12 @@
+**23 June 2033.** The colleague's answer (13 June 2033) is off by 10 days.
+
+Calculation:
+- From 21 May 2026 to 21 May 2033 is 7 years. That span contains two leap days (29 Feb 2028 and 29 Feb 2032), so it is 7 × 365 + 2 = 2557 days.
+- The remainder is 2590 − 2557 = 33 days.
+- 21 May + 10 days = 31 May, and the other 23 days land on 23 June.
+- 23 June 2033 falls on a Thursday.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The date 13 June 2033 is wrong. The correct date is 23 June 2033, and 13 June is only 2580 days after 21 May 2026.

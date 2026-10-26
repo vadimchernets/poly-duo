@@ -1,0 +1,76 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+For 2024, what is the maximum annual IRA contribution for someone under age 50 in the US?
+
+REFERENCE:
+$7,000 (IRS Notice 2023-75)
+
+CRITERION:
+Correct iff $7,000.
+
+=== ANSWER W ===
+**$7,000** for 2024.
+
+This is the combined limit across all traditional and Roth IRAs, or your taxable compensation for the year if that was less than $7,000. Roth IRA income limits may reduce the permitted contribution. [IRS guidance](https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-ira-contribution-limits)
+
+=== ANSWER X ===
+**Bottom line: $7,000 for 2024.** The colleague's draft is correct.
+
+Reading chosen: the combined limit across all of a person's traditional and Roth IRAs, not a limit per account.
+
+**Details**
+- The limit was $7,000 for people under 50. It was $6,500 in 2023.
+- People aged 50 or older could add a $1,000 catch-up, for $8,000 in total.
+- The contribution cannot exceed taxable compensation for the year. A person who earned less than $7,000 is limited to what they earned.
+- Roth IRA contributions phase out at higher incomes. For 2024 the range was $146,000–$161,000 for single filers and $230,000–$240,000 for married couples filing jointly.
+- Traditional IRA deductibility can be reduced if you or your spouse is covered by a workplace plan.
+- The deadline for 2024 contributions was April 15, 2025.
+
+I'm quoting the phase-out ranges from memory. Check them against IRS Notice 2023-75 before relying on them.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**Bottom line: $7,000 for 2024.**
+
+Reading chosen: the combined limit across all of a person's traditional and Roth IRAs, not a limit per account.
+
+**Facts**
+- The 2024 IRA contribution limit was $7,000 for people under 50. It was $6,500 in 2023.
+- People aged 50 or older could add a $1,000 catch-up, for $8,000 in total.
+- The contribution cannot exceed taxable compensation for the year. A person who earned less than $7,000 is limited to what they earned.
+- Roth IRA contributions phase out at higher incomes. For 2024 the phase-out was $146,000–$161,000 for single filers and $230,000–$240,000 for married couples filing jointly.
+- Traditional IRA deductibility phases out if the person or their spouse is covered by a workplace plan. The thresholds depend on filing status.
+- The deadline for 2024 contributions was April 15, 2025.
+
+**Conclusion**
+$7,000 is the ceiling. Your actual limit can be lower if your earnings are low or your income falls in a Roth phase-out range.
+
+**Not sure**
+I'm confident about the $7,000 and $1,000 figures. I'm quoting the phase-out ranges from memory, so check them against IRS Notice 2023-75 before relying on them.
+
+=== ANSWER Z ===
+**$7,000** is the 2024 maximum IRA contribution for someone under 50. The colleague's answer is correct.
+
+- **Combined limit:** The $7,000 applies across all your traditional and Roth IRAs together. It is not a separate limit for each account.
+- **Compensation cap:** You can't contribute more than your taxable compensation for the year. If you earned less than $7,000, that lower amount is your limit.
+- **Roth income limits:** Higher earners may be limited or barred from contributing to a Roth IRA. For 2024 the phase-out starts at $146,000 modified AGI for single filers and $230,000 for married filing jointly.
+- **Traditional IRA deductibility:** You can contribute to a traditional IRA at any income. Whether the contribution is tax-deductible can be limited if you or your spouse is covered by a workplace plan.
+- **Age 50 and over:** The limit is $8,000, which includes a $1,000 catch-up contribution.
+- **Deadline:** You could make 2024 contributions until the 2025 tax filing deadline, April 15, 2025.
+
+Source: IRS, "Retirement topics – IRA contribution limits."
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

@@ -1,0 +1,6 @@
+• W: Final answer is 14, matching the reference, with a correct per-word breakdown.
+  X: Final answer is 14 with a correct per-word tally, matching the reference.
+  Y: Final answer is 14, matching the reference (concise, no contradictions).
+  Z: Final answer is 14 with correct per-word counts, matching the reference.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

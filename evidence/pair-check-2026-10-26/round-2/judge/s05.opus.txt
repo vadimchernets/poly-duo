@@ -1,0 +1,8 @@
+W, X, Y contain only tool calls and no final answer; Z gives 400, which isn't 361.
+
+- **W:** Incorrect, because it only shows tool calls and never states a final number.
+- **X:** Incorrect, because it only shows a tool call and never states a final number.
+- **Y:** Incorrect, because it only shows tool calls and never states a final number.
+- **Z:** Incorrect, because it states 400, which does not match the reference 361.
+
+VERDICT: W=incorrect; X=incorrect; Y=incorrect; Z=incorrect

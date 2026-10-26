@@ -1,0 +1,13 @@
+**Sunday.**
+
+Reading chosen: both dates are in the Gregorian calendar, and the question asks for the weekday of 3 March 2030.
+
+Calculation:
+- From 3 March 2027 to 3 March 2030 is 3 years.
+- The span covers 3 March 2027 to 3 March 2028, 2028 to 2029, and 2029 to 2030.
+- Leap days in that span: 29 February 2028 falls between 3 March 2027 and 3 March 2028, so the first year has 366 days. The other two years have 365 days each.
+- Total: 366 + 365 + 365 = 1096 days.
+- 1096 = 7 × 156 + 4, so the weekday moves forward by 4.
+- Wednesday + 4 days = Sunday.
+
+Confidence: high. The only assumption is that the premise (3 March 2027 is a Wednesday) is true, and it is. I used it as given.

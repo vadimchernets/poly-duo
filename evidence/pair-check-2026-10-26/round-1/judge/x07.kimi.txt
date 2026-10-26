@@ -1,0 +1,3 @@
+• W: The final answer is Sunday and its +4-day shift matches the reference, so it is correct. X: It commits to Sunday with sound reasoning and no contradiction, so it is correct. Y: It commits to Sunday with sound reasoning and no contradiction, so it is correct. Z: It commits to Sunday with sound reasoning and no contradiction, so it is correct.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

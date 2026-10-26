@@ -1,0 +1,7 @@
+**17⁵ = 1,419,857**
+
+Step by step: 17² = 289, 17³ = 4,913, 17⁴ = 83,521, and 83,521 × 17 = 1,419,857.
+
+Confidence: high
+
+No errors in the colleague's answer

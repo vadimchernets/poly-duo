@@ -1,0 +1,18 @@
+**76.** The colleague's answer is correct.
+
+Reading chosen: the question asks for 20^423 mod 101, where 101 is prime.
+
+1. By Fermat's little theorem, 20^100 ≡ 1 (mod 101), so 20^423 ≡ 20^23, since 423 = 4·100 + 23.
+2. Repeated squaring gives:
+   - 20² = 400 ≡ −4
+   - 20⁴ ≡ 16
+   - 20⁸ ≡ 256 ≡ 54
+   - 20¹⁶ ≡ 54² = 2916 ≡ 88
+3. Since 23 = 16 + 4 + 2 + 1, 20²³ ≡ 88·16·(−4)·20. Step by step:
+   - 88·16 = 1408 ≡ 95
+   - 95·(−4) = −380 ≡ 24
+   - 24·20 = 480 ≡ 76
+
+Confidence: high
+
+No errors in the colleague's answer

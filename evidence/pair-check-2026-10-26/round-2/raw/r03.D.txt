@@ -1,0 +1,13 @@
+**The 18th character is `y`.**
+
+The original string has 24 characters, so the 18th character of the reversed string is the 7th character of the original (25 − 18 = 7). Counting the original: v(1) s(2) j(3) o(4) c(5) g(6) **y(7)**.
+
+Full reversed string: `suwvglotioenzrlsmygcojsv`
+
+Counting it: s1 u2 w3 v4 g5 l6 o7 t8 i9 o10 e11 n12 z13 r14 l15 s16 m17 **y18**.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The answer `n` is wrong. The 18th character is `y`.
+- The reversed string was written incorrectly. It has "enrzl" where it should be "enzrl" (z and r swapped). Even the colleague's own string gives `y` at position 18, not `n`.

@@ -1,0 +1,11 @@
+The 5th dose is at **3:00 PM on Tuesday**. The colleague's answer is correct.
+
+The first dose is at 7:00 AM Monday, and 4 intervals of 8 hours (32 hours) separate the 1st and 5th doses. 7:00 AM Monday + 32 hours = 3:00 PM Tuesday.
+
+Schedule: Mon 7:00 AM, Mon 3:00 PM, Mon 11:00 PM, Tue 7:00 AM, Tue 3:00 PM.
+
+I read "5th dose" as counting the first dose as dose 1.
+
+Confidence: high
+
+No errors in the colleague's answer

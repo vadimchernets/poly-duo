@@ -1,0 +1,6 @@
+**W:** It says 53 and gives correct reasoning, so it matches the reference.
+**X:** It says 53 because 2023 began on a Sunday and had 365 days, so it matches the reference.
+**Y:** It says 53 and explains that both January 1 and December 31 were Sundays, so it matches the reference.
+**Z:** Its bolded headline says 52, and later it corrects that to 53, so it gives two incompatible results.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=partial

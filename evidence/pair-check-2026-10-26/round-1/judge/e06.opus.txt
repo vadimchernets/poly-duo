@@ -1,0 +1,9 @@
+**W:** Its final answer is 3:00 PM Tuesday, and the schedule and the 32-hour calculation back it up, so it matches the reference.
+
+**X:** Its final answer is 3:00 PM Tuesday, and its dose-by-dose list matches the reference exactly.
+
+**Y:** Its opening line wrongly says 11:00 PM Monday, but it explicitly corrects this to 3:00 PM Tuesday, and its note about the other reading is labeled non-standard rather than offered as a second answer, so its final answer matches the reference.
+
+**Z:** Its final answer is 3:00 PM Tuesday, and its schedule matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

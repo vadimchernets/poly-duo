@@ -1,0 +1,20 @@
+**Final price: $3,696.08.** The colleague's $3,921.22 is wrong.
+
+Step by step:
+
+| Step | Calculation | Result |
+|---|---|---|
+| Start | | $8,796.50 |
+| −15% | × 0.85 | $7,477.025 |
+| −35% | × 0.65 | $4,860.06625 |
+| −35% | × 0.65 | $3,159.0430625 |
+| +17% | × 1.17 | $3,696.080283… |
+
+Check using the combined multiplier: 0.85 × 0.65 × 0.65 × 1.17 = 0.42017625, and 8,796.50 × 0.42017625 ≈ 3,696.08. This rounds to **$3,696.08**.
+
+The colleague used the right factors, but their product, 3,921.2177…, doesn't match them. It would need a combined multiplier of about 0.4458, not 0.42018.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The final figure is wrong: $3,921.22 should be $3,696.08. The arithmetic of multiplying out the stated factors was done incorrectly, even though the factors themselves were correct.

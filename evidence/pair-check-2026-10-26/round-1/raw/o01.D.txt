@@ -1,0 +1,6 @@
+February 2028 has 29 days, because 2028 is a leap year.
+
+2028 is divisible by 4 and is not a century year, so the Gregorian rule adds February 29.
+
+Confidence: high
+No errors in the colleague's answer

@@ -1,0 +1,6 @@
+- **W**: Gives $10,007.15, which is 10 cents off the reference; it made an arithmetic slip at the second step (6109.3716 instead of 6109.3116).
+- **X**: Gives $10,007.05, which exactly matches the reference.
+- **Y**: Gives $10,972.62, which is far from the reference.
+- **Z**: Gives $10,007.15, which is 10 cents off the reference because of the same arithmetic slip as W.
+
+VERDICT: W=incorrect; X=correct; Y=incorrect; Z=incorrect

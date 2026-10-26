@@ -1,0 +1,6 @@
+W: Correct. It says 9.9 is larger and gives the right reasons; the version-number caveat is labeled as a different reading, so it doesn't count as hedging.
+X: Correct. It says 9.9 > 9.11 with a correct digit-by-digit comparison; the version-number caveat is a separate reading and doesn't change the answer.
+Y: Correct. It says 9.9 is larger, which matches the reference.
+Z: Correct. It says 9.9 is larger, and padding both numbers to two decimal places backs that up.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

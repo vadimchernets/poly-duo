@@ -1,0 +1,5 @@
+• W: correct — its final answer is Wednesday and the reasoning supports the same result.  
+  X: correct — it endorses Wednesday and its checks agree with the reference.  
+  Y: correct — it concludes Wednesday via the Doomsday rule and a 400-year repeat check.  
+  Z: correct — it plainly states Wednesday, matching the reference.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

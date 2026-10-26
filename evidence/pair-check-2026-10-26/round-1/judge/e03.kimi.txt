@@ -1,0 +1,5 @@
+• W: States $7,000, matching the reference.  
+  X: Final answer is $7,000, with extra caveats that do not contradict it.  
+  Y: Clearly gives $7,000 as the 2024 under-50 limit.  
+  Z: Gives $7,000 and confirms the colleague’s answer is correct.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,10 @@
+**10.** The colleague's answer is correct.
+
+- "Mississippi's" has 5 s's: four in "Mississippi" (Mi**ss**i**ss**ippi) and one after the apostrophe.
+- "assassins" has 5 s's (a**ss**a**ss**in**s**).
+
+I counted case-insensitively. The capital "M" isn't an s, so case doesn't change the total.
+
+Confidence: high
+
+No errors in the colleague's answer

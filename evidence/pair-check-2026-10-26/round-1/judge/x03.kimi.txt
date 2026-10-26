@@ -1,0 +1,5 @@
+• W: Its stated answer to the asked question is $0.10; the $0.05 mention is explicitly only the different “$1.00 more than” version.  
+  X: It concludes $0.10 for the question as written; the later “not sure” note is a conditional caveat about different wording, not a different final answer.  
+  Y: It directly answers $0.10 (10 cents), matching the reference.  
+  Z: It commits to $0.10 for the written question; the 5-cent statement is conditional on the unrelated classic version.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

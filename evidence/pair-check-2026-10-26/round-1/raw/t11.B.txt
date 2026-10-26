@@ -1,0 +1,11 @@
+**235.2 L/100 km.** The colleague's answer is correct, so only small additions follow.
+
+I read "gallon" as the US liquid gallon.
+
+- 1 US gallon = 3.785411784 L and 1 mile = 1.609344 km, both exact by definition.
+- 3.785411784 / 1.609344 = 2.352146 L/km, which is 235.2146 L/100 km, so 235.2 to one decimal.
+- For the imperial gallon (4.54609 L), the result would be 282.5 L/100 km.
+
+Confidence: high
+
+No errors in the colleague's answer. Its constants are rounded to six significant figures (3.78541 and 1.60934), but the result still rounds to 235.2.

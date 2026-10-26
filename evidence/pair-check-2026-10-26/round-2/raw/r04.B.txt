@@ -1,0 +1,11 @@
+**The 18th character of the reversed string is "v".** The colleague's answer is correct.
+
+Reading chosen: positions counted from 1 in the reversed string.
+
+- The original has 24 characters, and its reversal is `jzsqxptnkxyevelwyvvuifgh`.
+- Position 18 of the reversed string maps to position 24 − 18 + 1 = 7 of the original. The original reads h g f i u v **v**, so that character is "v".
+- Counting directly in the reversed string gives the same result: j(1) z(2) s(3) q(4) x(5) p(6) t(7) n(8) k(9) x(10) y(11) e(12) v(13) e(14) l(15) w(16) y(17) **v(18)**.
+
+Confidence: high
+
+No errors in the colleague's answer

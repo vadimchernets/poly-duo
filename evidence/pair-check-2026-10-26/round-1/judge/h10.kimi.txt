@@ -1,0 +1,6 @@
+• W — Correct: final probability is 27/216 = 1/8, matching the reference.  
+  X — Correct: final probability is 27/216 = 1/8, matching the reference.  
+  Y — Correct: boxed final probability is 1/8, matching the reference.  
+  Z — Correct: final probability is 27/216 = 1/8, matching the reference.  
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

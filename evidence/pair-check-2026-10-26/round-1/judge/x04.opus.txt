@@ -1,0 +1,6 @@
+- **W:** It says the two kilograms of steel weigh more (twice as much), which matches the reference.
+- **X:** It says the steel weighs more, and its note on air buoyancy correctly says the effect is far too small to close a 2× gap.
+- **Y:** It says the steel weighs more and correctly notes that this isn't the classic trick question, because the masses here are different.
+- **Z:** It concludes the steel is heavier by a factor of about 2, and its buoyancy note doesn't contradict that.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

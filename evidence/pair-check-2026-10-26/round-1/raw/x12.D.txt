@@ -1,0 +1,7 @@
+Sally has **1 sister**. ChatGPT's answer is correct.
+
+Sally's brothers all share the same sisters. Each brother has 2 sisters, so the family has 2 girls. One of them is Sally, which leaves 1 other girl as her sister.
+
+Confidence: high
+
+No errors in the colleague's answer

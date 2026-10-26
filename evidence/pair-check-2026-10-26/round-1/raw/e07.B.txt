@@ -1,0 +1,14 @@
+**Bottom line: the plane lands at 10:00 AM GMT on January 16 in London.**
+
+**Reading chosen:** the 7 hours is real elapsed flight time, and the question asks for London local time at landing.
+
+**Calculation:**
+- 10:00 PM EST on Jan 15 is 03:00 UTC on Jan 16 (22:00 + 5 h).
+- Add 7 hours of flight time to get 10:00 UTC on Jan 16.
+- London is on GMT (UTC+0) in January, so local time equals UTC.
+
+**Check:** 10:00 PM New York time + 7 h is 5:00 AM on Jan 16 in New York. London is 5 hours ahead, so that is 10:00 AM in London.
+
+Confidence: high
+
+No errors in the colleague's answer

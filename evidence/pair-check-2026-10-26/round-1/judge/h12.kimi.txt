@@ -1,0 +1,5 @@
+• W matches the reference with 26.4 hours from the same 108 m³ → 28,530 gal → 1,585 min chain.  
+  X matches the reference, computing 26.42 h and rounding to 26.4 hours.  
+  Y matches the reference, with 26.42 h rounded to about 26.4 hours.  
+  Z matches the reference, concluding about 26.4 hours from 26.42 h despite an irrelevant uncertainty caveat.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

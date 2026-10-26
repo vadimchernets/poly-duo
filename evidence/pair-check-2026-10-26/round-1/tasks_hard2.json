@@ -1,0 +1,86 @@
+[
+ {
+  "id": "x01",
+  "group": "adversarial",
+  "question": "A farmer needs to get a goat across a river. His boat can carry the farmer plus one animal or item. What is the minimum number of one-way crossings needed?",
+  "reference": "1 (he simply takes the goat across; there is no wolf or cabbage)",
+  "criterion": "Correct iff 1 crossing. Answers of 7 (the classic wolf-goat-cabbage solution) or similar = incorrect."
+ },
+ {
+  "id": "x02",
+  "group": "adversarial",
+  "question": "In a Monty Hall-style game there are 3 doors, one hides a car. You pick door 1. The host does NOT know where the car is; he opens door 3 at random and it happens to show a goat. If you switch to door 2, what is your probability of winning the car?",
+  "reference": "1/2",
+  "criterion": "Correct iff 1/2. 2/3 = incorrect."
+ },
+ {
+  "id": "x03",
+  "group": "adversarial",
+  "question": "A bat and a ball cost $1.10 in total. The bat costs $1.00. How much does the ball cost?",
+  "reference": "$0.10",
+  "criterion": "Correct iff 10 cents. 5 cents = incorrect."
+ },
+ {
+  "id": "x04",
+  "group": "adversarial",
+  "question": "Which weighs more: a kilogram of feathers or two kilograms of steel?",
+  "reference": "Two kilograms of steel",
+  "criterion": "Correct iff steel (2 kg) is heavier. 'They weigh the same' = incorrect."
+ },
+ {
+  "id": "x05",
+  "group": "adversarial",
+  "question": "Compute 48,729 x 63,817 exactly.",
+  "reference": "3,109,738,593",
+  "criterion": "Correct iff 3,109,738,593."
+ },
+ {
+  "id": "x06",
+  "group": "adversarial",
+  "question": "How many times does the letter \"i\" appear in \"supercalifragilisticexpialidocious\"?",
+  "reference": "7",
+  "criterion": "Correct iff 7."
+ },
+ {
+  "id": "x07",
+  "group": "adversarial",
+  "question": "3 March 2027 is a Wednesday. What day of the week is 3 March 2030?",
+  "reference": "Sunday",
+  "criterion": "Correct iff Sunday."
+ },
+ {
+  "id": "x08",
+  "group": "adversarial",
+  "question": "How many prime numbers are there between 100 and 200?",
+  "reference": "21",
+  "criterion": "Correct iff 21."
+ },
+ {
+  "id": "x09",
+  "group": "adversarial",
+  "question": "What is 17 to the 5th power?",
+  "reference": "1,419,857",
+  "criterion": "Correct iff 1,419,857."
+ },
+ {
+  "id": "x10",
+  "group": "adversarial",
+  "question": "What is the sum of the decimal digits of 3^40?",
+  "reference": "90 (3^40 = 12,157,665,459,056,928,801)",
+  "criterion": "Correct iff 90."
+ },
+ {
+  "id": "x11",
+  "group": "adversarial",
+  "question": "I have 3 apples today. Yesterday I ate one apple. How many apples do I have now?",
+  "reference": "3",
+  "criterion": "Correct iff 3. 2 = incorrect."
+ },
+ {
+  "id": "x12",
+  "group": "adversarial",
+  "question": "Sally has 3 brothers. Each of her brothers has 2 sisters. How many sisters does Sally have?",
+  "reference": "1",
+  "criterion": "Correct iff 1."
+ }
+]

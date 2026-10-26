@@ -1,0 +1,5 @@
+W: Gives 235.2 L/100 km from the exact constants, which matches the reference.
+X: Gives 235.2 L/100 km using rounded constants, and that still matches the reference.
+Y: Gives 235.2 L/100 km for the US gallon, which matches the reference; the extra imperial-gallon figure is a separate case, so it isn't a hedge.
+Z: Gives 235.2 L/100 km from the exact constants, which matches the reference.
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

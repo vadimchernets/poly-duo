@@ -1,0 +1,6 @@
+- **W:** Says 1989 plainly, which matches the reference.
+- **X:** Commits to 1989, and its note that physical demolition came later is extra detail about a different event, not a competing answer.
+- **Y:** Says 1989; the mention of a "draft" or colleague is extra wording that doesn't change the answer.
+- **Z:** Says 1989 and treats "fall" as the opening of the border, which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

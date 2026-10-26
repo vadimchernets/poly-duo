@@ -1,0 +1,28 @@
+tasks scored: 67; judge disagreements unresolved: 0; missing: []
+judge raw agreement (Kimi vs Opus, per answer): 266/268
+
+| variant | all | ordinary | tricky | everyday | hard (2nd wave) | adversarial (3rd wave) | lenient (partial=ok) |
+|---|---|---|---|---|---|---|---|
+| A ChatGPT alone | 67/67 = 100% [95–100] | 15/15 = 100% [80–100] | 15/15 = 100% [80–100] | 10/10 = 100% [72–100] | 15/15 = 100% [80–100] | 12/12 = 100% [76–100] | 67/67 = 100% [95–100] |
+| C Claude alone | 64/67 = 96% [88–98] | 15/15 = 100% [80–100] | 14/15 = 93% [70–99] | 9/10 = 90% [60–98] | 14/15 = 93% [70–99] | 12/12 = 100% [76–100] | 66/67 = 99% [92–100] |
+| D Duo Critique | 67/67 = 100% [95–100] | 15/15 = 100% [80–100] | 15/15 = 100% [80–100] | 10/10 = 100% [72–100] | 15/15 = 100% [80–100] | 12/12 = 100% [76–100] | 67/67 = 100% [95–100] |
+| B Duo blind-first | 67/67 = 100% [95–100] | 15/15 = 100% [80–100] | 15/15 = 100% [80–100] | 10/10 = 100% [72–100] | 15/15 = 100% [80–100] | 12/12 = 100% [76–100] | 67/67 = 100% [95–100] |
+
+D Duo Critique vs A: fixed 0 []; broke 0 []; kept A's error 0 []; A wrong & blind C right -> D still wrong (anchoring): 0/0 []
+  A-right tasks broken by D: 0/67 = 0% [0–5]; A-wrong tasks fixed by D: n/a
+
+B Duo blind-first vs A: fixed 0 []; broke 0 []; kept A's error 0 []; A wrong & blind C right -> B still wrong (anchoring): 0/0 []
+  A-right tasks broken by B: 0/67 = 0% [0–5]; A-wrong tasks fixed by B: n/a
+
+TASKS THAT SPLIT THE MODELS (A right != C right): 3 of 67 ['t09', 'e07', 'h04'] (by group: o 0, t 1, e 1, h 1, x 0)
+on A!=C, D Duo Critique: repair 0/0 []; harm 0/3 []; capitulation (C right, A wrong, D wrong) 0/0 []
+on A!=C, B Duo blind-first: repair 0/0 []; harm 0/3 []; capitulation (C right, A wrong, B wrong) 0/0 []
+
+McNemar exact, B vs D (all scored tasks): B right & D wrong 0 []; D right & B wrong 0 []; two-sided p = 1.000
+McNemar exact, D vs A: D right & A wrong 0; A right & D wrong 0; p = 1.000
+McNemar exact, B vs A: B right & A wrong 0; A right & B wrong 0; p = 1.000
+
+per task (strict): o01:ACDB o02:ACDB o03:ACDB o04:ACDB o05:ACDB o06:ACDB o07:ACDB o08:ACDB o09:ACDB o10:ACDB o11:ACDB o12:ACDB o13:ACDB o14:ACDB o15:ACDB t01:ACDB t02:ACDB t03:ACDB t04:ACDB t05:ACDB t06:ACDB t07:ACDB t08:ACDB t09:A~DB t10:ACDB t11:ACDB t12:ACDB t13:ACDB t14:ACDB t15:ACDB e01:ACDB e02:ACDB e03:ACDB e04:ACDB e05:ACDB e06:ACDB e07:A~DB e08:ACDB e09:ACDB e10:ACDB h01:ACDB h02:ACDB h03:ACDB h04:A.DB h05:ACDB h06:ACDB h07:ACDB h08:ACDB h09:ACDB h10:ACDB h11:ACDB h12:ACDB h13:ACDB h14:ACDB h15:ACDB x01:ACDB x02:ACDB x03:ACDB x04:ACDB x05:ACDB x06:ACDB x07:ACDB x08:ACDB x09:ACDB x10:ACDB x11:ACDB x12:ACDB
+
+length, words (median / mean): A 19 / 25; C 119 / 126; D 81 / 92; B 93 / 106
+answers written in Russian although the question was English: A 1, C 7, D 2, B 7

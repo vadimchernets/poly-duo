@@ -1,0 +1,58 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Sally has 3 brothers. Each of her brothers has 2 sisters. How many sisters does Sally have?
+
+REFERENCE:
+1
+
+CRITERION:
+Correct iff 1.
+
+=== ANSWER W ===
+Sally has **1 sister**. ChatGPT's answer is correct.
+
+Sally's brothers all share the same sisters. Each brother has 2 sisters, so the family has 2 girls. One of them is Sally, which leaves 1 other girl as her sister.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+Sally has 1 sister.
+
+Each brother’s two sisters are Sally and the same other sister. Therefore, there are two girls in the family, so Sally has one sister.
+
+=== ANSWER Y ===
+**Sally has 1 sister.**
+
+**Reading chosen:** all the brothers share the same two parents (full siblings), and Sally is a girl.
+
+**Facts:**
+- Each brother has 2 sisters. Sally is one of them.
+- The other sister is a girl besides Sally.
+- Sally cannot count herself as her own sister, so her sisters are the girls in the family other than her. The family has 2 girls in total.
+
+**Conclusion:** Sally has 1 sister. A common wrong answer is 2, which comes from forgetting that Sally is one of the brothers' 2 sisters.
+
+**Not sure about:** half-siblings. If some brothers had different parents, the count could differ. The question doesn't say, so I assumed they are full siblings.
+
+=== ANSWER Z ===
+**Sally has 1 sister.**
+
+Reading chosen: the siblings are full siblings, and Sally is a girl.
+
+Each brother has 2 sisters, and Sally is one of them. The other one is a second girl. The family has 2 girls, so Sally has 1 sister. The common wrong answer is 2, which comes from forgetting that Sally is one of the brothers' 2 sisters.
+
+The colleague's answer is correct, so I have no corrections to make.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

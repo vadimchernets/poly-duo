@@ -1,0 +1,30 @@
+376
+
+Since \(14^3 = 2744 \equiv 744 \pmod{1000}\), and for every \(n \ge 3\),
+
+\[
+14^{n+100} \equiv 14^n \pmod{1000}.
+\]
+
+Thus,
+
+\[
+14^{884} \equiv 14^{84} \pmod{1000}.
+\]
+
+Repeated squaring:
+
+\[
+14^4 \equiv 416,\quad
+14^8 \equiv 56,\quad
+14^{16} \equiv 136,\quad
+14^{64} \equiv 296 \pmod{1000}.
+\]
+
+Therefore,
+
+\[
+14^{84}=14^{64}14^{16}14^4
+\equiv 296\cdot136\cdot416
+\equiv \boxed{376}\pmod{1000}.
+\]

@@ -1,0 +1,6 @@
+• - **W**: States the symbol is W — matches the reference.
+  - **X**: Final answer is W — matches; extra detail (atomic number) doesn't contradict.
+  - **Y**: Final answer is W — matches; extra etymology doesn't contradict.
+  - **Z**: Final answer is W — matches; extra facts and the "not T or Tu" note don't contradict.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

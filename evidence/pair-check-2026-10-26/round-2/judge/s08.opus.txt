@@ -1,0 +1,6 @@
+W gives only a tool call with no final answer, so it is missing.
+X gives 346, which does not match the reference 277.
+Y gives only tool calls with no final number, so it is missing.
+Z gives only a tool call and a stray colon with no final number, so it is missing.
+
+VERDICT: W=incorrect; X=incorrect; Y=incorrect; Z=incorrect

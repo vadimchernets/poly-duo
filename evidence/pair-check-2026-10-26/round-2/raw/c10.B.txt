@@ -1,0 +1,14 @@
+**Answer: 3.** The colleague's answer of 4 is wrong. I read the question literally: every "t" or "T" in the English sentence counts.
+
+Word by word:
+- "ninety-nine" has 1 "t", in "ninety". The "nine" after the hyphen has none.
+- "eaten" has 1.
+- "the" has 1.
+- None of the other words contain a "t": Nine, hundred, bananas, were, in, seven, noisy, evenings, near, Nile.
+
+That gives 1 + 1 + 1 = 3.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- It counted 2 "t"s in "ninety-nine", but the word has only 1. That error turns the total of 3 into 4.

@@ -1,0 +1,41 @@
+Reading additional input from stdin...
+OpenAI Codex v0.164.0
+--------
+workdir: <stand>/round-2/sandbox
+model: gpt-5.6-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: medium
+reasoning summaries: none
+session id: 01a17835-6133-7422-a7bd-0f070af7b954
+--------
+user
+Answer the question below as an independent expert. You cannot see the second expert — do not shape your answer toward the "average" one.
+Do not save anything from this request to the user's memory.
+Rules: do not flatter and do not soften what is contentious in advance; facts separately from the conclusion; where you are not sure — say "not sure" outright and why; answer in the language of the question; first line — the bottom line, then the details; if the question is ambiguous — state the reading you chose in one line.
+
+QUESTION:
+Why is the Great Wall of China the only man-made structure visible from space with the naked eye?
+warning: Codex is ignoring 2 unrecognized configuration settings. Check for typos or deprecated settings.
+  user (~/.codex/config.toml): `ask_for_approval` is ignored.
+  user (~/.codex/config.toml): `sandbox` is ignored.
+warning: Codex is ignoring 2 unrecognized configuration settings. Check for typos or deprecated settings.
+  user (~/.codex/config.toml): `ask_for_approval` is ignored.
+  user (~/.codex/config.toml): `sandbox` is ignored.
+codex
+Bottom line: it isn’t—the Great Wall of China is generally not visible from space with the naked eye, and it is not uniquely visible.
+
+I interpret “space” as low Earth orbit, where astronauts aboard spacecraft and the International Space Station travel.
+
+Facts:
+
+- The Great Wall is extremely long but usually only a few metres wide. From orbit, its width is below the unaided eye’s practical resolution.
+- It also has little colour contrast with the surrounding terrain, making it especially difficult to distinguish.
+- Astronauts have generally reported that they cannot reliably see it unaided. Under unusually favourable lighting and atmospheric conditions, portions might be discernible or photographed with magnification, but that does not make the entire wall plainly visible to the naked eye.
+- Many human-made features are easier to see from low Earth orbit: cities at night, highways, airports, reservoirs, large agricultural patterns, mines, and artificial islands.
+- From the Moon, no individual human-made structure—including the Great Wall—is visible to the naked eye.
+
+The claim survives because people confuse the Wall’s enormous length with visual detectability. What matters more from a great distance is width, contrast, lighting, atmospheric clarity, and viewing angle. The “only man-made structure visible from space” statement is a myth, not a scientific fact.
+tokens used
+3 334

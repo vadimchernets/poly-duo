@@ -1,0 +1,13 @@
+**Bottom line: 1 crossing.** The draft is correct.
+
+Reading I chose: the question asks only about getting the goat across. The farmer and goat are the only things that need to cross, and the boat carries the farmer plus one animal or item.
+
+The farmer rows the goat across in a single one-way trip, so the minimum is 1.
+
+If you meant the classic puzzle (wolf, goat and cabbage), the answer would be 7. The question doesn't mention a wolf, a cabbage, or any restriction on what can be left together, so I don't think it means that version.
+
+Confidence: high
+
+No errors in the colleague's answer.
+
+If you meant the classic puzzle, tell me which items must also cross and which pairs can't be left alone.

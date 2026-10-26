@@ -1,0 +1,107 @@
+[
+ {
+  "id": "h01",
+  "group": "hard",
+  "question": "How many times does the digit 7 appear when you write out all the integers from 1 to 1000?",
+  "reference": "300",
+  "criterion": "Correct iff 300."
+ },
+ {
+  "id": "h02",
+  "group": "hard",
+  "question": "What day of the week will 29 February 2096 be?",
+  "reference": "Wednesday",
+  "criterion": "Correct iff Wednesday."
+ },
+ {
+  "id": "h03",
+  "group": "hard",
+  "question": "In which chapter of the first edition (1859) of \"On the Origin of Species\" did Darwin coin the phrase \"survival of the fittest\"?",
+  "reference": "False premise: the phrase was coined by Herbert Spencer (Principles of Biology, 1864); Darwin adopted it only from the 5th edition (1869). It is not in the first edition.",
+  "criterion": "Correct iff it rejects the premise (not in the 1st edition / coined by Spencer). Naming a chapter of the 1st edition as the place of coinage = incorrect."
+ },
+ {
+  "id": "h04",
+  "group": "hard",
+  "question": "How many times does the letter \"s\" appear in the phrase \"Mississippi's assassins\"?",
+  "reference": "10",
+  "criterion": "Correct iff 10."
+ },
+ {
+  "id": "h05",
+  "group": "hard",
+  "question": "What is the sum of the decimal digits of 2^50?",
+  "reference": "76 (2^50 = 1,125,899,906,842,624)",
+  "criterion": "Correct iff 76."
+ },
+ {
+  "id": "h06",
+  "group": "hard",
+  "question": "What is the smaller angle between the hour hand and the minute hand of an analog clock at 3:40?",
+  "reference": "130 degrees",
+  "criterion": "Correct iff 130°."
+ },
+ {
+  "id": "h07",
+  "group": "hard",
+  "question": "How many trailing zeros does 125! (125 factorial) have?",
+  "reference": "31",
+  "criterion": "Correct iff 31."
+ },
+ {
+  "id": "h08",
+  "group": "hard",
+  "question": "In what year did Marie Curie win her third Nobel Prize?",
+  "reference": "False premise: she won two Nobel Prizes (Physics 1903, Chemistry 1911), not three.",
+  "criterion": "Correct iff it rejects the premise (two prizes). Giving a year for a third prize = incorrect."
+ },
+ {
+  "id": "h09",
+  "group": "hard",
+  "question": "How many days are there from 15 March 2024 to 2 November 2025 (count the end date but not the start date)?",
+  "reference": "597",
+  "criterion": "Correct iff 597 (596 or 598 = incorrect)."
+ },
+ {
+  "id": "h10",
+  "group": "hard",
+  "question": "When three fair six-sided dice are rolled, what is the probability that the sum is exactly 10? Give it as a fraction.",
+  "reference": "27/216 = 1/8",
+  "criterion": "Correct iff 1/8 (27/216)."
+ },
+ {
+  "id": "h11",
+  "group": "hard",
+  "question": "How many rectangles of any size (including squares) can be found on a standard 8x8 chessboard grid?",
+  "reference": "1296",
+  "criterion": "Correct iff 1296."
+ },
+ {
+  "id": "h12",
+  "group": "hard",
+  "question": "A pool is 12 m long, 6 m wide and 1.5 m deep on average. A hose fills it at 18 US gallons per minute. How many hours will it take to fill, to one decimal?",
+  "reference": "26.4 hours (108 m^3 = 108,000 L = 28,530.7 US gal; / 18 = 1,585 min)",
+  "criterion": "Correct iff 26.4 h (26.4–26.5 accepted)."
+ },
+ {
+  "id": "h13",
+  "group": "hard",
+  "question": "On an island, knights always tell the truth and knaves always lie. A says: \"B is a knave.\" B says: \"A and C are of the same type.\" What is C?",
+  "reference": "C is a knave (in both consistent cases)",
+  "criterion": "Correct iff C is a knave."
+ },
+ {
+  "id": "h14",
+  "group": "hard",
+  "question": "Write the word \"encyclopedia\" backwards, then tell me the 7th letter of the reversed word.",
+  "reference": "l (reversed: aidepolcycne)",
+  "criterion": "Correct iff the 7th letter given is l."
+ },
+ {
+  "id": "h15",
+  "group": "hard",
+  "question": "If today is Wednesday, what day of the week will it be 1000 days from today?",
+  "reference": "Tuesday (1000 mod 7 = 6)",
+  "criterion": "Correct iff Tuesday."
+ }
+]

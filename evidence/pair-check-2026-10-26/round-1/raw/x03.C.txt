@@ -1,0 +1,11 @@
+**The ball costs $0.10.**
+
+Reading chosen: the question as literally written, not the classic riddle.
+
+**Facts:**
+- Total is $1.10 and the bat is $1.00, as stated.
+- Ball = $1.10 − $1.00 = $0.10.
+
+**Conclusion:** The answer is $0.10. This is not the classic puzzle. In that version, the bat costs $1.00 *more than* the ball, and the ball then costs $0.05. Here the bat's price is given outright, so no such trick applies.
+
+Not sure: if you meant the "$1.00 more than" version, the answer would be $0.05. The wording you gave doesn't say that.

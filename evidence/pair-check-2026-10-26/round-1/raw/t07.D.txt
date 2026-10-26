@@ -1,0 +1,13 @@
+**The sum is 9,368, and the colleague's answer is correct.** I read the question as including both endpoints, 1 and 200.
+
+Inclusion–exclusion, with each sum written as k·n(n+1)/2:
+
+- Multiples of 3 (3 to 198, 66 terms): 3 · 66·67/2 = 3 · 2,211 = 6,633
+- Multiples of 5 (5 to 200, 40 terms): 5 · 40·41/2 = 5 · 820 = 4,100
+- Multiples of 15 (15 to 195, 13 terms), which would otherwise be counted twice: 15 · 13·14/2 = 15 · 91 = 1,365
+
+6,633 + 4,100 − 1,365 = **9,368**
+
+Confidence: high
+
+No errors in the colleague's answer

@@ -1,0 +1,6 @@
+W: Gives day 18 with correct reasoning: the snail is at 17 feet after 17 nights and climbs out on day 18.
+X: Gives day 18, explains why the snail doesn't slip back on the last day, and rejects 20 as the common mistake.
+Y: Gives day 18 with correct reasoning; the "bottom of the well" label is mislabeled but doesn't change the result.
+Z: Gives day 18 using n + 2 ≥ 20 and checks it, rejecting 20 and 21.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

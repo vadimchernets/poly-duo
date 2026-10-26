@@ -1,0 +1,9 @@
+**9.9 is larger.** The draft is correct.
+
+Compare the digits after the decimal point by padding to the same length: 9.9 = 9.90, and 90 > 11. So 9.90 > 9.11.
+
+The common mistake is reading "11" as bigger than "9", as in version numbers or software releases. Decimals don't work that way: 9.11 means 9 + 0.11, while 9.9 means 9 + 0.9.
+
+Confidence: high
+
+No errors in the colleague's answer

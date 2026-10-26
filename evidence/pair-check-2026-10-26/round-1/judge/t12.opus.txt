@@ -1,0 +1,5 @@
+W: Its final answer is 1009, which matches the reference.
+X: Its final answer is 1009, which matches the reference.
+Y: Its final answer is 1009, which matches the reference.
+Z: Its final answer is 1009, which matches the reference.
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

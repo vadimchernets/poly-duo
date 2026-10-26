@@ -1,0 +1,9 @@
+**11 seconds.** The colleague's answer is correct.
+
+Time is spent in the intervals between strikes, not on the strikes themselves. Six strikes have 5 intervals, so each interval is 5 ÷ 5 = 1 second. Twelve strikes have 11 intervals, so the total is 11 × 1 = 11 seconds.
+
+This assumes each strike is instantaneous, or that its duration is already counted within the interval.
+
+Confidence: high
+
+No errors in the colleague's answer

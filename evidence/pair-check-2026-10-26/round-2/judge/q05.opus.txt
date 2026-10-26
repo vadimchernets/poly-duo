@@ -1,0 +1,6 @@
+- **W:** The final answer of $6,505.57 matches the reference exactly.
+- **X:** The answer $5,783.30 is wrong because the stated product actually equals about $6,505.57.
+- **Y:** The final answer of $6,505.57 matches the reference exactly.
+- **Z:** The final answer of $6,505.57 matches the reference; the stated multiplier contains a typo, but grading is on the final answer only.
+
+VERDICT: W=correct; X=incorrect; Y=correct; Z=correct

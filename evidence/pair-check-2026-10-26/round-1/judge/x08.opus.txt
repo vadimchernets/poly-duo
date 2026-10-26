@@ -1,0 +1,6 @@
+W: The final answer is 21, which matches the reference.
+X: The final answer is 21, which matches the reference.
+Y: The final answer is 21, which matches the reference; its first decade tally had a slip, but it corrected that and kept only one result.
+Z: The final answer is 21, which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

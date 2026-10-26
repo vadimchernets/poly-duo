@@ -1,0 +1,52 @@
+08:41:25 done answers p05
+08:41:25 done answers c10
+08:41:25 done answers h20
+08:41:25 done answers q03
+08:41:25 done answers h05
+08:41:25 done answers q02
+08:41:25 done answers q01
+08:41:39 done answers q05
+08:41:39 done answers d04
+08:43:14 done answers q06
+08:43:33 done answers r02
+08:44:07 done answers r03
+08:44:28 done answers r05
+08:44:44 done answers r08
+08:44:56 done answers s04
+08:45:11 done answers s05
+08:45:26 done answers s08
+08:45:45 done answers w05
+08:47:50 done answers x01
+08:48:21 done answers x03
+08:48:39 FAIL sonnet n03.C.txt -9 timeout
+08:49:13 done answers x06
+08:49:28 done answers b04
+08:49:44 done answers b06
+08:50:02 done answers b08
+08:50:21 done answers c09
+08:50:42 done answers d02
+08:55:21 FAIL sonnet x04.D.txt -9 timeout
+08:56:52 done answers d06
+08:57:20 done answers h03
+08:57:26 done answers x04
+08:57:54 done answers h04
+08:58:05 FAIL sonnet n03.C.txt -9 timeout
+08:58:12 done answers h06
+08:58:22 done answers h07
+08:58:29 done answers h10
+08:58:35 done answers i04
+08:58:45 done answers m02
+09:00:01 done answers m03
+09:02:07 done answers m04
+09:02:22 done answers n04
+09:02:29 done answers p03
+09:02:38 done answers r04
+09:02:58 done answers w01
+09:03:13 done answers w04
+09:03:34 done answers m05
+09:09:30 FAIL sonnet s07.D.txt -9 timeout
+09:09:48 done answers x05
+09:10:34 FAIL sonnet n03.B.txt -9 timeout
+09:11:04 done answers n03
+09:16:50 FAIL sonnet s07.D.txt -9 timeout
+09:17:26 done answers s07

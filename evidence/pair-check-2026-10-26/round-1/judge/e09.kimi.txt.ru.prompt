@@ -1,0 +1,59 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is the legal blood alcohol limit for driving in England, in milligrams of alcohol per 100 ml of blood?
+
+REFERENCE:
+80 mg per 100 ml (Road Traffic Act 1988; Scotland is 50)
+
+CRITERION:
+Correct iff 80 mg/100 ml for England. Giving 50 for England = incorrect.
+
+=== ANSWER W ===
+**Нижняя строка: 80 мг алкоголя на 100 мл крови.**
+
+Выбранное прочтение: «Англия» означает Англию и Уэльс (там действует одинаковый закон). Предел для водителей-любителей, отдельных категорий нет.
+
+**Факты**
+- Закон: Road Traffic Act 1988, с поправками, и Road Traffic Offenders Act 1988. Предел для крови составляет 80 мг на 100 мл.
+- Для других проб: 35 мкг на 100 мл выдыхаемого воздуха и 107 мг на 100 мл мочи.
+- Шотландия с декабря 2014 года установила более низкий предел: 50 мг на 100 мл крови. Северная Ирландия остаётся на 80 мг. Поэтому в Англии и Шотландии цифры различаются.
+- Превышение предела является уголовным преступлением. Вождение под сильным влиянием алкоголя или с признаками нарушения тоже наказуемо, даже если концентрация ниже предела.
+
+**Вывод**
+Для Англии верный ответ: 80 мг/100 мл крови. Это один из самых высоких пределов в Европе, где типичная норма составляет 50 мг.
+
+**Неуверенность**
+Я не уверен, что с моего последнего обновления знаний (июнь 2026) закон не менялся. Заметных изменений для Англии я не знаю. Если вопрос критичен, сверьте цифру на gov.uk.
+
+=== ANSWER X ===
+80 milligrams of alcohol per 100 millilitres of blood.
+
+=== ANSWER Y ===
+**Bottom line: 80 mg of alcohol per 100 ml of blood.** The draft is correct. I read "England" as England and Wales, which share the same law.
+
+- The same law sets 35 µg per 100 ml of breath and 107 mg per 100 ml of urine.
+- Scotland has had a lower limit of 50 mg per 100 ml of blood since December 2014. Northern Ireland stays at 80 mg.
+- Driving while impaired is an offence even below the limit.
+
+I'm not aware of any change to the English limit. For a legal decision, check gov.uk.
+
+Confidence: high
+
+No errors in the colleague's answer.
+
+=== ANSWER Z ===
+**80 mg of alcohol per 100 ml of blood** is the legal driving limit in England. The same limit applies in Wales and Northern Ireland. Scotland has been lower since December 2014, at 50 mg per 100 ml.
+
+The colleague's figure is correct. The limit is set in the Road Traffic Act 1988 and is a prosecution threshold for driving or being in charge of a vehicle. Equivalent limits are 35 µg per 100 ml of breath and 107 mg per 100 ml of urine. Because impairment starts at lower levels, the safest approach is not to drink and drive. Some drivers, such as those with a drink-driving conviction or in specific commercial roles, may face stricter rules or penalties.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

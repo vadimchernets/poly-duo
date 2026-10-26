@@ -1,0 +1,17 @@
+**7** — the colleague's answer is correct.
+
+Split by syllable (super-cali-fragi-listic-expi-ali-docious), the "i"s fall in these places:
+
+- ca**li**
+- fra**gi**
+- **li**s
+- t**i**c
+- exp**i**
+- al**i**
+- doc**i**ous
+
+That makes 7 in total. The colleague's split also holds: 4 in "supercalifragilistic" and 3 in "expialidocious".
+
+Confidence: high
+
+No errors in the colleague's answer

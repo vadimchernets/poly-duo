@@ -1,0 +1,50 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many times does the letter "r" appear in the word "strawberry"?
+
+REFERENCE:
+3
+
+CRITERION:
+Correct iff 3.
+
+=== ANSWER W ===
+Буква «r» встречается в слове «strawberry» 3 раза.
+
+Разбор по буквам: s-t-**r**-a-w-b-e-**r**-**r**-y. Слово состоит из 10 букв, «r» стоит на 3-й, 8-й и 9-й позициях. Две из них идут подряд («rr» в «berry»).
+
+Я понял вопрос как подсчёт буквы «r» в английском слове «strawberry», без учёта регистра.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+Буква «r» встречается в слове «strawberry» 3 раза.
+
+**Факты:** s-t-**r**-a-w-b-e-**r**-**r**-y. Слово состоит из 10 букв. Буква «r» стоит на 3-й, 8-й и 9-й позициях. Две из них идут подряд («rr» в «berry»).
+
+**Вывод:** 3. Сомнений нет, я проверил побуквенно.
+
+Я понял вопрос как подсчёт буквы «r» в английском слове «strawberry», без учёта регистра.
+
+=== ANSWER Y ===
+3. The letter “r” appears three times in “strawberry.”
+
+=== ANSWER Z ===
+The draft is wrong: "strawberry" has 3 "r"s, and the draft's answer of 3 is correct. I checked by spelling the word out.
+
+s‑t‑**r**‑a‑w‑b‑e‑**r**‑**r**‑y
+
+The "r"s are in position 3 (st**r**aw), position 8 and position 9 (be**rr**y). That makes 1 + 2 = 3.
+
+Confidence: high
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

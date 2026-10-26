@@ -1,0 +1,11 @@
+**300.** The draft is correct.
+
+Reading chosen: count every occurrence of the digit 7 in the written numbers 1 to 1000.
+
+Pad the numbers 000 to 999 to three digits. Each of the three positions (hundreds, tens, ones) holds a 7 in exactly 1/10 of the 1000 numbers, which is 100 numbers per position. That gives 3 × 100 = 300. Padding with leading zeros adds no 7s. Neither 000 nor 1000 contains a 7, so the range 1 to 1000 gives the same total.
+
+As a check, 7 appears 100 times as a ones digit, 100 times as a tens digit (70–79, 170–179, and so on) and 100 times as a hundreds digit (700–799).
+
+Confidence: high
+
+No errors in the colleague's answer

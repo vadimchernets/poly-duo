@@ -1,0 +1,5 @@
+• W: No final digit sum is stated, only commands, so it is missing the required final answer.  
+  X: No final digit sum is stated, only a command, so it is missing the required final answer.  
+  Y: No final digit sum is stated, only several commands, so it is missing the required final answer.  
+  Z: It states 400, which does not match the reference 361.  
+  VERDICT: W=incorrect; X=incorrect; Y=incorrect; Z=incorrect

@@ -1,0 +1,13 @@
+**Bottom line: switching to door 2 wins with probability \(1/2\).**
+
+Given that door 3 revealed a goat, the car must be behind door 1 or door 2. Since the host chose door 3 without knowing the car’s location, observing a goat eliminates door 3 but gives no advantage to either remaining door:
+
+\[
+P(\text{car behind 1}\mid \text{goat behind 3})
+=
+P(\text{car behind 2}\mid \text{goat behind 3})
+=
+\frac12.
+\]
+
+So staying and switching are equally good. The usual Monty Hall \(2/3\) switching probability requires a knowledgeable host who deliberately avoids the car.

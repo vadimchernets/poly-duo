@@ -1,0 +1,17 @@
+**253 people.**
+
+Interpretation: “people” means other people, excluding you.
+
+For \(n\) people, the probability that nobody shares your fixed birthday is:
+
+\[
+\left(\frac{364}{365}\right)^n
+\]
+
+Thus:
+
+\[
+1-\left(\frac{364}{365}\right)^n \ge 0.5
+\]
+
+The smallest integer satisfying this is \(n=253\). This differs from the classic birthday problem (23 people), which asks whether *any pair* shares a birthday.

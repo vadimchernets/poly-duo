@@ -1,0 +1,79 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many times does the letter "i" appear in "supercalifragilisticexpialidocious"?
+
+REFERENCE:
+7
+
+CRITERION:
+Correct iff 7.
+
+=== ANSWER W ===
+**Bottom line: the letter "i" appears 7 times.**
+
+I read the question as asking for a case-insensitive count in the standard spelling "supercalifragilisticexpialidocious" (34 letters).
+
+**Count by syllable:**
+- super: 0
+- cali: 1
+- fragi: 1 (running total 2)
+- listic: 2 (total 4)
+- expi: 1 (total 5)
+- ali: 1 (total 6)
+- docious: 1 (total 7)
+
+I counted by hand and didn't run code. A different spelling would change the number.
+
+=== ANSWER X ===
+**The letter "i" appears 7 times.** The colleague's answer is correct.
+
+I read the question as a case-insensitive count in the standard spelling, "supercalifragilisticexpialidocious" (34 letters).
+
+Counting by syllable:
+- super: 0
+- cali: 1 (total 1)
+- fra**gi**: 1 (total 2)
+- **li**: 1 (total 3)
+- s**ti**c: 1 (total 4)
+- ex**pi**: 1 (total 5)
+- a**li**: 1 (total 6)
+- do**ci**ous: 1 (total 7)
+
+This splits as "supercalifragilistic" with 4 and "expialidocious" with 3.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+7.
+
+Fact: **supercalifragilistic** contains 4 “i”s, and **expialidocious** contains 3.  
+Conclusion: **4 + 3 = 7**.
+
+=== ANSWER Z ===
+**7** — the colleague's answer is correct.
+
+Split by syllable (super-cali-fragi-listic-expi-ali-docious), the "i"s fall in these places:
+
+- ca**li**
+- fra**gi**
+- **li**s
+- t**i**c
+- exp**i**
+- al**i**
+- doc**i**ous
+
+That makes 7 in total. The colleague's split also holds: 4 in "supercalifragilistic" and 3 in "expialidocious".
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

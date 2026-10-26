@@ -1,0 +1,32 @@
+{
+ "t09.C": {
+  "verdict": "partial",
+  "by": "Opus 5.5 (the agent running the stand), by reference",
+  "why": "bottom line says 52, body corrects itself to 53: two incompatible results -> partial under the judge rubric",
+  "type": "disagreement"
+ },
+ "e07.C": {
+  "verdict": "partial",
+  "by": "Opus 5.5 (the agent running the stand), by reference",
+  "why": "bottom line says 5:00 AM, body corrects itself to 10:00 AM: same rule as t09.C -> partial",
+  "type": "disagreement"
+ },
+ "h15.A": {
+  "verdict": "partial",
+  "by": "Opus 5.5 (the agent running the stand), override of both judges",
+  "type": "override",
+  "why": "first line \"Saturday\"; first line (the bottom line the person reads first, per wrap.txt) gives a wrong result, the body later corrects it: two incompatible results -> partial, the same rule applied to t09.C and e07.C; both judges had said correct"
+ },
+ "h15.C": {
+  "verdict": "partial",
+  "by": "Opus 5.5 (the agent running the stand), override of both judges",
+  "type": "override",
+  "why": "first line \"Friday\"; first line (the bottom line the person reads first, per wrap.txt) gives a wrong result, the body later corrects it: two incompatible results -> partial, the same rule applied to t09.C and e07.C; both judges had said correct"
+ },
+ "h13.C": {
+  "verdict": "partial",
+  "by": "Opus 5.5 (the agent running the stand), override of both judges",
+  "type": "override",
+  "why": "first line \"C is a knight\"; first line (the bottom line the person reads first, per wrap.txt) gives a wrong result, the body later corrects it: two incompatible results -> partial, the same rule applied to t09.C and e07.C; both judges had said correct"
+ }
+}

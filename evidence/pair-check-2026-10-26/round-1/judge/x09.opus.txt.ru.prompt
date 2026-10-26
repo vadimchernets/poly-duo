@@ -1,0 +1,61 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is 17 to the 5th power?
+
+REFERENCE:
+1,419,857
+
+CRITERION:
+Correct iff 1,419,857.
+
+=== ANSWER W ===
+**17⁵ = 1 419 857**
+
+Расчёт:
+- 17² = 289
+- 17³ = 289 × 17 = 4 913
+- 17⁴ = 4 913 × 17 = 83 521
+- 17⁵ = 83 521 × 17 = 1 419 857
+
+Проверка: 83 521 × 10 = 835 210; 83 521 × 7 = 584 647; сумма = 1 419 857.
+
+Трактовка: «17 в 5-й степени» — обычное возведение 17 в степень 5. Уверен в результате.
+
+=== ANSWER X ===
+**17⁵ = 1,419,857**
+
+Step by step: 17² = 289, 17³ = 4,913, 17⁴ = 83,521, and 83,521 × 17 = 1,419,857.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+1,419,857
+
+\(17^5 = 17 \times 17 \times 17 \times 17 \times 17 = 1{,}419{,}857\).
+
+=== ANSWER Z ===
+**17⁵ = 1 419 857**
+
+Расчёт (трактовка: обычное возведение 17 в степень 5):
+- 17² = 289
+- 17³ = 289 × 17 = 4 913
+- 17⁴ = 4 913 × 17 = 83 521
+- 17⁵ = 83 521 × 17 = 1 419 857
+
+Проверка: 83 521 × 10 = 835 210; 83 521 × 7 = 584 647; сумма = 1 419 857.
+
+Ответ коллеги верен.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

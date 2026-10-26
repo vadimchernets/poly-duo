@@ -1,0 +1,3 @@
+You cannot overtake the person in last place in a normal race: if they are last, you must already be behind them and therefore not in the race’s ranking.
+
+So the premise is impossible under ordinary race rules.

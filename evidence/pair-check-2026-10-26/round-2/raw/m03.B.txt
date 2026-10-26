@@ -1,0 +1,16 @@
+**5,969,389 × 1,172,703 = 7,000,320,388,467**
+
+The colleague's result is correct. I recomputed it by splitting 1,172,703 = 1,000,000 + 172,000 + 703:
+
+- 5,969,389 × 1,000,000 = 5,969,389,000,000
+- 5,969,389 × 172,000 = 1,026,734,908,000
+- 5,969,389 × 703 = 4,196,480,467
+- Sum = 7,000,320,388,467
+
+Two consistency checks also pass. Mod 9: 4 × 3 = 12, which reduces to 3, and the result's digit sum is 48, which also reduces to 3. Last three digits: 389 × 703 = 273,467, which ends in 467.
+
+I did this by hand and did not run it through a calculator or code.
+
+Confidence: high
+
+No errors in the colleague's answer

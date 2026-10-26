@@ -1,0 +1,7 @@
+Bottom line: \(\boxed{\frac{1}{8}}\).
+
+There are \(6^3=216\) equally likely outcomes. Exactly 27 ordered outcomes sum to 10, so
+
+\[
+\frac{27}{216}=\frac{1}{8}.
+\]

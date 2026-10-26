@@ -1,0 +1,15 @@
+**Bottom line:** For 10 servings you need 750 g of flour and 7.5 eggs, which in practice means 7 eggs plus half of a beaten egg.
+
+**Reading I chose:** the ingredients scale in direct proportion to the number of servings.
+
+**Calculation:** the factor is 10 ÷ 4 = 2.5.
+- Flour: 300 g × 2.5 = 750 g
+- Eggs: 3 × 2.5 = 7.5
+
+**The half egg:** Beat one egg and use about half of it. A large egg is about 50 g without the shell, so that is roughly 25 g. If you'd rather use whole eggs, 8 is safer than 7 for doughs and batters, because the extra egg only makes them slightly richer.
+
+**Caveat:** Leavening, salt and spices don't always scale linearly, and a larger batch may need a bigger pan and a longer bake.
+
+Confidence: high
+
+No errors in the colleague's answer

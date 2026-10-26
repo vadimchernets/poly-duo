@@ -1,0 +1,19 @@
+**597 days.** The colleague's answer is correct.
+
+The count excludes the start date and includes the end date, so it is simply the difference between the two dates.
+
+- 15 Mar 2024 → 15 Mar 2025 is 365 days. The leap day, 29 Feb 2024, falls before the start date, so it is not counted.
+- 15 Mar 2025 → 2 Nov 2025 is 232 days:
+  - 15 Mar → 15 Apr: 31 days
+  - 15 Apr → 15 May: 30 days
+  - 15 May → 15 Jun: 31 days
+  - 15 Jun → 15 Jul: 30 days
+  - 15 Jul → 15 Aug: 31 days
+  - 15 Aug → 15 Sep: 31 days
+  - 15 Sep → 15 Oct: 30 days
+  - 15 Oct → 2 Nov: 18 days
+- Total: 365 + 232 = 597.
+
+Confidence: high
+
+No errors in the colleague's answer

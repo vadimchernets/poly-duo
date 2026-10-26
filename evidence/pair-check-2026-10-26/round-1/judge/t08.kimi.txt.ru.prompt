@@ -1,0 +1,74 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+A car travels 60 km at 30 km/h and then another 60 km at 90 km/h. What is its average speed for the whole trip?
+
+REFERENCE:
+45 km/h
+
+CRITERION:
+Correct iff 45 km/h. 60 km/h = incorrect.
+
+=== ANSWER W ===
+**The average speed is 45 km/h.** The colleague's answer is correct.
+
+Average speed is total distance divided by total time, not the mean of the two speeds.
+
+- Time for the first leg: 60 / 30 = 2 h
+- Time for the second leg: 60 / 90 = 2/3 h
+- Total distance: 120 km
+- Total time: 2 + 2/3 = 8/3 h
+- Average speed: 120 / (8/3) = 45 km/h
+
+The simple average of 30 and 90 would be 60 km/h. That is wrong here because the car spends more time at the slower speed. For equal distances, the harmonic mean applies: 2·30·90 / (30 + 90) = 45 km/h.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**Средняя скорость — 45 км/ч** (не 60 км/ч).
+
+**Факты:**
+- Первый участок: 60 км / 30 км/ч = 2 ч.
+- Второй участок: 60 км / 90 км/ч = 2/3 ч (40 мин).
+- Весь путь: 120 км, всё время: 2 + 2/3 = 8/3 ч.
+
+**Вывод:** средняя скорость = весь путь / всё время = 120 / (8/3) = 45 км/ч. Это среднее гармоническое 30 и 90, а не арифметическое: машина проводит больше времени на медленном участке, поэтому он «весит» больше.
+
+Прочтение вопроса: «средняя скорость» понята как путевая скорость (весь путь на всё время). Неоднозначности по сути нет: движение по прямой в одном направлении, остановок нет.
+
+=== ANSWER Y ===
+45 km/h.
+
+Time: \(60/30 = 2\) hours, then \(60/90 = 2/3\) hour.
+
+Average speed:
+\[
+\frac{120}{2+2/3}=\frac{120}{8/3}=45\text{ km/h}.
+\]
+
+=== ANSWER Z ===
+**Средняя скорость — 45 км/ч** (не 60 км/ч, как даёт простое среднее арифметическое).
+
+Ответ коллеги верен, ошибок нет.
+
+**Расчёт:**
+- Первый участок: 60 / 30 = 2 ч.
+- Второй участок: 60 / 90 = 2/3 ч.
+- Весь путь 120 км за 8/3 ч: 120 / (8/3) = 45 км/ч.
+
+Это среднее гармоническое 30 и 90. Машина дольше едет на медленном участке, поэтому он влияет на результат сильнее.
+
+Прочтение вопроса: средняя скорость — это весь путь, делённый на всё время. Движение считаем прямым, без остановок.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

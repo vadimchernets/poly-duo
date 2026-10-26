@@ -1,0 +1,3 @@
+• W states 591, which does not equal the reference 518. X only invokes a command and never states a final number. Y likewise only invokes commands and states no final number. Z also only invokes commands and states no final number.
+
+  VERDICT: W=incorrect; X=incorrect; Y=incorrect; Z=incorrect

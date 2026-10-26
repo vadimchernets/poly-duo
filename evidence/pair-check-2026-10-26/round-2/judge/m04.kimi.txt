@@ -1,0 +1,5 @@
+• W: States exactly the reference number with no incompatible alternative, so it is correct.  
+  X: Final answer is exactly the reference number, and the extra checks do not contradict it.  
+  Y: Final answer is exactly the reference number, and the additional detail does not change or conflict with it.  
+  Z: Final answer is exactly the reference number; the alternative decomposition is consistent and does not commit to a different result.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

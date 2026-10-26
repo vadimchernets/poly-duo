@@ -1,0 +1,9 @@
+**28 words.** The colleague's answer is correct.
+
+The sentence has no hyphenated words, so the hyphen rule changes nothing. Counting each whitespace-separated token and ignoring punctuation gives:
+
+1. The 2. train 3. to 4. Vienna 5. left 6. eleven 7. minutes 8. late 9. stopped 10. for 11. twenty 12. minutes 13. outside 14. Linz 15. for 16. no 17. announced 18. reason 19. and 20. still 21. arrived 22. at 23. the 24. main 25. station 26. exactly 27. on 28. time
+
+Confidence: high
+
+No errors in the colleague's answer

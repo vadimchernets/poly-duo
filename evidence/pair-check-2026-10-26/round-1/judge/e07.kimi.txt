@@ -1,0 +1,9 @@
+• **W:** Correct — states 10:00 AM in London on January 16 with sound arithmetic.
+
+  **X:** Correct — converts to UTC (03:00 + 7h = 10:00 UTC) and lands on 10:00 AM January 16 London time.
+
+  **Y:** Correct — arrives at 10:00 AM GMT on January 16 with a consistent double-check.
+
+  **Z:** Partial — the final conclusion and corrected answer are 10:00 AM January 16, but the stated "bottom line" of 5:00 AM London time is a wrong result the answer itself commits to before retracting, i.e., it hedges between two incompatible results.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=partial

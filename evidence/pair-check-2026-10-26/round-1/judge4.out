@@ -1,0 +1,14 @@
+08:03:04 judged x01
+08:03:42 judged x02
+08:03:58 judged x03
+08:04:25 judged x07
+08:04:29 judged x06
+08:05:09 FAIL opus x05.opus.txt 1 in/claude',   path: '~/.local/bin/claude',   spawnargs: [     '-p',     '--model',     'opus',     '--setting-sources',     '',     '--max-turns',     '1',     '--add-dir',     '<stand>/round-1/sandbox'   ] }  Node.js v26.8.0-alpha.0.0.0 
+08:05:09 FAIL opus x04.opus.txt 1 in/claude',   path: '~/.local/bin/claude',   spawnargs: [     '-p',     '--model',     'opus',     '--setting-sources',     '',     '--max-turns',     '1',     '--add-dir',     '<stand>/round-1/sandbox'   ] }  Node.js v26.8.0-alpha.0.0.0 
+08:05:40 judged x08
+08:06:48 judged x05
+08:07:18 judged x09
+08:07:18 judged x04
+08:07:37 judged x10
+08:07:38 judged x11
+08:07:51 judged x12

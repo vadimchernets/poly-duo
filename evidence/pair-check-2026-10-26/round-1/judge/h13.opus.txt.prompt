@@ -1,0 +1,71 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+On an island, knights always tell the truth and knaves always lie. A says: "B is a knave." B says: "A and C are of the same type." What is C?
+
+REFERENCE:
+C is a knave (in both consistent cases)
+
+CRITERION:
+Correct iff C is a knave.
+
+=== ANSWER W ===
+**C is a knave.** The colleague's draft is correct.
+
+Reading chosen: each person is exactly one type, either a knight or a knave.
+
+- If A is a knight, then "B is a knave" is true, so B is a knave. B's statement is then false, so A and C are of different types. A is a knight, so C is a knave.
+- If A is a knave, then "B is a knave" is false, so B is a knight. B's statement is then true, so A and C are the same type. A is a knave, so C is a knave.
+
+Both cases give a knave. A and B can't be determined, but they are of opposite types.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**C is a knave.** The colleague's answer is correct, and I checked both cases.
+
+- **A is a knight:** A's statement is true, so B is a knave. B's statement is then false, so A and C are of different types. A is a knight, so C is a knave.
+- **A is a knave:** A's statement is false, so B is a knight. B's statement is then true, so A and C are of the same type. A is a knave, so C is a knave.
+
+Both cases give the same result. A and B can't be determined (either A is a knight and B a knave, or the reverse), but C is a knave either way.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**C is a knight.**
+
+Reading chosen: the puzzle is a standard knight/knave logic puzzle where each person is exactly one type.
+
+**Facts (case analysis):**
+
+- Case 1: A is a knight. Then "B is a knave" is true, so B is a knave. B's statement is then false, so A and C are of different types. A is a knight, so C is a knave.
+- Case 2: A is a knave. Then "B is a knave" is false, so B is a knight. B's statement is then true, so A and C are the same type. A is a knave, so C is a knave.
+
+**Check that I did not make a mistake:** In case 1, C is a knave, not a knight. I need to correct my bottom line.
+
+**Corrected bottom line: C is a knave.**
+
+Both cases lead to the same result:
+- Case 1 (A knight, B knave, C knave): A's statement is true, which is consistent. B's statement ("A and C are the same type") is false because A is a knight and C is a knave, so the knave B lies. Consistent.
+- Case 2 (A knave, B knight, C knave): A's statement is false, which is consistent. B's statement is true because A and C are both knaves, so the knight B tells the truth. Consistent.
+
+**Conclusion:** Whichever type A is, C is a knave. A and B cannot be determined, but they are of opposite types.
+
+=== ANSWER Z ===
+C is a knave.
+
+- If A is a knight, B is a knave. B’s statement is false, so A and C differ; therefore C is a knave.
+- If A is a knave, B is a knight. B’s statement is true, so A and C match; therefore C is a knave.
+
+Thus C must be a knave.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

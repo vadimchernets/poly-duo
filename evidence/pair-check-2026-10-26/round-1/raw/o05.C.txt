@@ -1,0 +1,8 @@
+**Saturday.**
+
+Facts:
+- 1 January 2000 fell on a Saturday (Gregorian calendar).
+- Check: 1 January 2001 was a Monday. 2000 was a leap year (366 days = 52 weeks + 2 days), so 1 Jan 2000 was two weekdays before Monday, which is Saturday.
+- Second check: 31 December 1999 was a Friday, so the next day is Saturday.
+
+Conclusion: Saturday. I'm confident, and the two checks agree.

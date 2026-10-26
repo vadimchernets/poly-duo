@@ -1,0 +1,5 @@
+• W gives 591 ml and its calculation supports 591, so it matches the reference.  
+  X gives 591 ml with correct rounding to 591, so it matches the reference.  
+  Y headlines 592 ml while also saying 591.47 rounds to 591, so it hedges between the wrong and right results.  
+  Z gives 591 ml and treats other cup definitions only as non-applicable caveats, so it matches the reference.  
+  VERDICT: W=correct; X=correct; Y=partial; Z=correct

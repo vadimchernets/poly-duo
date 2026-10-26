@@ -1,0 +1,11 @@
+**130°**
+
+Reading: the clock is a standard 12-hour analog face, time exactly 3:40, and the answer is the smaller of the two angles between the hands.
+
+Facts:
+- The minute hand moves 6° per minute. At 40 minutes it is at 240°, measured from 12.
+- The hour hand moves 0.5° per minute, which is 30° per hour. At 3:40 it has moved 3×30 + 40×0.5 = 110°.
+- The difference is 240° − 110° = 130°.
+- The other angle is 360° − 130° = 230°.
+
+Conclusion: the smaller angle is 130°. A common mistake is to put the hour hand exactly on the 3, at 90°. That gives 150°, which is wrong, because the hour hand has moved most of the way toward the 4.

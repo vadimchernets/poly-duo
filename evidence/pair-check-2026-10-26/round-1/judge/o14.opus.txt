@@ -1,0 +1,6 @@
+W: The final answer is 12, which matches the reference.
+X: It says 12 sides, which matches the reference.
+Y: It says 12 sides, which matches the reference, and the extra remark about a colleague doesn't change that.
+Z: It says 12 sides, which matches the reference, and the extra remarks about a colleague don't contradict it.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

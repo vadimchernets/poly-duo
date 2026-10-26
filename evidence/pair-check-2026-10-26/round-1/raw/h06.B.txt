@@ -1,0 +1,13 @@
+**130°.** The colleague's answer is correct.
+
+Reading: standard 12-hour analog clock at exactly 3:40, and the smaller of the two angles between the hands.
+
+- Minute hand: 40 × 6° = 240° from 12.
+- Hour hand: 3 × 30° + 40 × 0.5° = 110° from 12.
+- Difference: 240° − 110° = 130°. The other angle is 360° − 130° = 230°, so 130° is the smaller one.
+
+A common mistake is to put the hour hand exactly on the 3 (90°), which gives 150°. The hour hand has moved two-thirds of the way toward the 4.
+
+Confidence: high
+
+No errors in the colleague's answer

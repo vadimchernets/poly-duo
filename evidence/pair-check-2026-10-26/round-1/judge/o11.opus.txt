@@ -1,0 +1,9 @@
+**W:** Its final answer is 8.89 cm, the same as the reference.
+
+**X:** Its final answer is 8,89 cm (8.89 cm). Mentioning that you could round to about 8.9 cm in practice doesn't conflict with that.
+
+**Y:** It clearly states 8,89 cm as the exact result. The "about 8.9 cm" is only a rounded aside, not a second competing answer.
+
+**Z:** Its final answer is 8.89 cm, the same as the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

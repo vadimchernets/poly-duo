@@ -1,0 +1,12 @@
+**6,057,955 × 9,819,567 = 59,486,495,005,485.** The colleague's answer is correct.
+
+I checked it by writing 9,819,567 as 10,000,000 − 180,433:
+- 6,057,955 × 10,000,000 = 60,579,550,000,000
+- 6,057,955 × 180,433 = 1,090,431,900,000 + 2,623,094,515 = 1,093,054,994,515
+- 60,579,550,000,000 − 1,093,054,994,515 = 59,486,495,005,485
+
+A mod-9 check agrees. The digit sum of 9,819,567 is 45, so the product must be divisible by 9, and the result's digit sum is 72.
+
+Confidence: high
+
+No errors in the colleague's answer

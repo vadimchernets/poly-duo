@@ -1,0 +1,16 @@
+**3,109,738,593**
+
+Reading: plain integer multiplication, 48729 × 63817.
+
+Working:
+- 48,729 × 60,000 = 2,923,740,000
+- 48,729 × 3,000 = 146,187,000
+- 48,729 × 800 = 38,983,200
+- 48,729 × 17 = 828,393
+- Sum = 3,109,738,593
+
+Checks (done by hand, not by running code):
+- Mod 9: 48,729 ≡ 3 and 63,817 ≡ 7, so the product ≡ 21 ≡ 3. The result's digit sum is 48 ≡ 3. ✓
+- Mod 11: 48,729 ≡ 10 and 63,817 ≡ 6, so the product ≡ 60 ≡ 5. The result's alternating digit sum is −6 ≡ 5. ✓
+
+Both checks pass, so I'm confident in the result.

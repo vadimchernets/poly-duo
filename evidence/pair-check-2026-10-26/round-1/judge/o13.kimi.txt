@@ -1,0 +1,6 @@
+• W: States 2^16 = 65 536 with correct verification and endorses the draft, fully matching the reference.
+  X: Gives 65,536 exactly, matching the reference.
+  Y: Concludes 65 536 and confirms certainty, matching the reference.
+  Z: States 2^16 = 65,536 with correct supporting arithmetic, matching the reference.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

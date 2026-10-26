@@ -1,0 +1,5 @@
+• W matches the reference exactly with 14,077 days and no incompatible result.  
+  X matches the reference exactly with 14077 days and no incompatible result.  
+  Y matches the reference exactly with 14,077 days and no incompatible result.  
+  Z matches the reference exactly with 14,077 days and no incompatible result.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

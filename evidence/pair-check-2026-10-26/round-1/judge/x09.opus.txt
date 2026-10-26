@@ -1,0 +1,5 @@
+W: The final answer is 1 419 857 (with space separators), which matches the reference.
+X: The final answer is 1,419,857, which matches the reference, and the extra line about the colleague doesn't contradict it.
+Y: The final answer is 1,419,857, which matches the reference.
+Z: The final answer is 1 419 857, which matches the reference, and its remarks about the colleague don't contradict it.
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

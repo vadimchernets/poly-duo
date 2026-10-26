@@ -1,0 +1,15 @@
+**Bottom line: 3 crossings.**
+
+Reading chosen: the boat holds the farmer plus at most two items, and the classic restrictions apply (wolf+goat and goat+cabbage can't be left alone together; wolf+cabbage is safe).
+
+**Facts**
+- One crossing is impossible because all three items can't fit in the boat.
+- The number of one-way crossings must be odd, since the farmer ends on the far bank.
+- That leaves 3 as the smallest candidate.
+
+**A 3-crossing solution**
+1. The farmer takes the wolf and the cabbage across. The goat is alone on the start bank, which is safe.
+2. The farmer returns alone. The wolf and cabbage are left together on the far bank, which is safe because the wolf doesn't eat cabbage.
+3. The farmer takes the goat across. All three are now on the far bank.
+
+**Conclusion:** the minimum is 3, and it is proven by the lower bound above plus this valid sequence. I'm sure of this, with no ambiguity beyond the reading stated.

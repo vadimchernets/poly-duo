@@ -1,0 +1,13 @@
+**Final price: $3,696.08**
+
+Reading chosen: each percentage applies to the running price from the previous step (sequential, compounding), not to the original price.
+
+**Calculation (unrounded intermediates):**
+- Cut 15%: 8,796.50 × 0.85 = 7,477.025
+- Cut 35%: 7,477.025 × 0.65 = 4,860.06625
+- Cut 35%: 4,860.06625 × 0.65 = 3,159.0430625
+- Raise 17%: 3,159.0430625 × 1.17 ≈ 3,696.0804
+
+**Check:** the combined multiplier is 0.85 × 0.65 × 0.65 × 1.17 ≈ 0.42018. Multiplying 8,796.50 by that gives about 3,696.08, which matches.
+
+Rounding only at the end gives $3,696.08. Rounding to the cent at each step could shift the result by a cent, but I didn't compute that variant since the question asks only for the final rounding.

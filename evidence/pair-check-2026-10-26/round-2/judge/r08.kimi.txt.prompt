@@ -1,0 +1,58 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Reverse the string "hpwrmmwocswfwyagudwaqvdk". What is the 5th character of the reversed string?
+
+REFERENCE:
+a
+
+CRITERION:
+Correct iff this character.
+
+=== ANSWER W ===
+The 5th character of the reversed string is **a**; the colleague's answer "w" is wrong.
+
+The original string has 24 characters. Reversed, it reads `kdvqawdugaywfwscowmmrwph`, and its first five characters are k, d, v, q, a. The 5th is therefore the original's 20th character (24 − 5 + 1), which is `a`.
+
+I read "5th" as 1-based counting, so the first character is position 1.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- "w" is incorrect. The 5th character of the reversed string is "a". The "w" at position 6 of the reversed string is the likely source of the confusion.
+
+=== ANSWER X ===
+The 5th character of the reversed string is **a**, so the colleague's "w" is wrong.
+
+The original string has 24 characters: h p w r m m w o c s w f w y a g u d w a q v d k.
+
+Reversed, it reads: `kdvqawdugaywfwscowmmrwph`.
+
+Counting from the start: k(1) d(2) v(3) q(4) **a(5)**.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The answer "w" is incorrect. The 5th character of the reversed string is "a". The 5th character from the end of the original is "a" (position 20), and "w" is at position 19, which is the 6th from the end.
+
+=== ANSWER Y ===
+w
+
+=== ANSWER Z ===
+**Bottom line:** the 5th character of the reversed string is **a**.
+
+**Facts:**
+- The original string has 24 characters.
+- Reversed: `kdvqawdugaywfwscowmmrwph`
+- The first five characters of the reversed string are k, d, v, q, a.
+
+**Conclusion:** the 5th character is the 20th character of the original (counting from the left), which is `a`.
+
+I read "5th" as 1-based counting, so the first character is position 1.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

@@ -1,0 +1,112 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is 29^546 mod 1000?
+
+REFERENCE:
+121
+
+CRITERION:
+Correct iff exactly this number.
+
+=== ANSWER W ===
+**29^546 mod 1000 = 121**
+
+Reading chosen: the ordinary integer power 29^546, reduced mod 1000.
+
+**Method (Chinese Remainder Theorem, 1000 = 8 · 125):**
+
+- Mod 8: 29 ≡ 5, and 5² = 25 ≡ 1. Since 546 is even, 29^546 ≡ 1 (mod 8).
+- Mod 125: gcd(29, 125) = 1 and φ(125) = 100, so 29^546 ≡ 29^46 (mod 125).
+  - 29² ≡ 91
+  - 29⁴ ≡ 91² = 8281 ≡ 31
+  - 29⁸ ≡ 31² = 961 ≡ 86
+  - 29¹⁶ ≡ 86² = 7396 ≡ 21
+  - 29³² ≡ 21² = 441 ≡ 66
+  - 46 = 32 + 8 + 4 + 2, so 29^46 ≡ 66 · 86 · 31 · 91. Stepwise: 66·86 = 5676 ≡ 51; 51·31 = 1581 ≡ 81; 81·91 = 7371 ≡ 121 (mod 125).
+- Combine: x ≡ 121 (mod 125) and x ≡ 1 (mod 8). Since 121 = 15·8 + 1, 121 satisfies both, so x = 121 (mod 1000).
+
+I did this by hand and did not run code. The final value passes the mod 8 check, but the mod 125 arithmetic was only done once.
+
+=== ANSWER X ===
+**29^546 mod 1000 = 121.** The colleague's answer of 221 is wrong.
+
+**Reading chosen:** the ordinary integer power 29^546, reduced mod 1000.
+
+**Method (direct squaring mod 1000):**
+- 29² = 841
+- 29⁴ = 841² = 707281 ≡ 281
+- 29⁵ = 281·29 = 8149 ≡ 149
+- 29¹⁰ = 149² = 22201 ≡ 201
+- 29²⁰ = 201² = 40401 ≡ 401
+- 29⁴⁰ = 401² = 160801 ≡ 801
+- 29⁵⁰ = 29⁴⁰·29¹⁰ = 801·201 = 161001 ≡ 1
+
+So the order of 29 mod 1000 divides 50, and 546 ≡ 46 (mod 50). Then:
+- 29⁶ = 281·841 = 236321 ≡ 321
+- 29⁴⁶ = 29⁴⁰·29⁶ = 801·321 = 257121 ≡ **121**
+
+**Cross-check (CRT):** mod 8, 29² ≡ 1 and 546 is even, so the result is ≡ 1. Mod 125, 29^46 ≡ 121. The number 121 satisfies both, since 121 = 15·8 + 1.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The claim 29²⁰ ≡ 1 (mod 1000) is false. 29²⁰ ≡ 401, and the actual order of 29 divides 50, not 20. Reducing the exponent mod 20 was therefore invalid.
+- Even within their own reduction, 29⁶ ≡ 281·841 = 236321 ≡ 321, not 221.
+
+=== ANSWER Y ===
+221
+
+Since \(29^{20}\equiv 1\pmod{1000}\), reduce the exponent:
+
+\[
+546\equiv 6\pmod{20}.
+\]
+
+Thus,
+
+\[
+29^{546}\equiv 29^6\pmod{1000}.
+\]
+
+Calculating modulo \(1000\):
+
+\[
+29^2\equiv841,\quad
+29^4\equiv281,\quad
+29^6\equiv281\cdot841\equiv221.
+\]
+
+Therefore, \(\boxed{221}\).
+
+=== ANSWER Z ===
+**29^546 mod 1000 = 121.** The colleague's answer of 221 is wrong.
+
+**Method:** the order of 29 mod 1000 divides λ(1000) = 100, so 29^546 ≡ 29^46 (mod 1000). Direct repeated squaring then gives the result:
+
+- 29² = 841
+- 29⁴ ≡ 841² = 707281 ≡ 281
+- 29⁵ ≡ 281·29 = 8149 ≡ 149
+- 29⁶ ≡ 281·841 = 236321 ≡ 321
+- 29¹⁰ ≡ 149² = 22201 ≡ 201
+- 29²⁰ ≡ 201² = 40401 ≡ 401
+- 29⁴⁰ ≡ 401² = 160801 ≡ 801
+- 29⁴⁶ ≡ 801·321 = 257121 ≡ **121**
+
+**Cross-check with CRT:**
+- Mod 8: 29 ≡ 5 and 5² ≡ 1, so an even exponent gives 1.
+- Mod 125: 29⁴ ≡ 31, so 29⁴⁶ = (29⁴)¹¹·29² ≡ 31¹¹·91 ≡ 81·91 ≡ 121.
+- The only residue mod 1000 that is ≡ 1 (mod 8) and ≡ 121 (mod 125) is 121.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The claim 29²⁰ ≡ 1 (mod 1000) is false. Actually 29²⁰ ≡ 401 (mod 1000), and mod 125 it is 26, not 1. So reducing the exponent mod 20 is invalid. The valid reduction is mod 100.
+- Even with their reduction, the arithmetic is wrong: 281·841 = 236321 ≡ 321, not 221. Their final answer matches neither the true value nor their own chain of steps.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

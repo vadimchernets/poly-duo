@@ -1,0 +1,22 @@
+**1134**
+
+Divisible by 4 or 6:
+
+\[
+\left\lfloor\frac{4080}{4}\right\rfloor+
+\left\lfloor\frac{4080}{6}\right\rfloor-
+\left\lfloor\frac{4080}{12}\right\rfloor
+=1020+680-340=1360.
+\]
+
+Among these, numbers divisible by 9 must be divisible by \(\operatorname{lcm}(6,9)=18\), giving
+
+\[
+\left\lfloor\frac{4080}{18}\right\rfloor=226.
+\]
+
+Therefore:
+
+\[
+1360-226=\boxed{1134}.
+\]

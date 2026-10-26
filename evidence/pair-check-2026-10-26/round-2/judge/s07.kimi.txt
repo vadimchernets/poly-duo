@@ -1,0 +1,6 @@
+• **W:** No final answer is stated — it only contains tool-invocation blocks with no computed result or claimed digit sum, so it is missing.  
+  **X:** Same as W: it only shows a Bash invocation and never states a final answer, so it is missing.  
+  **Y:** It commits unambiguously to **162**, which matches the reference exactly, and its extra verification detail does not contradict it.  
+  **Z:** It states **162** plainly, which matches the reference exactly.
+
+  VERDICT: W=incorrect; X=incorrect; Y=correct; Z=correct

@@ -1,0 +1,9 @@
+• **W:** Final answer is $3,696.08, exactly matching the reference — correct.
+
+  **X:** Final answer is $3,696.08, exactly matching the reference (minor intermediate-digit imprecision doesn't affect the final result) — correct.
+
+  **Y:** Final answer is $3,921.22, which does not match the reference and rests on an arithmetically false product — incorrect.
+
+  **Z:** Final answer is $3,696.08, exactly matching the reference — correct.
+
+  VERDICT: W=correct; X=correct; Y=incorrect; Z=correct

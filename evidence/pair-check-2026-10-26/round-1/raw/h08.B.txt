@@ -1,0 +1,13 @@
+**Bottom line: Marie Curie never won a third Nobel Prize. She won two.**
+
+I read this as a factual question with a false premise.
+
+- **1903, Physics:** shared with Pierre Curie and Henri Becquerel, for work on radioactivity.
+- **1911, Chemistry:** won alone, for discovering polonium and radium.
+- She died in 1934, so no later prize exists.
+
+The "third" may come from her family's record. Her daughter Irène Joliot-Curie won the 1935 Nobel Prize in Chemistry with her husband Frédéric Joliot. Counting Marie, Pierre and Irène, the family has five Nobel Prizes. Marie Curie is also the only person to win Nobel Prizes in two different scientific fields.
+
+Confidence: high
+
+No errors in the colleague's answer

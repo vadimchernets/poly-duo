@@ -1,0 +1,9 @@
+• **W:** States 21, lists all 21 primes correctly, and the π(200) − π(100) = 46 − 25 = 21 check is valid, so it matches the reference. **correct**
+
+  **X:** Gives 21 with the correct full list of primes, matching the reference with no contradictions. **correct**
+
+  **Y:** Despite a self-corrected slip in the intermediate decade tally (5 corrected to 4), its committed final answer is 21 with a correct list and valid cross-check, so it matches the reference. **correct**
+
+  **Z:** States 21, correct list, valid 46 − 25 = 21 check, and sound endpoint reasoning — matches the reference. **correct**
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

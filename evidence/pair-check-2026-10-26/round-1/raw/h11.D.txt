@@ -1,0 +1,17 @@
+**Bottom line: 1,296 rectangles, including 204 squares.** The colleague's answer is correct.
+
+Reading chosen: the question asks for axis-aligned rectangles whose edges lie on the grid lines of an 8×8 board. That is the standard interpretation.
+
+A rectangle is fixed by choosing 2 of the 9 vertical lines and 2 of the 9 horizontal lines:
+
+C(9,2) × C(9,2) = 36 × 36 = **1,296**
+
+Check by summing over sizes: (1+2+…+8)² = 36² = 1,296.
+
+Squares are a subset of these. There are (9−k)² squares of side k, for k = 1 to 8:
+- 8² + 7² + … + 1² = 204 squares.
+- The remaining 1,296 − 204 = 1,092 rectangles are non-square.
+
+Confidence: high
+
+No errors in the colleague's answer

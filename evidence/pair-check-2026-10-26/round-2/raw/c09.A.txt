@@ -1,0 +1,3 @@
+14.
+
+Counting both lowercase and uppercase “e”, the sentence contains **14** occurrences.

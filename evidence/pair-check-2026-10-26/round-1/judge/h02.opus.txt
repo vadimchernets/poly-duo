@@ -1,0 +1,6 @@
+- **W:** It answers Wednesday, which matches the reference. The stray line about "the colleague's answer" doesn't change that.
+- **X:** It answers Wednesday, which matches the reference. Calling "the colleague's answer" correct doesn't contradict that result.
+- **Y:** It answers Wednesday, which matches the reference, and its cross-check agrees.
+- **Z:** It answers Wednesday, which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

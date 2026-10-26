@@ -1,0 +1,3 @@
+90.
+
+\(3^{40} = 12157665459056928801\), and the sum of its decimal digits is \(90\).

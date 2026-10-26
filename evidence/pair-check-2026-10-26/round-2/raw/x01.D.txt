@@ -1,0 +1,30 @@
+**14^884 mod 1000 = 216**
+
+Reading chosen: the remainder of 14^884 when divided by 1000.
+
+**Method (CRT):**
+- Mod 8: 14^884 is divisible by 2^884, so it is ≡ 0.
+- Mod 125: gcd(14,125)=1 and φ(125)=100, so 14^884 ≡ 14^84.
+  - 14² = 196 ≡ 71
+  - 14⁴ ≡ 71² = 5041 ≡ 41
+  - 14⁸ ≡ 41² = 1681 ≡ 56
+  - 14¹⁶ ≡ 56² = 3136 ≡ 11
+  - 14³² ≡ 121
+  - 14⁶⁴ ≡ 121² = 14641 ≡ 16
+  - 14⁸⁴ = 14⁶⁴·14¹⁶·14⁴ ≡ 16·11·41 = 7216 ≡ 91
+- Solve x ≡ 91 (mod 125) and x ≡ 0 (mod 8). Write x = 91 + 125k. Then 3 + 5k ≡ 0 (mod 8), so k ≡ 1 and x = 216.
+
+**Cross-check directly mod 1000:**
+- 14⁴ ≡ 416, 14⁸ ≡ 56, 14¹⁶ ≡ 136
+- 14³² ≡ 136² = 18496 ≡ 496
+- 14⁶⁴ ≡ 496² = 246016 ≡ 16
+- 14⁸⁴ ≡ 16·136·416 ≡ 176·416 = 73216 ≡ 216
+
+This agrees with the CRT result.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The final answer 376 is wrong; the correct value is 216.
+- The error is in 14⁶⁴. The answer gives 296, but 14³² ≡ 496 and 14⁶⁴ ≡ 496² ≡ 16 (mod 1000).
+- The reduction 14^884 ≡ 14^84 and the values of 14⁴, 14⁸, 14¹⁶ are correct.

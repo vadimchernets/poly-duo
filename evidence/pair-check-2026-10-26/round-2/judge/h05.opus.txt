@@ -1,0 +1,6 @@
+- **W:** It opens with a bolded wrong answer ($0.275) and only later corrects to 3⅓ cents, so it states two incompatible results.
+- **X:** It gives 1/30 of a dollar ≈ 3⅓ cents as the headline answer, and the 3¢ figure is only a stated rounding of that.
+- **Y:** It gives the exact answer $0.10/3 ≈ $0.0333 (1/30 of a dollar), and "about $0.03" is just a rounding of the same value.
+- **Z:** It states 1/30 of a dollar ≈ 3.33 cents, which matches the reference exactly.
+
+VERDICT: W=partial; X=correct; Y=correct; Z=correct

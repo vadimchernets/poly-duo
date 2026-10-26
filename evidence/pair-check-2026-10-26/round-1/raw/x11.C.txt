@@ -1,0 +1,12 @@
+**Bottom line: 3 apples.** Reading chosen: "3 today" is your current count, so eating one yesterday doesn't change it.
+
+**Facts**
+- You state that you have 3 apples today.
+- The apple was eaten yesterday, which is before "today".
+- "Now" is the same day as "today", so the count is the one you gave: 3.
+
+**Conclusion**
+- The answer is 3. Subtracting 1 would be wrong, because the 3 is already your count after yesterday's apple was eaten.
+
+**Not sure**
+- If you meant "I had 3 apples yesterday, before eating one", the answer would be 2. The wording says "today", so I didn't use that reading.

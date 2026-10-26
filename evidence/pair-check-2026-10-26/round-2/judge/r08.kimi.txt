@@ -1,0 +1,3 @@
+• W: Correct — its final answer is "a", matching the reference. X: Correct — its final answer is "a", matching the reference. Y: Incorrect — it answers "w", which does not match the reference. Z: Correct — its final answer is "a", matching the reference.
+
+  VERDICT: W=correct; X=correct; Y=incorrect; Z=correct

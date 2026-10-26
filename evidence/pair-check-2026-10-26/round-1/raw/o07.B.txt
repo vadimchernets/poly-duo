@@ -1,0 +1,9 @@
+**212 °F** (100 °C) at sea level, assuming standard atmospheric pressure (1 atm = 101.325 kPa) and pure water.
+
+- Real sea-level pressure changes with the weather, so the actual boiling point shifts by a fraction of a degree.
+- The boiling point falls roughly 1 °F for every ~500 m of altitude.
+- Dissolved solutes such as salt raise it slightly.
+
+Confidence: high
+
+No errors in the colleague's answer. The answer is correct but brief, so I added the standard-pressure caveats.

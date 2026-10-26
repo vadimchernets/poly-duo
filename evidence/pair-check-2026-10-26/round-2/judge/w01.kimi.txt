@@ -1,0 +1,5 @@
+• W: Its final answer is 27 and its clause-by-clause count (4+4+7+4+8) is accurate, so it matches the reference.
+  X: It commits to 27 with a correct clause breakdown and no hedging, so it matches the reference.
+  Y: Its explicit numbered count runs from In (1) to storm (27) with no errors, matching the reference.
+  Z: It states 27 words as the final answer with nothing contradicting that, so it matches the reference.
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,3 @@
+96% of the original price.
+
+Calculation: \(120\% \times 80\% = 96\%\). So the final price is 4% lower than the original.

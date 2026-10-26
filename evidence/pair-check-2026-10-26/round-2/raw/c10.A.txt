@@ -1,0 +1,7 @@
+4
+
+Reading: counting only inside the quoted sentence, case-insensitively.
+
+- “ninety-nine”: 2
+- “eaten”: 1
+- “the”: 1

@@ -1,0 +1,278 @@
+{
+ "c09": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "c10": {
+  "A": "incorrect",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "w01": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "w04": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "w05": {
+  "A": "incorrect",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "d02": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "d04": {
+  "A": "incorrect",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "d06": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "b04": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "b06": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "b08": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "p03": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "p05": {
+  "A": "incorrect",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "s04": {
+  "A": "incorrect",
+  "B": "incorrect",
+  "C": "incorrect",
+  "D": "incorrect"
+ },
+ "s05": {
+  "A": "incorrect",
+  "B": "incorrect",
+  "C": "incorrect",
+  "D": "incorrect"
+ },
+ "s07": {
+  "A": "correct",
+  "B": "incorrect",
+  "C": "incorrect",
+  "D": "correct"
+ },
+ "s08": {
+  "A": "incorrect",
+  "B": "incorrect",
+  "C": "incorrect",
+  "D": "incorrect"
+ },
+ "m02": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "m03": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "m04": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "m05": {
+  "A": "correct",
+  "B": "correct",
+  "C": "incorrect",
+  "D": "correct"
+ },
+ "x01": {
+  "A": "incorrect",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "x03": {
+  "A": "incorrect",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "x04": {
+  "A": "incorrect",
+  "B": "incorrect",
+  "C": "incorrect",
+  "D": "incorrect"
+ },
+ "x05": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "x06": {
+  "A": "incorrect",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "r02": {
+  "A": "incorrect",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "r03": {
+  "A": "incorrect",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "r04": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "r05": {
+  "A": "partial",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "r08": {
+  "A": "incorrect",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "i04": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "q01": {
+  "A": "incorrect",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "q02": {
+  "A": "incorrect",
+  "B": "incorrect",
+  "C": "incorrect",
+  "D": "correct"
+ },
+ "q03": {
+  "A": "incorrect",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "q05": {
+  "A": "incorrect",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "q06": {
+  "A": "incorrect",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "n03": {
+  "A": "incorrect",
+  "B": "incorrect",
+  "C": "correct",
+  "D": "incorrect"
+ },
+ "n04": {
+  "A": "correct",
+  "B": "incorrect",
+  "C": "correct",
+  "D": "correct"
+ },
+ "h03": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "h04": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "h05": {
+  "A": "partial",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "h06": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "h07": {
+  "A": "correct",
+  "B": "partial",
+  "C": "partial",
+  "D": "partial"
+ },
+ "h10": {
+  "A": "correct",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ },
+ "h20": {
+  "A": "partial",
+  "B": "correct",
+  "C": "correct",
+  "D": "correct"
+ }
+}

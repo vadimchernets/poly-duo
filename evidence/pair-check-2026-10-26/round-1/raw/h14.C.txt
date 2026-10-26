@@ -1,0 +1,10 @@
+**Bottom line:** "encyclopedia" reversed is "aidepolcycne", and its 7th letter is "l".
+
+**Reading chosen:** the 7th letter counted from the left of the reversed word, starting at 1.
+
+**Facts:**
+- Original: e-n-c-y-c-l-o-p-e-d-i-a (12 letters)
+- Reversed: a-i-d-e-p-o-l-c-y-c-n-e
+- Positions: 1=a, 2=i, 3=d, 4=e, 5=p, 6=o, 7=l, 8=c, 9=y, 10=c, 11=n, 12=e
+
+**Conclusion:** the 7th letter is **l**. It is also the 6th letter of the original word, which is the one counted from the end, 12 − 7 + 1 = 6.

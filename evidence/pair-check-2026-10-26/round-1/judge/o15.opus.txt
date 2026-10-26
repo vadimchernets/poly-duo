@@ -1,0 +1,9 @@
+**W:** It says 273.15 K, which matches the reference. The extra notes about the triple point don't change that.
+
+**X:** It says 273.15 K, which matches the reference exactly.
+
+**Y:** It says 273.15 K and recommends that value. It calls the value exact and later calls it measured, but both statements give the same number, so this is not two different results.
+
+**Z:** It says 273.15 K. Mentioning that 273 K is fine for rough work is an extra comment, not a hedge on the answer.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

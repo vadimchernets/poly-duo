@@ -1,0 +1,42 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many days are there in February 2028?
+
+REFERENCE:
+29
+
+CRITERION:
+Correct iff the answer is 29 (2028 is a leap year).
+
+=== ANSWER W ===
+29 days. February 2028 has 29 days because 2028 is a leap year.
+
+=== ANSWER X ===
+**29 days.**
+
+Facts: 2028 is divisible by 4 and not a century year, so it's a leap year. February in a leap year has 29 days. The last day is Tuesday, 29 February 2028.
+
+Conclusion: 29. I'm certain of this.
+
+=== ANSWER Y ===
+**29 days.** 2028 is divisible by 4 and isn't a century year, so it's a leap year and February has 29 days. The last day is Tuesday, 29 February 2028.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+February 2028 has 29 days, because 2028 is a leap year.
+
+2028 is divisible by 4 and is not a century year, so the Gregorian rule adds February 29.
+
+Confidence: high
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

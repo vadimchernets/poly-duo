@@ -1,0 +1,5 @@
+• W: Its final answer is Saturday, which matches the reference.  
+  X: Its final answer is Saturday, with checks that do not contradict it.  
+  Y: Its final answer is Saturday and the added checks agree with that result.  
+  Z: It gives the final answer Saturday, matching the reference.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

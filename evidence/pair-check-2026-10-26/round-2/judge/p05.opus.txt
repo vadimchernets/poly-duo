@@ -1,0 +1,9 @@
+**W:** Incorrect. It gives 13 June 2033, which is 10 days earlier than the reference.
+
+**X:** Correct. It arrives at 23 June 2033 by valid arithmetic (2557 + 33 days).
+
+**Y:** Correct. It gives 23 June 2033 and checks it with a consistent weekday argument, since 2590 is a multiple of 7.
+
+**Z:** Correct. It gives 23 June 2033, and its weekday check and its rejection of 13 June are both accurate.
+
+VERDICT: W=incorrect; X=correct; Y=correct; Z=correct

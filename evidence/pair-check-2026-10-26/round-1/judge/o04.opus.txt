@@ -1,0 +1,6 @@
+- **W:** Its final answer is W, which matches the reference.
+- **X:** It clearly states W, and the extra facts about wolframium and atomic number 74 don't conflict with it.
+- **Y:** It gives W as the symbol, and the extra etymology doesn't contradict the reference.
+- **Z:** It commits to W and explicitly rules out other symbols, so it matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

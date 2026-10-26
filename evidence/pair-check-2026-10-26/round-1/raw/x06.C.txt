@@ -1,0 +1,14 @@
+**Bottom line: the letter "i" appears 7 times.**
+
+I read the question as asking for a case-insensitive count in the standard spelling "supercalifragilisticexpialidocious" (34 letters).
+
+**Count by syllable:**
+- super: 0
+- cali: 1
+- fragi: 1 (running total 2)
+- listic: 2 (total 4)
+- expi: 1 (total 5)
+- ali: 1 (total 6)
+- docious: 1 (total 7)
+
+I counted by hand and didn't run code. A different spelling would change the number.

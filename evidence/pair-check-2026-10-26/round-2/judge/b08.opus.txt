@@ -1,0 +1,6 @@
+W gives 14,077, which matches the reference exactly.
+X gives 14077, which matches the reference exactly.
+Y gives 14,077, which matches the reference exactly.
+Z gives 14,077, which matches the reference exactly.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

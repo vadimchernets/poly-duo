@@ -1,0 +1,2 @@
+• W is correct because its final answer is 31 via the standard floor-sum count. X is correct because it commits to 31 and supports it with valid factor counts. Y is correct because it plainly gives 31 with the same computation. Z is correct because it also commits to 31 with consistent reasoning.
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

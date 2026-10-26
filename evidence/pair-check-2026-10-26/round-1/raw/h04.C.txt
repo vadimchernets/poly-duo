@@ -1,0 +1,11 @@
+**Bottom line: 9**
+
+Reading chosen: count both uppercase and lowercase "s", over the whole phrase "Mississippi's assassins".
+
+**Facts:**
+- "Mississippi's": M-i-**s**-**s**-i-**s**-**s**-i-p-p-i-'-**s**. That is 5.
+- "assassins": a-**s**-**s**-a-**s**-**s**-i-n-**s**. That is 4.
+
+**Conclusion:** 5 + 4 = 9.
+
+Not sure about nothing here, except the reading: if you meant only lowercase "s", the answer is still 9, because the phrase has no uppercase S.

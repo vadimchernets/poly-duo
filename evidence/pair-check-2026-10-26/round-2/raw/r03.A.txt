@@ -1,0 +1,3 @@
+Bottom line: **n**.
+
+Reversed string: `suwvglotioenrzlsmygcojsv`. The 18th character is `n`.

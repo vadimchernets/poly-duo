@@ -1,0 +1,11 @@
+**Bottom line:** "encyclopedia" reversed is **aidepolcycne**, and its 7th letter is **l**.
+
+Reading chosen: positions counted from the left of the reversed word, starting at 1.
+
+Reversed letters: a(1) i(2) d(3) e(4) p(5) o(6) **l(7)** c(8) y(9) c(10) n(11) e(12)
+
+The colleague's answer is correct.
+
+Confidence: high
+
+No errors in the colleague's answer

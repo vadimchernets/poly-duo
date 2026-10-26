@@ -1,0 +1,6 @@
+- **W:** The final answer is $2,760.60, which matches the reference exactly.
+- **X:** The final answer is $2,760.95, which is 35 cents off because of an arithmetic error (2,684.99 × 1.02816 = 2,760.5993…).
+- **Y:** The final answer is $2,760.60, which matches the reference exactly.
+- **Z:** The final answer is $2,760.60, which matches the reference exactly.
+
+VERDICT: W=correct; X=incorrect; Y=correct; Z=correct

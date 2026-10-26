@@ -1,0 +1,22 @@
+**The ball costs $1/30 ≈ $0.0333, or 3⅓ cents.**
+
+Reading chosen: bat = 2 × ball + $1.00, and bat + ball = $1.10.
+
+**Solution:**
+- Let the ball cost b. Then the bat costs 2b + 1.00.
+- Total: b + 2b + 1.00 = 1.10, so 3b = 0.10 and b = 0.10/3 ≈ $0.0333.
+- Check: bat = 2(0.0333) + 1.00 ≈ $1.0667. Bat + ball = $1.10. ✓
+
+**Whole cents:** The price is not a whole number of cents, so there is no exact answer in whole cents.
+- A 3¢ ball gives a $1.06 bat and a $1.09 total.
+- A 4¢ ball gives a $1.08 bat and a $1.12 total.
+
+If you have to round, the ball is 3¢.
+
+**Classic version:** "Bat costs $1.00 more than the ball" gives 5¢. The word "twice" changes the answer.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The headline answer, "$0.275 (27.5 cents)", is wrong. It contradicts the colleague's own derivation, which correctly gives 3⅓ cents. The colleague only fixed this at the end, with "Correction: …".
+- The final value, 3⅓ cents, is right. The answer should state it once, at the top, and not leave the wrong figure there.

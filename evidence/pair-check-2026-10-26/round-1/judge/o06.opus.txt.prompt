@@ -1,0 +1,63 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many seconds are there in one day?
+
+REFERENCE:
+86,400
+
+CRITERION:
+Correct iff 86,400.
+
+=== ANSWER W ===
+A day has 86,400 seconds (24 × 60 × 60). The colleague's answer is correct.
+
+I read the question as asking about a standard calendar day.
+
+Two caveats:
+- Leap seconds: a day with a leap second inserted in UTC has 86,401 seconds. The last one was in 2016, and the practice is due to be discontinued by 2035.
+- Daylight saving: in local time, a day can have 82,800 or 90,000 seconds on the days clocks change.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**86,400 seconds** (24 × 60 × 60). The colleague's answer is correct.
+
+Reading chosen: a standard civil day of 24 hours.
+
+Exceptions:
+- **Leap second:** a UTC day with one has 86,401 seconds. None have been added since 2016.
+- **Daylight-saving change:** a local day can have 82,800 or 90,000 seconds.
+- **Sidereal day:** about 86,164 seconds.
+
+Use 86,400 unless you need one of those cases.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**86,400 seconds** in one day (24 × 60 × 60).
+
+Reading chosen: a standard civil day, meaning 24 hours.
+
+Facts:
+- 1 day = 24 hours, 1 hour = 60 minutes, 1 minute = 60 seconds. That gives 24 × 3600 = 86,400.
+- A day can differ from this. A UTC day with a leap second has 86,401 seconds, though leap seconds haven't been added since 2016. Days with a daylight-saving change in local time have 82,800 or 90,000 seconds.
+- A sidereal day (the Earth's rotation relative to the stars) is about 86,164 seconds.
+
+Conclusion: use 86,400 unless you specifically mean a sidereal day or are handling leap seconds or DST.
+
+=== ANSWER Z ===
+There are 86,400 seconds in one day.
+
+Calculation: 24 hours × 60 minutes × 60 seconds = 86,400 seconds.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

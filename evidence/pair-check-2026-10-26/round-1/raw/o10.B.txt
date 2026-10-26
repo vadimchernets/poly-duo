@@ -1,0 +1,9 @@
+**Canberra is the capital of Australia.** The colleague's answer is correct.
+
+- Canberra is the seat of the federal Parliament and government. It lies in the Australian Capital Territory, between Sydney and Melbourne.
+- It was founded in 1913 as a planned capital, a compromise between the rival cities Sydney and Melbourne. Melbourne was the interim seat of government until 1927.
+- Sydney, the largest city, and Melbourne are the common wrong answers.
+
+Confidence: high
+
+No errors in the colleague's answer

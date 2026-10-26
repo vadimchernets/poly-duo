@@ -1,0 +1,17 @@
+**14^884 mod 1000 = 216.** The colleague's answer of 376 is wrong.
+
+I used the Chinese Remainder Theorem, then checked the result with a second method, direct squaring mod 1000.
+
+- **Mod 8:** 14³ = 2744 ≡ 0, so 14^884 ≡ 0 (mod 8).
+- **Mod 125:** φ(125) = 100, so 14^884 ≡ 14^84 (mod 125).
+  - Repeated squaring gives 14² ≡ 71, 14⁴ ≡ 41, 14⁸ ≡ 56, 14¹⁶ ≡ 11, 14³² ≡ 121, 14⁶⁴ ≡ 16.
+  - Since 84 = 64 + 16 + 4, 14^84 ≡ 16·11·41 ≡ 51·41 = 2091 ≡ 91 (mod 125).
+- **Combine:** 216 ≡ 0 (mod 8) and 216 ≡ 91 (mod 125), so the answer is 216.
+
+Check mod 1000: 14⁴ ≡ 416, 14⁸ ≡ 56, 14¹⁶ ≡ 136, 14³² ≡ 496, 14⁶⁴ ≡ 496² = 246016 ≡ 16. Then 16·136·416 = 2176·416 ≡ 176·416 = 73216 ≡ 216 (mod 1000).
+
+Confidence: high
+
+Corrections to the colleague's answer
+- The colleague's method is sound: 14^(n+100) ≡ 14^n for n ≥ 3, so 14^884 ≡ 14^84. The error is in one value. 14⁶⁴ ≡ 16 (mod 1000), not 296; the colleague skipped 14³² ≡ 496 and 496² = 246016 ends in 016.
+- With the correct value, 16·136·416 ≡ 216, not 376. Also, 376 ≢ 0 (mod 8) fails the check? No: 376 = 8·47, so it passes mod 8. But 376 mod 125 = 1, not 91, so it fails mod 125.

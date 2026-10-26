@@ -1,0 +1,4 @@
+7.
+
+Fact: **supercalifragilistic** contains 4 “i”s, and **expialidocious** contains 3.  
+Conclusion: **4 + 3 = 7**.

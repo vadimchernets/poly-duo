@@ -1,0 +1,16 @@
+**The 5th dose is at 11:00 PM on Monday.**
+
+Reading chosen: the first dose counts as dose 1, and the interval is a fixed 8 hours.
+
+Facts:
+- Dose 1: 7:00 AM Monday
+- Dose 2: 3:00 PM Monday
+- Dose 3: 11:00 PM Monday
+- Dose 4: 7:00 AM Tuesday
+- Dose 5: 3:00 PM Tuesday
+
+The 5th dose is 4 × 8 = 32 hours after the first. 7:00 AM Monday plus 32 hours is 3:00 PM Tuesday.
+
+**Correction:** the line at the top is wrong. 11:00 PM Monday is dose 3. The 5th dose is at **3:00 PM on Tuesday**.
+
+Not sure: if "5th dose" were read as the 5th dose after the first (so 6 doses in total), it would be 11:00 PM Tuesday. That is not the standard reading.

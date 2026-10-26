@@ -1,0 +1,54 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Write the word "encyclopedia" backwards, then tell me the 7th letter of the reversed word.
+
+REFERENCE:
+l (reversed: aidepolcycne)
+
+CRITERION:
+Correct iff the 7th letter given is l.
+
+=== ANSWER W ===
+**Bottom line:** "encyclopedia" reversed is **aidepolcycne**, and its 7th letter is **l**.
+
+Reading chosen: positions counted from the left of the reversed word, starting at 1.
+
+Reversed letters: a(1) i(2) d(3) e(4) p(5) o(6) **l(7)** c(8) y(9) c(10) n(11) e(12)
+
+The colleague's answer is correct.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+aidepolcycne — the 7th letter is **l**.
+
+=== ANSWER Y ===
+**Bottom line:** "encyclopedia" reversed is "aidepolcycne", and its 7th letter is "l".
+
+**Reading chosen:** the 7th letter counted from the left of the reversed word, starting at 1.
+
+**Facts:**
+- Original: e-n-c-y-c-l-o-p-e-d-i-a (12 letters)
+- Reversed: a-i-d-e-p-o-l-c-y-c-n-e
+- Positions: 1=a, 2=i, 3=d, 4=e, 5=p, 6=o, 7=l, 8=c, 9=y, 10=c, 11=n, 12=e
+
+**Conclusion:** the 7th letter is **l**. It is also the 6th letter of the original word, which is the one counted from the end, 12 − 7 + 1 = 6.
+
+=== ANSWER Z ===
+The colleague's answer is correct: the reversed word is **aidepolcycne**, and its 7th letter is **l**.
+
+Counting the reversed word: a(1) i(2) d(3) e(4) p(5) o(6) **l(7)** c(8) y(9) c(10) n(11) e(12).
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

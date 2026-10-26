@@ -1,0 +1,51 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is the sum of the decimal digits of 3^77?
+
+REFERENCE:
+162
+
+CRITERION:
+Correct iff exactly this number.
+
+=== ANSWER W ===
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "n=3**77; print(n, sum(map(int,str(n))))"</parameter>
+</invoke>
+
+
+
+<invoke name="Bash">
+<parameter name="command">echo ok</parameter>
+</invoke>
+
+=== ANSWER X ===
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "n=3**77; print(n, sum(map(int,str(n))))"</parameter>
+</invoke>
+
+=== ANSWER Y ===
+**162** is correct, and the colleague's answer has no errors.
+
+I recomputed 3^77 independently as 3^64 · 3^13 = 3433683820292512484657849089281 × 1594323. That gives 5474401089420219382077155933569751763, the same 37-digit number as the draft.
+
+Summing its digits in blocks of ten gives 42 + 31 + 51 + 38 = 162. As a consistency check, 162 is divisible by 9, as it must be, because 3^77 is divisible by 9.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+**162**
+
+\(3^{77}=5474401089420219382077155933569751763\).
+
+The sum of its decimal digits is \(162\).
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

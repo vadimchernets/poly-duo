@@ -1,0 +1,9 @@
+**W:** "q" is the 7th character of the reversed string, not the 9th, so it does not match the reference "o".
+
+**X:** It commits to "o" with correct counting, and the 0-indexed note is a clearly labeled alternative reading rather than a hedge.
+
+**Y:** It gives "o", supported by the correct reversed string and position mapping.
+
+**Z:** It gives "o" with correct counting.
+
+VERDICT: W=incorrect; X=correct; Y=correct; Z=correct

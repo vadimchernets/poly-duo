@@ -1,0 +1,81 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+When three fair six-sided dice are rolled, what is the probability that the sum is exactly 10? Give it as a fraction.
+
+REFERENCE:
+27/216 = 1/8
+
+CRITERION:
+Correct iff 1/8 (27/216).
+
+=== ANSWER W ===
+**Bottom line: 1/8** (27/216).
+
+**Facts**
+- Total outcomes: 6³ = 216, all equally likely.
+- Ordered triples (a,b,c) with a+b+c = 10 and each die from 1 to 6, grouped by multiset:
+  - {1,3,6}: 6 orderings
+  - {1,4,5}: 6
+  - {2,2,6}: 3
+  - {2,3,5}: 6
+  - {2,4,4}: 3
+  - {3,3,4}: 3
+  - Total: 6 + 6 + 3 + 6 + 3 + 3 = 27
+- Cross-check by symmetry: sum 11 also has 27 outcomes, and 10 and 11 are the two most likely sums after 10.5. (The known counts for sums 3 to 10 are 1, 3, 6, 10, 15, 21, 25, 27.) These add up consistently to 108 for sums 3 to 10, which is half of 216.
+
+**Conclusion**
+P = 27/216 = 1/8 = 12.5%.
+
+No uncertainty here. The only reading choice is that the dice are distinguishable, which is the standard one and gives equally likely outcomes.
+
+=== ANSWER X ===
+**The probability is 1/8** (27/216). The colleague's answer is correct.
+
+- There are 6³ = 216 equally likely ordered outcomes.
+- 27 of them sum to 10:
+  - {1,3,6}: 6 orderings
+  - {1,4,5}: 6
+  - {2,3,5}: 6
+  - {2,2,6}: 3
+  - {2,4,4}: 3
+  - {3,3,4}: 3
+- 27/216 = 1/8 = 12.5%.
+
+Cross-check: sums 10 and 11 are symmetric (s ↔ 21−s), each with 27 outcomes. They are the most likely sums.
+
+I treated the dice as distinguishable, which is the standard reading.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+Bottom line: \(\boxed{\frac{1}{8}}\).
+
+There are \(6^3=216\) equally likely outcomes. Exactly 27 ordered outcomes sum to 10, so
+
+\[
+\frac{27}{216}=\frac{1}{8}.
+\]
+
+=== ANSWER Z ===
+The probability is **1/8**, and the colleague's answer is correct.
+
+There are 6³ = 216 equally likely ordered outcomes. Counting by the multiset of faces, the ones that sum to 10 are:
+
+- {1,3,6}, {1,4,5} and {2,3,5}: 6 orderings each, so 18.
+- {2,2,6}, {2,4,4} and {3,3,4}: 3 orderings each, so 9.
+
+That gives 18 + 9 = 27 outcomes, and 27/216 = **1/8**.
+
+Confidence: high
+
+No errors in the colleague's answer. The only gap is that it asserts the count of 27 without showing it, which the breakdown above fills in.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

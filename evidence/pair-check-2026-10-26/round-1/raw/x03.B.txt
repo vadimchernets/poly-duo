@@ -1,0 +1,9 @@
+**The ball costs $0.10.**
+
+I read the question literally: the bat's price is given outright as $1.00, so the ball is $1.10 − $1.00 = $0.10.
+
+This is not the classic riddle. In that version the bat costs $1.00 *more than* the ball, which makes the ball $0.05. Your wording doesn't say that. If you meant the classic version, the answer is $0.05.
+
+Confidence: high
+
+No errors in the colleague's answer

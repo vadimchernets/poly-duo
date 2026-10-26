@@ -1,0 +1,11 @@
+**Saturday.**
+
+The colleague's answer is correct. I found no errors, so I changed nothing in the answer itself and only added a way to check it.
+
+Two quick checks:
+- 1 January 2001 was a Monday. The year 2000 was a leap year with 366 days, which is 52 weeks plus 2 days. So 1 January 2000 fell two weekdays before Monday, which is Saturday.
+- 31 December 1999 was a Friday, so the next day was Saturday.
+
+Confidence: high
+
+No errors in the colleague's answer

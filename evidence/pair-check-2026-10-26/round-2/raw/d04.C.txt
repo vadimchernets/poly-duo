@@ -1,0 +1,11 @@
+**19 July 2527 is a Saturday.**
+
+I read the question as the proleptic Gregorian calendar, with no reform adjustments.
+
+**Facts and method**
+- The Gregorian calendar repeats every 400 years: 146,097 days, which is exactly 20,871 weeks. So 19 July 2527 falls on the same weekday as 19 July 2127.
+- 19 July 2026 is a Sunday. 1 January 2026 is a Thursday, and 19 July is day 200 of the year, which is 199 days later. 199 mod 7 = 3, and Thursday + 3 days = Sunday.
+- From 2026 to 2127 is 101 years. The leap days in between are 2028 through 2124, which is 25 years, minus the non-leap 2100, so 24.
+- The weekday shift is 101 + 24 = 125 days. 125 mod 7 = 6, and Sunday + 6 days = Saturday.
+
+I did this by hand and did not run code to check it. I'm confident in it.

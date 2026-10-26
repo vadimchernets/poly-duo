@@ -1,0 +1,11 @@
+**The 18th character is "y".**
+
+Reading chosen: 1-based position in the reversed string.
+
+**Facts**
+- Original string: `vsjocgymslrzneoitolgvwus` (24 characters).
+- Reversed: `suwvglotioenzrlsmygcojsv`.
+- Counting in the reversed string: s1 u2 w3 v4 g5 l6 o7 t8 i9 o10 e11 n12 z13 r14 l15 s16 m17 y18.
+- Cross-check: reversed position 18 corresponds to original position 24 − 18 + 1 = 7, which is "y" (v s j o c g **y**).
+
+**Conclusion:** y. I'm sure of this; I counted it two independent ways.

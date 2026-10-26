@@ -1,0 +1,12 @@
+**C is a knave.** The colleague's draft is correct.
+
+Reading chosen: each person is exactly one type, either a knight or a knave.
+
+- If A is a knight, then "B is a knave" is true, so B is a knave. B's statement is then false, so A and C are of different types. A is a knight, so C is a knave.
+- If A is a knave, then "B is a knave" is false, so B is a knight. B's statement is then true, so A and C are the same type. A is a knave, so C is a knave.
+
+Both cases give a knave. A and B can't be determined, but they are of opposite types.
+
+Confidence: high
+
+No errors in the colleague's answer

@@ -1,0 +1,8 @@
+• All four answers commit to 9368, which matches the reference.
+
+  - W: Final answer 9368, correct.
+  - X: Final answer 9368, correct.
+  - Y: Final answer 9,368, correct.
+  - Z: Final answer 9,368, correct.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

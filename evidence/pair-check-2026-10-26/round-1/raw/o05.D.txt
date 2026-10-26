@@ -1,0 +1,7 @@
+1 January 2000 was a **Saturday**. The colleague's answer is correct.
+
+Quick check: 1 January 2000 is 1 day after 31 December 1999, which was a Friday. 2000 was also a leap year (divisible by 400), and that doesn't change the weekday of 1 January.
+
+Confidence: high
+
+No errors in the colleague's answer

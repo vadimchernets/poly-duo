@@ -1,0 +1,15 @@
+**Bottom line: 5 cats.**
+
+The colleague's answer is correct.
+
+- 5 cats catch 5 mice in 5 minutes, so each cat catches 1 mouse per 5 minutes.
+- In 100 minutes, one cat catches 100 / 5 = 20 mice.
+- 100 mice / 20 mice per cat = 5 cats.
+
+The most common wrong answer is 100 cats, which comes from scaling the number of cats in proportion to the number of mice while forgetting that the time grew too.
+
+I'm reading this as the standard puzzle: every cat works independently at a constant rate, and mice are never a limiting resource. If cats tire, get in each other's way, or the mice become scarce or wary, the data given wouldn't determine the answer.
+
+Confidence: high
+
+No errors in the colleague's answer

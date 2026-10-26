@@ -1,0 +1,10 @@
+**Tuesday.**
+
+1000 = 7 × 142 + 6, so 1000 days is 142 full weeks plus 6 days. Counting 6 days from Wednesday gives Thursday, Friday, Saturday, Sunday, Monday, Tuesday.
+
+The colleague's final answer (Tuesday) is correct, but the draft opened with the wrong answer, "Saturday", and only fixed it at the end.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The first line says "Saturday", which contradicts the working and the final answer. The correct answer is Tuesday.

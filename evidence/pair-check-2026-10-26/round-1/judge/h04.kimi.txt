@@ -1,0 +1,6 @@
+• - **W:** incorrect — counts "assassins" as 4 s's, but it has 5 (a**ss**a**ss**in**s**), so the total is 10, not 9.
+  - **X:** correct — gives 10 with accurate per-word counts (5 + 5).
+  - **Y:** correct — gives 10 with 5 s's in each word.
+  - **Z:** correct — gives 10 with correct breakdown (5 + 5).
+
+  VERDICT: W=incorrect; X=correct; Y=correct; Z=correct

@@ -1,0 +1,49 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is the square root of 1,764?
+
+REFERENCE:
+42
+
+CRITERION:
+Correct iff 42 (mentioning -42 as well is fine).
+
+=== ANSWER W ===
+**The square root of 1,764 is 42.**
+
+42 × 42 = 1,764. As a check, 40² = 1,600, 2·40·2 = 160 and 2² = 4, which add up to 1,764.
+
+Strictly, −42 also squares to 1,764. The principal (non-negative) root, which is what "the square root" normally means, is +42.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+42.
+
+42 × 42 = 1,764 (40² = 1,600, plus 2·40·2 = 160, plus 2² = 4). The principal root is +42; −42 also squares to 1,764. I'm sure of this.
+
+=== ANSWER Y ===
+The square root of 1,764 is **42**.
+
+Check: 42 × 42 = 1,764. (40² = 1,600, plus 2·40·2 = 160, plus 2² = 4, which gives 1,764.)
+
+The negative number −42 also squares to 1,764. The principal (positive) square root, which is what √ means, is 42.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+Bottom line: \(\sqrt{1{,}764}=42\).
+
+Fact: \(42^2 = 1{,}764\).
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

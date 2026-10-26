@@ -1,0 +1,10 @@
+**Bottom line:** the 5th character of the reversed string is **a**.
+
+**Facts:**
+- The original string has 24 characters.
+- Reversed: `kdvqawdugaywfwscowmmrwph`
+- The first five characters of the reversed string are k, d, v, q, a.
+
+**Conclusion:** the 5th character is the 20th character of the original (counting from the left), which is `a`.
+
+I read "5th" as 1-based counting, so the first character is position 1.

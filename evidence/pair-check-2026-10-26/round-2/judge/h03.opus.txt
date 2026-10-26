@@ -1,0 +1,6 @@
+- **W:** States switching wins with 100% probability; the mention of a "colleague's answer" is extraneous but doesn't change the result.
+- **X:** States switching gives a 100% chance because the car is visible, which matches the reference.
+- **Y:** Concludes switching wins with certainty (100%) and only names 2/3 to dismiss it, which matches the reference.
+- **Z:** States 100% under the given premise; the trust-your-eyes caveat doesn't hedge toward a wrong result.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

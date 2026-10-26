@@ -1,0 +1,109 @@
+08:36:17 FAIL codex h20.A.txt -15 
+08:36:17 FAIL codex h19.A.txt -15 
+08:39:13 FAIL sonnet n03.C.txt 1 Error: Reached max turns (1)
+08:39:39 done answers c10
+08:39:48 done answers h05
+08:39:57 done answers p05
+08:40:08 done answers q02
+08:40:15 done answers h20
+08:40:23 done answers q03
+08:40:35 done answers q01
+08:40:43 FAIL sonnet d04.B.txt 1 Error: Reached max turns (1)
+08:41:25 done answers p05
+08:41:25 done answers c10
+08:41:25 done answers h20
+08:41:25 done answers q03
+08:41:25 done answers h05
+08:41:25 done answers q02
+08:41:25 done answers q01
+08:41:39 done answers q05
+08:41:39 done answers d04
+08:43:14 done answers q06
+08:43:33 done answers r02
+08:44:07 done answers r03
+08:44:28 done answers r05
+08:44:44 done answers r08
+08:44:56 done answers s04
+08:45:11 done answers s05
+08:45:26 done answers s08
+08:45:45 done answers w05
+08:47:50 done answers x01
+08:48:21 done answers x03
+08:48:39 FAIL sonnet n03.C.txt -9 timeout
+08:49:13 done answers x06
+08:49:28 done answers b04
+08:49:44 done answers b06
+08:50:02 done answers b08
+08:50:21 done answers c09
+08:50:42 done answers d02
+08:55:21 FAIL sonnet x04.D.txt -9 timeout
+08:56:52 done answers d06
+08:57:20 done answers h03
+08:57:26 done answers x04
+08:57:54 done answers h04
+08:58:05 FAIL sonnet n03.C.txt -9 timeout
+08:58:12 done answers h06
+08:58:22 done answers h07
+08:58:29 done answers h10
+08:58:35 done answers i04
+08:58:45 done answers m02
+09:00:01 done answers m03
+09:02:07 done answers m04
+09:02:22 done answers n04
+09:02:29 done answers p03
+09:02:38 done answers r04
+09:02:58 done answers w01
+09:03:13 done answers w04
+09:03:34 done answers m05
+09:09:30 FAIL sonnet s07.D.txt -9 timeout
+09:09:48 done answers x05
+09:10:34 FAIL sonnet n03.B.txt -9 timeout
+09:11:04 done answers n03
+09:16:50 FAIL sonnet s07.D.txt -9 timeout
+09:17:26 done answers s07
+09:18:43 judged c10
+09:18:45 judged p05
+09:18:53 judged h05
+09:18:53 judged h20
+09:19:01 judged q01
+09:19:01 judged q02
+09:19:07 judged d04
+09:19:07 judged n03
+09:20:33 judged q03
+09:20:39 judged q05
+09:20:46 judged q06
+09:20:53 judged r02
+09:20:58 judged r03
+09:21:04 judged r08
+09:21:12 judged s04
+09:22:54 judged s05
+09:23:00 judged r05
+09:23:00 judged w05
+09:23:05 judged x01
+09:23:06 judged s08
+09:23:10 judged x06
+09:23:10 judged x03
+09:23:15 judged x04
+09:24:01 judged b04
+09:24:07 judged b06
+09:24:12 judged c09
+09:24:14 judged b08
+09:24:18 judged d06
+09:24:20 judged d02
+09:24:24 judged h03
+09:24:32 judged h04
+09:25:27 judged h06
+09:25:33 judged i04
+09:25:35 judged h10
+09:25:40 judged h07
+09:25:42 judged m02
+09:25:49 judged m05
+09:25:49 judged m03
+09:25:55 judged m04
+09:26:58 judged p03
+09:27:04 judged r04
+09:27:06 judged s07
+09:27:09 judged n04
+09:27:12 judged w04
+09:27:16 judged w01
+09:27:19 judged x05

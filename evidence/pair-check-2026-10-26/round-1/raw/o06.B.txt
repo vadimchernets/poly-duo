@@ -1,0 +1,14 @@
+**86,400 seconds** (24 × 60 × 60). The colleague's answer is correct.
+
+Reading chosen: a standard civil day of 24 hours.
+
+Exceptions:
+- **Leap second:** a UTC day with one has 86,401 seconds. None have been added since 2016.
+- **Daylight-saving change:** a local day can have 82,800 or 90,000 seconds.
+- **Sidereal day:** about 86,164 seconds.
+
+Use 86,400 unless you need one of those cases.
+
+Confidence: high
+
+No errors in the colleague's answer

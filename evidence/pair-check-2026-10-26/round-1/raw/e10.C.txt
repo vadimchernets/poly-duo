@@ -1,0 +1,13 @@
+**You owe $10,616.78.**
+
+Reading I chose: 6% is the nominal annual rate, so the monthly rate is 0.5%. That is the standard meaning of "6% compounded monthly."
+
+**Facts**
+- Balance = 10,000 × (1 + 0.06/12)^12 = 10,000 × 1.005^12.
+- 1.005^12 ≈ 1.0616778119.
+- Balance ≈ $10,616.778, which rounds to $10,616.78.
+- Interest accrued is $616.78. The effective annual rate is about 6.168%.
+
+**Conclusion and caveat**
+- If the lender rounds the balance to the cent each month, the result can differ by a cent or so. I did not compute that path, so I am not sure it gives the same figure.
+- If the 6% were an effective annual rate instead, you would owe exactly $10,600.00. That is not the usual reading of this wording.

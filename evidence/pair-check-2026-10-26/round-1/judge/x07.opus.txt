@@ -1,0 +1,9 @@
+**W:** It gives Sunday, and the shifts it uses (+2, +1, +1) are right.
+
+**X:** It gives Sunday with the correct 1096-day calculation. The remarks about the colleague's answer don't change its final answer.
+
+**Y:** It gives Sunday with the correct day count, 1096 mod 7 = 4.
+
+**Z:** It gives Sunday, and its year-by-year shifts are correct.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

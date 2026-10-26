@@ -1,0 +1,13 @@
+The ball costs **$0.05 (5 cents)**.
+
+Let the ball cost \(x\). Then the bat costs \(x + \$1.00\).
+
+\[
+x + (x + 1.00) = 1.10
+\]
+
+\[
+2x = 0.10 \Rightarrow x = 0.05
+\]
+
+So the ball is 5 cents and the bat is $1.05.

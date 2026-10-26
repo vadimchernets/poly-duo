@@ -1,0 +1,6 @@
+• W: Final answer is 5 cats with sound rate reasoning and only standard assumptions, matching the reference — correct.
+  X: Final answer is 5 cats, explicitly endorses the correct result, and its caveats don't commit to any incompatible answer — correct.
+  Y: Concise and correct: one cat catches 20 mice in 100 minutes, so 5 cats — correct.
+  Z: States 5 кошек (5 cats) with equivalent correct arithmetic, language notwithstanding — correct.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

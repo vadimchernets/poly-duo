@@ -1,0 +1,18 @@
+**18^136 mod 1000 = 776**
+
+Reading chosen: the ordinary integer power 18^136, reduced mod 1000.
+
+**Facts (CRT, 1000 = 8 · 125):**
+- Mod 8: 18 ≡ 2, and 2^136 is divisible by 8, so 18^136 ≡ 0.
+- Mod 125: φ(125) = 100 and gcd(18, 125) = 1, so 18^136 ≡ 18^36.
+  - 18² ≡ 74
+  - 18⁴ ≡ 74² = 5476 ≡ 101
+  - 18⁸ ≡ 101² = 10201 ≡ 76
+  - 18¹⁶ ≡ 76² = 5776 ≡ 26
+  - 18³² ≡ 26² = 676 ≡ 51
+  - 18³⁶ = 18³² · 18⁴ ≡ 51 · 101 = 5151 ≡ 26
+- Combine: x ≡ 26 (mod 125) and x ≡ 0 (mod 8). Writing x = 26 + 125k, we need 2 + 5k ≡ 0 (mod 8), so k ≡ 6 and x = 776.
+
+**Check:** 776 = 8 · 97, so 776 ≡ 0 (mod 8). Also 776 − 26 = 750 = 6 · 125, so 776 ≡ 26 (mod 125). Both conditions hold.
+
+I did this by hand and did not run code. I'm confident in the result, but only the intermediate checks above back it, not an independent computation.

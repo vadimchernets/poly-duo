@@ -1,0 +1,15 @@
+**The 5th dose is at 3:00 PM on Tuesday.** The colleague's answer is correct.
+
+Reading chosen: the first dose counts as dose 1, and the interval is a fixed 8 hours.
+
+- Dose 1: Monday 7:00 AM
+- Dose 2: Monday 3:00 PM
+- Dose 3: Monday 11:00 PM
+- Dose 4: Tuesday 7:00 AM
+- Dose 5: Tuesday 3:00 PM
+
+The 5th dose comes 4 × 8 = 32 hours after the first, and 7:00 AM Monday plus 32 hours is 3:00 PM Tuesday.
+
+Confidence: high
+
+No errors in the colleague's answer

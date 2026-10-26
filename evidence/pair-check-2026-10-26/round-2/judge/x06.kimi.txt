@@ -1,0 +1,9 @@
+• **W:** Final answer 121 matches the reference exactly; the hand-arithmetic caveat is not a hedge, so it is correct.
+
+  **X:** Final answer 121 matches the reference exactly, and it correctly refutes the false premise behind 221, so it is correct.
+
+  **Y:** Final answer 221 contradicts the reference and rests on the false claim that 29²⁰ ≡ 1 (mod 1000), so it is incorrect.
+
+  **Z:** Final answer 121 matches the reference exactly, so it is correct.
+
+  VERDICT: W=correct; X=correct; Y=incorrect; Z=correct

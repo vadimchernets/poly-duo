@@ -1,0 +1,9 @@
+**W:** Its final answer is Canberra, which matches the reference, and nothing else in it contradicts that.
+
+**X:** Its final answer is Canberra, and the historical detail it adds is consistent with that answer.
+
+**Y:** Its final answer is Canberra, and it names Sydney and Melbourne only as the common wrong answers.
+
+**Z:** It states Canberra plainly, which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

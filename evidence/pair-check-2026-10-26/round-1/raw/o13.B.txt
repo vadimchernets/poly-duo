@@ -1,0 +1,9 @@
+**2^16 = 65 536.**
+
+The draft "65,536" is correct. I read the question as ordinary integer exponentiation.
+
+Check: 2^8 = 256, and 256 × 256 = 65 536. This is also the number of distinct values that 16 bits can hold (0 to 65 535).
+
+Confidence: high
+
+No errors in the colleague's answer.

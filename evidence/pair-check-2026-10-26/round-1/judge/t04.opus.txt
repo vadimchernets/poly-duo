@@ -1,0 +1,6 @@
+**W:** Its final answer is 5 minutes, which matches the reference.
+**X:** Its final answer is 5 minutes, which matches the reference, and the extra remark about the colleague doesn't change that answer.
+**Y:** Its final answer is 5 minutes, which matches the reference, and it rejects 100 minutes rather than hedging toward it.
+**Z:** Its final answer is 5 minutes, which matches the reference, and its caveat about a different setup doesn't put forward a second answer.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

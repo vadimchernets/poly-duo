@@ -1,0 +1,9 @@
+**15% of 240 is 36.** The colleague's answer is correct.
+
+240 × 0.15 = 36.
+
+Check: 10% of 240 is 24 and 5% is 12, and 24 + 12 = 36.
+
+Confidence: high
+
+No errors in the colleague's answer

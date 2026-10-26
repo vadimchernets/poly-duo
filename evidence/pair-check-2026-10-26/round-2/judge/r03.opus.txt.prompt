@@ -1,0 +1,67 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Reverse the string "vsjocgymslrzneoitolgvwus". What is the 18th character of the reversed string?
+
+REFERENCE:
+y
+
+CRITERION:
+Correct iff this character.
+
+=== ANSWER W ===
+**The 18th character is "y".**
+
+Reading chosen: 1-based position in the reversed string.
+
+**Facts**
+- Original string: `vsjocgymslrzneoitolgvwus` (24 characters).
+- Reversed: `suwvglotioenzrlsmygcojsv`.
+- Counting in the reversed string: s1 u2 w3 v4 g5 l6 o7 t8 i9 o10 e11 n12 z13 r14 l15 s16 m17 y18.
+- Cross-check: reversed position 18 corresponds to original position 24 − 18 + 1 = 7, which is "y" (v s j o c g **y**).
+
+**Conclusion:** y. I'm sure of this; I counted it two independent ways.
+
+=== ANSWER X ===
+**The 18th character is `y`.**
+
+The original string has 24 characters, so the 18th character of the reversed string is the 7th character of the original (25 − 18 = 7). Counting the original: v(1) s(2) j(3) o(4) c(5) g(6) **y(7)**.
+
+Full reversed string: `suwvglotioenzrlsmygcojsv`
+
+Counting it: s1 u2 w3 v4 g5 l6 o7 t8 i9 o10 e11 n12 z13 r14 l15 s16 m17 **y18**.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The answer `n` is wrong. The 18th character is `y`.
+- The reversed string was written incorrectly. It has "enrzl" where it should be "enzrl" (z and r swapped). Even the colleague's own string gives `y` at position 18, not `n`.
+
+=== ANSWER Y ===
+Bottom line: **n**.
+
+Reversed string: `suwvglotioenrzlsmygcojsv`. The 18th character is `n`.
+
+=== ANSWER Z ===
+**The 18th character is "y".**
+
+Reading chosen: 1-based position in the reversed string.
+
+- Original (24 characters): `vsjocgymslrzneoitolgvwus`
+- Reversed: `suwvglotioenzrlsmygcojsv`
+- Counting: s1 u2 w3 v4 g5 l6 o7 t8 i9 o10 e11 n12 z13 r14 l15 s16 m17 **y18**
+- Cross-check: reversed position 18 is original position 24 − 18 + 1 = 7, which is "y" (v s j o c g **y**).
+
+Confidence: high
+
+Corrections to the colleague's answer
+- The answer "n" is wrong. In the reversed string, "n" is at position 12, not 18.
+- The colleague's reversed string `suwvglotioenrzlsmygcojsv` has "rz" where it should be "zr" (the original contains "rzne", which reverses to "enzr").
+- Even with that string, counting to position 18 gives "y", so the stated answer doesn't follow from their own string.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

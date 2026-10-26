@@ -1,0 +1,16 @@
+**300**
+
+Reading chosen: count every occurrence of the digit 7 in the written numbers 1 to 1000, so "77" counts twice.
+
+The draft is correct. Pad every number to three digits (000–999). Each of the three positions (ones, tens, hundreds) then shows a 7 exactly 100 times, so the total is 3 × 100 = 300. The padding adds only zeros, and 1000 has no 7, so neither changes the count.
+
+A check by position gives the same total:
+- Ones digit 7: 7, 17, …, 997, which is 100 numbers.
+- Tens digit 7: 70–79, 170–179, …, 970–979, which is 100 numbers.
+- Hundreds digit 7: 700–799, which is 100 numbers.
+
+If the question meant how many numbers contain a 7, the answer would be 271, not 300.
+
+Confidence: high
+
+No errors in the colleague's answer.

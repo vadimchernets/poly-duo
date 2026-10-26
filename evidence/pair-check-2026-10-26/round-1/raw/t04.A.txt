@@ -1,0 +1,3 @@
+5 minutes.
+
+Each machine makes 1 widget in 5 minutes. Therefore, 100 machines working simultaneously make 100 widgets in 5 minutes.

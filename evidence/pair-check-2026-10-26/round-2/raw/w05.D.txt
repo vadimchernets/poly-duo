@@ -1,0 +1,10 @@
+**The sentence has 27 words, so the colleague's answer of 28 is off by one.**
+
+Counting in order: When (1) the (2) library (3) finally (4) reopened (5) after (6) the (7) renovation (8) the (9) reading (10) room (11) had (12) new (13) lamps (14) wider (15) desks (16) quieter (17) chairs (18) and (19) a (20) strict (21) rule (22) against (23) eating (24) anything (25) at (26) all (27).
+
+The sentence contains no hyphenated words, so the hyphen rule doesn't change the count.
+
+Confidence: high
+
+Corrections to the colleague's answer
+- It said 28 words; the correct count is 27.

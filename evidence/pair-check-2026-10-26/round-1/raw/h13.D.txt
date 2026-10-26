@@ -1,0 +1,10 @@
+**C is a knave.** The colleague's answer is correct, and I checked both cases.
+
+- **A is a knight:** A's statement is true, so B is a knave. B's statement is then false, so A and C are of different types. A is a knight, so C is a knave.
+- **A is a knave:** A's statement is false, so B is a knight. B's statement is then true, so A and C are of the same type. A is a knave, so C is a knave.
+
+Both cases give the same result. A and B can't be determined (either A is a knight and B a knave, or the reverse), but C is a knave either way.
+
+Confidence: high
+
+No errors in the colleague's answer

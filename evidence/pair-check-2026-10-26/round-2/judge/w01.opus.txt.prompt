@@ -1,0 +1,63 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many words are in the following sentence? Count hyphenated words as one word.
+"In the early morning, before the market opened, the old fisherman sat on the pier and counted the boats that had not yet returned from the storm."
+
+REFERENCE:
+27
+
+CRITERION:
+Correct iff exactly this number.
+
+=== ANSWER W ===
+**The sentence has 27 words.** The colleague's answer is correct.
+
+Reading used: words are whitespace-separated tokens and punctuation isn't counted. The sentence has no hyphenated words, so that rule doesn't change the count.
+
+Count by clause:
+- "In the early morning": 4
+- "before the market opened": 4 (running total 8)
+- "the old fisherman sat on the pier": 7 (15)
+- "and counted the boats": 4 (19)
+- "that had not yet returned from the storm": 8 (27)
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**27 words.**
+
+**Facts**
+- Reading chosen: words are whitespace-separated tokens, with punctuation not counted. The sentence has no hyphenated words, so that rule doesn't affect the count.
+- Count by clause:
+  - "In the early morning" = 4
+  - "before the market opened" = 4 (running total 8)
+  - "the old fisherman sat on the pier" = 7 (15)
+  - "and counted the boats" = 4 (19)
+  - "that had not yet returned from the storm" = 8 (27)
+
+**Conclusion**
+The total is 27. I'm sure of this, since the sentence is short and has no ambiguous tokens such as contractions, numerals or hyphens.
+
+=== ANSWER Y ===
+The colleague's answer is correct: the sentence has 27 words.
+
+Counted in order: In (1) the (2) early (3) morning (4) before (5) the (6) market (7) opened (8) the (9) old (10) fisherman (11) sat (12) on (13) the (14) pier (15) and (16) counted (17) the (18) boats (19) that (20) had (21) not (22) yet (23) returned (24) from (25) the (26) storm (27).
+
+The sentence contains no hyphenated words, so the hyphen rule doesn't change the count.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+27 words.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

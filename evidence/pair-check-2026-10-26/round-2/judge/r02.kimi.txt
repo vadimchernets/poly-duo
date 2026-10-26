@@ -1,0 +1,6 @@
+• - **W**: Gives "q" as the 9th character; this is the reversed string's 7th character, not the 9th — incorrect.
+  - **X**: Clearly commits to "o" (original position 16) as the 9th character, matching the reference; the aside about 0-indexing is an explicit alternative reading, not a hedge in the committed answer — correct.
+  - **Y**: Commits to "o" and correctly identifies original position 16 — correct.
+  - **Z**: Bottom line is "o", with accurate counting — correct.
+
+  VERDICT: W=incorrect; X=correct; Y=correct; Z=correct

@@ -1,0 +1,11 @@
+**$10,616.78** is correct. The colleague's answer is right, with no errors.
+
+Reading chosen: 6% is the nominal annual rate, compounded monthly at 0.5% per month, with no payments and no fees.
+
+Balance = 10,000 × (1.005)¹² = 10,000 × 1.0616778… = $10,616.7781…, which rounds to **$10,616.78**.
+
+That is $616.78 of interest. It is slightly more than the $600 that simple interest would give, because the effective annual rate is about 6.168%.
+
+Confidence: high
+
+No errors in the colleague's answer

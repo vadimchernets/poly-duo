@@ -1,0 +1,13 @@
+**5 minutes.**
+
+**Facts:**
+- 5 machines make 5 widgets in 5 minutes, so each machine makes 1 widget in 5 minutes.
+- 100 machines working in parallel each make 1 widget in 5 minutes, so together they make 100 widgets in 5 minutes.
+
+**Assumptions:**
+- Each machine works independently and at the same constant rate.
+- Each widget is made by a single machine. The 5 minutes is the time for one widget, so extra machines can't speed up a single widget.
+
+**Conclusion:** The tempting answer of 100 minutes comes from treating machines and widgets as if time scaled with their count. It doesn't, because the machine-to-widget ratio is the same (1:1) in both cases.
+
+**Not sure:** If several machines could work on one widget at the same time, the answer could differ. The question gives no basis for that, so I didn't use it.

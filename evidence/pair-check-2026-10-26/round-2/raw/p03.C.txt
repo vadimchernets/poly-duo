@@ -1,0 +1,11 @@
+**16 September 2029.**
+
+Reading: "648 days after" means adding 648 calendar days, so 9 December 2027 is day 1.
+
+Calculation:
+- 8 Dec 2027 to 31 Dec 2027: 23 days, leaving 625.
+- 2028 is a leap year (366 days), so 31 Dec 2028 is day 389, leaving 259.
+- 2029 is not a leap year. Through 31 Aug it has 243 days (31+28+31+30+31+30+31+31), leaving 16 days into September.
+- 243 + 16 = 259, so the date is 16 September 2029.
+
+I'm confident in this result. I did the arithmetic by hand rather than running a date tool.

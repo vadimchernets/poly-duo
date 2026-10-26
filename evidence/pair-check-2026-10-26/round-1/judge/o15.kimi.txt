@@ -1,0 +1,5 @@
+• W: Correct — it commits to 273.15 K and its extra caveats do not contradict the reference.  
+  X: Correct — it gives exactly 273.15 K.  
+  Y: Correct — despite nuance about measurement uncertainty, its final instruction is to use 273.15 K.  
+  Z: Correct — it commits to 273.15 K while only treating 273 K as acceptable rough rounding.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

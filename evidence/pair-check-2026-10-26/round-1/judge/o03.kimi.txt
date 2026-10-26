@@ -1,0 +1,5 @@
+• W: States 5 miles = 8.05 km and shows 5 × 1.609344 = 8.04672, matching the reference exactly.  
+  X: Gives 8.05 km with the same exact conversion and rounding, so it matches.  
+  Y: Concludes 8.05 km using the exact international mile definition, which matches the reference.  
+  Z: States 8.05 km and confirms 8.04672 rounds to 8.05, matching the reference exactly.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

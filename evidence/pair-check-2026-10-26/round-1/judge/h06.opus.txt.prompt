@@ -1,0 +1,59 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is the smaller angle between the hour hand and the minute hand of an analog clock at 3:40?
+
+REFERENCE:
+130 degrees
+
+CRITERION:
+Correct iff 130°.
+
+=== ANSWER W ===
+**130°** — the colleague's answer is correct.
+
+Hour hand: 3:40 is 3 h 40 min = 3⅔ h, and 3⅔ × 30° = 110°.
+Minute hand: 40 × 6° = 240°.
+Difference: 240° − 110° = 130°. This is under 180°, so it is already the smaller angle.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+130°. The minute hand is at 240°, and the hour hand is at 110°; the difference is 130°.
+
+=== ANSWER Y ===
+**130°**
+
+Reading: the clock is a standard 12-hour analog face, time exactly 3:40, and the answer is the smaller of the two angles between the hands.
+
+Facts:
+- The minute hand moves 6° per minute. At 40 minutes it is at 240°, measured from 12.
+- The hour hand moves 0.5° per minute, which is 30° per hour. At 3:40 it has moved 3×30 + 40×0.5 = 110°.
+- The difference is 240° − 110° = 130°.
+- The other angle is 360° − 130° = 230°.
+
+Conclusion: the smaller angle is 130°. A common mistake is to put the hour hand exactly on the 3, at 90°. That gives 150°, which is wrong, because the hour hand has moved most of the way toward the 4.
+
+=== ANSWER Z ===
+**130°.** The colleague's answer is correct.
+
+Reading: standard 12-hour analog clock at exactly 3:40, and the smaller of the two angles between the hands.
+
+- Minute hand: 40 × 6° = 240° from 12.
+- Hour hand: 3 × 30° + 40 × 0.5° = 110° from 12.
+- Difference: 240° − 110° = 130°. The other angle is 360° − 130° = 230°, so 130° is the smaller one.
+
+A common mistake is to put the hour hand exactly on the 3 (90°), which gives 150°. The hour hand has moved two-thirds of the way toward the 4.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

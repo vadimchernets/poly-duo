@@ -1,0 +1,11 @@
+The sum of the decimal digits of \(11^{86}\) is **439**.
+
+\[
+11^{86}=484851478020272049990232001203901432179349361
+\]
+
+Adding its decimal digits gives:
+
+\[
+4+8+4+\cdots+6+1=\boxed{439}.
+\]

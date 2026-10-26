@@ -1,0 +1,9 @@
+**5 minutes.** The colleague's answer is correct.
+
+Each machine makes 1 widget in 5 minutes. So 100 machines working in parallel make 100 widgets in 5 minutes. The 100-minute answer is wrong because the machine-to-widget ratio is 1:1 in both cases.
+
+This assumes each machine works independently at a constant rate and builds one whole widget on its own.
+
+Confidence: high
+
+No errors in the colleague's answer

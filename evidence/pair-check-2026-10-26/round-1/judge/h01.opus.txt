@@ -1,0 +1,5 @@
+W: It gives 300 as its final answer, which matches the reference.
+X: It gives 300 as its final answer, which matches the reference; the 271 figure is offered only for a different reading of the question.
+Y: It gives 300 as its final answer, which matches the reference.
+Z: It gives 300 as its final answer, which matches the reference.
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,66 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+If 5 cats catch 5 mice in 5 minutes, how many cats are needed to catch 100 mice in 100 minutes?
+
+REFERENCE:
+5
+
+CRITERION:
+Correct iff 5.
+
+=== ANSWER W ===
+**Bottom line: 5 cats.**
+
+**Facts (given and derived):**
+- 5 cats catch 5 mice in 5 minutes, so the rate is 1 mouse per cat per 5 minutes (each cat catches 0.2 mice/min).
+- In 100 minutes, one cat catches 100 / 5 = 20 mice.
+
+**Conclusion:**
+- 100 mice / 20 mice per cat = 5 cats.
+
+**Assumption:** I'm reading this as the standard puzzle, where every cat works independently at a constant rate, mice are not a limiting resource, and the rate doesn't change over time. Under any other model (cats get tired, mice become scarce or wary, cats interfere with each other) the answer isn't determined by the data given.
+
+Not sure about nothing else here; the arithmetic is unambiguous under that assumption.
+
+=== ANSWER X ===
+**Bottom line: 5 cats.**
+
+The colleague's answer is correct.
+
+- 5 cats catch 5 mice in 5 minutes, so each cat catches 1 mouse per 5 minutes.
+- In 100 minutes, one cat catches 100 / 5 = 20 mice.
+- 100 mice / 20 mice per cat = 5 cats.
+
+The most common wrong answer is 100 cats, which comes from scaling the number of cats in proportion to the number of mice while forgetting that the time grew too.
+
+I'm reading this as the standard puzzle: every cat works independently at a constant rate, and mice are never a limiting resource. If cats tire, get in each other's way, or the mice become scarce or wary, the data given wouldn't determine the answer.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**Bottom line: 5 cats.**
+
+Each cat catches 1 mouse every 5 minutes. In 100 minutes, one cat catches 20 mice. Therefore, to catch 100 mice:
+
+100 ÷ 20 = **5 cats**.
+
+=== ANSWER Z ===
+**Ответ: 5 кошек.**
+
+Вывод: одна кошка ловит 1 мышь за 5 минут, значит за 100 минут она поймает 100 ÷ 5 = 20 мышей. Чтобы поймать 100 мышей, нужно 100 ÷ 20 = 5 кошек.
+
+Принятое допущение: все кошки работают с одинаковой постоянной скоростью, и мышей хватает на всех.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

@@ -1,0 +1,11 @@
+**Sally has 1 sister.**
+
+Reading chosen: the siblings are full siblings, and Sally is a girl.
+
+Each brother has 2 sisters, and Sally is one of them. The other one is a second girl. The family has 2 girls, so Sally has 1 sister. The common wrong answer is 2, which comes from forgetting that Sally is one of the brothers' 2 sisters.
+
+The colleague's answer is correct, so I have no corrections to make.
+
+Confidence: high
+
+No errors in the colleague's answer

@@ -1,0 +1,9 @@
+The prize is in box **B**.
+
+Checking each possibility:
+
+- In A: statements 1 and 2 are true → two truths.
+- In B: only statement 3 is true → exactly one truth.
+- In C: statements 2 and 3 are true → two truths.
+
+Therefore, only box **B** satisfies the condition.

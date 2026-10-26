@@ -1,0 +1,65 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+A vehicle uses 1 US gallon of fuel per mile. Express that in liters per 100 km, rounded to one decimal.
+
+REFERENCE:
+235.2 L/100 km (3.785411784 L / 1.609344 km x 100)
+
+CRITERION:
+Correct iff 235.2 (235.21 or 235 accepted as correct; off by more than 0.5 = incorrect).
+
+=== ANSWER W ===
+**235.2 L/100 km** (1 US gal/mile ≈ 235.215 L/100 km, rounded to 235.2).
+
+**Facts**
+- 1 US gallon = 3.785411784 L (exact by definition).
+- 1 mile = 1.609344 km (exact by definition).
+
+**Calculation**
+- 3.785411784 L per 1.609344 km = 2.352146 L/km.
+- × 100 = 235.2146 L/100 km, which rounds to 235.2.
+
+**Conclusion**
+- This is the standard conversion constant: 235.215 divided by mpg gives L/100 km, and at 1 mpg you get 235.2.
+- I assumed the US liquid gallon. The imperial gallon (4.54609 L) would give 282.5 L/100 km.
+
+I'm sure of the result, since both constants are exact.
+
+=== ANSWER X ===
+235.2 L/100 km.
+
+1 US gallon = 3.78541 L; 1 mile = 1.60934 km.
+
+\[
+\frac{3.78541}{1.60934}\times100=235.2\ \text{L/100 km}
+\]
+
+=== ANSWER Y ===
+**235.2 L/100 km.** The colleague's answer is correct, so only small additions follow.
+
+I read "gallon" as the US liquid gallon.
+
+- 1 US gallon = 3.785411784 L and 1 mile = 1.609344 km, both exact by definition.
+- 3.785411784 / 1.609344 = 2.352146 L/km, which is 235.2146 L/100 km, so 235.2 to one decimal.
+- For the imperial gallon (4.54609 L), the result would be 282.5 L/100 km.
+
+Confidence: high
+
+No errors in the colleague's answer. Its constants are rounded to six significant figures (3.78541 and 1.60934), but the result still rounds to 235.2.
+
+=== ANSWER Z ===
+**235.2 L/100 km**
+
+The draft is correct. 1 US gallon is 3.785411784 L and 1 mile is 1.609344 km. So 3.785411784 ÷ 1.609344 = 2.35215 L/km, which is 235.215 L/100 km. That rounds to 235.2.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

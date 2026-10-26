@@ -1,0 +1,9 @@
+**125! has 31 trailing zeros.**
+
+The draft is correct. Each trailing zero comes from a factor of 10 = 2 × 5. Factors of 2 are more plentiful than factors of 5, so the number of factors of 5 sets the count:
+
+⌊125/5⌋ + ⌊125/25⌋ + ⌊125/125⌋ = 25 + 5 + 1 = 31.
+
+Confidence: high
+
+No errors in the colleague's answer

@@ -1,0 +1,16 @@
+**9368**
+
+Reading chosen: "divisible by 3 or by 5" is inclusive, so numbers divisible by both are counted once.
+
+The sum is found by inclusion–exclusion:
+- Multiples of 3 (3 to 198): 3·(66·67/2) = 3·2211 = 6633
+- Multiples of 5 (5 to 200): 5·(40·41/2) = 5·820 = 4100
+- Multiples of 15 (15 to 195): 15·(13·14/2) = 15·91 = 1365, which are in both lists above
+
+6633 + 4100 − 1365 = **9368**
+
+The colleague's draft is correct, and I found no errors. I checked the arithmetic by hand and did not run code.
+
+Confidence: high
+
+No errors in the colleague's answer

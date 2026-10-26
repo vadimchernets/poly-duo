@@ -1,0 +1,3 @@
+16.
+
+Count by word: The (1), committee (2), recommended (3), reassessing (2), the (1), embarrassingly (1), unnecessary (2), bookkeeping (2), procedures (2). Total: **16**.

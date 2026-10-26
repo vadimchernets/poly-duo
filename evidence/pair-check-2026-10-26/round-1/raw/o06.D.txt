@@ -1,0 +1,11 @@
+A day has 86,400 seconds (24 × 60 × 60). The colleague's answer is correct.
+
+I read the question as asking about a standard calendar day.
+
+Two caveats:
+- Leap seconds: a day with a leap second inserted in UTC has 86,401 seconds. The last one was in 2016, and the practice is due to be discontinued by 2035.
+- Daylight saving: in local time, a day can have 82,800 or 90,000 seconds on the days clocks change.
+
+Confidence: high
+
+No errors in the colleague's answer

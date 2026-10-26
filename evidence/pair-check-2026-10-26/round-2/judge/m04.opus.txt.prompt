@@ -1,0 +1,64 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Compute 6,057,955 x 9,819,567 exactly.
+
+REFERENCE:
+59,486,495,005,485
+
+CRITERION:
+Correct iff exactly this number.
+
+=== ANSWER W ===
+59,486,495,005,485
+
+=== ANSWER X ===
+The colleague's answer is correct: 6,057,955 × 9,819,567 = **59,486,495,005,485**.
+
+I re-did the computation by splitting the first factor:
+- 9,819,567 × 6,000,000 = 58,917,402,000,000
+- 9,819,567 × 57,955 = 9,819,567 × 58,000 − 9,819,567 × 45 = 569,534,886,000 − 441,880,515 = 569,093,005,485
+- Sum: 58,917,402,000,000 + 569,093,005,485 = 59,486,495,005,485
+
+Two modular checks also pass:
+- **Mod 9:** 9,819,567 has digit sum 45, so the product must be divisible by 9. The result's digit sum is 72, which is.
+- **Mod 11:** the factors are ≡ 2 and ≡ 10, so the product is ≡ 20 ≡ 9. The result is also ≡ 9.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**6,057,955 × 9,819,567 = 59,486,495,005,485**
+
+**Facts (computation, done by hand without running code):**
+- 9,819,567 × 6,000,000 = 58,917,402,000,000
+- 9,819,567 × 57,955 = 9,819,567 × 58,000 − 9,819,567 × 45 = 569,534,886,000 − 441,880,515 = 569,093,005,485
+- Sum: 58,917,402,000,000 + 569,093,005,485 = 59,486,495,005,485
+
+**Checks:**
+- Mod 9: 9,819,567 has digit sum 45, so the product must be divisible by 9. The result's digit sum is 72, which is.
+- Mod 11: the factors are ≡ 2 and ≡ 10, so the product is ≡ 20 ≡ 9. The result is also ≡ 9.
+
+**Confidence:** High. Both checks pass. They don't rule out every possible error, but together they make an arithmetic slip very unlikely.
+
+=== ANSWER Z ===
+**6,057,955 × 9,819,567 = 59,486,495,005,485.** The colleague's answer is correct.
+
+I checked it by writing 9,819,567 as 10,000,000 − 180,433:
+- 6,057,955 × 10,000,000 = 60,579,550,000,000
+- 6,057,955 × 180,433 = 1,090,431,900,000 + 2,623,094,515 = 1,093,054,994,515
+- 60,579,550,000,000 − 1,093,054,994,515 = 59,486,495,005,485
+
+A mod-9 check agrees. The digit sum of 9,819,567 is 45, so the product must be divisible by 9, and the result's digit sum is 72.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

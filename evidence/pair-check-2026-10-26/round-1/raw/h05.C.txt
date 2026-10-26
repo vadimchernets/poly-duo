@@ -1,0 +1,7 @@
+**Answer: 76**
+
+**Facts:**
+- 2^50 = 1,125,899,906,842,624. I derived it as 2^40 × 1024, with 2^40 = 1,099,511,627,776, and this matches the known value.
+- Digit sum: 1+1+2+5+8+9+9+9+0+6+8+4+2+6+2+4 = 76.
+
+**Confidence:** I did this by hand, without running code. I checked the arithmetic twice and I'm confident in the result.

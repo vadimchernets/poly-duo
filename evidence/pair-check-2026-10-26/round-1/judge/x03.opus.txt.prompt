@@ -1,0 +1,55 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+A bat and a ball cost $1.10 in total. The bat costs $1.00. How much does the ball cost?
+
+REFERENCE:
+$0.10
+
+CRITERION:
+Correct iff 10 cents. 5 cents = incorrect.
+
+=== ANSWER W ===
+**The ball costs $0.10.**
+
+I read the question literally: the bat's price is given outright as $1.00, so the ball is $1.10 − $1.00 = $0.10.
+
+This is not the classic riddle. In that version the bat costs $1.00 *more than* the ball, which makes the ball $0.05. Your wording doesn't say that. If you meant the classic version, the answer is $0.05.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**The ball costs $0.10.**
+
+Reading chosen: the question as literally written, not the classic riddle.
+
+**Facts:**
+- Total is $1.10 and the bat is $1.00, as stated.
+- Ball = $1.10 − $1.00 = $0.10.
+
+**Conclusion:** The answer is $0.10. This is not the classic puzzle. In that version, the bat costs $1.00 *more than* the ball, and the ball then costs $0.05. Here the bat's price is given outright, so no such trick applies.
+
+Not sure: if you meant the "$1.00 more than" version, the answer would be $0.05. The wording you gave doesn't say that.
+
+=== ANSWER Y ===
+The ball costs **$0.10 (10 cents)**.
+
+Fact: $1.10 − $1.00 = $0.10.
+
+=== ANSWER Z ===
+**The ball costs $0.10.** The draft is correct for the question as written, where the bat's price is given outright as $1.00 and $1.10 − $1.00 = $0.10.
+
+I read the question literally. It is a close variant of the well-known puzzle where the bat costs *$1.00 more than* the ball. In that version the ball costs $0.05 and the bat $1.05. If that was what you meant, the answer is 5 cents.
+
+Confidence: high
+
+No errors in the colleague's answer.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

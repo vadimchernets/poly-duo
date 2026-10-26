@@ -1,0 +1,9 @@
+**W:** It states 591 ml, and the working (591.47 rounded down) supports that. Its remarks about the colleague don't change its own final answer.
+
+**X:** It gives 591 ml with correct arithmetic and rounding, which matches the reference.
+
+**Y:** It commits to two incompatible results: the headline says 592 ml, but its own working rounds to 591 ml. That counts as a hedge between a right and a wrong answer.
+
+**Z:** It gives 591 ml. It mentions 625 ml only as an alternative reading and explicitly rejects it, so it doesn't hedge.
+
+VERDICT: W=correct; X=correct; Y=partial; Z=correct

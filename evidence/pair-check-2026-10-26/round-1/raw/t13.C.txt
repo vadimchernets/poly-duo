@@ -1,0 +1,11 @@
+**Day 18.**
+
+Reading chosen: the snail climbs during the day and slips only at night. If it reaches the top during the day, it is out and doesn't slip back.
+
+**Facts:**
+- Net gain per full day and night is 1 foot.
+- After day *n*'s climb, the snail is at (n−1) + 3 = n + 2 feet. This assumes it hasn't reached the top before then.
+- It first reaches 20 feet when n + 2 ≥ 20, so n = 18.
+- Check: at the end of day 17 (after the night), the snail is at 17 feet. On day 18 it climbs 3 feet and reaches 20.
+
+**Conclusion:** Day 18. The common wrong answer is 20 (or 21). It comes from treating the net gain of 1 foot per day as if it applied on the final day, which ignores that the snail doesn't slip back once it is out.

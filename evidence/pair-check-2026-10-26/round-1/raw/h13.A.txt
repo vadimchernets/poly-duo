@@ -1,0 +1,6 @@
+C is a knave.
+
+- If A is a knight, B is a knave. B’s statement is false, so A and C differ; therefore C is a knave.
+- If A is a knave, B is a knight. B’s statement is true, so A and C match; therefore C is a knave.
+
+Thus C must be a knave.

@@ -1,0 +1,52 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is 5^554 mod 1009?
+
+REFERENCE:
+518
+
+CRITERION:
+Correct iff exactly this number.
+
+=== ANSWER W ===
+**591**
+
+Using repeated modular exponentiation:
+\[
+5^{554}\equiv 591 \pmod{1009}.
+\]
+
+=== ANSWER X ===
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "print(pow(5,554,1009))"</parameter>
+</invoke>
+
+=== ANSWER Y ===
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "print(pow(5,554,1009))"</parameter>
+</invoke>
+
+
+
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "print(pow(5,554,1009))"</parameter>
+</invoke>
+
+=== ANSWER Z ===
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "print(pow(5,554,1009))"</parameter>
+</invoke>
+
+
+
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "print(pow(5,554,1009))"</parameter>
+</invoke>
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

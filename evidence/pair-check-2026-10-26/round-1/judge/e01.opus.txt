@@ -1,0 +1,6 @@
+W: Gives $14,600 as the answer, which matches the reference.
+X: Gives $14,600 as the answer, which matches the reference.
+Y: Gives $14,600 as the answer, which matches the reference; it gets the increase from 2023 wrong ($450 instead of $750), but that side detail doesn't change the final figure.
+Z: Gives $14,600 as the answer, which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

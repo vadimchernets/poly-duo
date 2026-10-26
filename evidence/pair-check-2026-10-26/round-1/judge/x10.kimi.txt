@@ -1,0 +1,5 @@
+• W: Gives 90 with the correct value and digit sum, so it matches the reference.  
+  X: Gives 90 and verifies the correct value and digit sum, so it matches the reference.  
+  Y: Gives 90 and the correct value/digit sum; its confidence caveat does not hedge toward a different final result.  
+  Z: Gives 90 and the correct value/digit sum, so it matches the reference.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,22 @@
+**Answer: 14**
+
+Reading chosen: count every "e" or "E" in the sentence as quoted, with no other interpretation.
+
+**Count by word:**
+- A: 0
+- tattered: 2
+- banner: 1
+- fluttered: 2
+- above: 1
+- the: 1
+- battered: 2
+- battlements: 2
+- as: 0
+- the: 1
+- tattooed: 1
+- knight: 0
+- attacked: 1
+
+**Total:** 2+1+2+1+1+2+2+1+1+1 = 14
+
+I counted by hand and did not run code. The per-word tallies are above if you want to check any of them.

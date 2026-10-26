@@ -1,0 +1,6 @@
+W gives the reversed word as "aidepolcycne" and the 7th letter as l, which matches the reference.
+X gives "aidepolcycne" and says the 7th letter is l, which matches the reference.
+Y spells out each position and lands on l. Its side note that l is also the 6th letter of the original word is true, so nothing in it conflicts with the reference.
+Z says the 7th letter of "aidepolcycne" is l, which matches the reference. Its comment about a colleague's answer doesn't change that result.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

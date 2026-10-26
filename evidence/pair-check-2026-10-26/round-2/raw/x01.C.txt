@@ -1,0 +1,15 @@
+**216**
+
+Reading chosen: the standard integer 14^884, reduced mod 1000 (last three digits). I did this by hand with the Chinese Remainder Theorem and did not run code to cross-check.
+
+**Facts**
+
+- Mod 8: 14² = 196 ≡ 4, and 14³ ≡ 4·14 = 56 ≡ 0, so 14^884 ≡ 0 (mod 8).
+- Mod 125: gcd(14, 125) = 1 and φ(125) = 100, so 14^884 ≡ 14^84 (mod 125).
+  - Repeated squaring: 14² ≡ 71, 14⁴ ≡ 41, 14⁸ ≡ 56, 14¹⁶ ≡ 11, 14³² ≡ 121, 14⁶⁴ ≡ 16.
+  - 84 = 64 + 16 + 4, so 14^84 ≡ 16·11·41 ≡ 176·41 ≡ 51·41 = 2091 ≡ 91 (mod 125).
+- Combine: x ≡ 91 (mod 125) and x ≡ 0 (mod 8). Write x = 91 + 125k. Since 91 ≡ 3 and 125 ≡ 5 (mod 8), we need 3 + 5k ≡ 0 (mod 8), which gives k ≡ 1. So x = 216.
+
+**Conclusion**
+
+14^884 ≡ 216 (mod 1000). Check: 216 ≡ 0 (mod 8) and 216 − 125 = 91, so it matches both congruences.

@@ -1,0 +1,11 @@
+**125! has 31 trailing zeros.**
+
+The draft is correct, so I changed nothing in the result. Reading used: trailing zeros in base 10.
+
+Each trailing zero needs one factor 10 = 2×5. Factors of 2 are far more plentiful (119 of them in 125!), so the factors of 5 set the count:
+
+⌊125/5⌋ + ⌊125/25⌋ + ⌊125/125⌋ = 25 + 5 + 1 = 31
+
+Confidence: high
+
+No errors in the colleague's answer

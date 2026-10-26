@@ -1,0 +1,9 @@
+• W: Its own stated answer is consistently "f" — the "t" appears only in its critique of a colleague's answer — so its final answer matches the reference.
+
+  X: It opens by asserting the 5th character is "t" (wrong) and then concludes "f" (right), committing to two incompatible results, which blocks a "correct" grade and leaves it hedging between the wrong and right result.
+
+  Y: It consistently concludes "f" with a correct reversal and counting, matching the reference.
+
+  Z: Its own answer is uniformly "f" — the "t" is mentioned only when correcting a colleague — so its final answer matches the reference.
+
+  VERDICT: W=correct; X=partial; Y=correct; Z=correct

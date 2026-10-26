@@ -1,0 +1,5 @@
+• W — correct: its final result “1 419 857” matches the reference aside from spacing.  
+  X — correct: its final result is exactly “1,419,857.”  
+  Y — correct: its final result is exactly “1,419,857.”  
+  Z — correct: its final result “1 419 857” matches the reference aside from spacing.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

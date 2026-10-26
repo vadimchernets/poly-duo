@@ -1,0 +1,19 @@
+07:42:51 FAIL sonnet h03.C.txt 1 /claude',   path: '~/.local/bin/claude',   spawnargs: [     '-p',     '--model',     'sonnet',     '--setting-sources',     '',     '--max-turns',     '1',     '--add-dir',     '<stand>/round-1/sandbox'   ] }  Node.js v26.8.0-alpha.0.0.0 
+07:42:51 FAIL sonnet h04.C.txt 1 /claude',   path: '~/.local/bin/claude',   spawnargs: [     '-p',     '--model',     'sonnet',     '--setting-sources',     '',     '--max-turns',     '1',     '--add-dir',     '<stand>/round-1/sandbox'   ] }  Node.js v26.8.0-alpha.0.0.0 
+07:42:52 FAIL sonnet h07.C.txt 1 /claude',   path: '~/.local/bin/claude',   spawnargs: [     '-p',     '--model',     'sonnet',     '--setting-sources',     '',     '--max-turns',     '1',     '--add-dir',     '<stand>/round-1/sandbox'   ] }  Node.js v26.8.0-alpha.0.0.0 
+07:42:55 FAIL sonnet h08.C.txt 1 /claude',   path: '~/.local/bin/claude',   spawnargs: [     '-p',     '--model',     'sonnet',     '--setting-sources',     '',     '--max-turns',     '1',     '--add-dir',     '<stand>/round-1/sandbox'   ] }  Node.js v26.8.0-alpha.0.0.0 
+07:43:26 done answers h01
+07:43:54 done answers h06
+07:43:55 done answers h05
+07:44:26 done answers h02
+07:45:29 done answers h10
+07:45:37 done answers h09
+07:46:01 done answers h04
+07:46:26 done answers h11
+07:46:26 done answers h03
+07:46:46 done answers h08
+07:46:49 done answers h07
+07:47:08 done answers h12
+07:47:24 done answers h13
+07:47:29 done answers h14
+07:47:41 done answers h15

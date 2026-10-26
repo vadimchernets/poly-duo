@@ -1,0 +1,2 @@
+• W gives only a command and no stated digit sum, so it does not assert the required value. X likewise provides only computation commands and no final numeric answer. Y notes the digit-length issue but still supplies no final digit sum. Z commits to 439 and an incorrect expansion, not 454.
+  VERDICT: W=incorrect; X=incorrect; Y=incorrect; Z=incorrect

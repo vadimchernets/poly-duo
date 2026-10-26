@@ -1,0 +1,6 @@
+• **W**: States 19 July 2527 is a Saturday, matching the reference; correct.
+  **X**: Concludes Saturday via two independent checks, matching the reference; correct.
+  **Y**: Concludes Saturday with clear working, matching the reference; correct.
+  **Z**: Claims Friday, which contradicts the reference; incorrect.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=incorrect

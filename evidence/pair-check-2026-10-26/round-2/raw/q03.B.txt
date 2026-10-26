@@ -1,0 +1,19 @@
+**Final price: $2,760.60**
+
+I read the problem as each change applying to the running price from the previous step. I rounded only at the end.
+
+**Calculation**
+- Overall factor: 1.40 × 1.08 × 0.85 × 0.80 = 1.02816
+- $2,684.99 × 1.40 = $3,758.986
+- × 1.08 = $4,059.70488
+- × 0.85 = $3,450.749148
+- × 0.80 = $2,760.5993184, which rounds to **$2,760.60**
+
+**Check:** Rounding to the cent after every step gives $3,758.99, $4,059.71, $3,450.75, then $2,760.60. The result is the same.
+
+The net change is +2.816%, so the final price ends up slightly above the starting price.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The method is right, but the arithmetic is wrong. $2,684.99 × 1.02816 is $2,760.5993…, not $2,760.9457…. The correct rounded answer is $2,760.60, not $2,760.95.

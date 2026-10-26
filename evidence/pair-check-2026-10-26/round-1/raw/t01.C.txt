@@ -1,0 +1,11 @@
+**The ball costs $0.05.**
+
+Reading chosen: the standard puzzle, where "$1.00 more than the ball" means bat = ball + $1.00.
+
+**Facts**
+- Let the ball be x. Then the bat is x + 1.00.
+- Total: x + (x + 1.00) = 1.10, so 2x = 0.10, so x = 0.05.
+- Check: the bat is $1.05, the ball is $0.05, and together they cost $1.10. The bat costs exactly $1.00 more than the ball.
+
+**Conclusion**
+- The common intuitive answer, $0.10, is wrong. With a $0.10 ball the bat would be $1.10 and the total $1.20.

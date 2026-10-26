@@ -1,0 +1,6 @@
+• W: Gives 13 June 2033, which does not match the reference date of 23 June 2033, so it is incorrect.  
+  X: Concludes 23 June 2033, exactly matching the reference, so it is correct.  
+  Y: Concludes 23 June 2033, exactly matching the reference, so it is correct.  
+  Z: Concludes 23 June 2033, exactly matching the reference, so it is correct.  
+
+  VERDICT: W=incorrect; X=correct; Y=correct; Z=correct

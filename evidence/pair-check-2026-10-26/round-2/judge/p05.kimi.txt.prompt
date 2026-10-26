@@ -1,0 +1,57 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What date is 2590 days after 21 May 2026?
+
+REFERENCE:
+23 June 2033
+
+CRITERION:
+Correct iff exactly this date.
+
+=== ANSWER W ===
+13 June 2033.
+
+=== ANSWER X ===
+**23 June 2033.** The colleague's answer (13 June 2033) is off by 10 days.
+
+Calculation:
+- From 21 May 2026 to 21 May 2033 is 7 years. That span contains two leap days (29 Feb 2028 and 29 Feb 2032), so it is 7 × 365 + 2 = 2557 days.
+- The remainder is 2590 − 2557 = 33 days.
+- 21 May + 10 days = 31 May, and the other 23 days land on 23 June.
+- 23 June 2033 falls on a Thursday.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The date 13 June 2033 is wrong. The correct date is 23 June 2033, and 13 June is only 2580 days after 21 May 2026.
+
+=== ANSWER Y ===
+**23 June 2033, a Thursday.** I read "after" as adding 2590 days to 21 May 2026, so the start date is day 0.
+
+**Facts**
+- From 21 May 2026 to 21 May 2033 is 7 years. That span contains two leap days (29 Feb 2028 and 29 Feb 2032), so it is 7×365 + 2 = 2557 days.
+- The remaining days are 2590 − 2557 = 33.
+- 21 May 2033 plus 33 days: 10 days reach 31 May, and 23 more reach 23 June.
+
+**Check**
+- 2590 = 7×370, so the weekday is unchanged. 21 May 2026 is a Thursday, and 23 June 2033 is also a Thursday.
+
+=== ANSWER Z ===
+**2590 days after 21 May 2026 is 23 June 2033, a Thursday.** I read "after" as adding 2590 days, so 21 May 2026 is day 0.
+
+- From 21 May 2026 to 21 May 2033 is 7 years. It includes two leap days (29 Feb 2028 and 29 Feb 2032), so it is 7×365 + 2 = 2557 days.
+- The remaining 2590 − 2557 = 33 days take 21 May 2033 to 31 May (10 days), then to 23 June (23 more days).
+- As a check, 2590 = 7×370, so the weekday doesn't change. 21 May 2026 is a Thursday, and so is 23 June 2033.
+
+Confidence: high
+
+Corrections to the colleague's answer
+- "13 June 2033" is wrong. It is 10 days too early and falls on a Monday, which contradicts the unchanged weekday (2590 is a multiple of 7).
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

@@ -1,0 +1,3 @@
+16,857 days.
+
+This counts 31 July 2046 and excludes 5 June 2000.

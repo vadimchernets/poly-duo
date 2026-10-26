@@ -1,0 +1,12 @@
+**9.9 is larger.** The draft is correct.
+
+Reading chosen: both are ordinary decimal numbers, not version numbers or dates.
+
+- The whole parts are equal (9), so compare the fractions. Pad 9.9 to 9.90. The tenths digits are 9 and 1, so 9.90 > 9.11.
+- The difference is 9.9 − 9.11 = 0.79.
+- The usual mistake is to read the digits after the point as a whole number (11 > 9). That doesn't work for decimals.
+- If these were software version numbers, 9.11 would come after 9.9. That is the only reading where the answer flips.
+
+Confidence: high
+
+No errors in the colleague's answer

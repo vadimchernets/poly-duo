@@ -1,0 +1,63 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many days are there from 5 June 2000 to 31 July 2046? (Count the end date but not the start date.)
+
+REFERENCE:
+16857
+
+CRITERION:
+Correct iff exactly this number (off by one = incorrect).
+
+=== ANSWER W ===
+**16857 days**
+
+Reading chosen: the plain calendar-day difference, i.e. the end date minus the start date.
+
+**Facts**
+- 5 June 2000 → 5 June 2046 is 46 years, which is 46 × 365 = 16 790 days, plus leap days.
+- Leap days falling in that span: 29 Feb of 2004, 2008, …, 2044, which is 11 of them. The 29 Feb 2000 is before the start date, and 2046 is not a leap year.
+- That gives 16 790 + 11 = 16 801 days to 5 June 2046.
+- 5 June → 5 July 2046 is 30 days, and 5 July → 31 July is 26 days, so 56 days.
+
+**Conclusion**
+16 801 + 56 = 16 857. I am confident in this figure. I did the arithmetic by hand and did not run a calculation tool.
+
+=== ANSWER X ===
+**16,857 days**, counting 31 July 2046 but not 5 June 2000. The colleague's answer is correct.
+
+Reading chosen: the end date minus the start date in calendar days.
+
+- 5 June 2000 to 5 June 2046 is 46 × 365 = 16,790 days, plus leap days.
+- The leap days in that span are 29 Feb of 2004, 2008, …, 2044, which is 11. The 29 Feb 2000 falls before the start date, and 2046 is not a leap year. That gives 16,801 days.
+- 5 June to 5 July is 30 days, and 5 July to 31 July is 26 days, so 56 more days.
+- 16,801 + 56 = 16,857.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**The colleague's answer is correct: 16,857 days.**
+
+Reading used: the end date is counted and the start date is not, so this is the plain difference between the two dates.
+
+- 5 June 2000 → 5 June 2046 is 46 years, which is 46 × 365 = 16,790 days. Add 11 leap days (29 Feb in 2004, 2008, …, 2044), giving 16,801. The leap day of 2000 falls before 5 June, so it is not counted, and 2046 is not a leap year.
+- 5 June 2046 → 31 July 2046 is 25 days left in June plus 31 days in July, which is 56 days.
+- Total: 16,801 + 56 = **16,857 days**.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+16,857 days.
+
+This counts 31 July 2046 and excludes 5 June 2000.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

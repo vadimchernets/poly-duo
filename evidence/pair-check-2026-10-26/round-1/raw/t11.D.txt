@@ -1,0 +1,7 @@
+**235.2 L/100 km**
+
+The draft is correct. 1 US gallon is 3.785411784 L and 1 mile is 1.609344 km. So 3.785411784 ÷ 1.609344 = 2.35215 L/km, which is 235.215 L/100 km. That rounds to 235.2.
+
+Confidence: high
+
+No errors in the colleague's answer

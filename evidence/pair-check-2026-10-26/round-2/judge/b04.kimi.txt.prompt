@@ -1,0 +1,70 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many days are there from 13 September 1963 to 29 August 2010? (Count the end date but not the start date.)
+
+REFERENCE:
+17152
+
+CRITERION:
+Correct iff exactly this number (off by one = incorrect).
+
+=== ANSWER W ===
+**17152 days.**
+
+Reading chosen: the plain difference between the two dates (the end date is included, the start date is not).
+
+**Facts**
+- From 13 Sep 1963 to 13 Sep 2010 is 47 years, which is 47 × 365 = 17155 days plus the leap days.
+- The leap days (29 Feb) in that span fall in 1964, 1968, …, 2008. That is 12 leap years, and 2000 is among them because it is divisible by 400.
+- So 13 Sep 1963 to 13 Sep 2010 is 17155 + 12 = 17167 days.
+- 29 Aug 2010 is 15 days before 13 Sep 2010 (2 days to 31 Aug, then 13 more).
+
+**Conclusion**
+17167 − 15 = **17152 days**.
+
+I did this by hand and did not run a tool to check it.
+
+=== ANSWER X ===
+**17,152 days.** The colleague's answer is correct.
+
+Reading chosen: the plain difference between the two dates, so the end date is counted and the start date is not.
+
+- 13 Sep 1963 to 13 Sep 2010 is 47 years, or 47 × 365 = 17,155 days.
+- The leap days (29 Feb) in that span fall in 1964, 1968, …, 2008. That is 12 leap years, and 2000 is among them because it is divisible by 400. This gives 17,155 + 12 = 17,167 days.
+- 29 Aug 2010 is 15 days before 13 Sep 2010 (2 days to 31 Aug, then 13 more).
+- 17,167 − 15 = **17,152 days**.
+
+I checked this by hand and did not run a tool.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**17,152 days.** The colleague's answer is correct.
+
+- From 13 Sep 1963 to 13 Sep 2010 is 47 years, or 47 × 365 = 17,155 days.
+- The leap days in that span are 29 Feb of 1964, 1968, 1972, 1976, 1980, 1984, 1988, 1992, 1996, 2000, 2004 and 2008, which is 12. That gives 17,167 days.
+- 29 Aug 2010 is 15 days before 13 Sep 2010 (2 days to 31 Aug, plus 13), so 17,167 − 15 = 17,152.
+
+Counting the end date but not the start date matches the plain difference between the two dates.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+**17,152 days.**
+
+From 13 September 1963 to 13 September 2010: 17,167 days.  
+29 August is 15 days before 13 September.
+
+Therefore: **17,167 − 15 = 17,152 days**, counting the end date but not the start date.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

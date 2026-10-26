@@ -1,0 +1,67 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+A flight leaves New York at 10:00 PM local time on January 15 and the flight lasts 7 hours. What is the local time in London when it lands? (New York is on EST, UTC-5; London is on GMT, UTC+0.)
+
+REFERENCE:
+10:00 AM on January 16 London time
+
+CRITERION:
+Correct iff 10:00 AM January 16.
+
+=== ANSWER W ===
+5:00 AM in New York, which is 10:00 AM in London on January 16.
+
+Calculation: 10:00 PM + 7 hours = 5:00 AM; London is 5 hours ahead of New York, so arrival is **10:00 AM GMT**.
+
+=== ANSWER X ===
+**The plane lands at 10:00 AM GMT in London on January 16.** The colleague's answer is correct.
+
+Convert the departure to UTC: 10:00 PM EST on January 15 is 03:00 UTC on January 16. Add the 7-hour flight to get 10:00 UTC. London is on GMT (UTC+0) in January, so the local time is 10:00 AM on January 16.
+
+The answer assumes the flight lasts 7 hours of elapsed time, which is what the question states. It also assumes no daylight saving time applies, which is true for both cities in mid-January.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**Bottom line: the plane lands at 10:00 AM GMT on January 16 in London.**
+
+**Reading chosen:** the 7 hours is real elapsed flight time, and the question asks for London local time at landing.
+
+**Calculation:**
+- 10:00 PM EST on Jan 15 is 03:00 UTC on Jan 16 (22:00 + 5 h).
+- Add 7 hours of flight time to get 10:00 UTC on Jan 16.
+- London is on GMT (UTC+0) in January, so local time equals UTC.
+
+**Check:** 10:00 PM New York time + 7 h is 5:00 AM on Jan 16 in New York. London is 5 hours ahead, so that is 10:00 AM in London.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+**Bottom line: 5:00 AM on January 16, London time (GMT).**
+
+**Reading chosen:** the flight departs at 10:00 PM New York time, lasts 7 hours of real elapsed time, and the question asks for London local time on landing.
+
+**Facts:**
+- 10:00 PM EST on Jan 15 is 22:00 + 5 h = 03:00 UTC on Jan 16.
+- Adding the 7-hour flight gives 10:00 UTC on Jan 16.
+- London is on GMT (UTC+0) in January, so local time equals UTC.
+
+**Conclusion:** The result is **10:00 AM on January 16**, not 5:00 AM. My bottom line above was wrong, and the correct answer is **10:00 AM, January 16, London time**.
+
+The mistake was in the first line. I added the 5-hour offset and then forgot to add the 7 hours of flight. The step-by-step calculation is the correct one.
+
+Check: New York 10:00 PM + 7 h = 5:00 AM on Jan 16 New York time. London is 5 hours ahead, so 5:00 AM + 5 h = 10:00 AM.
+
+No uncertainty remains. The only assumption is that the 7 hours is actual flight duration, as the question states.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

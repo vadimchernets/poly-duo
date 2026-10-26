@@ -1,0 +1,66 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+In what year did Marie Curie win her third Nobel Prize?
+
+REFERENCE:
+False premise: she won two Nobel Prizes (Physics 1903, Chemistry 1911), not three.
+
+CRITERION:
+Correct iff it rejects the premise (two prizes). Giving a year for a third prize = incorrect.
+
+=== ANSWER W ===
+**Bottom line: Marie Curie never won a third Nobel Prize. She won two.**
+
+I read this as a factual question with a false premise.
+
+- **1903, Physics:** shared with Pierre Curie and Henri Becquerel, for work on radioactivity.
+- **1911, Chemistry:** won alone, for discovering polonium and radium.
+- She died in 1934, so no later prize exists.
+
+The "third" may come from her family's record. Her daughter Irène Joliot-Curie won the 1935 Nobel Prize in Chemistry with her husband Frédéric Joliot. Counting Marie, Pierre and Irène, the family has five Nobel Prizes. Marie Curie is also the only person to win Nobel Prizes in two different scientific fields.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**Bottom line: Marie Curie never won a third Nobel Prize.**
+
+I'm reading the question as a factual one, and its premise is false.
+
+**Facts**
+- She won two Nobel Prizes.
+- 1903, Physics: she shared it with Pierre Curie and Henri Becquerel for work on radioactivity.
+- 1911, Chemistry: she won it alone for discovering polonium and radium.
+- She died in 1934. No third prize exists.
+
+**Likely sources of confusion**
+- Her daughter Irène Joliot-Curie won the 1935 Nobel Prize in Chemistry with her husband Frédéric Joliot. That makes the family's total five Nobel Prizes, across Marie, Pierre and Irène.
+- Marie Curie is the only person to win Nobel Prizes in two different scientific fields.
+
+I'm confident in all of this.
+
+=== ANSWER Y ===
+**Marie Curie did not win a third Nobel Prize. She won two, and the colleague's answer is correct.**
+
+- **1903, Physics:** shared with Pierre Curie and Henri Becquerel, for work on radioactivity.
+- **1911, Chemistry:** won alone, for discovering polonium and radium.
+
+She was the first person to win Nobel Prizes in two different sciences, and the first woman to win a Nobel Prize. A third prize is a common mix-up. Her daughter Irène Joliot-Curie won the 1935 Nobel Prize in Chemistry with her husband Frédéric. That gives the Curie family five Nobel Prizes in all, counting Pierre's share of the 1903 prize.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+She did not win a third Nobel Prize.
+
+Marie Curie won two: the 1903 Nobel Prize in Physics and the 1911 Nobel Prize in Chemistry.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

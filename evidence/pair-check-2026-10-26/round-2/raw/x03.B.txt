@@ -1,0 +1,24 @@
+**18^136 mod 1000 = 776**, so the colleague's 576 is wrong. Reading used: the ordinary integer power 18^136, reduced mod 1000.
+
+**Derivation (CRT, 1000 = 8 · 125):**
+- Mod 8: 18 ≡ 2, and 2^136 is divisible by 8, so 18^136 ≡ 0.
+- Mod 125: gcd(18, 125) = 1 and φ(125) = 100, so 18^136 ≡ 18^36. Repeated squaring gives:
+  - 18² ≡ 74
+  - 18⁴ ≡ 101
+  - 18⁸ ≡ 76
+  - 18¹⁶ ≡ 26
+  - 18³² ≡ 51
+  - 18³⁶ = 18³² · 18⁴ ≡ 51 · 101 = 5151 ≡ 26
+- Combine: x = 26 + 125k with x ≡ 0 (mod 8). Since 26 ≡ 2 and 125 ≡ 5 (mod 8), we need 2 + 5k ≡ 0, so k ≡ 6 and x = 776.
+
+**Check:** 776 = 8 · 97, and 776 − 26 = 750 = 6 · 125, so both congruences hold.
+
+**Where the colleague went wrong:** the period-20 claim is actually true, because 18^20 ≡ 1 (mod 125) and 18^20 ≡ 0 (mod 8). Since 136 ≡ 16 (mod 20), 18^136 ≡ 18^16 (mod 1000) is a valid step. The error is the value of 18^16. From the mod-125 chain above, 18^16 ≡ 26 (mod 125) and ≡ 0 (mod 8), which gives 776. The colleague's 576 is ≡ 76 (mod 125), so it cannot be right.
+
+I did this by hand without running code. The checks above support the result, but they are not an independent computation.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The final value 576 is wrong; the correct value is 776. The error is in 18^16 mod 1000, which is 776, not 576.
+- The period-20 claim and the reduction 136 → 16 are correct, but the answer gives no intermediate steps for 18^16, so the mistake is unverifiable from the text.

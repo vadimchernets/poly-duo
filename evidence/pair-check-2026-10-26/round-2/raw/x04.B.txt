@@ -1,0 +1,3 @@
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "print(pow(5,554,1009))"</parameter>
+</invoke>

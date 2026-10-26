@@ -1,0 +1,10 @@
+No, it does not follow.
+
+Facts:
+
+- No cats are dogs.
+- Some dogs are not pets.
+
+These premises establish the existence of at least one non-pet dog, but they do not establish that any cats exist. Even if cats do exist, nothing states whether they are pets.
+
+Counterexample: there are no cats, and one dog that is not a pet. Both premises are true, while “some cats are not pets” is false. Therefore, the inference is invalid.

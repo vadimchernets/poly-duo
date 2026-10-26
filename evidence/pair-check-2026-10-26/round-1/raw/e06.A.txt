@@ -1,0 +1,9 @@
+The 5th dose is at **3:00 PM on Tuesday**.
+
+Schedule:
+
+1. Monday, 7:00 AM  
+2. Monday, 3:00 PM  
+3. Monday, 11:00 PM  
+4. Tuesday, 7:00 AM  
+5. Tuesday, 3:00 PM

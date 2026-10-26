@@ -1,0 +1,14 @@
+**Bottom line: 1,296 rectangles.**
+
+A rectangle is determined by choosing:
+
+- 2 of the 9 vertical grid lines: \(\binom{9}{2}=36\)
+- 2 of the 9 horizontal grid lines: \(\binom{9}{2}=36\)
+
+Therefore:
+
+\[
+36 \times 36 = 1{,}296
+\]
+
+This includes all axis-aligned rectangles, including squares.

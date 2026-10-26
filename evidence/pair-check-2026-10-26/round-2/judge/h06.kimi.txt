@@ -1,0 +1,6 @@
+• W: correct — final answer is 11 seconds with valid interval reasoning.  
+  X: correct — final answer is 11 seconds with valid interval reasoning.  
+  Y: correct — final answer is 11 seconds; its caveat about under-specification does not commit to a different result.  
+  Z: correct — final answer is 11 seconds and rejects the incorrect 10-second proportion.  
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

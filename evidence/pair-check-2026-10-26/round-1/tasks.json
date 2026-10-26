@@ -1,0 +1,282 @@
+[
+ {
+  "id": "o01",
+  "group": "ordinary",
+  "question": "How many days are there in February 2028?",
+  "reference": "29",
+  "criterion": "Correct iff the answer is 29 (2028 is a leap year)."
+ },
+ {
+  "id": "o02",
+  "group": "ordinary",
+  "question": "What is 15% of 240?",
+  "reference": "36",
+  "criterion": "Correct iff 36."
+ },
+ {
+  "id": "o03",
+  "group": "ordinary",
+  "question": "Convert 5 miles to kilometers, rounded to two decimals.",
+  "reference": "8.05 km (5 x 1.609344 = 8.04672)",
+  "criterion": "Correct iff 8.05 km (8.047 accepted)."
+ },
+ {
+  "id": "o04",
+  "group": "ordinary",
+  "question": "What is the chemical symbol for tungsten?",
+  "reference": "W",
+  "criterion": "Correct iff W."
+ },
+ {
+  "id": "o05",
+  "group": "ordinary",
+  "question": "What day of the week was 1 January 2000?",
+  "reference": "Saturday",
+  "criterion": "Correct iff Saturday."
+ },
+ {
+  "id": "o06",
+  "group": "ordinary",
+  "question": "How many seconds are there in one day?",
+  "reference": "86,400",
+  "criterion": "Correct iff 86,400."
+ },
+ {
+  "id": "o07",
+  "group": "ordinary",
+  "question": "What is the boiling point of water at sea level in degrees Fahrenheit?",
+  "reference": "212 °F",
+  "criterion": "Correct iff 212 °F."
+ },
+ {
+  "id": "o08",
+  "group": "ordinary",
+  "question": "Who wrote the novel \"Pride and Prejudice\"?",
+  "reference": "Jane Austen",
+  "criterion": "Correct iff Jane Austen."
+ },
+ {
+  "id": "o09",
+  "group": "ordinary",
+  "question": "What is the square root of 1,764?",
+  "reference": "42",
+  "criterion": "Correct iff 42 (mentioning -42 as well is fine)."
+ },
+ {
+  "id": "o10",
+  "group": "ordinary",
+  "question": "What is the capital of Australia?",
+  "reference": "Canberra",
+  "criterion": "Correct iff Canberra."
+ },
+ {
+  "id": "o11",
+  "group": "ordinary",
+  "question": "How many centimeters are in 3.5 inches?",
+  "reference": "8.89 cm",
+  "criterion": "Correct iff 8.89 cm."
+ },
+ {
+  "id": "o12",
+  "group": "ordinary",
+  "question": "In what year did the Berlin Wall fall?",
+  "reference": "1989",
+  "criterion": "Correct iff 1989."
+ },
+ {
+  "id": "o13",
+  "group": "ordinary",
+  "question": "What is 2 to the power of 16?",
+  "reference": "65,536",
+  "criterion": "Correct iff 65,536."
+ },
+ {
+  "id": "o14",
+  "group": "ordinary",
+  "question": "How many sides does a dodecagon have?",
+  "reference": "12",
+  "criterion": "Correct iff 12."
+ },
+ {
+  "id": "o15",
+  "group": "ordinary",
+  "question": "What is the freezing point of water in kelvin (at standard pressure)?",
+  "reference": "273.15 K",
+  "criterion": "Correct iff 273.15 K (\"about 273 K\" = partial)."
+ },
+ {
+  "id": "t01",
+  "group": "tricky",
+  "question": "A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost?",
+  "reference": "$0.05",
+  "criterion": "Correct iff 5 cents."
+ },
+ {
+  "id": "t02",
+  "group": "tricky",
+  "question": "How many times does the letter \"r\" appear in the word \"strawberry\"?",
+  "reference": "3",
+  "criterion": "Correct iff 3."
+ },
+ {
+  "id": "t03",
+  "group": "tricky",
+  "question": "Which number is larger: 9.11 or 9.9?",
+  "reference": "9.9",
+  "criterion": "Correct iff 9.9."
+ },
+ {
+  "id": "t04",
+  "group": "tricky",
+  "question": "If it takes 5 machines 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets?",
+  "reference": "5 minutes",
+  "criterion": "Correct iff 5 minutes."
+ },
+ {
+  "id": "t05",
+  "group": "tricky",
+  "question": "Why did Albert Einstein win the Nobel Prize for his theory of relativity?",
+  "reference": "False premise: he did not. The 1921 Nobel Prize in Physics was awarded for services to theoretical physics and especially the discovery of the law of the photoelectric effect.",
+  "criterion": "Correct iff it states the premise is false AND names the photoelectric effect. Explaining relativity as the reason = incorrect."
+ },
+ {
+  "id": "t06",
+  "group": "tricky",
+  "question": "In which year did the Great Wall of China become visible from the Moon with the naked eye?",
+  "reference": "False premise: it has never been visible from the Moon with the naked eye.",
+  "criterion": "Correct iff it rejects the premise (never visible). Giving a year = incorrect."
+ },
+ {
+  "id": "t07",
+  "group": "tricky",
+  "question": "What is the sum of all integers from 1 to 200 (inclusive) that are divisible by 3 or by 5?",
+  "reference": "9368",
+  "criterion": "Correct iff 9368."
+ },
+ {
+  "id": "t08",
+  "group": "tricky",
+  "question": "A car travels 60 km at 30 km/h and then another 60 km at 90 km/h. What is its average speed for the whole trip?",
+  "reference": "45 km/h",
+  "criterion": "Correct iff 45 km/h. 60 km/h = incorrect."
+ },
+ {
+  "id": "t09",
+  "group": "tricky",
+  "question": "How many Sundays were there in the calendar year 2023?",
+  "reference": "53 (2023 began on a Sunday and has 365 days)",
+  "criterion": "Correct iff 53."
+ },
+ {
+  "id": "t10",
+  "group": "tricky",
+  "question": "Mary's father has five daughters: Nana, Nene, Nini, Nono. What is the name of the fifth daughter?",
+  "reference": "Mary",
+  "criterion": "Correct iff Mary."
+ },
+ {
+  "id": "t11",
+  "group": "tricky",
+  "question": "A vehicle uses 1 US gallon of fuel per mile. Express that in liters per 100 km, rounded to one decimal.",
+  "reference": "235.2 L/100 km (3.785411784 L / 1.609344 km x 100)",
+  "criterion": "Correct iff 235.2 (235.21 or 235 accepted as correct; off by more than 0.5 = incorrect)."
+ },
+ {
+  "id": "t12",
+  "group": "tricky",
+  "question": "What is the smallest prime number greater than 1,000?",
+  "reference": "1009",
+  "criterion": "Correct iff 1009."
+ },
+ {
+  "id": "t13",
+  "group": "tricky",
+  "question": "A snail is at the bottom of a 20-foot well. Each day it climbs 3 feet, and each night it slips back 2 feet. On which day does it first reach the top?",
+  "reference": "Day 18",
+  "criterion": "Correct iff day 18. Day 20 = incorrect."
+ },
+ {
+  "id": "t14",
+  "group": "tricky",
+  "question": "All bloops are razzies. All razzies are lazzies. Does it follow that all lazzies are bloops?",
+  "reference": "No, it does not follow.",
+  "criterion": "Correct iff no (not necessarily)."
+ },
+ {
+  "id": "t15",
+  "group": "tricky",
+  "question": "How many different people served as President of the United States before Abraham Lincoln?",
+  "reference": "15",
+  "criterion": "Correct iff 15 (Lincoln was the 16th president)."
+ },
+ {
+  "id": "e01",
+  "group": "everyday",
+  "question": "In the US, for tax year 2024, what is the federal standard deduction for a single filer?",
+  "reference": "$14,600 (IRS Rev. Proc. 2023-34)",
+  "criterion": "Correct iff $14,600."
+ },
+ {
+  "id": "e02",
+  "group": "everyday",
+  "question": "For 2024, what is the US federal annual gift tax exclusion per recipient?",
+  "reference": "$18,000 (IRS)",
+  "criterion": "Correct iff $18,000."
+ },
+ {
+  "id": "e03",
+  "group": "everyday",
+  "question": "For 2024, what is the maximum annual IRA contribution for someone under age 50 in the US?",
+  "reference": "$7,000 (IRS Notice 2023-75)",
+  "criterion": "Correct iff $7,000."
+ },
+ {
+  "id": "e04",
+  "group": "everyday",
+  "question": "A recipe for 4 servings uses 300 g of flour and 3 eggs. How much flour and how many eggs are needed for 10 servings?",
+  "reference": "750 g flour and 7.5 eggs (in practice 7 or 8)",
+  "criterion": "Correct iff 750 g flour and 7.5 eggs (rounding to 7 or 8 with the 7.5 stated or implied is fine). Wrong flour = incorrect."
+ },
+ {
+  "id": "e05",
+  "group": "everyday",
+  "question": "I'm making bread with 500 g of flour at 70% hydration and 2% salt (baker's percentages). How much water and how much salt do I need?",
+  "reference": "350 g water, 10 g salt",
+  "criterion": "Correct iff 350 g water and 10 g salt; one of two right = partial."
+ },
+ {
+  "id": "e06",
+  "group": "everyday",
+  "question": "A medication is taken every 8 hours. The first dose is at 7:00 AM on Monday. When is the 5th dose?",
+  "reference": "3:00 PM Tuesday (doses: Mon 7 AM, Mon 3 PM, Mon 11 PM, Tue 7 AM, Tue 3 PM)",
+  "criterion": "Correct iff 3:00 PM Tuesday."
+ },
+ {
+  "id": "e07",
+  "group": "everyday",
+  "question": "A flight leaves New York at 10:00 PM local time on January 15 and the flight lasts 7 hours. What is the local time in London when it lands? (New York is on EST, UTC-5; London is on GMT, UTC+0.)",
+  "reference": "10:00 AM on January 16 London time",
+  "criterion": "Correct iff 10:00 AM January 16."
+ },
+ {
+  "id": "e08",
+  "group": "everyday",
+  "question": "Under the US Family and Medical Leave Act (FMLA), how many weeks of unpaid, job-protected leave can an eligible employee take in a 12-month period for their own serious health condition?",
+  "reference": "12 weeks (29 U.S.C. 2612)",
+  "criterion": "Correct iff 12 weeks (mentioning 26 weeks only for military caregiver leave is fine)."
+ },
+ {
+  "id": "e09",
+  "group": "everyday",
+  "question": "What is the legal blood alcohol limit for driving in England, in milligrams of alcohol per 100 ml of blood?",
+  "reference": "80 mg per 100 ml (Road Traffic Act 1988; Scotland is 50)",
+  "criterion": "Correct iff 80 mg/100 ml for England. Giving 50 for England = incorrect."
+ },
+ {
+  "id": "e10",
+  "group": "everyday",
+  "question": "I borrow $10,000 at 6% annual interest, compounded monthly, and make no payments. How much do I owe after exactly one year, to the cent?",
+  "reference": "$10,616.78",
+  "criterion": "Correct iff $10,616.78 (off by 1 cent = partial)."
+ }
+]

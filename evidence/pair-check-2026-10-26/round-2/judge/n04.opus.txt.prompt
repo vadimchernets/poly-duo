@@ -1,0 +1,54 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is the 3000th prime number?
+
+REFERENCE:
+27449
+
+CRITERION:
+Correct iff exactly this number.
+
+=== ANSWER W ===
+The colleague's answer is correct: the 3000th prime is **27,449**.
+
+This agrees with the standard reference values for nearby milestones: the 1000th prime is 7,919, the 2000th is 17,389, and the 3000th is 27,449. I checked this from memory and did not run a computation.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**The 3000th prime is 27449.**
+
+I'm reading "3000th" as counting from 2 as the 1st prime.
+
+**Facts**
+- I took this from memory of the standard table of milestone primes, not from a computation in this session. That table gives: 1000th = 7919, 2000th = 17389, 3000th = 27449, 4000th = 37813, 5000th = 48611.
+- 27449 is not divisible by any prime up to its square root (about 165.7). I did not run that check here.
+
+**Conclusion**
+- I'm fairly confident in 27449. My one doubt is that it comes from memory and I haven't recomputed it.
+- A sieve of Eratosthenes up to 28000 would confirm it. Check that the 3000th prime found is 27449.
+
+=== ANSWER Y ===
+The 3000th prime number is **27,449**.
+
+=== ANSWER Z ===
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "
+n=30000
+s=bytearray([1])*(n+1);s[0]=s[1]=0
+for i in range(2,int(n**.5)+1):
+    if s[i]: s[i*i::i]=bytearray(len(s[i*i::i]))
+p=[i for i in range(n+1) if s[i]]
+print(p[2999])"</parameter>
+</invoke>
+js
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

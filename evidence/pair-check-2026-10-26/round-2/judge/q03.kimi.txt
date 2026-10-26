@@ -1,0 +1,5 @@
+• W: Final answer is exactly $2,760.60, matching the reference.  
+  X: Final answer is $2,760.95, which is off by 35 cents and rests on incorrect multiplication.  
+  Y: Final answer is exactly $2,760.60, matching the reference.  
+  Z: Final answer is exactly $2,760.60, matching the reference.  
+  VERDICT: W=correct; X=incorrect; Y=correct; Z=correct

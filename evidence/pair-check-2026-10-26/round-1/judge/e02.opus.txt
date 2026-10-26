@@ -1,0 +1,6 @@
+- **W:** Says $18,000 per recipient for 2024, which matches the reference.
+- **X:** Says $18,000 per recipient for calendar year 2024, which matches the reference.
+- **Y:** Says $18,000 per recipient for 2024, which matches the reference.
+- **Z:** Says $18,000 per recipient for 2024, which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

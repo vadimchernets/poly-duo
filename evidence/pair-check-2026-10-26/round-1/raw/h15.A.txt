@@ -1,0 +1,5 @@
+Saturday.
+
+\(1000 \bmod 7 = 6\), so move forward six days from Wednesday: Thursday, Friday, Saturday, Sunday, Monday, Tuesday — **Tuesday**.
+
+Correction: the answer is **Tuesday**.

@@ -1,0 +1,60 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many different people served as President of the United States before Abraham Lincoln?
+
+REFERENCE:
+15
+
+CRITERION:
+Correct iff 15 (Lincoln was the 16th president).
+
+=== ANSWER W ===
+**15 people served as president before Abraham Lincoln.** The colleague's answer is correct.
+
+Lincoln was the 16th president. He was preceded by 15 distinct individuals, from George Washington to James Buchanan. The count by person matches the count by presidency number here because no one before Lincoln served nonconsecutive terms. Grover Cleveland, who was counted twice, came later.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**Bottom line: 15 different people.** The colleague's answer is correct.
+
+Reading chosen: "before Lincoln" means anyone who held the office before his inauguration on March 4, 1861.
+
+Lincoln was the 16th presidency, so he had 15 predecessors: Washington, John Adams, Jefferson, Madison, Monroe, John Quincy Adams, Jackson, Van Buren, William Henry Harrison, Tyler, Polk, Taylor, Fillmore, Pierce and Buchanan.
+
+Grover Cleveland's two non-consecutive terms are the reason later presidency numbers exceed the number of people. They come after Lincoln, so they don't affect this count. Before Lincoln, presidencies and people match one-to-one.
+
+Some people also count the presidents of the Continental Congress or the Articles of Confederation, such as John Hanson. They weren't presidents under the Constitution, so the standard answer excludes them.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**Bottom line: 15 different people.**
+
+Reading chosen: "before Lincoln" means anyone who held the office before Lincoln's inauguration on March 4, 1861.
+
+**Facts**
+- Lincoln was the 16th presidency.
+- Grover Cleveland's two non-consecutive terms are only a factor after Lincoln, so they don't change this count.
+- Lincoln's 15 predecessors, in order: Washington, John Adams, Jefferson, Madison, Monroe, John Quincy Adams, Jackson, Van Buren, William Henry Harrison, Tyler, Polk, Taylor, Fillmore, Pierce, Buchanan.
+
+**Conclusion**
+- Each of these 15 held the office once and was a distinct person, so the count is 15.
+
+**Caveat (not about the count)**
+- Some count John Hanson and other presidents of the Congress under the Articles of Confederation. That reading is non-standard, since they weren't U.S. Presidents under the Constitution. If you included them, the number would be larger. I haven't verified how many that would add.
+
+=== ANSWER Z ===
+15 different people served as U.S. president before Abraham Lincoln, who was the 16th president.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

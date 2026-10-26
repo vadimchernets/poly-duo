@@ -1,0 +1,6 @@
+• W: Correct — states 5 minutes with sound parallel-rate reasoning.
+  X: Correct — final answer is 5 minutes, consistent with the reference.
+  Y: Correct — 5 minutes, and correctly rejects the 100-minute fallacy without contradiction.
+  Z: Correct — 5 minutes; hedging about multi-machine widgets doesn't contradict the stated final answer.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

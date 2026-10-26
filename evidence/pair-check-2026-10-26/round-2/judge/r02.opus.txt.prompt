@@ -1,0 +1,61 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Reverse the string "xriqyjflwkwwmqnogqlnuvkx". What is the 9th character of the reversed string?
+
+REFERENCE:
+o
+
+CRITERION:
+Correct iff this character.
+
+=== ANSWER W ===
+q
+
+=== ANSWER X ===
+**The 9th character of the reversed string is "o".** The colleague's answer "q" is wrong.
+
+- The original has 24 characters: `x r i q y j f l w k w w m q n o g q l n u v k x`.
+- Reversed: `xkvunlqgonqmwwkwlfjyqirx`.
+- Counting from 1: x(1) k(2) v(3) u(4) n(5) l(6) q(7) g(8) **o(9)**.
+- The 9th character from the end corresponds to original position 16, which is "o".
+
+I read "9th" as 1-indexed. If it were 0-indexed (the 9th index), the answer would be "n".
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- "q" is incorrect. It is the 7th character of the reversed string (and the 18th of the original), not the 9th. The correct answer is "o".
+
+=== ANSWER Y ===
+**The 9th character of the reversed string is `o`.** The colleague's answer `q` is wrong.
+
+The original string has 24 characters. The 9th character of the reversed string is the original's 16th (24 − 9 + 1 = 16), which is `o`.
+
+Reversed string: `xkvunlqgonqmwwkwlfjyqirx`
+
+The first nine characters are x, k, v, u, n, l, q, g, **o**. The `q` at position 7 is probably where the colleague went wrong.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- `q` is incorrect. The 9th character is `o`; `q` is only the 7th character of the reversed string.
+
+=== ANSWER Z ===
+**Bottom line: the 9th character of the reversed string is "o".**
+
+**Facts**
+- The original string has 24 characters.
+- Reversed, it reads: `xkvunlqgonqmwwkwlfjyqirx`
+- Counting through the reversed string: x(1) k(2) v(3) u(4) n(5) l(6) q(7) g(8) o(9).
+
+**Conclusion**
+- The 9th character of the reversed string corresponds to position 16 of the original, which is "o".
+- I read "9th" as 1-indexed, counting from 1.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

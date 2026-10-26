@@ -1,0 +1,5 @@
+**Bottom line: 5 cats.**
+
+Each cat catches 1 mouse every 5 minutes. In 100 minutes, one cat catches 20 mice. Therefore, to catch 100 mice:
+
+100 ÷ 20 = **5 cats**.

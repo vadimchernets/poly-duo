@@ -1,0 +1,19 @@
+The colleague's answer is correct: 7,942,591 × 2,341,228 = **18,595,416,441,748**.
+
+I checked it by splitting the second factor into partial products:
+
+- × 2,000,000 = 15,885,182,000,000
+- × 300,000 = 2,382,777,300,000
+- × 40,000 = 317,703,640,000
+- × 1,000 = 7,942,591,000
+- × 200 = 1,588,518,200
+- × 20 = 158,851,820
+- × 8 = 63,540,728
+
+These sum to 18,595,416,441,748.
+
+Two further checks agree. The size is right, since about 7.94·10⁶ × 2.34·10⁶ ≈ 1.86·10¹³. The mod 9 check also matches: the first factor reduces to 1, the second to 4, and the result's digit sum, 67, reduces to 4.
+
+Confidence: high
+
+No errors in the colleague's answer

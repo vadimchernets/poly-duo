@@ -1,0 +1,26 @@
+<invoke name="Bash">
+<parameter name="command">python3 -c "
+n=20000
+s=bytearray([1])*n;s[0]=s[1]=0
+for i in range(2,int(n**.5)+1):
+    if s[i]:s[i*i::i]=bytearray(len(s[i*i::i]))
+p=[i for i in range(n) if s[i]]
+print(p[2221],len(p),p[1999])"</parameter>
+</invoke>
+
+
+Result=19559. Wait
+
+
+<invoke name="Bash">
+<parameter name="command">python3 -c "
+n=20000
+s=bytearray([1])*n;s[0]=s[1]=0
+for i in range(2,int(n**.5)+1):
+    if s[i]:s[i*i::i]=bytearray(len(s[i*i::i]))
+p=[i for i in range(n) if s[i]]
+print(p[2221],len(p),p[1999],p[-45:-35])"</parameter>
+</invoke>
+
+
+Result=19559

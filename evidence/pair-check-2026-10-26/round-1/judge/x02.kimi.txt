@@ -1,0 +1,5 @@
+• W: correct — it conditions on the goat at door 3 and concludes switching wins with probability 1/2.  
+  X: correct — it states the remaining doors are equally likely after the random host reveals a goat.  
+  Y: correct — it gives the Bayes calculation and a final probability of 1/2.  
+  Z: correct — it explicitly normalizes to P(car at 2)=1/2 under the uniform-random host assumption.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

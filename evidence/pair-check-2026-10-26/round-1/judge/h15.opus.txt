@@ -1,0 +1,6 @@
+**W:** It opens with "Saturday", but it then explicitly corrects itself, and its final answer, Tuesday, matches the reference.
+**X:** It opens with "Friday", but it explicitly retracts that and concludes Tuesday, which matches the reference.
+**Y:** It answers Tuesday with correct working (1000 mod 7 = 6).
+**Z:** It answers Tuesday with correct working (1000 mod 7 = 6).
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

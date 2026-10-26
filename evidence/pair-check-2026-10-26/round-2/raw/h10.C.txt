@@ -1,0 +1,12 @@
+**Bottom line: 5 cats.**
+
+**Facts (given and derived):**
+- 5 cats catch 5 mice in 5 minutes, so the rate is 1 mouse per cat per 5 minutes (each cat catches 0.2 mice/min).
+- In 100 minutes, one cat catches 100 / 5 = 20 mice.
+
+**Conclusion:**
+- 100 mice / 20 mice per cat = 5 cats.
+
+**Assumption:** I'm reading this as the standard puzzle, where every cat works independently at a constant rate, mice are not a limiting resource, and the rate doesn't change over time. Under any other model (cats get tired, mice become scarce or wary, cats interfere with each other) the answer isn't determined by the data given.
+
+Not sure about nothing else here; the arithmetic is unambiguous under that assumption.

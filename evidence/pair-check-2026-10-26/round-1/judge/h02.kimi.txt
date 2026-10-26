@@ -1,0 +1,5 @@
+• W gives Wednesday as the final answer, which matches the reference.  
+  X gives Wednesday as the final answer, which matches the reference.  
+  Y gives Wednesday as the final answer, which matches the reference.  
+  Z gives Wednesday as the final answer, which matches the reference.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

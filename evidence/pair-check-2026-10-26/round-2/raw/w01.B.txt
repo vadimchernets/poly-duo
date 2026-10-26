@@ -1,0 +1,14 @@
+**The sentence has 27 words.** The colleague's answer is correct.
+
+Reading used: words are whitespace-separated tokens and punctuation isn't counted. The sentence has no hyphenated words, so that rule doesn't change the count.
+
+Count by clause:
+- "In the early morning": 4
+- "before the market opened": 4 (running total 8)
+- "the old fisherman sat on the pier": 7 (15)
+- "and counted the boats": 4 (19)
+- "that had not yet returned from the storm": 8 (27)
+
+Confidence: high
+
+No errors in the colleague's answer

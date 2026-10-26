@@ -1,0 +1,7 @@
+A dodecagon has 12 sides.
+
+Its name comes from the Greek *dōdeka* ("twelve") and *gōnia* ("angle"). It also has 12 vertices. A regular dodecagon has interior angles of 150° each, which sum to 1800°.
+
+Confidence: high
+
+No errors in the colleague's answer

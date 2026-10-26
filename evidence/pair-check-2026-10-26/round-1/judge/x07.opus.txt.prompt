@@ -1,0 +1,65 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+3 March 2027 is a Wednesday. What day of the week is 3 March 2030?
+
+REFERENCE:
+Sunday
+
+CRITERION:
+Correct iff Sunday.
+
+=== ANSWER W ===
+Sunday.
+
+The shifts are: +2 days (leap year 2028), then +1, then +1. Wednesday + 4 days = Sunday.
+
+=== ANSWER X ===
+**Sunday.** The colleague's answer is correct.
+
+Reading chosen: both dates are in the Gregorian calendar.
+
+- From 3 March 2027 to 3 March 2030 is 3 years.
+- 29 February 2028 falls inside this span, so the first year has 366 days (+2 weekdays). The other two years have 365 days each (+1 weekday each).
+- The total shift is 2 + 1 + 1 = 4 days. That matches 1096 days = 7 × 156 + 4.
+- Wednesday + 4 days = Sunday.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**Sunday.**
+
+Reading chosen: both dates are in the Gregorian calendar, and the question asks for the weekday of 3 March 2030.
+
+Calculation:
+- From 3 March 2027 to 3 March 2030 is 3 years.
+- The span covers 3 March 2027 to 3 March 2028, 2028 to 2029, and 2029 to 2030.
+- Leap days in that span: 29 February 2028 falls between 3 March 2027 and 3 March 2028, so the first year has 366 days. The other two years have 365 days each.
+- Total: 366 + 365 + 365 = 1096 days.
+- 1096 = 7 × 156 + 4, so the weekday moves forward by 4.
+- Wednesday + 4 days = Sunday.
+
+Confidence: high. The only assumption is that the premise (3 March 2027 is a Wednesday) is true, and it is. I used it as given.
+
+=== ANSWER Z ===
+**Sunday.** The colleague's answer is correct.
+
+Each year from 3 March shifts the weekday by one day, or two if a 29 February falls in between:
+- 3 March 2027 to 3 March 2028 includes 29 February 2028, so it is 366 days (+2).
+- 3 March 2028 to 3 March 2029 is 365 days (+1).
+- 3 March 2029 to 3 March 2030 is 365 days (+1).
+
+That makes +4 days in total, and Wednesday + 4 = Sunday.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

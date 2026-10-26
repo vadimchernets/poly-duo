@@ -1,0 +1,5 @@
+• W: Its final answer is $18,000 per recipient for 2024, matching the IRS reference.  
+  X: It clearly states $18,000 per recipient for calendar year 2024, matching the reference.  
+  Y: It gives $18,000 per recipient for 2024 and confirms the colleague’s figure, matching the reference.  
+  Z: It commits to $18,000 per donor per recipient for 2024; the extra uncertainty about the non-citizen spouse figure does not contradict the graded answer.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

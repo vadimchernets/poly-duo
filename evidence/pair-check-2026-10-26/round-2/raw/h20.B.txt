@@ -1,0 +1,10 @@
+**591 ml**
+
+Reading chosen: US customary cups, with the given factor of 236.588 ml per cup.
+
+Calculation: 2.5 × 236.588 = 591.47 ml. The fractional part, 0.47, is below 0.5, so it rounds down to 591 ml.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The colleague's headline answer of "592 ml" is wrong. Their own calculation gives 591.47 ml, which they then correctly rounded to 591 ml. The headline contradicts that, so the final answer is 591 ml, not 592 ml.

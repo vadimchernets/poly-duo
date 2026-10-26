@@ -1,0 +1,5 @@
+• W says the premise is impossible but also calls it “not strictly impossible” and gives a forced “second to last” outcome, so it hedges.  
+  X clearly states impossibility but then says it is unsure and would practically answer “second to last,” so it hedges.  
+  Y directly says you cannot overtake the last-place runner and the premise is impossible, matching the reference.  
+  Z says the premise is contradictory but adopts a charitable reading and gives “second to last” as the practical answer, so it hedges.  
+  VERDICT: W=partial; X=partial; Y=correct; Z=partial

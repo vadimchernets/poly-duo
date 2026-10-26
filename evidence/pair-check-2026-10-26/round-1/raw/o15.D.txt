@@ -1,0 +1,7 @@
+**273.15 K.** The draft is correct.
+
+Water freezes at 0 °C at standard pressure (1 atm, 101.325 kPa), and 0 °C equals 273.15 K. The ice point is a convenient reference, though it is no longer the definition of the kelvin. Since 2019 the kelvin has been defined through the Boltzmann constant. The triple point of water is 273.16 K (0.01 °C), but that is at its own vapor pressure and is a different quantity from the freezing point at 1 atm.
+
+Confidence: high
+
+No errors in the colleague's answer

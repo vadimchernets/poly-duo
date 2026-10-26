@@ -1,0 +1,59 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is the sum of the decimal digits of 3^40?
+
+REFERENCE:
+90 (3^40 = 12,157,665,459,056,928,801)
+
+CRITERION:
+Correct iff 90.
+
+=== ANSWER W ===
+90.
+
+\(3^{40} = 12157665459056928801\), and the sum of its decimal digits is \(90\).
+
+=== ANSWER X ===
+**Answer: 90.** The colleague's answer is correct.
+
+3^40 = 12157665459056928801. Adding its digits gives 1+2+1+5+7+6+6+5+4+5+9+0+5+6+9+2+8+8+0+1 = 90.
+
+The value matches (3^20)² = 3486784401². Also, 3^40 is divisible by 9, so its digit sum must be too, and 90 is.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**Bottom line: 90.**
+
+**Facts:**
+- 3^20 = 3 486 784 401.
+- 3^40 = 3 486 784 401² = 12 157 665 459 056 928 801. This is from memory of the known value, and I did not run a computation.
+- Digit sum: 1+2+1+5+7+6+6+5+4+5+9+0+5+6+9+2+8+8+0+1 = 90.
+
+**Check:** 3^40 is divisible by 9, so its digit sum must be a multiple of 9, and 90 is. This doesn't fully verify the digits. I'm fairly confident in them, but a misremembered digit that preserved divisibility by 9 wouldn't be caught.
+
+=== ANSWER Z ===
+**The digit sum is 90.** The colleague's answer is correct.
+
+3^40 = 3 486 784 401² = 12 157 665 459 056 928 801. I recalled this value from memory and did not compute it in this session.
+
+Digit sum: 1+2+1+5+7+6+6+5+4+5+9+0+5+6+9+2+8+8+0+1 = 90.
+
+I checked the value two ways:
+- The last three digits match: 401² = 160 801, which ends in 801.
+- The leading digits match: 3.4868² ≈ 12.157.
+- The digit sum, 90, is a multiple of 9, as it must be because 3^40 is divisible by 9.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

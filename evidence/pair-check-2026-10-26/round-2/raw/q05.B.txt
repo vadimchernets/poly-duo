@@ -1,0 +1,20 @@
+**Final price: $6,505.57**
+
+Reading chosen: each change applies to the running price, not to the original, and rounding happens only at the end.
+
+| Step | Price |
+|---|---|
+| +17% (×1.17) | 6,299.2683 |
+| +12.5% (×1.125) | 7,086.6768 |
+| +8% (×1.08) | 7,653.6110 |
+| −15% (×0.85) | 6,505.5693 |
+
+The combined multiplier is 1.17 × 1.125 × 1.08 × 0.85 = 1.2083175, and 5,383.99 × 1.2083175 = 6,505.5693. Rounding to the cent after every step gives the same $6,505.57.
+
+Sanity check: the three increases give ×1.42155, so the price rises about 42%. The 15% cut brings that to about +20.8%, which is far above ChatGPT's +7.4%.
+
+Confidence: high
+
+Corrections to the colleague's answer
+- $5,783.30 is wrong. The stated product 5,383.99 × 1.17 × 1.125 × 1.08 × 0.85 equals 6,505.57, not 5,783.30. The combined multiplier is about 1.2083, but the draft's result implies about 1.074.
+- My own pre-draft answer had a typo in the combined multiplier (1.2083625). The correct value is 1.2083175. The step-by-step result of $6,505.57 was unaffected.

@@ -1,0 +1,9 @@
+**Answer: 76** (the colleague's answer is correct.)
+
+2^50 = 1,125,899,906,842,624.
+
+Digit sum: 1+1+2+5+8+9+9+9+0+6+8+4+2+6+2+4 = 76.
+
+Confidence: high
+
+No errors in the colleague's answer

@@ -1,0 +1,58 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is the freezing point of water in kelvin (at standard pressure)?
+
+REFERENCE:
+273.15 K
+
+CRITERION:
+Correct iff 273.15 K ("about 273 K" = partial).
+
+=== ANSWER W ===
+**273.15 K.** The draft is correct.
+
+Water freezes at 0 °C at standard pressure (1 atm, 101.325 kPa), and 0 °C equals 273.15 K. The ice point is a convenient reference, though it is no longer the definition of the kelvin. Since 2019 the kelvin has been defined through the Boltzmann constant. The triple point of water is 273.16 K (0.01 °C), but that is at its own vapor pressure and is a different quantity from the freezing point at 1 atm.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+273.15 K.
+
+At standard atmospheric pressure, pure water freezes at 0 °C, which equals 273.15 kelvin.
+
+=== ANSWER Y ===
+**273.15 K** (the value is exact by definition of the Celsius scale).
+
+**Facts:**
+- At standard pressure (1 atm = 101.325 kPa), pure water freezes/melts at 0 °C. That equals 273.15 K, since K = °C + 273.15.
+- Since the 2019 SI redefinition, the kelvin is defined through the Boltzmann constant, not the triple point of water. Because of this, the ice point is now an experimentally measured value, not an exact one. It is about 273.15 K to within roughly 0.0001 K.
+- The triple point of water (273.16 K, at 611.657 Pa) is a different point from the freezing point at 1 atm. It is about 0.01 K higher.
+
+**Conclusion:** Use 273.15 K. Rounding to 273 K is fine for rough work.
+
+**Reading I chose:** pure, air-free water at 1 atm. Air-saturated water freezes about 0.002 K lower, and dissolved salts lower it more. Under the post-2019 definition, 273.15 K is the conventional value, with a tiny measurement uncertainty.
+
+=== ANSWER Z ===
+**273.15 K** (0 °C at 1 atm = 101.325 kPa).
+
+The colleague's answer is correct. I'd add three short points:
+
+- **Conversion:** K = °C + 273.15.
+- **Definition:** Since the 2019 SI redefinition, the kelvin is fixed by the Boltzmann constant, not by the triple point of water. The ice point is therefore a measured value, about 273.15 K to within roughly 0.0001 K, and 273.15 K is the conventional value.
+- **Triple point:** Don't confuse the freezing point with the triple point of water. The triple point is about 273.16 K, at 611.657 Pa.
+
+I read the question as pure water at 1 atm. Dissolved air or salts lower the freezing point slightly. For rough work, 273 K is fine.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

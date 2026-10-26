@@ -1,0 +1,15 @@
+**6,274,968 × 2,358,864 = 14,801,796,116,352**
+
+The colleague's answer is correct. I recomputed it by splitting the second factor:
+
+- 6,274,968 × 2,000,000 = 12,549,936,000,000
+- 6,274,968 × 358,864 = 2,251,860,116,352, from 6,274,968 × 300,000 = 1,882,490,400,000 plus 6,274,968 × 58,864 = 369,369,716,352
+- Sum: 12,549,936,000,000 + 2,251,860,116,352 = 14,801,796,116,352
+
+Two quick checks agree:
+- **Digit sum mod 9:** 2,358,864 has digit sum 36, which is divisible by 9, so the product must be too. The result's digit sum is 54, which is.
+- **Last digit:** 8 × 4 = 32, so the product ends in 2, as the result does.
+
+Confidence: high
+
+No errors in the colleague's answer

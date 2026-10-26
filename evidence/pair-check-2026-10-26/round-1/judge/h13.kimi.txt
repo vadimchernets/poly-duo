@@ -1,0 +1,9 @@
+• **W:** Correctly analyzes both cases and concludes C is a knave, matching the reference.
+
+  **X:** Same sound case analysis; final answer C is a knave, matching the reference.
+
+  **Y:** Opens with a wrong bottom line ("C is a knight") but explicitly retracts it and commits to a single corrected final answer: C is a knave — which matches the reference.
+
+  **Z:** Concise case analysis concluding C is a knave, matching the reference.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

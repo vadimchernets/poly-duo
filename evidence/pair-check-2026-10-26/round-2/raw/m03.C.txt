@@ -1,0 +1,13 @@
+**5,969,389 × 1,172,703 = 7,000,320,388,467**
+
+**Facts (hand computation, split as 1,172,703 = 1,000,000 + 172,000 + 703):**
+- 5,969,389 × 1,000,000 = 5,969,389,000,000
+- 5,969,389 × 172,000 = 1,026,734,908,000
+- 5,969,389 × 703 = 4,196,480,467
+- Sum: 5,969,389,000,000 + 1,026,734,908,000 + 4,196,480,467 = 7,000,320,388,467
+
+**Checks:**
+- Mod 9: the digit sums give 4 × 3 = 12, which reduces to 3. The result's digit sum is 48, which also reduces to 3. ✓
+- Last three digits: 389 × 703 = 273,467, which ends in 467. ✓
+
+I did not run this through a calculator or code. Both checks passed, but they would not catch every possible error, such as a digit transposition.

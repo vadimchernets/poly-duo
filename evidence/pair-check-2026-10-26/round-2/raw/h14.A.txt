@@ -1,0 +1,7 @@
+No.
+
+Fact: “If it rains, the match is cancelled” means rain is sufficient for cancellation.
+
+But cancellation may have other causes—unsafe conditions, a power outage, or a team’s withdrawal. Concluding “it rained” from “the match was cancelled” is the fallacy of **affirming the consequent**.
+
+You could conclude it rained only if you also knew: “The match is cancelled **only if** it rains.”

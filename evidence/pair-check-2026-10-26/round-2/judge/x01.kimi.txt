@@ -1,0 +1,5 @@
+• W: correct — final answer is exactly 216.  
+  X: incorrect — final answer 376 does not match 216.  
+  Y: correct — final answer is exactly 216, with sound verification.  
+  Z: correct — final answer is exactly 216, with consistent CRT and direct checks.  
+  VERDICT: W=correct; X=incorrect; Y=correct; Z=correct

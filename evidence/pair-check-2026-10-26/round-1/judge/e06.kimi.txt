@@ -1,0 +1,9 @@
+• **W:** Final answer is 3:00 PM Tuesday with the correct dose schedule, matching the reference — correct.
+
+  **X:** Final answer is 3:00 PM Tuesday with correct reasoning (4 × 8 = 32 hours after the first dose) — correct.
+
+  **Y:** Although it opens with a wrong line (11:00 PM Monday), it explicitly retracts that line and its final answer is 3:00 PM Tuesday, which matches the reference — correct.
+
+  **Z:** Final answer is 3:00 PM Tuesday with the correct five-dose schedule — correct.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

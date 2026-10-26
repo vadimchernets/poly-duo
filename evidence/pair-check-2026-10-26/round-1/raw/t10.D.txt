@@ -1,0 +1,7 @@
+The fifth daughter is Mary. The question says Mary's father has five daughters, and Mary is one of them. The other four are Nana, Nene, Nini and Nono.
+
+This is a classic riddle. The pattern of the names (Na, Ne, Ni, No) suggests the missing one is "Nunu". But the question already names the daughter: Mary is the father's daughter.
+
+Confidence: high
+
+No errors in the colleague's answer

@@ -1,0 +1,45 @@
+07:39:43 done answers o03
+07:39:54 done answers o04
+07:39:57 done answers o02
+07:40:20 done answers o01
+07:40:23 done answers o06
+07:40:44 done answers o07
+07:40:44 done answers o05
+07:40:48 done answers o08
+07:41:01 done answers o09
+07:41:02 done answers o10
+07:41:39 done answers o13
+07:41:52 done answers o12
+07:41:53 done answers o14
+07:41:53 done answers t08
+07:42:24 done answers o11
+07:42:27 FAIL sonnet t01.D.txt 1 /claude',   path: '~/.local/bin/claude',   spawnargs: [     '-p',     '--model',     'sonnet',     '--setting-sources',     '',     '--max-turns',     '1',     '--add-dir',     '<stand>/round-1/sandbox'   ] }  Node.js v26.8.0-alpha.0.0.0 
+07:42:30 done answers o15
+07:42:50 FAIL sonnet t02.D.txt 1 /claude',   path: '~/.local/bin/claude',   spawnargs: [     '-p',     '--model',     'sonnet',     '--setting-sources',     '',     '--max-turns',     '1',     '--add-dir',     '<stand>/round-1/sandbox'   ] }  Node.js v26.8.0-alpha.0.0.0 
+07:42:50 FAIL sonnet t01.B.txt 1 /claude',   path: '~/.local/bin/claude',   spawnargs: [     '-p',     '--model',     'sonnet',     '--setting-sources',     '',     '--max-turns',     '1',     '--add-dir',     '<stand>/round-1/sandbox'   ] }  Node.js v26.8.0-alpha.0.0.0 
+07:42:51 FAIL sonnet t03.D.txt 1 /claude',   path: '~/.local/bin/claude',   spawnargs: [     '-p',     '--model',     'sonnet',     '--setting-sources',     '',     '--max-turns',     '1',     '--add-dir',     '<stand>/round-1/sandbox'   ] }  Node.js v26.8.0-alpha.0.0.0 
+07:42:53 FAIL sonnet t02.B.txt 1 /claude',   path: '~/.local/bin/claude',   spawnargs: [     '-p',     '--model',     'sonnet',     '--setting-sources',     '',     '--max-turns',     '1',     '--add-dir',     '<stand>/round-1/sandbox'   ] }  Node.js v26.8.0-alpha.0.0.0 
+07:43:24 done answers t04
+07:43:55 done answers t05
+07:44:58 done answers t03
+07:44:59 done answers t01
+07:45:03 done answers t02
+07:45:32 done answers t06
+07:45:57 done answers t07
+07:46:04 done answers t09
+07:46:20 done answers t10
+07:46:26 done answers t11
+07:46:51 done answers t12
+07:47:06 done answers t13
+07:47:45 done answers t14
+07:47:45 done answers t15
+07:48:09 done answers e02
+07:48:10 done answers e01
+07:48:25 done answers e03
+07:48:46 done answers e04
+07:48:48 done answers e05
+07:49:05 done answers e06
+07:49:27 done answers e07
+07:49:31 done answers e08
+07:49:44 done answers e10
+07:49:47 done answers e09

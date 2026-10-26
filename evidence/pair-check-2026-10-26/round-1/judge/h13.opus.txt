@@ -1,0 +1,6 @@
+W: Correct, because both cases are worked through properly and the answer concludes that C is a knave, which matches the reference.
+X: Correct, because both cases are checked and the answer concludes that C is a knave.
+Y: Correct, because although the first line says "knight", the answer explicitly retracts it and its final answer is that C is a knave.
+Z: Correct, because both cases lead it to conclude that C is a knave.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,22 @@
+**204 integers.**
+
+Divisible by 4 or 6:
+
+\[
+\left\lfloor\frac{733}{4}\right\rfloor+
+\left\lfloor\frac{733}{6}\right\rfloor-
+\left\lfloor\frac{733}{12}\right\rfloor
+=183+122-61=244.
+\]
+
+Among these, those divisible by 9 must be divisible by \(\operatorname{lcm}(6,9)=18\) or \(\operatorname{lcm}(4,9)=36\). Since every multiple of 36 is already a multiple of 18, their number is
+
+\[
+\left\lfloor\frac{733}{18}\right\rfloor=40.
+\]
+
+Therefore:
+
+\[
+244-40=\boxed{204}.
+\]

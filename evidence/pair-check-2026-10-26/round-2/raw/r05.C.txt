@@ -1,0 +1,11 @@
+**The 5th character is "f".**
+
+Reading chosen: the 5th character counted from 1, in the reversed string.
+
+**Facts**
+- The original string has 24 characters: `dsrzvc` `rqzsxj` `dpwyor` `efntzv`.
+- The reversed string is `vztnferowypdjxszqrcvzrsd`.
+- Its first five characters are v, z, t, n, f.
+- The 5th character of the reversed string is the 20th character of the original, which is "f" (the second letter of the last block, `efntzv`).
+
+**Conclusion:** f. I'm sure of this: I counted the length twice, by blocks of 6 and by individual positions, and both counts agree.

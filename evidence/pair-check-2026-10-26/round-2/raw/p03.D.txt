@@ -1,0 +1,7 @@
+**16 September 2029.** The colleague's answer is correct.
+
+Check: 23 days to 31 Dec 2027, then 366 days for leap-year 2028 (389 total). The remaining 259 days of 2029 land on day 259 of the year, which is 16 September (31 August is day 243, plus 16).
+
+Confidence: high
+
+No errors in the colleague's answer

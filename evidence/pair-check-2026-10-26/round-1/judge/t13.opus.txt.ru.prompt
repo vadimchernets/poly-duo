@@ -1,0 +1,60 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+A snail is at the bottom of a 20-foot well. Each day it climbs 3 feet, and each night it slips back 2 feet. On which day does it first reach the top?
+
+REFERENCE:
+Day 18
+
+CRITERION:
+Correct iff day 18. Day 20 = incorrect.
+
+=== ANSWER W ===
+**18-й день.**
+
+Каждый день чистый прирост равен 1 футу (+3 днём, −2 ночью), но в последний день улитка вылезает и не соскальзывает. После 17 ночей она на высоте 17 футов. На 18-й день она поднимается на 3 фута, достигает 20 футов и выбирается наверх.
+
+Проверка: в конце 17-го дня улитка на 19 футах (меньше 20), ночью спускается до 17, и 18-й день доводит её до 20.
+
+Confidence: high
+
+Corrections to the colleague's answer: No errors in the colleague's answer (ответ верный; лишь заголовок «Дно колодца:» в начале лишний и сбивает с толку).
+
+=== ANSWER X ===
+**Улитка выбирается на 18-й день.**
+
+Прочтение: днём улитка поднимается на 3 фута, ночью соскальзывает на 2. Если днём она достигла верха, то она уже снаружи и назад не соскальзывает.
+
+- Полные сутки (день и ночь) дают чистый прирост 1 фут. После 17 суток улитка на высоте 17 футов.
+- На 18-й день она поднимается на 3 фута и достигает 20 футов, то есть верха колодца.
+
+Типичная ошибка — ответ 20: в нём чистый прирост 1 фут в сутки применяют и в последний день, хотя ночью улитка уже не соскальзывает.
+
+Confidence: high
+
+Корректировки к ответу коллеги: коллега прав. Нужно лишь поправить заголовок его ответа. Фраза «Дно колодца: 18-й день» неточна, потому что 18-й день — это день, когда улитка достигает верха, а не дна.
+
+=== ANSWER Y ===
+**Дно колодца: 18-й день.**
+
+После 17 ночей улитка находится на высоте 17 футов. На 18-й день она поднимается на 3 фута, достигает 20 футов и выбирается, поэтому назад уже не соскальзывает.
+
+=== ANSWER Z ===
+**Day 18.**
+
+Reading chosen: the snail climbs during the day and slips only at night. If it reaches the top during the day, it is out and doesn't slip back.
+
+**Facts:**
+- Net gain per full day and night is 1 foot.
+- After day *n*'s climb, the snail is at (n−1) + 3 = n + 2 feet. This assumes it hasn't reached the top before then.
+- It first reaches 20 feet when n + 2 ≥ 20, so n = 18.
+- Check: at the end of day 17 (after the night), the snail is at 17 feet. On day 18 it climbs 3 feet and reaches 20.
+
+**Conclusion:** Day 18. The common wrong answer is 20 (or 21). It comes from treating the net gain of 1 foot per day as if it applied on the final day, which ignores that the snail doesn't slip back once it is out.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

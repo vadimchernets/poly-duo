@@ -1,0 +1,10 @@
+**212 °F** is the boiling point of water at sea level. This is for pure water at standard atmospheric pressure (1 atm, 101.325 kPa), which equals 100 °C.
+
+The colleague's answer is correct. A few details that may help:
+- Real sea-level pressure varies with the weather, so the actual boiling point shifts slightly, by about 1 °F or less.
+- The boiling point drops by roughly 1 °F for every 500 ft of altitude gained.
+- Dissolved solids such as salt raise it slightly.
+
+Confidence: high
+
+No errors in the colleague's answer

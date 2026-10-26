@@ -1,0 +1,68 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+In the US, for tax year 2024, what is the federal standard deduction for a single filer?
+
+REFERENCE:
+$14,600 (IRS Rev. Proc. 2023-34)
+
+CRITERION:
+Correct iff $14,600.
+
+=== ANSWER W ===
+**The 2024 federal standard deduction for a single filer is $14,600.** The colleague's answer is correct.
+
+- This is the amount for returns filed in 2025. It comes from Rev. Proc. 2023-34 and is $750 more than the 2023 figure of $13,850.
+- A single filer who is 65 or older, or blind, adds $1,950 for each condition.
+- For comparison, the 2024 amounts are $29,200 for married filing jointly and $21,900 for head of household. Married filing separately is $14,600.
+- A dependent's deduction is the greater of $1,300 or earned income plus $450, capped at $14,600.
+- The July 2025 law (the One Big Beautiful Bill Act) raised the standard deduction starting in tax year 2025. It did not change the 2024 figure.
+
+Reading chosen: "single filer" means an unmarried taxpayer who is not a head of household, and the figure is the base amount before any age, blindness or dependent adjustments.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+No errors in the colleague's answer.
+
+=== ANSWER X ===
+**$14,600** is the federal standard deduction for a single filer for tax year 2024. Additional deductions may apply if the filer was age 65 or older or blind. [IRS 2024 Form 1040 instructions](https://www.irs.gov/pub/irs-prior/i1040gi--2024.pdf)
+
+=== ANSWER Y ===
+**$14,600** is the federal standard deduction for a single filer for tax year 2024 (returns filed in 2025).
+
+**Facts**
+- The IRS set this in Rev. Proc. 2023-34, an inflation adjustment of $450 from 2023's $13,850.
+- For comparison, the 2024 amounts for other filing statuses are $29,200 for married filing jointly and $21,900 for head of household. A married person filing separately gets $14,600.
+- Extra amounts apply to filers who are 65 or older or blind. For single or head of household filers, each condition adds $1,950. For married filers, each adds $1,550.
+- A dependent's deduction is limited to the greater of $1,300 or earned income plus $450, but it can't exceed $14,600.
+
+**Conclusion**
+The base figure is $14,600. I'm confident in it.
+
+**Not sure:** I'm not certain of the 2024 add-on amounts for the elderly or blind. I recall them from memory and haven't checked them against the IRS text.
+
+**Reading chosen:** "Single filer" means an unmarried taxpayer who isn't a head of household, and "standard deduction" means the base amount before any age, blindness or dependent adjustments.
+
+The One Big Beautiful Bill Act (July 2025) raised the standard deduction starting in tax year 2025. It did not change the 2024 figure.
+
+=== ANSWER Z ===
+**$14,600** is the federal standard deduction for a single filer (and for married filing separately) for tax year 2024, the return filed in 2025.
+
+The colleague's answer is correct. Two details are worth adding:
+
+- **Age or blindness:** A single filer who was 65 or older or blind adds **$1,950** for each condition. A single filer who is both 65 or older and blind therefore gets $14,600 + $3,900 = $18,500.
+- **Dependents:** A filer who can be claimed as someone else's dependent gets a lower, limited standard deduction. It is the greater of $1,300 or earned income plus $450, capped at $14,600.
+
+Source: IRS Rev. Proc. 2023-34, and the 2024 Form 1040 instructions.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

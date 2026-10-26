@@ -1,0 +1,7 @@
+300 times.
+
+From 000 through 999, the digit 7 appears exactly 100 times in each position—ones, tens, and hundreds:
+
+\(100 + 100 + 100 = 300\).
+
+Neither 000 nor 1000 contains a 7, so the answer for 1 through 1000 remains **300**.

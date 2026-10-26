@@ -1,0 +1,59 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+If it takes 5 machines 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets?
+
+REFERENCE:
+5 minutes
+
+CRITERION:
+Correct iff 5 minutes.
+
+=== ANSWER W ===
+5 minutes.
+
+Each machine makes 1 widget in 5 minutes. Therefore, 100 machines working simultaneously make 100 widgets in 5 minutes.
+
+=== ANSWER X ===
+**5 minutes.**
+
+Each machine makes 1 widget in 5 minutes, since 5 machines make 5 widgets in 5 minutes. The machines work in parallel, so 100 machines make 100 widgets in the same 5 minutes.
+
+This assumes each machine works at the same constant rate and independently.
+
+Confidence: high
+
+No errors in the colleague's answer.
+
+=== ANSWER Y ===
+**5 minutes.** The colleague's answer is correct.
+
+Each machine makes 1 widget in 5 minutes. So 100 machines working in parallel make 100 widgets in 5 minutes. The 100-minute answer is wrong because the machine-to-widget ratio is 1:1 in both cases.
+
+This assumes each machine works independently at a constant rate and builds one whole widget on its own.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+**5 minutes.**
+
+**Facts:**
+- 5 machines make 5 widgets in 5 minutes, so each machine makes 1 widget in 5 minutes.
+- 100 machines working in parallel each make 1 widget in 5 minutes, so together they make 100 widgets in 5 minutes.
+
+**Assumptions:**
+- Each machine works independently and at the same constant rate.
+- Each widget is made by a single machine. The 5 minutes is the time for one widget, so extra machines can't speed up a single widget.
+
+**Conclusion:** The tempting answer of 100 minutes comes from treating machines and widgets as if time scaled with their count. It doesn't, because the machine-to-widget ratio is the same (1:1) in both cases.
+
+**Not sure:** If several machines could work on one widget at the same time, the answer could differ. The question gives no basis for that, so I didn't use it.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

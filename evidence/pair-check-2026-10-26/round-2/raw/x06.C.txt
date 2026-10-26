@@ -1,0 +1,17 @@
+**29^546 mod 1000 = 121**
+
+Reading chosen: the ordinary integer power 29^546, reduced mod 1000.
+
+**Method (Chinese Remainder Theorem, 1000 = 8 · 125):**
+
+- Mod 8: 29 ≡ 5, and 5² = 25 ≡ 1. Since 546 is even, 29^546 ≡ 1 (mod 8).
+- Mod 125: gcd(29, 125) = 1 and φ(125) = 100, so 29^546 ≡ 29^46 (mod 125).
+  - 29² ≡ 91
+  - 29⁴ ≡ 91² = 8281 ≡ 31
+  - 29⁸ ≡ 31² = 961 ≡ 86
+  - 29¹⁶ ≡ 86² = 7396 ≡ 21
+  - 29³² ≡ 21² = 441 ≡ 66
+  - 46 = 32 + 8 + 4 + 2, so 29^46 ≡ 66 · 86 · 31 · 91. Stepwise: 66·86 = 5676 ≡ 51; 51·31 = 1581 ≡ 81; 81·91 = 7371 ≡ 121 (mod 125).
+- Combine: x ≡ 121 (mod 125) and x ≡ 1 (mod 8). Since 121 = 15·8 + 1, 121 satisfies both, so x = 121 (mod 1000).
+
+I did this by hand and did not run code. The final value passes the mod 8 check, but the mod 125 arithmetic was only done once.

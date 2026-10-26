@@ -1,0 +1,57 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What date is 648 days after 8 December 2027?
+
+REFERENCE:
+16 September 2029
+
+CRITERION:
+Correct iff exactly this date.
+
+=== ANSWER W ===
+**16 September 2029.** The colleague's answer is correct.
+
+Check: 23 days to 31 Dec 2027, then 366 days for leap-year 2028 (389 total). The remaining 259 days of 2029 land on day 259 of the year, which is 16 September (31 August is day 243, plus 16).
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**16 September 2029.** The colleague's answer is correct.
+
+Reading: adding 648 calendar days to 8 December 2027, so 9 December 2027 is day 1.
+
+- 8 Dec to 31 Dec 2027: 23 days, leaving 625.
+- 2028 is a leap year (366 days), so 31 Dec 2028 is day 389, leaving 259.
+- In 2029, January through August total 243 days, leaving 16 days into September, so the date is 16 September 2029.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**16 September 2029.**
+
+Reading: "648 days after" means adding 648 calendar days, so 9 December 2027 is day 1.
+
+Calculation:
+- 8 Dec 2027 to 31 Dec 2027: 23 days, leaving 625.
+- 2028 is a leap year (366 days), so 31 Dec 2028 is day 389, leaving 259.
+- 2029 is not a leap year. Through 31 Aug it has 243 days (31+28+31+30+31+30+31+31), leaving 16 days into September.
+- 243 + 16 = 259, so the date is 16 September 2029.
+
+I'm confident in this result. I did the arithmetic by hand rather than running a date tool.
+
+=== ANSWER Z ===
+16 September 2029.
+
+Using standard date arithmetic, where 8 December 2027 is day zero.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

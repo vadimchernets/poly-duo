@@ -1,0 +1,62 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Reverse the string "dsrzvcrqzsxjdpwyorefntzv". What is the 5th character of the reversed string?
+
+REFERENCE:
+f
+
+CRITERION:
+Correct iff this character.
+
+=== ANSWER W ===
+**The 5th character is "f".**
+
+Reading chosen: counting from 1, in the reversed string.
+
+The original has 24 characters. Numbered, they are: d1 s2 r3 z4 v5 c6 r7 q8 z9 s10 x11 j12 d13 p14 w15 y16 o17 r18 e19 f20 n21 t22 z23 v24.
+
+The reversed string is `vztnferoywpdjxszqrcvzrsd`. Its first five characters are v, z, t, n, f. The 5th is the 20th character of the original.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The headline says the 5th character is "t", which is wrong. "t" is the 3rd character. The body of the answer then arrives at "f", so the answer contradicts itself, and only the second result is correct.
+- The reversed string is given as `vzt nferoywpdjxszqrcvzrsd`. Apart from the stray space, it is correct.
+
+=== ANSWER X ===
+The 5th character is **t**.
+
+Reversed string: `vzt nferoywpdjxszqrcvzrsd` — ignoring the accidental visual spacing, the first five characters are `vztnf`, so the 5th is **f**.
+
+=== ANSWER Y ===
+**The 5th character is "f".**
+
+Reading chosen: the 5th character counted from 1, in the reversed string.
+
+**Facts**
+- The original string has 24 characters: `dsrzvc` `rqzsxj` `dpwyor` `efntzv`.
+- The reversed string is `vztnferowypdjxszqrcvzrsd`.
+- Its first five characters are v, z, t, n, f.
+- The 5th character of the reversed string is the 20th character of the original, which is "f" (the second letter of the last block, `efntzv`).
+
+**Conclusion:** f. I'm sure of this: I counted the length twice, by blocks of 6 and by individual positions, and both counts agree.
+
+=== ANSWER Z ===
+**The 5th character of the reversed string is `f`.**
+
+The original has 24 characters: d-s-r-z-v-c-r-q-z-s-x-j-d-p-w-y-o-r-e-f-n-t-z-v.
+
+The reversed string is `vztnferoywpdjxszqrcvzrsd`, and its first five characters are v, z, t, n, f.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The opening line says the 5th character is **t**, which is wrong (`t` is the 3rd). The answer later corrects itself to `f`, so the two statements contradict each other. The reversed string it gives is correct, and `f` is the right answer.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

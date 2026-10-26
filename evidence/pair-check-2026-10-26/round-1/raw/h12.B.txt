@@ -1,0 +1,13 @@
+**Bottom line: about 26.4 hours.** The colleague's draft is correct.
+
+Reading chosen: the pool starts empty and is filled to the full 1.5 m depth, with the hose running continuously at 18 US gal/min and no losses.
+
+- Volume: 12 × 6 × 1.5 = 108 m³ = 108,000 L.
+- 1 US gallon = 3.785412 L, so the volume is about 28,531 US gallons.
+- Time: 28,531 ÷ 18 ≈ 1,585 min ≈ 26.42 h.
+
+The result is 26.4 hours, or about 1 day and 2.4 hours. Evaporation, leaks and flow-rate changes are not given, so they are ignored.
+
+Confidence: high
+
+No errors in the colleague's answer

@@ -1,0 +1,5 @@
+• W: Final answer is 235.2 L/100 km from the exact US gallon and mile, with the imperial value only a caveat.  
+  X: Final answer is 235.2 L/100 km; the slightly rounded constants still round to the same accepted value.  
+  Y: Final answer endorses 235.2 L/100 km and confirms the rounding remains correct despite rounded inputs.  
+  Z: Final answer is 235.2 L/100 km and correctly matches the reference constant.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

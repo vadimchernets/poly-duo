@@ -1,0 +1,15 @@
+**7,942,591 × 2,341,228 = 18,595,416,441,748**
+
+Reading chosen: plain integer multiplication in base 10.
+
+**Facts (hand computation, split by 2,341,228 = 2,000,000 + 341,000 + 228):**
+- 7,942,591 × 2,000,000 = 15,885,182,000,000
+- 7,942,591 × 341,000 = 2,708,423,531,000
+- 7,942,591 × 228 = 1,810,910,748
+- Sum: 15,885,182,000,000 + 2,708,423,531,000 + 1,810,910,748 = 18,595,416,441,748
+
+**Checks:**
+- Mod 9: the factors reduce to 1 and 4, so the product should be 4. The result's digit sum is 67, which is 4 mod 9. ✔
+- Mod 11: the factors reduce to 8 and 10, so the product should be 80 ≡ 3. The result's alternating digit sum is 25, which is 3 mod 11. ✔
+
+**Conclusion:** the result is 18,595,416,441,748. I did not run it in a calculator or the shell. Both modular checks pass, which makes an error unlikely, though they do not strictly rule out every mistake.

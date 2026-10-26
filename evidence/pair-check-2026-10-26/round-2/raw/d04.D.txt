@@ -1,0 +1,13 @@
+**19 July 2527 will be a Saturday, so the colleague's answer ("Friday") is wrong.**
+
+I reached this by anchoring on today's date and using the fact that the Gregorian calendar repeats every 400 years, which is exactly 20,871 weeks.
+
+1. Today, 26 October 2026, is a Monday. 19 July 2026 is 99 days earlier, and 99 mod 7 = 1, so 19 July 2026 was a Sunday. That also fits 4 July 2026 being a Saturday.
+2. Because of the 400-year cycle, 19 July 2527 falls on the same weekday as 19 July 2127.
+3. From 19 July 2026 to 19 July 2127 is 101 years. The leap years in between are 2028 to 2124, which is 25 years, minus 2100 (not a leap year in the Gregorian calendar), so 24 leap days.
+4. The weekday shift is 101 + 24 = 125 days, and 125 mod 7 = 6. Sunday plus 6 days is Saturday.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- "Friday" is incorrect. The correct day is Saturday.

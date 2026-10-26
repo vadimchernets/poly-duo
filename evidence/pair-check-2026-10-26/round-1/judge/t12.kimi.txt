@@ -1,0 +1,6 @@
+• W: States **1009** and correctly rules out 1001–1008, matching the reference — correct.  
+  X: States **1009** with valid primality/compositeness checks, matching the reference — correct.  
+  Y: States **1009** with a correct brief justification, matching the reference — correct.  
+  Z: States **1009** with correct factorizations and trial-division bounds, matching the reference — correct.  
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

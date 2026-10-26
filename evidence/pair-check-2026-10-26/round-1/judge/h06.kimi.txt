@@ -1,0 +1,3 @@
+• W: Correct — computes 130° with valid hour/minute positions and confirms it is the smaller angle. X: Correct — states 130° with correct supporting positions. Y: Correct — 130° with accurate reasoning and a correct common-mistake note. Z: Correct — 130° with correct arithmetic and the smaller-angle check.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,64 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+A farmer needs to get a goat across a river. His boat can carry the farmer plus one animal or item. What is the minimum number of one-way crossings needed?
+
+REFERENCE:
+1 (he simply takes the goat across; there is no wolf or cabbage)
+
+CRITERION:
+Correct iff 1 crossing. Answers of 7 (the classic wolf-goat-cabbage solution) or similar = incorrect.
+
+=== ANSWER W ===
+**1 crossing.**
+
+Reading I chose: the farmer has only the goat to move (no wolf or cabbage), and the boat carries the farmer plus one animal or item.
+
+**Facts:**
+- The boat holds the farmer and one passenger, and the goat is the only passenger.
+- The farmer rows the goat across in a single one-way trip.
+- No constraints apply. Nothing else is on the bank that could eat the goat or be eaten.
+
+**Conclusion:** the minimum is 1 one-way crossing.
+
+**Caveat:** this looks like the wolf-goat-cabbage puzzle with the extra items removed. If a wolf and a cabbage were also present and had to cross, the minimum would be 7. Nothing in the question mentions them, so I did not count them.
+
+=== ANSWER X ===
+**1 crossing.**
+
+Interpretation: only the farmer and goat are involved. They cross together in the boat once.
+
+=== ANSWER Y ===
+**1 crossing.**
+
+Reading I chose: the goat is the only thing the farmer has to move (no wolf or cabbage). The boat carries the farmer plus one passenger.
+
+The farmer puts the goat in the boat and rows across once. Nothing else is on either bank that could eat the goat or be eaten, so no further trips are needed.
+
+If this was meant to be the classic wolf–goat–cabbage puzzle, where all three must cross and the wolf and goat can't be left alone together, nor the goat and cabbage, the minimum would be 7 one-way crossings. The question doesn't mention a wolf or cabbage, so I didn't count them.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+**Bottom line: 1 crossing.** The draft is correct.
+
+Reading I chose: the question asks only about getting the goat across. The farmer and goat are the only things that need to cross, and the boat carries the farmer plus one animal or item.
+
+The farmer rows the goat across in a single one-way trip, so the minimum is 1.
+
+If you meant the classic puzzle (wolf, goat and cabbage), the answer would be 7. The question doesn't mention a wolf, a cabbage, or any restriction on what can be left together, so I don't think it means that version.
+
+Confidence: high
+
+No errors in the colleague's answer.
+
+If you meant the classic puzzle, tell me which items must also cross and which pairs can't be left alone.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

@@ -1,0 +1,3 @@
+Sunday.
+
+The shifts are: +2 days (leap year 2028), then +1, then +1. Wednesday + 4 days = Sunday.

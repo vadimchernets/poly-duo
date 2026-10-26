@@ -1,0 +1,7 @@
+The colleague's answer is correct: the 3000th prime is **27,449**.
+
+This agrees with the standard reference values for nearby milestones: the 1000th prime is 7,919, the 2000th is 17,389, and the 3000th is 27,449. I checked this from memory and did not run a computation.
+
+Confidence: high
+
+No errors in the colleague's answer

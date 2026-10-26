@@ -1,0 +1,77 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many times does the digit 7 appear when you write out all the integers from 1 to 1000?
+
+REFERENCE:
+300
+
+CRITERION:
+Correct iff 300.
+
+=== ANSWER W ===
+**300**
+
+Reading chosen: count every occurrence of the digit 7 in the written numbers 1 to 1000, so "77" counts twice.
+
+The draft is correct. Pad every number to three digits (000–999). Each of the three positions (ones, tens, hundreds) then shows a 7 exactly 100 times, so the total is 3 × 100 = 300. The padding adds only zeros, and 1000 has no 7, so neither changes the count.
+
+A check by position gives the same total:
+- Ones digit 7: 7, 17, …, 997, which is 100 numbers.
+- Tens digit 7: 70–79, 170–179, …, 970–979, which is 100 numbers.
+- Hundreds digit 7: 700–799, which is 100 numbers.
+
+If the question meant how many numbers contain a 7, the answer would be 271, not 300.
+
+Confidence: high
+
+No errors in the colleague's answer.
+
+=== ANSWER X ===
+**300**
+
+**Reading chosen:** count every occurrence of the digit 7 in the decimal writing of 1 through 1000. The 7 in "17" counts once, and "77" counts twice.
+
+**Facts:**
+- 1000 contains no 7, so the range is effectively 1–999, or 000–999 padded to three digits. Padding adds only zeros, so it doesn't change the count of 7s.
+- Each of the 3 digit positions (units, tens, hundreds) takes each value 0–9 equally often across 000–999, which is 100 times each.
+- So each position shows a 7 exactly 100 times.
+
+**Conclusion:** 3 × 100 = 300.
+
+**Check by place:**
+- Units digit 7: 100 numbers (7, 17, …, 997).
+- Tens digit 7: 100 numbers (70–79, 170–179, …).
+- Hundreds digit 7: 100 numbers (700–799).
+- 100 + 100 + 100 = 300.
+
+I'm sure of this result. The only way to get a different number is to read the question differently. For example, counting the numbers that contain a 7 gives 271, not 300.
+
+=== ANSWER Y ===
+**300.** The draft is correct.
+
+Reading chosen: count every occurrence of the digit 7 in the written numbers 1 to 1000.
+
+Pad the numbers 000 to 999 to three digits. Each of the three positions (hundreds, tens, ones) holds a 7 in exactly 1/10 of the 1000 numbers, which is 100 numbers per position. That gives 3 × 100 = 300. Padding with leading zeros adds no 7s. Neither 000 nor 1000 contains a 7, so the range 1 to 1000 gives the same total.
+
+As a check, 7 appears 100 times as a ones digit, 100 times as a tens digit (70–79, 170–179, and so on) and 100 times as a hundreds digit (700–799).
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+300 times.
+
+From 000 through 999, the digit 7 appears exactly 100 times in each position—ones, tens, and hundreds:
+
+\(100 + 100 + 100 = 300\).
+
+Neither 000 nor 1000 contains a 7, so the answer for 1 through 1000 remains **300**.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

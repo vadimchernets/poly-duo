@@ -1,0 +1,60 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many prime numbers are there between 100 and 200?
+
+REFERENCE:
+21
+
+CRITERION:
+Correct iff 21.
+
+=== ANSWER W ===
+**21 prime numbers between 100 and 200.** The colleague's answer is correct.
+
+I read "between 100 and 200" as the range 100–200. Neither endpoint is prime, so counting them or leaving them out gives the same result.
+
+The primes are 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199.
+
+As a check, π(200) = 46 and π(100) = 25, and 46 − 25 = 21.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+There are **21** prime numbers between 100 and 200.
+
+They are: 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, and 199.
+
+=== ANSWER Y ===
+**21 primes between 100 and 200.**
+
+Reading chosen: the range is 100–200, and since neither endpoint is prime, inclusive or exclusive gives the same count.
+
+Facts: the primes are
+101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199.
+
+Check: π(200) = 46 and π(100) = 25, so 46 − 25 = 21. This matches the list above.
+
+Per decade: 100s: 5; 110s: 1; 120s: 1; 130s: 3; 140s: 1; 150s: 2; 160s: 2; 170s: 2; 180s: 1; 190s: 4. Sum: 5+1+1+3+1+2+2+2+1+... let me recount from the list: 101,103,107,109 (4 in 100s), 113 (1), 127 (1), 131,137,139 (3), 149 (1), 151,157 (2), 163,167 (2), 173,179 (2), 181 (1), 191,193,197,199 (4). Total = 4+1+1+3+1+2+2+2+1+4 = 21. (My first decade tally listed 5 for the 100s; the correct figure is 4.)
+
+I'm certain of the answer; the list and the π(200) − π(100) check agree.
+
+=== ANSWER Z ===
+**There are 21 primes between 100 and 200. The colleague's answer is correct.**
+
+They are: 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199.
+
+As a check, there are 46 primes up to 200 and 25 up to 100, and 46 − 25 = 21. Neither 100 nor 200 is prime, so whether the range includes its endpoints doesn't matter.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

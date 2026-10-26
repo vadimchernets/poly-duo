@@ -1,0 +1,21 @@
+**19 July 2527 is a Saturday.** ChatGPT's "Friday" is wrong.
+
+I read the question as the Gregorian calendar extended to 2527, with no reform adjustments.
+
+**Check 1: anchor on 2000**
+- 1 January 2000 was a Saturday. In a leap year, 19 July is day 201, which is 200 days later. 200 mod 7 = 4, so 19 July 2000 was a Wednesday.
+- The Gregorian cycle is 400 years, which is exactly 20,871 weeks. So 19 July 2400 is also a Wednesday.
+- From 2400 to 2527 is 127 years. Leap days run from 2404 through 2524, which is 31, minus the non-leap 2500, so 30.
+- The weekday shift is 127 + 30 = 157 days. 157 mod 7 = 3, and Wednesday + 3 days = **Saturday**.
+
+**Check 2: anchor on 2026**
+- 19 July 2026 is a Sunday.
+- 2527 is 400 years after 2127, so they share a weekday. From 2026 to 2127 is 101 years with 24 leap days (2028–2124 minus 2100).
+- The shift is 125 days. 125 mod 7 = 6, and Sunday + 6 days = **Saturday**.
+
+Both routes agree. I did this by hand and did not run code.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The answer "Friday" is incorrect; the correct weekday is Saturday. It also gave no working to check.

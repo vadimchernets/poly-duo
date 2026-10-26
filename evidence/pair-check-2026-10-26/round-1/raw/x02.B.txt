@@ -1,0 +1,19 @@
+**Bottom line: 1/2.** Switching to door 2 wins the car with probability 50%, and so does staying with door 1. The colleague's answer is correct.
+
+**Reading chosen:** The host picks uniformly at random between doors 2 and 3, without knowing where the car is. He could have revealed the car, but he didn't, so we condition on that outcome.
+
+**Calculation (Bayes):**
+- Each door starts with prior probability 1/3.
+- The likelihood of the observation "host opens door 3 and shows a goat" depends on where the car is:
+  - Car at door 1: 1/2 (he picks door 3, and it is a goat).
+  - Car at door 2: 1/2 (same).
+  - Car at door 3: 0 (he would have shown the car).
+- The joint probabilities are 1/6, 1/6 and 0. Dividing by the total of 1/3 gives P(car at 1) = P(car at 2) = 1/2.
+
+**Why it differs from the classic 2/3:** A knowing host always opens a goat door. If the car is at door 2, he is forced to open door 3, so that outcome has likelihood 1. If the car is at door 1, he opens door 3 only half the time, so that outcome has likelihood 1/2. This asymmetry produces the 2/3 for switching. A random host has equal likelihoods for both cases, so the extra weight disappears.
+
+**Caveat:** This assumes the host chooses uniformly between doors 2 and 3. If he were biased toward door 3, the answer would shift.
+
+Confidence: high
+
+No errors in the colleague's answer

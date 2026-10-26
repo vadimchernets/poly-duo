@@ -1,0 +1,12 @@
+**Sally has 1 sister.**
+
+**Reading chosen:** all the brothers share the same two parents (full siblings), and Sally is a girl.
+
+**Facts:**
+- Each brother has 2 sisters. Sally is one of them.
+- The other sister is a girl besides Sally.
+- Sally cannot count herself as her own sister, so her sisters are the girls in the family other than her. The family has 2 girls in total.
+
+**Conclusion:** Sally has 1 sister. A common wrong answer is 2, which comes from forgetting that Sally is one of the brothers' 2 sisters.
+
+**Not sure about:** half-siblings. If some brothers had different parents, the count could differ. The question doesn't say, so I assumed they are full siblings.

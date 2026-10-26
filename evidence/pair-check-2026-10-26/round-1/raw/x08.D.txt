@@ -1,0 +1,9 @@
+**There are 21 primes between 100 and 200. The colleague's answer is correct.**
+
+They are: 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199.
+
+As a check, there are 46 primes up to 200 and 25 up to 100, and 46 − 25 = 21. Neither 100 nor 200 is prime, so whether the range includes its endpoints doesn't matter.
+
+Confidence: high
+
+No errors in the colleague's answer

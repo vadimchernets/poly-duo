@@ -1,0 +1,57 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Reverse the string "hgfiuvvywleveyxkntpxqszj". What is the 18th character of the reversed string?
+
+REFERENCE:
+v
+
+CRITERION:
+Correct iff this character.
+
+=== ANSWER W ===
+**The 18th character of the reversed string is "v".**
+
+Reading chosen: counting from 1, in the reversed string.
+
+**Facts:**
+- The original string has 24 characters.
+- Reversed: `jzsqxptnkxyevelwyvvuifgh`
+- Counting through it: j(1) z(2) s(3) q(4) x(5) p(6) t(7) n(8) k(9) x(10) y(11) e(12) v(13) e(14) l(15) w(16) y(17) v(18)
+- Cross-check: reversed position 18 corresponds to original position 24 − 18 + 1 = 7, which is "v" (h g f i u v **v**).
+
+**Conclusion:** v. I'm sure of this result.
+
+=== ANSWER X ===
+The 18th character of the reversed string is **v**, so the colleague's answer is correct.
+
+The original string has 24 characters, so the 18th character of the reversed string is the 7th of the original (24 − 18 + 1 = 7), which is "v".
+
+The reversed string is "jzsqxptnkxyevelwyvvuifgh", and its 18th character is "v".
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+The 18th character of the reversed string is **v**.
+
+=== ANSWER Z ===
+**The 18th character of the reversed string is "v".** The colleague's answer is correct.
+
+Reading chosen: positions counted from 1 in the reversed string.
+
+- The original has 24 characters, and its reversal is `jzsqxptnkxyevelwyvvuifgh`.
+- Position 18 of the reversed string maps to position 24 − 18 + 1 = 7 of the original. The original reads h g f i u v **v**, so that character is "v".
+- Counting directly in the reversed string gives the same result: j(1) z(2) s(3) q(4) x(5) p(6) t(7) n(8) k(9) x(10) y(11) e(12) v(13) e(14) l(15) w(16) y(17) **v(18)**.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

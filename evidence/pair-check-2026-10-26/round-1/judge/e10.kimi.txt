@@ -1,0 +1,9 @@
+• **W** — Final answer is $10,616.78, matching the reference exactly; correct.
+
+  **X** — Final answer is $10,616.78 under its chosen reading, and the $10,600.00 alternative is explicitly disavowed, not committed to; correct.
+
+  **Y** — Final answer is $10,616.78, matching the reference with no competing commitment; correct.
+
+  **Z** — Final answer is $10,616.78, and the rounding/effective-rate caveats are hedged possibilities, not committed results; correct.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,5 @@
+• W: Its final answer is 1 and the 7-crossing note is only a conditional caveat, not the committed result.  
+  X: It gives 1 as the minimum for the farmer-plus-goat-only scenario.  
+  Y: It states 1 and treats 7 only as the answer to an unstated wolf-cabbage version.  
+  Z: It commits to 1 and correctly notes 7 would apply only to the classic variant, not this question.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

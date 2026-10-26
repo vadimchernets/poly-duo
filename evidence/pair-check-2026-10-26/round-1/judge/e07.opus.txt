@@ -1,0 +1,9 @@
+**W:** It gives 10:00 AM in London on January 16, which matches the reference.
+
+**X:** It gives 10:00 AM GMT on January 16, which matches the reference. The odd mentions of a "colleague's answer" don't change the result.
+
+**Y:** It gives 10:00 AM GMT on January 16 and checks it a second way, which matches the reference.
+
+**Z:** Its first line says 5:00 AM, but it then says plainly that this was wrong and settles on 10:00 AM on January 16. Because it retracts the wrong figure instead of leaving both open, its final answer matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

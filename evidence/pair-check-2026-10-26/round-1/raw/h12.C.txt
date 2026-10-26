@@ -1,0 +1,13 @@
+**Bottom line: about 26.4 hours.**
+
+Reading chosen: the "1.5 m average depth" is the full water depth, and the pool is filled to that level with no losses.
+
+**Facts**
+- Volume = 12 × 6 × 1.5 = 108 m³ = 108,000 L.
+- 1 US gallon = 3.785412 L, so the volume is about 28,531 US gallons.
+- Time = 28,531 ÷ 18 ≈ 1,585 min ≈ 26.42 h.
+
+**Conclusion**
+It takes about 26.4 hours, or roughly 1 day and 2.4 hours of continuous running.
+
+This ignores evaporation, leaks and any change in the hose flow rate. I'm not sure the real fill would match, since those factors aren't given.

@@ -1,0 +1,5 @@
+W: Says "No, it doesn't follow" and gives a valid counterexample, which matches the reference.
+X: Says "Нет, не следует" ("No, it does not follow") and shows the premises are true while the conclusion fails, which matches the reference.
+Y: Answers "No" and says the reverse does not follow, which matches the reference.
+Z: Answers "Нет, не следует" ("No, it does not follow") and repeats "No" in the English summary, which matches the reference.
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

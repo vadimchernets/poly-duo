@@ -1,0 +1,7 @@
+The colleague's answer is correct: the reversed word is **aidepolcycne**, and its 7th letter is **l**.
+
+Counting the reversed word: a(1) i(2) d(3) e(4) p(5) o(6) **l(7)** c(8) y(9) c(10) n(11) e(12).
+
+Confidence: high
+
+No errors in the colleague's answer

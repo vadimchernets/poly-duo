@@ -1,0 +1,51 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is the sum of the decimal digits of 2^50?
+
+REFERENCE:
+76 (2^50 = 1,125,899,906,842,624)
+
+CRITERION:
+Correct iff 76.
+
+=== ANSWER W ===
+76
+
+=== ANSWER X ===
+**Answer: 76** (the colleague's answer is correct.)
+
+2^50 = 1,125,899,906,842,624.
+
+Digit sum: 1+1+2+5+8+9+9+9+0+6+8+4+2+6+2+4 = 76.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**Answer: 76**
+
+**Facts:**
+- 2^50 = 1,125,899,906,842,624. I derived it as 2^40 × 1024, with 2^40 = 1,099,511,627,776, and this matches the known value.
+- Digit sum: 1+1+2+5+8+9+9+9+0+6+8+4+2+6+2+4 = 76.
+
+**Confidence:** I did this by hand, without running code. I checked the arithmetic twice and I'm confident in the result.
+
+=== ANSWER Z ===
+**The sum is 76, and the colleague's answer is correct.**
+
+2^50 = 1,125,899,906,842,624.
+
+Digit sum: 1+1+2+5+8+9+9+9+0+6+8+4+2+6+2+4 = 76.
+
+Confidence: high
+
+No errors in the colleague's answer.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

@@ -1,0 +1,7 @@
+278 integers.
+
+- Divisible by 4 or 6:  
+  \(\lfloor1000/4\rfloor+\lfloor1000/6\rfloor-\lfloor1000/12\rfloor=250+166-83=333\).
+- Among these, those divisible by 9 are precisely the multiples of 18:  
+  \(\lfloor1000/18\rfloor=55\).
+- Therefore: \(333-55=\boxed{278}\).

@@ -1,0 +1,23 @@
+**29^546 mod 1000 = 121.** The colleague's answer of 221 is wrong.
+
+**Method:** the order of 29 mod 1000 divides λ(1000) = 100, so 29^546 ≡ 29^46 (mod 1000). Direct repeated squaring then gives the result:
+
+- 29² = 841
+- 29⁴ ≡ 841² = 707281 ≡ 281
+- 29⁵ ≡ 281·29 = 8149 ≡ 149
+- 29⁶ ≡ 281·841 = 236321 ≡ 321
+- 29¹⁰ ≡ 149² = 22201 ≡ 201
+- 29²⁰ ≡ 201² = 40401 ≡ 401
+- 29⁴⁰ ≡ 401² = 160801 ≡ 801
+- 29⁴⁶ ≡ 801·321 = 257121 ≡ **121**
+
+**Cross-check with CRT:**
+- Mod 8: 29 ≡ 5 and 5² ≡ 1, so an even exponent gives 1.
+- Mod 125: 29⁴ ≡ 31, so 29⁴⁶ = (29⁴)¹¹·29² ≡ 31¹¹·91 ≡ 81·91 ≡ 121.
+- The only residue mod 1000 that is ≡ 1 (mod 8) and ≡ 121 (mod 125) is 121.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The claim 29²⁰ ≡ 1 (mod 1000) is false. Actually 29²⁰ ≡ 401 (mod 1000), and mod 125 it is 26, not 1. So reducing the exponent mod 20 is invalid. The valid reduction is mod 100.
+- Even with their reduction, the arithmetic is wrong: 281·841 = 236321 ≡ 321, not 221. Their final answer matches neither the true value nor their own chain of steps.

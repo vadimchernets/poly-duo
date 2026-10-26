@@ -1,0 +1,9 @@
+**The square root of 1,764 is 42.**
+
+42 × 42 = 1,764. As a check, 40² = 1,600, 2·40·2 = 160 and 2² = 4, which add up to 1,764.
+
+Strictly, −42 also squares to 1,764. The principal (non-negative) root, which is what "the square root" normally means, is +42.
+
+Confidence: high
+
+No errors in the colleague's answer

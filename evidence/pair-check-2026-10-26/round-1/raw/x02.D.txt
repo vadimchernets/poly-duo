@@ -1,0 +1,17 @@
+**Switching to door 2 wins with probability 1/2.** ChatGPT's answer is correct. Its reasoning was hand-waved, so here is the full calculation.
+
+Reading chosen: the host picks one of doors 2 or 3 uniformly at random, without knowing where the car is. We condition on the observed event "he opened door 3 and it was a goat."
+
+Each door has prior probability 1/3 of hiding the car. For each case, the chance of the observed event is:
+
+- **Car behind 1:** the host opens door 3 with probability 1/2, and it shows a goat. This gives 1/3 · 1/2 = 1/6.
+- **Car behind 2:** the host opens door 3 with probability 1/2, and it shows a goat. This gives 1/3 · 1/2 = 1/6.
+- **Car behind 3:** the host opens door 3 with probability 1/2, but it shows the car. This is inconsistent with what you saw, so it contributes 0.
+
+Normalizing gives P(car behind 2 | goat behind 3) = (1/6) / (1/6 + 1/6) = **1/2**. Staying with door 1 also wins with probability 1/2.
+
+In the classic game, a host who knows where the car is always avoids it. Then door 3 would be opened with probability 1 if the car were behind 2, but only 1/2 if it were behind 1, which is what gives switching its 2/3. Here the host's choice carries no information about door 1. The only update comes from ruling out the car-behind-3 case, and that update hits doors 1 and 2 equally.
+
+Confidence: high
+
+No errors in the colleague's answer

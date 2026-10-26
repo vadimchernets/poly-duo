@@ -1,0 +1,11 @@
+**21 prime numbers between 100 and 200.** The colleague's answer is correct.
+
+I read "between 100 and 200" as the range 100–200. Neither endpoint is prime, so counting them or leaving them out gives the same result.
+
+The primes are 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199.
+
+As a check, π(200) = 46 and π(100) = 25, and 46 − 25 = 21.
+
+Confidence: high
+
+No errors in the colleague's answer

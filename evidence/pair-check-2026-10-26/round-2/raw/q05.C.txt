@@ -1,0 +1,13 @@
+**Final price: $6,505.57**
+
+Reading chosen: each change applies to the running price, not to the original one, and I rounded only at the end.
+
+Steps:
+- ×1.17 → 6,299.2683
+- ×1.125 → 7,086.6768
+- ×1.08 → 7,653.6110
+- ×0.85 → 6,505.5693
+
+The combined multiplier is 1.17 × 1.125 × 1.08 × 0.85 = 1.2083625. Multiplying that by 5,383.99 gives the same result.
+
+Rounding after each step would give a figure that differs by a cent or so, but I did not compute it. I did the arithmetic by hand and ran no tool.

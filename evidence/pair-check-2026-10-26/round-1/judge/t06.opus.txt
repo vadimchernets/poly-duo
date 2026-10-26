@@ -1,0 +1,6 @@
+W: Correct. It says the wall has never been visible from the Moon with the naked eye and that the claim is a myth.
+X: Correct. It says "Never" and calls the claim a myth.
+Y: Correct. It rejects the premise for every era, and its garbled spelling of the astronaut's name doesn't change that.
+Z: Correct. It says the wall has never been visible, so there is no such year.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

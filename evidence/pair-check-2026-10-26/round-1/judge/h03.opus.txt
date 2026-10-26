@@ -1,0 +1,9 @@
+**W:** It rejects the premise. It says Spencer coined the phrase and it is not in the 1859 edition, and pointing to Chapter IV of the 5th edition does not name a first-edition chapter.
+
+**X:** It says Darwin neither coined nor used the phrase in the 1859 edition and credits Spencer, so it rejects the premise.
+
+**Y:** It says outright that the premise is false: Spencer coined the phrase and it is absent from the first edition.
+
+**Z:** It rejects the premise, crediting Spencer and saying the phrase does not appear in the first edition. Its claim that the 5th edition already had the retitled chapter is extra detail outside the criterion.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

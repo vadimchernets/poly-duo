@@ -1,0 +1,7 @@
+**The ball costs $0.10.** The draft is correct for the question as written, where the bat's price is given outright as $1.00 and $1.10 − $1.00 = $0.10.
+
+I read the question literally. It is a close variant of the well-known puzzle where the bat costs *$1.00 more than* the ball. In that version the ball costs $0.05 and the bat $1.05. If that was what you meant, the answer is 5 cents.
+
+Confidence: high
+
+No errors in the colleague's answer.

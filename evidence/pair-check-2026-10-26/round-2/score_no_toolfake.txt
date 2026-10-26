@@ -1,0 +1,29 @@
+tasks with a fake tool call instead of an answer in C/D/B: ['m05', 'n03', 'n04', 's04', 's05', 's07', 's08', 'x04'] (EXCLUDED)
+tasks scored: 38; judge disagreements unresolved: 0; missing: ['c01', 'c02', 'c03', 'c04', 'c05', 'c06', 'c07', 'c08', 'w02', 'w03', 'w06', 'd01', 'd03', 'd05', 'd07', 'd08', 'b01', 'b02', 'b03', 'b05', 'b07', 'p01', 'p02', 'p04', 'p06', 's01', 's02', 's03', 's06', 'm01', 'm06', 'm07', 'm08', 'x02', 'r01', 'r06', 'r07', 'i01', 'i02', 'i03', 'i05', 'i06', 'q04', 'n01', 'n02', 'h01', 'h02', 'h08', 'h09', 'h11', 'h12', 'h13', 'h14', 'h15', 'h16', 'h17', 'h18', 'h19', 'h21', 'h22', 'h23', 'h24']
+judge raw agreement (Kimi vs Opus, per answer): 184/184
+
+| variant | all selected | selected as A-wrong (pre-check) | control: A-right (pre-check) | lenient (partial=ok) |
+|---|---|---|---|---|
+| A ChatGPT alone | 20/38 = 53% [37–68] | 0/18 = 0% [0–18] | 20/20 = 100% [84–100] | 23/38 = 61% [45–74] |
+| C Claude alone | 36/38 = 95% [83–99] | 17/18 = 94% [74–99] | 19/20 = 95% [76–99] | 37/38 = 97% [87–100] |
+| D Duo Critique | 37/38 = 97% [87–100] | 18/18 = 100% [82–100] | 19/20 = 95% [76–99] | 38/38 = 100% [91–100] |
+| B Duo blind-first | 36/38 = 95% [83–99] | 17/18 = 94% [74–99] | 19/20 = 95% [76–99] | 37/38 = 97% [87–100] |
+
+D Duo Critique vs A: fixed 18 ['c10', 'w05', 'd04', 'p05', 'x01', 'x03', 'x06', 'r02', 'r03', 'r05', 'r08', 'q01', 'q02', 'q03', 'q05', 'q06', 'h05', 'h20']; broke 1 ['h07']; kept A's error 0 []; A wrong & blind C right -> D still wrong (anchoring): 0/17 []
+  A-right tasks broken by D: 1/20 = 5% [1–24]; A-wrong tasks fixed by D: 18/18 = 100% [82–100]
+
+B Duo blind-first vs A: fixed 17 ['c10', 'w05', 'd04', 'p05', 'x01', 'x03', 'x06', 'r02', 'r03', 'r05', 'r08', 'q01', 'q03', 'q05', 'q06', 'h05', 'h20']; broke 1 ['h07']; kept A's error 1 ['q02']; A wrong & blind C right -> B still wrong (anchoring): 0/17 []
+  A-right tasks broken by B: 1/20 = 5% [1–24]; A-wrong tasks fixed by B: 17/18 = 94% [74–99]
+
+TASKS THAT SPLIT THE MODELS (A right != C right): 18 of 38 ['c10', 'w05', 'd04', 'p05', 'x01', 'x03', 'x06', 'r02', 'r03', 'r05', 'r08', 'q01', 'q03', 'q05', 'q06', 'h05', 'h07', 'h20'] (by task type: arithmetic 3, calendar 2, characters 4, letters 1, logic 0, percent 4, premise 0, puzzle 2, units 1, words 1)
+on A!=C, D Duo Critique: repair 17/17 ['c10', 'w05', 'd04', 'p05', 'x01', 'x03', 'x06', 'r02', 'r03', 'r05', 'r08', 'q01', 'q03', 'q05', 'q06', 'h05', 'h20']; harm 1/1 ['h07']; capitulation (C right, A wrong, D wrong) 0/17 []
+on A!=C, B Duo blind-first: repair 17/17 ['c10', 'w05', 'd04', 'p05', 'x01', 'x03', 'x06', 'r02', 'r03', 'r05', 'r08', 'q01', 'q03', 'q05', 'q06', 'h05', 'h20']; harm 1/1 ['h07']; capitulation (C right, A wrong, B wrong) 0/17 []
+
+McNemar exact, B vs D (all scored tasks): B right & D wrong 0 []; D right & B wrong 1 ['q02']; two-sided p = 1.000
+McNemar exact, D vs A: D right & A wrong 18; A right & D wrong 1; p = 0.000
+McNemar exact, B vs A: B right & A wrong 17; A right & B wrong 1; p = 0.000
+
+per task (strict): c09:ACDB c10:.CDB w01:ACDB w04:ACDB w05:.CDB d02:ACDB d04:.CDB d06:ACDB b04:ACDB b06:ACDB b08:ACDB p03:ACDB p05:.CDB m02:ACDB m03:ACDB m04:ACDB x01:.CDB x03:.CDB x05:ACDB x06:.CDB r02:.CDB r03:.CDB r04:ACDB r05:~CDB r08:.CDB i04:ACDB q01:.CDB q02:..D. q03:.CDB q05:.CDB q06:.CDB h03:ACDB h04:ACDB h05:~CDB h06:ACDB h07:A~~~ h10:ACDB h20:~CDB
+
+length, words (median / mean): A 16 / 19; C 116 / 125; D 106 / 118; B 132 / 142
+answers written in Russian although the question was English: A 1, C 3, D 2, B 3

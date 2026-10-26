@@ -1,0 +1,4 @@
+8.05 kilometers.
+
+Using 1 mile = 1.609344 km:  
+5 × 1.609344 = 8.04672 km, rounded to two decimals = **8.05 km**.

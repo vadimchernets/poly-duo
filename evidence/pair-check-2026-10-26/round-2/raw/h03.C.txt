@@ -1,0 +1,12 @@
+**Bottom line: Yes, switch to door 2. Your chance of winning is 100%.**
+
+Reading chosen: the glass is fully transparent, so you reliably see the car behind door 2, and the host's reveal of door 3 shows a goat, which is consistent with what you see.
+
+**Facts:**
+- Because you can see the car behind door 2, there is no uncertainty about where it is. The usual 1/3 vs 2/3 probabilities from the standard Monty Hall problem apply only when the car's location is hidden.
+- Door 3 showing a goat is consistent with the car being behind door 2, so it gives no contradictory information.
+- Door 1 therefore has a goat (the car is behind door 2, and there is only one car).
+
+**Conclusion:** Switching to door 2 wins with certainty, assuming the glass is truly transparent and you are not misperceiving it (for example, a reflection or a mirror trick). The 2/3 figure from the classic problem is irrelevant here, since it comes from the information you lack in that version.
+
+**Caveat:** The only way the answer is not 100% is if you doubt your observation (the glass is deceptive, or the rules allow the car to be moved after the reveal). Nothing in the question suggests either, so I treat it as certain.

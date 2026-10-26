@@ -1,0 +1,62 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+If today is Wednesday, what day of the week will it be 1000 days from today?
+
+REFERENCE:
+Tuesday (1000 mod 7 = 6)
+
+CRITERION:
+Correct iff Tuesday.
+
+=== ANSWER W ===
+Saturday.
+
+\(1000 \bmod 7 = 6\), so move forward six days from Wednesday: Thursday, Friday, Saturday, Sunday, Monday, Tuesday — **Tuesday**.
+
+Correction: the answer is **Tuesday**.
+
+=== ANSWER X ===
+**Friday.**
+
+Reading chosen: "1000 days from today" means today + 1000 days, with today as day 0.
+
+Facts:
+- 1000 = 7 × 142 + 6, so 1000 mod 7 = 6.
+- Wednesday + 6 days = Tuesday + 1... counting: Thu (1), Fri (2), Sat (3), Sun (4), Mon (5), Tue (6). That gives Tuesday.
+
+Correction to my bottom line: the count lands on **Tuesday**, not Friday. Counting forward 6 days from Wednesday ends on Tuesday. Equivalently, 6 days ahead is the same as 1 day back.
+
+Conclusion: **Tuesday**.
+
+=== ANSWER Y ===
+**Tuesday.**
+
+1000 = 7 × 142 + 6, so 1000 days is 142 full weeks plus 6 days. Counting 6 days from Wednesday gives Thursday, Friday, Saturday, Sunday, Monday, Tuesday.
+
+The colleague's final answer (Tuesday) is correct, but the draft opened with the wrong answer, "Saturday", and only fixed it at the end.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The first line says "Saturday", which contradicts the working and the final answer. The correct answer is Tuesday.
+
+=== ANSWER Z ===
+**Tuesday.**
+
+Reading chosen: "1000 days from today" means today + 1000 days, with today as day 0.
+
+- 1000 = 7 × 142 + 6, so 1000 mod 7 = 6.
+- Six days after Wednesday: Thu, Fri, Sat, Sun, Mon, Tue → **Tuesday** (the same as one day back).
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The draft opens with "Saturday," which contradicts its own calculation. The correct result is Tuesday, and the draft ends up there too, so the opening line is the only error.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

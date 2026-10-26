@@ -1,0 +1,3 @@
+66.7%.
+
+A 40% loss leaves 60% of the starting value. To recover: \(100/60 - 1 = 0.6667\), or **66.7%**.

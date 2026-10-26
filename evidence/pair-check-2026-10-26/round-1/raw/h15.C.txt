@@ -1,0 +1,11 @@
+**Friday.**
+
+Reading chosen: "1000 days from today" means today + 1000 days, with today as day 0.
+
+Facts:
+- 1000 = 7 × 142 + 6, so 1000 mod 7 = 6.
+- Wednesday + 6 days = Tuesday + 1... counting: Thu (1), Fri (2), Sat (3), Sun (4), Mon (5), Tue (6). That gives Tuesday.
+
+Correction to my bottom line: the count lands on **Tuesday**, not Friday. Counting forward 6 days from Wednesday ends on Tuesday. Equivalently, 6 days ahead is the same as 1 day back.
+
+Conclusion: **Tuesday**.

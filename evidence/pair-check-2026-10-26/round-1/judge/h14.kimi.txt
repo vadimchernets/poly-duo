@@ -1,0 +1,6 @@
+• W: Reverse is aidepolcycne and it states the 7th letter is l — matches the reference. correct
+  X: States aidepolcycne and 7th letter l — matches. correct
+  Y: Correctly shows aidepolcycne with l at position 7; the extra "6th of the original" note is consistent, not contradictory. correct
+  Z: States aidepolcycne and 7th letter l — matches. correct
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

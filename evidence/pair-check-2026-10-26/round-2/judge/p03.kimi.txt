@@ -1,0 +1,9 @@
+• W: States **16 September 2029** with a consistent day-count breakdown (23 + 366 + 259) that matches the reference, so it's correct.
+
+  X: States **16 September 2029** and its step-by-step arithmetic (23 days remaining in 2027, 366 in leap-year 2028, 259th day of 2029 = 16 September) is consistent with the reference, so it's correct.
+
+  Y: States **16 September 2029** with a correct month-by-month cumulative count (243 days through August plus 16) that lands on the reference date, so it's correct.
+
+  Z: States **16 September 2029** and its "day zero" framing (8 December 2027 as day 0) yields exactly that date, matching the reference, so it's correct.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

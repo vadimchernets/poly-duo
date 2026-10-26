@@ -1,0 +1,3 @@
+The 5th character is **t**.
+
+Reversed string: `vzt nferoywpdjxszqrcvzrsd` — ignoring the accidental visual spacing, the first five characters are `vztnf`, so the 5th is **f**.

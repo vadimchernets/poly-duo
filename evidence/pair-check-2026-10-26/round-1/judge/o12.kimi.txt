@@ -1,0 +1,5 @@
+• W: It states 1989 and gives the standard fall date of November 9, 1989, matching the reference.  
+  X: It selects 1989 for the fall, and the later-dismantling caveat names a different event rather than changing the final answer.  
+  Y: It explicitly says the Berlin Wall fell in 1989, with later demolition and reunification noted as separate events.  
+  Z: It gives 1989 and defines “fall” as the November 9, 1989 border opening, matching the reference.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

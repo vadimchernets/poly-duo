@@ -1,0 +1,5 @@
+• W: correct — its final price is exactly $6,505.57, matching the reference.  
+  X: incorrect — it gives $5,783.30, which does not match the reference.  
+  Y: correct — it concludes exactly $6,505.57 and does not hedge toward another result.  
+  Z: correct — despite stating an incorrect combined multiplier, its committed final answer is exactly $6,505.57.  
+  VERDICT: W=correct; X=incorrect; Y=correct; Z=correct

@@ -1,0 +1,8 @@
+W, X, Y only contain tool calls with no final answer. Z gives 439, wrong.
+
+- **W:** It contains only a tool call and no final number, so the answer is missing.
+- **X:** It contains only tool calls and no final number, so the answer is missing.
+- **Y:** It questions a prior value and issues a tool call, but never states a final number.
+- **Z:** It states 439, which does not match the reference 454 (and the 45-digit expansion it shows is too short for 11^86).
+
+VERDICT: W=incorrect; X=incorrect; Y=incorrect; Z=incorrect

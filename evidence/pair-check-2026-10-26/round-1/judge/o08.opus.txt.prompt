@@ -1,0 +1,55 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Who wrote the novel "Pride and Prejudice"?
+
+REFERENCE:
+Jane Austen
+
+CRITERION:
+Correct iff Jane Austen.
+
+=== ANSWER W ===
+Jane Austen wrote *Pride and Prejudice*. It was published anonymously in 1813, under the byline "By the Author of *Sense and Sensibility*."
+
+Your colleague's answer is correct. I added the publication detail because it's accurate and useful context.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+The draft is correct, but it's only a bare statement.
+
+**Jane Austen wrote *Pride and Prejudice*.**
+
+- It was first published anonymously on 28 January 1813 in London by Thomas Egerton. The title page said only "By the Author of *Sense and Sensibility*."
+- Austen was named as the author after her death in 1817. Her brother Henry Austen identified her in his 1818 biographical notice.
+- An earlier version, titled *First Impressions*, was drafted in 1796–1797. She revised it heavily before publication.
+
+The attribution is not disputed.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+Jane Austen wrote "Pride and Prejudice".
+
+**Facts**
+- It was first published anonymously on 28 January 1813 in London by Thomas Egerton. The title page said only "By the Author of *Sense and Sensibility*."
+- Austen's authorship became publicly known later, after her death in 1817. Her brother Henry Austen named her in his biographical notice, published in 1818.
+- She drafted an earlier version, titled "First Impressions", in 1796–1797. She revised it heavily before publication.
+
+**Conclusion**
+There is no real dispute over the attribution. Jane Austen is the author.
+
+=== ANSWER Z ===
+Jane Austen wrote the novel *Pride and Prejudice*.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

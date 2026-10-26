@@ -1,0 +1,12 @@
+**$14,600** is the federal standard deduction for a single filer (and for married filing separately) for tax year 2024, the return filed in 2025.
+
+The colleague's answer is correct. Two details are worth adding:
+
+- **Age or blindness:** A single filer who was 65 or older or blind adds **$1,950** for each condition. A single filer who is both 65 or older and blind therefore gets $14,600 + $3,900 = $18,500.
+- **Dependents:** A filer who can be claimed as someone else's dependent gets a lower, limited standard deduction. It is the greater of $1,300 or earned income plus $450, capped at $14,600.
+
+Source: IRS Rev. Proc. 2023-34, and the 2024 Form 1040 instructions.
+
+Confidence: high
+
+No errors in the colleague's answer

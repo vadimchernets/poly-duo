@@ -1,0 +1,9 @@
+W: Says plainly that Einstein did not win the prize for relativity and names the photoelectric effect as the achievement the prize recognized.
+
+X: Calls the premise false and names the photoelectric effect; the line about the committee citing relativity "indirectly" is muddled, but it still says relativity was left out of the citation, so the final answer holds.
+
+Y: Says he did not win for relativity and quotes the citation naming the photoelectric effect.
+
+Z: Says he did **not** win for relativity and gives the photoelectric effect as the specifically named achievement.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

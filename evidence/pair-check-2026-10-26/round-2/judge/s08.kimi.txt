@@ -1,0 +1,2 @@
+• W only issues a Bash command and never states a final digit sum, so it is missing the required value. X states 346, which does not equal the reference 277. Y also only issues commands and never reports 277. Z likewise contains only a command/no-op and no stated final answer matching 277.
+  VERDICT: W=incorrect; X=incorrect; Y=incorrect; Z=incorrect

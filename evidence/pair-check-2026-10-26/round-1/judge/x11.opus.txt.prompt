@@ -1,0 +1,56 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+I have 3 apples today. Yesterday I ate one apple. How many apples do I have now?
+
+REFERENCE:
+3
+
+CRITERION:
+Correct iff 3. 2 = incorrect.
+
+=== ANSWER W ===
+**Bottom line: you have 3 apples.** The colleague's answer is correct.
+
+Reading chosen: "I have 3 apples today" is your current count. The apple you ate yesterday is already reflected in it, so nothing needs to be subtracted.
+
+If you meant "I had 3 apples yesterday and then ate one", the answer would be 2. The wording says "today", so I didn't use that reading.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+You have 3 apples now.
+
+Yesterday’s eaten apple does not change today’s stated count.
+
+=== ANSWER Y ===
+You have 3 apples now.
+
+Reading chosen: the 3 apples are your count today, and the apple you ate yesterday is already reflected in that number. If you meant "3 apples yesterday, ate one, so how many are left?", the answer would be 2.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+**Bottom line: 3 apples.** Reading chosen: "3 today" is your current count, so eating one yesterday doesn't change it.
+
+**Facts**
+- You state that you have 3 apples today.
+- The apple was eaten yesterday, which is before "today".
+- "Now" is the same day as "today", so the count is the one you gave: 3.
+
+**Conclusion**
+- The answer is 3. Subtracting 1 would be wrong, because the 3 is already your count after yesterday's apple was eaten.
+
+**Not sure**
+- If you meant "I had 3 apples yesterday, before eating one", the answer would be 2. The wording says "today", so I didn't use that reading.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

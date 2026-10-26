@@ -1,0 +1,3 @@
+• All four answers conclude Sunday, matching the reference; their Doomsday reasoning (anchor Sunday for 2100s, doomsday Tuesday, 8/8 Tuesday → 13/8 Sunday) checks out in each case. W is correct. X is correct. Y is correct. Z is correct.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

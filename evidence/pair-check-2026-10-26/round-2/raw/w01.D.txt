@@ -1,0 +1,9 @@
+The colleague's answer is correct: the sentence has 27 words.
+
+Counted in order: In (1) the (2) early (3) morning (4) before (5) the (6) market (7) opened (8) the (9) old (10) fisherman (11) sat (12) on (13) the (14) pier (15) and (16) counted (17) the (18) boats (19) that (20) had (21) not (22) yet (23) returned (24) from (25) the (26) storm (27).
+
+The sentence contains no hyphenated words, so the hyphen rule doesn't change the count.
+
+Confidence: high
+
+No errors in the colleague's answer

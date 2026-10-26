@@ -1,0 +1,75 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+A price of $4,599.00 is raised by 8%, then raised by 23%, then raised by 17%, then raised by 40%. What is the final price, rounded to the cent?
+
+REFERENCE:
+$10,007.05
+
+CRITERION:
+Correct iff exactly this amount (1 cent off = partial).
+
+=== ANSWER W ===
+**Итог: $10 007,15.** Ответ коллеги ($10 972,62) неверен.
+
+Прочтение: четыре последовательных повышения, каждое от предыдущей цены, без промежуточного округления.
+
+- 4599,00 × 1,08 = 4966,92
+- 4966,92 × 1,23 = 6109,3716
+- 6109,3716 × 1,17 = 7147,964772
+- 7147,964772 × 1,40 = 10 007,1506808
+
+Проверка общим множителем: 1,08 × 1,23 × 1,17 × 1,40 = 2,1759192, а 4599 × 2,1759192 = 10 007,15.
+
+Если округлять до цента после каждого шага (4966,92 → 6109,37 → 7147,96), получится 10 007,14. В вопросе промежуточное округление не требуется, поэтому ответ — 10 007,15.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- Итоговая сумма $10 972,617984 неверна: произведение множителей 1,08 × 1,23 × 1,17 × 1,40 равно 2,1759192, а не примерно 2,386. Правильный результат — $10 007,15, то есть ответ коллеги завышен почти на $965.
+
+=== ANSWER X ===
+**The final price is $10,007.05.** The colleague's $10,972.62 is wrong.
+
+The combined multiplier is 1.08 × 1.23 × 1.17 × 1.40 = 2.1759192, so $4,599.00 × 2.1759192 = $10,007.0524, which rounds to $10,007.05.
+
+Step by step:
+- × 1.08 → $4,966.92
+- × 1.23 → $6,109.3116
+- × 1.17 → $7,147.894572
+- × 1.40 → $10,007.0524
+
+I read each raise as compounding on the previous price, which is the standard reading.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The multiplication was done wrong. $4,599 × 1.08 × 1.23 × 1.17 × 1.40 equals $10,007.0524, not $10,972.617984. The rounded result should be $10,007.05, not $10,972.62.
+
+=== ANSWER Y ===
+$10,972.62
+
+Calculation:  
+$4,599.00 × 1.08 × 1.23 × 1.17 × 1.40 = $10,972.617984, which rounds to **$10,972.62**.
+
+=== ANSWER Z ===
+**Итог: $10,007.15**
+
+Прочтение: четыре последовательных повышения, каждое от предыдущей цены, без округления промежуточных шагов.
+
+Расчёт:
+- 4599,00 × 1,08 = 4966,92
+- 4966,92 × 1,23 = 6109,3716
+- 6109,3716 × 1,17 = 7147,964772
+- 7147,964772 × 1,40 = 10007,1506808
+
+Округление до цента даёт 10007,15.
+
+Если округлять до цента после каждого шага, получится 4966,92 → 6109,37 → 7147,96 → 10007,14. Это на цент меньше. Вопрос не требует промежуточного округления, поэтому я выбрал ответ без него.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

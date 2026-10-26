@@ -1,0 +1,10 @@
+**Bottom line: the 9th character of the reversed string is "o".**
+
+**Facts**
+- The original string has 24 characters.
+- Reversed, it reads: `xkvunlqgonqmwwkwlfjyqirx`
+- Counting through the reversed string: x(1) k(2) v(3) u(4) n(5) l(6) q(7) g(8) o(9).
+
+**Conclusion**
+- The 9th character of the reversed string corresponds to position 16 of the original, which is "o".
+- I read "9th" as 1-indexed, counting from 1.

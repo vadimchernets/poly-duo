@@ -1,0 +1,6 @@
+**W:** Correct; the final answer is "v", which matches the reference.
+**X:** Correct; the final answer is "v", which matches the reference.
+**Y:** Correct; the final answer is "v", which matches the reference.
+**Z:** Correct; the final answer is "v", which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

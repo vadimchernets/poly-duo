@@ -1,0 +1,9 @@
+• W: States exactly 7,000,320,388,467, matching the reference — correct.
+
+  X: Final answer is exactly 7,000,320,388,467 with supporting computation that checks out — correct.
+
+  Y: Final answer is exactly 7,000,320,388,467; extra caveat about check limits doesn't contradict the result — correct.
+
+  Z: Final answer is exactly 7,000,320,388,467 and its decomposition (1,172,703 = 1,000,000 + 172,703) also sums correctly — correct.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

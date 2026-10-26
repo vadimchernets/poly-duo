@@ -1,0 +1,10 @@
+**1009** is the smallest prime greater than 1,000. The colleague's draft is correct.
+
+Why:
+- 1001 = 7 × 11 × 13, 1003 = 17 × 59, 1005 = 5 × 201, and 1007 = 19 × 53, so all four are composite.
+- The even numbers 1002, 1004, 1006 and 1008 are composite.
+- √1009 ≈ 31.8. 1009 is not divisible by any prime up to 31 (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31), so it is prime.
+
+Confidence: high
+
+No errors in the colleague's answer

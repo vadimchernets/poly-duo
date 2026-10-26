@@ -1,0 +1,3 @@
+2
+
+Counting the quoted sentence only, case-insensitively: “peppers” appears twice, contributing one **s** each.

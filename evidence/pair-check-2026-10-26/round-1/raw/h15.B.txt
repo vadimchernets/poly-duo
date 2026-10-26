@@ -1,0 +1,11 @@
+**Tuesday.**
+
+Reading chosen: "1000 days from today" means today + 1000 days, with today as day 0.
+
+- 1000 = 7 × 142 + 6, so 1000 mod 7 = 6.
+- Six days after Wednesday: Thu, Fri, Sat, Sun, Mon, Tue → **Tuesday** (the same as one day back).
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The draft opens with "Saturday," which contradicts its own calculation. The correct result is Tuesday, and the draft ends up there too, so the opening line is the only error.

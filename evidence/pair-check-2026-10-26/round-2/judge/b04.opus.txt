@@ -1,0 +1,8 @@
+All four give 17152, matching the reference.
+
+- **W:** The final answer is 17152, which matches the reference exactly.
+- **X:** The final answer is 17,152, which matches the reference.
+- **Y:** The final answer is 17,152, which matches the reference.
+- **Z:** The final answer is 17,152, which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

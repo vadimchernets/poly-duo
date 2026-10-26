@@ -1,0 +1,5 @@
+W: The final answer is 76, which matches the reference.
+X: The final answer is 76, with the right value of 2^50 and the right digit sum; the remark about a colleague doesn't change the result.
+Y: The final answer is 76, worked out correctly from 2^50 = 1,125,899,906,842,624.
+Z: The final answer is 76, which matches the reference; the extra comment about a colleague doesn't contradict it.
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

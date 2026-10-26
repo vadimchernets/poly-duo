@@ -1,0 +1,9 @@
+• **W:** Final answer $10,007.15 — an arithmetic slip (4966.92 × 1.23 = 6109.3116, not 6109.3716) puts it 10 cents above the reference, more than the 1-cent partial tolerance, so incorrect.
+
+  **X:** Final answer $10,007.05 with correct multiplication (4599 × 2.1759192 = 10007.0524 → $10,007.05), matching the reference exactly — correct.
+
+  **Y:** Final answer $10,972.62, which reflects a wrong product (~2.386 instead of 2.1759192) and contradicts the reference — incorrect.
+
+  **Z:** Same arithmetic slip as W (6109.3716 at the second step) leading to $10,007.15, 10 cents off the reference — incorrect.
+
+  VERDICT: W=incorrect; X=correct; Y=incorrect; Z=incorrect

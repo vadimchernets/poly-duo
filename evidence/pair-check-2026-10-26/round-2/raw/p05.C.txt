@@ -1,0 +1,9 @@
+**23 June 2033, a Thursday.** I read "after" as adding 2590 days to 21 May 2026, so the start date is day 0.
+
+**Facts**
+- From 21 May 2026 to 21 May 2033 is 7 years. That span contains two leap days (29 Feb 2028 and 29 Feb 2032), so it is 7×365 + 2 = 2557 days.
+- The remaining days are 2590 − 2557 = 33.
+- 21 May 2033 plus 33 days: 10 days reach 31 May, and 23 more reach 23 June.
+
+**Check**
+- 2590 = 7×370, so the weekday is unchanged. 21 May 2026 is a Thursday, and 23 June 2033 is also a Thursday.

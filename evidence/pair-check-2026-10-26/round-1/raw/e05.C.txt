@@ -1,0 +1,11 @@
+**Bottom line: 350 g water and 10 g salt.**
+
+**Facts**
+- Baker's percentages are relative to the flour weight (flour = 100%).
+- Water: 500 g × 0.70 = 350 g
+- Salt: 500 g × 0.02 = 10 g
+
+**Conclusion**
+- Total dough weight before any starter or yeast is 860 g (500 + 350 + 10).
+- If you add a sourdough starter or preferment, its flour and water count toward the totals. Subtract them from the amounts above to keep 70% overall hydration. I assumed no starter.
+- Salt is calculated on flour only, not on total dough weight. If you meant 2% of total dough, the answer would differ, but that is not the standard baker's convention.

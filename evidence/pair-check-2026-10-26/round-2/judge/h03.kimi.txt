@@ -1,0 +1,3 @@
+• **W** — Concludes switching wins with 100% probability and explicitly rejects the 2/3 classic figure, so it matches the reference despite extra caveats. **X** — States switch with a 100% guaranteed win because the car is directly visible, exactly matching the reference. **Y** — Gives yes, switch with 100%/certainty, says the 2/3 result is irrelevant here, and its caveats do not commit to any lower probability. **Z** — Says switch for a 100% win under the stated clear-glass premise and dismisses the usual 2/3 reasoning, matching the reference.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,5 @@
+• W: Correct — final answer is 45 km/h and rejects 60 km/h.  
+  X: Correct — computes 120 km over 8/3 h and gives 45 km/h.  
+  Y: Correct — final answer is 45 km/h.  
+  Z: Correct — final answer is 45 km/h and rejects 60 km/h.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

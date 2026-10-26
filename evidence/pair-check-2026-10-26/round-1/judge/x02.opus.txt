@@ -1,0 +1,9 @@
+**W:** Its final answer is 1/2, worked out with Bayes, which matches the reference.
+
+**X:** It states 1/2 for switching and treats switching and staying as equal, which matches the reference.
+
+**Y:** It concludes 1/2 with a correct Bayesian calculation, and its caveat about a biased host doesn't change that answer.
+
+**Z:** It concludes 1/2 for switching, which matches the reference, and its caveat about the uniform-choice assumption doesn't contradict that.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,6 @@
+• W: States 36 with correct calculation and check, matching the reference exactly.
+  X: States 36 with correct calculation, matching the reference exactly.
+  Y: States 36 with correct calculation and check, matching the reference exactly.
+  Z: States 36 with correct calculation and check, matching the reference exactly.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

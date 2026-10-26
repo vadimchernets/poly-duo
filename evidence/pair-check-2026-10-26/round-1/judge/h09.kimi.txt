@@ -1,0 +1,3 @@
+• **W:** States 597 with sound leap-day reasoning and correct month-by-month sum of 365 + 232, matching the reference. **X:** Concludes 597 (mentioning 598 only as a rejected alternative), fully matching the reference. **Y:** States 597 with the same correct breakdown (214 days to 15 Oct plus 18 days), matching the reference. **Z:** Simply states 597 days, which matches the reference, with no contradictory content.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

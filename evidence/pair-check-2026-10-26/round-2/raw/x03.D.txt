@@ -1,0 +1,22 @@
+**18^136 mod 1000 = 776.** The colleague's answer of 576 is wrong.
+
+**Reading chosen:** the standard remainder of 18^136 divided by 1000.
+
+**Method (CRT, 1000 = 8 · 125):**
+- Mod 8: 18^136 contains 2^136, so it is ≡ 0.
+- Mod 125: gcd(18,125)=1 and φ(125)=100, so 18^136 ≡ 18^36.
+  - 18² = 324 ≡ 74
+  - 18⁴ ≡ 74² = 5476 ≡ 101
+  - 18⁸ ≡ 101² = 10201 ≡ 76
+  - 18¹⁶ ≡ 76² = 5776 ≡ 26
+  - 18³² ≡ 26² = 676 ≡ 51
+  - 18³⁶ = 18³² · 18⁴ ≡ 51 · 101 = 5151 ≡ 26
+- Solve x ≡ 0 (mod 8) and x ≡ 26 (mod 125). Write x = 26 + 125k. Then 2 + 5k ≡ 0 (mod 8), so k ≡ 6 and x = 776.
+
+**Direct check mod 1000:** 18⁴ ≡ 976, 18⁸ ≡ 576, 18¹⁶ ≡ 776, 18³² ≡ 176, and 18³⁶ = 18³² · 18⁴ ≡ 176 · 976 ≡ 776. The exponent can be reduced mod 100 here because the power of 2 is already past 2³, so 18^136 ≡ 18^36 (mod 1000).
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The final value 576 is wrong. 18¹⁶ ≡ 776 (mod 1000), and 576 is actually 18⁸.
+- The claim that the powers cycle with period 20 is unjustified. 18²⁰ ≡ 376 is not 1, and the correct period of 18ⁿ mod 125 is dividing 100, not 20. Reducing 136 to 16 therefore has no basis.

@@ -1,0 +1,3 @@
+273.15 K.
+
+At standard atmospheric pressure, pure water freezes at 0 °C, which equals 273.15 kelvin.

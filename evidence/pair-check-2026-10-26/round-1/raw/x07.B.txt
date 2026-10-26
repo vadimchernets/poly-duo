@@ -1,0 +1,12 @@
+**Sunday.** The colleague's answer is correct.
+
+Reading chosen: both dates are in the Gregorian calendar.
+
+- From 3 March 2027 to 3 March 2030 is 3 years.
+- 29 February 2028 falls inside this span, so the first year has 366 days (+2 weekdays). The other two years have 365 days each (+1 weekday each).
+- The total shift is 2 + 1 + 1 = 4 days. That matches 1096 days = 7 × 156 + 4.
+- Wednesday + 4 days = Sunday.
+
+Confidence: high
+
+No errors in the colleague's answer

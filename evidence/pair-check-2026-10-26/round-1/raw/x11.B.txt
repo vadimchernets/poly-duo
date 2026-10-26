@@ -1,0 +1,9 @@
+**Bottom line: you have 3 apples.** The colleague's answer is correct.
+
+Reading chosen: "I have 3 apples today" is your current count. The apple you ate yesterday is already reflected in it, so nothing needs to be subtracted.
+
+If you meant "I had 3 apples yesterday and then ate one", the answer would be 2. The wording says "today", so I didn't use that reading.
+
+Confidence: high
+
+No errors in the colleague's answer

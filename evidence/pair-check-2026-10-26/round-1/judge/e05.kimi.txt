@@ -1,0 +1,6 @@
+• W: Final answer 350 g water and 10 g salt with correct math — correct.
+  X: States 350 g water and 10 g salt with correct calculation; extra caveats (total dough weight, starter note) don't contradict the reference — correct.
+  Y: Bottom line is 350 g water and 10 g salt with correct math; extra assumptions don't contradict the reference — correct.
+  Z: States 350 g water and 10 g salt with correct calculation; extra detail doesn't contradict the reference — correct.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

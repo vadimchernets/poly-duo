@@ -1,0 +1,6 @@
+**W:** Its final answer is 31 trailing zeros, which matches the reference.
+**X:** Its final answer is 31 trailing zeros, and its extra count of 119 factors of 2 is also accurate.
+**Y:** Its final answer is 31 trailing zeros, which matches the reference.
+**Z:** Its final answer is 31 trailing zeros, and nothing in its working contradicts that.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

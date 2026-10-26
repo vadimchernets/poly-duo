@@ -1,0 +1,71 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Compute 6,274,968 x 2,358,864 exactly.
+
+REFERENCE:
+14,801,796,116,352
+
+CRITERION:
+Correct iff exactly this number.
+
+=== ANSWER W ===
+**6,274,968 × 2,358,864 = 14,801,796,116,352**
+
+The colleague's answer is correct. I recomputed it by splitting the second factor:
+
+- 6,274,968 × 2,000,000 = 12,549,936,000,000
+- 6,274,968 × 358,864 = 2,251,860,116,352, from 6,274,968 × 300,000 = 1,882,490,400,000 plus 6,274,968 × 58,864 = 369,369,716,352
+- Sum: 12,549,936,000,000 + 2,251,860,116,352 = 14,801,796,116,352
+
+Two quick checks agree:
+- **Digit sum mod 9:** 2,358,864 has digit sum 36, which is divisible by 9, so the product must be too. The result's digit sum is 54, which is.
+- **Last digit:** 8 × 4 = 32, so the product ends in 2, as the result does.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+14,801,796,116,352
+
+=== ANSWER Y ===
+**6,274,968 × 2,358,864 = 14,801,796,116,352**
+
+The colleague's answer is correct. I checked it by splitting the second factor:
+
+- 6,274,968 × 2,000,000 = 12,549,936,000,000
+- 6,274,968 × 358,864 = 2,251,860,116,352
+- Sum: 14,801,796,116,352
+
+As a cross-check, the digit sum of 2,358,864 is 36, so the product must be divisible by 9. The digit sum of the result is 54, which is.
+
+I did the arithmetic by hand and did not run any commands.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "print(6274968*2358864)"</parameter>
+</invoke>
+
+<invoke name="Bash">
+<parameter name="command">echo $((6274968*2358864))</parameter>
+</invoke>
+
+<invoke name="Bash">
+<parameter name="command">bc <<< "6274968*2358864"</parameter>
+</invoke>
+
+<invoke name="Bash">
+<parameter name="command">awk 'BEGIN{printf "%d\n", 6274968*2358864}'</parameter>
+</invoke>
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

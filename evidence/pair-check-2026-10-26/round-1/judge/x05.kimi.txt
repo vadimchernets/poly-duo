@@ -1,0 +1,5 @@
+• W: The final answer matches the reference exactly.  
+  X: The final answer matches the reference exactly.  
+  Y: The final answer matches the reference exactly.  
+  Z: The final answer matches the reference exactly.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

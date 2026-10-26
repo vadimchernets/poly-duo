@@ -1,0 +1,7 @@
+**591 ml** (to the nearest millilitre)
+
+Reading chosen: US customary cups, using the given 236.588 ml per cup.
+
+Calculation: 2.5 × 236.588 = 591.47 ml. The fractional part, 0.47, is below 0.5, so it rounds down to 591.
+
+Not in doubt: the arithmetic. The only assumption is the supplied conversion factor. A "metric cup" of 250 ml would give 625 ml, but that is not what the question specifies.

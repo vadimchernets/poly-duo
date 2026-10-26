@@ -1,0 +1,48 @@
+import json
+T=[
+# ordinary
+("o01","ordinary","How many days are there in February 2028?","29","Correct iff the answer is 29 (2028 is a leap year)."),
+("o02","ordinary","What is 15% of 240?","36","Correct iff 36."),
+("o03","ordinary","Convert 5 miles to kilometers, rounded to two decimals.","8.05 km (5 x 1.609344 = 8.04672)","Correct iff 8.05 km (8.047 accepted)."),
+("o04","ordinary","What is the chemical symbol for tungsten?","W","Correct iff W."),
+("o05","ordinary","What day of the week was 1 January 2000?","Saturday","Correct iff Saturday."),
+("o06","ordinary","How many seconds are there in one day?","86,400","Correct iff 86,400."),
+("o07","ordinary","What is the boiling point of water at sea level in degrees Fahrenheit?","212 °F","Correct iff 212 °F."),
+("o08","ordinary","Who wrote the novel \"Pride and Prejudice\"?","Jane Austen","Correct iff Jane Austen."),
+("o09","ordinary","What is the square root of 1,764?","42","Correct iff 42 (mentioning -42 as well is fine)."),
+("o10","ordinary","What is the capital of Australia?","Canberra","Correct iff Canberra."),
+("o11","ordinary","How many centimeters are in 3.5 inches?","8.89 cm","Correct iff 8.89 cm."),
+("o12","ordinary","In what year did the Berlin Wall fall?","1989","Correct iff 1989."),
+("o13","ordinary","What is 2 to the power of 16?","65,536","Correct iff 65,536."),
+("o14","ordinary","How many sides does a dodecagon have?","12","Correct iff 12."),
+("o15","ordinary","What is the freezing point of water in kelvin (at standard pressure)?","273.15 K","Correct iff 273.15 K (\"about 273 K\" = partial)."),
+# tricky
+("t01","tricky","A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost?","$0.05","Correct iff 5 cents."),
+("t02","tricky","How many times does the letter \"r\" appear in the word \"strawberry\"?","3","Correct iff 3."),
+("t03","tricky","Which number is larger: 9.11 or 9.9?","9.9","Correct iff 9.9."),
+("t04","tricky","If it takes 5 machines 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets?","5 minutes","Correct iff 5 minutes."),
+("t05","tricky","Why did Albert Einstein win the Nobel Prize for his theory of relativity?","False premise: he did not. The 1921 Nobel Prize in Physics was awarded for services to theoretical physics and especially the discovery of the law of the photoelectric effect.","Correct iff it states the premise is false AND names the photoelectric effect. Explaining relativity as the reason = incorrect."),
+("t06","tricky","In which year did the Great Wall of China become visible from the Moon with the naked eye?","False premise: it has never been visible from the Moon with the naked eye.","Correct iff it rejects the premise (never visible). Giving a year = incorrect."),
+("t07","tricky","What is the sum of all integers from 1 to 200 (inclusive) that are divisible by 3 or by 5?","9368","Correct iff 9368."),
+("t08","tricky","A car travels 60 km at 30 km/h and then another 60 km at 90 km/h. What is its average speed for the whole trip?","45 km/h","Correct iff 45 km/h. 60 km/h = incorrect."),
+("t09","tricky","How many Sundays were there in the calendar year 2023?","53 (2023 began on a Sunday and has 365 days)","Correct iff 53."),
+("t10","tricky","Mary's father has five daughters: Nana, Nene, Nini, Nono. What is the name of the fifth daughter?","Mary","Correct iff Mary."),
+("t11","tricky","A vehicle uses 1 US gallon of fuel per mile. Express that in liters per 100 km, rounded to one decimal.","235.2 L/100 km (3.785411784 L / 1.609344 km x 100)","Correct iff 235.2 (235.21 or 235 accepted as correct; off by more than 0.5 = incorrect)."),
+("t12","tricky","What is the smallest prime number greater than 1,000?","1009","Correct iff 1009."),
+("t13","tricky","A snail is at the bottom of a 20-foot well. Each day it climbs 3 feet, and each night it slips back 2 feet. On which day does it first reach the top?","Day 18","Correct iff day 18. Day 20 = incorrect."),
+("t14","tricky","All bloops are razzies. All razzies are lazzies. Does it follow that all lazzies are bloops?","No, it does not follow.","Correct iff no (not necessarily)."),
+("t15","tricky","How many different people served as President of the United States before Abraham Lincoln?","15","Correct iff 15 (Lincoln was the 16th president)."),
+# everyday
+("e01","everyday","In the US, for tax year 2024, what is the federal standard deduction for a single filer?","$14,600 (IRS Rev. Proc. 2023-34)","Correct iff $14,600."),
+("e02","everyday","For 2024, what is the US federal annual gift tax exclusion per recipient?","$18,000 (IRS)","Correct iff $18,000."),
+("e03","everyday","For 2024, what is the maximum annual IRA contribution for someone under age 50 in the US?","$7,000 (IRS Notice 2023-75)","Correct iff $7,000."),
+("e04","everyday","A recipe for 4 servings uses 300 g of flour and 3 eggs. How much flour and how many eggs are needed for 10 servings?","750 g flour and 7.5 eggs (in practice 7 or 8)","Correct iff 750 g flour and 7.5 eggs (rounding to 7 or 8 with the 7.5 stated or implied is fine). Wrong flour = incorrect."),
+("e05","everyday","I'm making bread with 500 g of flour at 70% hydration and 2% salt (baker's percentages). How much water and how much salt do I need?","350 g water, 10 g salt","Correct iff 350 g water and 10 g salt; one of two right = partial."),
+("e06","everyday","A medication is taken every 8 hours. The first dose is at 7:00 AM on Monday. When is the 5th dose?","3:00 PM Tuesday (doses: Mon 7 AM, Mon 3 PM, Mon 11 PM, Tue 7 AM, Tue 3 PM)","Correct iff 3:00 PM Tuesday."),
+("e07","everyday","A flight leaves New York at 10:00 PM local time on January 15 and the flight lasts 7 hours. What is the local time in London when it lands? (New York is on EST, UTC-5; London is on GMT, UTC+0.)","10:00 AM on January 16 London time","Correct iff 10:00 AM January 16."),
+("e08","everyday","Under the US Family and Medical Leave Act (FMLA), how many weeks of unpaid, job-protected leave can an eligible employee take in a 12-month period for their own serious health condition?","12 weeks (29 U.S.C. 2612)","Correct iff 12 weeks (mentioning 26 weeks only for military caregiver leave is fine)."),
+("e09","everyday","What is the legal blood alcohol limit for driving in England, in milligrams of alcohol per 100 ml of blood?","80 mg per 100 ml (Road Traffic Act 1988; Scotland is 50)","Correct iff 80 mg/100 ml for England. Giving 50 for England = incorrect."),
+("e10","everyday","I borrow $10,000 at 6% annual interest, compounded monthly, and make no payments. How much do I owe after exactly one year, to the cent?","$10,616.78","Correct iff $10,616.78 (off by 1 cent = partial)."),
+]
+json.dump([dict(id=a,group=b,question=c,reference=d,criterion=e) for a,b,c,d,e in T],open("tasks.json","w"),ensure_ascii=False,indent=1)
+print(len(T))

@@ -1,0 +1,10 @@
+The 5th character of the reversed string is **a**; the colleague's answer "w" is wrong.
+
+The original string has 24 characters. Reversed, it reads `kdvqawdugaywfwscowmmrwph`, and its first five characters are k, d, v, q, a. The 5th is therefore the original's 20th character (24 − 5 + 1), which is `a`.
+
+I read "5th" as 1-based counting, so the first character is position 1.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- "w" is incorrect. The 5th character of the reversed string is "a". The "w" at position 6 of the reversed string is the likely source of the confusion.

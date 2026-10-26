@@ -1,0 +1,6 @@
+• W: Final answer 17152 matches the reference, with sound leap-year and offset reasoning, and no contradictory caveat.  
+  X: Final answer 17,152 matches the reference and it explicitly confirms rather than disputes it.  
+  Y: Final answer 17,152 matches the reference, with correct leap-year enumeration and no hedge away from it.  
+  Z: Final answer 17,152 matches the reference via the same correct 17167 − 15 computation.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

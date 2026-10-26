@@ -1,0 +1,65 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+I'm making bread with 500 g of flour at 70% hydration and 2% salt (baker's percentages). How much water and how much salt do I need?
+
+REFERENCE:
+350 g water, 10 g salt
+
+CRITERION:
+Correct iff 350 g water and 10 g salt; one of two right = partial.
+
+=== ANSWER W ===
+Bottom line: **350 g water and 10 g salt**.
+
+Baker’s percentages are calculated from the flour weight:
+
+- Water: 500 g × 70% = **350 g**
+- Salt: 500 g × 2% = **10 g**
+
+=== ANSWER X ===
+**Bottom line: 350 g water and 10 g salt.**
+
+**Facts**
+- Baker's percentages are relative to the flour weight (flour = 100%).
+- Water: 500 g × 0.70 = 350 g
+- Salt: 500 g × 0.02 = 10 g
+
+**Conclusion**
+- Total dough weight before any starter or yeast is 860 g (500 + 350 + 10).
+- If you add a sourdough starter or preferment, its flour and water count toward the totals. Subtract them from the amounts above to keep 70% overall hydration. I assumed no starter.
+- Salt is calculated on flour only, not on total dough weight. If you meant 2% of total dough, the answer would differ, but that is not the standard baker's convention.
+
+=== ANSWER Y ===
+**Bottom line: 350 g water and 10 g salt.** The colleague's answer is correct.
+
+Baker's percentages are relative to flour weight (flour = 100%):
+- Water: 500 g × 0.70 = **350 g**
+- Salt: 500 g × 0.02 = **10 g**
+
+The total dough is 860 g. This assumes no starter or preferment. If you add a sourdough starter or poolish, its flour and water count toward the totals, so subtract them from the amounts above to keep 70% overall hydration.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+The draft is correct. You need **350 g water and 10 g salt**.
+
+Baker's percentages are taken from the flour weight, which counts as 100%:
+
+- Water: 500 g × 0.70 = **350 g**
+- Salt: 500 g × 0.02 = **10 g**
+
+The total dough weight before any starter or yeast is 860 g. If you add a starter, count its flour and water in the totals. The recipe's percentages usually already include them.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

@@ -1,0 +1,13 @@
+576
+
+Since \(18^3 \equiv 832 \pmod{1000}\), and multiplying repeatedly gives \(18^{20} \equiv 376 \pmod{1000}\). The powers then cycle modulo 1000 with period 20:
+
+\[
+136 \equiv 16 \pmod{20},
+\]
+
+so
+
+\[
+18^{136}\equiv 18^{16}\equiv \boxed{576}\pmod{1000}.
+\]

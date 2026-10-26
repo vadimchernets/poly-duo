@@ -1,0 +1,52 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is 2 to the power of 16?
+
+REFERENCE:
+65,536
+
+CRITERION:
+Correct iff 65,536.
+
+=== ANSWER W ===
+**2^16 = 65 536.**
+
+The draft "65,536" is correct. I read the question as ordinary integer exponentiation.
+
+Check: 2^8 = 256, and 256 × 256 = 65 536. This is also the number of distinct values that 16 bits can hold (0 to 65 535).
+
+Confidence: high
+
+No errors in the colleague's answer.
+
+=== ANSWER X ===
+65,536.
+
+=== ANSWER Y ===
+**2^16 = 65 536.**
+
+Reading chosen: ordinary exponentiation of integers (2 multiplied by itself 16 times).
+
+Facts:
+- 2^8 = 256
+- 2^16 = 256 × 256 = 65 536
+- It is also the number of distinct values in 16 bits (0 to 65 535).
+
+Conclusion: 65 536. I am sure of this result.
+
+=== ANSWER Z ===
+2^16 = **65,536**. The colleague's answer is correct.
+
+Details: 2^16 = (2^8)² = 256² = 65,536. This is also the number of distinct values a 16-bit unsigned integer can hold (0 to 65,535).
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

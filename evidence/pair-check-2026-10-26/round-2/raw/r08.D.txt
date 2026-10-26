@@ -1,0 +1,12 @@
+The 5th character of the reversed string is **a**, so the colleague's "w" is wrong.
+
+The original string has 24 characters: h p w r m m w o c s w f w y a g u d w a q v d k.
+
+Reversed, it reads: `kdvqawdugaywfwscowmmrwph`.
+
+Counting from the start: k(1) d(2) v(3) q(4) **a(5)**.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The answer "w" is incorrect. The 5th character of the reversed string is "a". The 5th character from the end of the original is "a" (position 20), and "w" is at position 19, which is the 6th from the end.

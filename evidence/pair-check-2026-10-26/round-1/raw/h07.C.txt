@@ -1,0 +1,14 @@
+**125! has 31 trailing zeros.**
+
+Reading chosen: trailing zeros in base 10 of 125!.
+
+Facts (Legendre's formula; the count of 10s is limited by the count of factors of 5, since factors of 2 are more plentiful):
+- ⌊125/5⌋ = 25
+- ⌊125/25⌋ = 5
+- ⌊125/125⌋ = 1
+- Sum: 25 + 5 + 1 = 31 factors of 5.
+- Factors of 2 number far more than 31 (⌊125/2⌋ + ⌊125/4⌋ + … = 62 + 31 + 15 + 7 + 3 + 1 = 119).
+
+Conclusion: the number of factors of 10 is min(31, 119) = 31, so 31 trailing zeros.
+
+I'm sure of this result; I computed it by hand and did not run code.

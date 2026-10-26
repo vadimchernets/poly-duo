@@ -1,0 +1,79 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+A price of $5,383.99 is raised by 17%, then raised by 12.5%, then raised by 8%, then cut by 15%. What is the final price, rounded to the cent?
+
+REFERENCE:
+$6,505.57
+
+CRITERION:
+Correct iff exactly this amount (1 cent off = partial).
+
+=== ANSWER W ===
+**Final price: $6,505.57**
+
+Reading chosen: each change applies to the running price, not to the original, and rounding happens only at the end.
+
+| Step | Price |
+|---|---|
+| +17% (×1.17) | 6,299.2683 |
+| +12.5% (×1.125) | 7,086.6768 |
+| +8% (×1.08) | 7,653.6110 |
+| −15% (×0.85) | 6,505.5693 |
+
+The combined multiplier is 1.17 × 1.125 × 1.08 × 0.85 = 1.2083175, and 5,383.99 × 1.2083175 = 6,505.5693. Rounding to the cent after every step gives the same $6,505.57.
+
+Sanity check: the three increases give ×1.42155, so the price rises about 42%. The 15% cut brings that to about +20.8%, which is far above ChatGPT's +7.4%.
+
+Confidence: high
+
+Corrections to the colleague's answer
+- $5,783.30 is wrong. The stated product 5,383.99 × 1.17 × 1.125 × 1.08 × 0.85 equals 6,505.57, not 5,783.30. The combined multiplier is about 1.2083, but the draft's result implies about 1.074.
+- My own pre-draft answer had a typo in the combined multiplier (1.2083625). The correct value is 1.2083175. The step-by-step result of $6,505.57 was unaffected.
+
+=== ANSWER X ===
+$5,783.30
+
+Calculation:  
+$5,383.99 × 1.17 × 1.125 × 1.08 × 0.85 = $5,783.303259…$, which rounds to **$5,783.30**.
+
+=== ANSWER Y ===
+**The final price is $6,505.57, so the colleague's $5,783.30 is wrong.**
+
+I applied the four changes in order, without rounding in between:
+
+1. 5,383.99 × 1.17 = 6,299.2683
+2. 6,299.2683 × 1.125 = 7,086.6768375
+3. 7,086.6768375 × 1.08 = 7,653.6109845
+4. 7,653.6109845 × 0.85 = 6,505.5693368, which rounds to **$6,505.57**
+
+The overall factor is 1.17 × 1.125 × 1.08 × 0.85 = 1.20832, about +20.8%. That is above 5,383.99, while the colleague's result is only about +7.4%.
+
+Rounding to the cent after each step gives 6,299.27 → 7,086.68 → 7,653.61 → 6,505.57. That is the same result.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The product 5,383.99 × 1.17 × 1.125 × 1.08 × 0.85 is $6,505.57, not $5,783.30. The stated multipliers are correct, but the arithmetic is wrong.
+
+=== ANSWER Z ===
+**Final price: $6,505.57**
+
+Reading chosen: each change applies to the running price, not to the original one, and I rounded only at the end.
+
+Steps:
+- ×1.17 → 6,299.2683
+- ×1.125 → 7,086.6768
+- ×1.08 → 7,653.6110
+- ×0.85 → 6,505.5693
+
+The combined multiplier is 1.17 × 1.125 × 1.08 × 0.85 = 1.2083625. Multiplying that by 5,383.99 gives the same result.
+
+Rounding after each step would give a figure that differs by a cent or so, but I did not compute it. I did the arithmetic by hand and ran no tool.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

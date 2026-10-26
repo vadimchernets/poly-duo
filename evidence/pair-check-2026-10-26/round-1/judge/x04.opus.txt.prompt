@@ -1,0 +1,62 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Which weighs more: a kilogram of feathers or two kilograms of steel?
+
+REFERENCE:
+Two kilograms of steel
+
+CRITERION:
+Correct iff steel (2 kg) is heavier. 'They weigh the same' = incorrect.
+
+=== ANSWER W ===
+Two kilograms of steel weigh more.
+
+- Feathers: 1 kilogram
+- Steel: 2 kilograms
+
+The steel weighs twice as much.
+
+=== ANSWER X ===
+**Two kilograms of steel weigh more.** That is twice the mass of one kilogram of feathers, and the material doesn't change it.
+
+The colleague's answer is correct but very thin. It leaves out the one caveat that someone might raise.
+
+**Reading I chose:** "weighs" means the scale reading or the force of gravity on the object, and "kilogram" is a unit of mass. This is not the classic trick question, where the masses are equal. Here the masses are different (1 kg against 2 kg).
+
+**Air buoyancy:**
+- Feathers take up much more volume, so they displace more air and are pushed up slightly more.
+- In air, a scale reading of 1 kg of feathers means the true mass is a little over 1 kg. The difference is on the order of 0.1%, which is about 1 g.
+- The correction for steel is around 0.02%.
+- Neither effect comes anywhere near closing a 2× gap. In a vacuum there is no buoyancy at all, and steel is still twice as heavy.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+Two kilograms of steel weigh more: 2 kg is twice 1 kg, whatever the material.
+
+The colleague's answer is correct. The question is a variant of the classic riddle "what weighs more, a kilogram of feathers or a kilogram of steel?" (the answer there is "they weigh the same"). Here the masses differ, so there is no trick.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+**Two kilograms of steel weigh more.** It is twice the mass of the feathers.
+
+**Facts:**
+- 2 kg is greater than 1 kg. The material doesn't change that.
+- In ordinary air, buoyancy acts on both objects. A kilogram of feathers has a much larger volume, so it displaces more air and is pushed up slightly more. Its true mass is therefore a bit more than 1 kg when the scale reads 1 kg. The correction is on the order of 0.1% (about 1 g). The steel's correction is about 0.02%. Neither is anywhere near enough to close a 2× gap.
+
+**Reading I chose:** "kilogram" means a unit of mass, and "weighs" means the scale reading or force of gravity. I'm not treating this as the classic "kg of feathers vs. kg of steel" trick question, because the numbers here differ.
+
+**Conclusion:** Steel, by a factor of about 2.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

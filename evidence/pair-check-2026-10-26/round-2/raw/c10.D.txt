@@ -1,0 +1,12 @@
+**The letter "t" appears 3 times.** I counted case-insensitively, inside the quoted sentence only.
+
+- "ninety-nine": 1 (the "t" in "ninety")
+- "eaten": 1
+- "the": 1
+
+None of the other words ("Nine", "hundred", "bananas", "were", "in", "seven", "noisy", "evenings", "near", "Nile") contain a "t".
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The answer of 4 is wrong. It counts 2 "t"s in "ninety-nine", but that word has only one, in "ninety". The hyphenated "nine" has none. The correct total is 3.

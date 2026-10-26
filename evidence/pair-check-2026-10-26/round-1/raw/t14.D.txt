@@ -1,0 +1,11 @@
+**No, it doesn't follow.** The draft is correct, and I found no real errors in it.
+
+The two premises give only one direction: bloops ⊆ razzies ⊆ lazzies. That means all bloops are lazzies. The reverse, "all lazzies are bloops," is the fallacy of converting a universal affirmative ("All A are B" does not imply "All B are A").
+
+Counterexample: all dogs are mammals, and all mammals are animals. It doesn't follow that all animals are dogs.
+
+The premises are also consistent with lazzies and bloops being the same set. So the reverse isn't ruled out, but nothing forces it.
+
+Confidence: high
+
+No errors in the colleague's answer

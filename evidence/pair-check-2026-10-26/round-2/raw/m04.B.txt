@@ -1,0 +1,14 @@
+The colleague's answer is correct: 6,057,955 × 9,819,567 = **59,486,495,005,485**.
+
+I re-did the computation by splitting the first factor:
+- 9,819,567 × 6,000,000 = 58,917,402,000,000
+- 9,819,567 × 57,955 = 9,819,567 × 58,000 − 9,819,567 × 45 = 569,534,886,000 − 441,880,515 = 569,093,005,485
+- Sum: 58,917,402,000,000 + 569,093,005,485 = 59,486,495,005,485
+
+Two modular checks also pass:
+- **Mod 9:** 9,819,567 has digit sum 45, so the product must be divisible by 9. The result's digit sum is 72, which is.
+- **Mod 11:** the factors are ≡ 2 and ≡ 10, so the product is ≡ 20 ≡ 9. The result is also ≡ 9.
+
+Confidence: high
+
+No errors in the colleague's answer

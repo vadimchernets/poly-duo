@@ -1,0 +1,14 @@
+**Bottom line: 36.2 US mpg.**
+
+Calculation:
+
+\[
+\frac{100\ \text{km}}{6.5\ \text{L}}
+\times
+\frac{1\ \text{mile}}{1.609344\ \text{km}}
+\times
+\frac{3.785411784\ \text{L}}{1\ \text{US gal}}
+= 36.186\ldots
+\]
+
+Rounded to one decimal: **36.2 US mpg**.

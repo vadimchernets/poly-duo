@@ -1,0 +1,9 @@
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "n=11**86;print(n,len(str(n)),sum(map(int,str(n))))"</parameter>
+</invoke>
+to=
+
+
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "n=11**86;print(n);print(len(str(n)));print(sum(map(int,str(n))))"</parameter>
+</invoke>

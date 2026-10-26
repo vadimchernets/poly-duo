@@ -1,0 +1,9 @@
+**The plane lands at 10:00 AM GMT in London on January 16.** The colleague's answer is correct.
+
+Convert the departure to UTC: 10:00 PM EST on January 15 is 03:00 UTC on January 16. Add the 7-hour flight to get 10:00 UTC. London is on GMT (UTC+0) in January, so the local time is 10:00 AM on January 16.
+
+The answer assumes the flight lasts 7 hours of elapsed time, which is what the question states. It also assumes no daylight saving time applies, which is true for both cities in mid-January.
+
+Confidence: high
+
+No errors in the colleague's answer

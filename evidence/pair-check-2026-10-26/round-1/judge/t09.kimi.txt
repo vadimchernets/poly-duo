@@ -1,0 +1,5 @@
+• W: Correct — its final answer is 53, matching the reference.  
+  X: Correct — it gives 53 with the right Jan 1 Sunday/365-day reasoning.  
+  Y: Correct — it clearly concludes 53 Sundays, consistent with the reference.  
+  Z: Correct — although it first writes “52,” it explicitly corrects the bottom line to 53, so the final answer matches.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

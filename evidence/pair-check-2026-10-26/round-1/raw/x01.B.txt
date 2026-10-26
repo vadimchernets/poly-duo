@@ -1,0 +1,11 @@
+**1 crossing.**
+
+Reading I chose: the goat is the only thing the farmer has to move (no wolf or cabbage). The boat carries the farmer plus one passenger.
+
+The farmer puts the goat in the boat and rows across once. Nothing else is on either bank that could eat the goat or be eaten, so no further trips are needed.
+
+If this was meant to be the classic wolf–goat–cabbage puzzle, where all three must cross and the wolf and goat can't be left alone together, nor the goat and cabbage, the minimum would be 7 one-way crossings. The question doesn't mention a wolf or cabbage, so I didn't count them.
+
+Confidence: high
+
+No errors in the colleague's answer

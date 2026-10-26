@@ -1,0 +1,9 @@
+**52 Sundays.**
+
+Facts: 2023 was not a leap year, so it had 365 days = 52 weeks + 1 day. January 1, 2023 was a Sunday, so the extra day fell on Sunday. That gives 52 full weeks plus one more Sunday: Jan 1 through Dec 31 (Dec 31, 2023 was also a Sunday).
+
+Correction to the bottom line: the count is **53 Sundays**, not 52. The first Sunday was January 1, and the last was December 31, 2023.
+
+Check: from Jan 1 to Dec 31 is 364 days = exactly 52 weeks, so both ends are Sundays, giving 52 + 1 = 53.
+
+Reading chosen: calendar year 2023, Gregorian calendar. I'm confident in this.

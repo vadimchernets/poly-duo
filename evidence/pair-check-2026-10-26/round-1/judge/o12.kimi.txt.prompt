@@ -1,0 +1,55 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+In what year did the Berlin Wall fall?
+
+REFERENCE:
+1989
+
+CRITERION:
+Correct iff 1989.
+
+=== ANSWER W ===
+1989.
+
+The Berlin Wall fell on November 9, 1989, when East Germany opened its border crossings following mass protests and political upheaval.
+
+=== ANSWER X ===
+**1989.**
+
+Reading chosen: "fall" means the opening of the border crossings on the night of 9 November 1989.
+
+**Facts**
+- On 9 November 1989, East Germany announced relaxed travel rules. Crowds went to the crossings, and the guards opened them that night.
+- Much of the wall was torn down over the following months. Germany formally reunified on 3 October 1990.
+
+**Conclusion**
+- If you mean the day the wall stopped working as a barrier, the answer is 1989.
+- If you mean when it was fully dismantled, that was later. Official demolition began in June 1990 and went on into 1991, with some sections kept as memorials.
+
+=== ANSWER Y ===
+The draft is correct: the Berlin Wall fell in **1989**.
+
+East Germany announced on November 9, 1989 that its border crossings would open, after weeks of mass protests and political upheaval. Crowds then crossed freely, and people began dismantling parts of the Wall. Official demolition began in 1990. German reunification followed on October 3, 1990.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+**1989.**
+
+The Berlin Wall fell on the night of 9 November 1989, when East Germany opened its border crossings after mass protests and an announcement of relaxed travel rules. Most of the wall was demolished later: official demolition began in June 1990 and ran into 1991. Germany formally reunified on 3 October 1990.
+
+Reading chosen: "fall" means the opening of the border, not the physical demolition.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

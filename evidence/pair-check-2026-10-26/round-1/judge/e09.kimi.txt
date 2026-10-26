@@ -1,0 +1,5 @@
+• W: States England/England-and-Wales is 80 mg/100 ml and gives 50 only for Scotland, matching the reference.  
+  X: Gives exactly 80 mg per 100 ml for England, matching the reference.  
+  Y: Gives 80 mg/100 ml for England and treats 50 only as Scotland’s lower limit, matching the reference.  
+  Z: Gives 80 mg/100 ml for England and correctly assigns 50 to Scotland without making it England’s limit.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,6 @@
+- **W:** States Sunday, which matches the reference.
+- **X:** States Sunday, which matches the reference.
+- **Y:** States Sunday, which matches the reference.
+- **Z:** States Sunday, which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

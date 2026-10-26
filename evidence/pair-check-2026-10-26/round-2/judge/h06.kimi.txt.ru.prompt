@@ -1,0 +1,62 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+A clock takes 5 seconds to strike 6 o'clock (six strikes). How many seconds does it take to strike 12 o'clock, at the same pace?
+
+REFERENCE:
+11 seconds
+
+CRITERION:
+Correct iff 11 seconds. 10 = incorrect.
+
+=== ANSWER W ===
+**11 seconds.** The colleague's answer is correct.
+
+Time is spent in the intervals between strikes, not on the strikes themselves. Six strikes have 5 intervals, so each interval is 5 ÷ 5 = 1 second. Twelve strikes have 11 intervals, so the total is 11 × 1 = 11 seconds.
+
+This assumes each strike is instantaneous, or that its duration is already counted within the interval.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**11 seconds.**
+
+Six strikes contain **5 intervals**. If those intervals take 5 seconds, each interval takes 1 second. Twelve strikes contain **11 intervals**, so they take **11 seconds**.
+
+=== ANSWER Y ===
+**Ответ: 11 секунд.**
+
+Выбранное прочтение: 6 ударов занимают 5 секунд, считается время от начала первого удара до конца последнего (или от момента до момента), а длительность самих ударов пренебрежимо мала или входит в интервалы.
+
+**Факты:**
+- 6 ударов дают 5 интервалов между ними.
+- 5 секунд / 5 интервалов = 1 секунда на интервал.
+- 12 ударов дают 11 интервалов.
+
+**Вывод:** 11 интервалов × 1 с = 11 секунд.
+
+Типичная ошибка — пропорция 5 × 12/6 = 10 секунд. Она неверна, потому что время определяется числом интервалов, а не числом ударов.
+
+Не уверен только в одном: если условие подразумевает, что каждый удар имеет заметную длительность, а пауза между ними другая, то задача недоопределена. При стандартной постановке ответ 11.
+
+=== ANSWER Z ===
+**11 секунд.**
+
+Прочтение: время считается между ударами, а длительностью самих ударов можно пренебречь. Это стандартная постановка этой задачи.
+
+6 ударов дают 5 интервалов, поэтому 5 с ÷ 5 = 1 с на интервал. 12 ударов дают 11 интервалов, то есть 11 × 1 с = 11 с.
+
+Пропорция 5 × 12/6 = 10 с неверна. Время зависит от числа интервалов, а не от числа ударов.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

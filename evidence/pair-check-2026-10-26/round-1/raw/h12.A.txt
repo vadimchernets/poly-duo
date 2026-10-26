@@ -1,0 +1,8 @@
+**Bottom line: 26.4 hours.**
+
+Assuming the pool starts empty and the hose flows continuously:
+
+- Pool volume: \(12 \times 6 \times 1.5 = 108\ \text{m}^3\)
+- \(108\ \text{m}^3 \approx 28{,}530\) US gallons
+- Fill time: \(28{,}530 \div 18 \approx 1{,}585\) minutes
+- \(1{,}585 \div 60 \approx 26.4\) hours

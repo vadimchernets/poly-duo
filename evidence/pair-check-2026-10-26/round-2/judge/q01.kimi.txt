@@ -1,0 +1,5 @@
+• W: Final answer is exactly $19,308.01 and the extra correction does not introduce an incompatible result.  
+  X: Final answer is exactly $19,308.01; the per-step rounding note is a caveat, not the chosen final answer.  
+  Y: Final answer is $19,307.02, which is $1.01 below the reference and rests on an incorrect product.  
+  Z: Final answer is exactly $19,308.01; the alternate rounding note is explicitly rejected for this question.  
+  VERDICT: W=correct; X=correct; Y=incorrect; Z=correct

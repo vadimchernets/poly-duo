@@ -1,0 +1,7 @@
+2^16 = **65,536**. The colleague's answer is correct.
+
+Details: 2^16 = (2^8)² = 256² = 65,536. This is also the number of distinct values a 16-bit unsigned integer can hold (0 to 65,535).
+
+Confidence: high
+
+No errors in the colleague's answer

@@ -1,0 +1,72 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+For 2024, what is the US federal annual gift tax exclusion per recipient?
+
+REFERENCE:
+$18,000 (IRS)
+
+CRITERION:
+Correct iff $18,000.
+
+=== ANSWER W ===
+**Bottom line: $18,000 per recipient for 2024. The colleague's figure is correct.**
+
+I read the question as asking about the §2503(b) annual exclusion for gifts made in calendar year 2024. The IRS set the figure in Rev. Proc. 2023-34.
+
+- **Per donor:** each donor can give $18,000 to each recipient. That was $17,000 in 2023 and is $19,000 in 2025.
+- **Married couples:** spouses can elect gift-splitting under §2513 to give $36,000 per recipient. Both spouses must consent, and a Form 709 must be filed even if no tax is due.
+- **Present interest only:** the exclusion covers only gifts the recipient can use now. Gifts in trust usually need Crummey withdrawal rights or similar terms to qualify.
+- **Gifts above the limit:** the excess isn't taxed right away. You file Form 709, and the excess reduces your lifetime exemption, which was $13.61 million per person in 2024.
+- **Gifts that don't count at all:**
+  - Tuition paid directly to a school and medical expenses paid directly to a provider don't count toward the $18,000.
+  - Gifts to a US-citizen spouse are unlimited under the marital deduction.
+  - For a non-citizen spouse, the 2024 annual limit was $185,000.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**$18,000 per recipient** for calendar year 2024.
+
+Each donor could give up to $18,000 to each recipient under the federal annual gift-tax exclusion. Married couples could generally combine exclusions for **$36,000 per recipient**, subject to gift-splitting rules. [IRS gift-tax FAQs](https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-gift-taxes)
+
+=== ANSWER Y ===
+**The 2024 US federal annual gift tax exclusion is $18,000 per recipient.** The colleague's answer is correct.
+
+- Each donor can give up to $18,000 to any number of recipients in 2024 without filing a gift tax return (Form 709) or using any of their lifetime exemption.
+- A married couple can "split" gifts, which allows $36,000 per recipient. Gift-splitting usually requires filing Form 709, even if no tax is due.
+- Gifts above $18,000 to one person aren't taxed right away. They must be reported and count against the lifetime exemption, which was $13.61 million per person for 2024.
+- Some payments aren't gifts for this purpose, and don't count toward the $18,000. These include tuition or medical expenses paid directly to the institution or provider, and gifts to a spouse who is a US citizen (unlimited marital deduction).
+- The exclusion rose to $19,000 for 2025.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+**Bottom line: $18,000 per recipient for 2024.**
+
+Reading I chose: the annual exclusion for gifts by one donor to any one recipient, under IRC §2503(b), for gifts made in calendar year 2024.
+
+**Facts**
+- The 2024 exclusion is $18,000 per donor per recipient. It was $17,000 in 2023 and is $19,000 in 2025.
+- A married couple can "split" gifts (§2513) to give up to $36,000 per recipient in 2024. Both spouses must consent, and a Form 709 must be filed.
+- The exclusion applies only to gifts of a present interest. Gifts in trust often fail this test unless they have Crummey withdrawal rights or similar terms.
+- Gifts to a spouse who is a US citizen are unlimited (marital deduction). For a non-citizen spouse the annual limit in 2024 was $185,000.
+- Payments made directly to a school for tuition or to a medical provider for care are excluded entirely. They don't count toward the $18,000.
+- Gifts above the exclusion don't automatically trigger tax. They require filing Form 709 and reduce the lifetime exemption, which was $13.61 million per person in 2024.
+
+**Conclusion**
+Each donor can give $18,000 to each recipient in 2024 with no reporting and no use of the lifetime exemption.
+
+**Confidence**
+I'm sure of the $18,000 figure, which the IRS set in Rev. Proc. 2023-34. I'm less sure of the non-citizen spouse figure ($185,000), so check it if it matters to you.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

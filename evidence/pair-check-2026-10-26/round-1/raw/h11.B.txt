@@ -1,0 +1,11 @@
+**1296 rectangles**, and 204 of them are squares. I took "8×8 chessboard" to mean 8×8 squares, which gives 9 horizontal and 9 vertical grid lines. I counted only rectangles whose sides lie along those lines.
+
+- A rectangle is fixed by choosing 2 of the 9 horizontal lines and 2 of the 9 vertical lines. That gives C(9,2) × C(9,2) = 36 × 36 = 1296.
+- The number of k×k squares is (9−k)². Summing for k = 1 to 8 gives 64+49+36+25+16+9+4+1 = 204.
+- Rectangles that aren't squares: 1296 − 204 = 1092. Use this figure if the question meant only non-square rectangles.
+
+Tilted rectangles are not counted.
+
+Confidence: high
+
+No errors in the colleague's answer.

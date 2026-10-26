@@ -1,0 +1,3 @@
+• W: Concludes 9.9 is larger, matching the reference. X: Concludes 9.9 > 9.11, matching the reference. Y: States 9.9 is larger, matching the reference. Z: Concludes 9.9 is larger, matching the reference.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

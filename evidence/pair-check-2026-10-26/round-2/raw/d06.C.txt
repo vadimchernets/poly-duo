@@ -1,0 +1,16 @@
+**Wednesday.**
+
+Reading chosen: the proleptic Gregorian calendar, with no reforms assumed beyond 2199.
+
+**Facts**
+- 20 November 2000 was a Monday (known anchor).
+- From 20 Nov 2000 to 20 Nov 2199 is 199 years.
+- Leap days in that span: 49 leap years from 2004 to 2196, minus 2100 (not a leap year in the Gregorian calendar), gives 48.
+- Total days: 199 × 365 + 48 = 72,683. Since 72,683 mod 7 = 2, the date falls 2 weekdays after Monday.
+
+**Cross-check (Doomsday rule)**
+- The century anchor for the 2100s is Sunday.
+- For year 99: ⌊99/12⌋ = 8, remainder 3, ⌊3/4⌋ = 0, so the shift is 8 + 3 + 0 = 11, which is 4 mod 7. Sunday + 4 = Thursday, so 2199's doomsday is Thursday.
+- 7 November is a doomsday date, so it is a Thursday. 14 and 21 November are also Thursdays, which makes 20 November a Wednesday.
+
+Both methods agree. I have no uncertainty about this result.

@@ -1,0 +1,5 @@
+• W: Correct — it clearly states Jane Austen.  
+  X: Correct — the final answer is Jane Austen, with accurate extra context.  
+  Y: Correct — it concludes Jane Austen and does not hedge.  
+  Z: Correct — it directly states Jane Austen.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

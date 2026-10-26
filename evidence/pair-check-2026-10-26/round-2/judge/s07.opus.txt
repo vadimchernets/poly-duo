@@ -1,0 +1,8 @@
+W and X contain only tool calls with no final answer; Y and Z state 162.
+
+- **W:** It contains only tool-call text and never gives a final number, so the answer is missing.
+- **X:** It contains only a tool call and no stated final answer, so the answer is missing.
+- **Y:** Its final answer is 162, which matches the reference exactly.
+- **Z:** Its final answer is 162, which matches the reference exactly.
+
+VERDICT: W=incorrect; X=incorrect; Y=correct; Z=correct

@@ -1,0 +1,8 @@
+The draft is wrong: "strawberry" has 3 "r"s, and the draft's answer of 3 is correct. I checked by spelling the word out.
+
+s‑t‑**r**‑a‑w‑b‑e‑**r**‑**r**‑y
+
+The "r"s are in position 3 (st**r**aw), position 8 and position 9 (be**rr**y). That makes 1 + 2 = 3.
+
+Confidence: high
+No errors in the colleague's answer

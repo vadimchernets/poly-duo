@@ -1,0 +1,52 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What day of the week was 1 January 2000?
+
+REFERENCE:
+Saturday
+
+CRITERION:
+Correct iff Saturday.
+
+=== ANSWER W ===
+1 January 2000 was a **Saturday**. The colleague's answer is correct.
+
+Quick check: 1 January 2000 is 1 day after 31 December 1999, which was a Friday. 2000 was also a leap year (divisible by 400), and that doesn't change the weekday of 1 January.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**Saturday.**
+
+Facts:
+- 1 January 2000 fell on a Saturday (Gregorian calendar).
+- Check: 1 January 2001 was a Monday. 2000 was a leap year (366 days = 52 weeks + 2 days), so 1 Jan 2000 was two weekdays before Monday, which is Saturday.
+- Second check: 31 December 1999 was a Friday, so the next day is Saturday.
+
+Conclusion: Saturday. I'm confident, and the two checks agree.
+
+=== ANSWER Y ===
+**Saturday.**
+
+The colleague's answer is correct. I found no errors, so I changed nothing in the answer itself and only added a way to check it.
+
+Two quick checks:
+- 1 January 2001 was a Monday. The year 2000 was a leap year with 366 days, which is 52 weeks plus 2 days. So 1 January 2000 fell two weekdays before Monday, which is Saturday.
+- 31 December 1999 was a Friday, so the next day was Saturday.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+Saturday.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

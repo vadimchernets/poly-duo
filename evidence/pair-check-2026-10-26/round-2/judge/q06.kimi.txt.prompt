@@ -1,0 +1,79 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+A price of $8,796.50 is cut by 15%, then cut by 35%, then cut by 35%, then raised by 17%. What is the final price, rounded to the cent?
+
+REFERENCE:
+$3,696.08
+
+CRITERION:
+Correct iff exactly this amount (1 cent off = partial).
+
+=== ANSWER W ===
+**Final price: $3,696.08.** The colleague's $3,921.22 is wrong.
+
+Step by step:
+
+| Step | Calculation | Result |
+|---|---|---|
+| Start | | $8,796.50 |
+| −15% | × 0.85 | $7,477.025 |
+| −35% | × 0.65 | $4,860.06625 |
+| −35% | × 0.65 | $3,159.0430625 |
+| +17% | × 1.17 | $3,696.080283… |
+
+Check using the combined multiplier: 0.85 × 0.65 × 0.65 × 1.17 = 0.42017625, and 8,796.50 × 0.42017625 ≈ 3,696.08. This rounds to **$3,696.08**.
+
+The colleague used the right factors, but their product, 3,921.2177…, doesn't match them. It would need a combined multiplier of about 0.4458, not 0.42018.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The final figure is wrong: $3,921.22 should be $3,696.08. The arithmetic of multiplying out the stated factors was done incorrectly, even though the factors themselves were correct.
+
+=== ANSWER X ===
+**Final price: $3,696.08**
+
+Reading chosen: each percentage applies to the running price from the previous step (sequential, compounding), not to the original price.
+
+**Calculation (unrounded intermediates):**
+- Cut 15%: 8,796.50 × 0.85 = 7,477.025
+- Cut 35%: 7,477.025 × 0.65 = 4,860.06625
+- Cut 35%: 4,860.06625 × 0.65 = 3,159.0430625
+- Raise 17%: 3,159.0430625 × 1.17 ≈ 3,696.0804
+
+**Check:** the combined multiplier is 0.85 × 0.65 × 0.65 × 1.17 ≈ 0.42018. Multiplying 8,796.50 by that gives about 3,696.08, which matches.
+
+Rounding only at the end gives $3,696.08. Rounding to the cent at each step could shift the result by a cent, but I didn't compute that variant since the question asks only for the final rounding.
+
+=== ANSWER Y ===
+$3,921.22
+
+Calculation:  
+$8,796.50 × 0.85 × 0.65 × 0.65 × 1.17 = $3,921.21770625, which rounds to **$3,921.22**.
+
+=== ANSWER Z ===
+**The final price is $3,696.08.** The colleague's $3,921.22 is wrong.
+
+Reading chosen: each percentage applies to the running price from the previous step (sequential, compounding).
+
+- Cut 15%: 8,796.50 × 0.85 = 7,477.025
+- Cut 35%: 7,477.025 × 0.65 = 4,860.06625
+- Cut 35%: 4,860.06625 × 0.65 = 3,159.0430625
+- Raise 17%: 3,159.0430625 × 1.17 = 3,696.080283…
+
+Check: the combined multiplier is 0.85 × 0.65 × 0.65 × 1.17 ≈ 0.420183, and 8,796.50 × 0.420183 ≈ 3,696.08.
+
+If you rounded to the cent after every step (half-up), you would get 7,477.03 → 4,860.07 → 3,159.05 → 3,696.09. The question asks only for the final rounding, so $3,696.08 stands.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The product 8,796.50 × 0.85 × 0.65 × 0.65 × 1.17 is 3,696.08, not 3,921.21770625. The stated result does not follow from the stated formula, so the arithmetic was wrong.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

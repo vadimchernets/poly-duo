@@ -1,0 +1,2 @@
+• W gives $0.05 with valid algebra and no contradictory result. X gives $0.05 with valid algebra and no contradictory result. Y gives $0.05 with valid algebra and no contradictory result. Z gives $0.05 with valid algebra and no contradictory result.
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

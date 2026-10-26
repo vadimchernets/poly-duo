@@ -1,0 +1,15 @@
+**Answer: 204**
+
+Reading chosen: "divisible by 4 or by 6" is inclusive or, and "not by 9" applies to the whole union.
+
+**Facts (inclusion–exclusion on 1..733):**
+- Multiples of 4: ⌊733/4⌋ = 183
+- Multiples of 6: ⌊733/6⌋ = 122
+- Multiples of both, i.e. of lcm(4,6) = 12: ⌊733/12⌋ = 61
+- Divisible by 4 or 6: 183 + 122 − 61 = 244
+
+**Remove those also divisible by 9:**
+- Divisible by 4 and 9 means a multiple of 36, and by 6 and 9 means a multiple of 18.
+- Every multiple of 36 is also a multiple of 18, so the union is just the multiples of 18: ⌊733/18⌋ = 40.
+
+**Conclusion:** 244 − 40 = **204**

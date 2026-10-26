@@ -1,0 +1,5 @@
+W: The final answer is $10,616.78, which matches the reference.
+X: The final answer is $10,616.78; its caveats about other readings are conditional and don't replace that result.
+Y: The final answer is $10,616.78, which matches the reference.
+Z: The final answer is $10,616.78; its caveats are conditional and don't commit to a second, conflicting result.
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

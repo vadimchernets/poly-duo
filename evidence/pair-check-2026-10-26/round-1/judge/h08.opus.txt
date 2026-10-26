@@ -1,0 +1,9 @@
+**W:** Correct. It rejects the premise and says she won two prizes (1903 and 1911); the extra line about the colleague doesn't change that answer.
+
+**X:** Correct. It says plainly that no third prize exists and gives the two real ones.
+
+**Y:** Correct. It rejects the premise and names the two prizes; the comments about the colleague don't change that answer.
+
+**Z:** Correct. It says she didn't win a third prize and lists the 1903 and 1911 prizes.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

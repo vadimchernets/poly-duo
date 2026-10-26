@@ -1,0 +1,5 @@
+• W: Correct — its final answer is $14,600, matching the reference, with no incompatible alternative result.  
+  X: Correct — it plainly states the 2024 single-filer standard deduction is $14,600.  
+  Y: Correct — the final answer is $14,600; the mistaken $450 inflation-adjustment aside does not change or hedge the graded figure.  
+  Z: Correct — it states $14,600 for tax year 2024 and its added details are consistent with that final answer.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,6 @@
+**W:** Its final answer is 29 days, which matches the reference.
+**X:** Its final answer is 29 days, which matches the reference, and the extra detail that 29 February 2028 is a Tuesday is accurate.
+**Y:** Its final answer is 29 days, which matches the reference; the stray "colleague" line doesn't change the result.
+**Z:** Its final answer is 29 days, which matches the reference, and the leap-year reasoning is sound.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

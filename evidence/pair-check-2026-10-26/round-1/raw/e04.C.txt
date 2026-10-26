@@ -1,0 +1,15 @@
+**Bottom line:** 750 g of flour and 7.5 eggs, which in practice means 7 or 8 eggs.
+
+**Reading I chose:** the ingredients scale in direct proportion to the number of servings.
+
+**Calculation** (the factor is 10 ÷ 4 = 2.5):
+- Flour: 300 g × 2.5 = 750 g
+- Eggs: 3 × 2.5 = 7.5
+
+**Eggs:** You can't use half an egg directly, so you have two options.
+- Beat one egg, then use about half of it by weight or volume. A large egg is roughly 50 g without the shell, so you'd use about 25 g of the beaten egg.
+- Round to 7 or 8 whole eggs. The result is slightly drier with 7 and slightly richer or wetter with 8.
+
+I'm not sure which rounding is better, because that depends on the recipe. If the eggs mainly bind the batter (pancakes, dough), 8 is usually safer than 7. If the eggs provide structure (sponge cake), stay close to 7.5 and use the beaten-egg method.
+
+**Caveat:** Linear scaling is generally fine for flour and eggs. For baking, a larger batch can need different pan sizes and a longer bake time. Also scale any leavening, salt, and spices carefully, because they don't always scale linearly.

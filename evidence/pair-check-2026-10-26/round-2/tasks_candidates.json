@@ -1,0 +1,758 @@
+[
+ {
+  "id": "c01",
+  "group": "letters",
+  "question": "How many times does the letter \"e\" (lowercase or uppercase) appear in this sentence?\n\"The committee unanimously recommended reassessing the embarrassingly unnecessary bookkeeping procedures\"",
+  "reference": "16",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "c02",
+  "group": "letters",
+  "question": "How many times does the letter \"s\" (lowercase or uppercase) appear in this sentence?\n\"Peter Piper picked a peck of pickled peppers, and a peck of pickled peppers Peter Piper picked\"",
+  "reference": "2",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "c03",
+  "group": "letters",
+  "question": "How many times does the letter \"p\" (lowercase or uppercase) appear in this sentence?\n\"She sells seashells by the seashore, and the shells she sells are surely seashells\"",
+  "reference": "0",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "c04",
+  "group": "letters",
+  "question": "How many times does the letter \"t\" (lowercase or uppercase) appear in this sentence?\n\"Mississippi millionaires rarely appreciate unnecessarily possessive assessments\"",
+  "reference": "2",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "c05",
+  "group": "letters",
+  "question": "How many times does the letter \"i\" (lowercase or uppercase) appear in this sentence?\n\"The quick brown fox jumps over the lazy dog while eleven elephants elegantly evade every eel\"",
+  "reference": "2",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "c06",
+  "group": "letters",
+  "question": "How many times does the letter \"s\" (lowercase or uppercase) appear in this sentence?\n\"Bookkeepers and committee members keep the accommodation register successfully balanced\"",
+  "reference": "6",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "c07",
+  "group": "letters",
+  "question": "How many times does the letter \"s\" (lowercase or uppercase) appear in this sentence?\n\"Irresistible strawberries arrive every morning at the riverside market in Barcelona\"",
+  "reference": "5",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "c08",
+  "group": "letters",
+  "question": "How many times does the letter \"e\" (lowercase or uppercase) appear in this sentence?\n\"Statistically speaking, sixty-six successive sessions seldom satisfy skeptical scientists\"",
+  "reference": "7",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "c09",
+  "group": "letters",
+  "question": "How many times does the letter \"e\" (lowercase or uppercase) appear in this sentence?\n\"A tattered banner fluttered above the battered battlements as the tattooed knight attacked\"",
+  "reference": "14",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "c10",
+  "group": "letters",
+  "question": "How many times does the letter \"t\" (lowercase or uppercase) appear in this sentence?\n\"Nine hundred ninety-nine bananas were eaten in seven noisy evenings near the Nile\"",
+  "reference": "3",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "w01",
+  "group": "words",
+  "question": "How many words are in the following sentence? Count hyphenated words as one word.\n\"In the early morning, before the market opened, the old fisherman sat on the pier and counted the boats that had not yet returned from the storm.\"",
+  "reference": "27",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "w02",
+  "group": "words",
+  "question": "How many words are in the following sentence? Count hyphenated words as one word.\n\"Although the weather forecast had promised clear skies for the whole weekend, it rained steadily from Friday evening until late on Sunday afternoon, and the picnic was cancelled twice.\"",
+  "reference": "29",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "w03",
+  "group": "words",
+  "question": "How many words are in the following sentence? Count hyphenated words as one word.\n\"My grandmother always said that a good soup needs patience, a sharp knife, fresh vegetables, a little salt, and a pot that is a size larger than you think you need.\"",
+  "reference": "31",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "w04",
+  "group": "words",
+  "question": "How many words are in the following sentence? Count hyphenated words as one word.\n\"The train to Vienna left eleven minutes late, stopped for twenty minutes outside Linz for no announced reason, and still arrived at the main station exactly on time.\"",
+  "reference": "28",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "w05",
+  "group": "words",
+  "question": "How many words are in the following sentence? Count hyphenated words as one word.\n\"When the library finally reopened after the renovation, the reading room had new lamps, wider desks, quieter chairs, and a strict rule against eating anything at all.\"",
+  "reference": "27",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "w06",
+  "group": "words",
+  "question": "How many words are in the following sentence? Count hyphenated words as one word.\n\"If you water the tomatoes in the evening rather than at noon, less water evaporates, the roots stay cooler overnight, and the plants are noticeably healthier by midsummer.\"",
+  "reference": "28",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "d01",
+  "group": "calendar",
+  "question": "What day of the week will 22 April 2159 be (Gregorian calendar)?",
+  "reference": "Sunday",
+  "criterion": "Correct iff this weekday."
+ },
+ {
+  "id": "d02",
+  "group": "calendar",
+  "question": "What day of the week will 13 August 2169 be (Gregorian calendar)?",
+  "reference": "Sunday",
+  "criterion": "Correct iff this weekday."
+ },
+ {
+  "id": "d03",
+  "group": "calendar",
+  "question": "What day of the week will 1 February 2378 be (Gregorian calendar)?",
+  "reference": "Wednesday",
+  "criterion": "Correct iff this weekday."
+ },
+ {
+  "id": "d04",
+  "group": "calendar",
+  "question": "What day of the week will 19 July 2527 be (Gregorian calendar)?",
+  "reference": "Saturday",
+  "criterion": "Correct iff this weekday."
+ },
+ {
+  "id": "d05",
+  "group": "calendar",
+  "question": "What day of the week will 11 June 2282 be (Gregorian calendar)?",
+  "reference": "Sunday",
+  "criterion": "Correct iff this weekday."
+ },
+ {
+  "id": "d06",
+  "group": "calendar",
+  "question": "What day of the week will 20 November 2199 be (Gregorian calendar)?",
+  "reference": "Wednesday",
+  "criterion": "Correct iff this weekday."
+ },
+ {
+  "id": "d07",
+  "group": "calendar",
+  "question": "What day of the week will 11 August 2239 be (Gregorian calendar)?",
+  "reference": "Sunday",
+  "criterion": "Correct iff this weekday."
+ },
+ {
+  "id": "d08",
+  "group": "calendar",
+  "question": "What day of the week will 12 November 2455 be (Gregorian calendar)?",
+  "reference": "Friday",
+  "criterion": "Correct iff this weekday."
+ },
+ {
+  "id": "b01",
+  "group": "calendar",
+  "question": "How many days are there from 12 April 1953 to 8 January 2006? (Count the end date but not the start date.)",
+  "reference": "19264",
+  "criterion": "Correct iff exactly this number (off by one = incorrect)."
+ },
+ {
+  "id": "b02",
+  "group": "calendar",
+  "question": "How many days are there from 16 April 1989 to 30 January 2009? (Count the end date but not the start date.)",
+  "reference": "7229",
+  "criterion": "Correct iff exactly this number (off by one = incorrect)."
+ },
+ {
+  "id": "b03",
+  "group": "calendar",
+  "question": "How many days are there from 14 July 1999 to 15 May 2035? (Count the end date but not the start date.)",
+  "reference": "13089",
+  "criterion": "Correct iff exactly this number (off by one = incorrect)."
+ },
+ {
+  "id": "b04",
+  "group": "calendar",
+  "question": "How many days are there from 13 September 1963 to 29 August 2010? (Count the end date but not the start date.)",
+  "reference": "17152",
+  "criterion": "Correct iff exactly this number (off by one = incorrect)."
+ },
+ {
+  "id": "b05",
+  "group": "calendar",
+  "question": "How many days are there from 3 May 1970 to 24 November 2008? (Count the end date but not the start date.)",
+  "reference": "14085",
+  "criterion": "Correct iff exactly this number (off by one = incorrect)."
+ },
+ {
+  "id": "b06",
+  "group": "calendar",
+  "question": "How many days are there from 5 June 2000 to 31 July 2046? (Count the end date but not the start date.)",
+  "reference": "16857",
+  "criterion": "Correct iff exactly this number (off by one = incorrect)."
+ },
+ {
+  "id": "b07",
+  "group": "calendar",
+  "question": "How many days are there from 19 May 1970 to 18 June 2021? (Count the end date but not the start date.)",
+  "reference": "18658",
+  "criterion": "Correct iff exactly this number (off by one = incorrect)."
+ },
+ {
+  "id": "b08",
+  "group": "calendar",
+  "question": "How many days are there from 15 June 2010 to 29 December 2048? (Count the end date but not the start date.)",
+  "reference": "14077",
+  "criterion": "Correct iff exactly this number (off by one = incorrect)."
+ },
+ {
+  "id": "p01",
+  "group": "calendar",
+  "question": "What date is 2648 days after 5 January 2023?",
+  "reference": "6 April 2030",
+  "criterion": "Correct iff exactly this date."
+ },
+ {
+  "id": "p02",
+  "group": "calendar",
+  "question": "What date is 1317 days after 5 October 2023?",
+  "reference": "14 May 2027",
+  "criterion": "Correct iff exactly this date."
+ },
+ {
+  "id": "p03",
+  "group": "calendar",
+  "question": "What date is 648 days after 8 December 2027?",
+  "reference": "16 September 2029",
+  "criterion": "Correct iff exactly this date."
+ },
+ {
+  "id": "p04",
+  "group": "calendar",
+  "question": "What date is 859 days after 13 December 2026?",
+  "reference": "20 April 2029",
+  "criterion": "Correct iff exactly this date."
+ },
+ {
+  "id": "p05",
+  "group": "calendar",
+  "question": "What date is 2590 days after 21 May 2026?",
+  "reference": "23 June 2033",
+  "criterion": "Correct iff exactly this date."
+ },
+ {
+  "id": "p06",
+  "group": "calendar",
+  "question": "What date is 1315 days after 17 November 2020?",
+  "reference": "24 June 2024",
+  "criterion": "Correct iff exactly this date."
+ },
+ {
+  "id": "s01",
+  "group": "arithmetic",
+  "question": "What is the sum of the decimal digits of 3^68?",
+  "reference": "153",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "s02",
+  "group": "arithmetic",
+  "question": "What is the sum of the decimal digits of 7^65?",
+  "reference": "247",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "s03",
+  "group": "arithmetic",
+  "question": "What is the sum of the decimal digits of 7^43?",
+  "reference": "169",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "s04",
+  "group": "arithmetic",
+  "question": "What is the sum of the decimal digits of 11^86?",
+  "reference": "454",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "s05",
+  "group": "arithmetic",
+  "question": "What is the sum of the decimal digits of 11^78?",
+  "reference": "361",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "s06",
+  "group": "arithmetic",
+  "question": "What is the sum of the decimal digits of 3^62?",
+  "reference": "153",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "s07",
+  "group": "arithmetic",
+  "question": "What is the sum of the decimal digits of 3^77?",
+  "reference": "162",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "s08",
+  "group": "arithmetic",
+  "question": "What is the sum of the decimal digits of 11^58?",
+  "reference": "277",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "m01",
+  "group": "arithmetic",
+  "question": "Compute 8,744,943 x 2,362,619 exactly.",
+  "reference": "20,660,968,485,717",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "m02",
+  "group": "arithmetic",
+  "question": "Compute 7,942,591 x 2,341,228 exactly.",
+  "reference": "18,595,416,441,748",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "m03",
+  "group": "arithmetic",
+  "question": "Compute 5,969,389 x 1,172,703 exactly.",
+  "reference": "7,000,320,388,467",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "m04",
+  "group": "arithmetic",
+  "question": "Compute 6,057,955 x 9,819,567 exactly.",
+  "reference": "59,486,495,005,485",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "m05",
+  "group": "arithmetic",
+  "question": "Compute 6,274,968 x 2,358,864 exactly.",
+  "reference": "14,801,796,116,352",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "m06",
+  "group": "arithmetic",
+  "question": "Compute 5,480,570 x 1,813,813 exactly.",
+  "reference": "9,940,729,113,410",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "m07",
+  "group": "arithmetic",
+  "question": "Compute 1,198,684 x 9,421,797 exactly.",
+  "reference": "11,293,757,315,148",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "m08",
+  "group": "arithmetic",
+  "question": "Compute 1,966,266 x 2,848,043 exactly.",
+  "reference": "5,600,010,117,438",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "x01",
+  "group": "arithmetic",
+  "question": "What is 14^884 mod 1000?",
+  "reference": "216",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "x02",
+  "group": "arithmetic",
+  "question": "What is 17^460 mod 101?",
+  "reference": "1",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "x03",
+  "group": "arithmetic",
+  "question": "What is 18^136 mod 1000?",
+  "reference": "776",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "x04",
+  "group": "arithmetic",
+  "question": "What is 5^554 mod 1009?",
+  "reference": "518",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "x05",
+  "group": "arithmetic",
+  "question": "What is 20^423 mod 101?",
+  "reference": "76",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "x06",
+  "group": "arithmetic",
+  "question": "What is 29^546 mod 1000?",
+  "reference": "121",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "r01",
+  "group": "characters",
+  "question": "Reverse the string \"lwjmonnqoycekkcvbpylwlgj\". What is the 14th character of the reversed string?",
+  "reference": "c",
+  "criterion": "Correct iff this character."
+ },
+ {
+  "id": "r02",
+  "group": "characters",
+  "question": "Reverse the string \"xriqyjflwkwwmqnogqlnuvkx\". What is the 9th character of the reversed string?",
+  "reference": "o",
+  "criterion": "Correct iff this character."
+ },
+ {
+  "id": "r03",
+  "group": "characters",
+  "question": "Reverse the string \"vsjocgymslrzneoitolgvwus\". What is the 18th character of the reversed string?",
+  "reference": "y",
+  "criterion": "Correct iff this character."
+ },
+ {
+  "id": "r04",
+  "group": "characters",
+  "question": "Reverse the string \"hgfiuvvywleveyxkntpxqszj\". What is the 18th character of the reversed string?",
+  "reference": "v",
+  "criterion": "Correct iff this character."
+ },
+ {
+  "id": "r05",
+  "group": "characters",
+  "question": "Reverse the string \"dsrzvcrqzsxjdpwyorefntzv\". What is the 5th character of the reversed string?",
+  "reference": "f",
+  "criterion": "Correct iff this character."
+ },
+ {
+  "id": "r06",
+  "group": "characters",
+  "question": "Reverse the string \"vdbeozhkxaygksjeavrbzzss\". What is the 12th character of the reversed string?",
+  "reference": "k",
+  "criterion": "Correct iff this character."
+ },
+ {
+  "id": "r07",
+  "group": "characters",
+  "question": "Reverse the string \"sgbckystwswoeccnnlpxmcyk\". What is the 20th character of the reversed string?",
+  "reference": "k",
+  "criterion": "Correct iff this character."
+ },
+ {
+  "id": "r08",
+  "group": "characters",
+  "question": "Reverse the string \"hpwrmmwocswfwyagudwaqvdk\". What is the 5th character of the reversed string?",
+  "reference": "a",
+  "criterion": "Correct iff this character."
+ },
+ {
+  "id": "i01",
+  "group": "arithmetic",
+  "question": "How many integers from 1 to 1000 (inclusive) are divisible by 4 or by 6, but not by 9?",
+  "reference": "278",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "i02",
+  "group": "arithmetic",
+  "question": "How many integers from 1 to 4080 (inclusive) are divisible by 4 or by 6, but not by 9?",
+  "reference": "1134",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "i03",
+  "group": "arithmetic",
+  "question": "How many integers from 1 to 3704 (inclusive) are divisible by 3 or by 8, but not by 12?",
+  "reference": "1235",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "i04",
+  "group": "arithmetic",
+  "question": "How many integers from 1 to 733 (inclusive) are divisible by 4 or by 6, but not by 9?",
+  "reference": "204",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "i05",
+  "group": "arithmetic",
+  "question": "How many integers from 1 to 3320 (inclusive) are divisible by 3 or by 8, but not by 12?",
+  "reference": "1107",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "i06",
+  "group": "arithmetic",
+  "question": "How many integers from 1 to 2678 (inclusive) are divisible by 3 or by 8, but not by 12?",
+  "reference": "892",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "q01",
+  "group": "percent",
+  "question": "A price of $7,796.00 is raised by 40%, then raised by 17%, then raised by 8%, then raised by 40%. What is the final price, rounded to the cent?",
+  "reference": "$19,308.01",
+  "criterion": "Correct iff exactly this amount (1 cent off = partial)."
+ },
+ {
+  "id": "q02",
+  "group": "percent",
+  "question": "A price of $4,599.00 is raised by 8%, then raised by 23%, then raised by 17%, then raised by 40%. What is the final price, rounded to the cent?",
+  "reference": "$10,007.05",
+  "criterion": "Correct iff exactly this amount (1 cent off = partial)."
+ },
+ {
+  "id": "q03",
+  "group": "percent",
+  "question": "A price of $2,684.99 is raised by 40%, then raised by 8%, then cut by 15%, then cut by 20%. What is the final price, rounded to the cent?",
+  "reference": "$2,760.60",
+  "criterion": "Correct iff exactly this amount (1 cent off = partial)."
+ },
+ {
+  "id": "q04",
+  "group": "percent",
+  "question": "A price of $3,186.99 is raised by 8%, then raised by 8%, then raised by 12.5%, then cut by 20%. What is the final price, rounded to the cent?",
+  "reference": "$3,345.57",
+  "criterion": "Correct iff exactly this amount (1 cent off = partial)."
+ },
+ {
+  "id": "q05",
+  "group": "percent",
+  "question": "A price of $5,383.99 is raised by 17%, then raised by 12.5%, then raised by 8%, then cut by 15%. What is the final price, rounded to the cent?",
+  "reference": "$6,505.57",
+  "criterion": "Correct iff exactly this amount (1 cent off = partial)."
+ },
+ {
+  "id": "q06",
+  "group": "percent",
+  "question": "A price of $8,796.50 is cut by 15%, then cut by 35%, then cut by 35%, then raised by 17%. What is the final price, rounded to the cent?",
+  "reference": "$3,696.08",
+  "criterion": "Correct iff exactly this amount (1 cent off = partial)."
+ },
+ {
+  "id": "n01",
+  "group": "arithmetic",
+  "question": "What is the 777th prime number?",
+  "reference": "5903",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "n02",
+  "group": "arithmetic",
+  "question": "What is the 1500th prime number?",
+  "reference": "12553",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "n03",
+  "group": "arithmetic",
+  "question": "What is the 2222th prime number?",
+  "reference": "19583",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "n04",
+  "group": "arithmetic",
+  "question": "What is the 3000th prime number?",
+  "reference": "27449",
+  "criterion": "Correct iff exactly this number."
+ },
+ {
+  "id": "h01",
+  "group": "puzzle",
+  "question": "I have two US coins that add up to 30 cents. Neither of them is a nickel. What are the two coins?",
+  "reference": "Impossible with standard US coins (the only pair is a quarter and a nickel).",
+  "criterion": "Correct iff it says it is impossible / no such pair. Answering 'a quarter and a nickel' = incorrect."
+ },
+ {
+  "id": "h02",
+  "group": "puzzle",
+  "question": "A boy and his mother are in a car crash. The mother dies at the scene. At the hospital the surgeon looks at the boy and says, \"I can't operate on him, he's my son.\" How is this possible?",
+  "reference": "The surgeon is the boy's father.",
+  "criterion": "Correct iff the father. 'The surgeon is his mother' = incorrect."
+ },
+ {
+  "id": "h03",
+  "group": "puzzle",
+  "question": "In a Monty Hall game the doors are made of clear glass and you can see the car behind door 2. You pick door 1, and the host opens door 3 to show a goat. Should you switch, and what is your chance of winning if you switch to door 2?",
+  "reference": "Yes, switch: probability 1 (you can see the car).",
+  "criterion": "Correct iff switching wins with probability 1 / certainty. 2/3 = incorrect."
+ },
+ {
+  "id": "h04",
+  "group": "puzzle",
+  "question": "A farmer must take a wolf, a goat and a cabbage across a river. His boat can carry him plus TWO of them at once. The wolf eats the goat and the goat eats the cabbage if left alone without him. What is the minimum number of one-way crossings?",
+  "reference": "3 (take wolf+cabbage, come back alone, take goat)",
+  "criterion": "Correct iff 3."
+ },
+ {
+  "id": "h05",
+  "group": "puzzle",
+  "question": "A bat and a ball cost $1.10 in total. The bat costs $1.00 more than TWICE the price of the ball. How much does the ball cost?",
+  "reference": "1/30 of a dollar, about 3.33 cents",
+  "criterion": "Correct iff about 3.33 cents ($0.0333). 5 cents = incorrect."
+ },
+ {
+  "id": "h06",
+  "group": "puzzle",
+  "question": "A clock takes 5 seconds to strike 6 o'clock (six strikes). How many seconds does it take to strike 12 o'clock, at the same pace?",
+  "reference": "11 seconds",
+  "criterion": "Correct iff 11 seconds. 10 = incorrect."
+ },
+ {
+  "id": "h07",
+  "group": "puzzle",
+  "question": "In a race you overtake the person who is in LAST place. What place are you in now?",
+  "reference": "Impossible: you cannot overtake the last-placed runner (if you are behind them, they are not last).",
+  "criterion": "Correct iff it says this is impossible."
+ },
+ {
+  "id": "h08",
+  "group": "puzzle",
+  "question": "How many people must be in a room for there to be at least a 50% chance that at least one of them shares YOUR specific birthday (ignore leap years, 365 equally likely days)?",
+  "reference": "253",
+  "criterion": "Correct iff 253. 23 = incorrect."
+ },
+ {
+  "id": "h09",
+  "group": "puzzle",
+  "question": "A doctor gives you 3 pills and tells you to take one every half hour. How many minutes will it take to take all three, starting with the first one right now?",
+  "reference": "60 minutes",
+  "criterion": "Correct iff 60 minutes."
+ },
+ {
+  "id": "h10",
+  "group": "puzzle",
+  "question": "If 5 cats catch 5 mice in 5 minutes, how many cats are needed to catch 100 mice in 100 minutes?",
+  "reference": "5",
+  "criterion": "Correct iff 5."
+ },
+ {
+  "id": "h11",
+  "group": "puzzle",
+  "question": "A rope ladder hangs over the side of a ship; its rungs are 30 cm apart and 10 rungs are above the water. The tide rises 90 cm. How many rungs are now above the water?",
+  "reference": "10 (the ship rises with the tide)",
+  "criterion": "Correct iff 10."
+ },
+ {
+  "id": "h12",
+  "group": "logic",
+  "question": "No cats are dogs. Some dogs are not pets. Does it follow that some cats are not pets?",
+  "reference": "No, it does not follow.",
+  "criterion": "Correct iff no."
+ },
+ {
+  "id": "h13",
+  "group": "logic",
+  "question": "It is not true that every student passed. Which statement must be true: (a) no student passed, (b) at least one student did not pass, (c) at least one student passed?",
+  "reference": "(b)",
+  "criterion": "Correct iff (b) only."
+ },
+ {
+  "id": "h14",
+  "group": "logic",
+  "question": "If it rains, the match is cancelled. The match was cancelled. Can we conclude that it rained?",
+  "reference": "No (affirming the consequent).",
+  "criterion": "Correct iff no."
+ },
+ {
+  "id": "h15",
+  "group": "logic",
+  "question": "Exactly one of these three statements is true. 1: 'The prize is in box A.' 2: 'The prize is not in box B.' 3: 'The prize is not in box A.' Where is the prize (it is in exactly one of boxes A, B, C)?",
+  "reference": "Box B (statements 1 and 3 contradict so one of them is true; then statement 2 must be false, so the prize is in B; check: 1 false, 3 true, 2 false).",
+  "criterion": "Correct iff box B."
+ },
+ {
+  "id": "h16",
+  "group": "premise",
+  "question": "Which Apollo mission landed the first woman on the Moon?",
+  "reference": "False premise: no Apollo mission carried a woman; no woman has walked on the Moon (as of the models' knowledge).",
+  "criterion": "Correct iff it rejects the premise."
+ },
+ {
+  "id": "h17",
+  "group": "premise",
+  "question": "In what year did the Eiffel Tower get moved from London to Paris?",
+  "reference": "False premise: it was built in Paris (1887-1889) and never moved.",
+  "criterion": "Correct iff it rejects the premise."
+ },
+ {
+  "id": "h18",
+  "group": "premise",
+  "question": "Why is the Great Wall of China the only man-made structure visible from space with the naked eye?",
+  "reference": "False premise: it is not; it is generally not visible to the naked eye from orbit, and other structures/cities are more visible.",
+  "criterion": "Correct iff it rejects the premise."
+ },
+ {
+  "id": "h19",
+  "group": "premise",
+  "question": "What did Napoleon say when he crossed the Atlantic to visit the United States in 1810?",
+  "reference": "False premise: Napoleon never visited the United States.",
+  "criterion": "Correct iff it rejects the premise."
+ },
+ {
+  "id": "h20",
+  "group": "units",
+  "question": "A recipe needs 2.5 US cups of milk. How many millilitres is that, to the nearest millilitre? (1 US cup = 236.588 ml)",
+  "reference": "591 ml",
+  "criterion": "Correct iff 591 ml."
+ },
+ {
+  "id": "h21",
+  "group": "units",
+  "question": "A car's fuel consumption is 6.5 litres per 100 km. What is that in US miles per gallon, to one decimal? (1 US gal = 3.785411784 L, 1 mile = 1.609344 km)",
+  "reference": "36.2 mpg",
+  "criterion": "Correct iff 36.2 (36.1-36.2 accepted)."
+ },
+ {
+  "id": "h22",
+  "group": "percent",
+  "question": "A shop raises a price by 20% and later advertises '20% off'. Compared with the original price, what is the final price, in percent?",
+  "reference": "96% (a 4% decrease)",
+  "criterion": "Correct iff 96% / 4% lower."
+ },
+ {
+  "id": "h23",
+  "group": "percent",
+  "question": "An investment loses 40% in year one. By what percentage must it grow in year two to get back exactly to the starting value? Give one decimal.",
+  "reference": "66.7%",
+  "criterion": "Correct iff 66.7%."
+ },
+ {
+  "id": "h24",
+  "group": "calendar",
+  "question": "Counting 1 January as day 1, what is the date of the 256th day of the year 2024?",
+  "reference": "12 September 2024",
+  "criterion": "Correct iff 12 September (2024 is a leap year)."
+ }
+]

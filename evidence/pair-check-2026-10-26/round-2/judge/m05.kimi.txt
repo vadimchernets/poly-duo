@@ -1,0 +1,6 @@
+• - **W**: Its final answer is 14,801,796,116,352, exactly the reference — correct.
+  - **X**: The final answer is exactly 14,801,796,116,352 — correct.
+  - **Y**: Its final answer is 14,801,796,116,352, exactly the reference — correct.
+  - **Z**: Contains only tool-call stubs with no outputs or stated numeric result, so there is no final answer to match — incorrect.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=incorrect

@@ -1,0 +1,74 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+A price of $2,684.99 is raised by 40%, then raised by 8%, then cut by 15%, then cut by 20%. What is the final price, rounded to the cent?
+
+REFERENCE:
+$2,760.60
+
+CRITERION:
+Correct iff exactly this amount (1 cent off = partial).
+
+=== ANSWER W ===
+**Final price: $2,760.60**
+
+The combined multiplier is 1.40 × 1.08 × 0.85 × 0.80 = 1.02816. Step by step:
+
+- $2,684.99 × 1.40 = $3,758.986
+- × 1.08 = $4,059.70488
+- × 0.85 = $3,450.749148
+- × 0.80 = $2,760.5993184, which rounds to **$2,760.60**
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The method and multiplier are right, but the arithmetic is wrong. 2684.99 × 1.02816 = 2760.5993, not 2760.9457, so the correct rounded result is $2,760.60, not $2,760.95.
+
+=== ANSWER X ===
+$2,760.95
+
+Calculation: $2,684.99 × 1.40 × 1.08 × 0.85 × 0.80 = $2,760.9457152, which rounds to **$2,760.95**.
+
+=== ANSWER Y ===
+**Final price: $2,760.60**
+
+Reading chosen: each change applies to the running price from the previous step, and I rounded only at the end.
+
+**Calculation**
+- Overall factor: 1.40 × 1.08 × 0.85 × 0.80 = 1.02816
+- $2,684.99 × 1.40 = $3,758.986
+- × 1.08 = $4,059.70488
+- × 0.85 = $3,450.749148
+- × 0.80 = $2,760.5993184, which rounds to $2,760.60
+
+**Check:** If you round to the cent after every step, you get $3,758.99, $4,059.71, $3,450.75, then $2,760.60. The result is the same.
+
+**Conclusion:** The net change is +2.816%, so the final price is slightly above the start. I'm confident in this result.
+
+=== ANSWER Z ===
+**Final price: $2,760.60**
+
+I read the problem as each change applying to the running price from the previous step. I rounded only at the end.
+
+**Calculation**
+- Overall factor: 1.40 × 1.08 × 0.85 × 0.80 = 1.02816
+- $2,684.99 × 1.40 = $3,758.986
+- × 1.08 = $4,059.70488
+- × 0.85 = $3,450.749148
+- × 0.80 = $2,760.5993184, which rounds to **$2,760.60**
+
+**Check:** Rounding to the cent after every step gives $3,758.99, $4,059.71, $3,450.75, then $2,760.60. The result is the same.
+
+The net change is +2.816%, so the final price ends up slightly above the starting price.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The method is right, but the arithmetic is wrong. $2,684.99 × 1.02816 is $2,760.5993…, not $2,760.9457…. The correct rounded answer is $2,760.60, not $2,760.95.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

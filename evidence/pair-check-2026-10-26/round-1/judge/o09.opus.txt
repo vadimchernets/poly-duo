@@ -1,0 +1,6 @@
+**W:** Gives 42 as the principal root, checks it, and notes −42; the stray "No errors in the colleague's answer" line doesn't change that answer.
+**X:** States 42 and notes −42, which the criterion allows.
+**Y:** Gives 42 as the principal root and mentions −42; its extra trailing line doesn't contradict that.
+**Z:** States √1,764 = 42 and confirms that 42² = 1,764.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,16 @@
+**The ball costs 1/30 of a dollar, about 3.33 cents ($0.0333…).**
+
+Reading chosen: the bat costs $1.00 more than *twice* the ball's price.
+
+Let the ball cost x. Then the bat costs 2x + 1.00.
+
+x + (2x + 1.00) = 1.10, so 3x = 0.10, so x = 0.10/3 ≈ $0.0333.
+
+Check: the bat costs 2(0.0333…) + 1.00 = $1.0666…, and 0.0333… + 1.0666… = $1.10. ✓
+
+In practice, prices are rounded to whole cents. No whole-cent price satisfies the conditions exactly. The exact answer is 3⅓ cents.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The opening line gives $0.275 (27.5 cents), which is wrong. The derivation below it, and the "Correction" line, give the right value of 3⅓ cents. A reader who stops at the first line gets the wrong answer, so the answer should state only 3⅓ cents.

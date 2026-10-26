@@ -313,6 +313,8 @@ permission flow. That was one phone in two of the ten languages; the other eight
 the same sources and machine-checked against them, and the old Tasker path for Android has never been run on a phone (the Poly A1 Android Duo was run on an emulator on 2026-10-01). Duo was also run end to end on free ChatGPT and Claude accounts (free Claude, Sonnet 5.5) on 2026-10-01.
 `tools/verify.py` unpacks each signed shortcut and compares its prompts and texts with the open source files in `locales/`; it checks that the file matches the sources, not that the AIs answer well. Verified in the live run: Duo and Trio of 2026-10-01 (before Duo 5 / Trio 4); a fresh run on current iOS and app versions is still to be done and dated here. Blind Critique (2026-10-26) is in the source and not yet in the iCloud links above — the Duo 5 file there still runs the earlier Critique, where Claude checks ChatGPT's answer — and it has not been run on a phone yet. Everything known to be unverified is in Limitations above and in the [FAQ](docs/en/faq.md).
 
+Own check of the pair (26 Oct 2026, command-line models, blind grading against a reference): the Claude review made a correct ChatGPT draft wrong in 0 of 66 cases (95% CI 0-6%) and fixed ChatGPT's error in 18 of 18 cases on a set chosen for those errors; the blind variant against the earlier Critique: no difference established. Data and limits: [evidence/pair-check-2026-10-26/](evidence/pair-check-2026-10-26/README.md).
+
 ## Build from source
 
 ```bash

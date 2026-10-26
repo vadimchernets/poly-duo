@@ -1,0 +1,6 @@
+- **W:** It gives $3,696.08 with correct intermediate steps, which matches the reference exactly.
+- **X:** It gives $3,696.08 by sequential compounding, which matches the reference exactly.
+- **Y:** It gives $3,921.22, which is an arithmetic error and does not match the reference.
+- **Z:** It gives $3,696.08 as its final answer and labels the per-step rounding variant ($3,696.09) only as an aside, so it matches the reference.
+
+VERDICT: W=correct; X=correct; Y=incorrect; Z=correct

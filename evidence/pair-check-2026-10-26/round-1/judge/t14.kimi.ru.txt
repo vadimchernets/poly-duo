@@ -1,0 +1,3 @@
+• W: Correct — it explicitly answers "No, it doesn't follow" and the added caveat that the converse is merely possible does not change the final answer. X: Correct — it clearly states "Нет, не следует" with a valid counterexample and no hedge toward "yes." Y: Correct — it plainly answers "No" and says the reverse does not follow. Z: Correct — both its Russian and English conclusions say the converse does not follow, with no contradictory commitment.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,6 @@
+W: Gives 15 and notes that Lincoln was the 16th president, which matches the reference.
+X: Gives 15 and lists all 15 predecessors, which matches the reference.
+Y: Gives 15. Its caveat about counting Articles-era presidents is labeled non-standard, so the answer doesn't hedge on the count.
+Z: Gives 15 and says Lincoln was the 16th president, which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,7 @@
+**5 miles = 8.05 km**
+
+The colleague's answer is correct. 1 mile is exactly 1.609344 km (international mile), and 5 × 1.609344 = 8.04672 km, which rounds to 8.05 km.
+
+Confidence: high
+
+No errors in the colleague's answer

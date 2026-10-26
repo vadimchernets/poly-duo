@@ -1,0 +1,6 @@
+• W: Correct — explicitly rejects the premise, stating it cannot be seen from the Moon with the naked eye in any year.
+  X: Correct — plainly says "Never" and calls the claim a myth.
+  Y: Correct — clearly states there is no such year and the premise is false; its extra caveats about the myth's publication history and LEO sightings do not hedge the Moon-visibility answer.
+  Z: Correct — says "Never" with no such year; mentions of astronauts glimpsing it under ideal conditions refer to low Earth orbit, not the Moon, so no incompatible result.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

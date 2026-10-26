@@ -1,0 +1,11 @@
+**The 18th character of the reversed string is "v".**
+
+Reading chosen: counting from 1, in the reversed string.
+
+**Facts:**
+- The original string has 24 characters.
+- Reversed: `jzsqxptnkxyevelwyvvuifgh`
+- Counting through it: j(1) z(2) s(3) q(4) x(5) p(6) t(7) n(8) k(9) x(10) y(11) e(12) v(13) e(14) l(15) w(16) y(17) v(18)
+- Cross-check: reversed position 18 corresponds to original position 24 − 18 + 1 = 7, which is "v" (h g f i u v **v**).
+
+**Conclusion:** v. I'm sure of this result.

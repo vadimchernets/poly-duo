@@ -1,0 +1,15 @@
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "print(6274968*2358864)"</parameter>
+</invoke>
+
+<invoke name="Bash">
+<parameter name="command">echo $((6274968*2358864))</parameter>
+</invoke>
+
+<invoke name="Bash">
+<parameter name="command">bc <<< "6274968*2358864"</parameter>
+</invoke>
+
+<invoke name="Bash">
+<parameter name="command">awk 'BEGIN{printf "%d\n", 6274968*2358864}'</parameter>
+</invoke>

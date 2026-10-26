@@ -1,0 +1,5 @@
+• W = correct: it states Canberra is the capital and confirms the colleague.  
+  X = correct: it states Canberra is the capital and confirms the colleague.  
+  Y = correct: it directly answers Canberra and supports it without hedging.  
+  Z = correct: it plainly states Canberra is the capital.
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,5 @@
+• W: It rejects the premise by saying no 1859 chapter is the answer and that Spencer coined the phrase, with only extra uncertainty about later-edition details.  
+  X: It directly says Darwin neither coined nor used the phrase in the 1859 first edition and identifies Spencer’s 1864 coinage and Darwin’s later fifth-edition adoption.  
+  Y: It clearly rejects the false premise and states the phrase appears nowhere in the 1859 edition while crediting Spencer.  
+  Z: It explicitly says Darwin did not coin the phrase and it is not in the 1859 first edition, matching the reference’s rejection of the premise.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

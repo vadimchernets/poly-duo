@@ -1,0 +1,5 @@
+• W: Correct — it clearly states 15 and correctly notes Lincoln was the 16th president.  
+  X: Correct — it states 15 and lists the 15 predecessors while excluding non-Constitutional presidents.  
+  Y: Correct — it gives 15 as the bottom line, and the caveat about Articles of Confederation presidents does not change that final answer.  
+  Z: Correct — it plainly states 15 different people before Lincoln, the 16th president.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,9 @@
+**W:** It says Saturday, and its supporting reasoning (31 December 1999 was a Friday) is accurate.
+
+**X:** It says Saturday, and both of its checks are accurate and consistent.
+
+**Y:** It says Saturday, and its leap-year and previous-day checks are both accurate.
+
+**Z:** It says Saturday, which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

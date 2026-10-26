@@ -1,0 +1,15 @@
+**7,942,591 × 2,341,228 = 18,595,416,441,748.** The colleague's answer is correct, and I confirmed it independently. I read the question as plain base-10 integer multiplication.
+
+**Computation** (2,341,228 = 2,000,000 + 341,000 + 228):
+- 7,942,591 × 2,000,000 = 15,885,182,000,000
+- 7,942,591 × 341,000 = 2,708,423,531,000
+- 7,942,591 × 228 = 1,810,910,748
+- Sum = 18,595,416,441,748
+
+**Check (mod 9):** the digit sums of the factors are 37 and 22, which reduce to 1 and 4. The product should therefore be 4 mod 9. The result's digit sum is 67, which is also 4 mod 9, so it passes.
+
+I did this by hand and did not run it in a calculator or the shell.
+
+Confidence: high
+
+No errors in the colleague's answer

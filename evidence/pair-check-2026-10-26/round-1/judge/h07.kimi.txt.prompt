@@ -1,0 +1,71 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many trailing zeros does 125! (125 factorial) have?
+
+REFERENCE:
+31
+
+CRITERION:
+Correct iff 31.
+
+=== ANSWER W ===
+**125! has 31 trailing zeros.**
+
+The draft is correct. Each trailing zero comes from a factor of 10 = 2 × 5. Factors of 2 are more plentiful than factors of 5, so the number of factors of 5 sets the count:
+
+⌊125/5⌋ + ⌊125/25⌋ + ⌊125/125⌋ = 25 + 5 + 1 = 31.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**125! has 31 trailing zeros.**
+
+Reading chosen: trailing zeros in base 10 of 125!.
+
+Facts (Legendre's formula; the count of 10s is limited by the count of factors of 5, since factors of 2 are more plentiful):
+- ⌊125/5⌋ = 25
+- ⌊125/25⌋ = 5
+- ⌊125/125⌋ = 1
+- Sum: 25 + 5 + 1 = 31 factors of 5.
+- Factors of 2 number far more than 31 (⌊125/2⌋ + ⌊125/4⌋ + … = 62 + 31 + 15 + 7 + 3 + 1 = 119).
+
+Conclusion: the number of factors of 10 is min(31, 119) = 31, so 31 trailing zeros.
+
+I'm sure of this result; I computed it by hand and did not run code.
+
+=== ANSWER Y ===
+31.
+
+Trailing zeros come from factors of 10, each requiring a pair \(2 \times 5\). There are more factors of 2 than 5, so count factors of 5:
+
+\[
+\left\lfloor \frac{125}{5} \right\rfloor+
+\left\lfloor \frac{125}{25} \right\rfloor+
+\left\lfloor \frac{125}{125} \right\rfloor
+=25+5+1=31.
+\]
+
+Therefore, \(125!\) has **31 trailing zeros**.
+
+=== ANSWER Z ===
+**125! has 31 trailing zeros.**
+
+The draft is correct, so I changed nothing in the result. Reading used: trailing zeros in base 10.
+
+Each trailing zero needs one factor 10 = 2×5. Factors of 2 are far more plentiful (119 of them in 125!), so the factors of 5 set the count:
+
+⌊125/5⌋ + ⌊125/25⌋ + ⌊125/125⌋ = 25 + 5 + 1 = 31
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

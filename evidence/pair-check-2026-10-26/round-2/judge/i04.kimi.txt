@@ -1,0 +1,5 @@
+• W: Final answer is exactly 204 with correct inclusion–exclusion, so it matches the reference.  
+  X: Final answer is exactly 204 and the counting agrees with the reference, so it is correct.  
+  Y: Final answer is exactly 204 with the same valid computation, so it matches the reference.  
+  Z: Final answer is exactly 204 and commits to no incompatible result, so it is correct.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

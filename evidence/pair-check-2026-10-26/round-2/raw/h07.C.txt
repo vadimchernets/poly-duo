@@ -1,0 +1,14 @@
+**Bottom line: the situation is impossible as stated. You cannot overtake the person in last place, because you would have to be behind them, and then you would be the one in last place.**
+
+**Facts**
+- To overtake someone, you must start behind them.
+- If you are behind the last-place runner, you are already last, so the "last place" person was not actually last.
+- Overtaking the person who is last (at that moment) therefore contradicts the premise.
+
+**Conclusion**
+- Read literally, there is no consistent answer. The common trick-answer "second to last" is the answer to a different, fixed riddle: "you overtake the person in *second* place, what place are you in?" (first? No: you take second place.) Applied to last place, it only works if "last" means last among everyone *except you*.
+- Under that charitable reading (the person was last among the others, and you were behind them, so you were last overall), after overtaking them you are **second to last**, and they are now last.
+
+**Reading chosen:** "last place" means last among the other runners, not counting you.
+
+**Not sure:** whether the questioner intends the paradox answer ("impossible") or the charitable one ("second to last"). I'd give "second to last" as the practical answer, with the caveat that the literal wording is contradictory.

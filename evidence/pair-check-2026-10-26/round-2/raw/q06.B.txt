@@ -1,0 +1,17 @@
+**The final price is $3,696.08.** The colleague's $3,921.22 is wrong.
+
+Reading chosen: each percentage applies to the running price from the previous step (sequential, compounding).
+
+- Cut 15%: 8,796.50 × 0.85 = 7,477.025
+- Cut 35%: 7,477.025 × 0.65 = 4,860.06625
+- Cut 35%: 4,860.06625 × 0.65 = 3,159.0430625
+- Raise 17%: 3,159.0430625 × 1.17 = 3,696.080283…
+
+Check: the combined multiplier is 0.85 × 0.65 × 0.65 × 1.17 ≈ 0.420183, and 8,796.50 × 0.420183 ≈ 3,696.08.
+
+If you rounded to the cent after every step (half-up), you would get 7,477.03 → 4,860.07 → 3,159.05 → 3,696.09. The question asks only for the final rounding, so $3,696.08 stands.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The product 8,796.50 × 0.85 × 0.65 × 0.65 × 1.17 is 3,696.08, not 3,921.21770625. The stated result does not follow from the stated formula, so the arithmetic was wrong.

@@ -1,0 +1,5 @@
+W: The final answer is 1 sister, which matches the reference.
+X: The final answer is 1 sister, which matches the reference.
+Y: The final answer is 1 sister, and the note about half-siblings is only a caveat, not a second answer.
+Z: The final answer is 1 sister, which matches the reference.
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

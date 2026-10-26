@@ -1,0 +1,15 @@
+**Final price: $19,308.01**
+
+I chose the reading that each increase compounds on the previous price, with rounding only at the end.
+
+- 7,796.00 × 1.40 = 10,914.40
+- 10,914.40 × 1.17 = 12,769.848
+- 12,769.848 × 1.08 = 13,791.43584
+- 13,791.43584 × 1.40 = 19,308.010176, which rounds to **$19,308.01**
+
+If you rounded to the cent after every step, you would get 10,914.40 → 12,769.85 → 13,791.44 → 19,308.02. That is one cent higher. The question asks only for the final price to be rounded, so $19,308.01 is the answer.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The colleague's product, $19,307.02464, is wrong. The correct product is 19,308.010176. The error is about $1, which looks like a slip in the multiplication. The method (multiplying 1.40 × 1.17 × 1.08 × 1.40) was right, but the number it produced was not.

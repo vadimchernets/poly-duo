@@ -1,0 +1,70 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many times does the letter "t" (lowercase or uppercase) appear in this sentence?
+"Nine hundred ninety-nine bananas were eaten in seven noisy evenings near the Nile"
+
+REFERENCE:
+3
+
+CRITERION:
+Correct iff exactly this number.
+
+=== ANSWER W ===
+4
+
+Reading: counting only inside the quoted sentence, case-insensitively.
+
+- “ninety-nine”: 2
+- “eaten”: 1
+- “the”: 1
+
+=== ANSWER X ===
+**Ответ: 3.**
+
+Читал вопрос буквально: считаются все «t» в английском предложении, регистр не важен.
+
+**Факты (пословно):**
+- ninety — 1 («ninety»)
+- eaten — 1
+- the — 1
+- В остальных словах «t» нет: Nine, hundred, nine, bananas, were, in, seven, noisy, evenings, near, Nile.
+
+**Вывод:** 1 + 1 + 1 = 3. Сомнений нет, предложение короткое и я проверил каждое слово.
+
+=== ANSWER Y ===
+**The letter "t" appears 3 times.** I counted case-insensitively, inside the quoted sentence only.
+
+- "ninety-nine": 1 (the "t" in "ninety")
+- "eaten": 1
+- "the": 1
+
+None of the other words ("Nine", "hundred", "bananas", "were", "in", "seven", "noisy", "evenings", "near", "Nile") contain a "t".
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- The answer of 4 is wrong. It counts 2 "t"s in "ninety-nine", but that word has only one, in "ninety". The hyphenated "nine" has none. The correct total is 3.
+
+=== ANSWER Z ===
+**Answer: 3.** The colleague's answer of 4 is wrong. I read the question literally: every "t" or "T" in the English sentence counts.
+
+Word by word:
+- "ninety-nine" has 1 "t", in "ninety". The "nine" after the hyphen has none.
+- "eaten" has 1.
+- "the" has 1.
+- None of the other words contain a "t": Nine, hundred, bananas, were, in, seven, noisy, evenings, near, Nile.
+
+That gives 1 + 1 + 1 = 3.
+
+Confidence: high
+
+Corrections to the colleague's answer:
+- It counted 2 "t"s in "ninety-nine", but the word has only 1. That error turns the total of 3 into 4.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

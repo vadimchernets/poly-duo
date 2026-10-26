@@ -1,0 +1,6 @@
+**W:** It answers 4 because it wrongly counts two "t"s in "ninety-nine", so it does not match the reference of 3.
+**X:** It answers 3 with a correct word-by-word count, which matches the reference.
+**Y:** It answers 3 and correctly identifies the single "t" in "ninety", which matches the reference.
+**Z:** It answers 3 with an accurate breakdown, which matches the reference.
+
+VERDICT: W=incorrect; X=correct; Y=correct; Z=correct

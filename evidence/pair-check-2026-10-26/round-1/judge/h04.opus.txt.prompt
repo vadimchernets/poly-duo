@@ -1,0 +1,57 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+How many times does the letter "s" appear in the phrase "Mississippi's assassins"?
+
+REFERENCE:
+10
+
+CRITERION:
+Correct iff 10.
+
+=== ANSWER W ===
+**Bottom line: 9**
+
+Reading chosen: count both uppercase and lowercase "s", over the whole phrase "Mississippi's assassins".
+
+**Facts:**
+- "Mississippi's": M-i-**s**-**s**-i-**s**-**s**-i-p-p-i-'-**s**. That is 5.
+- "assassins": a-**s**-**s**-a-**s**-**s**-i-n-**s**. That is 4.
+
+**Conclusion:** 5 + 4 = 9.
+
+Not sure about nothing here, except the reading: if you meant only lowercase "s", the answer is still 9, because the phrase has no uppercase S.
+
+=== ANSWER X ===
+**10.** The colleague's answer is correct.
+
+- "Mississippi's" has 5 s's: four in "Mississippi" (Mi**ss**i**ss**ippi) and one after the apostrophe.
+- "assassins" has 5 s's (a**ss**a**ss**in**s**).
+
+I counted case-insensitively. The capital "M" isn't an s, so case doesn't change the total.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+10. “Mississippi’s” has 5 **s**’s, and “assassins” has 5.
+
+=== ANSWER Z ===
+**10.**
+
+- "Mississippi's" has 5 s: Mi**ss**i**ss**ippi'**s**.
+- "assassins" has 5 s: a**ss**a**ss**in**s**.
+
+5 + 5 = 10. The phrase has no uppercase S, so the count is the same whether or not case matters.
+
+Confidence: high
+
+No errors in the colleague's answer.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

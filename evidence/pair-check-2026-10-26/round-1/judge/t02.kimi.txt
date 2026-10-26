@@ -1,0 +1,3 @@
+• W — States the count is 3 with a correct per-letter breakdown, matching the reference. X — States 3 and confirms it by spelling the word out, matching the reference. Y — Gives 3 directly, matching the reference. Z — Despite the confusing “draft is wrong” framing, its committed final answer is consistently 3, so it matches the reference.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

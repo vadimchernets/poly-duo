@@ -1,0 +1,6 @@
+• W: Final answer is 3 and it clearly commits to 3, so it matches the reference.  
+  X: Final answer is 3 with no conflicting commitment, so it matches the reference.  
+  Y: Final answer is 3 and the “would be 2” line is only an alternative reading, not the committed result.  
+  Z: Final answer is 3 and explicitly rejects subtracting 1, so it matches the reference.
+
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

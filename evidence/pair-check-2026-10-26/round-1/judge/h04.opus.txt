@@ -1,0 +1,9 @@
+**W:** Incorrect. It undercounts "assassins" as 4 when it has 5, so its total is 9.
+
+**X:** Correct. It counts 5 + 5 = 10, which matches the reference.
+
+**Y:** Correct. It counts 5 in each word for a total of 10.
+
+**Z:** Correct. It counts 5 + 5 = 10.
+
+VERDICT: W=incorrect; X=correct; Y=correct; Z=correct

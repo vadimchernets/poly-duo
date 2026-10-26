@@ -1,0 +1,6 @@
+W gives 26.4 hours, which matches the reference.
+X gives 26.4 hours (about 26.42 h), which matches the reference.
+Y gives about 26.4 hours, which matches the reference.
+Z gives about 26.4 hours; its note about real-world factors is a caveat, not a second result, so it still matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

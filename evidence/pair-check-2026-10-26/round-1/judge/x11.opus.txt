@@ -1,0 +1,9 @@
+**W:** It commits to 3 and gives 2 only for a reading it explicitly rejects, so this is not a hedge.
+
+**X:** It states 3 plainly and says yesterday's apple does not change today's count.
+
+**Y:** It commits to 3 with high confidence, and its mention of 2 applies only to a different reading of the question.
+
+**Z:** It concludes 3 and says subtracting would be wrong, leaving 2 only as a side note for a reading it rejects.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

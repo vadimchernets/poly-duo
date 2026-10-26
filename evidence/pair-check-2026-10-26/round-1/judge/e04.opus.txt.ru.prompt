@@ -1,0 +1,81 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+A recipe for 4 servings uses 300 g of flour and 3 eggs. How much flour and how many eggs are needed for 10 servings?
+
+REFERENCE:
+750 g flour and 7.5 eggs (in practice 7 or 8)
+
+CRITERION:
+Correct iff 750 g flour and 7.5 eggs (rounding to 7 or 8 with the 7.5 stated or implied is fine). Wrong flour = incorrect.
+
+=== ANSWER W ===
+**Bottom line:** 750 g of flour and 7.5 eggs, which in practice means 7 or 8 eggs.
+
+**Reading I chose:** the ingredients scale in direct proportion to the number of servings.
+
+**Calculation** (the factor is 10 ÷ 4 = 2.5):
+- Flour: 300 g × 2.5 = 750 g
+- Eggs: 3 × 2.5 = 7.5
+
+**Eggs:** You can't use half an egg directly, so you have two options.
+- Beat one egg, then use about half of it by weight or volume. A large egg is roughly 50 g without the shell, so you'd use about 25 g of the beaten egg.
+- Round to 7 or 8 whole eggs. The result is slightly drier with 7 and slightly richer or wetter with 8.
+
+I'm not sure which rounding is better, because that depends on the recipe. If the eggs mainly bind the batter (pancakes, dough), 8 is usually safer than 7. If the eggs provide structure (sponge cake), stay close to 7.5 and use the beaten-egg method.
+
+**Caveat:** Linear scaling is generally fine for flour and eggs. For baking, a larger batch can need different pan sizes and a longer bake time. Also scale any leavening, salt, and spices carefully, because they don't always scale linearly.
+
+=== ANSWER X ===
+750 g of flour and 7.5 eggs.
+
+Calculation: 10 servings are 2.5 times more than 4, so multiply each ingredient by 2.5:
+
+- Flour: 300 × 2.5 = 750 g
+- Eggs: 3 × 2.5 = 7.5 eggs
+
+Practically, use 7 eggs plus half of one beaten egg.
+
+=== ANSWER Y ===
+**Для 10 порций нужно 750 г муки и 7,5 яйца. Практически — 750 г муки и 7–8 яиц.**
+
+(Язык вопроса — английский, поэтому ниже на английском.)
+
+**Final answer: 750 g of flour and 7.5 eggs. In practice, use 750 g of flour and 7–8 eggs.**
+
+The scale factor is 10 ÷ 4 = 2.5.
+
+- Flour: 300 g × 2.5 = 750 g
+- Eggs: 3 × 2.5 = 7.5 eggs
+
+Half an egg is awkward to measure. Beat one egg, then add about half of it (roughly 25 g). Or round to 8 medium eggs for a slightly richer result, or 7 for a slightly drier one. Rounding barely matters for most batters and doughs. For precision-sensitive bakes such as sponge cake, use the beaten-egg method.
+
+Other ingredients (liquids, sugar, fat) scale by the same 2.5× factor. Leavening, spices and salt can be scaled slightly less. Baking time and pan size may also need adjusting.
+
+Confidence: high
+
+Corrections to the colleague's answer: No errors in the colleague's answer. The "7 eggs plus half of one beaten egg" suggestion is a bit imprecise: it should be 7 whole eggs plus half of a beaten egg (7.5 total). I've clarified that and added the rounding options.
+
+=== ANSWER Z ===
+**Bottom line:** For 10 servings you need 750 g of flour and 7.5 eggs, which in practice means 7 eggs plus half of a beaten egg.
+
+**Reading I chose:** the ingredients scale in direct proportion to the number of servings.
+
+**Calculation:** the factor is 10 ÷ 4 = 2.5.
+- Flour: 300 g × 2.5 = 750 g
+- Eggs: 3 × 2.5 = 7.5
+
+**The half egg:** Beat one egg and use about half of it. A large egg is about 50 g without the shell, so that is roughly 25 g. If you'd rather use whole eggs, 8 is safer than 7 for doughs and batters, because the extra egg only makes them slightly richer.
+
+**Caveat:** Leavening, salt and spices don't always scale linearly, and a larger batch may need a bigger pan and a longer bake.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

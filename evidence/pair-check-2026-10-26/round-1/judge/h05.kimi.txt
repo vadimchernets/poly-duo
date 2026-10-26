@@ -1,0 +1,5 @@
+• W — States 76, matching the reference.
+  X — Concludes 76 with a correct expansion and digit sum, matching the reference.
+  Y — Concludes 76 with a correct value and digit sum, matching the reference.
+  Z — Concludes 76 and confirms the colleague’s answer, matching the reference.
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

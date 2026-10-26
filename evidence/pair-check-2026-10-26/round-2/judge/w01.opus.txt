@@ -1,0 +1,6 @@
+- **W:** Its final answer of 27 matches the reference, and the clause-by-clause count is consistent.
+- **X:** It states 27, which matches the reference exactly.
+- **Y:** Its word-by-word enumeration ends at 27, which matches the reference.
+- **Z:** It answers 27 directly, which matches the reference.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

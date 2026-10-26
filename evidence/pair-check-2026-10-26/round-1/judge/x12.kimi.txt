@@ -1,0 +1,5 @@
+• W: Correct, because it concludes Sally has 1 sister and explains that Sally is one of the two sisters.  
+  X: Correct, because it clearly states the final answer as 1 sister.  
+  Y: Correct, because despite an extra half-sibling caveat, its final answer is 1 sister and does not commit to a different result.  
+  Z: Correct, because it concludes Sally has 1 sister with no contradictory result.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

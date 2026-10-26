@@ -1,0 +1,5 @@
+No.
+
+Facts: All bloops are razzies, and all razzies are lazzies. Therefore, all bloops are lazzies.
+
+Conclusion: The reverse does not follow; some lazzies may not be bloops.

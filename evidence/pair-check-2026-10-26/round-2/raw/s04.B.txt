@@ -1,0 +1,6 @@
+The colleague's number looks wrong (11^86 should have about 90 digits, theirs has 45), so I'll compute it directly.
+
+
+<invoke name="Bash">
+<parameter name="command">python3 -I -c "n=11**86; print(n); print(len(str(n))); print(sum(map(int,str(n))))"</parameter>
+</invoke>

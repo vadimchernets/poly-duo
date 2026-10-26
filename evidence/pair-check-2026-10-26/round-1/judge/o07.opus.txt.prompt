@@ -1,0 +1,54 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is the boiling point of water at sea level in degrees Fahrenheit?
+
+REFERENCE:
+212 °F
+
+CRITERION:
+Correct iff 212 °F.
+
+=== ANSWER W ===
+212 °F (100 °C) at standard atmospheric pressure (1 atm) at sea level.
+
+=== ANSWER X ===
+**212 °F** (100 °C) at standard sea-level pressure (1 atm = 101.325 kPa).
+
+**Facts**
+- The 212 °F figure follows from 100 °C × 9/5 + 32.
+- It holds only at 1 atm. Real sea-level pressure varies with weather, so the actual boiling point shifts by a fraction of a degree. It drops about 1 °F for each ~500 m of altitude gained.
+- Dissolved solutes such as salt raise the boiling point slightly. The 212 °F figure is for pure water.
+
+**Conclusion**
+212 °F is the standard answer. I read "sea level" as standard atmospheric pressure and pure water.
+
+=== ANSWER Y ===
+**212 °F** (100 °C) at sea level, assuming standard atmospheric pressure (1 atm = 101.325 kPa) and pure water.
+
+- Real sea-level pressure changes with the weather, so the actual boiling point shifts by a fraction of a degree.
+- The boiling point falls roughly 1 °F for every ~500 m of altitude.
+- Dissolved solutes such as salt raise it slightly.
+
+Confidence: high
+
+No errors in the colleague's answer. The answer is correct but brief, so I added the standard-pressure caveats.
+
+=== ANSWER Z ===
+**212 °F** is the boiling point of water at sea level. This is for pure water at standard atmospheric pressure (1 atm, 101.325 kPa), which equals 100 °C.
+
+The colleague's answer is correct. A few details that may help:
+- Real sea-level pressure varies with the weather, so the actual boiling point shifts slightly, by about 1 °F or less.
+- The boiling point drops by roughly 1 °F for every 500 ft of altitude gained.
+- Dissolved solids such as salt raise it slightly.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

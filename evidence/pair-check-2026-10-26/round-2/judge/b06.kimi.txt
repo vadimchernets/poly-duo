@@ -1,0 +1,5 @@
+• W: correct — its final total is 16,857 days, matching the reference exactly.  
+  X: correct — it ends at 16,857 days with the required counting convention.  
+  Y: correct — it concludes 16,857 days and the counting convention matches.  
+  Z: correct — it gives 16,857 days and states the end date is counted while the start is not.  
+  VERDICT: W=correct; X=correct; Y=correct; Z=correct

@@ -1,0 +1,55 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is the smallest prime number greater than 1,000?
+
+REFERENCE:
+1009
+
+CRITERION:
+Correct iff 1009.
+
+=== ANSWER W ===
+**1009** is the smallest prime greater than 1,000. The colleague's draft is correct.
+
+Why:
+- 1001 = 7 × 11 × 13, 1003 = 17 × 59, 1005 = 5 × 201, and 1007 = 19 × 53, so all four are composite.
+- The even numbers 1002, 1004, 1006 and 1008 are composite.
+- √1009 ≈ 31.8. 1009 is not divisible by any prime up to 31 (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31), so it is prime.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+The smallest prime greater than 1,000 is **1009**. The colleague's answer is correct.
+
+Check: 1001 = 7·11·13, 1002 is even, 1003 = 17·59, 1004 is even, 1005 is divisible by 5, 1006 is even, 1007 = 19·53, and 1008 is even. 1009 isn't divisible by any prime up to 31 (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31). √1009 ≈ 31.8, so those are the only primes that need testing.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+1009.
+
+1001–1008 are composite, while 1009 has no prime divisor at or below √1009 ≈ 31.8, so 1009 is prime.
+
+=== ANSWER Z ===
+**1009.**
+
+Facts:
+- 1001 = 7 × 11 × 13
+- 1003 = 17 × 59
+- 1007 = 19 × 53
+- 1009: not divisible by 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 or 31. √1009 ≈ 31.8, so those are the only primes to check.
+- Even numbers and 1005 (divisible by 5) are excluded. 1001, 1003 and 1007 are composite, so 1009 is the first prime above 1000.
+
+Conclusion: the smallest prime greater than 1,000 is 1009. I'm confident in this.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

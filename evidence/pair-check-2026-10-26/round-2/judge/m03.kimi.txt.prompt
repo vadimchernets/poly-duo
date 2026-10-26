@@ -1,0 +1,70 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Compute 5,969,389 x 1,172,703 exactly.
+
+REFERENCE:
+7,000,320,388,467
+
+CRITERION:
+Correct iff exactly this number.
+
+=== ANSWER W ===
+7,000,320,388,467
+
+=== ANSWER X ===
+**5,969,389 × 1,172,703 = 7,000,320,388,467**
+
+The colleague's result is correct. I recomputed it by splitting 1,172,703 = 1,000,000 + 172,000 + 703:
+
+- 5,969,389 × 1,000,000 = 5,969,389,000,000
+- 5,969,389 × 172,000 = 1,026,734,908,000
+- 5,969,389 × 703 = 4,196,480,467
+- Sum = 7,000,320,388,467
+
+Two consistency checks also pass. Mod 9: 4 × 3 = 12, which reduces to 3, and the result's digit sum is 48, which also reduces to 3. Last three digits: 389 × 703 = 273,467, which ends in 467.
+
+I did this by hand and did not run it through a calculator or code.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+**5,969,389 × 1,172,703 = 7,000,320,388,467**
+
+**Facts (hand computation, split as 1,172,703 = 1,000,000 + 172,000 + 703):**
+- 5,969,389 × 1,000,000 = 5,969,389,000,000
+- 5,969,389 × 172,000 = 1,026,734,908,000
+- 5,969,389 × 703 = 4,196,480,467
+- Sum: 5,969,389,000,000 + 1,026,734,908,000 + 4,196,480,467 = 7,000,320,388,467
+
+**Checks:**
+- Mod 9: the digit sums give 4 × 3 = 12, which reduces to 3. The result's digit sum is 48, which also reduces to 3. ✓
+- Last three digits: 389 × 703 = 273,467, which ends in 467. ✓
+
+I did not run this through a calculator or code. Both checks passed, but they would not catch every possible error, such as a digit transposition.
+
+=== ANSWER Z ===
+**5,969,389 × 1,172,703 = 7,000,320,388,467.** The colleague's answer is correct.
+
+Check by splitting 1,172,703 = 1,000,000 + 172,703:
+- 5,969,389 × 1,000,000 = 5,969,389,000,000
+- 5,969,389 × 172,703 = 1,030,931,388,467
+  - ×100,000 = 596,938,900,000
+  - ×70,000 = 417,857,230,000
+  - ×2,000 = 11,938,778,000
+  - ×700 = 4,178,572,300
+  - ×3 = 17,908,167
+- Sum: 5,969,389,000,000 + 1,030,931,388,467 = 7,000,320,388,467
+
+Confidence: high
+
+No errors in the colleague's answer
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

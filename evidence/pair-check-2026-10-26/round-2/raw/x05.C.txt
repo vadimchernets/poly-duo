@@ -1,0 +1,18 @@
+**20^423 mod 101 = 76**
+
+Reading chosen: standard modular exponentiation, with 20^423 taken as an integer power.
+
+**Facts**
+- 101 is prime and gcd(20, 101) = 1, so by Fermat's little theorem 20^100 ≡ 1 (mod 101).
+- 423 = 4·100 + 23, so 20^423 ≡ 20^23 (mod 101).
+- 20² = 400 ≡ 97 ≡ −4.
+- 20³ ≡ −80 ≡ 21.
+- 20⁴ ≡ 16.
+- 20⁵ ≡ 320 ≡ 17.
+- 20¹⁰ ≡ 17² = 289 ≡ 87 ≡ −14.
+- 20²⁰ ≡ (−14)² = 196 ≡ 95 ≡ −6.
+- 20²³ = 20²⁰ · 20³ ≡ (−6)(21) = −126 ≡ 76 (mod 101).
+
+**Cross-check:** a second route using square-and-multiply gives the same result. 20¹⁶ ≡ −13, and (−13)·16·(−4)·20 ≡ 76 (mod 101).
+
+I did not run code; this is hand arithmetic, checked by two independent routes.

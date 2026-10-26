@@ -1,0 +1,3 @@
+5:00 AM in New York, which is 10:00 AM in London on January 16.
+
+Calculation: 10:00 PM + 7 hours = 5:00 AM; London is 5 hours ahead of New York, so arrival is **10:00 AM GMT**.

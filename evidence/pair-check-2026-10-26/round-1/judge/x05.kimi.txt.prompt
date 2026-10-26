@@ -1,0 +1,75 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+Compute 48,729 x 63,817 exactly.
+
+REFERENCE:
+3,109,738,593
+
+CRITERION:
+Correct iff 3,109,738,593.
+
+=== ANSWER W ===
+**48,729 × 63,817 = 3,109,738,593.** The colleague's answer is correct.
+
+I checked it by splitting 63,817 into parts:
+- 48,729 × 60,000 = 2,923,740,000
+- 48,729 × 3,000 = 146,187,000
+- 48,729 × 800 = 38,983,200
+- 48,729 × 17 = 828,393
+
+The sum is 3,109,738,593.
+
+A mod 9 check agrees. 48,729 has digit sum 30, so it is 3 mod 9. 63,817 has digit sum 25, so it is 7 mod 9. Their product is 21, which is 3 mod 9. The result 3,109,738,593 has digit sum 48, so it is also 3 mod 9.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**48,729 × 63,817 = 3,109,738,593**
+
+The colleague's answer is correct. I read the question as plain integer multiplication.
+
+Working:
+- 48,729 × 60,000 = 2,923,740,000
+- 48,729 × 3,000 = 146,187,000
+- 48,729 × 800 = 38,983,200
+- 48,729 × 17 = 828,393
+- Sum = 3,109,738,593
+
+Check mod 9: 48,729 ≡ 3 and 63,817 ≡ 7, so the product ≡ 21 ≡ 3. The result's digit sum is 48, which is ≡ 3. ✓
+
+I did the arithmetic by hand and ran no code.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Y ===
+3,109,738,593
+
+=== ANSWER Z ===
+**3,109,738,593**
+
+Reading: plain integer multiplication, 48729 × 63817.
+
+Working:
+- 48,729 × 60,000 = 2,923,740,000
+- 48,729 × 3,000 = 146,187,000
+- 48,729 × 800 = 38,983,200
+- 48,729 × 17 = 828,393
+- Sum = 3,109,738,593
+
+Checks (done by hand, not by running code):
+- Mod 9: 48,729 ≡ 3 and 63,817 ≡ 7, so the product ≡ 21 ≡ 3. The result's digit sum is 48 ≡ 3. ✓
+- Mod 11: 48,729 ≡ 10 and 63,817 ≡ 6, so the product ≡ 60 ≡ 5. The result's alternating digit sum is −6 ≡ 5. ✓
+
+Both checks pass, so I'm confident in the result.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

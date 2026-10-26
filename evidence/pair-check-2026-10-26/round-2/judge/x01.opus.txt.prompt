@@ -1,0 +1,117 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is 14^884 mod 1000?
+
+REFERENCE:
+216
+
+CRITERION:
+Correct iff exactly this number.
+
+=== ANSWER W ===
+**216**
+
+Reading chosen: the standard integer 14^884, reduced mod 1000 (last three digits). I did this by hand with the Chinese Remainder Theorem and did not run code to cross-check.
+
+**Facts**
+
+- Mod 8: 14² = 196 ≡ 4, and 14³ ≡ 4·14 = 56 ≡ 0, so 14^884 ≡ 0 (mod 8).
+- Mod 125: gcd(14, 125) = 1 and φ(125) = 100, so 14^884 ≡ 14^84 (mod 125).
+  - Repeated squaring: 14² ≡ 71, 14⁴ ≡ 41, 14⁸ ≡ 56, 14¹⁶ ≡ 11, 14³² ≡ 121, 14⁶⁴ ≡ 16.
+  - 84 = 64 + 16 + 4, so 14^84 ≡ 16·11·41 ≡ 176·41 ≡ 51·41 = 2091 ≡ 91 (mod 125).
+- Combine: x ≡ 91 (mod 125) and x ≡ 0 (mod 8). Write x = 91 + 125k. Since 91 ≡ 3 and 125 ≡ 5 (mod 8), we need 3 + 5k ≡ 0 (mod 8), which gives k ≡ 1. So x = 216.
+
+**Conclusion**
+
+14^884 ≡ 216 (mod 1000). Check: 216 ≡ 0 (mod 8) and 216 − 125 = 91, so it matches both congruences.
+
+=== ANSWER X ===
+376
+
+Since \(14^3 = 2744 \equiv 744 \pmod{1000}\), and for every \(n \ge 3\),
+
+\[
+14^{n+100} \equiv 14^n \pmod{1000}.
+\]
+
+Thus,
+
+\[
+14^{884} \equiv 14^{84} \pmod{1000}.
+\]
+
+Repeated squaring:
+
+\[
+14^4 \equiv 416,\quad
+14^8 \equiv 56,\quad
+14^{16} \equiv 136,\quad
+14^{64} \equiv 296 \pmod{1000}.
+\]
+
+Therefore,
+
+\[
+14^{84}=14^{64}14^{16}14^4
+\equiv 296\cdot136\cdot416
+\equiv \boxed{376}\pmod{1000}.
+\]
+
+=== ANSWER Y ===
+**14^884 mod 1000 = 216.** The colleague's answer of 376 is wrong.
+
+I used the Chinese Remainder Theorem, then checked the result with a second method, direct squaring mod 1000.
+
+- **Mod 8:** 14³ = 2744 ≡ 0, so 14^884 ≡ 0 (mod 8).
+- **Mod 125:** φ(125) = 100, so 14^884 ≡ 14^84 (mod 125).
+  - Repeated squaring gives 14² ≡ 71, 14⁴ ≡ 41, 14⁸ ≡ 56, 14¹⁶ ≡ 11, 14³² ≡ 121, 14⁶⁴ ≡ 16.
+  - Since 84 = 64 + 16 + 4, 14^84 ≡ 16·11·41 ≡ 51·41 = 2091 ≡ 91 (mod 125).
+- **Combine:** 216 ≡ 0 (mod 8) and 216 ≡ 91 (mod 125), so the answer is 216.
+
+Check mod 1000: 14⁴ ≡ 416, 14⁸ ≡ 56, 14¹⁶ ≡ 136, 14³² ≡ 496, 14⁶⁴ ≡ 496² = 246016 ≡ 16. Then 16·136·416 = 2176·416 ≡ 176·416 = 73216 ≡ 216 (mod 1000).
+
+Confidence: high
+
+Corrections to the colleague's answer
+- The colleague's method is sound: 14^(n+100) ≡ 14^n for n ≥ 3, so 14^884 ≡ 14^84. The error is in one value. 14⁶⁴ ≡ 16 (mod 1000), not 296; the colleague skipped 14³² ≡ 496 and 496² = 246016 ends in 016.
+- With the correct value, 16·136·416 ≡ 216, not 376. Also, 376 ≢ 0 (mod 8) fails the check? No: 376 = 8·47, so it passes mod 8. But 376 mod 125 = 1, not 91, so it fails mod 125.
+
+=== ANSWER Z ===
+**14^884 mod 1000 = 216**
+
+Reading chosen: the remainder of 14^884 when divided by 1000.
+
+**Method (CRT):**
+- Mod 8: 14^884 is divisible by 2^884, so it is ≡ 0.
+- Mod 125: gcd(14,125)=1 and φ(125)=100, so 14^884 ≡ 14^84.
+  - 14² = 196 ≡ 71
+  - 14⁴ ≡ 71² = 5041 ≡ 41
+  - 14⁸ ≡ 41² = 1681 ≡ 56
+  - 14¹⁶ ≡ 56² = 3136 ≡ 11
+  - 14³² ≡ 121
+  - 14⁶⁴ ≡ 121² = 14641 ≡ 16
+  - 14⁸⁴ = 14⁶⁴·14¹⁶·14⁴ ≡ 16·11·41 = 7216 ≡ 91
+- Solve x ≡ 91 (mod 125) and x ≡ 0 (mod 8). Write x = 91 + 125k. Then 3 + 5k ≡ 0 (mod 8), so k ≡ 1 and x = 216.
+
+**Cross-check directly mod 1000:**
+- 14⁴ ≡ 416, 14⁸ ≡ 56, 14¹⁶ ≡ 136
+- 14³² ≡ 136² = 18496 ≡ 496
+- 14⁶⁴ ≡ 496² = 246016 ≡ 16
+- 14⁸⁴ ≡ 16·136·416 ≡ 176·416 = 73216 ≡ 216
+
+This agrees with the CRT result.
+
+Confidence: high
+
+**Corrections to the colleague's answer**
+- The final answer 376 is wrong; the correct value is 216.
+- The error is in 14⁶⁴. The answer gives 296, but 14³² ≡ 496 and 14⁶⁴ ≡ 496² ≡ 16 (mod 1000).
+- The reduction 14^884 ≡ 14^84 and the values of 14⁴, 14⁸, 14¹⁶ are correct.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

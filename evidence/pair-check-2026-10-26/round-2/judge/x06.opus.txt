@@ -1,0 +1,6 @@
+- **W:** Final answer 121 matches the reference exactly.
+- **X:** Final answer 121 matches the reference exactly. Its rejection of 221 doesn't hedge.
+- **Y:** Final answer 221 doesn't match the reference. It also rests on the false premise that 29²⁰ ≡ 1 (mod 1000).
+- **Z:** Final answer 121 matches the reference exactly. It correctly rejects 221.
+
+VERDICT: W=correct; X=correct; Y=incorrect; Z=correct

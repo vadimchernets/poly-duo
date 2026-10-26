@@ -1,0 +1,92 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+In a Monty Hall-style game there are 3 doors, one hides a car. You pick door 1. The host does NOT know where the car is; he opens door 3 at random and it happens to show a goat. If you switch to door 2, what is your probability of winning the car?
+
+REFERENCE:
+1/2
+
+CRITERION:
+Correct iff 1/2. 2/3 = incorrect.
+
+=== ANSWER W ===
+**Switching to door 2 wins with probability 1/2.** ChatGPT's answer is correct. Its reasoning was hand-waved, so here is the full calculation.
+
+Reading chosen: the host picks one of doors 2 or 3 uniformly at random, without knowing where the car is. We condition on the observed event "he opened door 3 and it was a goat."
+
+Each door has prior probability 1/3 of hiding the car. For each case, the chance of the observed event is:
+
+- **Car behind 1:** the host opens door 3 with probability 1/2, and it shows a goat. This gives 1/3 · 1/2 = 1/6.
+- **Car behind 2:** the host opens door 3 with probability 1/2, and it shows a goat. This gives 1/3 · 1/2 = 1/6.
+- **Car behind 3:** the host opens door 3 with probability 1/2, but it shows the car. This is inconsistent with what you saw, so it contributes 0.
+
+Normalizing gives P(car behind 2 | goat behind 3) = (1/6) / (1/6 + 1/6) = **1/2**. Staying with door 1 also wins with probability 1/2.
+
+In the classic game, a host who knows where the car is always avoids it. Then door 3 would be opened with probability 1 if the car were behind 2, but only 1/2 if it were behind 1, which is what gives switching its 2/3. Here the host's choice carries no information about door 1. The only update comes from ruling out the car-behind-3 case, and that update hits doors 1 and 2 equally.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+**Bottom line: switching to door 2 wins with probability \(1/2\).**
+
+Given that door 3 revealed a goat, the car must be behind door 1 or door 2. Since the host chose door 3 without knowing the car’s location, observing a goat eliminates door 3 but gives no advantage to either remaining door:
+
+\[
+P(\text{car behind 1}\mid \text{goat behind 3})
+=
+P(\text{car behind 2}\mid \text{goat behind 3})
+=
+\frac12.
+\]
+
+So staying and switching are equally good. The usual Monty Hall \(2/3\) switching probability requires a knowledgeable host who deliberately avoids the car.
+
+=== ANSWER Y ===
+**Bottom line: 1/2.** Switching to door 2 wins the car with probability 50%, and so does staying with door 1. The colleague's answer is correct.
+
+**Reading chosen:** The host picks uniformly at random between doors 2 and 3, without knowing where the car is. He could have revealed the car, but he didn't, so we condition on that outcome.
+
+**Calculation (Bayes):**
+- Each door starts with prior probability 1/3.
+- The likelihood of the observation "host opens door 3 and shows a goat" depends on where the car is:
+  - Car at door 1: 1/2 (he picks door 3, and it is a goat).
+  - Car at door 2: 1/2 (same).
+  - Car at door 3: 0 (he would have shown the car).
+- The joint probabilities are 1/6, 1/6 and 0. Dividing by the total of 1/3 gives P(car at 1) = P(car at 2) = 1/2.
+
+**Why it differs from the classic 2/3:** A knowing host always opens a goat door. If the car is at door 2, he is forced to open door 3, so that outcome has likelihood 1. If the car is at door 1, he opens door 3 only half the time, so that outcome has likelihood 1/2. This asymmetry produces the 2/3 for switching. A random host has equal likelihoods for both cases, so the extra weight disappears.
+
+**Caveat:** This assumes the host chooses uniformly between doors 2 and 3. If he were biased toward door 3, the answer would shift.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+**Bottom line: 1/2.** Switching to door 2 wins with probability 50%, and so does staying.
+
+**Reading chosen:** The host picks door 3 uniformly at random from the two doors you didn't pick. He could have revealed the car, but he didn't. We condition on that outcome.
+
+**Facts (Bayes):**
+- Prior: P(car at 1) = P(car at 2) = P(car at 3) = 1/3.
+- Likelihood of the observed event "host opens door 3 and shows a goat":
+  - Car at 1: the host opens door 3 with probability 1/2, and it is a goat. Likelihood = 1/2.
+  - Car at 2: the host opens door 3 with probability 1/2, and it is a goat. Likelihood = 1/2.
+  - Car at 3: the host opens door 3 with probability 1/2, but it shows the car. This contradicts the observation. Likelihood = 0.
+- Joint probabilities: 1/6 for car at 1, 1/6 for car at 2, 0 for car at 3.
+- Normalize: P(car at 1 | observation) = P(car at 2 | observation) = (1/6)/(1/3) = 1/2.
+
+**Why it differs from the classic problem:** In the classic game the host knows where the car is and always opens a goat door. Under that rule the event "door 3 shows a goat" has probability 1 if the car is at 2 and 1/2 if the car is at 1. That asymmetry gives 2/3 for switching. With a random host, the likelihoods are equal. Your door-1 pick gains no extra weight, because the host's action no longer depends on where the car is.
+
+**Conclusion:** Switching and staying are equivalent here, each winning with probability 1/2.
+
+**Caveat:** This depends on the host choosing uniformly at random between doors 2 and 3. If he had a bias, such as preferring door 3, the answer would change. The question doesn't state one, so I assumed none.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

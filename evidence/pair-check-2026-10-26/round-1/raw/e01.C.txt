@@ -1,0 +1,16 @@
+**$14,600** is the federal standard deduction for a single filer for tax year 2024 (returns filed in 2025).
+
+**Facts**
+- The IRS set this in Rev. Proc. 2023-34, an inflation adjustment of $450 from 2023's $13,850.
+- For comparison, the 2024 amounts for other filing statuses are $29,200 for married filing jointly and $21,900 for head of household. A married person filing separately gets $14,600.
+- Extra amounts apply to filers who are 65 or older or blind. For single or head of household filers, each condition adds $1,950. For married filers, each adds $1,550.
+- A dependent's deduction is limited to the greater of $1,300 or earned income plus $450, but it can't exceed $14,600.
+
+**Conclusion**
+The base figure is $14,600. I'm confident in it.
+
+**Not sure:** I'm not certain of the 2024 add-on amounts for the elderly or blind. I recall them from memory and haven't checked them against the IRS text.
+
+**Reading chosen:** "Single filer" means an unmarried taxpayer who isn't a head of household, and "standard deduction" means the base amount before any age, blindness or dependent adjustments.
+
+The One Big Beautiful Bill Act (July 2025) raised the standard deduction starting in tax year 2025. It did not change the 2024 figure.

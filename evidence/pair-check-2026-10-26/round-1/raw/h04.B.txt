@@ -1,0 +1,10 @@
+**10.**
+
+- "Mississippi's" has 5 s: Mi**ss**i**ss**ippi'**s**.
+- "assassins" has 5 s: a**ss**a**ss**in**s**.
+
+5 + 5 = 10. The phrase has no uppercase S, so the count is the same whether or not case matters.
+
+Confidence: high
+
+No errors in the colleague's answer.

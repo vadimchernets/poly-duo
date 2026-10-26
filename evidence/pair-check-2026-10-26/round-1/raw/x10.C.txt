@@ -1,0 +1,8 @@
+**Bottom line: 90.**
+
+**Facts:**
+- 3^20 = 3 486 784 401.
+- 3^40 = 3 486 784 401² = 12 157 665 459 056 928 801. This is from memory of the known value, and I did not run a computation.
+- Digit sum: 1+2+1+5+7+6+6+5+4+5+9+0+5+6+9+2+8+8+0+1 = 90.
+
+**Check:** 3^40 is divisible by 9, so its digit sum must be a multiple of 9, and 90 is. This doesn't fully verify the digits. I'm fairly confident in them, but a misremembered digit that preserved divisibility by 9 wouldn't be caught.

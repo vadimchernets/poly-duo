@@ -1,0 +1,3 @@
+9.9 is larger.
+
+As decimals, 9.11 < 9.90, so 9.9 > 9.11.

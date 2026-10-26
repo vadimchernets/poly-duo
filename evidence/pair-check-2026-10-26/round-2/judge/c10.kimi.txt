@@ -1,0 +1,6 @@
+• W: incorrect — it commits to 4 by counting two t's in "ninety-nine", but only "ninety" contains a t, so its final answer contradicts the reference of 3.
+  X: correct — its final answer is exactly 3, matching the reference, with an accurate word-by-word breakdown and no hedging.
+  Y: correct — it firmly concludes 3 (one t each in "ninety", "eaten", "the"), matching the reference exactly.
+  Z: correct — it commits unambiguously to 3 with the same accurate per-word count and no alternative total.
+
+  VERDICT: W=incorrect; X=correct; Y=correct; Z=correct

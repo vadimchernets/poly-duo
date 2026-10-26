@@ -1,0 +1,12 @@
+The draft is correct. You need **350 g water and 10 g salt**.
+
+Baker's percentages are taken from the flour weight, which counts as 100%:
+
+- Water: 500 g × 0.70 = **350 g**
+- Salt: 500 g × 0.02 = **10 g**
+
+The total dough weight before any starter or yeast is 860 g. If you add a starter, count its flour and water in the totals. The recipe's percentages usually already include them.
+
+Confidence: high
+
+No errors in the colleague's answer

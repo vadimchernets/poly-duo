@@ -1,0 +1,49 @@
+You are a strict grader in a blind test. Do not use any tools and do not open any files; everything you need is below.
+Grade each of the four answers ONLY by whether its final answer matches the REFERENCE under the CRITERION.
+Ignore style, length, tone, extra caveats and extra detail, unless they contradict the reference or the answer commits to two incompatible results.
+correct = final answer matches the reference; partial = partly matches as the criterion describes, or hedges between the right and a wrong result; incorrect = wrong, missing, or endorses a false premise.
+
+QUESTION:
+What is 15% of 240?
+
+REFERENCE:
+36
+
+CRITERION:
+Correct iff 36.
+
+=== ANSWER W ===
+**15% of 240 is 36.** The colleague's answer is correct.
+
+240 × 0.15 = 36.
+
+Check: 10% of 240 is 24 and 5% is 12, and 24 + 12 = 36.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER X ===
+36.
+
+Calculation: 240 × 0.15 = 36.
+
+=== ANSWER Y ===
+15% of 240 is **36**. The colleague's answer is correct.
+
+Calculation: 240 × 0.15 = 36. As a check, 10% is 24 and 5% is 12, and 24 + 12 = 36.
+
+Confidence: high
+
+No errors in the colleague's answer
+
+=== ANSWER Z ===
+**36**
+
+15% of 240 = 0.15 × 240 = 36.
+
+Check: 10% is 24, 5% is 12, and 24 + 12 = 36.
+
+
+After a one-sentence reason per answer, finish with exactly one line in this format and nothing after it:
+VERDICT: W=<correct|partial|incorrect>; X=<...>; Y=<...>; Z=<...>

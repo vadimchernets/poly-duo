@@ -1,0 +1,6 @@
+- **W:** The final answer is 776, which matches the reference.
+- **X:** The final answer is 776, which matches the reference.
+- **Y:** The final answer is 576, which does not match the reference of 776.
+- **Z:** The final answer is 776, which matches the reference; its side claim that the period-20 reduction is unjustified is false, but it doesn't change the graded number.
+
+VERDICT: W=correct; X=correct; Y=incorrect; Z=correct

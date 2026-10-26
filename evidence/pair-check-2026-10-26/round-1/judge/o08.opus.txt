@@ -1,0 +1,6 @@
+**W:** Correct. It names Jane Austen as the author.
+**X:** Correct. It names Jane Austen as the author.
+**Y:** Correct. It names Jane Austen as the author.
+**Z:** Correct. It names Jane Austen as the author.
+
+VERDICT: W=correct; X=correct; Y=correct; Z=correct

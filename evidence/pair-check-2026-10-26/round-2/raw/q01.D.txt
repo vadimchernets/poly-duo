@@ -1,0 +1,13 @@
+**Final price: $19,308.01.** The colleague's figure of $19,307.02 is wrong.
+
+Reading chosen: each increase applies to the price left by the previous step (compounding).
+
+1. $7,796.00 × 1.40 = $10,914.40
+2. $10,914.40 × 1.17 = $12,769.848
+3. $12,769.848 × 1.08 = $13,791.43584
+4. $13,791.43584 × 1.40 = $19,308.010176, which rounds to **$19,308.01**
+
+Confidence: high
+
+Corrections to the colleague's answer
+- The product $7,796 × 1.40 × 1.17 × 1.08 × 1.40 is $19,308.010176, not $19,307.02464. The method was right, but the arithmetic was off by about $1, so the rounded answer is wrong.
