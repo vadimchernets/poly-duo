@@ -60,7 +60,7 @@ themselves. Nothing goes through a server of ours — there isn't one.
 2. Tap **`Duo.shortcut`** (or **`Trio.shortcut`**) → **Add**.
 3. Run it once and tap **Always Allow** each time it asks about ChatGPT, Claude and the clipboard (4–6 times on the first run).
 
-The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (site update of 2026-10-01) and in the [GitHub release](https://github.com/vadimchernets/c1m-duo/releases/tag/v1.0.0). Keep the file name
+The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (site update of 2026-10-01) and in the [GitHub release](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0). Keep the file name
 `Duo.shortcut`: the name in Shortcuts comes from it, and «another mode — same question» finds the
 shortcut by that name.
 
@@ -321,9 +321,9 @@ get any other way.
 
 ## Prior art / timestamps
 
-- GitHub Release v1.0.0 (signed Duo and Trio, 5 languages, SHA-256): https://github.com/vadimchernets/c1m-duo/releases/tag/v1.0.0 — 2026-10-01
-- Software Heritage archive: `swh:1:snp:1da6fe462b3dc1729914fee2cef6331f44c87a3d` — https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/vadimchernets/c1m-duo
-- Wayback Machine: [repository](https://web.archive.org/web/20261001170056/https://github.com/vadimchernets/c1m-duo) · [release](https://web.archive.org/web/20261001170138/https://github.com/vadimchernets/c1m-duo/releases/tag/v1.0.0) · [polyhelper.ai/duo](https://web.archive.org/web/20261001170120/https://polyhelper.ai/duo/)
+- GitHub Release v1.0.0 (signed Duo and Trio, 5 languages, SHA-256): https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0 — 2026-10-01
+- Software Heritage archive: `swh:1:snp:1da6fe462b3dc1729914fee2cef6331f44c87a3d` — https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/vadimchernets/poly-duo
+- Wayback Machine: [repository](https://web.archive.org/web/20261001170056/https://github.com/vadimchernets/poly-duo) · [release](https://web.archive.org/web/20261001170138/https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0) · [polyhelper.ai/duo](https://web.archive.org/web/20261001170120/https://polyhelper.ai/duo/)
 - Earlier version: C1M, first published on GitHub on 1–2 September 2026.
 
 ## Legal
