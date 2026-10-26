@@ -1,0 +1,38 @@
+name: The review made a correct answer worse
+description: ChatGPT's first answer was right, and the check by the other assistant spoiled it.
+title: "[Worse after review]: "
+labels: ["worse-after-review"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        These cases are the most useful reports we get: they show where a second opinion hurts.
+        Please remove anything private from the question and the answers before pasting.
+  - type: textarea
+    id: question
+    attributes:
+      label: The question
+    validations:
+      required: true
+  - type: textarea
+    id: first-answer
+    attributes:
+      label: ChatGPT's first answer (the correct one)
+    validations:
+      required: true
+  - type: textarea
+    id: final-answer
+    attributes:
+      label: The final answer after the review
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: How you know the first answer was right
+      description: A source, a calculation, a test you ran.
+  - type: input
+    id: mode
+    attributes:
+      label: Mode and Duo version number
+      placeholder: "e.g. Critique, Duo 5"

@@ -1,6 +1,6 @@
-# Receitas do Poly — o que perguntar e qual modo usar
+# Receitas do Duo — o que perguntar e qual modo usar
 
-O Poly é generalista: qualquer tarefa se resume à formulação certa mais o modo certo. Abaixo está uma biblioteca de receitas já testadas. O caminho mais rápido para um texto que já existe: **selecione o texto → Compartilhar → Poly** — ele cai direto na caixa de pergunta, e você só acrescenta a instrução na frente.
+O C1M Duo é generalista: qualquer tarefa se resume à formulação certa mais o modo certo. Abaixo está uma biblioteca de receitas já testadas. O caminho mais rápido para um texto que já existe: **selecione o texto → Compartilhar → Duo** — ele cai direto na caixa de pergunta, e você só acrescenta a instrução na frente.
 
 | Tarefa | O que escrever na pergunta | Modo |
 |---|---|---|
@@ -28,13 +28,14 @@ O Poly é generalista: qualquer tarefa se resume à formulação certa mais o mo
 | Logotipo, diagrama, cartão comemorativo, ilustração | "Desenhe [o quê, em que estilo]" — dois esboços vetoriais para escolher | 🎨 Imagem · 2–3✉ |
 | Foto de um documento, placa ou cardápio | Compartilhe a foto → Poly Photo (o OCR cuida do resto) | complemento Poly Photo |
 | Tela pequena / em movimento | pergunte por voz — a resposta é lida em voz alta e o texto vai para a área de transferência | complemento Poly Voice |
-| Sem saber qual modo escolher | pergunte do jeito que está — não escolha um modo por conta própria | 🧭 Auto · +1✉ (o ChatGPT recomenda um; o Poly recomeça com a mesma pergunta) |
+| Sem saber qual modo escolher | pergunte do jeito que está — não escolha um modo por conta própria | 🧭 Auto · +1✉ (o ChatGPT recomenda um; o Duo recomeça com a mesma pergunta) |
 | Orçamento de mensagens apertado, mas você ainda quer dois olhares | pergunte do jeito que está | ➕ Delta · 2✉ (alternativa mais barata à 🔀 Síntese: a âncora do Claude + a lista de melhorias do ChatGPT — 2 mensagens em vez de 3) |
 
 ## Notas de técnica
 
 - **O Debate é uma ferramenta rara, não um padrão.** Guarde-o para quando você precisar mesmo que alguém tente quebrar a conclusão: código crítico, decisões em que o erro sai caro. A escrita do dia a dia passa pela Crítica ou pelo Consultor; perguntas de alto risco passam pela Síntese.
+- **Quando acertar é o mais importante, deixe os dois responderem primeiro.** Na ⚖️ Crítica, o Claude lê a resposta do ChatGPT antes de conferi-la, e um revisor que já viu uma resposta tende a concordar com ela. Por isso, "os dois concordam" ali vale menos do que parece. Em 👀 Lado a lado e 🔀 Síntese, cada IA responde por conta própria antes de uma ver a outra; quando elas concordam, essa concordância pesa mais.
 - **A tecla de microfone** do teclado, na caixa de pergunta, dá entrada por voz sem nenhuma configuração.
 - **Palavras modificadoras** no fim da pergunta funcionam: "responda de forma concisa", "em detalhe", "só em tópicos" — os modelos obedecem.
-- Para uma receita que você usa sempre, dá para montar um **pequeno atalho dedicado**: um bloco de texto com a tarefa já escrita, seguido de "Executar Atalho" apontando para o Poly (a tarefa vira a pergunta pré-preenchida).
-- O resultado de cada execução já está na sua **área de transferência** — cole direto em um e-mail ou numa conversa — e também fica salvo no **diário**, o `Poly-journal.md`.
+- Para uma receita que você usa sempre, dá para montar um **pequeno atalho dedicado**: um bloco de texto com a tarefa já escrita, seguido de "Executar Atalho" apontando para o Duo (a tarefa vira a pergunta pré-preenchida).
+- O resultado de cada execução já está na sua **área de transferência** — cole direto em um e-mail ou numa conversa — e também fica salvo no **diário**, o `Duo-journal.md`.

@@ -9,6 +9,16 @@ Poly's prompts are built around.
 Scope: only work published in 2025 or 2026, only setups with two models or with a second model
 checking a first. Nothing older is cited on purpose.
 
+## Who else does this
+
+*Search of 2026-10-25, mostly secondary sources; we check it again about once a month.* We did not
+find another way to have ChatGPT answer and Claude check it through the actions the two apps publish
+themselves, on your own accounts, on a phone, with no server and no key. Close tools exist: hosted
+multi-model apps (Poe, ChatHub, MultipleChat, Oriveo) charge a subscription or credits, or ask for
+your own API keys; Perplexity's Model Council is a web premium feature; AI Actions for Shortcuts
+needs your own API key; a 2026 Medium article describes a ChatGPT-versus-Claude Shortcut on iPhone,
+but we found no install for it. If you know one we missed, write to info@polyhelper.ai.
+
 ## In one table
 
 | Claim | Measured where | Result |
@@ -74,7 +84,7 @@ data. Nobody should quote 0.822 as a fact about Claude and ChatGPT as they ship 
 
 **The pair is directional: which model checks which changes the sign.** On 116 hard and medium
 LiveCodeBench tasks, Claude reviewing Codex's solution raised correctness from 71.6% to 89.7%
-(p = .001); Codex reviewing Claude's solution *lowered* it, 91.4% to 82.8% (p = .046). The authors'
+(p = .001) — someone else's result on code review, not measured on Duo; Codex reviewing Claude's solution *lowered* it, 91.4% to 82.8% (p = .046). The authors'
 conclusion is literally "use Claude to review Codex, not the other way around" (arXiv, Jul 2026
 [27]). This is a narrow domain — code, with no test execution allowed — and it should not be
 generalized to every question type. But it is the clearest published demonstration that a

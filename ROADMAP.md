@@ -1,4 +1,4 @@
-# Roadmap
+# C1M Duo roadmap
 
 No dates — this is a direction, not a schedule. Priorities shift with
 feedback from whoever is using it — write to info@polyhelper.ai and say what you hit.
@@ -8,12 +8,19 @@ feedback from whoever is using it — write to info@polyhelper.ai and say what y
 - Collect feedback from the first users of the 1.0.0 release.
 - Finish the demo GIF and screenshots for the README and the docs.
 - New locales. The translation files and how they are built are described in [BUILD.md](BUILD.md);
-  this product does not take outside contributions, so a language arrives when we add it.
+  translations and fixes are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 - **The first real run of the Android path.** The Tasker projects in
   [android/](android/) are built and verified but have never touched a
   physical phone; one report from a real device turns them from
   experimental into a supported half of the product.
-- A compatibility table: phone, iOS version, app versions, what was tried.
+- Filling the compatibility table ([docs/en/compat.md](docs/en/compat.md)) from run reports.
+
+## Done
+
+- The compatibility table and a «Run report» issue form: phone, iOS version, app versions, what was tried.
+- The result in three blocks ("both agree / where they differ / what to check yourself") on iPhone, in Duo 5 and Trio 4. The Poly A1 app already did it on Android.
+- Trio without a key on iPhones with Apple Intelligence (iOS 26+), in English, Spanish and Portuguese.
+- Duo inside Poly A1 on Android, on free keys.
 
 ## Next
 

@@ -1,0 +1,85 @@
+name: Run report (it worked / it broke)
+description: Tell us what Duo or Trio did on your phone. No question text needed.
+title: "[Run]: "
+labels: ["run-report"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please do not paste the question you asked or the answers. Only the setup and what happened.
+  - type: input
+    id: iphone
+    attributes:
+      label: iPhone model
+      placeholder: "e.g. iPhone 14, iPhone 16 Pro"
+    validations:
+      required: true
+  - type: input
+    id: ios
+    attributes:
+      label: iOS version
+      description: Settings → General → About → Software Version.
+      placeholder: "e.g. 18.4"
+    validations:
+      required: true
+  - type: input
+    id: chatgpt
+    attributes:
+      label: ChatGPT app version
+      description: App Store → your profile → the app's version, or Settings → About inside the app.
+    validations:
+      required: true
+  - type: input
+    id: claude
+    attributes:
+      label: Claude app version
+    validations:
+      required: true
+  - type: dropdown
+    id: plans
+    attributes:
+      label: ChatGPT and Claude plans
+      options:
+        - Both free
+        - ChatGPT free, Claude paid
+        - ChatGPT paid, Claude free
+        - Both paid
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options:
+        - Critique
+        - Debate to agreement
+        - Side by side
+        - Synthesis
+        - Advisor
+        - Another mode from the menu
+        - Trio (with a key)
+        - Trio (without a key)
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Duo or Trio version, if you know it
+      description: The date you added the shortcut is enough. Don't know? Write «don't know».
+    validations:
+      required: false
+  - type: dropdown
+    id: result
+    attributes:
+      label: Result
+      options:
+        - It worked
+        - It worked with a problem
+        - It did not work
+    validations:
+      required: true
+  - type: textarea
+    id: broke
+    attributes:
+      label: What broke, and at which step
+      description: Which screen or message you saw, and what you expected. Leave empty if it worked.

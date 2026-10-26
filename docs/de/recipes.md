@@ -1,6 +1,6 @@
-# Poly-Rezepte — was du fragst und welchen Modus du nimmst
+# Duo-Rezepte — was du fragst und welchen Modus du nimmst
 
-Poly ist ein Allrounder: Jede Aufgabe läuft auf die richtige Formulierung plus den richtigen Modus hinaus. Unten steht eine erprobte Rezeptsammlung. Der schnellste Weg für vorhandenen Text: **Text markieren → Teilen → Poly** — er landet direkt im Fragefeld, du stellst nur noch die Anweisung davor.
+C1M Duo ist ein Allrounder: Jede Aufgabe läuft auf die richtige Formulierung plus den richtigen Modus hinaus. Unten steht eine erprobte Rezeptsammlung. Der schnellste Weg für vorhandenen Text: **Text markieren → Teilen → Duo** — er landet direkt im Fragefeld, du stellst nur noch die Anweisung davor.
 
 | Aufgabe | Was du in die Frage schreibst | Modus |
 |---|---|---|
@@ -28,13 +28,14 @@ Poly ist ein Allrounder: Jede Aufgabe läuft auf die richtige Formulierung plus 
 | Logo, Diagramm, Grußkarte, Illustration | „Zeichne [was, in welchem Stil]“ — zwei Vektorskizzen zur Auswahl | 🎨 Bild · 2–3✉ |
 | Foto eines Dokuments, Schilds oder einer Speisekarte | Foto teilen → Poly Photo (die Texterkennung erledigt den Rest) | Begleiter Poly Photo |
 | Kleiner Bildschirm / unterwegs | Per Stimme fragen — die Antwort wird vorgelesen, der Text landet in der Zwischenablage | Begleiter Poly Voice |
-| Unsicher, welchen Modus du nehmen sollst | Frag es, wie es ist — wähl selbst keinen Modus | 🧭 Auto · +1✉ (ChatGPT empfiehlt einen; Poly startet mit derselben Frage neu) |
+| Unsicher, welchen Modus du nehmen sollst | Frag es, wie es ist — wähl selbst keinen Modus | 🧭 Auto · +1✉ (ChatGPT empfiehlt einen; Duo startet mit derselben Frage neu) |
 | Das Nachrichtenbudget ist knapp, du willst trotzdem zwei Sichtweisen | Frag es, wie es ist | ➕ Delta · 2✉ (die günstigere Alternative zur 🔀 Synthese: Claudes Anker + ChatGPTs Liste an Verbesserungen — 2 statt 3 Nachrichten) |
 
 ## Hinweise zur Technik
 
 - **Debatte ist ein seltenes Werkzeug, kein Standard.** Heb sie dir auf, wenn ausdrücklich jemand versuchen soll, das Fazit zu zerlegen: kritischer Code, Entscheidungen, bei denen ein Fehler teuer wird. Alltägliches Schreiben läuft über Kritik oder Berater; Fragen mit viel auf dem Spiel über die Synthese.
+- **Wenn es auf Richtigkeit am meisten ankommt, lass beide zuerst antworten.** In ⚖️ Kritik liest Claude die Antwort von ChatGPT, bevor es sie prüft, und wer eine Antwort schon gesehen hat, stimmt ihr eher zu. „Beide sind sich einig“ sagt dort also weniger, als es scheint. In 👀 Nebeneinander und 🔀 Synthese antwortet jede KI für sich, bevor eine die andere sieht – stimmen sie dann überein, zählt das mehr.
 - **Die Mikrofontaste** auf der Tastatur im Fragefeld gibt dir Spracheingabe ganz ohne Einrichtung.
 - **Zusatzworte** am Ende einer Frage wirken: „antworte knapp“, „ausführlich“, „nur in Stichpunkten“ — die Modelle halten sich daran.
-- Für ein Rezept, das du oft benutzt, kannst du dir einen **kleinen eigenen Kurzbefehl** bauen: ein Textblock mit der schon fertig formulierten Aufgabe, gefolgt von „Kurzbefehl ausführen“ mit Ziel Poly (die Aufgabe wird zur vorausgefüllten Frage).
-- Das Ergebnis jedes Laufs liegt bereits in deiner **Zwischenablage** — füg es direkt in eine E-Mail oder einen Chat ein — und es wird außerdem im **Journal** `Poly-journal.md` gesichert.
+- Für ein Rezept, das du oft benutzt, kannst du dir einen **kleinen eigenen Kurzbefehl** bauen: ein Textblock mit der schon fertig formulierten Aufgabe, gefolgt von „Kurzbefehl ausführen“ mit Ziel Duo (die Aufgabe wird zur vorausgefüllten Frage).
+- Das Ergebnis jedes Laufs liegt bereits in deiner **Zwischenablage** — füg es direkt in eine E-Mail oder einen Chat ein — und es wird außerdem im **Journal** `Duo-journal.md` gesichert.

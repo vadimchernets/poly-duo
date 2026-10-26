@@ -1,6 +1,6 @@
-# Poly recipes — what to ask, and which mode to use
+# Duo recipes — what to ask, and which mode to use
 
-Poly is a generalist: any task boils down to the right phrasing plus the right mode. Below is a tested library of recipes. The fastest path for existing text: **select the text → Share → Poly** — it drops straight into the question box, so you just add the instruction in front of it.
+C1M Duo is a generalist: any task boils down to the right phrasing plus the right mode. Below is a tested library of recipes. The fastest path for existing text: **select the text → Share → Duo** — it drops straight into the question box, so you just add the instruction in front of it.
 
 | Task | What to write in the question | Mode |
 |---|---|---|
@@ -28,13 +28,14 @@ Poly is a generalist: any task boils down to the right phrasing plus the right m
 | Logo, diagram, greeting card, illustration | "Draw [what, in what style]" — two vector sketches to choose from | 🎨 Image · 2–3✉ |
 | Photo of a document, sign, or menu | Share the photo → Poly Photo (OCR handles the rest) | Poly Photo companion |
 | Small screen / on the move | ask by voice — the answer is read aloud, and the text lands in your clipboard | Poly Voice companion |
-| Not sure which mode to pick | ask it as-is — don't choose a mode yourself | 🧭 Auto · +1✉ (ChatGPT recommends one; Poly restarts with the same question) |
+| Not sure which mode to pick | ask it as-is — don't choose a mode yourself | 🧭 Auto · +1✉ (ChatGPT recommends one; Duo restarts with the same question) |
 | Message budget is tight, but you still want two takes | ask it as-is | ➕ Delta · 2✉ (a cheaper alternative to 🔀 Synthesis: Claude's anchor + ChatGPT's list of improvements — 2 messages instead of 3) |
 
 ## Technique notes
 
 - **Debate is a rare tool, not a default.** Save it for when you specifically need someone to try to break the conclusion: critical code, decisions where a mistake is expensive. Everyday writing goes through Critique or Advisor; high-stakes questions go through Synthesis.
+- **When getting it right matters most, let both answer first.** In ⚖️ Critique, Claude reads ChatGPT's answer before it checks it, and a reviewer who has seen an answer tends to agree with it. So "both agree" there means less than it looks. In 👀 Side by side and 🔀 Synthesis, each AI answers on its own before either sees the other, so when they agree, that agreement counts for more.
 - **The microphone key** on the keyboard in the question box gives you voice input with no setup.
 - **Modifier words** at the end of a question work: "answer concisely," "in detail," "in bullet points only" — the models follow them.
-- For a recipe you use often, you can build a **small dedicated shortcut**: a block of text with the task already written, followed by "Run Shortcut" pointing at Poly (the task becomes the pre-filled question).
-- Every run's result is already in your **clipboard** — paste it straight into an email or chat — and it's also saved in the **journal**, `Poly-journal.md`.
+- For a recipe you use often, you can build a **small dedicated shortcut**: a block of text with the task already written, followed by "Run Shortcut" pointing at Duo (the task becomes the pre-filled question).
+- Every run's result is already in your **clipboard** — paste it straight into an email or chat — and it's also saved in the **journal**, `Duo-journal.md`.

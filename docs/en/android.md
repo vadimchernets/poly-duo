@@ -1,4 +1,6 @@
-# Poly on Android (Tasker)
+# Poly on Android (Tasker) — the older path
+
+**Start here instead:** C1M Duo inside the free **Poly A1** app (Google Play) runs the same pair automatically on a free key, and also by hand with your ChatGPT and Claude through Share. It was run on an Android emulator on 2026-10-01. This page describes the older Tasker path, built and checked on paper, **not tested on a real device**.
 
 On iPhone, Poly runs on the "Ask Claude" and ChatGPT Shortcuts actions — official hooks that hand a question to an AI app and get the answer back. Android has no equivalent: the Claude and ChatGPT apps don't publish an action that a third-party app can call to ask a question and receive the answer. Nothing on Android plays the role of App Intents here.
 
