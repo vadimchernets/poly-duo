@@ -1,4 +1,4 @@
-# C1M (Duo)
+# Poly Duo (C1M)
 
 **Nothing like this exists on phones yet. ChatGPT and Claude work as a pair. Smartphone orchestration of the strongest AIs — no subscriptions, no extra fees, no server, no card.**
 
