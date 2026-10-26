@@ -2,6 +2,8 @@
 
 **Nothing like this exists on phones yet. ChatGPT and Claude work as a pair. Smartphone orchestration of the strongest AIs — no subscriptions, no extra fees, no server, no card.**
 
+[![Watch the 18-second demo](https://img.youtube.com/vi/xljOlD4z1K4/hqdefault.jpg)](https://youtu.be/xljOlD4z1K4)
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23089503.svg)](https://doi.org/10.5281/zenodo.23089503) Archived on Zenodo — concept DOI (all versions): [10.5281/zenodo.23089503](https://doi.org/10.5281/zenodo.23089503)
 
 **Free: two AIs from different companies work together right on your phone. ChatGPT answers, Claude checks. No server of ours, no computer, nothing to pay.**
