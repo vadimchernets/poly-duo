@@ -1,12 +1,14 @@
-# C1M Duo
+# Poly Duo (C1M)
 
-**C1M Duo — ChatGPT + Claude on iPhone.** Nothing like this exists on phones yet: ChatGPT and Claude work as a pair, each answers on its own and then the answers are compared, on the accounts you already have. Free ones are enough. No server of ours, no API key, no card, no computer. You can run the strongest models of two companies together, and a paid plan adds no extra fee.
+**Poly Duo (C1M) — ChatGPT + Claude on iPhone.** Nothing like this exists on phones yet: ChatGPT and Claude work as a pair, each answers on its own and then the answers are compared, on the accounts you already have. Free ones are enough. No server of ours, no API key, no card, no computer. You can run the strongest models of two companies together, and a paid plan adds no extra fee.
 
 Built by the author of two papers on AI verification accepted at NeurIPS 2026 workshops. In our data on the 5 August 2026 flagships (a re-analysis of our companion study's data), when ChatGPT (gpt-5.6-sol) and Claude (claude-fable-5) answered 1,459 factual questions independently and agreed, they were right 98% of the time (985 of 1,004). [The research behind it](#the-research-behind-it).
 
 Why "nothing like it": the multi-AI tools we found (search of 2026-10-25) need a server, your own API keys, credits or a computer. Details and sources: [docs/en/evidence.md](docs/en/evidence.md#who-else-does-this).
 
 **Tip.** Pick the model you want in the Claude and ChatGPT apps. Duo takes whatever is set there.
+
+[![Watch the 18-second demo](https://img.youtube.com/vi/xljOlD4z1K4/hqdefault.jpg)](https://youtu.be/xljOlD4z1K4)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23089503.svg)](https://doi.org/10.5281/zenodo.23089503) Archived on Zenodo — concept DOI (all versions): [10.5281/zenodo.23089503](https://doi.org/10.5281/zenodo.23089503)
 
@@ -66,7 +68,7 @@ Have ChatGPT and Claude? Start right away. Have one? It helps you install the ot
 2. Tap **`Duo.shortcut`** (or **`Trio.shortcut`**) → **Add**.
 3. Run it once and tap **Always Allow** each time it asks about ChatGPT, Claude and the clipboard (4–6 times on the first run).
 
-The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (site update of 2026-10-01) and in the [GitHub release](https://github.com/vadimchernets/c1m-duo/releases/tag/v1.0.0). Keep the file name
+The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (site update of 2026-10-01) and in the [GitHub release](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0). Keep the file name
 `Duo.shortcut`: the name in Shortcuts comes from it, and Siri and «another mode — same question»
 find the shortcut by that name.
 
@@ -354,9 +356,9 @@ get any other way.
 
 ## Prior art / timestamps
 
-- GitHub Release v1.0.0 (signed Duo and Trio, 5 languages, SHA-256): https://github.com/vadimchernets/c1m-duo/releases/tag/v1.0.0 — 2026-10-01
-- Software Heritage archive: `swh:1:snp:1da6fe462b3dc1729914fee2cef6331f44c87a3d` — https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/vadimchernets/c1m-duo
-- Wayback Machine: [repository](https://web.archive.org/web/20261001170056/https://github.com/vadimchernets/c1m-duo) · [release](https://web.archive.org/web/20261001170138/https://github.com/vadimchernets/c1m-duo/releases/tag/v1.0.0) · [polyhelper.ai/duo](https://web.archive.org/web/20261001170120/https://polyhelper.ai/duo/)
+- GitHub Release v1.0.0 (signed Duo and Trio, 5 languages, SHA-256): https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0 — 2026-10-01
+- Software Heritage archive: `swh:1:snp:1da6fe462b3dc1729914fee2cef6331f44c87a3d` — https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/vadimchernets/poly-duo
+- Wayback Machine: [repository](https://web.archive.org/web/20261001170056/https://github.com/vadimchernets/poly-duo) · [release](https://web.archive.org/web/20261001170138/https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0) · [polyhelper.ai/duo](https://web.archive.org/web/20261001170120/https://polyhelper.ai/duo/)
 - Earlier version: C1M, first published on GitHub on 1–2 September 2026.
 
 ## Legal

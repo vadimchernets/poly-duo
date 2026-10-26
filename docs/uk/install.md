@@ -18,7 +18,7 @@ C1M Duo (на цих сторінках — Poly) — це «швидка ком
 
 ### Запасний варіант — файл
 
-Підписані файли `Duo.shortcut` і `Trio.shortcut` лежать на [polyhelper.ai/duo/](https://polyhelper.ai/duo/) і в [релізі на GitHub](https://github.com/vadimchernets/c1m-duo/releases/tag/v1.0.0). Або так:
+Підписані файли `Duo.shortcut` і `Trio.shortcut` лежать на [polyhelper.ai/duo/](https://polyhelper.ai/duo/) і в [релізі на GitHub](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0). Або так:
 
 1. Отримайте файл **`Poly.shortcut`** будь-яким способом: AirDrop, WhatsApp/Telegram, пошта, флешка — не має значення.
 2. Торкніться файлу. Відкриється застосунок «Команди» з карткою «Poly» — торкніться **Додати команду**. Готово, Poly встановлено.

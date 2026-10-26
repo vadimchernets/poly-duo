@@ -19,7 +19,7 @@ C1M Duo — это команда для iPhone: задаёте один воп�
 
 ### Запасные способы — файл
 
-Подписанные файлы `Duo.shortcut` и `Trio.shortcut` лежат на сайте [polyhelper.ai/duo/ru/](https://polyhelper.ai/duo/ru/) и в [GitHub-релизе](https://github.com/vadimchernets/c1m-duo/releases/tag/v1.0.0). Или так:
+Подписанные файлы `Duo.shortcut` и `Trio.shortcut` лежат на сайте [polyhelper.ai/duo/ru/](https://polyhelper.ai/duo/ru/) и в [GitHub-релизе](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0). Или так:
 
 1. Получите файл **`dist/ru/Duo.shortcut`** любым способом: AirDrop, WhatsApp/Telegram, почта, флешка — как угодно.
 2. Тапните по файлу → откроется приложение «Команды» с карточкой «Duo» → нажмите **«Добавить»**. Всё, команда установлена.

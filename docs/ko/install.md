@@ -18,7 +18,7 @@ iPhone에서 링크를 탭하면 → 단축어 앱이 열려요 → **단축어 
 
 ### 백업 — 파일
 
-서명된 `Duo.shortcut`과 `Trio.shortcut` 파일은 [polyhelper.ai/duo/](https://polyhelper.ai/duo/)와 [GitHub 릴리스](https://github.com/vadimchernets/c1m-duo/releases/tag/v1.0.0)에 있어요. 아니면 이렇게 하세요.
+서명된 `Duo.shortcut`과 `Trio.shortcut` 파일은 [polyhelper.ai/duo/](https://polyhelper.ai/duo/)와 [GitHub 릴리스](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0)에 있어요. 아니면 이렇게 하세요.
 
 1. **`Duo.shortcut`** 파일을 어떤 방법으로든 받으세요: AirDrop, WhatsApp/Telegram, 이메일, USB 드라이브 — 방법은 상관없어요.
 2. 파일을 탭하세요. 단축어 앱이 «Duo» 카드와 함께 열리면 **단축어 추가**를 탭하세요. 끝, Duo가 설치되었어요.

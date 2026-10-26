@@ -19,7 +19,7 @@ On your iPhone, tap the link → the Shortcuts app opens → **Add**. On the fir
 
 ### Backup — the file
 
-The signed `Duo.shortcut` and `Trio.shortcut` files are on [polyhelper.ai/duo/en/](https://polyhelper.ai/duo/en/) and in the [GitHub release](https://github.com/vadimchernets/c1m-duo/releases/tag/v1.0.0). Or:
+The signed `Duo.shortcut` and `Trio.shortcut` files are on [polyhelper.ai/duo/en/](https://polyhelper.ai/duo/en/) and in the [GitHub release](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0). Or:
 
 1. Get the **`Duo.shortcut`** file any way you like: AirDrop, WhatsApp/Telegram, email, a USB drive — it doesn't matter.
 2. Tap the file. The Shortcuts app opens with a "Duo" card — tap **Add**. Done, Duo is installed.
