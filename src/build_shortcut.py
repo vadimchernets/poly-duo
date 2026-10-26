@@ -429,7 +429,7 @@ def build(lang):
     QUESTION = {'QUESTION': (question, 'Provided Input')}
 
     g_main, g_extra, g_anchor, g_image, g_empty, g_finale = ids(6)
-    g_notice, = ids(1)
+    g_notice, g_blank = ids(2)
 
     def journal_note(template, refs=None):
         """Per-branch note: mode name plus the raw drafts that produced the result."""
@@ -507,20 +507,25 @@ def build(lang):
     actions = [
         act_comment(L['comment.main']),
 
-        # ---- Once, on the very first run: PolyHelper on a laptop or PC does more. Shown before the question so the
-        # person reads it at once and nothing of a run is interrupted; a marker file next to the journal
-        # (iCloud Drive → Shortcuts) says it was shown, so it never comes back. No marker (the first run, or the
-        # file was deleted) → shown once more; a missing file is not an error. The help screen keeps its paragraph.
+        # ---- Once, on the very first run: what the next minute looks like. Right after it the iPhone asks for
+        # permission 4–6 times and an unanswered request vanishes in seconds, so the person is told before, not
+        # after. A marker file next to the journal (iCloud Drive → Shortcuts) says it was shown, so it never comes
+        # back; a missing file is not an error. The laptop/PC paragraph lives on the help screen.
         act_get_file(L['files.pc_notice'], pc_get),
         act_set_variable(L['variables.pc_notice_seen'], pc_get, 'File'),
         if_has_value(g_notice, L['variables.pc_notice_seen']),
         if_else(g_notice),
-        act_alert(L['alert.pc_notice_title'], L['alert.pc_notice_body']),
-        act_text(text_token(L['alert.pc_notice_body']), pc_text),
+        act_alert(L['alert.first_run_title'], L['alert.first_run_body']),
+        act_text(text_token(L['alert.first_run_body']), pc_text),
         act_save_file(L['files.pc_notice'], pc_text, pc_save),
         if_close(g_notice),
 
         act_ask(L['ask.question'], question, prefill_from_share=True),
+        # An empty question would spend 1–8 messages on nothing: say so and stop before any AI is asked
+        if_output(g_blank, question, 'Provided Input', 101),
+        act_notify(L['notify.empty_question']),
+        {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
+        if_close(g_blank),
         menu_open(g_main, L['menu.main_title'], MAIN),
 
         # ---- Critique: ChatGPT answers, Claude verifies and finalizes
@@ -777,8 +782,8 @@ def build(lang):
 
         # ---- Shared tail: deliver, then record, then offer another run
         act_clipboard(variable(RESULT)),
-        act_notify(L['notify.tail_done']),
         if_has_value(g_empty, RESULT),
+        act_notify(L['notify.tail_done']),
         if_else(g_empty),
         act_notify(L['notify.tail_empty']),
         if_close(g_empty),

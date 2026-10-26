@@ -25,7 +25,7 @@
     "multi": "EXTENSÃO PRO (coro manual). Este NÃO é o Poly principal: domine primeiro a dupla automática. Poly Multi: um coro de IAs. ChatGPT e Claude respondem sozinhos (ações de app); as outras (Gemini, Grok, DeepSeek…) você consulta na mão — o prompt já está na área de transferência, volte e toque em OK depois de cada Copy. No fim o Claude funde tudo."
   },
   "ask": {
-    "question": "O que você quer perguntar ao Poly?",
+    "question": "Sua pergunta para o ChatGPT e o Claude (em qualquer idioma):",
     "clarify_suffix": "\n\nResponda a tudo isso em uma única mensagem (ou escreva «pular»):",
     "clarify_default": "pular",
     "voice_question": "Dite sua pergunta para o Poly",
@@ -34,7 +34,7 @@
     "multi_count": "O prompt já está na sua ÁREA DE TRANSFERÊNCIA. A quantas IAs mais você vai perguntar na mão (Gemini, Grok, DeepSeek…)? 0 — só a dupla automática."
   },
   "menu": {
-    "main_title": "Modo do Poly (ℹ️ a ajuda fica em «📂 Mais…»)",
+    "main_title": "Escolha um modo · primeira vez? ⚖️ Crítica",
     "main_items": [
       "⚖️ Crítica · 3✉",
       "🤝 Debate até o acordo · 3–8✉",
@@ -100,8 +100,8 @@
     "delta_step1": "➕ Delta [1/2]: o Claude está escrevendo a resposta-âncora…",
     "delta_step2": "[2/2] O ChatGPT está procurando o que acrescentar… Se disser «logged out» — abra o app dele e rode o Poly de novo.",
     "help": "ℹ️ Ajuda do Poly — sem chamadas de IA, de graça.",
-    "tail_done": "✅ A resposta final está na sua área de transferência (também no Mac/iPad pela Área de Transferência Universal); o diário é gravado depois de ela aparecer. Se o resultado final vier vazio — a ação estourou o tempo: a resposta completa está esperando no app do Claude.",
-    "tail_empty": "⚠️ A resposta final está vazia — a ação estourou o tempo. Procure a resposta completa no app do Claude; os rascunhos estão no diário.",
+    "tail_done": "✅ Pronto. A resposta também está na área de transferência: cole onde quiser.",
+    "tail_empty": "⚠️ Nenhuma resposta chegou. Veja no app do Claude; os rascunhos estão salvos no diário.",
     "voice_start": "🎧 Poly Voice: ChatGPT → Claude, eu leio a resposta final em voz alta. ≈1 min. Se o ChatGPT disser «logged out» — abra o app dele e comece de novo.",
     "photo_done": "📸 Texto reconhecido — abrindo o Poly.",
     "multi_step1": "🎼 Coro [1/3]: ChatGPT e Claude estão respondendo por conta própria…",
@@ -109,13 +109,16 @@
     "argue_start": "🤝 Debate até o acordo: o ChatGPT escolhe um lado, o Claude contesta, até 3 rodadas até que um ceda. ≈2–4 min, não toque no telefone. Se o ChatGPT disser «sessão encerrada», abra o app dele e rode o Poly de novo.",
     "argue_object": "[{N}/3] O Claude está contestando…",
     "argue_reply": "[{N}/3] O ChatGPT responde às objeções…",
-    "argue_verdict": "O Claude escreve o resultado: onde concordaram / o que segue em disputa / o que você decide…"
+    "argue_verdict": "O Claude escreve o resultado: onde concordaram / o que segue em disputa / o que você decide…",
+    "empty_question": "Sem pergunta, nada foi enviado. Abra o Poly de novo e digite sua pergunta."
   },
   "alert": {
     "multi_next_title": "Poly Multi — próxima IA",
     "multi_next_body": "Abra você mesmo o app da próxima IA → cole o prompt da área de transferência → envie → COPIE a resposta dela → volte para cá → OK.",
     "pc_notice_title": "Mais em um notebook ou PC",
-    "pc_notice_body": "💻 Em um notebook ou PC, o PolyHelper faz mais: pastas, agentes, canais, agendamentos, um conselho de várias IAs. O Poly no telefone é a versão leve, sem as funções de PC."
+    "pc_notice_body": "💻 Em um notebook ou PC, o PolyHelper faz mais: pastas, agentes, canais, agendamentos, um conselho de várias IAs. O Poly no telefone é a versão leve, sem as funções de PC.",
+    "first_run_title": "Antes da sua primeira pergunta",
+    "first_run_body": "Agora o iPhone vai pedir 4–6 vezes acesso ao ChatGPT e ao Claude. Toda vez, toque logo em «Permitir Sempre» (ou «Permitir»). Só uma vez."
   },
   "output": {
     "critique": "{S}\n\n■ RESPOSTA VERIFICADA (Claude)\n{C}",

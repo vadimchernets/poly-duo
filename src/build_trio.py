@@ -59,7 +59,7 @@ from build_shortcut import (  # noqa: E402
     ROOT, Locale, new_uuid, text_token, attachment, variable, validate,
     act_ask, act_gpt, act_claude, act_text, act_set_variable, act_get_variable,
     act_comment, act_clipboard, act_quick_look, act_get_file, act_save_file,
-    if_has_value, if_else, if_close, version_check,
+    if_has_value, if_else, if_close, if_output, version_check,
 )
 
 # NVIDIA build first: the strongest free models today, three companies on one key without a card
@@ -642,7 +642,7 @@ def build(lang, nokey=False):
     t_prompt, n_prompt, apple = ids(3)
     f_third, f_provider, f_claude, f_out, f_body = ids(5)
     s_prompt, s_claude = ids(2)
-    g_key, g_apple = ids(2)
+    g_key, g_apple, g_blank = ids(3)
     Q = {'Q': (question, 'Provided Input')}
 
     if nokey:
@@ -709,6 +709,11 @@ def build(lang, nokey=False):
 
         # ---- the pair, exactly as Critique in Poly: ChatGPT answers, Claude checks
         act_ask(T['ask.question'], question, prefill_from_share=True),
+        # an empty question would spend messages and a key's quota on nothing: say so and stop
+        if_output(g_blank, question, 'Provided Input', 101),
+        act_notify(NAME, L['notify.empty_question']),
+        {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
+        if_close(g_blank),
         act_notify(NAME, T['notify.start']),
         act_text(text_token(L.prompt('wrap'), Q), wrap),
         act_gpt(text_token('{P}', {'P': (wrap, 'Text')}), gpt),

@@ -25,7 +25,7 @@
     "multi": "PRO-ERWEITERUNG (manueller Chor). Das ist NICHT das Haupt-Poly: Lerne zuerst das automatische Duo. Poly Multi: ein Chor aus KIs. ChatGPT und Claude antworten von selbst (App-Intents); die anderen (Gemini, Grok, DeepSeek…) fragst du von Hand ab — der Prompt liegt schon in deiner Zwischenablage, komm zurück und tippe nach jedem Copy auf OK. Am Ende führt Claude alles zusammen."
   },
   "ask": {
-    "question": "Was möchtest du Poly fragen?",
+    "question": "Deine Frage an ChatGPT und Claude (in jeder Sprache):",
     "clarify_suffix": "\n\nBeantworte das in einer Nachricht (oder schreibe „überspringen“):",
     "clarify_default": "überspringen",
     "voice_question": "Diktiere deine Frage an Poly",
@@ -34,10 +34,10 @@
     "multi_count": "Der Prompt liegt schon in deiner ZWISCHENABLAGE. Wie viele weitere KIs fragst du von Hand ab (Gemini, Grok, DeepSeek…)? 0 — nur das automatische Paar."
   },
   "menu": {
-    "main_title": "Poly-Modus (ℹ️ Hilfe steckt in „📂 Mehr…“)",
+    "main_title": "Modus wählen · zum ersten Mal? ⚖️ Kritik",
     "main_items": [
       "⚖️ Kritik · 3✉",
-      "🤝 Streit bis zur Einigung · 3–8✉",
+      "🤝 Streit bis Einigung · 3–8✉",
       "🩺 Berater · 1✉",
       "👀 Nebeneinander · 2✉",
       "🔀 Synthese · 3✉",
@@ -100,8 +100,8 @@
     "delta_step1": "➕ Delta [1/2]: Claude schreibt die Ankerantwort…",
     "delta_step2": "[2/2] ChatGPT sucht, was sich ergänzen lässt… Meldet es „logged out“ — öffne seine App und starte Poly neu.",
     "help": "ℹ️ Poly-Hilfe — keine KI-Aufrufe, kostenlos.",
-    "tail_done": "✅ Die finale Antwort liegt in deiner Zwischenablage (über die universelle Zwischenablage auch auf Mac/iPad); das Journal wird nach der Anzeige geschrieben. Wirkt das Finale leer — der Intent lief in einen Timeout: Die vollständige Antwort wartet in der Claude-App.",
-    "tail_empty": "⚠️ Die finale Antwort ist leer — der Intent lief in einen Timeout. Die vollständige Antwort findest du in der Claude-App; die Entwürfe stehen im Journal.",
+    "tail_done": "✅ Fertig. Die Antwort liegt auch in der Zwischenablage: überall einfügen.",
+    "tail_empty": "⚠️ Es kam keine Antwort zurück. Schau in der Claude-App nach; die Entwürfe stehen im Journal.",
     "voice_start": "🎧 Poly Voice: ChatGPT → Claude, die finale Antwort lese ich dir vor. ≈1 Min. Meldet ChatGPT „logged out“ — öffne seine App und starte noch einmal.",
     "photo_done": "📸 Text erkannt — ich öffne Poly.",
     "multi_step1": "🎼 Chor [1/3]: ChatGPT und Claude antworten von selbst…",
@@ -109,13 +109,16 @@
     "argue_start": "🤝 Streit bis zur Einigung: ChatGPT bezieht Position, Claude widerspricht, bis zu 3 Runden, bis einer nachgibt. ≈2–4 Min., Telefon nicht berühren. Meldet ChatGPT «abgemeldet» — App öffnen und Poly neu starten.",
     "argue_object": "[{N}/3] Claude widerspricht…",
     "argue_reply": "[{N}/3] ChatGPT antwortet auf die Einwände…",
-    "argue_verdict": "Claude schreibt das Ergebnis: einig / noch strittig / Ihre Entscheidung…"
+    "argue_verdict": "Claude schreibt das Ergebnis: einig / noch strittig / Ihre Entscheidung…",
+    "empty_question": "Keine Frage, also wurde nichts gesendet. Starte Poly noch einmal und tippe deine Frage ein."
   },
   "alert": {
     "multi_next_title": "Poly Multi — nächste KI",
     "multi_next_body": "Öffne die nächste KI-App selbst → füge den Prompt aus der Zwischenablage ein → abschicken → KOPIERE ihre Antwort → komm hierher zurück → OK.",
     "pc_notice_title": "Mehr auf dem Laptop oder PC",
-    "pc_notice_body": "💻 Auf dem Laptop oder PC kann PolyHelper mehr: Ordner, Agenten, Kanäle, Zeitpläne, ein Rat aus mehreren KIs. Poly auf dem Handy ist die leichte Version, ohne die PC-Funktionen."
+    "pc_notice_body": "💻 Auf dem Laptop oder PC kann PolyHelper mehr: Ordner, Agenten, Kanäle, Zeitpläne, ein Rat aus mehreren KIs. Poly auf dem Handy ist die leichte Version, ohne die PC-Funktionen.",
+    "first_run_title": "Vor deiner ersten Frage",
+    "first_run_body": "Gleich fragt dein iPhone 4–6 Mal nach Zugriff auf ChatGPT und Claude. Tippe jedes Mal sofort auf „Immer erlauben“ (oder „Erlauben“). Nur einmal."
   },
   "output": {
     "critique": "{S}\n\n■ GEPRÜFTE ANTWORT (Claude)\n{C}",

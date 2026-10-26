@@ -25,7 +25,7 @@
     "multi": "EXTENSIÓN PRO (coro manual). Esto NO es la Poly principal: primero domine el dúo automático. Poly Multi: un coro de IA. ChatGPT y Claude responden solos (acciones de app); a las demás (Gemini, Grok, DeepSeek…) las consulta usted a mano — el prompt ya está en el portapapeles, vuelva y pulse OK después de cada Copy. Al final Claude lo funde todo."
   },
   "ask": {
-    "question": "¿Qué quiere preguntarle a Poly?",
+    "question": "Su pregunta para ChatGPT y Claude (en cualquier idioma):",
     "clarify_suffix": "\n\nResponda a todo esto en un solo mensaje (o escriba «saltar»):",
     "clarify_default": "saltar",
     "voice_question": "Dicte su pregunta para Poly",
@@ -34,10 +34,10 @@
     "multi_count": "El prompt ya está en su PORTAPAPELES. ¿A cuántas IA más va a consultar a mano (Gemini, Grok, DeepSeek…)? 0 — solo la pareja automática."
   },
   "menu": {
-    "main_title": "Modo de Poly (ℹ️ la ayuda está en «📂 Más…»)",
+    "main_title": "Elija un modo · ¿primera vez? ⚖️ Crítica",
     "main_items": [
       "⚖️ Crítica · 3✉",
-      "🤝 Debate hasta el acuerdo · 3–8✉",
+      "🤝 Debate hasta acordar · 3–8✉",
       "🩺 Asesor · 1✉",
       "👀 En paralelo · 2✉",
       "🔀 Síntesis · 3✉",
@@ -100,8 +100,8 @@
     "delta_step1": "➕ Delta [1/2]: Claude escribe la respuesta ancla…",
     "delta_step2": "[2/2] ChatGPT busca qué añadir… Si dice «logged out» — abra su app y vuelva a lanzar Poly.",
     "help": "ℹ️ Ayuda de Poly — sin llamadas a la IA, gratis.",
-    "tail_done": "✅ La respuesta final está en su portapapeles (también en Mac/iPad con el Portapapeles Universal); el diario se escribe después de mostrarla. Si el resultado final sale vacío — la acción se agotó por tiempo: la respuesta completa le espera en la app de Claude.",
-    "tail_empty": "⚠️ La respuesta final está vacía — la acción se agotó por tiempo. Busque la respuesta completa en la app de Claude; los borradores están en el diario.",
+    "tail_done": "✅ Listo. La respuesta también está en el portapapeles: péguela donde quiera.",
+    "tail_empty": "⚠️ No llegó ninguna respuesta. Mire en la app de Claude; los borradores están guardados en el diario.",
     "voice_start": "🎧 Poly Voice: ChatGPT → Claude, le leeré la respuesta final en voz alta. ≈1 min. Si ChatGPT dice «logged out» — abra su app y empiece otra vez.",
     "photo_done": "📸 Texto reconocido — abriendo Poly.",
     "multi_step1": "🎼 Coro [1/3]: ChatGPT y Claude responden por su cuenta…",
@@ -109,13 +109,16 @@
     "argue_start": "🤝 Debate hasta el acuerdo: ChatGPT toma una postura, Claude la objeta, hasta 3 rondas hasta que uno ceda. ≈2–4 min, no toque el teléfono. Si ChatGPT dice «sesión cerrada», abra su app y vuelva a ejecutar Poly.",
     "argue_object": "[{N}/3] Claude está objetando…",
     "argue_reply": "[{N}/3] ChatGPT responde a las objeciones…",
-    "argue_verdict": "Claude redacta el resultado: en qué coinciden / qué sigue en disputa / qué decide usted…"
+    "argue_verdict": "Claude redacta el resultado: en qué coinciden / qué sigue en disputa / qué decide usted…",
+    "empty_question": "No hay pregunta, así que no se envió nada. Abra Poly de nuevo y escriba su pregunta."
   },
   "alert": {
     "multi_next_title": "Poly Multi — siguiente IA",
     "multi_next_body": "Abra usted mismo la app de la siguiente IA → pegue el prompt del portapapeles → envíe → COPIE su respuesta → vuelva aquí → OK.",
     "pc_notice_title": "Más en un portátil o PC",
-    "pc_notice_body": "💻 En un portátil o PC, PolyHelper hace más: carpetas, agentes, canales, horarios, un consejo de varias IA. Poly en el teléfono es la versión ligera, sin las funciones de PC."
+    "pc_notice_body": "💻 En un portátil o PC, PolyHelper hace más: carpetas, agentes, canales, horarios, un consejo de varias IA. Poly en el teléfono es la versión ligera, sin las funciones de PC.",
+    "first_run_title": "Antes de su primera pregunta",
+    "first_run_body": "Ahora su iPhone pedirá 4–6 veces acceso a ChatGPT y Claude. Cada vez, toque enseguida «Permitir siempre» (o «Permitir»). Solo una vez."
   },
   "output": {
     "critique": "{S}\n\n■ RESPUESTA VERIFICADA (Claude)\n{C}",

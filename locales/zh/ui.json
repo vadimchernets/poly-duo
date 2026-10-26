@@ -25,7 +25,7 @@
     "multi": "PRO 扩展（手动合唱）。这不是主力 Poly：请先熟悉自动双 AI。Poly Multi：AI 合唱团。ChatGPT 和 Claude 会自己作答（应用操作）；其余的（Gemini、Grok、DeepSeek……）需要你手动去问 —— 提示词已经在剪贴板里，每次 Copy 之后回到这里点 OK。最后由 Claude 把所有内容合并起来。"
   },
   "ask": {
-    "question": "你想问 Poly 什么？",
+    "question": "你要问 ChatGPT 和 Claude 的问题（任何语言都可以）：",
     "clarify_suffix": "\n\n请在一条消息里把这些都回答掉（或者输入“跳过”）：",
     "clarify_default": "跳过",
     "voice_question": "请口述你要问 Poly 的问题",
@@ -34,7 +34,7 @@
     "multi_count": "提示词已经在你的剪贴板里。你还要手动去问几个 AI（Gemini、Grok、DeepSeek……）？0 —— 只用自动的这一对。"
   },
   "menu": {
-    "main_title": "Poly 模式（ℹ️ 帮助在“📂 更多…”里）",
+    "main_title": "选择模式 · 第一次？⚖️ 审校",
     "main_items": [
       "⚖️ 审校 · 3✉",
       "🤝 辩论到共识 · 3–8✉",
@@ -100,8 +100,8 @@
     "delta_step1": "➕ 增补 [1/2]：Claude 正在写主干答案……",
     "delta_step2": "[2/2] ChatGPT 正在找可以补充的内容……如果它说“logged out” —— 打开它的 App，再重新运行 Poly。",
     "help": "ℹ️ Poly 帮助 —— 不调用 AI，免费。",
-    "tail_done": "✅ 最终答案已经在剪贴板里（借助“通用剪贴板”，在 Mac/iPad 上也能直接粘贴）；日志在答案显示之后写入。如果最终结果是空的 —— 说明操作超时了：完整答案正在 Claude App 里等你。",
-    "tail_empty": "⚠️ 最终答案是空的 —— 操作超时了。请到 Claude App 里找完整答案；草稿都在日志里。",
+    "tail_done": "✅ 完成。答案也在剪贴板里：可以粘贴到任何地方。",
+    "tail_empty": "⚠️ 没有收到答案。请查看 Claude 应用；草稿已保存在日志中。",
     "voice_start": "🎧 Poly Voice：ChatGPT → Claude，最终答案我会念给你听。约 1 分钟。如果 ChatGPT 说“logged out” —— 打开它的 App，重新开始。",
     "photo_done": "📸 文字已识别 —— 正在打开 Poly。",
     "multi_step1": "🎼 合唱 [1/3]：ChatGPT 和 Claude 正在各自作答……",
@@ -109,13 +109,16 @@
     "argue_start": "🤝 辩论到共识：ChatGPT 选定立场，Claude 反驳，最多 3 轮，直到一方让步。约 2–4 分钟，请勿触碰手机。若 ChatGPT 提示“已退出登录”，请打开其 App 后重新运行 Poly。",
     "argue_object": "[{N}/3] Claude 正在反驳…",
     "argue_reply": "[{N}/3] ChatGPT 正在回应反驳…",
-    "argue_verdict": "Claude 正在写结论：共识 / 仍有分歧 / 由你决定…"
+    "argue_verdict": "Claude 正在写结论：共识 / 仍有分歧 / 由你决定…",
+    "empty_question": "没有问题，因此什么也没有发送。请再次运行 Poly 并输入你的问题。"
   },
   "alert": {
     "multi_next_title": "Poly Multi —— 下一个 AI",
     "multi_next_body": "自己打开下一个 AI 的 App → 粘贴剪贴板里的提示词 → 发送 → 复制它的回答 → 回到这里 → 点 OK。",
     "pc_notice_title": "在笔记本或台式电脑上功能更多",
-    "pc_notice_body": "💻 在笔记本或台式电脑上，PolyHelper 能做得更多：文件夹、智能体、频道、定时任务、由多个 AI 组成的评审团。手机上的 Poly 是轻量版，不含电脑端功能。"
+    "pc_notice_body": "💻 在笔记本或台式电脑上，PolyHelper 能做得更多：文件夹、智能体、频道、定时任务、由多个 AI 组成的评审团。手机上的 Poly 是轻量版，不含电脑端功能。",
+    "first_run_title": "提第一个问题之前",
+    "first_run_body": "接下来 iPhone 会 4–6 次请求访问 ChatGPT 和 Claude。每次都请立即点“始终允许”（或“允许”）。只有这一次。"
   },
   "output": {
     "critique": "{S}\n\n■ 复核后的答案（Claude）\n{C}",

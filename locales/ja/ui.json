@@ -25,7 +25,7 @@
     "multi": "PRO 拡張（手動の合唱）。これはメインの Poly ではありません。まず自動のデュオを使いこなしてください。Poly Multi：AI の合唱。ChatGPT と Claude は自分で回答しますが（App のアクション）、それ以外（Gemini、Grok、DeepSeek…）は手作業で聞きます — プロンプトはすでにクリップボードにあるので、Copy のたびにここへ戻って OK をタップしてください。最後に Claude がすべてをまとめます。"
   },
   "ask": {
-    "question": "Poly に何を聞きますか？",
+    "question": "ChatGPT と Claude への質問（どの言語でも可）：",
     "clarify_suffix": "\n\nこれらにまとめて1通で答えてください（不要なら「スキップ」と入力）：",
     "clarify_default": "スキップ",
     "voice_question": "Poly への質問を話してください",
@@ -34,7 +34,7 @@
     "multi_count": "プロンプトはすでにクリップボードにあります。あと何個の AI を手作業で聞きますか（Gemini、Grok、DeepSeek…）？ 0 — 自動のペアだけ。"
   },
   "menu": {
-    "main_title": "Poly のモード（ℹ️ ヘルプは「📂 その他…」の中）",
+    "main_title": "モードを選択 · 初めてなら ⚖️ 批評",
     "main_items": [
       "⚖️ 批評 · 3✉",
       "🤝 合意までの議論 · 3–8✉",
@@ -100,8 +100,8 @@
     "delta_step1": "➕ 差分 [1/2]：Claude が軸になる回答を書いています…",
     "delta_step2": "[2/2] ChatGPT が足すべき点を探しています… 「logged out」と出たら、その App を開いてから Poly をやり直してください。",
     "help": "ℹ️ Poly のヘルプ — AI を呼ばないので無料です。",
-    "tail_done": "✅ 最終回答はクリップボードに入っています（ユニバーサルクリップボード経由で Mac/iPad でも）。記録は表示のあとに書き込まれます。最終回答が空に見えるときはアクションがタイムアウトしています — 全文は Claude App で待っています。",
-    "tail_empty": "⚠️ 最終回答が空です — アクションがタイムアウトしました。全文は Claude App で探してください。途中の草案は記録に残っています。",
+    "tail_done": "✅ 完了。答えはクリップボードにも入っています。どこにでも貼り付けられます。",
+    "tail_empty": "⚠️ 答えが届きませんでした。Claude アプリを確認してください。下書きはジャーナルに保存されています。",
     "voice_start": "🎧 Poly Voice：ChatGPT → Claude、最終回答を読み上げます。約1分。ChatGPT が「logged out」と言ったら、その App を開いてからやり直してください。",
     "photo_done": "📸 文字を認識しました — Poly を開きます。",
     "multi_step1": "🎼 合唱 [1/3]：ChatGPT と Claude が自分で答えています…",
@@ -109,13 +109,16 @@
     "argue_start": "🤝 合意までの議論：ChatGPT が立場を取り、Claude が反論。どちらかが譲るまで最大3ラウンド。約2〜4分、スマホに触れないでください。ChatGPT が「ログアウト」と言ったらアプリを開いて Poly を再実行。",
     "argue_object": "[{N}/3] Claude が反論中…",
     "argue_reply": "[{N}/3] ChatGPT が反論に答えています…",
-    "argue_verdict": "Claude がまとめを作成中：一致点 / 残る争点 / あなたが決めること…"
+    "argue_verdict": "Claude がまとめを作成中：一致点 / 残る争点 / あなたが決めること…",
+    "empty_question": "質問がないため、何も送信していません。もう一度 Poly を起動して質問を入力してください。"
   },
   "alert": {
     "multi_next_title": "Poly Multi — 次の AI",
     "multi_next_body": "次の AI の App を自分で開く → クリップボードのプロンプトを貼り付け → 送信 → その回答をコピー → ここに戻る → OK。",
     "pc_notice_title": "ノートPCやパソコンならもっと",
-    "pc_notice_body": "💻 ノートPCやパソコンでは、PolyHelper がもっと多くのことをこなします: フォルダ、エージェント、チャンネル、スケジュール、複数の AI による合議。スマホの Poly は、PC 向け機能を省いた軽量版です。"
+    "pc_notice_body": "💻 ノートPCやパソコンでは、PolyHelper がもっと多くのことをこなします: フォルダ、エージェント、チャンネル、スケジュール、複数の AI による合議。スマホの Poly は、PC 向け機能を省いた軽量版です。",
+    "first_run_title": "最初の質問の前に",
+    "first_run_body": "このあと iPhone が ChatGPT と Claude へのアクセスを 4〜6 回求めます。毎回すぐに「常に許可」（または「許可」）をタップしてください。最初の一度だけです。"
   },
   "output": {
     "critique": "{S}\n\n■ 検証済みの回答（Claude）\n{C}",

@@ -25,7 +25,7 @@
     "multi": "EXTENSION PRO (chœur manuel). Ce n’est PAS la Poly principale : commence par maîtriser le duo automatique. Poly Multi : un chœur d’IA. ChatGPT et Claude répondent d’eux-mêmes (actions d’app) ; les autres (Gemini, Grok, DeepSeek…), tu les interroges à la main — le prompt est déjà dans ton presse-papiers, reviens et appuie sur OK après chaque Copy. À la fin, Claude fusionne le tout."
   },
   "ask": {
-    "question": "Que veux-tu demander à Poly ?",
+    "question": "Ta question pour ChatGPT et Claude (dans n’importe quelle langue) :",
     "clarify_suffix": "\n\nRéponds à tout ça en un seul message (ou écris « passer ») :",
     "clarify_default": "passer",
     "voice_question": "Dicte ta question pour Poly",
@@ -34,10 +34,10 @@
     "multi_count": "Le prompt est déjà dans ton PRESSE-PAPIERS. Combien d’IA vas-tu encore interroger à la main (Gemini, Grok, DeepSeek…) ? 0 — seulement le duo automatique."
   },
   "menu": {
-    "main_title": "Mode Poly (ℹ️ l’aide est dans « 📂 Plus… »)",
+    "main_title": "Choisis un mode · première fois ? ⚖️ Critique",
     "main_items": [
       "⚖️ Critique · 3✉",
-      "🤝 Débat jusqu'à l'accord · 3–8✉",
+      "🤝 Débat vers l’accord · 3–8✉",
       "🩺 Conseil · 1✉",
       "👀 Côte à côte · 2✉",
       "🔀 Synthèse · 3✉",
@@ -100,8 +100,8 @@
     "delta_step1": "➕ Delta [1/2] : Claude écrit la réponse d’ancrage…",
     "delta_step2": "[2/2] ChatGPT cherche quoi ajouter… S’il dit « logged out » — ouvre son app et relance Poly.",
     "help": "ℹ️ Aide de Poly — aucun appel à l’IA, gratuit.",
-    "tail_done": "✅ La réponse finale est dans ton presse-papiers (aussi sur Mac/iPad via le presse-papiers universel) ; le journal est écrit après l’affichage. Si le final semble vide — l’action a expiré : la réponse complète t’attend dans l’app Claude.",
-    "tail_empty": "⚠️ La réponse finale est vide — l’action a expiré. Cherche la réponse complète dans l’app Claude ; les brouillons sont dans le journal.",
+    "tail_done": "✅ Terminé. La réponse est aussi dans le presse-papiers : colle-la où tu veux.",
+    "tail_empty": "⚠️ Aucune réponse n’est arrivée. Regarde dans l’app Claude ; les brouillons sont dans le journal.",
     "voice_start": "🎧 Poly Voice : ChatGPT → Claude, je lirai la réponse finale à voix haute. ≈1 min. Si ChatGPT dit « logged out » — ouvre son app et recommence.",
     "photo_done": "📸 Texte reconnu — j’ouvre Poly.",
     "multi_step1": "🎼 Chœur [1/3] : ChatGPT et Claude répondent d’eux-mêmes…",
@@ -109,13 +109,16 @@
     "argue_start": "🤝 Débat jusqu'à l'accord : ChatGPT prend position, Claude objecte, jusqu'à 3 tours, jusqu'à ce que l'un cède. ≈2–4 min, ne touchez pas le téléphone. Si ChatGPT indique « déconnecté », ouvrez son app et relancez Poly.",
     "argue_object": "[{N}/3] Claude objecte…",
     "argue_reply": "[{N}/3] ChatGPT répond aux objections…",
-    "argue_verdict": "Claude rédige le bilan : accords / désaccords restants / à vous de décider…"
+    "argue_verdict": "Claude rédige le bilan : accords / désaccords restants / à vous de décider…",
+    "empty_question": "Pas de question, rien n’a été envoyé. Relance Poly et tape ta question."
   },
   "alert": {
     "multi_next_title": "Poly Multi — IA suivante",
     "multi_next_body": "Ouvre toi-même l’app de l’IA suivante → colle le prompt du presse-papiers → envoie → COPIE sa réponse → reviens ici → OK.",
     "pc_notice_title": "Plus sur un ordinateur portable ou un PC",
-    "pc_notice_body": "💻 Sur un ordinateur portable ou un PC, PolyHelper en fait plus : dossiers, agents, canaux, planification, un conseil de plusieurs IA. Poly sur le téléphone est la version légère, sans les fonctions PC."
+    "pc_notice_body": "💻 Sur un ordinateur portable ou un PC, PolyHelper en fait plus : dossiers, agents, canaux, planification, un conseil de plusieurs IA. Poly sur le téléphone est la version légère, sans les fonctions PC.",
+    "first_run_title": "Avant ta première question",
+    "first_run_body": "Ton iPhone va demander 4 à 6 fois l’accès à ChatGPT et Claude. À chaque fois, touche tout de suite « Toujours autoriser » (ou « Autoriser »). Une seule fois."
   },
   "output": {
     "critique": "{S}\n\n■ RÉPONSE VÉRIFIÉE (Claude)\n{C}",
