@@ -13,8 +13,8 @@ C1M Duo는 iPhone용 «단축어»예요. 질문을 하나 하면 두 AI, 곧 Ch
 
 iPhone에서 링크를 탭하면 → 단축어 앱이 열려요 → **단축어 추가**. 처음 실행할 때 단축어가 권한을 4–6번 물어봐요. 매번 **항상 허용**을 탭하세요.
 
-- **Duo:** https://www.icloud.com/shortcuts/7029076d5fd04c029ed791e853c0b52e
-- **Trio** (세 번째 목소리, 아래 참고): https://www.icloud.com/shortcuts/44621a4106924121bdcb0b9c815287d8
+- **Duo:** https://www.icloud.com/shortcuts/21fd5e14593c452181bc86373095044f
+- **Trio** (세 번째 목소리, 아래 참고): https://www.icloud.com/shortcuts/1f8e98ef1a804b3a91f7042d734d8b48
 
 ### 백업 — 파일
 
@@ -83,7 +83,7 @@ iPhone에서 링크를 탭하면 → 단축어 앱이 열려요 → **단축어 
 
 `Trio.shortcut`은 듀오에 세 번째 AI를 더해요. 질문과 ChatGPT의 답, Claude의 최종 답을 읽고 둘 다 놓친 것만 짚어 줘요.
 
-**키 없이(iPhone 15 Pro 이상, iOS 26+):** 세 번째 목소리가 Apple Intelligence 자체라서 키도 가입도 필요 없어요. 내 iPhone이 해당하는지 모르겠나요? 설정 → 일반 → 정보 → 모델 이름. 키 없는 Trio는 [English](https://www.icloud.com/shortcuts/ee3c39818e2c42a49a4c7b970c634f44) · [Español](https://www.icloud.com/shortcuts/c5bf0f3dba4746038e6337a675615273) · [Português](https://www.icloud.com/shortcuts/3f7039e9624b41ff82953efce55ac312) 판으로 설치할 수 있어요.
+**키 없이(iPhone 15 Pro 이상, iOS 26+):** 세 번째 목소리가 Apple Intelligence 자체라서 키도 가입도 필요 없어요. 내 iPhone이 해당하는지 모르겠나요? 설정 → 일반 → 정보 → 모델 이름. 키 없는 Trio는 [한국어](https://www.icloud.com/shortcuts/c9036b0825eb481daad7f5d65647041f) · [English](https://www.icloud.com/shortcuts/ce0c861c67564a51b16ad54aabb2af10) · [Español](https://www.icloud.com/shortcuts/2fa4fe00f8e44c899749598b020e9354) · [Português](https://www.icloud.com/shortcuts/d70606cc26964f2c9e1be66f33e12967) 판으로 설치할 수 있어요.
 
 **오래된 iPhone이거나 키를 쓰고 싶다면:** Trio가 AI 회사에서 받는 긴 비밀번호인 무료 키를 한 번 물어봐요(1분, 카드 없음). 무료 키 하나 — 또는 여러 개 — 로 이 순서대로 돌아가요.
 - **console.groq.com/keys** → Create API Key(`gsk_`로 시작해요, 문자 인증 없음, Google 계정으로 로그인);

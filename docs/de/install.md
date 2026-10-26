@@ -9,6 +9,14 @@ C1M Duo ist ein Kurzbefehl fürs iPhone: Du stellst eine Frage, und zwei KIs kü
 
 ## Installieren (ein Tipp)
 
+**Am einfachsten — iCloud-Link (ein Tipp).** Tippe auf dem iPhone den Link an → Kurzbefehle öffnet sich → **Kurzbefehl hinzufügen**. Beim ersten Lauf fragt der Kurzbefehl 4–6 Mal nach Berechtigungen; tippe jedes Mal **Immer erlauben**.
+
+- **Duo:** https://www.icloud.com/shortcuts/3cf48ffc59804169a821a07869490441
+- **Trio, iPhone 15 Pro oder neuer — ohne Schlüssel (die dritte Stimme ist Apple Intelligence):** https://www.icloud.com/shortcuts/0a82d9e47ea54b0f88e05bb59972bbf4
+- **Trio — kostenloser Schlüssel (die dritte Stimme):** https://www.icloud.com/shortcuts/43178262a9864362be1ed5f9c0ae0461
+
+**Oder per Datei:**
+
 1. Bring die Datei **`dist/de/Duo.shortcut`** auf beliebigem Weg auf dein iPhone: AirDrop, WhatsApp/Telegram, E-Mail, ein USB-Stick — egal wie.
 2. Tippe auf die Datei. Shortcuts öffnet sich mit einer „Duo“-Karte — tippe auf **„Kurzbefehl hinzufügen“**. Fertig, Duo ist installiert.
    - Kam die Datei in einem Messenger an, tippe sie zuerst dort an, wähle „Teilen“/„Öffnen in…“ und dann Shortcuts.

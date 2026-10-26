@@ -9,6 +9,14 @@ C1M Duo は iPhone 用の「ショートカット」です。質問をひとつ�
 
 ## インストール（タップ1回）
 
+**いちばん簡単な方法 — iCloud リンク（タップ1回）。** iPhone でリンクをタップ → ショートカット App が開く → **ショートカットを追加**。初回実行時に許可を 4〜6 回たずねられます。そのたびに **常に許可** をタップしてください。
+
+- **Duo:** https://www.icloud.com/shortcuts/37c0a3d4911f4ac9b484a289a0414fc1
+- **Trio、iPhone 15 Pro 以降 — キー不要（3番目の声は Apple Intelligence）:** https://www.icloud.com/shortcuts/4f21ecdeb5434c72b35ba1a4bad619d3
+- **Trio — 無料のキー（3番目の声）:** https://www.icloud.com/shortcuts/96f6248b57134b5c91c7c0be311f7a96
+
+**または、ファイルで：**
+
 1. **`dist/ja/Duo.shortcut`** ファイルを好きな方法で手に入れます：AirDrop、WhatsApp/Telegram、メール、USB メモリ — 何でも構いません。
 2. ファイルをタップします。ショートカット App が開いて「Duo」のカードが出るので、**「ショートカットを追加」** をタップ。これでインストール完了です。
    - メッセージ App にファイルが届いた場合は、まずそこでタップし、共有／「次で開く…」を選んで、ショートカットを指定します。

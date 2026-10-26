@@ -9,6 +9,14 @@ C1M Duo 是 iPhone 上的一条“快捷指令”：你问一个问题，两个 
 
 ## 安装（一次点击）
 
+**最简单——iCloud 链接（点一下）。** 在 iPhone 上点链接 → “快捷指令”App 打开 → **添加快捷指令**。首次运行时会询问 4–6 次权限，每次都点 **始终允许**。
+
+- **Duo:** https://www.icloud.com/shortcuts/33d4fe322c9b46dda9857c9f61d55cfb
+- **Trio，iPhone 15 Pro 或更新机型——无需密钥（第三个声音是 Apple Intelligence）:** https://www.icloud.com/shortcuts/ec3d6b87694848e8b9ac247711321591
+- **Trio——免费密钥（第三个声音）:** https://www.icloud.com/shortcuts/9662625839ff4d1593a67a7968342dd1
+
+**或者用文件：**
+
 1. 用你喜欢的任何方式拿到 **`dist/zh/Duo.shortcut`** 文件：AirDrop、WhatsApp/Telegram、邮件、U 盘 —— 都无所谓。
 2. 点一下这个文件。快捷指令 App 会打开一张“Duo”卡片 —— 点 **“添加快捷指令”**。搞定，Duo 装好了。
    - 如果文件是在聊天 App 里收到的，先在那里点开它，选“共享”/“打开方式…”，再选快捷指令。

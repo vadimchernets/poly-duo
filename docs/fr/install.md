@@ -9,6 +9,14 @@ C1M Duo est un « raccourci » pour iPhone : tu poses une seule question et elle
 
 ## Installation (une seule pression)
 
+**Le plus simple — le lien iCloud (une pression).** Sur l’iPhone, touche le lien → Raccourcis s’ouvre → **Ajouter le raccourci**. À la première exécution, le raccourci demande 4 à 6 autorisations ; touche à chaque fois **Toujours autoriser**.
+
+- **Duo :** https://www.icloud.com/shortcuts/59ce956164934a02a99b147382ff7c98
+- **Trio, iPhone 15 Pro ou plus récent — sans clé (la troisième voix est Apple Intelligence) :** https://www.icloud.com/shortcuts/6ba796788d524a04bb3b34ea94238f03
+- **Trio — clé gratuite (la troisième voix) :** https://www.icloud.com/shortcuts/2446e4180bd549b18f1b9a015910df00
+
+**Ou par fichier :**
+
 1. Récupère le fichier **`dist/fr/Duo.shortcut`** comme tu veux : AirDrop, WhatsApp/Telegram, e-mail, une clé USB — peu importe.
 2. Touche le fichier. L’app Raccourcis s’ouvre sur une fiche « Duo » — appuie sur **Ajouter le raccourci**. Voilà, Duo est installé.
    - Si le fichier est arrivé dans une messagerie, touche-le d’abord là-bas, choisis Partager/« Ouvrir dans… », puis sélectionne Raccourcis.

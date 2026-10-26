@@ -13,8 +13,8 @@ C1M Duo (на цих сторінках — Poly) — це «швидка ком
 
 На iPhone торкніться посилання → відкриється застосунок «Команди» → **Додати команду**. Під час першого запуску команда 4–6 разів попросить дозвіл — щоразу торкайтеся **Завжди дозволяти**.
 
-- **Duo:** https://www.icloud.com/shortcuts/7029076d5fd04c029ed791e853c0b52e
-- **Trio** (третій голос, див. нижче): https://www.icloud.com/shortcuts/44621a4106924121bdcb0b9c815287d8
+- **Duo:** https://www.icloud.com/shortcuts/0042178a8812424c9c90fb52ad80f66c
+- **Trio** (третій голос, див. нижче): https://www.icloud.com/shortcuts/90ca62a0ebfa4c3f916aea4bdc5a8805
 
 ### Запасний варіант — файл
 
@@ -83,7 +83,7 @@ C1M Duo (на цих сторінках — Poly) — це «швидка ком
 
 `Trio.shortcut` додає до пари третій ШІ: він читає питання, відповідь ChatGPT і фінальну відповідь Claude та називає лише те, що пропустили обидва.
 
-**Без ключа (iPhone 15 Pro чи новіший, iOS 26+):** третій голос — сам Apple Intelligence, без ключа й реєстрації. Не впевнені щодо свого iPhone? Параметри → Загальні → Про цей пристрій → Назва моделі. Встановіть Trio без ключа: [English](https://www.icloud.com/shortcuts/ee3c39818e2c42a49a4c7b970c634f44) · [Español](https://www.icloud.com/shortcuts/c5bf0f3dba4746038e6337a675615273) · [Português](https://www.icloud.com/shortcuts/3f7039e9624b41ff82953efce55ac312).
+**Без ключа (iPhone 15 Pro чи новіший, iOS 26+):** третій голос — сам Apple Intelligence, без ключа й реєстрації. Не впевнені щодо свого iPhone? Параметри → Загальні → Про цей пристрій → Назва моделі. Встановіть Trio без ключа: [English](https://www.icloud.com/shortcuts/ce0c861c67564a51b16ad54aabb2af10) · [Español](https://www.icloud.com/shortcuts/2fa4fe00f8e44c899749598b020e9354) · [Português](https://www.icloud.com/shortcuts/d70606cc26964f2c9e1be66f33e12967).
 
 **Старіший iPhone або віддаєте перевагу ключу:** Trio один раз просить безкоштовний ключ — довгий пароль від ШІ-компанії (хвилина, без картки). Працює з будь-яким безкоштовним ключем — чи кількома — у такому порядку:
 - **console.groq.com/keys** → Create API Key (починається з `gsk_`; без SMS, вхід через акаунт Google);
