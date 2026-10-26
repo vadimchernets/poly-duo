@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed (2026-10-26, the first minute; not yet in the iCloud links)
+- **Duo: the first run warns before the permission prompts.** One window: iPhone will ask 4–6 times
+  for access to ChatGPT and Claude, tap «Always Allow» (or «Allow») right away. It replaces the
+  laptop/PC notice, which stays on the help screen. People who already ran Duo do not see it again.
+- **Duo and Trio: an empty question stops the run** with one notification, before any AI is asked.
+- **Duo: plain words at the end.** «Done» and «no answer» are the two branches of one check; no
+  «intent timed out». The menu title points a first-timer to Critique; the second mode reads
+  «🤝 Debate to agreement · 3–8✉» so the price is no longer cut off (en, de, es, fr).
+- All 11 languages. Found by a screen-by-screen audit with a busy non-technical reader.
+
 ### Added (2026-10-07, debate until agreement)
 - **Duo: a new mode «🤝 Debate until agreement · 3–8✉»**, second in the main menu, right after
   Critique. For life choices with no right answer («which to choose», «should I agree»): ChatGPT
