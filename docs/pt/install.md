@@ -19,7 +19,7 @@ No iPhone, toque no link → o app Atalhos abre → **Adicionar**. Na primeira e
 
 ### Alternativa — o arquivo
 
-Os arquivos assinados `Duo.shortcut` e `Trio.shortcut` estão em [polyhelper.ai/duo/pt/](https://polyhelper.ai/duo/pt/) e na [versão do GitHub](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0). Ou então:
+Os arquivos assinados `Duo.shortcut` e `Trio.shortcut` estão em [polyhelper.ai/duo/pt/](https://polyhelper.ai/pt/duo/) e na [versão do GitHub](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0). Ou então:
 
 1. Leve o arquivo **`dist/pt/Duo.shortcut`** até o telefone do jeito que preferir: AirDrop, WhatsApp/Telegram, e-mail, um pen drive — tanto faz.
 2. Toque no arquivo. O app Atalhos abre com um cartão "Duo" — toque em **Adicionar**. Pronto, o Duo está instalado.

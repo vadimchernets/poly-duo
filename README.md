@@ -75,7 +75,7 @@ Have ChatGPT and Claude? Start right away. Have one? It helps you install the ot
 2. Tap **`Duo.shortcut`** (or **`Trio.shortcut`**) → **Add**.
 3. Run it once and tap **Always Allow** each time it asks about ChatGPT, Claude and the clipboard (4–6 times on the first run).
 
-The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (site update of 2026-10-01) and in the [GitHub release](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0). Keep the file name
+The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (Duo 6.1, site update of 2026-10-27) and in the [GitHub release](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0). Keep the file name
 `Duo.shortcut`: the name in Shortcuts comes from it, and Siri and «another mode — same question»
 find the shortcut by that name.
 
