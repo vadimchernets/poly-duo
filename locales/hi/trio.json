@@ -56,5 +56,6 @@
   "error.compare": "⚠️ Claude की तुलना नहीं आई। Claude का अपना जवाब, ChatGPT का जवाब देखने से पहले लिखा हुआ:\n\n{C}",
   "nokey.comment": "बिना कुंजी वाला Trio — ChatGPT और Claude अलग-अलग जवाब देते हैं, और तीसरी आवाज़ Apple Intelligence है («Use Model» ऐक्शन, Apple Intelligence वाले iPhone पर, iOS 26 या नया): कोई कुंजी नहीं लेनी। अगर iCloud Drive → Shortcuts → poly-key.txt में कुंजी रखी है, तो तीसरी आवाज़ उसी का इस्तेमाल करती है — बिल्कुल कुंजी वाले Trio की तरह। फिर Claude तीनों जवाबों की तुलना करके अंतिम जवाब लिखता है: अपने-आप मेल खाया / मेल नहीं खाया / खुद क्या जाँचें। ChatGPT: Start new chat चालू, Continuous बंद।",
   "nokey.notify.step3": "[3/4] Apple Intelligence वह ढूँढ रहा है जो दोनों से छूट गया… Claude का जवाब अब क्लिपबोर्ड में है।",
-  "nokey.no_ai": "यह iPhone Apple Intelligence का इस्तेमाल नहीं कर सकता। Trio का वह संस्करण इंस्टॉल करें जो मुफ़्त प्रदाता कुंजी पर चलता है: polyhelper.ai/duo/। ऊपर Claude का जवाब पूरा है।"
+  "nokey.no_ai": "यह iPhone Apple Intelligence का इस्तेमाल नहीं कर सकता। Trio का वह संस्करण इंस्टॉल करें जो मुफ़्त प्रदाता कुंजी पर चलता है: polyhelper.ai/duo/। ऊपर Claude का जवाब पूरा है।",
+  "provider.apple": "Apple Intelligence"
 }
