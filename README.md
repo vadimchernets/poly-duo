@@ -65,7 +65,7 @@ Have ChatGPT and Claude? Start right away. Have one? It helps you install the ot
 | Deutsch | [Duo](https://www.icloud.com/shortcuts/933e7ea2bbd1411e82b92456acd3f660) | [Trio](https://www.icloud.com/shortcuts/3deb89385a604743925a2683faa0a216) |
 | Français | [Duo](https://www.icloud.com/shortcuts/a0e24803eec24ccdb3e52e662f4ab4be) | [Trio](https://www.icloud.com/shortcuts/5debce283e1b4e4a90403959dbd8b748) |
 | हिन्दी | [Duo](https://www.icloud.com/shortcuts/e1f7599017414e2890e5987dd032b300) | [Trio](https://www.icloud.com/shortcuts/8524e67391be4ced90d6bfddfc5fd271) |
-| 日本語 | [Duo](https://www.icloud.com/shortcuts/a339a9533c8345f0aae55e6c32f8a921) | [Trio](https://www.icloud.com/shortcuts/deeefcf99eea4e369562c7cc5b10b48e) |
+| 日本語 | [Duo](https://www.icloud.com/shortcuts/a339a9533c8345f0aae55e6c32f8a921) | [Trio](https://www.icloud.com/shortcuts/c0988a5ff0f242cb8458f2991eef5b7f) |
 | 한국어 | [Duo](https://www.icloud.com/shortcuts/d596af88843047349f2105516dd5eafc) | [Trio](https://www.icloud.com/shortcuts/0df9f941045d4c3a8e43bef02c01c35b) |
 | 中文 | [Duo](https://www.icloud.com/shortcuts/9c16eb0749bd411bbb6b2d2d05093f91) | [Trio](https://www.icloud.com/shortcuts/8c7639cf0be9421e884b075ee9b794e4) |
 

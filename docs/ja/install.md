@@ -13,7 +13,7 @@ C1M Duo は iPhone 用の「ショートカット」です。質問をひとつ�
 
 - **Duo:** https://www.icloud.com/shortcuts/a339a9533c8345f0aae55e6c32f8a921
 - **Trio、iPhone 15 Pro 以降 — キー不要（3番目の声は Apple Intelligence）:** https://www.icloud.com/shortcuts/92d37480faf44969882f992c08baba7a
-- **Trio — 無料のキー（3番目の声）:** https://www.icloud.com/shortcuts/deeefcf99eea4e369562c7cc5b10b48e
+- **Trio — 無料のキー（3番目の声）:** https://www.icloud.com/shortcuts/c0988a5ff0f242cb8458f2991eef5b7f
 
 **または、ファイルで：**
 
