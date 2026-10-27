@@ -13,9 +13,9 @@ C1M Duo es un «atajo» para iPhone: usted hace una sola pregunta y la trabajan 
 
 En su iPhone, toque el enlace → se abre la app Atajos → **Añadir**. En la primera ejecución el atajo pide permiso 4–6 veces — pulse **Permitir siempre** cada vez.
 
-- **Duo:** https://www.icloud.com/shortcuts/4ad6ef17f5204757979866ea92be1b82
-- **Trio, iPhone 15 Pro o posterior — sin clave** (la tercera voz es Apple Intelligence; ver abajo): https://www.icloud.com/shortcuts/2fa4fe00f8e44c899749598b020e9354
-- **Trio, iPhone más antiguo — clave gratuita** (la tercera voz, ver abajo): https://www.icloud.com/shortcuts/c0bfe9e877d74dd1bb59e6d91f758983
+- **Duo:** https://www.icloud.com/shortcuts/7b563fc82bc4462782e8bf64d6005841
+- **Trio, iPhone 15 Pro o posterior — sin clave** (la tercera voz es Apple Intelligence; ver abajo): https://www.icloud.com/shortcuts/281f56b82f7444438220fdffcbb46f22
+- **Trio, iPhone más antiguo — clave gratuita** (la tercera voz, ver abajo): https://www.icloud.com/shortcuts/3180a49b17e64b35b9b7c3b445ba98e9
 
 ### Alternativa — el archivo
 
@@ -86,7 +86,7 @@ Justo después de elegir modo llega una **notificación de estado** («qué est�
 `Trio.shortcut` añade una tercera IA a la pareja: lee la pregunta, la respuesta de ChatGPT y la
 respuesta final de Claude, y señala solo lo que ambos pasaron por alto.
 
-**Sin clave (iPhone 15 Pro o posterior, iOS 26+):** la tercera voz es la propia Apple Intelligence, sin clave ni registro. ¿No sabe qué iPhone tiene? Ajustes → General → Información → Nombre del modelo. Instale el Trio sin clave: [English](https://www.icloud.com/shortcuts/ce0c861c67564a51b16ad54aabb2af10) · [Español](https://www.icloud.com/shortcuts/2fa4fe00f8e44c899749598b020e9354) · [Português](https://www.icloud.com/shortcuts/d70606cc26964f2c9e1be66f33e12967).
+**Sin clave (iPhone 15 Pro o posterior, iOS 26+):** la tercera voz es la propia Apple Intelligence, sin clave ni registro. ¿No sabe qué iPhone tiene? Ajustes → General → Información → Nombre del modelo. Instale el Trio sin clave: [English](https://www.icloud.com/shortcuts/2a24e0157e4a445bae92ed1410907b9f) · [Español](https://www.icloud.com/shortcuts/281f56b82f7444438220fdffcbb46f22) · [Português](https://www.icloud.com/shortcuts/4000dcb2b9d64dcfaa44062c92e51b69).
 
 **iPhone anterior, o prefiere una clave:** Trio pide una sola vez una clave gratuita, una contraseña larga de una empresa de IA (un minuto, sin tarjeta). Funciona con cualquier clave gratuita — o varias — en este orden:
 - **console.groq.com/keys** → Create API Key (empieza por `gsk_`; sin SMS, con su cuenta de Google);

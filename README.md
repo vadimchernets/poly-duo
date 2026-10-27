@@ -45,10 +45,10 @@ Have ChatGPT and Claude? Start right away. Have one? It helps you install the ot
   Drive (`Shortcuts/poly-key.txt`).
 - **Trio without a key** — on an iPhone with Apple Intelligence (iPhone 15 Pro or newer, iOS 26+) the
   third voice can be Apple Intelligence on the phone: no key, no sign-up. Same install, a different
-  file: [English](https://www.icloud.com/shortcuts/ce0c861c67564a51b16ad54aabb2af10) ·
-  [Español](https://www.icloud.com/shortcuts/2fa4fe00f8e44c899749598b020e9354) ·
-  [Português](https://www.icloud.com/shortcuts/d70606cc26964f2c9e1be66f33e12967) ·
-  [Deutsch](https://www.icloud.com/shortcuts/0a82d9e47ea54b0f88e05bb59972bbf4) · [Français](https://www.icloud.com/shortcuts/6ba796788d524a04bb3b34ea94238f03) · [日本語](https://www.icloud.com/shortcuts/4f21ecdeb5434c72b35ba1a4bad619d3) · [한국어](https://www.icloud.com/shortcuts/c9036b0825eb481daad7f5d65647041f) · [中文](https://www.icloud.com/shortcuts/ec3d6b87694848e8b9ac247711321591). Not for
+  file: [English](https://www.icloud.com/shortcuts/2a24e0157e4a445bae92ed1410907b9f) ·
+  [Español](https://www.icloud.com/shortcuts/281f56b82f7444438220fdffcbb46f22) ·
+  [Português](https://www.icloud.com/shortcuts/4000dcb2b9d64dcfaa44062c92e51b69) ·
+  [Deutsch](https://www.icloud.com/shortcuts/ee32676281884deeba0868ced906c229) · [Français](https://www.icloud.com/shortcuts/5b368c5ebf2e45c1ad41702dd9692c90) · [日本語](https://www.icloud.com/shortcuts/92d37480faf44969882f992c08baba7a) · [한국어](https://www.icloud.com/shortcuts/99366127269947f285147e66af8109b9) · [中文](https://www.icloud.com/shortcuts/0a339cb1b3fd4ddea6b2ec40808debd9). Not for
   Russian, Ukrainian or Hindi yet (no such file for them).
 
 ## Install in 60 seconds
@@ -57,17 +57,17 @@ Have ChatGPT and Claude? Start right away. Have one? It helps you install the ot
 
 | Language | Duo | Trio |
 |---|---|---|
-| English | [Duo](https://www.icloud.com/shortcuts/5dd061c5b24547ab956ce7629014fd65) | [Trio](https://www.icloud.com/shortcuts/90a23c632942460da0ff9d8949aee2d5) |
-| Español | [Duo](https://www.icloud.com/shortcuts/4ad6ef17f5204757979866ea92be1b82) | [Trio](https://www.icloud.com/shortcuts/c0bfe9e877d74dd1bb59e6d91f758983) |
-| Português | [Duo](https://www.icloud.com/shortcuts/28eeafbfab0540358515b8ce40e226e7) | [Trio](https://www.icloud.com/shortcuts/571774dc4c3747aba4a0b30cdd5ac24e) |
-| Русский | [Duo](https://www.icloud.com/shortcuts/b1410fb8e10d43e89258cfcd66924a71) | [Trio](https://www.icloud.com/shortcuts/f36e5d7103eb40009bb3f6f77e778e0a) |
-| Українська | [Duo](https://www.icloud.com/shortcuts/0042178a8812424c9c90fb52ad80f66c) | [Trio](https://www.icloud.com/shortcuts/90ca62a0ebfa4c3f916aea4bdc5a8805) |
-| Deutsch | [Duo](https://www.icloud.com/shortcuts/3cf48ffc59804169a821a07869490441) | [Trio](https://www.icloud.com/shortcuts/43178262a9864362be1ed5f9c0ae0461) |
-| Français | [Duo](https://www.icloud.com/shortcuts/59ce956164934a02a99b147382ff7c98) | [Trio](https://www.icloud.com/shortcuts/2446e4180bd549b18f1b9a015910df00) |
-| हिन्दी | [Duo](https://www.icloud.com/shortcuts/6a2650043d5d4e9b8b45cece899b9e41) | [Trio](https://www.icloud.com/shortcuts/cbb31b119a23484b930e5cf07cefeab4) |
-| 日本語 | [Duo](https://www.icloud.com/shortcuts/37c0a3d4911f4ac9b484a289a0414fc1) | [Trio](https://www.icloud.com/shortcuts/96f6248b57134b5c91c7c0be311f7a96) |
-| 한국어 | [Duo](https://www.icloud.com/shortcuts/21fd5e14593c452181bc86373095044f) | [Trio](https://www.icloud.com/shortcuts/1f8e98ef1a804b3a91f7042d734d8b48) |
-| 中文 | [Duo](https://www.icloud.com/shortcuts/33d4fe322c9b46dda9857c9f61d55cfb) | [Trio](https://www.icloud.com/shortcuts/9662625839ff4d1593a67a7968342dd1) |
+| English | [Duo](https://www.icloud.com/shortcuts/240897bf8b4c49e98db65093b9e7032b) | [Trio](https://www.icloud.com/shortcuts/ca730c3d887648a0a380dc397ede7ab7) |
+| Español | [Duo](https://www.icloud.com/shortcuts/7b563fc82bc4462782e8bf64d6005841) | [Trio](https://www.icloud.com/shortcuts/3180a49b17e64b35b9b7c3b445ba98e9) |
+| Português | [Duo](https://www.icloud.com/shortcuts/a8f7d898268e43c29ed2e136e99f6bf5) | [Trio](https://www.icloud.com/shortcuts/29cace07d31f4033aa0cf26a2d1f9bb1) |
+| Русский | [Duo](https://www.icloud.com/shortcuts/4d2f4893fbaa4e57a4a9b4d629a4e43d) | [Trio](https://www.icloud.com/shortcuts/aaeeb82334154966b6c5fa6c8b6fdd3d) |
+| Українська | [Duo](https://www.icloud.com/shortcuts/d5baefab7b8f4941a32cccb6c58aa90c) | [Trio](https://www.icloud.com/shortcuts/2ee4ec0be50e4e2c85c10626bd5adf01) |
+| Deutsch | [Duo](https://www.icloud.com/shortcuts/933e7ea2bbd1411e82b92456acd3f660) | [Trio](https://www.icloud.com/shortcuts/3deb89385a604743925a2683faa0a216) |
+| Français | [Duo](https://www.icloud.com/shortcuts/a0e24803eec24ccdb3e52e662f4ab4be) | [Trio](https://www.icloud.com/shortcuts/5debce283e1b4e4a90403959dbd8b748) |
+| हिन्दी | [Duo](https://www.icloud.com/shortcuts/e1f7599017414e2890e5987dd032b300) | [Trio](https://www.icloud.com/shortcuts/8524e67391be4ced90d6bfddfc5fd271) |
+| 日本語 | [Duo](https://www.icloud.com/shortcuts/a339a9533c8345f0aae55e6c32f8a921) | [Trio](https://www.icloud.com/shortcuts/deeefcf99eea4e369562c7cc5b10b48e) |
+| 한국어 | [Duo](https://www.icloud.com/shortcuts/d596af88843047349f2105516dd5eafc) | [Trio](https://www.icloud.com/shortcuts/0df9f941045d4c3a8e43bef02c01c35b) |
+| 中文 | [Duo](https://www.icloud.com/shortcuts/9c16eb0749bd411bbb6b2d2d05093f91) | [Trio](https://www.icloud.com/shortcuts/8c7639cf0be9421e884b075ee9b794e4) |
 
 **Backup: the signed file.**
 
