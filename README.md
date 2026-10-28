@@ -1,69 +1,19 @@
 # ChatGPT × Claude — second opinion, one tap, free
 
-**Install:** [iPhone — add the Duo shortcut](https://www.icloud.com/shortcuts/2aaedccd2de64a579e9addbc122533db) · [Android — Poly Duo on Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1) · [other languages](#install-in-60-seconds) · [polyhelper.ai/duo](https://polyhelper.ai/duo/)
-
-**What it is, technically:** a signed Apple Shortcut that chains the Ask ChatGPT and Ask Claude App Intents; it makes no network calls of its own, and `tools/verify.py` checks the signed files against `locales/`.
-
 **Poly Duo — ChatGPT + Claude on iPhone; a free pair of AIs on Android.** Nothing like this exists on phones yet: ChatGPT and Claude work as a pair, each answers on its own and then the answers are compared, on the accounts you already have. Free ones are enough. No card, no computer. You can run the strongest models of two companies together, and a paid plan adds no extra fee.
 
-Poly Duo is built by the author of two papers on AI verification accepted at NeurIPS 2026 workshops. In our test of the October 2026 flagships (GPT-6.1 Sol + Claude Opus 5.5, run on 26 October 2026 through the companies' own command-line apps on regular subscriptions), when the two answered 100 new, never-published questions independently and agreed, they were right 97% of the time (72 of 74) — and on none of the 100 did both give the same confident wrong answer. In August 2026, on 1,459 public factual questions, the flagships of the day were right 98% of the time when they agreed (a re-analysis of our companion study's data).
+<!-- Poster: when video 2 is live on YouTube, point this link at the video instead of polyhelper.ai/duo. -->
+[![Watch Duo run — open polyhelper.ai/duo](docs/img/duo-hook-en-horizontal.jpg)](https://polyhelper.ai/duo/)
 
-Why "nothing like it": the multi-AI tools we found (search of 2026-10-25) need a server, your own API keys, credits or a computer. Details and sources: [docs/en/evidence.md](docs/en/evidence.md#who-else-does-this).
-
-**Tip.** Pick the model you want in the Claude and ChatGPT apps. Duo takes whatever is set there.
-
-**Before you start (iPhone, iOS 18+):** install the free **ChatGPT** and **Claude** apps and sign in to both once. No Claude yet? [Get the Claude app in the App Store](https://apps.apple.com/app/id6473753684) (about a minute) and sign in. Free accounts are enough.
-
-**First run — keep the phone in your hand.** iPhone asks about 5 times whether Duo may pass your question to ChatGPT and Claude, copy the result to the clipboard and write the journal file. Each time tap **Always Allow**: it applies only to Duo and only to your own apps, not to the rest of the phone. An unanswered prompt vanishes within seconds and the run ends with «no access» — then just run it again. After that there are no more prompts.
-
-**Then do not touch the screen for about a minute: a touch stops Duo.**
-
-[![Watch the 18-second demo](https://img.youtube.com/vi/xljOlD4z1K4/hqdefault.jpg)](https://youtu.be/xljOlD4z1K4)
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23089503.svg)](https://doi.org/10.5281/zenodo.23089503) Archived on Zenodo — concept DOI (all versions): [10.5281/zenodo.23089503](https://doi.org/10.5281/zenodo.23089503)
-
-### How it works
-
-On iPhone, a Shortcut calls Ask ChatGPT, then Ask Claude — actions the two apps publish themselves. Answers pass between your own apps, with no server of ours and no API keys, on your own accounts. You get one checked answer on the screen and in the clipboard, in about a minute.
-
-Duo is free, and so is **Trio** (Duo plus a third voice, below). The code is open source (Apache-2.0): [source on GitHub](https://github.com/vadimchernets/poly-duo). Looking for Android? See [Android](#android). The **Poly A1** app ([Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1); on iPhone a beta on TestFlight, App Store soon) is free, installs Duo and Trio for you and walks you through every step.
-
-Have ChatGPT and Claude? Start right away. Have one? It helps you install the other. Have neither? Gemini (Google) or Meta AI (WhatsApp, Facebook) helps you install both, free.
-
-[![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-![iOS 18+](https://img.shields.io/badge/iOS-18%2B-lightgrey.svg)
-
-<p align="center">
-  <img src="assets/demo.gif" alt="One run: tap the shortcut, ask a question, pick Critique, read the checked answer" width="320">
-</p>
-
-## Duo and Trio
-
-- **Duo** — the pair. ChatGPT and Claude each answer on their own, without seeing each other; then
-  Claude compares the two and writes one answer, on the screen and in the clipboard, in about a
-  minute. In the default mode, **Critique**, it opens with three blocks: matched independently /
-  did not match / what to check yourself. Eleven more
-  modes (debate to agreement, side by side, dispute map, decision, …) sit in the same menu or under
-  📂 More… — twelve in all. Spends 1–8 messages from your own ChatGPT and Claude plans per run; the ✉ price is shown
-  before you choose.
-- **Trio** — Duo plus a third voice from a third company. ChatGPT and Claude answer separately, a free AI
-  names only the errors and gaps both of them missed, then Claude compares all three and writes the
-  final answer; the third voice's words come as a separate block under it. It runs on any **free** key — NVIDIA first (Kimi K3, GLM-5.3, DeepSeek V4.1 Flash), then
-  Google AI Studio (Gemini), OpenRouter (its free models) or Groq — or several of them: Trio
-  tries every key and every free model until one answers. Limits are counted per account, not per
-  key, so extra keys help only when they come from different companies. Keys are never inside the shortcut: asked once on the first run and kept in your iCloud
-  Drive (`Shortcuts/poly-key.txt`).
-- **Trio without a key** — on an iPhone with Apple Intelligence (iPhone 15 Pro or newer, iOS 26+) the
-  third voice can be Apple Intelligence on the phone: no key, no sign-up. Same install, a different
-  file: [English](https://www.icloud.com/shortcuts/2a24e0157e4a445bae92ed1410907b9f) ·
-  [Español](https://www.icloud.com/shortcuts/281f56b82f7444438220fdffcbb46f22) ·
-  [Português](https://www.icloud.com/shortcuts/4000dcb2b9d64dcfaa44062c92e51b69) ·
-  [Deutsch](https://www.icloud.com/shortcuts/ee32676281884deeba0868ced906c229) · [Français](https://www.icloud.com/shortcuts/5b368c5ebf2e45c1ad41702dd9692c90) · [日本語](https://www.icloud.com/shortcuts/92d37480faf44969882f992c08baba7a) · [한국어](https://www.icloud.com/shortcuts/99366127269947f285147e66af8109b9) · [中文](https://www.icloud.com/shortcuts/0a339cb1b3fd4ddea6b2ec40808debd9) · [हिन्दी](https://www.icloud.com/shortcuts/649c129fd8ba4551b42497a8d88317ac). Not for
-  Russian or Ukrainian yet (no such file for them).
+**Install:** [iPhone — add the Duo shortcut](https://www.icloud.com/shortcuts/2aaedccd2de64a579e9addbc122533db) · [Android — Poly Duo on Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1) · [other languages](#install-in-60-seconds) · [polyhelper.ai/duo](https://polyhelper.ai/duo/)
 
 ## Install in 60 seconds
 
-**One tap (recommended).** On your iPhone, tap the link for your language → the Shortcuts app opens → **Add**. On the first run keep the phone in your hand and tap **Always Allow** each time it asks about ChatGPT, Claude and the clipboard (about 5 times). Needs the Claude app installed and signed in: [App Store](https://apps.apple.com/app/id6473753684).
+**Step 1 — apps.** On iPhone (iOS 18+) install the free **ChatGPT** and **Claude** apps and sign in to both once. No Claude yet? [Get the Claude app in the App Store](https://apps.apple.com/app/id6473753684) (about a minute). Free accounts are enough.
+
+**Step 2 — shortcut.** Tap the iCloud link for your language below → the Shortcuts app opens → **Add**.
+
+**Step 3 — first run: keep the phone in your hand.** iPhone asks about 5 times whether Duo may pass your question to ChatGPT and Claude, copy the result to the clipboard and write the journal file. Each time tap **Always Allow**: it applies only to Duo and only to your own apps, not to the rest of the phone. An unanswered prompt vanishes within seconds and the run ends with «no access» — then just run it again. After that there are no more prompts. **Then do not touch the screen for about a minute: a touch stops Duo.**
 
 | Language | Duo | Trio |
 |---|---|---|
@@ -90,37 +40,66 @@ The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (Du
 find the shortcut by that name.
 
 **If it doesn't work:** no «Ask Claude» in the action list — update the Claude app and iOS (18+). Empty answer — open the Claude app and check that you are signed in (no app yet: [App Store](https://apps.apple.com/app/id6473753684)), and open ChatGPT once. Duo stopped while you were scrolling — a touch of the screen stops it; run it again and wait a minute. ChatGPT says «logged out» — open ChatGPT, close it, run Duo again. The permission prompt vanished before you tapped — just run it again and tap **Always Allow** at once. More: [docs/en/install.md](docs/en/install.md#if-somethings-wrong).
+## How it works
 
-## Requirements
+Ask ChatGPT → Ask Claude, blind → compare.
 
-- iPhone on **iOS 18 or later** (iPad on iPadOS 18+ is expected to work, untested).
-- The **ChatGPT** and **Claude** apps, installed and signed in.
-- Your own ChatGPT and Claude accounts — free ones are enough: free Claude runs Sonnet 5.5 — the same
-  Sonnet 5.5 as on the paid plan (paid plans also have stronger models); the Ask Claude action uses
-  whichever model is set in your Claude app, and ChatGPT runs on `auto` (the app picks the model).
-  Two $20 plans, ChatGPT Plus and Claude Pro, give you access to GPT-6 Sol and Claude Opus 5.5 at no
-  extra charge from Duo; Duo uses the model each app picks (plans as of 26 October 2026).
-- For **Trio**: any free key (no card) — [NVIDIA](https://build.nvidia.com/settings/api-keys) first
-  (email, password, then an SMS code); no SMS? [Groq](https://console.groq.com/keys) or
-  [Google AI Studio](https://aistudio.google.com/apikey) — sign in with your Google account, no
-  phone needed; or [OpenRouter](https://openrouter.ai/keys) (turn on free models once in
-  [privacy settings](https://openrouter.ai/settings/privacy), otherwise they answer «No endpoints
-  found»). Several keys, one per line, help when they are from different companies — limits are
-  per account, not per key. On the first run iPhone asks for permission 4–6 times — tap
-  **Always Allow** each time.
-- Don't touch the screen while it runs — that cancels the run on Apple's platform.
+On iPhone, a Shortcut calls Ask ChatGPT, then Ask Claude — actions the two apps publish themselves. Answers pass between your own apps, with no server of ours and no API keys, on your own accounts. You get one checked answer on the screen and in the clipboard, in about a minute.
 
-Docs in twelve languages: [English](docs/en/install.md) · [العربية](docs/ar/install.md) · [Deutsch](docs/de/install.md) · [Español](docs/es/install.md) · [Français](docs/fr/install.md) · [हिन्दी](docs/hi/install.md) · [日本語](docs/ja/install.md) · [한국어](docs/ko/install.md) · [Português](docs/pt/install.md) · [Русский](docs/ru/install.md) · [Українська](docs/uk/install.md) · [中文](docs/zh/install.md)
+**What it is, technically:** a signed Apple Shortcut that chains the Ask ChatGPT and Ask Claude App Intents; it makes no network calls of its own, and `tools/verify.py` checks the signed files against `locales/`.
 
-To build from source you need macOS (the `shortcuts` CLI signs the files) and Python 3.9+ — see
-[Build from source](#build-from-source).
+**Tip.** Pick the model you want in the Claude and ChatGPT apps. Duo takes whatever is set there.
+
+Duo is free, and so is **Trio** (Duo plus a third voice, below). The code is open source (Apache-2.0): [source on GitHub](https://github.com/vadimchernets/poly-duo). Looking for Android? See [Android](#android). The **Poly A1** app ([Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1); on iPhone a beta on TestFlight, App Store soon) is free, installs Duo and Trio for you and walks you through every step.
+
+Have ChatGPT and Claude? Start right away. Have one? It helps you install the other. Have neither? Gemini (Google) or Meta AI (WhatsApp, Facebook) helps you install both, free.
+
+[![Watch the 18-second demo](https://img.youtube.com/vi/xljOlD4z1K4/hqdefault.jpg)](https://youtu.be/xljOlD4z1K4)
+
+[![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+![iOS 18+](https://img.shields.io/badge/iOS-18%2B-lightgrey.svg)
+
+<p align="center">
+  <img src="assets/demo.gif" alt="One run: tap the shortcut, ask a question, pick Critique, read the checked answer" width="320">
+</p>
+
+## Limitations
+
+Worth knowing before you install:
+
+- **iPhone only, iOS 18 or later.** iPad is expected to work on iPadOS 18+, but it is untested.
+- **Free plans have limits.** Free Claude has a daily limit; free ChatGPT has its own. See the
+  note at the end of this page.
+- **A run takes about a minute**, closer to two in the multi-step modes.
+- **It spends messages from your own plans**, not from an API budget.
+- **Touching the screen cancels the run.** That's a limit of Apple's platform, not a choice we
+  made. The one exception is **Clarify**, which opens its own window and asks you to answer.
+- **You can't pick the model from inside Duo.** Each app uses the model set in it — choose it in the
+  Claude and ChatGPT apps first, and check it before a run that matters.
+- **Very long questions are risky.** The Claude action can time out and hand back an empty result
+  while Claude keeps writing inside its own app; shorter questions return reliably.
+
+## Build from source
+
+```bash
+./tools/build.sh            # every locale: build, sign, package, verify
+./tools/build.sh en         # just one
+python3 tools/verify.py     # checks only
+```
+
+Requires macOS (the `shortcuts` CLI signs the files) and Python 3.9+. The builders read
+`locales/<lang>/` and write `dist/<lang>/`; `tools/verify.py` unpacks the signed result and
+checks that it matches what the sources produce.
 
 ---
 
-*In the sources the main shortcut is still called **Poly** — `tools/build.sh` writes
-`dist/<lang>/Poly.shortcut`. C1M Duo is the same shortcut released under its own name, with «Poly»
-changed to «Duo» in titles, menus, help and journal file names. The rest of this page says Poly
-where it describes the sources.*
+## Research and numbers
+
+Poly Duo is built by the author of two papers on AI verification accepted at NeurIPS 2026 workshops. In our test of the October 2026 flagships (GPT-6.1 Sol + Claude Opus 5.5, run on 26 October 2026 through the companies' own command-line apps on regular subscriptions), when the two answered 100 new, never-published questions independently and agreed, they were right 97% of the time (72 of 74) — and on none of the 100 did both give the same confident wrong answer. In August 2026, on 1,459 public factual questions, the flagships of the day were right 98% of the time when they agreed (a re-analysis of our companion study's data).
+
+Why "nothing like it": the multi-AI tools we found (search of 2026-10-25) need a server, your own API keys, credits or a computer. Details and sources: [docs/en/evidence.md](docs/en/evidence.md#who-else-does-this).
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23089503.svg)](https://doi.org/10.5281/zenodo.23089503) Archived on Zenodo — concept DOI (all versions): [10.5281/zenodo.23089503](https://doi.org/10.5281/zenodo.23089503)
 
 ## Why a pair
 
@@ -236,6 +215,66 @@ Trio is the one place where a free key buys a third company.
 
 On an iPhone with Apple Intelligence (iPhone 15 Pro or newer, iOS 26 or later) there is a Trio whose third voice is Apple Intelligence through the Shortcuts action «Use Model». It needs no key and no sign-up. Links are in «Duo and Trio» above (English, Spanish, Portuguese, Deutsch, Français, 日本語, 한국어, 中文, हिन्दी). On any other iPhone use the free-key Trio.
 
+## Duo and Trio
+
+- **Duo** — the pair. ChatGPT and Claude each answer on their own, without seeing each other; then
+  Claude compares the two and writes one answer, on the screen and in the clipboard, in about a
+  minute. In the default mode, **Critique**, it opens with three blocks: matched independently /
+  did not match / what to check yourself. Eleven more
+  modes (debate to agreement, side by side, dispute map, decision, …) sit in the same menu or under
+  📂 More… — twelve in all. Spends 1–8 messages from your own ChatGPT and Claude plans per run; the ✉ price is shown
+  before you choose.
+- **Trio** — Duo plus a third voice from a third company. ChatGPT and Claude answer separately, a free AI
+  names only the errors and gaps both of them missed, then Claude compares all three and writes the
+  final answer; the third voice's words come as a separate block under it. It runs on any **free** key — NVIDIA first (Kimi K3, GLM-5.3, DeepSeek V4.1 Flash), then
+  Google AI Studio (Gemini), OpenRouter (its free models) or Groq — or several of them: Trio
+  tries every key and every free model until one answers. Limits are counted per account, not per
+  key, so extra keys help only when they come from different companies. Keys are never inside the shortcut: asked once on the first run and kept in your iCloud
+  Drive (`Shortcuts/poly-key.txt`).
+- **Trio without a key** — on an iPhone with Apple Intelligence (iPhone 15 Pro or newer, iOS 26+) the
+  third voice can be Apple Intelligence on the phone: no key, no sign-up. Same install, a different
+  file: [English](https://www.icloud.com/shortcuts/2a24e0157e4a445bae92ed1410907b9f) ·
+  [Español](https://www.icloud.com/shortcuts/281f56b82f7444438220fdffcbb46f22) ·
+  [Português](https://www.icloud.com/shortcuts/4000dcb2b9d64dcfaa44062c92e51b69) ·
+  [Deutsch](https://www.icloud.com/shortcuts/ee32676281884deeba0868ced906c229) · [Français](https://www.icloud.com/shortcuts/5b368c5ebf2e45c1ad41702dd9692c90) · [日本語](https://www.icloud.com/shortcuts/92d37480faf44969882f992c08baba7a) · [한국어](https://www.icloud.com/shortcuts/99366127269947f285147e66af8109b9) · [中文](https://www.icloud.com/shortcuts/0a339cb1b3fd4ddea6b2ec40808debd9) · [हिन्दी](https://www.icloud.com/shortcuts/649c129fd8ba4551b42497a8d88317ac). Not for
+  Russian or Ukrainian yet (no such file for them).
+
+*In the sources the main shortcut is still called **Poly** — `tools/build.sh` writes
+`dist/<lang>/Poly.shortcut`. C1M Duo is the same shortcut released under its own name, with «Poly»
+changed to «Duo» in titles, menus, help and journal file names. The rest of this page says Poly
+where it describes the sources.*
+
+## Requirements
+
+- iPhone on **iOS 18 or later** (iPad on iPadOS 18+ is expected to work, untested).
+- The **ChatGPT** and **Claude** apps, installed and signed in.
+- Your own ChatGPT and Claude accounts — free ones are enough: free Claude runs Sonnet 5.5 — the same
+  Sonnet 5.5 as on the paid plan (paid plans also have stronger models); the Ask Claude action uses
+  whichever model is set in your Claude app, and ChatGPT runs on `auto` (the app picks the model).
+  Two $20 plans, ChatGPT Plus and Claude Pro, give you access to GPT-6 Sol and Claude Opus 5.5 at no
+  extra charge from Duo; Duo uses the model each app picks (plans as of 26 October 2026).
+- For **Trio**: any free key (no card) — [NVIDIA](https://build.nvidia.com/settings/api-keys) first
+  (email, password, then an SMS code); no SMS? [Groq](https://console.groq.com/keys) or
+  [Google AI Studio](https://aistudio.google.com/apikey) — sign in with your Google account, no
+  phone needed; or [OpenRouter](https://openrouter.ai/keys) (turn on free models once in
+  [privacy settings](https://openrouter.ai/settings/privacy), otherwise they answer «No endpoints
+  found»). Several keys, one per line, help when they are from different companies — limits are
+  per account, not per key. On the first run iPhone asks for permission 4–6 times — tap
+  **Always Allow** each time.
+- Don't touch the screen while it runs — that cancels the run on Apple's platform.
+
+Docs in twelve languages: [English](docs/en/install.md) · [العربية](docs/ar/install.md) · [Deutsch](docs/de/install.md) · [Español](docs/es/install.md) · [Français](docs/fr/install.md) · [हिन्दी](docs/hi/install.md) · [日本語](docs/ja/install.md) · [한국어](docs/ko/install.md) · [Português](docs/pt/install.md) · [Русский](docs/ru/install.md) · [Українська](docs/uk/install.md) · [中文](docs/zh/install.md)
+
+To build from source you need macOS (the `shortcuts` CLI signs the files) and Python 3.9+ — see
+[Build from source](#build-from-source).
+
+---
+
+*In the sources the main shortcut is still called **Poly** — `tools/build.sh` writes
+`dist/<lang>/Poly.shortcut`. C1M Duo is the same shortcut released under its own name, with «Poly»
+changed to «Duo» in titles, menus, help and journal file names. The rest of this page says Poly
+where it describes the sources.*
+
 ## Companions
 
 Small single-purpose shortcuts that share the same engine. They are for people who build from source
@@ -307,22 +346,6 @@ Message consumption comes out of your own ChatGPT and Claude plans (free or paid
 same allowance as your normal chats — and the ✉ badge in the menu tells you the price before you
 pick a mode. The code is open source under the Apache License 2.0 — see [LICENSE](LICENSE).
 
-## Limitations
-
-Worth knowing before you install:
-
-- **iPhone only, iOS 18 or later.** iPad is expected to work on iPadOS 18+, but it is untested.
-- **Free plans have limits.** Free Claude has a daily limit; free ChatGPT has its own. See the
-  note at the end of this page.
-- **A run takes about a minute**, closer to two in the multi-step modes.
-- **It spends messages from your own plans**, not from an API budget.
-- **Touching the screen cancels the run.** That's a limit of Apple's platform, not a choice we
-  made. The one exception is **Clarify**, which opens its own window and asks you to answer.
-- **You can't pick the model from inside Duo.** Each app uses the model set in it — choose it in the
-  Claude and ChatGPT apps first, and check it before a run that matters.
-- **Very long questions are risky.** The Claude action can time out and hand back an empty result
-  while Claude keeps writing inside its own app; shorter questions return reliably.
-
 ## Verified
 
 The demo above is a rendering of the interface — the labels come from the English locale and the
@@ -334,18 +357,6 @@ the same sources and machine-checked against them, and the old Tasker path for A
 `tools/verify.py` unpacks each signed shortcut and compares its prompts and texts with the open source files in `locales/`; it checks that the file matches the sources, not that the AIs answer well. Verified in the live run: Duo and Trio of 2026-10-01 (before Duo 5 / Trio 4); a fresh run on current iOS and app versions is still to be done and dated here. The blind Critique of Duo 6 / Trio 5 (2026-10-26) has not been run on a phone yet. Everything known to be unverified is in Limitations above and in the [FAQ](docs/en/faq.md).
 
 Own check of the pair (26 Oct 2026, command-line models, blind grading against a reference): the Claude review made a correct ChatGPT draft wrong in 0 of 66 cases (95% CI 0-6%) and fixed ChatGPT's error in 18 of 18 cases on a set chosen for those errors; the blind variant against the earlier Critique: no difference established. Data and limits: [evidence/pair-check-2026-10-26/](evidence/pair-check-2026-10-26/README.md).
-
-## Build from source
-
-```bash
-./tools/build.sh            # every locale: build, sign, package, verify
-./tools/build.sh en         # just one
-python3 tools/verify.py     # checks only
-```
-
-Requires macOS (the `shortcuts` CLI signs the files) and Python 3.9+. The builders read
-`locales/<lang>/` and write `dist/<lang>/`; `tools/verify.py` unpacks the signed result and
-checks that it matches what the sources produce.
 
 ## Docs
 
