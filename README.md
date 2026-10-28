@@ -1,6 +1,6 @@
 # ChatGPT × Claude — second opinion, one tap, free
 
-**Poly Duo — ChatGPT + Claude on iPhone; a free pair of AIs on Android.** Nothing like this exists on phones yet: ChatGPT and Claude work as a pair, each answers on its own and then the answers are compared, on the accounts you already have. Free ones are enough. No card, no computer. You can run the strongest models of two companies together, and a paid plan adds no extra fee.
+**For the first time, your own ChatGPT and Claude apps work together on your phone — one tap, free.** **Poly Duo — ChatGPT + Claude on iPhone; a free pair of AIs on Android.** Nothing like this exists on phones yet: ChatGPT and Claude work as a pair, each answers on its own and then the answers are compared, on the accounts you already have. Free ones are enough. No card, no computer. You can run the strongest models of two companies together, and a paid plan adds no extra fee.
 
 <!-- Poster: when video 2 is live on YouTube, point this link at the video instead of polyhelper.ai/duo. -->
 [![Watch Duo run — open polyhelper.ai/duo](docs/img/duo-hook-en-horizontal.jpg)](https://polyhelper.ai/duo/)
