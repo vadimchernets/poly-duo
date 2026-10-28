@@ -1,6 +1,6 @@
-# Poly Duo (C1M)
+# ChatGPT × Claude — second opinion, one tap, free
 
-**Poly Duo (C1M) — ChatGPT + Claude on iPhone.** Nothing like this exists on phones yet: ChatGPT and Claude work as a pair, each answers on its own and then the answers are compared, on the accounts you already have. Free ones are enough. No server of ours, no API key, no card, no computer. You can run the strongest models of two companies together, and a paid plan adds no extra fee.
+**Poly Duo — ChatGPT + Claude on iPhone.** Nothing like this exists on phones yet: ChatGPT and Claude work as a pair, each answers on its own and then the answers are compared, on the accounts you already have. Free ones are enough. No server of ours, no API key, no card, no computer. You can run the strongest models of two companies together, and a paid plan adds no extra fee.
 
 Poly Duo is built by the author of two papers on AI verification accepted at NeurIPS 2026 workshops. In our test of the October 2026 flagships (GPT-6.1 Sol + Claude Opus 5.5, run on 26 October 2026 through the companies' own command-line apps on regular subscriptions), when the two answered 100 new, never-published questions independently and agreed, they were right 97% of the time (72 of 74) — and on none of the 100 did both give the same confident wrong answer. In August 2026, on 1,459 public factual questions, the flagships of the day were right 98% of the time when they agreed (a re-analysis of our companion study's data).
 
