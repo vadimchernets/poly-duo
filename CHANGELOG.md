@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed (D-100, 2026-10-28; planned as Duo 6.3, not released yet)
+- **Critique on the iPhone asked neither ChatGPT nor Claude's blind answer.** Live run 28.10: the result
+  began «EMPTY: ChatGPT returned no text / EMPTY: Claude returned no text» and the judge wrote the answer
+  alone; iOS never even asked for ChatGPT. Cause (checked with a test shortcut on Shortcuts 28.10): a
+  variable set from an empty Text «has any value», so «no ChatGPT answer yet → ask» and «no blind answer
+  yet → ask Claude» were always false. Now variables are emptied with «Nothing», and a text is tested by
+  its characters (Match Text `\S`) everywhere an empty answer must trigger a call or a retry (Duo and
+  Trio). Same iPhone after the fix: both blind answers came, real differences listed, ≈2 min.
+- **Far fewer permission windows on the first run.** iOS asks once for every «Save File», «Copy» and
+  «Append» action of a run, even after «Always Allow»: the fixed Critique still showed ~14 windows (Duo 5:
+  ~6). The Critique and Debate drafts (six and up to eleven file writes) are gone, and with them the
+  resume of a cut-off run (U-05); Critique copies the result once (in the shared tail); ChatGPT's answer
+  is still copied before Claude (D-98) but no longer also saved as «Duo's own». Same iPhone: 8 windows
+  on the first run (notifications, ChatGPT, Claude ×2, copy ×2, remember, journal).
+- **«Another mode — same question», the Recipes and «go back» run this very shortcut.** They ran the
+  shortcut called «Duo» by name; after «Keep Both» the new version is «Duo 1», so they started the old
+  one. Now `isSelf` (checked on Shortcuts for macOS: the child gets the input and returns its output).
+
 ### Fixed (D-98, 2026-10-28; not released yet: live iPhone repeat and second-family review first)
 - **ChatGPT's answer is no longer lost when Claude hits its message limit.** On a real iPhone
   (28.10) Claude's app action threw «You have reached your current Claude message limit…»; iOS

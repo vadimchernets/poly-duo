@@ -260,6 +260,16 @@ def act_run_shortcut(name, src_uid, src_name):
                                            'WFInput': attachment(src_uid, src_name)}}
 
 
+def act_run_self(name, src_uid, src_name):
+    """Run THIS shortcut again (`isSelf`), whatever it is called on the phone. D-100: by name, «Another mode — same
+    question», the Recipes and «go back» ran the shortcut called «Duo»; after «Keep Both» the new version is «Duo 1»,
+    so they started the OLD one (live iPhone 28.10). `isSelf` checked on Shortcuts (macOS) 28.10: the child run gets
+    the input and returns its output to the parent. `name` stays for older Shortcuts that read only the name."""
+    action = act_run_shortcut(name, src_uid, src_name)
+    action['WFWorkflowActionParameters']['WFWorkflow'] = {'isSelf': True, 'workflowName': name}
+    return action
+
+
 def menu_open(group, title, items):
     return {'WFWorkflowActionIdentifier': 'is.workflow.actions.choosefrommenu',
             'WFWorkflowActionParameters': {'GroupingIdentifier': group, 'WFControlFlowMode': 0,
@@ -358,6 +368,40 @@ def act_match_number(src_uid, src_name, number_uid, number_name, uid):
                 'text': text_token('{T}', {'T': (src_uid, src_name)}), 'UUID': uid}}
 
 
+def act_nothing(uid):
+    """«Nothing» (is.workflow.actions.nothing): its output has no value."""
+    return {'WFWorkflowActionIdentifier': 'is.workflow.actions.nothing',
+            'WFWorkflowActionParameters': {'UUID': uid}}
+
+
+def clear_variable(name):
+    """Set the variable to NOTHING — never to an empty Text. D-100, checked on Shortcuts 28.10: a variable set from
+    a Text action with an empty string «has any value» (and «does not have any value» is false), so every «no answer
+    yet → ask» branch behind such a variable was skipped: on the iPhone Duo 6 Critique never called ChatGPT nor
+    Claude's blind answer. A variable set from «Nothing» has no value, as an unset one."""
+    uid = new_uuid()
+    return [act_nothing(uid), act_set_variable(name, uid, 'Nothing')]
+
+
+def if_text(group, var_name, present=True):
+    """If the variable holds at least one non-space character (present=True), or not (present=False). D-100: «has any
+    value» is true for an empty or blank text, so an answer that came back as empty text (or a text read from an
+    emptied draft file) must be tested by its characters, not by «has any value». Match Text `\\S` → its Matches has a
+    value only when there is a visible character; for a variable with nothing in it Matches has no value either
+    (both checked on Shortcuts 28.10)."""
+    get, match = new_uuid(), new_uuid()
+    return [act_get_variable(var_name, get),
+            act_first_match(get, 'Variable', r'\S', match),
+            if_output(group, match, 'Matches', 100 if present else 101)]
+
+
+def if_output_text(group, src_uid, src_name, present=True):
+    """As if_text, for an earlier action's output instead of a variable."""
+    match = new_uuid()
+    return [act_first_match(src_uid, src_name, r'\S', match),
+            if_output(group, match, 'Matches', 100 if present else 101)]
+
+
 def if_else(group):
     return {'WFWorkflowActionIdentifier': 'is.workflow.actions.conditional',
             'WFWorkflowActionParameters': {'GroupingIdentifier': group, 'WFControlFlowMode': 1}}
@@ -389,18 +433,6 @@ RELEASE_NAME = 'Duo'
 # «Debate until agreement»: a side that is genuinely convinced starts its reply with this marker
 # (the prompts argue-2-object / argue-3-reply ask for it); the shortcut stops the rounds when it appears.
 ARGUE_MARKER = '[[CONCEDE]]'
-
-
-# Draft of the Critique run (U-05) and the length at which a request to Claude counts as long (U-08)
-DRAFT_MINUTES = 15
-
-
-def draft_names(lang, ai):
-    """Draft file names carry the language and the build variant, so another language, the Apple Intelligence build
-    or another device on the same iCloud never picks up a draft written with different prompts."""
-    base = f"Duo-draft-{lang}-{'ai' if ai else 'std'}"
-    return {'q': f'{base}-question.txt', 'a': f'{base}-answer.txt', 'b': f'{base}-own.txt',
-            'aq': f'{base}-argue-question.txt', 'al': f'{base}-argue-log.txt', 'an': f'{base}-argue-rounds.txt'}
 
 
 def version_key(ai):
@@ -573,7 +605,7 @@ def with_gpt_retry(actions, skip=()):
         second = {'WFWorkflowActionIdentifier': action['WFWorkflowActionIdentifier'],
                   'WFWorkflowActionParameters': {**params, 'UUID': again}}
         out += [act_set_variable(var, params['UUID'], 'Ask ChatGPT'),
-                if_no_value(group, var), act_delay(3), second,
+                *if_text(group, var, present=False), act_delay(3), second,
                 act_set_variable(var, again, 'Ask ChatGPT'), if_close(group),
                 act_get_variable(var, final)]
         rewrites[params['UUID']] = final
@@ -632,7 +664,6 @@ def build(lang, ai=False):
     START_VAR = 'PolyStartText'
     GPT_VAR, CLAUDE_VAR = 'PolyChatGPTAnswer', 'PolyClaudeAnswer'
     OWN_VAR = 'PolyClaudeOwn'   # Critique: Claude's blind answer (step 2); CLAUDE_VAR is the step-3 comparison
-    D = draft_names(lang, ai)
     VK = version_key(ai)
     CHECK_VAR = 'PolyCheckRequest'
     RETRY_SKIP = set()   # ChatGPT calls that have their own retry or are not a mode's first call (see with_gpt_retry)
@@ -671,16 +702,16 @@ def build(lang, ai=False):
         (on device 28.10: «You have reached your current Claude message limit…»), iOS stops the whole shortcut with a
         system alert — Shortcuts has no built-in try/catch or «continue on error» for an app action (x-error of a
         shortcuts:// x-callback-url only opens another URL after the run has ended), so the «Claude did not answer» menu (made for an
-        EMPTY answer) is never reached and the answer ChatGPT already gave would be lost. Now it is in the clipboard,
-        remembered as Duo's own (so the next run does not offer it as a question), and the step's notification says
-        so. No extra screen, tap or message; only when there is an answer. `note`: that step's own notification; the
+        EMPTY answer) is never reached and the answer ChatGPT already gave would be lost. Now it is in the clipboard
+        and the step's notification says so. D-100: it is no longer also remembered as Duo's own (that was one more
+        «Save File», one more permission window on the first run); when the run goes on, the tail's clipboard write
+        replaces it and is remembered there. No extra screen, tap or message; only when there is an answer. `note`: that step's own notification; the
         clipboard line goes FIRST (a banner may cut a long text); with no note one notification with that line alone."""
         txt, g = new_uuid(), new_uuid()
         kept = L['notify.gpt_kept']
         return [act_text(text_token('{A}', {'A': (src_uid, src_name)}), txt),
-                if_output(g, txt, 'Text', 100),
+                *if_output_text(g, txt, 'Text'),
                 act_clipboard(attachment(txt, 'Text')),
-                *remember_answer(txt, 'Text'),
                 act_notify(kept + '\n' + note if note else kept),
                 *([if_else(g), act_notify(note)] if note else []),
                 if_close(g)]
@@ -693,7 +724,7 @@ def build(lang, ai=False):
             uid = new_uuid()
             out += [menu_case(group, item),
                     act_text(text_token(L['menu.recipes_texts'][i]), uid),
-                    act_run_shortcut(RELEASE_NAME, uid, 'Text'),
+                    act_run_self(RELEASE_NAME, uid, 'Text'),
                     {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}}]
         return out + [menu_close(group)]
 
@@ -783,7 +814,7 @@ def build(lang, ai=False):
             # a round has no retry (it is an answer to an answer); if ChatGPT returns nothing, the log is left as it
             # was instead of getting an empty «side A» entry, and the debate goes on to the next step
             act_set_variable(ARGUE_REPLY, gp2, 'Ask ChatGPT'),
-            if_has_value(g_gp, ARGUE_REPLY),
+            *if_text(g_gp, ARGUE_REPLY),
             act_get_variable(ARGUE_LOG, get4),
             act_text(text_token('{L}\n\n' + L['output.argue_side_a_round'].replace('{N}', rnd) + '\n{A}',
                                 {'L': (get4, 'Variable'), 'A': (gp2, 'Ask ChatGPT')}), add2),
@@ -791,12 +822,8 @@ def build(lang, ai=False):
             if_close(g_gp),
             if_close(g_rep),
             if_close(g_obj),
-            act_get_variable(ARGUE_LOG, sv_get),
-            act_text(text_token('{L}', {'L': (sv_get, 'Variable')}), sv_text),
-            act_save_file(D['al'], sv_text, sv_save),
             act_text(text_token(rnd), rd_text),
             act_set_variable(ARGUE_ROUNDS, rd_text, 'Text'),
-            act_save_file(D['an'], rd_text, rd_save),
             if_close(g_rd),
         ]
 
@@ -813,7 +840,7 @@ def build(lang, ai=False):
         (cr_oget, cr_own, cr_own2, cr_own_t, cr_own_save, cr_own_get,
          cr_own_f, cr_bclr, cr_bclr_save, cr_rft, cr_qclr, cr_qclr_save) = ids(12)
         g_r1, g_r2, g_r3, g_need, g_retry, g_save, g_long, g_cretry, g_cok = ids(9)
-        g_own, g_oretry, g_osave, g_n1, g_n2, g_cstart = ids(6)
+        g_own, g_oretry, g_osave, g_n1, g_n2, g_cstart, g_rbt, g_rag = ids(8)
         cr_wrap, cr_gpt, cr_prompt, cr_claude = ids(4)
         RETRY_SKIP.update((cr_gpt, cr_gpt2))
         rule_prefix = 'Extra instruction from the user for this check (apply it): {RULE}\n\n' if rule_uid else ''
@@ -846,109 +873,45 @@ def build(lang, ai=False):
             ]
         return [
             *pre,
-            # ---- Do not lose the work already paid for (U-05). Both independent answers are saved as drafts next to
-            # the journal (iCloud Drive → Shortcuts): the question in one file, ChatGPT's answer in another, Claude's
-            # own answer in a third; the question file's «last modified» date is the draft's time. If the shortcut is
-            # interrupted and run again within 15 minutes with the SAME question, whatever is already saved is not
-            # asked again (one notification, no menu). The question file is emptied once Claude's comparison has come,
-            # so a finished run is never «resumed». File names carry the language and the build variant.
-            act_text(text_token(''), cr_empty0),
-            act_set_variable(GPT_VAR, cr_empty0, 'Text'),
-            act_text(text_token(''), cr_empty1),
-            act_set_variable(OWN_VAR, cr_empty1, 'Text'),
-            act_get_file(D['q'], cr_rf),
-            if_output(g_r1, cr_rf, 'File', 100),
-            # compare the file's TEXT with the question (as OWN below), never the file object: a file may compare by
-            # name or type, and then a draft would silently never resume. Not checked on device.
-            act_text(text_token('{F}', {'F': (cr_rf, 'File')}), cr_rft),
-            if_output(g_r2, cr_rft, 'Text', 4, WFConditionalActionString=text_token('{Q}', Q)),
-            {'WFWorkflowActionIdentifier': 'is.workflow.actions.properties.files',
-             'WFWorkflowActionParameters': {'WFInput': attachment(cr_rf, 'File'),
-                                            'WFContentItemPropertyName': 'Last Modified Date', 'UUID': cr_rdate}},
-            act_date(cr_rnow),
-            {'WFWorkflowActionIdentifier': 'is.workflow.actions.gettimebetweendates',
-             'WFWorkflowActionParameters': {'WFInput': attachment(cr_rnow, 'Date'),
-                                            'WFTimeUntilFromDate': text_token(
-                                                '{D}', {'D': (cr_rdate, 'Last Modified Date')}),
-                                            'WFTimeUntilUnit': 'Minutes', 'UUID': cr_rage}},
-            # «between −15 and 15 minutes» reads the same whichever way the system counts (as in version_check)
-            if_output(g_r3, cr_rage, 'Time Between Dates', 1003,
-                      WFNumberValue=-DRAFT_MINUTES, WFAnotherNumber=DRAFT_MINUTES),
-            act_get_file(D['a'], cr_ra),
-            act_set_variable(GPT_VAR, cr_ra, 'File'),
-            # Claude's own answer is read as TEXT: an empty file is still a file, empty text is «no value»
-            act_get_file(D['b'], cr_rb),
-            act_text(text_token('{F}', {'F': (cr_rb, 'File')}), cr_rb_t),
-            act_set_variable(OWN_VAR, cr_rb_t, 'Text'),
-            act_notify(L['notify.resume']),
-            if_close(g_r3),
-            if_close(g_r2),
-            if_close(g_r1),
-            # ONE notification: the start one only when nothing was resumed (the resume one says it already)
-            if_no_value(g_cstart, GPT_VAR),
+            # D-100: no drafts. Writing them (question, ChatGPT's answer, Claude's own answer, then emptying them) was
+            # six «Save File» actions, and iOS asks for each one on the first run, «Always Allow» or not: with the
+            # clipboard and the journal that was ~14 permission windows (Duo 5: ~6). The resume of a cut-off run
+            # (U-05) went with them; the answer is no longer lost to Claude's limit anyway (keep_gpt, D-98).
+            # Emptied with «Nothing», not with an empty Text (an empty Text «has any value»).
+            *clear_variable(GPT_VAR),
+            *clear_variable(OWN_VAR),
             act_notify(L['notify.critique_start']),
-            if_close(g_cstart),
             # the wrapped question is needed by step 1 AND step 2, so it is built outside both
             act_text(text_token(L.prompt('wrap'), Q), cr_wrap),
             # ---- Step 1: ChatGPT
-            act_get_variable(GPT_VAR, cr_rget),
-            if_output(g_need, cr_rget, 'Variable', 101),
             act_gpt(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_gpt),
             act_set_variable(GPT_VAR, cr_gpt, 'Ask ChatGPT'),
             # an empty ChatGPT answer (often a false «logged out» or a dropped call): wait 3 s, ask once more
-            if_no_value(g_retry, GPT_VAR),
+            *if_text(g_retry, GPT_VAR, present=False),
             act_delay(3),
             act_gpt(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_gpt2),
             act_set_variable(GPT_VAR, cr_gpt2, 'Ask ChatGPT'),
             if_close(g_retry),
-            # save the draft only when there is an answer: a stale «own answer» of an earlier question is emptied
-            # first, then ChatGPT's answer, the question last (its date stamps a complete draft)
-            if_has_value(g_save, GPT_VAR),
-            # the question file is emptied FIRST: if the run is cut between the writes, an old question never meets a
-            # new answer (the half-written draft has an empty question and is not resumed)
-            act_text(text_token(''), cr_qclr),
-            act_save_file(D['q'], cr_qclr, cr_qclr_save),
-            act_text(text_token(''), cr_bclr),
-            act_save_file(D['b'], cr_bclr, cr_bclr_save),
-            act_text(text_token('{Q}', Q), cr_qtext),
-            act_get_variable(GPT_VAR, cr_aget),
-            act_text(text_token('{A}', {'A': (cr_aget, 'Variable')}), cr_atext),
-            act_save_file(D['a'], cr_atext, cr_asave),
-            act_save_file(D['q'], cr_qtext, cr_qsave),
-            if_close(g_save),
-            if_close(g_need),
             # ---- Step 2: Claude answers the same wrapped question WITHOUT ChatGPT's answer (blind). An empty answer
             # is retried once; if it stays empty, step 3 works with ChatGPT's answer alone (the prompt says how).
-            act_get_variable(OWN_VAR, cr_oget),
             act_get_variable(GPT_VAR, cr_kget),
-            if_output(g_own, cr_oget, 'Variable', 101),
             *keep_gpt(cr_kget, 'Variable', L['notify.critique_blind']),
             act_claude(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_own),
             act_set_variable(OWN_VAR, cr_own, 'Ask Claude'),
-            if_no_value(g_oretry, OWN_VAR),
+            *if_text(g_oretry, OWN_VAR, present=False),
             act_notify(L['notify.claude_retry']),
             act_claude(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_own2),
             act_set_variable(OWN_VAR, cr_own2, 'Ask Claude'),
             if_close(g_oretry),
-            if_has_value(g_osave, OWN_VAR),
-            act_get_variable(OWN_VAR, cr_own_get),
-            act_text(text_token('{B}', {'B': (cr_own_get, 'Variable')}), cr_own_t),
-            act_save_file(D['b'], cr_own_t, cr_own_save),
-            if_close(g_osave),
-            # both drafts resumed: step 3 is the first Claude call of this run, so ChatGPT's answer is kept here
-            if_else(g_own),
-            *keep_gpt(cr_kget, 'Variable'),
-            if_close(g_own),
             # ---- Step 3: Claude compares both. Numbers that stand in only one of the two answers are found by rule,
             # not by Claude's attention, and handed over as data (not checked on device: Match Text with a regex,
             # Repeat with Each, «does not contain» = condition 999, the «Repeat Item» variable). Only when both
             # answers exist: with one of them missing every number would be «only in one».
             act_get_variable(GPT_VAR, cr_gpt_f),
             act_get_variable(OWN_VAR, cr_own_f),
-            act_text(text_token(''), cr_num0),
-            act_set_variable(NUMS_VAR, cr_num0, 'Text'),
-            if_has_value(g_n1, OWN_VAR),
-            if_has_value(g_n2, GPT_VAR),
+            *clear_variable(NUMS_VAR),
+            *if_text(g_n1, OWN_VAR),
+            *if_text(g_n2, GPT_VAR),
             *number_pass(cr_gpt_f, OWN_VAR),
             *number_pass(cr_own_f, GPT_VAR),
             if_close(g_n2),
@@ -968,7 +931,7 @@ def build(lang, ai=False):
             if_close(g_long),
             act_claude(text_token('{P}', {'P': (cr_prompt, 'Text')}), cr_claude),
             act_set_variable(CLAUDE_VAR, cr_claude, 'Ask Claude'),
-            if_no_value(g_cretry, CLAUDE_VAR),
+            *if_text(g_cretry, CLAUDE_VAR, present=False),
             act_notify(L['notify.claude_retry']),
             act_first_chars(cr_prompt, 'Text', LONG_TEXT, cr_cut),
             act_claude(text_token('{P}', {'P': (cr_cut, 'Matches')}), cr_claude2),
@@ -976,12 +939,9 @@ def build(lang, ai=False):
             if_close(g_cretry),
             act_get_variable(CLAUDE_VAR, cr_claude_f),
             # RESULT is set only when step 3 (CLAUDE_VAR, not a wrapped text) has an answer; otherwise RESULT stays
-            # empty and the shared tail offers the «Claude did not answer» menu. A comparison that came spends the
-            # draft: empty the question file so the next run starts fresh.
-            if_has_value(g_cok, CLAUDE_VAR),
-            act_text(text_token(''), cr_clear),
-            act_save_file(D['q'], cr_clear, cr_clear_save),
-            act_clipboard(attachment(cr_claude_f, 'Variable')),
+            # empty and the shared tail offers the «Claude did not answer» menu. The shared tail copies RESULT to the
+            # clipboard (D-100: one clipboard action less, one permission window less on the first run).
+            *if_text(g_cok, CLAUDE_VAR),
             act_set_variable(RESULT, cr_claude_f, 'Variable'),
             if_close(g_cok),
             *journal_note(('critique', L['journal.critique']), {'X': (cr_gpt_f, 'Variable')}),
@@ -1068,8 +1028,7 @@ def build(lang, ai=False):
         # `is.workflow.actions.getclipboard` is standard; its output is called «Clipboard» (not checked on device).
         # The clipboard counts only when it holds at least three words: a password, a one-time code or a lone
         # link must never land in the question field, where a busy person would send it on with one tap.
-        act_text(text_token(''), st_empty),
-        act_set_variable(START_VAR, st_empty, 'Text'),
+        *clear_variable(START_VAR),
         # Shortcut Input first, the clipboard ONLY when there is none (so a Share-Sheet run never reads, or asks
         # permission for, the clipboard). Share: «Get Text from Input» first (text, a URL, an article, a text PDF); a
         # result that is only a picture's file name counts as no text; only then «Get Images from Input» → Extract
@@ -1081,10 +1040,9 @@ def build(lang, ai=False):
         act_set_variable(START_VAR, st_dtext, 'Text'),
         act_first_match(st_dtext, 'Text', r'(?i)^\s*\S+\.(?:jpe?g|png|heic|heif|gif|webp|tiff?|bmp)\s*$', st_fn),
         if_output(g_fn, st_fn, 'Matches', 100),
-        act_text(text_token(''), st_clr),
-        act_set_variable(START_VAR, st_clr, 'Text'),
+        *clear_variable(START_VAR),
         if_close(g_fn),
-        if_no_value(g_nostart, START_VAR),
+        *if_text(g_nostart, START_VAR, present=False),
         act_detect('images', SHARE_INPUT, st_img),
         if_output(g_img, st_img, 'Images', 100),
         {'WFWorkflowActionIdentifier': 'is.workflow.actions.extracttextfromimage',
@@ -1110,8 +1068,7 @@ def build(lang, ai=False):
         act_first_chars(st_clip, 'Clipboard', LAST_ANSWER_CHARS, st_ccut),
         act_text(text_token('{M}', {'M': (st_ccut, 'Matches')}), st_ctext),
         if_output(g_mine, st_ctext, 'Text', 4, WFConditionalActionString=text_token('{F}', {'F': (st_last_t, 'Text')})),
-        act_text(text_token(''), st_mine),
-        act_set_variable(START_VAR, st_mine, 'Text'),
+        *clear_variable(START_VAR),
         if_close(g_mine),
         if_close(g_last),
         if_close(g_words),
@@ -1136,60 +1093,22 @@ def build(lang, ai=False):
         # Then Claude, as a neutral recorder: where they agreed / what is still disputed / what you decide.
         menu_case(g_main, MAIN[1]),
         act_notify(L['notify.argue_start']),
-        # ---- Resume (U-05): a debate cut off within 15 minutes, same question → continue with the saved log and
-        # the number of rounds already finished; one notification, no menu. Nothing is saved yet → a fresh debate.
-        act_text(text_token(''), ar_empty),
-        act_set_variable(ARGUE_LOG, ar_empty, 'Text'),
+        # D-100: no drafts (each «Save File» is one more permission window on the first run), so no resume either
+        *clear_variable(ARGUE_LOG),
         act_text(text_token('0'), ar_zero0),
         act_set_variable(ARGUE_ROUNDS, ar_zero0, 'Text'),
-        act_get_file(D['aq'], ar_rf),
-        if_output(g_a1, ar_rf, 'File', 100),
-        act_text(text_token('{F}', {'F': (ar_rf, 'File')}), ar_rft),   # the file's TEXT is compared, not the file
-        if_output(g_a2, ar_rft, 'Text', 4, WFConditionalActionString=text_token('{Q}', Q)),
-        {'WFWorkflowActionIdentifier': 'is.workflow.actions.properties.files',
-         'WFWorkflowActionParameters': {'WFInput': attachment(ar_rf, 'File'),
-                                        'WFContentItemPropertyName': 'Last Modified Date', 'UUID': ar_rdate}},
-        act_date(ar_rnow),
-        {'WFWorkflowActionIdentifier': 'is.workflow.actions.gettimebetweendates',
-         'WFWorkflowActionParameters': {'WFInput': attachment(ar_rnow, 'Date'),
-                                        'WFTimeUntilFromDate': text_token(
-                                            '{D}', {'D': (ar_rdate, 'Last Modified Date')}),
-                                        'WFTimeUntilUnit': 'Minutes', 'UUID': ar_rage}},
-        if_output(g_a3, ar_rage, 'Time Between Dates', 1003,
-                  WFNumberValue=-DRAFT_MINUTES, WFAnotherNumber=DRAFT_MINUTES),
-        act_get_file(D['al'], ar_lf),
-        act_set_variable(ARGUE_LOG, ar_lf, 'File'),
-        act_get_file(D['an'], ar_nf),
-        act_set_variable(ARGUE_ROUNDS, ar_nf, 'File'),
-        act_notify(L['notify.resume_debate']),
-        if_close(g_a3),
-        if_close(g_a2),
-        if_close(g_a1),
-        if_no_value(g_aopen, ARGUE_LOG),
-            act_text(text_token(L.prompt('argue-1-open'), Q), ar_open),
-            act_gpt(text_token('{P}', {'P': (ar_open, 'Text')}), ar_gpt),
-            act_set_variable(ARGUE_OPEN, ar_gpt, 'Ask ChatGPT'),
-            # an empty opening answer: wait 3 s and ask once more (U-05)
-            if_no_value(g_aretry, ARGUE_OPEN),
-            act_delay(3),
-            act_gpt(text_token('{P}', {'P': (ar_open, 'Text')}), ar_gpt2),
-            act_set_variable(ARGUE_OPEN, ar_gpt2, 'Ask ChatGPT'),
-            if_close(g_aretry),
-            act_get_variable(ARGUE_OPEN, ar_open_get),
-            act_text(text_token(L['output.argue_side_a'] + '\n{A}', {'A': (ar_open_get, 'Variable')}), ar_log0),
-            act_set_variable(ARGUE_LOG, ar_log0, 'Text'),
-            # the debate log is saved after the opening and after every round, next to the journal, with the
-            # question beside it (U-05). It is saved, not yet resumed from: see the report.
-            act_text(text_token('{Q}', Q), ar_qtext),
-            # order: log → rounds → question LAST (the question file's date stamps a complete draft; if the run is
-            # cut between writes, the old question differs or is stale and the half-written draft is not resumed)
-            act_text(text_token('0'), ar_zero),
-            act_text(text_token(''), ar_qclr),   # the old question goes first, as in Critique
-            act_save_file(D['aq'], ar_qclr, ar_qclr_save),
-            act_save_file(D['al'], ar_log0, ar_lsave0),
-            act_save_file(D['an'], ar_zero, ar_zsave),
-            act_save_file(D['aq'], ar_qtext, ar_qsave),
-        if_close(g_aopen),
+        act_text(text_token(L.prompt('argue-1-open'), Q), ar_open),
+        act_gpt(text_token('{P}', {'P': (ar_open, 'Text')}), ar_gpt),
+        act_set_variable(ARGUE_OPEN, ar_gpt, 'Ask ChatGPT'),
+        # an empty opening answer: wait 3 s and ask once more (U-05)
+        *if_text(g_aretry, ARGUE_OPEN, present=False),
+        act_delay(3),
+        act_gpt(text_token('{P}', {'P': (ar_open, 'Text')}), ar_gpt2),
+        act_set_variable(ARGUE_OPEN, ar_gpt2, 'Ask ChatGPT'),
+        if_close(g_aretry),
+        act_get_variable(ARGUE_OPEN, ar_open_get),
+        act_text(text_token(L['output.argue_side_a'] + '\n{A}', {'A': (ar_open_get, 'Variable')}), ar_log0),
+        act_set_variable(ARGUE_LOG, ar_log0, 'Text'),
         *argue_round(1), *argue_round(2), *argue_round(3),
         act_notify(L['notify.argue_verdict']),
         act_get_variable(ARGUE_LOG, ar_get),
@@ -1200,9 +1119,6 @@ def build(lang, ai=False):
         act_text(text_token(L['output.argue'], {'V': (ar_verdict, 'Ask Claude'),
                                                 'L': (ar_log_final, 'Variable')}), ar_out),
         act_set_variable(RESULT, ar_out, 'Text'),
-        # a finished debate is not resumed: empty the question file
-        act_text(text_token(''), ar_clear),
-        act_save_file(D['aq'], ar_clear, ar_csave),
         *journal_note(('argue', L['journal.argue'])),
 
         # ---- Advisor: Claude reviews the user's own text without rewriting it
@@ -1464,7 +1380,7 @@ def build(lang, ai=False):
             act_save_file(MY_MODE_FILE, mm_new, mm_save),
             act_set_variable(MY_RULE, mm_new, 'Text'),
             menu_case(g_mmenu, L['menu.my_mode_missing_items'][1]),
-            act_run_shortcut(RELEASE_NAME, question, 'Provided Input'),
+            act_run_self(RELEASE_NAME, question, 'Provided Input'),
             {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
             menu_close(g_mmenu),
             if_close(g_mm),
@@ -1473,7 +1389,7 @@ def build(lang, ai=False):
         menu_close(g_main),
 
         # ---- Shared tail: deliver, then record, then offer another run
-        if_has_value(g_empty, RESULT),
+        *if_text(g_empty, RESULT),
         act_clipboard(variable(RESULT)),
         act_notify(L['notify.tail_done']),
         if_else(g_empty),
@@ -1482,12 +1398,12 @@ def build(lang, ai=False):
         if_close(g_empty),
         # what the clipboard now holds (the result above, or the one the «Claude did not answer» menu delivered) is
         # remembered before the result screen, so the next run does not offer it back as a question
-        if_has_value(g_tlrem, RESULT),
+        *if_text(g_tlrem, RESULT),
         act_get_variable(RESULT, tl_rget),
         *remember_answer(tl_rget, 'Variable'),
         if_close(g_tlrem),
         # ONE Quick Look, after the «Claude did not answer» menu too, and only when there is something to show
-        if_has_value(g_show, RESULT),
+        *if_text(g_show, RESULT),
         act_quick_look(variable(RESULT)),
         if_close(g_show),
         act_date(tl_date),
@@ -1500,7 +1416,7 @@ def build(lang, ai=False):
         menu_open(g_finale, L['menu.finale_title'], L['menu.finale_items']),
         menu_case(g_finale, L['menu.finale_items'][0]),
         menu_case(g_finale, L['menu.finale_items'][1]),
-        act_run_shortcut(RELEASE_NAME, question, 'Provided Input'),
+        act_run_self(RELEASE_NAME, question, 'Provided Input'),
         # ---- More…: one extra step for the person who wants it; the usual «Done / Another mode» stays two taps
         menu_case(g_finale, L['menu.finale_items'][2]),
         menu_open(g_more, L['menu.finale_more_title'], L['menu.finale_more_items']),

@@ -5,7 +5,7 @@ import plistlib
 
 import pytest
 
-from test_first_run import LANGS, ROOT, build, kind
+from test_first_run import LANGS, ROOT, build, kind, guard_var
 
 VERSION = json.loads((ROOT / 'releases' / 'version.json').read_text(encoding='utf-8'))
 
@@ -29,9 +29,8 @@ def enclosing(actions, index):
     return stack
 
 
-def var_name(cond):
-    node = params(cond)['WFInput']['Variable']['Value']
-    return node.get('VariableName') or node.get('OutputName')
+def var_name(cond, actions):
+    return guard_var(actions, cond)
 
 
 def ui_of(lang):
@@ -75,7 +74,7 @@ def test_critique_blind_scheme_and_claude_down_is_reachable(tmp_path, lang):
                and params(actions[i])['WFVariableName'] == result_name]
     first = setters[0]
     conds = enclosing(actions, first)
-    assert var_name(conds[-1]) == 'PolyClaudeAnswer' and params(conds[-1])['WFCondition'] == 100
+    assert var_name(conds[-1], actions) == 'PolyClaudeAnswer' and params(conds[-1])['WFCondition'] == 100
     src = params(actions[first])['WFInput']['Value']
     assert by_uid[src['OutputUUID']]['WFWorkflowActionIdentifier'].endswith('getvariable')
     # the shared tail tests RESULT, so with no step-3 answer RESULT stays empty and the menu is offered
@@ -99,7 +98,7 @@ def test_fallback_has_one_quick_look_and_no_empty_window(tmp_path, lang):
     # the one Quick Look after it is guarded by «RESULT has any value»
     look = next(i for i in range(close, len(actions)) if kind(actions[i]) == 'previewdocument')
     guard = enclosing(actions, look)[-1]
-    assert var_name(guard) == ui['variables']['result'] and params(guard)['WFCondition'] == 100
+    assert var_name(guard, actions) == ui['variables']['result'] and params(guard)['WFCondition'] == 100
     # the free-key chain of the fallback makes no Gemini web-search call
     chunk = json.dumps(actions[menu:close])
     assert 'google_search' not in chunk and 'googleSearch' not in chunk
@@ -111,13 +110,14 @@ def test_debate_round_survives_empty_chatgpt_reply(tmp_path, lang):
     saves = [i for i, a in enumerate(actions) if kind(a) == 'setvariable' and params(a)['WFVariableName'] == 'PolyArgueReply']
     assert len(saves) == 3
     for i in saves:
-        assert var_name(actions[i + 1]) == 'PolyArgueReply' and params(actions[i + 1])['WFCondition'] == 100
+        cond = next(a for a in actions[i + 1:] if kind(a) == 'conditional')
+        assert var_name(cond, actions) == 'PolyArgueReply' and params(cond)['WFCondition'] == 100
         log_set = next(j for j in range(i, len(actions)) if kind(actions[j]) == 'setvariable'
                        and params(actions[j])['WFVariableName'] == ui_of(lang)['variables']['argue_log'])
-        assert actions[i + 1] in enclosing(actions, log_set)
+        assert cond in enclosing(actions, log_set)
 
 
-def test_ai_build_uses_existing_version_key_and_own_draft_names(tmp_path):
+def test_ai_build_uses_existing_version_key(tmp_path):
     assert 'duo_ai' not in VERSION  # the test documents the interim rule: until the key exists, `duo` is used
     build(tmp_path, 'en')
     ai = plistlib.loads((tmp_path / 'en' / 'ai' / 'Poly.shortcut').read_bytes())['WFWorkflowActions']
@@ -130,7 +130,7 @@ def test_ai_build_uses_existing_version_key_and_own_draft_names(tmp_path):
                   and 'run-report' in str(params(a)))
     assert f"version=duo%20{VERSION['duo']}" in report
     saves = {params(a)['WFFileDestinationPath'] for a in ai if kind(a) == 'save'}
-    assert any(s.startswith('Duo-draft-en-ai-') for s in saves) and not any(s.startswith('Duo-draft-en-std-') for s in saves)
+    assert not any(s.startswith('Duo-draft-') for s in saves)   # D-100: no drafts in either build
 
 
 def token_text(node):
@@ -159,42 +159,6 @@ def test_numbers_are_compared_as_whole_numbers_once(tmp_path, lang):
 
 
 @pytest.mark.parametrize('lang', LANGS)
-def test_resume_compares_text_not_file_objects(tmp_path, lang):
-    actions = build(tmp_path, lang)
-    same = [a for a in actions if kind(a) == 'conditional' and params(a).get('WFCondition') == 4
-            and 'WFConditionalActionString' in params(a)]
-    assert len(same) == 4  # + Duo 6.1: the clipboard's start against Duo's last answer (test_duo61)
-    by_uid = {params(a).get('UUID'): a for a in actions}
-    for c in same:
-        node = params(c)['WFInput']['Variable']['Value']
-        assert node['OutputName'] == 'Text'
-        src = by_uid[node['OutputUUID']]
-        assert kind(src) == 'gettext'   # the text made from the file, as for the own answer
-
-
-@pytest.mark.parametrize('lang', LANGS)
-def test_saving_a_draft_empties_the_question_file_first(tmp_path, lang):
-    actions = build(tmp_path, lang)
-    by_uid = {params(a).get('UUID'): a for a in actions}
-    saves = [i for i, a in enumerate(actions) if kind(a) == 'save']
-    base = f'Duo-draft-{lang}-std'
-
-    def is_empty_save(i):
-        src = list(params(actions[i])['WFInput']['Value']['attachmentsByRange'].values())[0]['OutputUUID']
-        return params(by_uid[src])['WFTextActionText']['Value']['string'] == ''
-
-    for first_name, then_name in ((f'{base}-question.txt', f'{base}-own.txt'),
-                                  (f'{base}-argue-question.txt', f'{base}-argue-log.txt')):
-        pairs = [i for i in saves if params(actions[i])['WFFileDestinationPath'] == then_name]
-        assert pairs
-        hit = False
-        for i in pairs:
-            prev = [j for j in saves if j < i][-2:]
-            hit = hit or any(params(actions[j])['WFFileDestinationPath'] == first_name and is_empty_save(j) for j in prev)
-        assert hit, first_name
-
-
-@pytest.mark.parametrize('lang', LANGS)
 def test_critique_reverse_has_its_own_attribution(tmp_path, lang):
     ui = ui_of(lang)
     assert ui['output']['critique_reverse'] != ui['output']['critique']
@@ -204,3 +168,57 @@ def test_critique_reverse_has_its_own_attribution(tmp_path, lang):
     texts = [token_text(params(a).get('WFTextActionText')) for a in actions if kind(a) == 'gettext']
     assert any(ui['output']['critique_reverse'].split('\n')[-2] in t for t in texts)
     assert any(ui['journal']['critique_reverse'].split('{X}')[0] in t for t in texts)
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_no_variable_is_emptied_with_an_empty_text(tmp_path, lang):
+    """D-100 (live iPhone, 28.10): a variable set from an empty Text «has any value» in Shortcuts, so Critique's
+    «no ChatGPT answer yet → ask» and «no blind answer yet → ask Claude» were skipped and both answers came back
+    empty. A variable is emptied with «Nothing», and a text is tested by its characters."""
+    actions = build(tmp_path, lang)
+    by_uid = {params(a).get('UUID'): a for a in actions}
+    for a in actions:
+        if kind(a) != 'setvariable':
+            continue
+        src = by_uid.get(params(a)['WFInput']['Value'].get('OutputUUID'))
+        if src is not None and kind(src) == 'gettext':
+            value = params(src)['WFTextActionText']['Value']
+            assert value['string'] != '' or value['attachmentsByRange'], \
+                f"{params(a)['WFVariableName']} is set from an empty Text"
+    ui = ui_of(lang)
+    start = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['critique_start'])
+    gpt = next(i for i in range(start, len(actions)) if kind(actions[i]) == 'AskIntent')
+    blind = next(i for i in range(gpt, len(actions)) if kind(actions[i]) == 'ClaudeAppIntentsExtension')
+    # both blind answers are always asked: no If around the first ChatGPT call nor around Claude's own answer
+    assert enclosing(actions, gpt) == [] and enclosing(actions, blind) == []
+    # their retries test the answer by its characters (Match Text `\S`), not by «has any value»
+    for call, var in ((gpt, 'PolyChatGPTAnswer'), (blind, 'PolyClaudeOwn')):
+        guard = next(a for a in actions[call:] if kind(a) == 'conditional')
+        assert var_name(guard, actions) == var and params(guard)['WFCondition'] == 101
+        assert params(guard)['WFInput']['Variable']['Value']['OutputName'] == 'Matches'
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_critique_first_run_asks_few_permissions(tmp_path, lang):
+    """D-100 (live iPhone, 28.10): iOS asks once for EVERY «Save File» / «Copy to Clipboard» / «Append» action of a
+    run, «Always Allow» or not: Duo 6 Critique showed ~14 windows on the first run, Duo 5 ~6. Critique itself now
+    writes nothing to a file and copies once (ChatGPT's answer before Claude, D-98); the shared tail copies the result
+    once, remembers it once and appends one journal entry."""
+    ui = ui_of(lang)
+    actions = build(tmp_path, lang)
+    start = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['critique_start'])
+    end = next(i for i in range(start, len(actions)) if kind(actions[i]) == 'choosefrommenu')
+    block = [kind(a) for a in actions[start:end]]
+    assert block.count('save') == 0 and block.count('append') == 0
+    assert block.count('setclipboard') == 1
+    tail = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['tail_done'])
+    finale = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
+                  and params(a).get('WFMenuPrompt') == ui['menu']['finale_title'])
+    down = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
+                and params(a).get('WFMenuItems') == ui['menu']['claude_down_items'])
+    down_end = next(i for i in range(down, len(actions)) if kind(actions[i]) == 'choosefrommenu'
+                    and params(actions[i]).get('WFControlFlowMode') == 2
+                    and params(actions[i])['GroupingIdentifier'] == params(actions[down])['GroupingIdentifier'])
+    # the happy path: everything from the tail to the finale menu except the «Claude did not answer» menu
+    seen = [kind(a) for i, a in enumerate(actions[tail - 3:finale], tail - 3) if not down <= i <= down_end]
+    assert seen.count('setclipboard') == 1 and seen.count('save') == 1 and seen.count('append') == 1

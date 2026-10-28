@@ -47,23 +47,17 @@ def test_ai_build_and_claude_down(tmp_path, lang):
 
 
 @pytest.mark.parametrize('lang', LANGS)
-def test_debate_resume_and_retries(tmp_path, lang):
+def test_debate_no_drafts_and_retries(tmp_path, lang):
     ui = json.loads((ROOT / 'locales' / lang / 'ui.json').read_text(encoding='utf-8'))
     actions = build(tmp_path, lang)
-    note = next(i for i, a in enumerate(actions)
-                if params(a).get('WFNotificationActionBody') == ui['notify']['resume_debate'])
+    # D-100: no draft files (each «Save File» is one more permission window on the first run), so no resume
     saves = [params(a).get('WFFileDestinationPath') for a in actions if kind(a) == 'save']
-    base = f'Duo-draft-{lang}-std-argue'
-    assert {f'{base}-question.txt', f'{base}-log.txt', f'{base}-rounds.txt'} <= set(saves)
-    # the question is written LAST (it stamps a complete draft): after the log and the round counter
-    first = [i for i, a in enumerate(actions) if params(a).get('WFFileDestinationPath') == f'{base}-question.txt'][1]  # [0] is the empty one written first
-    assert [params(actions[i]).get('WFFileDestinationPath') for i in range(first - 2, first + 1)] == \
-        [f'{base}-log.txt', f'{base}-rounds.txt', f'{base}-question.txt']
+    assert not any(str(s).startswith('Duo-draft-') for s in saves)
+    assert not any(params(a).get('WFNotificationActionBody') == ui['notify']['resume_debate'] for a in actions)
     # each of the three rounds runs only while «rounds done» is between 0 and n-1, and records itself when over
     rounds = [a for a in actions if kind(a) == 'conditional' and params(a).get('WFCondition') == 1003
               and params(a).get('WFNumberValue') == 0]
     assert sorted(params(a)['WFAnotherNumber'] for a in rounds) == [0, 1, 2]
-    assert note > 0
     # every ChatGPT call that opens a mode is followed by one retry after a 3-second wait
     delays = [i for i, a in enumerate(actions) if kind(a) == 'delay']
     assert len(delays) >= 10
@@ -75,5 +69,7 @@ def test_debate_resume_and_retries(tmp_path, lang):
         start = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify'][key])
         gpt = next(i for i in range(start, len(actions)) if kind(actions[i]) == 'AskIntent'
                    and actions[i]['WFWorkflowActionIdentifier'] == 'com.openai.chat.AskIntent')
-        assert kind(actions[gpt + 1]) == 'setvariable' and params(actions[gpt + 2])['WFCondition'] == 101
-        assert kind(actions[gpt + 3]) == 'delay'
+        # D-100: the answer is tested by its characters (Get Variable → Match Text `\S` → If no value)
+        assert [kind(a) for a in actions[gpt + 1:gpt + 4]] == ['setvariable', 'getvariable', 'match']
+        assert params(actions[gpt + 4])['WFCondition'] == 101
+        assert kind(actions[gpt + 5]) == 'delay'

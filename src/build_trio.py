@@ -64,6 +64,7 @@ from build_shortcut import (  # noqa: E402
     act_comment, act_clipboard, act_quick_look, act_get_file, act_save_file, act_alert,
     if_has_value, if_else, if_close, if_output, version_check,
     act_delay, act_first_match, act_first_chars, repeat_open, repeat_close, if_item_missing, if_no_value, LONG_TEXT,
+    clear_variable, if_text,
 )
 
 # Endpoints and model ids live in src/models.json (tools/check_models.py checks them against the providers).
@@ -911,15 +912,14 @@ def build(lang, nokey=False):
         if_close(g_blank),
         act_notify(NAME, T['notify.start']),
         act_text(text_token(L.prompt('wrap'), Q), wrap),
-        act_text(text_token(''), n0),
-        act_set_variable(GPT_VAR, n0, 'Text'),
-        act_text(text_token(''), n_get),
-        act_set_variable(OWN_VAR, n_get, 'Text'),
+        # D-100: emptied with «Nothing» and tested by their characters: an empty Text «has any value» in Shortcuts
+        *clear_variable(GPT_VAR),
+        *clear_variable(OWN_VAR),
         # ---- Step 1: ChatGPT answers the wrapped question. An empty answer (often a false «logged out» or a
         # dropped call): wait 3 s, ask once more, as in Duo.
         act_gpt(text_token('{P}', {'P': (wrap, 'Text')}), gpt),
         act_set_variable(GPT_VAR, gpt, 'Ask ChatGPT'),
-        if_no_value(g_retry, GPT_VAR),
+        *if_text(g_retry, GPT_VAR, present=False),
         act_delay(3),
         act_gpt(text_token('{P}', {'P': (wrap, 'Text')}), gpt2),
         act_set_variable(GPT_VAR, gpt2, 'Ask ChatGPT'),
@@ -928,7 +928,7 @@ def build(lang, nokey=False):
         act_notify(NAME, T['notify.step2']),
         act_claude(text_token('{P}', {'P': (wrap, 'Text')}), claude_own),
         act_set_variable(OWN_VAR, claude_own, 'Ask Claude'),
-        if_no_value(g_oretry, OWN_VAR),
+        *if_text(g_oretry, OWN_VAR, present=False),
         act_notify(NAME, L['notify.claude_retry']),
         act_claude(text_token('{P}', {'P': (wrap, 'Text')}), claude_own2),
         act_set_variable(OWN_VAR, claude_own2, 'Ask Claude'),
@@ -936,7 +936,7 @@ def build(lang, nokey=False):
         # Claude's own answer reaches the clipboard before the network call: if the third voice fails
         # in any way, the person still holds an answer.
         # (an empty answer must not wipe what the person already has on the clipboard)
-        if_has_value(g_own_clip, OWN_VAR),
+        *if_text(g_own_clip, OWN_VAR),
         act_get_variable(OWN_VAR, own_f),
         act_clipboard(attachment(own_f, 'Variable')),
         if_close(g_own_clip),
@@ -948,10 +948,9 @@ def build(lang, nokey=False):
         # attention, and handed over as data (as in Duo's Critique; only when both answers exist).
         act_get_variable(GPT_VAR, gpt_f),
         act_get_variable(OWN_VAR, own_f2),
-        act_text(text_token(''), n_f),
-        act_set_variable(NUMS_VAR, n_f, 'Text'),
-        if_has_value(g_n1, OWN_VAR),
-        if_has_value(g_n2, GPT_VAR),
+        *clear_variable(NUMS_VAR),
+        *if_text(g_n1, OWN_VAR),
+        *if_text(g_n2, GPT_VAR),
         act_first_match(gpt_f, 'Variable', r'\d+(?:[.,:/-]\d+)*', nums_a),
         repeat_open(g_rep, nums_a, 'Matches'),
         act_get_variable('Repeat Item', item_a),
@@ -998,14 +997,14 @@ def build(lang, nokey=False):
         act_claude(text_token('{P}', {'P': (c_prompt, 'Text')}), claude),
         act_set_variable(CMP_VAR, claude, 'Ask Claude'),
         # empty comparison: one retry with the request cut to the first LONG_TEXT characters (as in Duo)
-        if_no_value(g_cretry, CMP_VAR),
+        *if_text(g_cretry, CMP_VAR, present=False),
         act_notify(NAME, T.get('notify.compare_retry', L['notify.claude_retry'])),
         act_first_chars(c_prompt, 'Text', LONG_TEXT, c_cut),
         act_claude(text_token('{P}', {'P': (c_cut, 'Matches')}), claude2),
         act_set_variable(CMP_VAR, claude2, 'Ask Claude'),
         if_close(g_cretry),
         # still empty: Claude's own independent answer takes the place of the comparison, with a line saying so
-        if_no_value(g_cfail, CMP_VAR),
+        *if_text(g_cfail, CMP_VAR, present=False),
         *set_text(CMP_VAR, T['error.compare'], c_fail, {'C': (own_f2, 'Variable')}),
         if_close(g_cfail),
         act_get_variable(CMP_VAR, s_claude),

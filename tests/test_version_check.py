@@ -70,3 +70,11 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
 def test_another_mode_calls_the_released_name(tmp_path, lang):
     actions = build(tmp_path, 'build_shortcut.py', lang, 'Poly.shortcut')
     assert {p['WFWorkflowName'] for p in params(actions, 'runworkflow')} == {'Duo'}  # Another mode and Recipes
+
+
+def test_reruns_start_this_very_shortcut(tmp_path):
+    """D-100: «Another mode», the Recipes and «go back» run THIS shortcut (isSelf), not whatever is called «Duo»:
+    after «Keep Both» on the iPhone the new version was «Duo 1» and the reruns started the old one."""
+    actions = build(tmp_path, 'build_shortcut.py', 'en', 'Poly.shortcut')
+    runs = [a['WFWorkflowActionParameters'] for a in actions if a['WFWorkflowActionIdentifier'].endswith('runworkflow')]
+    assert runs and all(p['WFWorkflow'] == {'isSelf': True, 'workflowName': 'Duo'} for p in runs)

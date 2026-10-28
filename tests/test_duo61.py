@@ -41,7 +41,7 @@ def test_own_answer_not_prefilled(tmp_path, lang):
     seq = [kind(a) for a in actions[clip:clip + 16]]
     assert seq == ['getclipboard', 'match', 'conditional', 'setvariable',
                    'open', 'gettext', 'conditional', 'match', 'gettext', 'conditional',
-                   'gettext', 'setvariable', 'conditional', 'conditional', 'conditional', 'conditional']
+                   'nothing', 'setvariable', 'conditional', 'conditional', 'conditional', 'conditional']
     get = params(actions[clip + 4])
     assert get['WFGetFilePath'] == last and get['WFFileErrorIfNotFound'] is False and get['WFShowFilePicker'] is False
     file_text = params(actions[clip + 5])['UUID']
@@ -59,7 +59,7 @@ def test_own_answer_not_prefilled(tmp_path, lang):
     assert mine['WFInput']['Variable']['Value'] == {'OutputUUID': params(actions[clip + 8])['UUID'],
                                                      'Type': 'ActionOutput', 'OutputName': 'Text'}
     assert ref(mine['WFConditionalActionString']) == (file_text, 'Text')
-    assert params(actions[clip + 10])['WFTextActionText']['Value']['string'] == ''
+    assert kind(actions[clip + 10]) == 'nothing'   # D-100: emptied with «Nothing», not an empty Text
     assert params(actions[clip + 11])['WFVariableName'] == 'PolyStartText'
     groups = [params(actions[i])['GroupingIdentifier'] for i in (clip + 9, clip + 6, clip + 2)]
     assert [params(actions[i])['GroupingIdentifier'] for i in (clip + 12, clip + 13, clip + 14)] == groups
@@ -71,10 +71,9 @@ def test_own_answer_not_prefilled(tmp_path, lang):
     # for the person and before any further AI call: «by hand» check request, Image (both), Claude writes / ChatGPT
     # checks, the tail (RESULT, also when the «Claude did not answer» menu delivered it), and the re-checked result.
     saves = saves_of(actions, last)
-    # 6 as in Duo 6.1, plus D-98: ChatGPT's answer copied before the next Claude call in Critique and My mode (twice
-    # each: before the blind step, and before step 3 when both drafts were resumed), Side by side, both Syntheses,
-    # Decision, Dispute map, Debate, both Images and round 1 of Debate until agreement
-    assert len(saves) == 6 + 13
+    # 6 as in Duo 6.1. D-98's copies of ChatGPT's answer are no longer remembered (D-100: one «Save File» each, one
+    # more permission window on the first run); they are checked below on their own
+    assert len(saves) == 6
     for s in saves:
         txt, cut = actions[s - 1], actions[s - 2]
         assert kind(txt) == 'gettext' and kind(cut) == 'match'
@@ -109,28 +108,31 @@ def test_own_answer_not_prefilled(tmp_path, lang):
             path.append(actions[i])
             i += 1
         return path
+    # D-98: the ChatGPT-answer copies, told apart by the clipboard line in the notification right after the copy
+    kept = [c for c in copies if ui['notify']['gpt_kept'] in (params(actions[c + 1]).get('WFNotificationActionBody') or '')]
+    # Side by side, both Syntheses, Decision, Dispute map, Debate, both Images, round 1 of Debate until agreement,
+    # Critique and My mode (once each now: no resumed drafts, D-100)
+    assert len(kept) == 11
     for c in copies:
-        if down < c < down_end:
+        if down < c < down_end or c in kept:
             continue      # its three branches are checked through the tail save (the menu itself comes first)
         assert not any(kind(a) in waits and params(a).get('WFControlFlowMode', 0) == 0 for a in run_from(c)), \
             f'clipboard write at {c} is not remembered before a screen or an AI call'
-    # D-98: the ChatGPT-answer copies are told apart by the clipboard line in the notification right after the save;
-    # each one is followed (before anything else that waits) by a Claude call, and copies only a text that has a value
-    kept = [s for s in saves if ui['notify']['gpt_kept'] in (params(actions[s + 1]).get('WFNotificationActionBody') or '')]
-    assert len(kept) == 13
     by_uid = {params(a).get('UUID'): a for a in actions}
-    for s in kept:
-        assert kind(actions[s - 4]) == 'conditional' and params(actions[s - 4])['WFCondition'] == 100
-        nxt = next(a for a in actions[s:] if kind(a) in waits and params(a).get('WFControlFlowMode', 0) == 0)
+    for c in kept:
+        # each is followed (before anything else that waits) by a Claude call, and copies only a text with characters
+        assert kind(actions[c - 1]) == 'conditional' and params(actions[c - 1])['WFCondition'] == 100
+        assert kind(actions[c - 2]) == 'match' and params(actions[c - 2])['WFMatchTextPattern'] == r'\S'
+        nxt = next(a for a in actions[c:] if kind(a) in waits and params(a).get('WFControlFlowMode', 0) == 0)
         assert kind(nxt) == 'ClaudeAppIntentsExtension'
         # the copied text is an answer itself, never the debate log (its side-A header is there without an answer)
-        src_a = by_uid[ref(params(actions[s - 5])['WFTextActionText'])[0]]
+        src_a = by_uid[ref(params(actions[c - 3])['WFTextActionText'])[0]]
         if kind(src_a) == 'getvariable':
             assert params(src_a)['WFVariable']['Value']['VariableName'] in (
                 'PolyChatGPTAnswer', 'PolyArgueOpening') or params(src_a)['WFVariable']['Value']['VariableName'].startswith('PolyGPTRetry')
         else:
             assert kind(src_a) == 'AskIntent'
-    img1, img2, rev, manual, tail, ratify = [s for s in saves if s not in kept]
+    img1, img2, rev, manual, tail, ratify = saves
     for s in (manual, img1, img2, rev):                # Copy <an action output> → remember the same output
         copy = max(i for i in copies if i < s)
         assert params(actions[copy])['WFInput']['Value']['OutputUUID'] == src(s)

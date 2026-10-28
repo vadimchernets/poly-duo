@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from test_first_run import LANGS, ROOT, assert_blank_guard, assert_duo_blank_guard, build, kind
+from test_first_run import LANGS, ROOT, assert_blank_guard, assert_duo_blank_guard, build, kind, guard_var
 
 
 def params(a):
@@ -43,7 +43,7 @@ def test_oneshot_resume_long(tmp_path, lang):
     ocr = next(i for i in range(shin, ask) if kind(actions[i]) == 'extracttextfromimage')
     assert dtext < img < ocr
     guard = params(actions[img - 1])
-    assert guard['WFCondition'] == 101 and guard['WFInput']['Variable']['Value']['VariableName'] == 'PolyStartText'
+    assert guard['WFCondition'] == 101 and guard_var(actions, actions[img - 1]) == 'PolyStartText'
     # the clipboard counts only when it holds three words
     words = actions[clip + 1]
     assert params(words)['WFMatchTextPattern'] == r'\S+\s+\S+\s+\S+'
@@ -60,24 +60,19 @@ def test_oneshot_resume_long(tmp_path, lang):
                 and params(a).get('WFMenuPrompt') == ui['menu']['main_title'])
     assert assert_duo_blank_guard(actions, ui) == main
 
-    # --- U-05: resume block, one retry after 3 s, draft saved after the answer
+    # --- one retry after 3 s; D-100: no drafts and no resume (each «Save File» is a permission window)
     n = ui['notify']
-    resume = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == n['resume'])
+    assert not any(params(a).get('WFNotificationActionBody') == n['resume'] for a in actions)
     gpt_calls = [i for i, a in enumerate(actions) if kind(a) == 'AskIntent'
                  and a['WFWorkflowActionIdentifier'] == 'com.openai.chat.AskIntent']
     delay = next(i for i, a in enumerate(actions) if kind(a) == 'delay')
     assert params(actions[delay])['WFDelayTime'] == 3
     first, second = [i for i in gpt_calls if i < delay][-1], [i for i in gpt_calls if i > delay][0]
-    assert first < delay < second and resume < first
+    assert first < delay < second
     assert kind(actions[delay - 1]) == 'conditional' and params(actions[delay - 1])['WFCondition'] == 101
-    saves = [params(a)['WFFileDestinationPath'] for a in actions[second:second + 18] if kind(a) == 'save']
-    base = f'Duo-draft-{lang}-std'   # language and build variant are in the name
-    # old question emptied first, stale own answer cleared, then the answer, the question last
-    assert saves == [f'{base}-question.txt', f'{base}-own.txt', f'{base}-answer.txt', f'{base}-question.txt']
-    # the age window is 15 minutes and the question must be the same one
-    assert any(params(a).get('WFTimeUntilUnit') == 'Minutes' for a in actions)
+    assert not any(str(params(a).get('WFFileDestinationPath')).startswith('Duo-draft-') for a in actions)
     same = [a for a in actions if kind(a) == 'conditional' and params(a).get('WFCondition') == 4]
-    assert len(same) == 4  # Critique, My mode (shares its block), the debate, and Duo's own answer (test_duo61)
+    assert len(same) == 1  # Duo's own answer (test_duo61)
 
     # --- U-08: one notification (no alert) for a long request, one retry with the cut text
     long_note = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == n['long_text'])

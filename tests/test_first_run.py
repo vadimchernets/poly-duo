@@ -68,6 +68,22 @@ def kind(action):
     return action['WFWorkflowActionIdentifier'].rsplit('.', 1)[-1]
 
 
+def guard_var(actions, cond):
+    """The variable (or output) name an If tests. D-100: a text is tested through Match Text `\\S` (an empty Text
+    «has any value» in Shortcuts), so an If on that Match's «Matches» is followed back to the variable it reads."""
+    node = cond['WFWorkflowActionParameters']['WFInput']['Variable']['Value']
+    if node.get('OutputName') == 'Matches':
+        by_uid = {a['WFWorkflowActionParameters'].get('UUID'): a for a in actions}
+        match = by_uid[node['OutputUUID']]['WFWorkflowActionParameters']
+        if match['WFMatchTextPattern'] == r'\S':
+            (src,) = match['text']['Value']['attachmentsByRange'].values()
+            read = by_uid[src['OutputUUID']]
+            if kind(read) == 'getvariable':
+                return read['WFWorkflowActionParameters']['WFVariable']['Value']['VariableName']
+            return src['OutputName']
+    return node.get('VariableName') or node.get('OutputName')
+
+
 def notification(action):
     body = action['WFWorkflowActionParameters'].get('WFNotificationActionBody')
     return body if isinstance(body, str) else None
