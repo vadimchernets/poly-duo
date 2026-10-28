@@ -4,7 +4,7 @@
 
 **What it is, technically:** a signed Apple Shortcut that chains the Ask ChatGPT and Ask Claude App Intents; it makes no network calls of its own, and `tools/verify.py` checks the signed files against `locales/`.
 
-**Poly Duo — ChatGPT + Claude on iPhone; a free pair of AIs on Android.** Nothing like this exists on phones yet: ChatGPT and Claude work as a pair, each answers on its own and then the answers are compared, on the accounts you already have. Free ones are enough. No server of ours, no API key, no card, no computer. You can run the strongest models of two companies together, and a paid plan adds no extra fee.
+**Poly Duo — ChatGPT + Claude on iPhone; a free pair of AIs on Android.** Nothing like this exists on phones yet: ChatGPT and Claude work as a pair, each answers on its own and then the answers are compared, on the accounts you already have. Free ones are enough. No card, no computer. You can run the strongest models of two companies together, and a paid plan adds no extra fee.
 
 Poly Duo is built by the author of two papers on AI verification accepted at NeurIPS 2026 workshops. In our test of the October 2026 flagships (GPT-6.1 Sol + Claude Opus 5.5, run on 26 October 2026 through the companies' own command-line apps on regular subscriptions), when the two answered 100 new, never-published questions independently and agreed, they were right 97% of the time (72 of 74) — and on none of the 100 did both give the same confident wrong answer. In August 2026, on 1,459 public factual questions, the flagships of the day were right 98% of the time when they agreed (a re-analysis of our companion study's data).
 
@@ -24,9 +24,9 @@ Why "nothing like it": the multi-AI tools we found (search of 2026-10-25) need a
 
 ### How it works
 
-On iPhone, a Shortcut calls Ask ChatGPT, then Ask Claude — actions the two apps publish themselves. Answers pass between your own apps, with no server of ours, on your own accounts. You get one checked answer on the screen and in the clipboard, in about a minute.
+On iPhone, a Shortcut calls Ask ChatGPT, then Ask Claude — actions the two apps publish themselves. Answers pass between your own apps, with no server of ours and no API keys, on your own accounts. You get one checked answer on the screen and in the clipboard, in about a minute.
 
-Duo is free and open source, and so is **Trio** (Duo plus a third voice, below). Looking for Android? See [Android](#android). The **Poly A1** app ([Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1); on iPhone a beta on TestFlight, App Store soon) is free, installs Duo and Trio for you and walks you through every step.
+Duo is free, and so is **Trio** (Duo plus a third voice, below). The code is open source (Apache-2.0): [source on GitHub](https://github.com/vadimchernets/poly-duo). Looking for Android? See [Android](#android). The **Poly A1** app ([Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1); on iPhone a beta on TestFlight, App Store soon) is free, installs Duo and Trio for you and walks you through every step.
 
 Have ChatGPT and Claude? Start right away. Have one? It helps you install the other. Have neither? Gemini (Google) or Meta AI (WhatsApp, Facebook) helps you install both, free.
 
