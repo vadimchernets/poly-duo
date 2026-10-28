@@ -12,6 +12,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   its own within ~1.5 s and the run ended there: no journal entry, no «What next?». Now every
   permission window of a run comes before the result screen (also for «Check the result again»).
 - The weekly update offer is shown only when version.json has a link for this language (Codex).
+- **No more «Choose values for each parameter in this action» after «Done».** The weekly version check
+  stopped every run there (iPhone and Mac, 28.10), so it never ran nor stamped its date: a number
+  condition on a «Get Variable» / «Dictionary Value» output, and «contains» straight on «Contents of
+  URL», are rejected by Shortcuts. Both now go through a Number / a Text (checked on Shortcuts for Mac:
+  the check passes, and the update offer appears when the number is higher).
 
 ### Fixed (Duo 6.3, D-100, 2026-10-28; built-in number duo 9)
 - **Critique on the iPhone asked neither ChatGPT nor Claude's blind answer.** Live run 28.10: the result

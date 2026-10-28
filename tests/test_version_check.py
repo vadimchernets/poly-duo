@@ -78,3 +78,23 @@ def test_reruns_start_this_very_shortcut(tmp_path):
     actions = build(tmp_path, 'build_shortcut.py', 'en', 'Poly.shortcut')
     runs = [a['WFWorkflowActionParameters'] for a in actions if a['WFWorkflowActionIdentifier'].endswith('runworkflow')]
     assert runs and all(p['WFWorkflow'] == {'isSelf': True, 'workflowName': 'Duo'} for p in runs)
+
+
+@pytest.mark.parametrize('builder,name', [('build_shortcut.py', 'Poly.shortcut'), ('build_trio.py', 'Trio.shortcut')])
+def test_conditions_have_inputs_shortcuts_accepts(tmp_path, builder, name):
+    """D-100 (6.3.1, checked on Shortcuts 28.10): a number condition (less / greater / between) on a «Get Variable» or
+    «Dictionary Value» output, and «contains» straight on «Contents of URL», stop the run with «Choose values for each
+    parameter in this action» — it came right after «Done» of every Duo run (the weekly version check). A number
+    condition takes a Number or Count; «contains» takes a Text or a variable."""
+    actions = build(tmp_path, builder, 'en', name)
+    for a in actions:
+        if not a['WFWorkflowActionIdentifier'].endswith('conditional'):
+            continue
+        p = a['WFWorkflowActionParameters']
+        if p.get('WFControlFlowMode') != 0:
+            continue
+        node = p['WFInput']['Variable']['Value']
+        if p['WFCondition'] in (0, 1, 2, 3, 1003):
+            assert node.get('OutputName') in ('Number', 'Count'), node
+        if p['WFCondition'] in (99, 999, 4, 5):
+            assert node.get('OutputName') != 'Contents of URL', node

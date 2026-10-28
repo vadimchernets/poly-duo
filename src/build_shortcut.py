@@ -492,6 +492,7 @@ def version_check(L, key, name, lang):
     ids = lambda n: [new_uuid() for _ in range(n)]
     (f_get, f_date, now, age, far, age_get, stamp_now, stamp, stamp_save,
      wifi, cell, net_get, gh, site, json_get, remote, link) = ids(17)
+    age_num, remote_num, gh_t, site_t, json_t = ids(5)
     g_file, g_due, g_wifi, g_net, g_gh, g_site, g_json, g_new, g_menu, g_link = ids(10)
     age_var, json_var, net_var = f'{name}VersionAge', f'{name}VersionJson', f'{name}Network'
     stamp_file = f'{name}-version-check.txt'
@@ -520,8 +521,12 @@ def version_check(L, key, name, lang):
         act_set_variable(age_var, far, 'Number'),
         if_close(g_file),
         act_get_variable(age_var, age_get),
+        # D-100 (6.3.1): a number condition on a «Get Variable» output stops the run with «Choose values for each
+        # parameter in this action» (iPhone and Mac, 28.10: right after «Done» of every run, so the check never ran and
+        # never stamped). Through a Number action, as the debate rounds do, it works.
+        act_number(age_get, 'Variable', age_num),
         # «between −7 and 7 days» reads the same whichever way the system counts the difference
-        if_output(g_due, age_get, 'Variable', 1003,
+        if_output(g_due, age_num, 'Number', 1003,
                   WFNumberValue=-VERSION_DAYS, WFAnotherNumber=VERSION_DAYS),
         if_else(g_due),
         # Offline, «Get Contents of URL» stops the shortcut with a system error, and Shortcuts has
@@ -544,20 +549,26 @@ def version_check(L, key, name, lang):
         act_save_file(stamp_file, stamp, stamp_save),
         # An empty answer, a 404 page or HTML from a proxy is «no update»: only a text that
         # contains the key is ever read as a dictionary.
+        # D-100 (6.3.1): «contains» straight on «Contents of URL» (a file) stops the run with «Choose values for each
+        # parameter in this action» (checked on Shortcuts, 28.10); on a Text made from it, it works.
         act_download(VERSION_URLS[0], gh),
-        if_output(g_gh, gh, 'Contents of URL', 99, WFConditionalActionString=needle),
-        act_set_variable(json_var, gh, 'Contents of URL'),
+        act_text(text_token('{C}', {'C': (gh, 'Contents of URL')}), gh_t),
+        if_output(g_gh, gh_t, 'Text', 99, WFConditionalActionString=needle),
+        act_set_variable(json_var, gh_t, 'Text'),
         if_else(g_gh),
         act_download(VERSION_URLS[1], site),
-        if_output(g_site, site, 'Contents of URL', 99, WFConditionalActionString=needle),
-        act_set_variable(json_var, site, 'Contents of URL'),
+        act_text(text_token('{C}', {'C': (site, 'Contents of URL')}), site_t),
+        if_output(g_site, site_t, 'Text', 99, WFConditionalActionString=needle),
+        act_set_variable(json_var, site_t, 'Text'),
         if_close(g_site),
         if_close(g_gh),
         act_get_variable(json_var, json_get),
-        if_output(g_json, json_get, 'Variable', 99, WFConditionalActionString=needle),
-        act_dict_value(key, json_get, 'Variable', remote),
-        if_output(g_new, remote, 'Dictionary Value', 2, WFNumberValue=built_version(key)),
-        act_dict_value(f'{key}_{lang}', json_get, 'Variable', link),
+        act_text(text_token('{J}', {'J': (json_get, 'Variable')}), json_t),
+        if_output(g_json, json_t, 'Text', 99, WFConditionalActionString=needle),
+        act_dict_value(key, json_t, 'Text', remote),
+        act_number(remote, 'Dictionary Value', remote_num),   # a number condition needs a Number input (D-100)
+        if_output(g_new, remote_num, 'Number', 2, WFNumberValue=built_version(key)),
+        act_dict_value(f'{key}_{lang}', json_t, 'Text', link),
         # only with a link for this language: an empty one would open nothing (Codex, D-100)
         *if_output_text(g_link, link, 'Dictionary Value'),
         menu_open(g_menu, L['update.prompt'].replace('{NAME}', name), [install, later]),
