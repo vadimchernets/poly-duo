@@ -11,7 +11,7 @@ C1M Duo est un « raccourci » pour iPhone : tu poses une seule question et elle
 
 **Le plus simple — le lien iCloud (une pression).** Sur l’iPhone, touche le lien → Raccourcis s’ouvre → **Ajouter le raccourci**. À la première exécution, le raccourci demande 4 à 6 autorisations ; touche à chaque fois **Toujours autoriser**.
 
-- **Duo :** https://www.icloud.com/shortcuts/156e0fc3a1f341ffaf2c617b8d9050bd
+- **Duo :** https://www.icloud.com/shortcuts/7d533a2afdbe47fa8c43a9e5562fe38f
 - **Trio, iPhone 15 Pro ou plus récent — sans clé (la troisième voix est Apple Intelligence) :** https://www.icloud.com/shortcuts/5b368c5ebf2e45c1ad41702dd9692c90
 - **Trio — clé gratuite (la troisième voix) :** https://www.icloud.com/shortcuts/5debce283e1b4e4a90403959dbd8b748
 

@@ -13,7 +13,7 @@ O C1M Duo é um "atalho" para iPhone: você faz uma pergunta e ela é trabalhada
 
 No iPhone, toque no link → o app Atalhos abre → **Adicionar**. Na primeira execução o atalho pede permissão 4–6 vezes — toque em **Sempre Permitir** todas as vezes.
 
-- **Duo:** https://www.icloud.com/shortcuts/caa63f68b26b4f07afc03eef4a96307c
+- **Duo:** https://www.icloud.com/shortcuts/a4efe974287b482aa65dbc0ce58bf6e0
 - **Trio, iPhone 15 Pro ou mais novo — sem chave** (a terceira voz é a Apple Intelligence; veja abaixo): https://www.icloud.com/shortcuts/4000dcb2b9d64dcfaa44062c92e51b69
 - **Trio, iPhone mais antigo — chave gratuita** (a terceira voz, veja abaixo): https://www.icloud.com/shortcuts/29cace07d31f4033aa0cf26a2d1f9bb1
 
