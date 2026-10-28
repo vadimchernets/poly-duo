@@ -12,8 +12,7 @@ subscriptions, the same as chatting in those apps directly. The ✉ badge in
 the menu shows the price before you pick a mode.
 
 **Is it safe to install a shortcut from the internet?**
-Official builds are published as signed files in this repository's
-the folder you were given only. You can also open the shortcut in the
+Official builds are published as signed files in this repository's `releases/` folder and on polyhelper.ai/duo. You can also open the shortcut in the
 Shortcuts app and read every step before running it — nothing is hidden.
 
 **Can I choose the model?**

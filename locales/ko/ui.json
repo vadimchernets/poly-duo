@@ -111,6 +111,7 @@
     ],
     "claude_down_title": "Claude가 답하지 않았습니다. 다음으로 확인…",
     "claude_down_items": [
+      "📲 Claude 앱이 없거나 로그인하지 않았나요? App Store 열기",
       "🔑 제공업체 무료 키 — 설정 필요",
       "📱 이 iPhone — Apple Intelligence (iPhone 15 Pro 이상)",
       "📋 Gemini 또는 Meta AI에서 직접"

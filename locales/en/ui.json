@@ -111,6 +111,7 @@
     ],
     "claude_down_title": "Claude did not answer. Check with…",
     "claude_down_items": [
+      "📲 No Claude app or not signed in? Open the App Store",
       "🔑 Use a free provider key — setup needed",
       "📱 This iPhone — Apple Intelligence (iPhone 15 Pro or newer)",
       "📋 By hand in Gemini or Meta AI"

@@ -28,8 +28,9 @@ def test_ai_build_and_claude_down(tmp_path, lang):
                 if params(a).get('WFNotificationActionBody') == ui['notify']['tail_empty'])
     menu = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
                 and params(a).get('WFMenuItems') == ui['menu']['claude_down_items'])
-    assert menu > note and len(ui['menu']['claude_down_items']) == 3
-    assert 'Apple Intelligence' in ui['menu']['claude_down_items'][1]
+    assert menu > note and len(ui['menu']['claude_down_items']) == 4
+    assert 'Apple Intelligence' in ui['menu']['claude_down_items'][2]
+    assert 'apps.apple.com/app/id6473753684' in json.dumps(actions[menu:])
     assert any(a['WFWorkflowActionIdentifier'] == 'is.workflow.actions.askllm' for a in actions[menu:])
     # nothing of the plain Duo asks Apple Intelligence on the main path
     assert not any(a['WFWorkflowActionIdentifier'] == 'is.workflow.actions.askllm' for a in actions[:note])

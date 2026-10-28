@@ -111,6 +111,7 @@
     ],
     "claude_down_title": "Claude не ответил. Проверить через…",
     "claude_down_items": [
+      "📲 Нет приложения Claude или не вошли? Открыть App Store",
       "🔑 Бесплатный ключ провайдера — нужна настройка",
       "📱 Этот iPhone — Apple Intelligence (iPhone 15 Pro и новее)",
       "📋 Вручную в Gemini или Meta AI"

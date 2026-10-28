@@ -111,6 +111,7 @@
     ],
     "claude_down_title": "لم يردّ Claude. التحقق عبر…",
     "claude_down_items": [
+      "📲 لا يوجد تطبيق Claude أو لم تسجّل الدخول؟ افتح App Store",
       "🔑 مفتاح مجاني من مزوّد — يحتاج إعدادًا",
       "📱 هذا الـ iPhone — Apple Intelligence (iPhone 15 Pro أو أحدث)",
       "📋 يدويًا في Gemini أو Meta AI"

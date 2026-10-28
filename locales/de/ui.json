@@ -111,6 +111,7 @@
     ],
     "claude_down_title": "Claude hat nicht geantwortet. Prüfen mit…",
     "claude_down_items": [
+      "📲 Keine Claude-App oder nicht angemeldet? App Store öffnen",
       "🔑 Kostenloser Anbieter-Schlüssel – Einrichtung nötig",
       "📱 Diesem iPhone: Apple Intelligence (iPhone 15 Pro oder neuer)",
       "📋 Von Hand in Gemini oder Meta AI"

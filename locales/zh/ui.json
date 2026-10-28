@@ -111,6 +111,7 @@
     ],
     "claude_down_title": "Claude 没有回复。改用…核查",
     "claude_down_items": [
+      "📲 没有 Claude 应用或未登录？打开 App Store",
       "🔑 使用服务商的免费密钥——需要先设置",
       "📱 本机 iPhone — Apple Intelligence（iPhone 15 Pro 及更新机型）",
       "📋 手动用 Gemini 或 Meta AI"

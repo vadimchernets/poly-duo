@@ -1,12 +1,22 @@
 # ChatGPT × Claude — second opinion, one tap, free
 
-**Poly Duo — ChatGPT + Claude on iPhone.** Nothing like this exists on phones yet: ChatGPT and Claude work as a pair, each answers on its own and then the answers are compared, on the accounts you already have. Free ones are enough. No server of ours, no API key, no card, no computer. You can run the strongest models of two companies together, and a paid plan adds no extra fee.
+**Install:** [iPhone — add the Duo shortcut](https://www.icloud.com/shortcuts/240897bf8b4c49e98db65093b9e7032b) · [Android — Poly Duo on Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1) · [other languages](#install-in-60-seconds) · [polyhelper.ai/duo](https://polyhelper.ai/duo/)
+
+**What it is, technically:** a signed Apple Shortcut that chains the Ask ChatGPT and Ask Claude App Intents; it makes no network calls of its own, and `tools/verify.py` checks the signed files against `locales/`.
+
+**Poly Duo — ChatGPT + Claude on iPhone; a free pair of AIs on Android.** Nothing like this exists on phones yet: ChatGPT and Claude work as a pair, each answers on its own and then the answers are compared, on the accounts you already have. Free ones are enough. No server of ours, no API key, no card, no computer. You can run the strongest models of two companies together, and a paid plan adds no extra fee.
 
 Poly Duo is built by the author of two papers on AI verification accepted at NeurIPS 2026 workshops. In our test of the October 2026 flagships (GPT-6.1 Sol + Claude Opus 5.5, run on 26 October 2026 through the companies' own command-line apps on regular subscriptions), when the two answered 100 new, never-published questions independently and agreed, they were right 97% of the time (72 of 74) — and on none of the 100 did both give the same confident wrong answer. In August 2026, on 1,459 public factual questions, the flagships of the day were right 98% of the time when they agreed (a re-analysis of our companion study's data).
 
 Why "nothing like it": the multi-AI tools we found (search of 2026-10-25) need a server, your own API keys, credits or a computer. Details and sources: [docs/en/evidence.md](docs/en/evidence.md#who-else-does-this).
 
 **Tip.** Pick the model you want in the Claude and ChatGPT apps. Duo takes whatever is set there.
+
+**Before you start (iPhone, iOS 18+):** install the free **ChatGPT** and **Claude** apps and sign in to both once. No Claude yet? [Get the Claude app in the App Store](https://apps.apple.com/app/id6473753684) (about a minute) and sign in. Free accounts are enough.
+
+**First run — keep the phone in your hand.** iPhone asks about 5 times whether Duo may pass your question to ChatGPT and Claude, copy the result to the clipboard and write the journal file. Each time tap **Always Allow**: it applies only to Duo and only to your own apps, not to the rest of the phone. An unanswered prompt vanishes within seconds and the run ends with «no access» — then just run it again. After that there are no more prompts.
+
+**Then do not touch the screen for about a minute: a touch stops Duo.**
 
 [![Watch the 18-second demo](https://img.youtube.com/vi/xljOlD4z1K4/hqdefault.jpg)](https://youtu.be/xljOlD4z1K4)
 
@@ -16,7 +26,7 @@ Why "nothing like it": the multi-AI tools we found (search of 2026-10-25) need a
 
 On iPhone, a Shortcut calls Ask ChatGPT, then Ask Claude — actions the two apps publish themselves. Answers pass between your own apps, with no server of ours, on your own accounts. You get one checked answer on the screen and in the clipboard, in about a minute.
 
-Duo is free and open source, and so is **Trio** (Duo plus a third voice, below). Looking for Android? See [Android](#android). The **Poly A1** app ([App Store / Google Play](https://polyhelper.ai/)) is free, installs Duo and Trio for you and walks you through every step.
+Duo is free and open source, and so is **Trio** (Duo plus a third voice, below). Looking for Android? See [Android](#android). The **Poly A1** app ([Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1); on iPhone a beta on TestFlight, App Store soon) is free, installs Duo and Trio for you and walks you through every step.
 
 Have ChatGPT and Claude? Start right away. Have one? It helps you install the other. Have neither? Gemini (Google) or Meta AI (WhatsApp, Facebook) helps you install both, free.
 
@@ -53,7 +63,7 @@ Have ChatGPT and Claude? Start right away. Have one? It helps you install the ot
 
 ## Install in 60 seconds
 
-**One tap (recommended).** On your iPhone, tap the link for your language → the Shortcuts app opens → **Add**. On the first run tap **Always Allow** each time it asks about ChatGPT, Claude and the clipboard (4–6 times).
+**One tap (recommended).** On your iPhone, tap the link for your language → the Shortcuts app opens → **Add**. On the first run keep the phone in your hand and tap **Always Allow** each time it asks about ChatGPT, Claude and the clipboard (about 5 times). Needs the Claude app installed and signed in: [App Store](https://apps.apple.com/app/id6473753684).
 
 | Language | Duo | Trio |
 |---|---|---|
@@ -75,11 +85,11 @@ Have ChatGPT and Claude? Start right away. Have one? It helps you install the ot
 2. Tap **`Duo.shortcut`** (or **`Trio.shortcut`**) → **Add**.
 3. Run it once and tap **Always Allow** each time it asks about ChatGPT, Claude and the clipboard (4–6 times on the first run).
 
-The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (Duo 6.1, site update of 2026-10-27) and in the [GitHub release](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0). Keep the file name
+The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (Duo 6.1, site update of 2026-10-27) and in the [`releases/`](releases) folder of this repository (the same files that `releases/SHA256SUMS` lists). The [GitHub releases](https://github.com/vadimchernets/poly-duo/releases) page does not carry the current files: its only attached files, in v1.0.0–v1.0.4, are the old 1.0 builds named `Duo-en.shortcut` and so on. Do not use them: the name becomes the shortcut's name, and Siri and «another mode — same question» then cannot find it. Keep the file name
 `Duo.shortcut`: the name in Shortcuts comes from it, and Siri and «another mode — same question»
 find the shortcut by that name.
 
-**If it doesn't work:** no «Ask Claude» in the action list — update the Claude app and iOS (18+). Empty answer — open both apps once. ChatGPT says «logged out» — open ChatGPT, close it, run Duo again. The permission prompt vanished before you tapped — just run it again and tap **Always Allow** at once. More: [docs/en/install.md](docs/en/install.md#if-somethings-wrong).
+**If it doesn't work:** no «Ask Claude» in the action list — update the Claude app and iOS (18+). Empty answer — open the Claude app and check that you are signed in (no app yet: [App Store](https://apps.apple.com/app/id6473753684)), and open ChatGPT once. Duo stopped while you were scrolling — a touch of the screen stops it; run it again and wait a minute. ChatGPT says «logged out» — open ChatGPT, close it, run Duo again. The permission prompt vanished before you tapped — just run it again and tap **Always Allow** at once. More: [docs/en/install.md](docs/en/install.md#if-somethings-wrong).
 
 ## Requirements
 
@@ -119,7 +129,7 @@ Two measured pairs (different months and GPT reasoning settings); plans as of 26
 
 ### The research behind it
 
-Poly Duo builds on two papers accepted at NeurIPS 2026 workshops, on our October 2026 measurement of today's flagships, and on a re-analysis of our companion study's data. (0) October 2026 flagships (our measurement, 26 Oct 2026; channel: the vendors' own CLIs on regular subscriptions — Codex CLI, reasoning effort medium; Claude Code CLI, default — same frozen system prompt and answer parser as the August wave, one blind call per item, no web or tools, temperature not settable in either CLI). On a frozen set of 100 two-hop questions composed from Wikidata in August 2026 and never published, gpt-6.1-sol + claude-opus-5-5 agreed on 74/100; GPT's emitted answer was correct on 72/74 = 97.3% [Wilson 90.7, 99.3]; no item had both models confidently (≥ 80) giving the same wrong answer (0/100); GPT's confident-failure rate 4.0% → 1.4%. With claude-fable-5-1: coverage 78/100, emitted 76/78 = 97.4% [91.1, 99.3], shared confident failure on 1 item in 100. Alone on the same items: gpt-6.1-sol 95%, claude-opus-5-5 72%, claude-fable-5-1 77%. On a stratified 300-item SimpleQA subsample (297 graded for the Fable pair): emitted 96.3% (183/190, coverage 64.0%) and 97.9% (187/191, 65.0%), vs 98.0% for the August pair on the same items; on the 106 WVA items (101 answered by both): agreed answers correct 30/33 and 31/33, vs 33/35 for the August pair on the same 101; gpt-6.1-sol alone is 94.9% (94/99) there, so agreement adds nothing on these items. (1) Self-confidence is a weak signal (TAE workshop, doi:10.5281/zenodo.23197651): across nine API models of a 16-model blind collection (late July 2026; claude-haiku-4-5, gpt-5-mini, gemini-3.6-flash, grok-4-fast, deepseek-chat, qwen-plus, kimi-k3, glm-4.5, mistral-small-latest), stated confidence predicts a model's own correctness at AUROC 0.53–0.79; on the pre-specified headline panel (CN: DeepSeek, Alibaba, Moonshot), agreement with blindly elicited models reaches 0.83 vs 0.55 for self-confidence (Δ +0.29; 0.775 vs 0.545 under a label-free recoding). (2) Verification must be blind-first (Who Verifies the Agents? workshop, doi:10.5281/zenodo.23197641): in an exploratory conformity arm with six July 2026 API verifiers (Anthropic, OpenAI, Google, DeepSeek, Alibaba, Moonshot), verifiers that had disagreed blind endorsed the answer once shown it as a colleague's in 38.5% of cases (168/436); Poly Duo collects both answers blind before comparing them — in its default mode (Critique) and in Synthesis and Side by side. In the same paper, on the hardest quintile by population difficulty, the July 2026 API panels (one model per lab, labelled "frontier" there, budget/mid-tier for eight of nine) replicated 342 answers across 106 questions and, as originally graded, none was correct. (3) Post-hoc re-analysis (26 Oct 2026) of the released flagship-wave data of the companion study (doi:10.5281/zenodo.22166995; one flagship per lab, 5 Aug 2026 snapshot): the pair gpt-5.6-sol + claude-fable-5, 1,459 SimpleQA items, blind answers, GPT's answer emitted only on deterministic-equivalence agreement — coverage 69.6%, emitted answers correct 98.1% (985/1,004) [97.2, 98.9] vs 95.3% for GPT alone; confident-failure rate (conf ≥ 80, of confident answers) 4.6% → 1.9% for GPT and 10.3% → 2.8% for Claude; the two flagships made the same confident mistake on only 1 question in 100 (1.0%). On the 106 WVA items (hard for the July models) the flagship pair agreed on 37 and was right on 34. The mid-tier pair of the same labs (gpt-5-mini + claude-haiku-4-5, July 2026): coverage 8.6%, emitted answers correct 36.6%, 0/13 on the 106. A stronger pair wins on every practical axis: coverage ×8, emitted accuracy 37% → 98%, shared confident failures among emitted answers 8% → 1.5%. With ChatGPT Plus/Pro and Claude Pro/Max, Duo runs the strongest chat models those plans offer at no extra cost; figures in (0) are for the October 2026 pair measured through CLIs, figures in (3) for the 5 Aug 2026 pair.
+Poly Duo builds on two papers accepted at NeurIPS 2026 workshops, on our October 2026 measurement of today's flagships, and on a re-analysis of our companion study's data. (0) October 2026 flagships (our measurement, 26 Oct 2026; channel: the vendors' own CLIs on regular subscriptions — Codex CLI, reasoning effort medium; Claude Code CLI, default — same frozen system prompt and answer parser as the August wave, one blind call per item, no web or tools, temperature not settable in either CLI). On a frozen set of 100 two-hop questions composed from Wikidata in August 2026 and never published, gpt-6.1-sol + claude-opus-5-5 agreed on 74/100; GPT's emitted answer was correct on 72/74 = 97.3% [Wilson 90.7, 99.3]; no item had both models confidently (≥ 80) giving the same wrong answer (0/100); GPT's confident-failure rate 4.0% → 1.4%. With claude-fable-5-1: coverage 78/100, emitted 76/78 = 97.4% [91.1, 99.3], shared confident failure on 1 item in 100. Alone on the same items: gpt-6.1-sol 95%, claude-opus-5-5 72%, claude-fable-5-1 77%. On a stratified 300-item SimpleQA subsample (297 graded for the Fable pair): emitted 96.3% (183/190, coverage 64.0%) and 97.9% (187/191, 65.0%), vs 98.0% for the August pair on the same items; on the full 106 WVA items (graded answers only): agreed answers correct 31/35 (with Opus 5.5) and 31/34 (with Fable 5.1); gpt-6.1-sol alone is 94.2% (98/104) there, so agreement adds little on these items. (1) Self-confidence is a weak signal (TAE workshop, doi:10.5281/zenodo.23197651): across nine API models of a 16-model blind collection (late July 2026; claude-haiku-4-5, gpt-5-mini, gemini-3.6-flash, grok-4-fast, deepseek-chat, qwen-plus, kimi-k3, glm-4.5, mistral-small-latest), stated confidence predicts a model's own correctness at AUROC 0.53–0.79; on the pre-specified headline panel (CN: DeepSeek, Alibaba, Moonshot), agreement with blindly elicited models reaches 0.83 vs 0.55 for self-confidence (Δ +0.29; 0.775 vs 0.545 under a label-free recoding). (2) Verification must be blind-first (Who Verifies the Agents? workshop, doi:10.5281/zenodo.23197641): in an exploratory conformity arm with six July 2026 API verifiers (Anthropic, OpenAI, Google, DeepSeek, Alibaba, Moonshot), verifiers that had disagreed blind endorsed the answer once shown it as a colleague's in 38.5% of cases (168/436); Poly Duo collects both answers blind before comparing them — in its default mode (Critique) and in Synthesis and Side by side. In the same paper, on the hardest quintile by population difficulty, the July 2026 API panels (one model per lab, labelled "frontier" there, budget/mid-tier for eight of nine) replicated 342 answers across 106 questions and, as originally graded, none was correct. (3) Post-hoc re-analysis (26 Oct 2026) of the released flagship-wave data of the companion study (doi:10.5281/zenodo.22166995; one flagship per lab, 5 Aug 2026 snapshot): the pair gpt-5.6-sol + claude-fable-5, 1,459 SimpleQA items, blind answers, GPT's answer emitted only on deterministic-equivalence agreement — coverage 69.6%, emitted answers correct 98.1% (985/1,004) [97.2, 98.9] vs 95.3% for GPT alone; confident-failure rate (conf ≥ 80, of confident answers) 4.6% → 1.9% for GPT and 10.3% → 2.8% for Claude; the two flagships made the same confident mistake on only 1 question in 100 (1.0%). On the 106 WVA items (hard for the July models) the flagship pair agreed on 37 and was right on 34. The mid-tier pair of the same labs (gpt-5-mini + claude-haiku-4-5, July 2026): coverage 8.6%, emitted answers correct 36.6%, 0/13 on the 106. A stronger pair wins on every practical axis: coverage ×8, emitted accuracy 37% → 98%, shared confident failures among emitted answers 8% → 1.5%. With ChatGPT Plus/Pro and Claude Pro/Max, Duo runs the strongest chat models those plans offer at no extra cost; figures in (0) are for the October 2026 pair measured through CLIs, figures in (3) for the 5 Aug 2026 pair.
 
 Limits: SimpleQA is public, and gpt-5.6-sol echoes the gold string on 61.6% of answers; on the 106 items it is 95.2% correct alone and echoes gold on 64.2% — hard for July models, not for it. The gate removes a smaller share of GPT's confident failures than the mid-tier gate (70.8% vs 92.3%). Flagship vs mid-tier is two measured points (different months; GPT reasoning effort medium vs minimal). Pair figures describe blind answers compared afterwards, the scheme Poly Duo uses in Critique, Synthesis and Side by side; they are not a measured accuracy of any Poly Duo mode. The WVA zero holds under population difficulty; under leave-panel-out difficulty it persists for the cross-bloc panel (0/116), not pooled (78/354). Crediting the defensible answers found by WVA's manual gold adjudication moves that zero to at most 13/342 (lift 0.98×). The conformity arm's reverse-prompt control ran on six local models. On TAE's US panel, pooled self-confidence leads (0.84 vs 0.70), a between-model effect (0.67 rank-normalised). Claude runs the app's default model; ChatGPT runs with `model: auto`, which on paid plans picks the plan's model (on Plus chat as of 26 Oct 2026: GPT-6 Sol; GPT-6.1 Sol is in Codex and ChatGPT Work). The October measurement is one run through CLIs, n = 100 on the fresh set; it is not a measured accuracy of a Poly Duo mode. On the fresh set the August GPT arm ran via API at reasoning effort none, so August vs October is not compared there. Data and papers: github.com/vadimchernets/papers · polyhelper.ai/research
 
@@ -218,13 +228,13 @@ ChatGPT answers · Claude answers blind → third voice (NVIDIA → Gemini → O
 - **Errors in plain words.** Only if every key and model failed does the block list what each one
   answered — no money left (402), limit (429), overloaded (503), invalid key (401) — and what to do.
   Claude's answer is already in the clipboard before the third voice is asked.
-- File: `dist/<lang>/Trio.shortcut` (en, es, pt, ru, uk). Getting the key: [docs/en/install.md](docs/en/install.md#trio--the-third-voice-free-key).
+- File: `releases/<lang>/Trio.shortcut` (en, es, pt, ru, uk, de, fr, hi, ja, ko, zh). Getting the key: [docs/en/install.md](docs/en/install.md#trio--the-third-voice-free-key).
 
 Trio is the one place where a free key buys a third company.
 
 ### Trio without a key
 
-On an iPhone with Apple Intelligence (iPhone 15 Pro or newer, iOS 26 or later) there is a Trio whose third voice is Apple Intelligence through the Shortcuts action «Use Model». It needs no key and no sign-up. Links are in «Duo and Trio» above (English, Spanish, Portuguese). On any other iPhone use the free-key Trio.
+On an iPhone with Apple Intelligence (iPhone 15 Pro or newer, iOS 26 or later) there is a Trio whose third voice is Apple Intelligence through the Shortcuts action «Use Model». It needs no key and no sign-up. Links are in «Duo and Trio» above (English, Spanish, Portuguese, Deutsch, Français, 日本語, 한국어, 中文, हिन्दी). On any other iPhone use the free-key Trio.
 
 ## Companions
 
@@ -245,7 +255,7 @@ name «Poly», so rename yours to «Poly» or edit the Run Shortcut step in each
 > **Want the full council rather than a pair?** Poly is the pocket edition of a larger method:
 > **PolyHelper** asks up to ten AIs and merges them into one document with the disagreements kept —
 > free, nothing to install, on any device. Poly Multi already merges by its canon.
-> → ask whoever gave you this folder for **PolyHelper C1**.
+> → **PolyHelper C1**: [polyhelper.ai](https://polyhelper.ai/).
 
 ## Android
 
@@ -263,7 +273,7 @@ Prompts are deliberately shared across all languages. The models read them, not 
 works best there — every locale uses `locales/en/prompts/` by default, and any language may
 override a single prompt by dropping its own file into `locales/<lang>/prompts/` if it ever needs to.
 
-All ten are built and verified against their sources — `python3 tools/verify.py` checks that every
+All eleven shipped languages are built and verified against their sources — `python3 tools/verify.py` checks that every
 shipped shortcut is what the locale files produce, and that every kit matches.
 
 | Language | Locale | | Language | Locale |
@@ -273,9 +283,10 @@ shipped shortcut is what the locale files produce, and that every kit matches.
 | Deutsch | `de` | | Русский | `ru` |
 | Español | `es` | | 中文 | `zh` |
 | Français | `fr` | | हिन्दी | `hi` |
+| 한국어 | `ko` | | Українська | `uk` |
 
-Verified against the source files is not the same as run on a phone. Two of the ten have been
-through a live iPhone with paid accounts, end to end, every mode but Debate to agreement; the other eight are built from
+Verified against the source files is not the same as run on a phone. Two of the eleven have been
+through a live iPhone with paid accounts, end to end, every mode but Debate to agreement; the other nine are built from
 the same sources and machine-checked against them, but nobody has used them on a phone yet — if
 you install one, telling us what broke is the most useful thing you can do.
 
@@ -363,7 +374,7 @@ get any other way.
 
 ## Prior art / timestamps
 
-- GitHub Release v1.0.0 (signed Duo and Trio, 5 languages, SHA-256): https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0 — 2026-10-01
+- GitHub Release v1.0.0 (the first signed Duo and Trio, 5 languages, SHA-256; kept as a timestamp, not for download — the current files are in `releases/`): https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0 — 2026-10-01
 - Software Heritage archive: `swh:1:snp:1da6fe462b3dc1729914fee2cef6331f44c87a3d` — https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/vadimchernets/poly-duo
 - Wayback Machine: [repository](https://web.archive.org/web/20261001170056/https://github.com/vadimchernets/poly-duo) · [release](https://web.archive.org/web/20261001170138/https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0) · [polyhelper.ai/duo](https://web.archive.org/web/20261001170120/https://polyhelper.ai/duo/)
 - Earlier version: C1M, first published on GitHub on 1–2 September 2026.
@@ -378,7 +389,7 @@ Poly is a personal tool — not professional advice and not a fact-checker. Plea
 [disclaimer](DISCLAIMER.md) before relying on it for anything that matters.
 
 Copyright 2026 Vadym Chernets. Licensed under the [Apache License 2.0](LICENSE); see also
-[NOTICE](NOTICE) and [TRADEMARKS.md](TRADEMARKS.md).
+[NOTICE](NOTICE) and [TRADEMARKS.md](TRADEMARKS.md). Apache-2.0 includes a patent grant to every user of this code (section 3 of the license). Any «patent pending» mention elsewhere concerns the PolyHelper method, not your right to use, change and share this code.
 
 ---
 

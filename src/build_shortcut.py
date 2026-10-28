@@ -967,6 +967,8 @@ def build(lang, ai=False):
         g_chk, g_down, g_key = u(), u(), u()
         c_get, kf, kvar, kprompt, third_get, apple_p, apple, apple_get, man_get = (u() for _ in range(9))
         items = L['menu.claude_down_items']
+        # items[0] opens the Claude app's App Store page (no Claude app, or signed out); items[1:] are the three
+        # ways to still have the answer checked, in the order below
         # A light chain, so Duo stays small (a big shortcut opens slowly on an iPhone): the free keys only, found by
         # their prefix, ONE model each (the first in models.json); paid keys and the other models are Trio's job.
         free = ('provider.nvidia', 'provider.gemini', 'provider.openrouter', 'provider.groq')
@@ -980,8 +982,13 @@ def build(lang, ai=False):
             act_get_variable(CHECK_VAR, c_get),
             if_has_value(g_chk, CHECK_VAR),
             menu_open(g_down, L['menu.claude_down_title'], items),
-            # 1. a free key saved in poly-key.txt: Trio's provider chain, reused from build_trio
+            # 0. no Claude app (or signed out): open its App Store page; nothing is sent, the run ends as before
             menu_case(g_down, items[0]),
+            {'WFWorkflowActionIdentifier': 'is.workflow.actions.openurl',
+             'WFWorkflowActionParameters': {'WFInput': text_token('https://apps.apple.com/app/id6473753684'),
+                                            'Show-WFInput': True}},
+            # 1. a free key saved in poly-key.txt: Trio's provider chain, reused from build_trio
+            menu_case(g_down, items[1]),
             act_get_file(T['files.key'], kf),
             act_set_variable(TV['key_file'], kf, 'File'),
             if_has_value(g_key, TV['key_file']),
@@ -995,13 +1002,13 @@ def build(lang, ai=False):
             act_notify(L['notify.no_key_file']),
             if_close(g_key),
             # 2. this iPhone (Apple Intelligence, iPhone 15 Pro and newer — the label says so)
-            menu_case(g_down, items[1]),
+            menu_case(g_down, items[2]),
             act_text(text_token('{P}', {'P': (c_get, 'Variable')}), apple_p),
             build_trio.act_use_model(apple_p, apple),
             act_set_variable(RESULT, apple, 'Response'),
             *deliver(),
             # 3. by hand: the check request goes to the clipboard
-            menu_case(g_down, items[2]),
+            menu_case(g_down, items[3]),
             act_get_variable(CHECK_VAR, man_get),
             act_clipboard(attachment(man_get, 'Variable')),
             *remember_answer(man_get, 'Variable'),
