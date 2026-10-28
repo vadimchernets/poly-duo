@@ -121,6 +121,7 @@
     "critique_start": "⚖️ 검토: ChatGPT가 답하고 → Claude가 따로 답하고 → Claude가 둘을 비교해요. 약 1분, 휴대폰을 만지지 마세요. ChatGPT가 «logged out»이라고 하면 ChatGPT 앱을 열고 Poly를 다시 실행하세요.",
     "critique_step2": "[2/3] Claude가 확인하고 최종 답을 만들고 있어요…",
     "critique_blind": "[2/3] Claude가 ChatGPT의 답을 보지 않고 따로 답하고 있어요…",
+    "gpt_kept": "📋 ChatGPT의 답변이 클립보드에 있습니다. Claude가 메시지 한도로 멈춰도 원하는 곳에 붙여넣을 수 있습니다. Claude에게는 나중에 다시 물어보세요.",
     "critique_step3": "[3/3] Claude가 둘을 비교하고 있어요: 따로 해도 같은 점 / 다른 점 / 직접 확인할 것, 그리고 최종 답…",
     "critique_summary": "[3/3] Claude가 두 답을 정리하고 있어요: 둘 다 같은 점 / 다른 점 / 직접 확인할 것… (확인된 답은 이미 클립보드에 있어요)",
     "advisor_start": "🩺 조언자: Claude가 글을 고쳐 쓰지 않고 검토해요. 약 40초, 화면을 만지지 마세요.",

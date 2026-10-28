@@ -121,6 +121,7 @@
     "critique_start": "⚖️ Crítica: ChatGPT responde → Claude responde por su cuenta → Claude compara ambas. ≈1 min, no toque el teléfono. Si ChatGPT dice «logged out» — abra su app y vuelva a lanzar Poly.",
     "critique_step2": "[2/3] Claude verifica y monta la respuesta final…",
     "critique_blind": "[2/3] Claude responde por su cuenta, sin ver la respuesta de ChatGPT…",
+    "gpt_kept": "📋 La respuesta de ChatGPT está en el portapapeles. Si Claude se detiene por su límite de mensajes, puede pegarla donde quiera; vuelva a preguntar a Claude más tarde.",
     "critique_step3": "[3/3] Claude compara ambas: coincidieron por separado / no coincidieron / qué comprobar usted, y luego la respuesta final…",
     "critique_summary": "[3/3] Claude ordena las dos respuestas: en qué coinciden / en qué difieren / qué comprobar tú… (la respuesta verificada ya está en el portapapeles)",
     "advisor_start": "🩺 Asesor: Claude revisa su texto sin reescribirlo. ≈40 s, no toque la pantalla.",

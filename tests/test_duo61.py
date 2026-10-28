@@ -71,7 +71,10 @@ def test_own_answer_not_prefilled(tmp_path, lang):
     # for the person and before any further AI call: «by hand» check request, Image (both), Claude writes / ChatGPT
     # checks, the tail (RESULT, also when the «Claude did not answer» menu delivered it), and the re-checked result.
     saves = saves_of(actions, last)
-    assert len(saves) == 6
+    # 6 as in Duo 6.1, plus D-98: ChatGPT's answer copied before the next Claude call in Critique and My mode (twice
+    # each: before the blind step, and before step 3 when both drafts were resumed), Side by side, both Syntheses,
+    # Decision, Dispute map, Debate, both Images and round 1 of Debate until agreement
+    assert len(saves) == 6 + 13
     for s in saves:
         txt, cut = actions[s - 1], actions[s - 2]
         assert kind(txt) == 'gettext' and kind(cut) == 'match'
@@ -111,7 +114,23 @@ def test_own_answer_not_prefilled(tmp_path, lang):
             continue      # its three branches are checked through the tail save (the menu itself comes first)
         assert not any(kind(a) in waits and params(a).get('WFControlFlowMode', 0) == 0 for a in run_from(c)), \
             f'clipboard write at {c} is not remembered before a screen or an AI call'
-    img1, img2, rev, manual, tail, ratify = saves
+    # D-98: the ChatGPT-answer copies are told apart by the clipboard line in the notification right after the save;
+    # each one is followed (before anything else that waits) by a Claude call, and copies only a text that has a value
+    kept = [s for s in saves if ui['notify']['gpt_kept'] in (params(actions[s + 1]).get('WFNotificationActionBody') or '')]
+    assert len(kept) == 13
+    by_uid = {params(a).get('UUID'): a for a in actions}
+    for s in kept:
+        assert kind(actions[s - 4]) == 'conditional' and params(actions[s - 4])['WFCondition'] == 100
+        nxt = next(a for a in actions[s:] if kind(a) in waits and params(a).get('WFControlFlowMode', 0) == 0)
+        assert kind(nxt) == 'ClaudeAppIntentsExtension'
+        # the copied text is an answer itself, never the debate log (its side-A header is there without an answer)
+        src_a = by_uid[ref(params(actions[s - 5])['WFTextActionText'])[0]]
+        if kind(src_a) == 'getvariable':
+            assert params(src_a)['WFVariable']['Value']['VariableName'] in (
+                'PolyChatGPTAnswer', 'PolyArgueOpening') or params(src_a)['WFVariable']['Value']['VariableName'].startswith('PolyGPTRetry')
+        else:
+            assert kind(src_a) == 'AskIntent'
+    img1, img2, rev, manual, tail, ratify = [s for s in saves if s not in kept]
     for s in (manual, img1, img2, rev):                # Copy <an action output> → remember the same output
         copy = max(i for i in copies if i < s)
         assert params(actions[copy])['WFInput']['Value']['OutputUUID'] == src(s)

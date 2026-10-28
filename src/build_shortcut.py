@@ -666,6 +666,25 @@ def build(lang, ai=False):
                 act_text(text_token('{M}', {'M': (cut, 'Matches')}), txt),
                 act_save_file(L['files.last_answer'], txt, save)]
 
+    def keep_gpt(src_uid, src_name, note=None):
+        """D-98: ChatGPT's answer goes to the clipboard BEFORE the next Claude call. When Claude's own app throws
+        (on device 28.10: «You have reached your current Claude message limit…»), iOS stops the whole shortcut with a
+        system alert — Shortcuts has no built-in try/catch or «continue on error» for an app action (x-error of a
+        shortcuts:// x-callback-url only opens another URL after the run has ended), so the «Claude did not answer» menu (made for an
+        EMPTY answer) is never reached and the answer ChatGPT already gave would be lost. Now it is in the clipboard,
+        remembered as Duo's own (so the next run does not offer it as a question), and the step's notification says
+        so. No extra screen, tap or message; only when there is an answer. `note`: that step's own notification; the
+        clipboard line goes FIRST (a banner may cut a long text); with no note one notification with that line alone."""
+        txt, g = new_uuid(), new_uuid()
+        kept = L['notify.gpt_kept']
+        return [act_text(text_token('{A}', {'A': (src_uid, src_name)}), txt),
+                if_output(g, txt, 'Text', 100),
+                act_clipboard(attachment(txt, 'Text')),
+                *remember_answer(txt, 'Text'),
+                act_notify(kept + '\n' + note if note else kept),
+                *([if_else(g), act_notify(note)] if note else []),
+                if_close(g)]
+
     def recipes_menu(group, title):
         """Recipes: a ready task → the question box opens pre-filled with its wording (Duo runs itself with that
         text as its input, the same way the Share Sheet does), the person edits it and picks a mode."""
@@ -722,7 +741,7 @@ def build(lang, ai=False):
         """One round of «Debate until agreement»: Claude objects, ChatGPT answers. Each half runs only
         while nobody has conceded — the debate log does not yet contain the marker."""
         g_obj, g_rep, g_gp = ids(3)
-        get1, pr1, cl1, get2, add1, get3, pr2, gp2, get4, add2 = ids(10)
+        get1, pr1, cl1, get2, add1, get3, pr2, gp2, get4, add2, op_get = ids(11)
         RETRY_SKIP.add(gp2)
         sv_get, sv_text, sv_save = ids(3)
         rnd = str(n)
@@ -737,10 +756,15 @@ def build(lang, ai=False):
             if_output(g_rd, rd_num, 'Number', 1003, WFNumberValue=0, WFAnotherNumber=n - 1),
             if_contains(g_obj, ARGUE_LOG, ARGUE_MARKER),
             if_else(g_obj),
+            act_get_variable(ARGUE_LOG, get1),
+            *([act_get_variable(ARGUE_OPEN, op_get)] if n == 1 else []),
             # round 1: Claude states its OWN position on the question without seeing side A's opening
             # (blind first, same number of messages); from round 2 on the sides see each other
-            act_notify(L['notify.argue_blind' if n == 1 else 'notify.argue_object'].replace('{N}', rnd)),
-            act_get_variable(ARGUE_LOG, get1),
+            # round 1: ChatGPT's opening goes to the clipboard first, see keep_gpt. The opening itself, not the log
+            # (whose side-A header is there even when ChatGPT sent nothing); a resumed debate has no opening in memory
+            # and copies nothing
+            *(keep_gpt(op_get, 'Variable', L['notify.argue_blind'].replace('{N}', rnd)) if n == 1 else
+              [act_notify(L['notify.argue_object'].replace('{N}', rnd))]),
             (act_text(text_token(L.prompt('argue-1-open-b'), Q), pr1) if n == 1 else
              act_text(text_token(L.prompt('argue-2-object').replace('{ROUND}', rnd),
                                  {**QUESTION, 'LOG': (get1, 'Variable')}), pr1)),
@@ -785,6 +809,7 @@ def build(lang, ai=False):
         (cr_empty0, cr_empty1, cr_rf, cr_rdate, cr_rnow, cr_rage, cr_ra, cr_rb, cr_rb_t, cr_rget, cr_gpt2, cr_qtext,
          cr_qsave, cr_atext, cr_asave, cr_aget, cr_gpt_f, cr_len, cr_cut, cr_claude2, cr_claude_f, cr_clear,
          cr_clear_save, cr_num0, cr_numfin) = ids(29 - 4)
+        cr_kget, = ids(1)
         (cr_oget, cr_own, cr_own2, cr_own_t, cr_own_save, cr_own_get,
          cr_own_f, cr_bclr, cr_bclr_save, cr_rft, cr_qclr, cr_qclr_save) = ids(12)
         g_r1, g_r2, g_r3, g_need, g_retry, g_save, g_long, g_cretry, g_cok = ids(9)
@@ -895,8 +920,9 @@ def build(lang, ai=False):
             # ---- Step 2: Claude answers the same wrapped question WITHOUT ChatGPT's answer (blind). An empty answer
             # is retried once; if it stays empty, step 3 works with ChatGPT's answer alone (the prompt says how).
             act_get_variable(OWN_VAR, cr_oget),
+            act_get_variable(GPT_VAR, cr_kget),
             if_output(g_own, cr_oget, 'Variable', 101),
-            act_notify(L['notify.critique_blind']),
+            *keep_gpt(cr_kget, 'Variable', L['notify.critique_blind']),
             act_claude(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_own),
             act_set_variable(OWN_VAR, cr_own, 'Ask Claude'),
             if_no_value(g_oretry, OWN_VAR),
@@ -909,6 +935,9 @@ def build(lang, ai=False):
             act_text(text_token('{B}', {'B': (cr_own_get, 'Variable')}), cr_own_t),
             act_save_file(D['b'], cr_own_t, cr_own_save),
             if_close(g_osave),
+            # both drafts resumed: step 3 is the first Claude call of this run, so ChatGPT's answer is kept here
+            if_else(g_own),
+            *keep_gpt(cr_kget, 'Variable'),
             if_close(g_own),
             # ---- Step 3: Claude compares both. Numbers that stand in only one of the two answers are found by rule,
             # not by Claude's attention, and handed over as data (not checked on device: Match Text with a regex,
@@ -1189,6 +1218,7 @@ def build(lang, ai=False):
         act_notify(L['notify.survey_start']),
         act_text(text_token(L.prompt('wrap'), Q), sb_wrap),
         act_gpt(text_token('{P}', {'P': (sb_wrap, 'Text')}), sb_gpt),
+        *keep_gpt(sb_gpt, 'Ask ChatGPT'),
         act_claude(text_token('{P}', {'P': (sb_wrap, 'Text')}), sb_claude),
         act_text(text_token(L['output.survey'],
                             {'G': (sb_gpt, 'Ask ChatGPT'), 'C': (sb_claude, 'Ask Claude')}), sb_join),
@@ -1203,6 +1233,7 @@ def build(lang, ai=False):
         act_notify(L['notify.synthesis_claude_start']),
         act_text(text_token(L.prompt('wrap'), Q), sc_wrap),
         act_gpt(text_token('{P}', {'P': (sc_wrap, 'Text')}), sc_gpt),
+        *keep_gpt(sc_gpt, 'Ask ChatGPT'),
         act_claude(text_token('{P}', {'P': (sc_wrap, 'Text')}), sc_claude),
         act_text(text_token(L.prompt('synthesis-anchor-claude'),
                             {**QUESTION, 'GPT_ANSWER': (sc_gpt, 'Ask ChatGPT'),
@@ -1216,6 +1247,7 @@ def build(lang, ai=False):
         act_notify(L['notify.synthesis_gpt_start']),
         act_text(text_token(L.prompt('wrap'), Q), sg_wrap),
         act_gpt(text_token('{P}', {'P': (sg_wrap, 'Text')}), sg_gpt),
+        *keep_gpt(sg_gpt, 'Ask ChatGPT'),
         act_claude(text_token('{P}', {'P': (sg_wrap, 'Text')}), sg_claude),
         act_text(text_token(L.prompt('synthesis-anchor-gpt'),
                             {**QUESTION, 'GPT_ANSWER': (sg_gpt, 'Ask ChatGPT'),
@@ -1244,7 +1276,7 @@ def build(lang, ai=False):
         act_notify(L['notify.decision_start']),
         act_text(text_token(L.prompt('decision-1-fast'), Q), de_fast),
         act_gpt(text_token('{P}', {'P': (de_fast, 'Text')}), de_gpt),
-        act_notify(L['notify.decision_step2']),
+        *keep_gpt(de_gpt, 'Ask ChatGPT', L['notify.decision_step2']),
         act_text(text_token(L.prompt('decision-2-cautious'), Q), de_caution),
         act_claude(text_token('{P}', {'P': (de_caution, 'Text')}), de_claude),
         act_notify(L['notify.decision_step3']),
@@ -1261,6 +1293,7 @@ def build(lang, ai=False):
         act_notify(L['notify.disputemap_start']),
         act_text(text_token(L.prompt('wrap'), Q), dm_wrap),
         act_gpt(text_token('{P}', {'P': (dm_wrap, 'Text')}), dm_gpt),
+        *keep_gpt(dm_gpt, 'Ask ChatGPT'),
         act_claude(text_token('{P}', {'P': (dm_wrap, 'Text')}), dm_claude),
         act_text(text_token(L.prompt('dispute-map'),
                             {**QUESTION, 'GPT_ANSWER': (dm_gpt, 'Ask ChatGPT'),
@@ -1275,7 +1308,7 @@ def build(lang, ai=False):
         act_notify(L['notify.debate_start']),
         act_text(text_token(L.prompt('wrap'), Q), db_wrap),
         act_gpt(text_token('{P}', {'P': (db_wrap, 'Text')}), db_draft),
-        act_notify(L['notify.debate_step2']),
+        *keep_gpt(db_draft, 'Ask ChatGPT', L['notify.debate_step2']),
         # blind first: Claude answers the question on its own (it does not see ChatGPT's draft); only then
         # ChatGPT sees both and revises, and the judge sees both originals and the revision — still 4 messages
         act_claude(text_token('{P}', {'P': (db_wrap, 'Text')}), db_crit),
@@ -1319,7 +1352,7 @@ def build(lang, ai=False):
         act_notify(L['notify.image_step1']),
         act_text(text_token(L.prompt('image-svg-brief'), Q), i1_brief),
         act_gpt(text_token('{P}', {'P': (i1_brief, 'Text')}), i1_gpt),
-        act_notify(L['notify.image_step2']),
+        *keep_gpt(i1_gpt, 'Ask ChatGPT', L['notify.image_step2']),
         act_claude(text_token('{P}', {'P': (i1_brief, 'Text')}), i1_claude),
         act_text(text_token(IMAGE_GALLERY_HTML.replace('{TITLE}', L['output.image_html_title'])
                             .replace('{CAP_C}', L['output.image_html_claude'])
@@ -1339,7 +1372,7 @@ def build(lang, ai=False):
         act_notify(L['notify.image_step1']),
         act_text(text_token(L.prompt('image-svg-brief'), Q), i2_brief),
         act_gpt(text_token('{P}', {'P': (i2_brief, 'Text')}), i2_gpt),
-        act_notify(L['notify.image_step2']),
+        *keep_gpt(i2_gpt, 'Ask ChatGPT', L['notify.image_step2']),
         act_claude(text_token('{P}', {'P': (i2_brief, 'Text')}), i2_claude),
         act_text(text_token(IMAGE_GALLERY_HTML.replace('{TITLE}', L['output.image_html_title'])
                             .replace('{CAP_C}', L['output.image_html_claude'])

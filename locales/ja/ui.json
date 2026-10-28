@@ -121,6 +121,7 @@
     "critique_start": "⚖️ 批評：ChatGPT が答え → Claude が自分で答え → Claude が両方を比較。約1分、スマホには触らないでください。ChatGPT が「logged out」と言ったら、その App を開いてから Poly をやり直してください。",
     "critique_step2": "[2/3] Claude が検証して最終回答をまとめています…",
     "critique_blind": "[2/3] Claude が ChatGPT の回答を見ずに、自分で答えています…",
+    "gpt_kept": "📋 ChatGPT の回答はクリップボードにあります。Claude がメッセージ上限で止まっても、どこにでも貼り付けられます。Claude にはあとでもう一度聞いてください。",
     "critique_step3": "[3/3] Claude が両方を比較しています：独立に一致／不一致／自分で確かめること、そして最終回答…",
     "critique_summary": "[3/3] Claude が2つの回答を整理しています：一致点／相違点／自分で確かめること…（検証済みの回答はすでにクリップボードにあります）",
     "advisor_start": "🩺 助言：Claude があなたの文章を書き換えずに講評します。約40秒、画面に触らないでください。",

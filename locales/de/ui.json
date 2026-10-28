@@ -121,6 +121,7 @@
     "critique_start": "⚖️ Kritik: ChatGPT antwortet → Claude antwortet selbst → Claude vergleicht beide. ≈1 Min., Finger weg vom Handy. Meldet ChatGPT „logged out“ — öffne seine App und starte Poly neu.",
     "critique_step2": "[2/3] Claude prüft nach und baut die finale Antwort…",
     "critique_blind": "[2/3] Claude antwortet selbst, ohne die Antwort von ChatGPT zu sehen…",
+    "gpt_kept": "📋 Die Antwort von ChatGPT ist in der Zwischenablage. Stoppt Claude wegen seines Nachrichtenlimits, kannst du sie trotzdem überall einfügen; frag Claude später noch einmal.",
     "critique_step3": "[3/3] Claude vergleicht beide: unabhängig übereinstimmend / nicht übereinstimmend / was du selbst prüfen solltest, dann die Endantwort…",
     "critique_summary": "[3/3] Claude sortiert beide Antworten: worin sie übereinstimmen / wo sie sich unterscheiden / was du selbst prüfen solltest… (die geprüfte Antwort ist schon in der Zwischenablage)",
     "advisor_start": "🩺 Berater: Claude prüft deinen Text, ohne ihn umzuschreiben. ≈40 Sek., Finger weg vom Bildschirm.",

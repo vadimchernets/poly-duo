@@ -121,6 +121,7 @@
     "critique_start": "⚖️ Critique: ChatGPT answers → Claude answers on its own → Claude compares both. ≈1 min, don't touch the phone. If ChatGPT says «logged out» — open its app and rerun Poly.",
     "critique_step2": "[2/3] Claude is verifying and assembling the final answer…",
     "critique_blind": "[2/3] Claude answers on its own, without seeing ChatGPT's answer…",
+    "gpt_kept": "📋 ChatGPT's answer is in the clipboard. If Claude stops on its message limit, you can still paste it anywhere; ask Claude again later.",
     "critique_step3": "[3/3] Claude compares both: matched independently / did not match / what to check yourself, then the final answer…",
     "critique_summary": "[3/3] Claude is sorting both answers: both agree / where they differ / what to check yourself… (the checked answer is already in the clipboard)",
     "advisor_start": "🩺 Advisor: Claude reviews your text without rewriting it. ≈40 sec, don't touch the screen.",

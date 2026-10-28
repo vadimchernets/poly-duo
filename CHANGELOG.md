@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed (D-98, 2026-10-28; not released yet: live iPhone repeat and second-family review first)
+- **ChatGPT's answer is no longer lost when Claude hits its message limit.** On a real iPhone
+  (28.10) Claude's app action threw «You have reached your current Claude message limit…»; iOS
+  stops the whole shortcut with that system alert, and Shortcuts has no built-in try/catch or «continue on error» for an app
+  action's error, so the «Claude did not answer» menu (made for an empty answer) was never reached.
+  Now, in every mode where ChatGPT answers before Claude (Critique, My mode, Side by side, both
+  Syntheses, Decision, Dispute map, Debate, both Images, round 1 of Debate until agreement),
+  ChatGPT's answer goes to the clipboard right before the first Claude call of the run (in Critique
+  also when both drafts were resumed; in the debate, ChatGPT's opening itself, not the log), is
+  remembered as Duo's own (so the next run does not offer it as a question), and that step's
+  notification says so first. Only
+  when there is an answer; no new screen, tap or message. New string `notify.gpt_kept` in all 12
+  languages.
+
 ### Added (Duo 6.2, 2026-10-27; built-in number duo 8)
 - **When Claude does not answer, the first item is now «📲 No Claude app or not signed in? Open the App
   Store».** It opens the Claude app's App Store page; nothing is sent and the run ends there. The three

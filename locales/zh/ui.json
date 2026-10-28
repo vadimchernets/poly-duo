@@ -121,6 +121,7 @@
     "critique_start": "⚖️ 审校：ChatGPT 先答 → Claude 独立作答 → Claude 对比两份。约 1 分钟，别碰手机。如果 ChatGPT 说“logged out” —— 打开它的 App，再重新运行 Poly。",
     "critique_step2": "[2/3] Claude 正在复核并整理最终答案……",
     "critique_blind": "[2/3] Claude 在看不到 ChatGPT 回答的情况下独立作答……",
+    "gpt_kept": "📋 ChatGPT 的回答已在剪贴板中。如果 Claude 因消息额度用完而停止，仍可将回答粘贴到任何地方；稍后再问 Claude。",
     "critique_step3": "[3/3] Claude 正在对比两份回答：独立一致之处／不一致之处／需要你自己核实的内容，然后给出最终答案……",
     "critique_summary": "[3/3] Claude 正在整理两份回答：一致之处／分歧之处／需要你自己核实的内容……（复核后的答案已在剪贴板中）",
     "advisor_start": "🩺 顾问：Claude 只点评你的文字，不改写。约 40 秒，别碰屏幕。",

@@ -121,6 +121,7 @@
     "critique_start": "⚖️ Crítica: o ChatGPT responde → o Claude responde por conta própria → o Claude compara as duas. ≈1 min, não mexa no telefone. Se o ChatGPT disser «logged out» — abra o app dele e rode o Poly de novo.",
     "critique_step2": "[2/3] O Claude está verificando e montando a resposta final…",
     "critique_blind": "[2/3] O Claude responde por conta própria, sem ver a resposta do ChatGPT…",
+    "gpt_kept": "📋 A resposta do ChatGPT está na área de transferência. Se o Claude parar pelo limite de mensagens, você ainda pode colá-la onde quiser; pergunte ao Claude de novo mais tarde.",
     "critique_step3": "[3/3] O Claude compara as duas: coincidiram de forma independente / não coincidiram / o que conferir você mesmo, e depois a resposta final…",
     "critique_summary": "[3/3] O Claude está organizando as duas respostas: em que concordam / onde divergem / o que conferir você mesmo… (a resposta verificada já está na área de transferência)",
     "advisor_start": "🩺 Consultor: o Claude analisa o seu texto sem reescrevê-lo. ≈40 s, não toque na tela.",

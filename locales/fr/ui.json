@@ -121,6 +121,7 @@
     "critique_start": "⚖️ Critique : ChatGPT répond → Claude répond de son côté → Claude compare les deux. ≈1 min, ne touche pas au téléphone. Si ChatGPT dit « logged out » — ouvre son app et relance Poly.",
     "critique_step2": "[2/3] Claude vérifie et assemble la réponse finale…",
     "critique_blind": "[2/3] Claude répond de son côté, sans voir la réponse de ChatGPT…",
+    "gpt_kept": "📋 La réponse de ChatGPT est dans le presse-papiers. Si Claude s'arrête à cause de sa limite de messages, vous pouvez quand même la coller où vous voulez ; redemandez à Claude plus tard.",
     "critique_step3": "[3/3] Claude compare les deux : concordances indépendantes / divergences / ce qu’il faut vérifier toi-même, puis la réponse finale…",
     "critique_summary": "[3/3] Claude trie les deux réponses : sur quoi elles s'accordent / où elles divergent / ce qu'il faut vérifier vous-même… (la réponse vérifiée est déjà dans le presse-papiers)",
     "advisor_start": "🩺 Conseil : Claude relit ton texte sans le réécrire. ≈40 s, ne touche pas à l’écran.",
