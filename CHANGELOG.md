@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed (Duo 6.3.1, 2026-10-28; built-in number duo 10)
+- **The journal entry is written before the result screen.** On a real iPhone (28.10, Duo 6.3) the
+  «Append to file» permission window that came right after the result screen was closed vanished on
+  its own within ~1.5 s and the run ended there: no journal entry, no «What next?». Now every
+  permission window of a run comes before the result screen (also for «Check the result again»).
+- The weekly update offer is shown only when version.json has a link for this language (Codex).
+
 ### Fixed (Duo 6.3, D-100, 2026-10-28; built-in number duo 9)
 - **Critique on the iPhone asked neither ChatGPT nor Claude's blind answer.** Live run 28.10: the result
   began «EMPTY: ChatGPT returned no text / EMPTY: Claude returned no text» and the judge wrote the answer

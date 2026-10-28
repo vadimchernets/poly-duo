@@ -222,3 +222,15 @@ def test_critique_first_run_asks_few_permissions(tmp_path, lang):
     # the happy path: everything from the tail to the finale menu except the «Claude did not answer» menu
     seen = [kind(a) for i, a in enumerate(actions[tail - 3:finale], tail - 3) if not down <= i <= down_end]
     assert seen.count('setclipboard') == 1 and seen.count('save') == 1 and seen.count('append') == 1
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_no_permission_window_after_the_result_screen(tmp_path, lang):
+    """D-100 (6.3.1, live iPhone 28.10): a permission window right after the result screen closed vanished on its own
+    and ended the run (no journal, no «What next?»). Between the result screen and the finale menu nothing may ask."""
+    ui = ui_of(lang)
+    actions = build(tmp_path, lang)
+    finale = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
+                  and params(a).get('WFMenuPrompt') == ui['menu']['finale_title'])
+    look = max(i for i in range(finale) if kind(actions[i]) == 'previewdocument')
+    assert not any(kind(a) in ('save', 'append', 'setclipboard') for a in actions[look:finale])

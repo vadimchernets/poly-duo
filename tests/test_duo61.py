@@ -145,11 +145,14 @@ def test_own_answer_not_prefilled(tmp_path, lang):
     assert kind(actions[tail + 1]) == 'conditional' and params(actions[tail + 1])['WFControlFlowMode'] == 2
     look = next(i for i in range(tail, len(actions)) if kind(actions[i]) == 'previewdocument')
     journal = next(i for i in range(tail, len(actions)) if kind(actions[i]) == 'append')
-    assert tail < look < journal
+    # D-100 (6.3.1): the journal permission window comes before the result screen, not after it
+    assert tail < journal < look
     # the re-check: Copy <RESULT> where RESULT was just set from the same text
     set_ratify = next(a for a in reversed(actions[:ratify]) if kind(a) == 'setvariable')
     assert params(set_ratify)['WFInput']['Value']['OutputUUID'] == src(ratify)
-    assert kind(actions[ratify + 1]) == 'previewdocument'
+    # D-100 (6.3.1): its journal entry is written before its result screen
+    look2 = next(i for i in range(ratify, len(actions)) if kind(actions[i]) == 'previewdocument')
+    assert kind(actions[look2 - 1]) == 'append' and kind(actions[look2 + 1]) != 'append'
 
 
 @pytest.mark.parametrize('lang', LANGS)

@@ -492,7 +492,7 @@ def version_check(L, key, name, lang):
     ids = lambda n: [new_uuid() for _ in range(n)]
     (f_get, f_date, now, age, far, age_get, stamp_now, stamp, stamp_save,
      wifi, cell, net_get, gh, site, json_get, remote, link) = ids(17)
-    g_file, g_due, g_wifi, g_net, g_gh, g_site, g_json, g_new, g_menu = ids(9)
+    g_file, g_due, g_wifi, g_net, g_gh, g_site, g_json, g_new, g_menu, g_link = ids(10)
     age_var, json_var, net_var = f'{name}VersionAge', f'{name}VersionJson', f'{name}Network'
     stamp_file = f'{name}-version-check.txt'
     needle = f'"{key}":'
@@ -558,6 +558,8 @@ def version_check(L, key, name, lang):
         act_dict_value(key, json_get, 'Variable', remote),
         if_output(g_new, remote, 'Dictionary Value', 2, WFNumberValue=built_version(key)),
         act_dict_value(f'{key}_{lang}', json_get, 'Variable', link),
+        # only with a link for this language: an empty one would open nothing (Codex, D-100)
+        *if_output_text(g_link, link, 'Dictionary Value'),
         menu_open(g_menu, L['update.prompt'].replace('{NAME}', name), [install, later]),
         menu_case(g_menu, install),
         {'WFWorkflowActionIdentifier': 'is.workflow.actions.openurl',
@@ -565,6 +567,7 @@ def version_check(L, key, name, lang):
                                         'Show-WFInput': True}},
         menu_case(g_menu, later),
         menu_close(g_menu),
+        if_close(g_link),
         if_close(g_new),
         if_close(g_json),
         if_close(g_net),
@@ -1402,10 +1405,9 @@ def build(lang, ai=False):
         act_get_variable(RESULT, tl_rget),
         *remember_answer(tl_rget, 'Variable'),
         if_close(g_tlrem),
-        # ONE Quick Look, after the «Claude did not answer» menu too, and only when there is something to show
-        *if_text(g_show, RESULT),
-        act_quick_look(variable(RESULT)),
-        if_close(g_show),
+        # the journal entry is written BEFORE the result screen (D-100, 6.3.1): on the iPhone (28.10) the «Append to
+        # file» permission window that came right after closing the result vanished on its own within ~1.5 s, and the
+        # run ended there — no journal entry, no «What next?». Now every permission window comes before the result.
         act_date(tl_date),
         act_get_variable(JOURNAL_EXTRA, tl_extra),
         act_get_variable(RESULT, tl_result),
@@ -1413,6 +1415,10 @@ def build(lang, ai=False):
                             {**Q, 'D': (tl_date, 'Date'), 'JX': (tl_extra, 'Variable'),
                              'R': (tl_result, 'Variable')}), tl_entry),
         act_append_file(L['files.journal'], tl_entry),
+        # ONE Quick Look, after the «Claude did not answer» menu too, and only when there is something to show
+        *if_text(g_show, RESULT),
+        act_quick_look(variable(RESULT)),
+        if_close(g_show),
         menu_open(g_finale, L['menu.finale_title'], L['menu.finale_items']),
         menu_case(g_finale, L['menu.finale_items'][0]),
         menu_case(g_finale, L['menu.finale_items'][1]),
@@ -1431,14 +1437,14 @@ def build(lang, ai=False):
         act_set_variable(RESULT, fn_out, 'Text'),
         act_clipboard(variable(RESULT)),
         *remember_answer(fn_out, 'Text'),
-        act_quick_look(variable(RESULT)),
         # the corrected final answer goes into the journal as its own entry (the main entry above was written before
-        # this menu and holds the earlier version)
+        # this menu and holds the earlier version) — BEFORE its result screen, as in the shared tail (D-100, 6.3.1)
         act_date(fn_date),
         act_get_variable(JOURNAL_EXTRA, fn_jx),
         act_text(text_token(L['journal.entry'],
                             {**Q, 'D': (fn_date, 'Date'), 'JX': (fn_jx, 'Variable'), 'R': (fn_out, 'Text')}), fn_entry),
         act_append_file(L['files.journal'], fn_entry),
+        act_quick_look(variable(RESULT)),
 
         # Save to Notes (Create Note: the text goes to WFCreateNoteBody, Notes takes the first line as the title; not checked on device)
         menu_case(g_more, L['menu.finale_more_items'][1]),
