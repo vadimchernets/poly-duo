@@ -13,13 +13,13 @@ O C1M Duo é um "atalho" para iPhone: você faz uma pergunta e ela é trabalhada
 
 No iPhone, toque no link → o app Atalhos abre → **Adicionar**. Na primeira execução o atalho pede permissão 4–6 vezes — toque em **Sempre Permitir** todas as vezes.
 
-- **Duo:** https://www.icloud.com/shortcuts/a8f7d898268e43c29ed2e136e99f6bf5
+- **Duo:** https://www.icloud.com/shortcuts/1f65ad8a07d04f0ba3bf83295deb30b2
 - **Trio, iPhone 15 Pro ou mais novo — sem chave** (a terceira voz é a Apple Intelligence; veja abaixo): https://www.icloud.com/shortcuts/4000dcb2b9d64dcfaa44062c92e51b69
 - **Trio, iPhone mais antigo — chave gratuita** (a terceira voz, veja abaixo): https://www.icloud.com/shortcuts/29cace07d31f4033aa0cf26a2d1f9bb1
 
 ### Alternativa — o arquivo
 
-Os arquivos assinados `Duo.shortcut` e `Trio.shortcut` estão em [polyhelper.ai/duo/pt/](https://polyhelper.ai/pt/duo/) e na [versão do GitHub](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0). Ou então:
+Os arquivos assinados `Duo.shortcut` e `Trio.shortcut` estão em [polyhelper.ai/duo/pt/](https://polyhelper.ai/pt/duo/) e na [versão do GitHub](https://github.com/vadimchernets/poly-duo/tree/main/releases). Ou então:
 
 1. Leve o arquivo **`dist/pt/Duo.shortcut`** até o telefone do jeito que preferir: AirDrop, WhatsApp/Telegram, e-mail, um pen drive — tanto faz.
 2. Toque no arquivo. O app Atalhos abre com um cartão "Duo" — toque em **Adicionar**. Pronto, o Duo está instalado.

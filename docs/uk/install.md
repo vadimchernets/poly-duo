@@ -13,12 +13,12 @@ C1M Duo (на цих сторінках — Poly) — це «швидка ком
 
 На iPhone торкніться посилання → відкриється застосунок «Команди» → **Додати команду**. Під час першого запуску команда 4–6 разів попросить дозвіл — щоразу торкайтеся **Завжди дозволяти**.
 
-- **Duo:** https://www.icloud.com/shortcuts/d5baefab7b8f4941a32cccb6c58aa90c
+- **Duo:** https://www.icloud.com/shortcuts/6dc9b80c563a47a3a7908f80d74c9803
 - **Trio** (третій голос, див. нижче): https://www.icloud.com/shortcuts/2ee4ec0be50e4e2c85c10626bd5adf01
 
 ### Запасний варіант — файл
 
-Підписані файли `Duo.shortcut` і `Trio.shortcut` лежать на [polyhelper.ai/duo/](https://polyhelper.ai/duo/) і в [релізі на GitHub](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0). Або так:
+Підписані файли `Duo.shortcut` і `Trio.shortcut` лежать на [polyhelper.ai/duo/](https://polyhelper.ai/duo/) і в [релізі на GitHub](https://github.com/vadimchernets/poly-duo/tree/main/releases). Або так:
 
 1. Отримайте файл **`Poly.shortcut`** будь-яким способом: AirDrop, WhatsApp/Telegram, пошта, флешка — не має значення.
 2. Торкніться файлу. Відкриється застосунок «Команди» з карткою «Poly» — торкніться **Додати команду**. Готово, Poly встановлено.

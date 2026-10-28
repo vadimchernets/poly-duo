@@ -13,12 +13,12 @@ C1M Duo는 iPhone용 «단축어»예요. 질문을 하나 하면 두 AI, 곧 Ch
 
 iPhone에서 링크를 탭하면 → 단축어 앱이 열려요 → **단축어 추가**. 처음 실행할 때 단축어가 권한을 4–6번 물어봐요. 매번 **항상 허용**을 탭하세요.
 
-- **Duo:** https://www.icloud.com/shortcuts/d596af88843047349f2105516dd5eafc
+- **Duo:** https://www.icloud.com/shortcuts/baa110a943f64b97a33a67a88a9e123a
 - **Trio** (세 번째 목소리, 아래 참고): https://www.icloud.com/shortcuts/0df9f941045d4c3a8e43bef02c01c35b
 
 ### 백업 — 파일
 
-서명된 `Duo.shortcut`과 `Trio.shortcut` 파일은 [polyhelper.ai/duo/](https://polyhelper.ai/duo/)와 [GitHub 릴리스](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0)에 있어요. 아니면 이렇게 하세요.
+서명된 `Duo.shortcut`과 `Trio.shortcut` 파일은 [polyhelper.ai/duo/](https://polyhelper.ai/duo/)와 [GitHub 릴리스](https://github.com/vadimchernets/poly-duo/tree/main/releases)에 있어요. 아니면 이렇게 하세요.
 
 1. **`Duo.shortcut`** 파일을 어떤 방법으로든 받으세요: AirDrop, WhatsApp/Telegram, 이메일, USB 드라이브 — 방법은 상관없어요.
 2. 파일을 탭하세요. 단축어 앱이 «Duo» 카드와 함께 열리면 **단축어 추가**를 탭하세요. 끝, Duo가 설치되었어요.

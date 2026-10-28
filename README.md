@@ -1,6 +1,6 @@
 # ChatGPT × Claude — second opinion, one tap, free
 
-**Install:** [iPhone — add the Duo shortcut](https://www.icloud.com/shortcuts/240897bf8b4c49e98db65093b9e7032b) · [Android — Poly Duo on Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1) · [other languages](#install-in-60-seconds) · [polyhelper.ai/duo](https://polyhelper.ai/duo/)
+**Install:** [iPhone — add the Duo shortcut](https://www.icloud.com/shortcuts/2aaedccd2de64a579e9addbc122533db) · [Android — Poly Duo on Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1) · [other languages](#install-in-60-seconds) · [polyhelper.ai/duo](https://polyhelper.ai/duo/)
 
 **What it is, technically:** a signed Apple Shortcut that chains the Ask ChatGPT and Ask Claude App Intents; it makes no network calls of its own, and `tools/verify.py` checks the signed files against `locales/`.
 
@@ -67,17 +67,17 @@ Have ChatGPT and Claude? Start right away. Have one? It helps you install the ot
 
 | Language | Duo | Trio |
 |---|---|---|
-| English | [Duo](https://www.icloud.com/shortcuts/240897bf8b4c49e98db65093b9e7032b) | [Trio](https://www.icloud.com/shortcuts/ca730c3d887648a0a380dc397ede7ab7) |
-| Español | [Duo](https://www.icloud.com/shortcuts/7b563fc82bc4462782e8bf64d6005841) | [Trio](https://www.icloud.com/shortcuts/3180a49b17e64b35b9b7c3b445ba98e9) |
-| Português | [Duo](https://www.icloud.com/shortcuts/a8f7d898268e43c29ed2e136e99f6bf5) | [Trio](https://www.icloud.com/shortcuts/29cace07d31f4033aa0cf26a2d1f9bb1) |
-| Русский | [Duo](https://www.icloud.com/shortcuts/4d2f4893fbaa4e57a4a9b4d629a4e43d) | [Trio](https://www.icloud.com/shortcuts/aaeeb82334154966b6c5fa6c8b6fdd3d) |
-| Українська | [Duo](https://www.icloud.com/shortcuts/d5baefab7b8f4941a32cccb6c58aa90c) | [Trio](https://www.icloud.com/shortcuts/2ee4ec0be50e4e2c85c10626bd5adf01) |
-| Deutsch | [Duo](https://www.icloud.com/shortcuts/933e7ea2bbd1411e82b92456acd3f660) | [Trio](https://www.icloud.com/shortcuts/3deb89385a604743925a2683faa0a216) |
-| Français | [Duo](https://www.icloud.com/shortcuts/a0e24803eec24ccdb3e52e662f4ab4be) | [Trio](https://www.icloud.com/shortcuts/5debce283e1b4e4a90403959dbd8b748) |
-| हिन्दी | [Duo](https://www.icloud.com/shortcuts/e1f7599017414e2890e5987dd032b300) | [Trio](https://www.icloud.com/shortcuts/8524e67391be4ced90d6bfddfc5fd271) |
-| 日本語 | [Duo](https://www.icloud.com/shortcuts/a339a9533c8345f0aae55e6c32f8a921) | [Trio](https://www.icloud.com/shortcuts/c0988a5ff0f242cb8458f2991eef5b7f) |
-| 한국어 | [Duo](https://www.icloud.com/shortcuts/d596af88843047349f2105516dd5eafc) | [Trio](https://www.icloud.com/shortcuts/0df9f941045d4c3a8e43bef02c01c35b) |
-| 中文 | [Duo](https://www.icloud.com/shortcuts/9c16eb0749bd411bbb6b2d2d05093f91) | [Trio](https://www.icloud.com/shortcuts/8c7639cf0be9421e884b075ee9b794e4) |
+| English | [Duo](https://www.icloud.com/shortcuts/2aaedccd2de64a579e9addbc122533db) | [Trio](https://www.icloud.com/shortcuts/ca730c3d887648a0a380dc397ede7ab7) |
+| Español | [Duo](https://www.icloud.com/shortcuts/3cdb6fd7c96d4c0e809722a3805c6795) | [Trio](https://www.icloud.com/shortcuts/3180a49b17e64b35b9b7c3b445ba98e9) |
+| Português | [Duo](https://www.icloud.com/shortcuts/1f65ad8a07d04f0ba3bf83295deb30b2) | [Trio](https://www.icloud.com/shortcuts/29cace07d31f4033aa0cf26a2d1f9bb1) |
+| Русский | [Duo](https://www.icloud.com/shortcuts/d30c4b524b0c4a46ad277012f30b0fec) | [Trio](https://www.icloud.com/shortcuts/aaeeb82334154966b6c5fa6c8b6fdd3d) |
+| Українська | [Duo](https://www.icloud.com/shortcuts/6dc9b80c563a47a3a7908f80d74c9803) | [Trio](https://www.icloud.com/shortcuts/2ee4ec0be50e4e2c85c10626bd5adf01) |
+| Deutsch | [Duo](https://www.icloud.com/shortcuts/3879cd43aea24a02bf972ca4d6753a32) | [Trio](https://www.icloud.com/shortcuts/3deb89385a604743925a2683faa0a216) |
+| Français | [Duo](https://www.icloud.com/shortcuts/9aac04b03b834e4987a46a2fcd1b1ed8) | [Trio](https://www.icloud.com/shortcuts/5debce283e1b4e4a90403959dbd8b748) |
+| हिन्दी | [Duo](https://www.icloud.com/shortcuts/b04f8caba6ff436f82dc87fa512e9b80) | [Trio](https://www.icloud.com/shortcuts/8524e67391be4ced90d6bfddfc5fd271) |
+| 日本語 | [Duo](https://www.icloud.com/shortcuts/bf58bda752a74690ace18084869f7728) | [Trio](https://www.icloud.com/shortcuts/c0988a5ff0f242cb8458f2991eef5b7f) |
+| 한국어 | [Duo](https://www.icloud.com/shortcuts/baa110a943f64b97a33a67a88a9e123a) | [Trio](https://www.icloud.com/shortcuts/0df9f941045d4c3a8e43bef02c01c35b) |
+| 中文 | [Duo](https://www.icloud.com/shortcuts/c02410d82abd44548b3e18288de18ca1) | [Trio](https://www.icloud.com/shortcuts/8c7639cf0be9421e884b075ee9b794e4) |
 
 **Backup: the signed file.**
 
@@ -85,7 +85,7 @@ Have ChatGPT and Claude? Start right away. Have one? It helps you install the ot
 2. Tap **`Duo.shortcut`** (or **`Trio.shortcut`**) → **Add**.
 3. Run it once and tap **Always Allow** each time it asks about ChatGPT, Claude and the clipboard (4–6 times on the first run).
 
-The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (Duo 6.1, site update of 2026-10-27) and in the [`releases/`](releases) folder of this repository (the same files that `releases/SHA256SUMS` lists). The [GitHub releases](https://github.com/vadimchernets/poly-duo/releases) page does not carry the current files: its only attached files, in v1.0.0–v1.0.4, are the old 1.0 builds named `Duo-en.shortcut` and so on. Do not use them: the name becomes the shortcut's name, and Siri and «another mode — same question» then cannot find it. Keep the file name
+The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (Duo 6.2) and in the [`releases/`](releases) folder of this repository (the same files that `releases/SHA256SUMS` lists). The [GitHub releases](https://github.com/vadimchernets/poly-duo/releases) page does not carry the current files: its only attached files, in v1.0.0–v1.0.4, are the old 1.0 builds named `Duo-en.shortcut` and so on. Do not use them: the name becomes the shortcut's name, and Siri and «another mode — same question» then cannot find it. Keep the file name
 `Duo.shortcut`: the name in Shortcuts comes from it, and Siri and «another mode — same question»
 find the shortcut by that name.
 

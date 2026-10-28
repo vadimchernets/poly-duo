@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (Duo 6.2, 2026-10-27; built-in number duo 8)
+- **When Claude does not answer, the first item is now «📲 No Claude app or not signed in? Open the App
+  Store».** It opens the Claude app's App Store page; nothing is sent and the run ends there. The three
+  other ways to still have the answer checked follow it as before. New iCloud links for Duo in all 11
+  languages (README, docs/*/install.md, releases/version.json). Trio and Trio without a key are
+  unchanged (the rebuilt files match the 6.1 ones action for action), so their links and numbers
+  (trio 6, trio_nokey 3) stay.
+
 ### Fixed (Duo 6.1, 2026-10-26)
 - **Duo no longer offers its own last answer as the next question.** Duo leaves its answer in the
   clipboard; the next run pre-filled the question box with it, and one «Done» spent 3 messages on

@@ -50,7 +50,9 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
     assert newer == [VERSION[key]]
     keys = [p['WFDictionaryKey'] for p in params(actions, 'getvalueforkey')]
     assert f'{key}_{lang}' in keys
-    assert len([p for p in params(actions, 'openurl') if 'run-report' not in str(p)]) == 1  # + the report link
+    # the update link; besides it only the report link and (Duo, Claude did not answer) the Claude App Store page
+    assert len([p for p in params(actions, 'openurl')
+                if 'run-report' not in str(p) and 'apps.apple.com/app/id6473753684' not in str(p)]) == 1
     # the network goes first, by actions that never throw; a non-JSON answer is «no update»
     nets = [p['WFNetworkDetailsNetwork'] for p in params(actions, 'getwifi')]
     assert nets == ['Wi-Fi', 'Cellular']

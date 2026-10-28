@@ -13,13 +13,13 @@ C1M Duo is a "shortcut" for iPhone: ask one question, and it's handled by two AI
 
 On your iPhone, tap the link → the Shortcuts app opens → **Add**. On the first run the shortcut asks for permission 4–6 times — tap **Always Allow** each time.
 
-- **Duo:** https://www.icloud.com/shortcuts/240897bf8b4c49e98db65093b9e7032b
+- **Duo:** https://www.icloud.com/shortcuts/2aaedccd2de64a579e9addbc122533db
 - **Trio, iPhone 15 Pro or newer — no key** (the third voice is Apple Intelligence; see below): https://www.icloud.com/shortcuts/2a24e0157e4a445bae92ed1410907b9f
 - **Trio, older iPhone — free key** (the third voice, see below): https://www.icloud.com/shortcuts/ca730c3d887648a0a380dc397ede7ab7
 
 ### Backup — the file
 
-The signed `Duo.shortcut` and `Trio.shortcut` files are on [polyhelper.ai/duo/en/](https://polyhelper.ai/duo/) and in the [GitHub release](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0). Or:
+The signed `Duo.shortcut` and `Trio.shortcut` files are on [polyhelper.ai/duo/en/](https://polyhelper.ai/duo/) and in the [`releases/` folder on GitHub](https://github.com/vadimchernets/poly-duo/tree/main/releases). Or:
 
 1. Get the **`Duo.shortcut`** file any way you like: AirDrop, WhatsApp/Telegram, email, a USB drive — it doesn't matter.
 2. Tap the file. The Shortcuts app opens with a "Duo" card — tap **Add**. Done, Duo is installed.

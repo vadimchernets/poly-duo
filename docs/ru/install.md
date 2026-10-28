@@ -13,13 +13,13 @@ C1M Duo — это команда для iPhone: задаёте один воп�
 
 На iPhone тапните ссылку → откроются «Быстрые команды» → **«Добавить»**. При первом запуске команда 4–6 раз спросит разрешения — каждый раз жмите **«Разрешать всегда»**.
 
-- **Duo:** https://www.icloud.com/shortcuts/4d2f4893fbaa4e57a4a9b4d629a4e43d
+- **Duo:** https://www.icloud.com/shortcuts/d30c4b524b0c4a46ad277012f30b0fec
 - **Trio, iPhone 15 Pro или новее — без ключа** (третий голос — Apple Intelligence; версия на английском): https://www.icloud.com/shortcuts/2a24e0157e4a445bae92ed1410907b9f
 - **Trio, более старый iPhone — бесплатный ключ** (третий голос): https://www.icloud.com/shortcuts/aaeeb82334154966b6c5fa6c8b6fdd3d
 
 ### Запасные способы — файл
 
-Подписанные файлы `Duo.shortcut` и `Trio.shortcut` лежат на сайте [polyhelper.ai/duo/ru/](https://polyhelper.ai/ru/duo/) и в [GitHub-релизе](https://github.com/vadimchernets/poly-duo/releases/tag/v1.0.0). Или так:
+Подписанные файлы `Duo.shortcut` и `Trio.shortcut` лежат на сайте [polyhelper.ai/duo/ru/](https://polyhelper.ai/ru/duo/) и в [GitHub-релизе](https://github.com/vadimchernets/poly-duo/tree/main/releases). Или так:
 
 1. Получите файл **`dist/ru/Duo.shortcut`** любым способом: AirDrop, WhatsApp/Telegram, почта, флешка — как угодно.
 2. Тапните по файлу → откроется приложение «Команды» с карточкой «Duo» → нажмите **«Добавить»**. Всё, команда установлена.
