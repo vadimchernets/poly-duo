@@ -5,7 +5,7 @@
 <!-- Poster: when video 2 is live on YouTube, point this link at the video instead of polyhelper.ai/duo. -->
 [![Watch Duo run — open polyhelper.ai/duo](docs/img/duo-hook-en-horizontal.jpg)](https://polyhelper.ai/duo/)
 
-**Install:** [iPhone — add the Duo shortcut](https://www.icloud.com/shortcuts/2aaedccd2de64a579e9addbc122533db) · [Android — Poly Duo on Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1) · [other languages](#install-in-60-seconds) · [polyhelper.ai/duo](https://polyhelper.ai/duo/)
+**Install:** [iPhone — add the Duo shortcut](https://www.icloud.com/shortcuts/73ff6c2eddc540e0a04cc63db07bcb84) · [Android — Poly Duo on Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1) · [other languages](#install-in-60-seconds) · [polyhelper.ai/duo](https://polyhelper.ai/duo/)
 
 ## Install in 60 seconds
 
@@ -17,17 +17,17 @@
 
 | Language | Duo | Trio |
 |---|---|---|
-| English | [Duo](https://www.icloud.com/shortcuts/2aaedccd2de64a579e9addbc122533db) | [Trio](https://www.icloud.com/shortcuts/ca730c3d887648a0a380dc397ede7ab7) |
-| Español | [Duo](https://www.icloud.com/shortcuts/3cdb6fd7c96d4c0e809722a3805c6795) | [Trio](https://www.icloud.com/shortcuts/3180a49b17e64b35b9b7c3b445ba98e9) |
-| Português | [Duo](https://www.icloud.com/shortcuts/1f65ad8a07d04f0ba3bf83295deb30b2) | [Trio](https://www.icloud.com/shortcuts/29cace07d31f4033aa0cf26a2d1f9bb1) |
-| Русский | [Duo](https://www.icloud.com/shortcuts/d30c4b524b0c4a46ad277012f30b0fec) | [Trio](https://www.icloud.com/shortcuts/aaeeb82334154966b6c5fa6c8b6fdd3d) |
-| Українська | [Duo](https://www.icloud.com/shortcuts/6dc9b80c563a47a3a7908f80d74c9803) | [Trio](https://www.icloud.com/shortcuts/2ee4ec0be50e4e2c85c10626bd5adf01) |
-| Deutsch | [Duo](https://www.icloud.com/shortcuts/3879cd43aea24a02bf972ca4d6753a32) | [Trio](https://www.icloud.com/shortcuts/3deb89385a604743925a2683faa0a216) |
-| Français | [Duo](https://www.icloud.com/shortcuts/9aac04b03b834e4987a46a2fcd1b1ed8) | [Trio](https://www.icloud.com/shortcuts/5debce283e1b4e4a90403959dbd8b748) |
-| हिन्दी | [Duo](https://www.icloud.com/shortcuts/b04f8caba6ff436f82dc87fa512e9b80) | [Trio](https://www.icloud.com/shortcuts/8524e67391be4ced90d6bfddfc5fd271) |
-| 日本語 | [Duo](https://www.icloud.com/shortcuts/bf58bda752a74690ace18084869f7728) | [Trio](https://www.icloud.com/shortcuts/c0988a5ff0f242cb8458f2991eef5b7f) |
-| 한국어 | [Duo](https://www.icloud.com/shortcuts/baa110a943f64b97a33a67a88a9e123a) | [Trio](https://www.icloud.com/shortcuts/0df9f941045d4c3a8e43bef02c01c35b) |
-| 中文 | [Duo](https://www.icloud.com/shortcuts/c02410d82abd44548b3e18288de18ca1) | [Trio](https://www.icloud.com/shortcuts/8c7639cf0be9421e884b075ee9b794e4) |
+| English | [Duo](https://www.icloud.com/shortcuts/73ff6c2eddc540e0a04cc63db07bcb84) | [Trio](https://www.icloud.com/shortcuts/ca730c3d887648a0a380dc397ede7ab7) |
+| Español | [Duo](https://www.icloud.com/shortcuts/fe3a7b9b95304fe7998c62328903aa12) | [Trio](https://www.icloud.com/shortcuts/3180a49b17e64b35b9b7c3b445ba98e9) |
+| Português | [Duo](https://www.icloud.com/shortcuts/eb3370375aed49ee99b289cf125ac1a5) | [Trio](https://www.icloud.com/shortcuts/29cace07d31f4033aa0cf26a2d1f9bb1) |
+| Русский | [Duo](https://www.icloud.com/shortcuts/8c499582c0554dd0b965cafcf83ce26c) | [Trio](https://www.icloud.com/shortcuts/aaeeb82334154966b6c5fa6c8b6fdd3d) |
+| Українська | [Duo](https://www.icloud.com/shortcuts/a13e303e51974957a09198cc22b8ad69) | [Trio](https://www.icloud.com/shortcuts/2ee4ec0be50e4e2c85c10626bd5adf01) |
+| Deutsch | [Duo](https://www.icloud.com/shortcuts/8541f801cda446048dcc59f7cf98add5) | [Trio](https://www.icloud.com/shortcuts/3deb89385a604743925a2683faa0a216) |
+| Français | [Duo](https://www.icloud.com/shortcuts/038b67254bf242a18a6d551e7eae4f1c) | [Trio](https://www.icloud.com/shortcuts/5debce283e1b4e4a90403959dbd8b748) |
+| हिन्दी | [Duo](https://www.icloud.com/shortcuts/e964195237f040688facecea9e7dd9c2) | [Trio](https://www.icloud.com/shortcuts/8524e67391be4ced90d6bfddfc5fd271) |
+| 日本語 | [Duo](https://www.icloud.com/shortcuts/f74fd5f56aa64321a2b63a954db0e647) | [Trio](https://www.icloud.com/shortcuts/c0988a5ff0f242cb8458f2991eef5b7f) |
+| 한국어 | [Duo](https://www.icloud.com/shortcuts/ff7bff3172e34e43923a3ce16dea51dc) | [Trio](https://www.icloud.com/shortcuts/0df9f941045d4c3a8e43bef02c01c35b) |
+| 中文 | [Duo](https://www.icloud.com/shortcuts/da642843a99841e0a35945873ca463a0) | [Trio](https://www.icloud.com/shortcuts/8c7639cf0be9421e884b075ee9b794e4) |
 
 **Backup: the signed file.**
 
@@ -35,7 +35,7 @@
 2. Tap **`Duo.shortcut`** (or **`Trio.shortcut`**) → **Add**.
 3. Run it once and tap **Always Allow** each time it asks about ChatGPT, Claude and the clipboard (4–6 times on the first run).
 
-The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (Duo 6.2) and in the [`releases/`](releases) folder of this repository (the same files that `releases/SHA256SUMS` lists). The [GitHub releases](https://github.com/vadimchernets/poly-duo/releases) page does not carry the current files: its only attached files, in v1.0.0–v1.0.4, are the old 1.0 builds named `Duo-en.shortcut` and so on. Do not use them: the name becomes the shortcut's name, and Siri and «another mode — same question» then cannot find it. Keep the file name
+The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (Duo 6.3) and in the [`releases/`](releases) folder of this repository (the same files that `releases/SHA256SUMS` lists). The [GitHub releases](https://github.com/vadimchernets/poly-duo/releases) page does not carry the current files: its only attached files, in v1.0.0–v1.0.4, are the old 1.0 builds named `Duo-en.shortcut` and so on. Do not use them: the name becomes the shortcut's name, and Siri and «another mode — same question» then cannot find it. Keep the file name
 `Duo.shortcut`: the name in Shortcuts comes from it, and Siri and «another mode — same question»
 find the shortcut by that name.
 

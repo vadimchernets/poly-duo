@@ -13,7 +13,7 @@ C1M Duo — это команда для iPhone: задаёте один воп�
 
 На iPhone тапните ссылку → откроются «Быстрые команды» → **«Добавить»**. При первом запуске команда 4–6 раз спросит разрешения — каждый раз жмите **«Разрешать всегда»**.
 
-- **Duo:** https://www.icloud.com/shortcuts/d30c4b524b0c4a46ad277012f30b0fec
+- **Duo:** https://www.icloud.com/shortcuts/8c499582c0554dd0b965cafcf83ce26c
 - **Trio, iPhone 15 Pro или новее — без ключа** (третий голос — Apple Intelligence; версия на английском): https://www.icloud.com/shortcuts/2a24e0157e4a445bae92ed1410907b9f
 - **Trio, более старый iPhone — бесплатный ключ** (третий голос): https://www.icloud.com/shortcuts/aaeeb82334154966b6c5fa6c8b6fdd3d
 

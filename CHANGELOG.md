@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-### Fixed (D-100, 2026-10-28; planned as Duo 6.3, not released yet)
+### Fixed (Duo 6.3, D-100, 2026-10-28; built-in number duo 9)
 - **Critique on the iPhone asked neither ChatGPT nor Claude's blind answer.** Live run 28.10: the result
   began «EMPTY: ChatGPT returned no text / EMPTY: Claude returned no text» and the judge wrote the answer
   alone; iOS never even asked for ChatGPT. Cause (checked with a test shortcut on Shortcuts 28.10): a
@@ -24,7 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   shortcut called «Duo» by name; after «Keep Both» the new version is «Duo 1», so they started the old
   one. Now `isSelf` (checked on Shortcuts for macOS: the child gets the input and returns its output).
 
-### Fixed (D-98, 2026-10-28; not released yet: live iPhone repeat and second-family review first)
+### Fixed (Duo 6.3, D-98, 2026-10-28)
 - **ChatGPT's answer is no longer lost when Claude hits its message limit.** On a real iPhone
   (28.10) Claude's app action threw «You have reached your current Claude message limit…»; iOS
   stops the whole shortcut with that system alert, and Shortcuts has no built-in try/catch or «continue on error» for an app

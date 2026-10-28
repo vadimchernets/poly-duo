@@ -13,7 +13,7 @@ C1M Duo는 iPhone용 «단축어»예요. 질문을 하나 하면 두 AI, 곧 Ch
 
 iPhone에서 링크를 탭하면 → 단축어 앱이 열려요 → **단축어 추가**. 처음 실행할 때 단축어가 권한을 4–6번 물어봐요. 매번 **항상 허용**을 탭하세요.
 
-- **Duo:** https://www.icloud.com/shortcuts/baa110a943f64b97a33a67a88a9e123a
+- **Duo:** https://www.icloud.com/shortcuts/ff7bff3172e34e43923a3ce16dea51dc
 - **Trio** (세 번째 목소리, 아래 참고): https://www.icloud.com/shortcuts/0df9f941045d4c3a8e43bef02c01c35b
 
 ### 백업 — 파일
