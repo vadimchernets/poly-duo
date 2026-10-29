@@ -174,7 +174,8 @@ def test_recipes_and_my_rule_reachable(tmp_path, lang):
         assert len(runs) == len(m['recipes_texts'])
         assert all(params(r)['WFWorkflowName'] == 'Duo' for r in runs)
     texts = [params(a)['WFTextActionText']['Value']['string'] for a in actions[empty[0]:empty[0] + 22] if kind(a) == 'gettext']
-    assert texts == m['recipes_texts']
+    # D-29: each re-run starts with the marker that forces the question box and the mode menu
+    assert texts == ['⟦duo-menu⟧\n' + t for t in m['recipes_texts']]
     # the main menu still comes right after the question, unchanged
     ask = next(i for i, a in enumerate(actions) if kind(a) == 'ask' and params(a)['WFAskActionPrompt'] == ui['ask']['question'])
     main = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu' and params(a).get('WFMenuPrompt') == m['main_title'])
@@ -188,10 +189,10 @@ def test_recipes_and_my_rule_reachable(tmp_path, lang):
     guard = params(actions[g - 1])
     assert kind(actions[g - 1]) == 'conditional' and guard['WFCondition'] == 101
     assert guard['WFInput']['Variable']['Value']['VariableName'] == 'PolyMyRule'
-    seq = [kind(a) for a in actions[g:g + 15]]
+    seq = [kind(a) for a in actions[g:g + 16]]
     assert seq == ['choosefrommenu', 'choosefrommenu', 'ask', 'match', 'conditional', 'exit', 'conditional',
                    'gettext', 'save', 'setvariable',
-                   'choosefrommenu', 'runworkflow', 'exit', 'choosefrommenu', 'conditional']
+                   'choosefrommenu', 'gettext', 'runworkflow', 'exit', 'choosefrommenu', 'conditional']
     # 1. write it now: the field opens with the sample, Done saves the file and the check goes on with that rule
     write = params(actions[g + 2])
     assert write['WFAskActionPrompt'] == ui['ask']['my_rule']
@@ -203,15 +204,20 @@ def test_recipes_and_my_rule_reachable(tmp_path, lang):
     assert empty_rule['WFCondition'] == 101 and empty_rule['WFInput']['Variable']['Value']['OutputUUID'] == chars['UUID']
     assert params(actions[g + 8])['WFFileDestinationPath'] == 'Poly-my-mode.txt'
     assert params(actions[g + 9])['WFVariableName'] == 'PolyMyRule'
-    rule = actions[g + 15]
+    rule = actions[g + 16]
     assert kind(rule) == 'getvariable' and params(rule)['WFVariable']['Value']['VariableName'] == 'PolyMyRule'
     # nothing is spent before the rule is there: the first AI call of My mode comes after this menu
     first_ai = next(i for i in range(g, len(actions)) if kind(actions[i]) in ('AskIntent', 'ClaudeAppIntentsExtension'))
-    assert first_ai > g + 15
+    assert first_ai > g + 16
     # 2. back: Duo runs again with the same question in the field, then the mode menu
-    back = params(actions[g + 11])
+    # D-29: through a Text action that puts the menu marker in front of the question (read from PolyQuestion)
+    back = params(actions[g + 12])
     assert back['WFWorkflowName'] == 'Duo'
-    ask_uid = params(actions[ask])['UUID']
-    assert back['WFInput']['Value']['OutputUUID'] == ask_uid
+    tx = params(actions[g + 11])
+    assert back['WFInput']['Value']['OutputUUID'] == tx['UUID']
+    assert tx['WFTextActionText']['Value']['string'].startswith('⟦duo-menu⟧\n')
+    qref = list(tx['WFTextActionText']['Value']['attachmentsByRange'].values())[0]['OutputUUID']
+    assert any(kind(a) == 'getvariable' and params(a)['UUID'] == qref
+               and params(a)['WFVariable']['Value']['VariableName'] == 'PolyQuestion' for a in actions)
     # the old dead-end notice is gone from every language
     assert 'my_mode_missing' not in ui['notify']

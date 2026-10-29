@@ -106,7 +106,8 @@ def test_first_minute(tmp_path, lang):
                 and a['WFWorkflowActionParameters'].get('WFMenuPrompt') == ui['menu']['main_title'])
     end = assert_duo_blank_guard(actions, ui)
     # Duo 6.4: the question goes to a variable (a resumed draft fills the same one), then the mode menu
-    assert kind(actions[end]) == 'setvariable' and main == end + 1
+    # D-29: then the «ask without editing» Else branch (QUICK) and the «Critique right away» branch (MODE), then the menu
+    assert kind(actions[end]) == 'setvariable' and kind(actions[end + 1]) == 'conditional' and main > end
     assert actions[end]['WFWorkflowActionParameters']['WFVariableName'] == 'PolyQuestion'
 
     # «empty» comes only when RESULT has no text; «done» only inside «RESULT has text», right after its one clipboard

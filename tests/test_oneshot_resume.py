@@ -59,7 +59,8 @@ def test_oneshot_resume_long(tmp_path, lang):
     assert list(default['attachmentsByRange'].values())[0]['OutputUUID'] == params(actions[ask - 1])['UUID']
     main = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
                 and params(a).get('WFMenuPrompt') == ui['menu']['main_title'])
-    assert assert_duo_blank_guard(actions, ui) == main - 1   # then the question goes to PolyQuestion (Duo 6.4)
+    end = assert_duo_blank_guard(actions, ui)   # then the question goes to PolyQuestion (Duo 6.4); D-29: menu is later
+    assert kind(actions[end]) == 'setvariable' and 0 < main - end < 40
 
     # --- one retry after 3 s; Duo 6.4: the resume is back, through ONE draft «Save File» (test_duo64)
     n = ui['notify']

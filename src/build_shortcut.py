@@ -480,6 +480,13 @@ REPORT_MODES = {'critique': 'Critique', 'argue': 'Debate%20to%20agreement', 'sur
                 'synthesis_claude': 'Synthesis', 'synthesis_gpt': 'Synthesis', 'advisor': 'Advisor',
                 None: 'Another%20mode%20from%20the%20menu'}
 MY_MODE_FILE = 'Poly-my-mode.txt'
+# D-29 (C-1, C-3): the person's two optional shortcuts, in ONE small file next to the journal: «MODE=critique» (the mode
+# menu is skipped) and «QUICK=1» (a text shared to Duo is sent without the question box). Read by ONE «Get File» at
+# the start, written by ONE «Save File» in the final «More actions» menu. Duo's own re-runs («Another mode», Recipes,
+# «go back») start with MENU_MARK, which is cut off again at once and forces the question box and the mode menu.
+PREFS_FILE = 'Duo-prefs.txt'
+PREFS_HEAD = '⟦duo-prefs⟧\n'
+MENU_MARK = '⟦duo-menu⟧\n'
 # How much of the answer Duo left in the clipboard is remembered (files.last_answer), to recognise it next run
 LAST_ANSWER_CHARS = 200
 REPORT_URL = 'https://github.com/vadimchernets/poly-duo/issues/new?template=run-report.yml'
@@ -700,9 +707,10 @@ def build(lang, ai=False):
     EXTRA = L['menu.extra_items']
 
     ids = lambda n: [new_uuid() for _ in range(n)]
-    question, = ids(1)
-    Q = {'Q': (question, 'Provided Input')}
-    QUESTION = {'QUESTION': (question, 'Provided Input')}
+    question, qpre = ids(2)
+    # the modes read the question from a Get Variable (qpre) that runs after the question box OR after the skipped box
+    Q = {'Q': (qpre, 'Variable')}
+    QUESTION = {'QUESTION': (qpre, 'Variable')}
     q_get, g_fresh, g_crit, g_down = ids(4)
     QV = {'Q': (q_get, 'Variable')}   # the question after the mode menu (typed now, or from a resumed draft)
 
@@ -727,6 +735,8 @@ def build(lang, ai=False):
     DRAFT = draft_file(lang, ai)
     RETRY_SKIP = set()   # ChatGPT calls that have their own retry or are not a mode's first call (see with_gpt_retry)
     NUMS_VAR, MODE_VAR, MY_RULE = 'PolyOnlyInOne', 'PolyMode', 'PolyMyRule'
+    PREF_MODE, PREF_QUICK, FORCE_MENU = 'PolyPrefMode', 'PolyPrefQuick', 'PolyForceMenu'
+    SHARED_VAR, SKIP_MENU, SKIP_Q, PREFS_CHANGED = 'PolyShared', 'PolySkipMenu', 'PolySkipQuestion', 'PolyPrefsChanged'
     g_rec, g_mm, g_more = ids(3)
     rv_wrap, rv_claude, rv_prompt, rv_gpt, rv_sum_prompt, rv_sum, rv_out, mm_file, mm_rule = ids(9)
     (fn_get, fn_prompt, fn_gpt, fn_out, nt_get, rm_get, rm_match, rm_item, dv_model, dv_ios, ue_model, ue_ios,
@@ -734,6 +744,9 @@ def build(lang, ai=False):
     g_rat, g_rem = ids(2)
     g_mmenu, mm_ask, mm_new, mm_save, tl_rget, g_tlrem, g_mmempty, mm_chars = ids(8)
     fn_date, fn_jx, fn_entry = ids(3)
+    pf_get, pf_txt, g_pf1, g_pf2, g_sh, mk_get, mk_m, mk_rep, g_mk, g_ka, g_kb, g_qa, g_qb, g_qc, g_qd = ids(15)
+    qw_get, qw_m, g_askq, g_skm = ids(4)
+    g_pc, pm_get, pq_get, pf_new, pf_save, sk_get = ids(6)
 
     def journal_note(entry, refs=None):
         """Per-branch note: mode name plus the raw drafts that produced the result. `entry` is
@@ -775,6 +788,13 @@ def build(lang, ai=False):
                 *([if_else(g), act_notify(note)] if note else []),
                 if_close(g)]
 
+    def rerun_with_menu(src_uid, src_name):
+        """Run Duo again with this question and MENU_MARK in front: the new run forces the question box and the
+        mode menu even when the person chose «Critique right away» or «ask without editing» (D-29)."""
+        uid = new_uuid()
+        return [act_text(text_token(MENU_MARK + '{Q}', {'Q': (src_uid, src_name)}), uid),
+                act_run_self(RELEASE_NAME, uid, 'Text')]
+
     def recipes_menu(group, title):
         """Recipes: a ready task → the question box opens pre-filled with its wording (Duo runs itself with that
         text as its input, the same way the Share Sheet does), the person edits it and picks a mode."""
@@ -782,7 +802,7 @@ def build(lang, ai=False):
         for i, item in enumerate(items):
             uid = new_uuid()
             out += [menu_case(group, item),
-                    act_text(text_token(L['menu.recipes_texts'][i]), uid),
+                    act_text(text_token(MENU_MARK + L['menu.recipes_texts'][i]), uid),
                     act_run_self(RELEASE_NAME, uid, 'Text'),
                     {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}}]
         return out + [menu_close(group)]
@@ -900,7 +920,7 @@ def build(lang, ai=False):
         Claude's own answer with a line «ChatGPT did not answer (limit?), no comparison» (no comparing message is
         spent on one answer). Claude gave nothing → ChatGPT's answer with the same line about Claude, and the
         «check with…» menu (Trio's free keys, this iPhone, by hand) follows in the shared tail (CLAUDE_DOWN)."""
-        qsrc = qsrc or (question, 'Provided Input')
+        qsrc = qsrc or (qpre, 'Variable')
         QQ, QQUESTION = {'Q': qsrc}, {'QUESTION': qsrc}
         (cr_gpt2, cr_gpt_f, cr_len, cr_cut, cr_claude2, cr_claude_f, cr_numfin, cr_kget, cr_own, cr_own2,
          cr_own_f, cr_g1, cr_o1, cr_save, cr_dq, cr_da, cr_jg) = ids(17)
@@ -1232,6 +1252,18 @@ def build(lang, ai=False):
         # The clipboard counts only when it holds at least three words: a password, a one-time code or a lone
         # link must never land in the question field, where a busy person would send it on with one tap.
         *clear_variable(START_VAR),
+        # D-29: the person's two optional shortcuts (C-1 «Critique right away», C-3 «ask without editing»), read from
+        # ONE small file; a missing file (the default) is no value and nothing changes. Each run starts with them unset.
+        *clear_variable(FORCE_MENU), *clear_variable(SHARED_VAR), *clear_variable(SKIP_MENU), *clear_variable(SKIP_Q),
+        *clear_variable(PREF_MODE), *clear_variable(PREF_QUICK),
+        act_get_file(PREFS_FILE, pf_get),
+        act_text(text_token('{F}', {'F': (pf_get, 'File')}), pf_txt),
+        if_output(g_pf1, pf_txt, 'Text', 99, WFConditionalActionString='MODE=critique'),
+        *set_text(PREF_MODE, 'MODE=critique\n'),
+        if_close(g_pf1),
+        if_output(g_pf2, pf_txt, 'Text', 99, WFConditionalActionString='QUICK=1'),
+        *set_text(PREF_QUICK, 'QUICK=1\n'),
+        if_close(g_pf2),
         # Shortcut Input first, the clipboard ONLY when there is none (so a Share-Sheet run never reads, or asks
         # permission for, the clipboard). Share: «Get Text from Input» first (text, a URL, an article, a text PDF); a
         # result that is only a picture's file name counts as no text; only then «Get Images from Input» → Extract
@@ -1253,6 +1285,10 @@ def build(lang, ai=False):
         act_set_variable(START_VAR, st_ocr, 'Text from Image'),
         if_close(g_img),
         if_close(g_nostart),
+        # the text came from Share (not from the clipboard): only then «ask without editing» may apply
+        *if_text(g_sh, START_VAR),
+        *set_text(SHARED_VAR, '1'),
+        if_close(g_sh),
         if_else(g_start),
         act_clipboard_get(st_clip),
         act_first_match(st_clip, 'Clipboard', r'\S+\s+\S+\s+\S+', st_words),
@@ -1276,6 +1312,34 @@ def build(lang, ai=False):
         if_close(g_last),
         if_close(g_words),
         if_close(g_start),
+        # D-29: Duo's own re-runs («Another mode», Recipes, «go back») start with MENU_MARK: cut it off, and show the
+        # question box and the mode menu whatever the person's two optional shortcuts say.
+        act_get_variable(START_VAR, mk_get),
+        act_first_match(mk_get, 'Variable', '⟦duo-menu⟧', mk_m),
+        if_output(g_mk, mk_m, 'Matches', 100),
+        *set_text(FORCE_MENU, '1'),
+        act_replace_text(mk_get, 'Variable', MENU_MARK, '', mk_rep),
+        act_set_variable(START_VAR, mk_rep, 'Updated Text'),
+        if_close(g_mk),
+        # «Critique right away» (C-1): skip the mode menu. «Ask without editing» (C-3): a text SHARED to Duo with at
+        # least three words (a lone link or a code is still put in the box) goes without the question box.
+        *if_text(g_ka, PREF_MODE),
+        *if_text(g_kb, FORCE_MENU, present=False),
+        *set_text(SKIP_MENU, '1'),
+        if_close(g_kb),
+        if_close(g_ka),
+        *if_text(g_qa, PREF_QUICK),
+        *if_text(g_qb, SHARED_VAR),
+        *if_text(g_qc, FORCE_MENU, present=False),
+        act_get_variable(START_VAR, qw_get),
+        act_first_match(qw_get, 'Variable', r'\S+\s+\S+\s+\S+', qw_m),
+        if_output(g_qd, qw_m, 'Matches', 100),
+        *set_text(SKIP_Q, '1'),
+        if_close(g_qd),
+        if_close(g_qc),
+        if_close(g_qb),
+        if_close(g_qa),
+        *if_text(g_askq, SKIP_Q, present=False),
         act_get_variable(START_VAR, st_get),
         act_ask(L['ask.question'], question, default_from=(st_get, 'Variable')),
         # An empty question would spend 1–8 messages on nothing, so no AI is asked. Instead of a dead end the person
@@ -1286,6 +1350,15 @@ def build(lang, ai=False):
         {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
         if_close(g_blank),
         act_set_variable(QVAR, question, 'Provided Input'),
+        if_else(g_askq),
+        act_get_variable(START_VAR, sk_get),
+        act_set_variable(QVAR, sk_get, 'Variable'),
+        if_close(g_askq),
+        act_get_variable(QVAR, qpre),
+        # the mode menu, or straight to Critique (C-1)
+        *if_text(g_skm, SKIP_MENU),
+        *set_text(CRIT_VAR, '1'),
+        if_else(g_skm),
         menu_open(g_main, L['menu.main_title'], MAIN),
 
         # ---- Critique: ChatGPT answers, Claude verifies and finalizes. It runs after the mode menu (below), so a
@@ -1585,13 +1658,14 @@ def build(lang, ai=False):
             act_save_file(MY_MODE_FILE, mm_new, mm_save),
             act_set_variable(MY_RULE, mm_new, 'Text'),
             menu_case(g_mmenu, L['menu.my_mode_missing_items'][1]),
-            act_run_self(RELEASE_NAME, question, 'Provided Input'),
+            *rerun_with_menu(qpre, 'Variable'),
             {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
             menu_close(g_mmenu),
             if_close(g_mm),
             act_get_variable(MY_RULE, mm_rule)], rule_uid=mm_rule),
         menu_close(g_extra),
         menu_close(g_main),
+        if_close(g_skm),
         if_close(g_fresh),
         # from here on the question is QVAR: typed now, or from a resumed draft (the question field did not run then)
         act_get_variable(QVAR, q_get),
@@ -1636,7 +1710,7 @@ def build(lang, ai=False):
         menu_open(g_finale, L['menu.finale_title'], L['menu.finale_items']),
         menu_case(g_finale, L['menu.finale_items'][0]),
         menu_case(g_finale, L['menu.finale_items'][1]),
-        act_run_self(RELEASE_NAME, q_get, 'Variable'),
+        *rerun_with_menu(q_get, 'Variable'),
         # ---- More…: one extra step for the person who wants it; the usual «Done / Another mode» stays two taps
         menu_case(g_finale, L['menu.finale_items'][2]),
         menu_open(g_more, L['menu.finale_more_title'], L['menu.finale_more_items']),
@@ -1698,7 +1772,28 @@ def build(lang, ai=False):
                                                    'I': (ue_ios, 'URL Encoded Text'),
                                                    'D': (md_get, 'Variable')}),
              'Show-WFInput': True}},
+        # D-29: the person's two optional shortcuts. Each case only changes the variables; ONE «Save File» below
+        # writes the file when a case ran. «Show all menus again» empties both.
+        menu_case(g_more, L['menu.finale_more_items'][4]),
+        *set_text(PREF_MODE, 'MODE=critique\n'),
+        *set_text(PREFS_CHANGED, '1'),
+        act_notify(L['notify.pref_mode']),
+        menu_case(g_more, L['menu.finale_more_items'][5]),
+        *set_text(PREF_QUICK, 'QUICK=1\n'),
+        *set_text(PREFS_CHANGED, '1'),
+        act_notify(L['notify.pref_quick']),
+        menu_case(g_more, L['menu.finale_more_items'][6]),
+        *clear_variable(PREF_MODE),
+        *clear_variable(PREF_QUICK),
+        *set_text(PREFS_CHANGED, '1'),
+        act_notify(L['notify.pref_reset']),
         menu_close(g_more),
+        *if_text(g_pc, PREFS_CHANGED),
+        act_get_variable(PREF_MODE, pm_get),
+        act_get_variable(PREF_QUICK, pq_get),
+        act_text(text_token(PREFS_HEAD + '{M}{Q}', {'M': (pm_get, 'Variable'), 'Q': (pq_get, 'Variable')}), pf_new),
+        act_save_file(PREFS_FILE, pf_new, pf_save),
+        if_close(g_pc),
         menu_close(g_finale),
 
         # ---- Last of all, at most once a week: is there a newer Duo? (see version_check)

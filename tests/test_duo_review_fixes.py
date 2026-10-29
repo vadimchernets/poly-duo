@@ -62,8 +62,8 @@ def test_critique_blind_scheme_and_claude_down_is_reachable(tmp_path, lang):
     assert msg_blind == msg_gpt
     wrap = by_uid[msg_blind]
     # the question is read from PolyQuestion (typed now, or from a resumed draft)
-    question = next(params(a)['UUID'] for a in actions if kind(a) == 'getvariable'
-                    and params(a)['WFVariable']['Value']['VariableName'] == 'PolyQuestion')
+    question = [params(a)['UUID'] for a in actions if kind(a) == 'getvariable'
+                and params(a)['WFVariable']['Value']['VariableName'] == 'PolyQuestion'][-1]   # D-29: the first reads it before the menu
     assert {v['OutputUUID'] for v in params(wrap)['WFTextActionText']['Value']['attachmentsByRange'].values()} == {question}
     # step 3 sees both answers and the numbers found by rule
     compare = next(i for i in range(s3, len(actions)) if kind(actions[i]) == 'ClaudeAppIntentsExtension')
@@ -202,8 +202,9 @@ def test_no_variable_is_emptied_with_an_empty_text(tmp_path, lang):
             for cond in enclosing(actions, call):
                 assert params(cond)['WFInput']['Variable']['Value']['OutputName'] == 'Matches', var_name(cond, actions)
         if start == starts[0]:   # My mode: inside the mode menu, which runs only when nothing is resumed
-            assert [var_name(c, actions) for c in enclosing(actions, gpt)] == ['PolyResume']
-            assert [var_name(c, actions) for c in enclosing(actions, blind)] == ['PolyResume']
+            # D-29: and in the Else of «Critique right away» (PolySkipMenu), whose Then goes straight to the main Critique
+            assert [var_name(c, actions) for c in enclosing(actions, gpt)] == ['PolyResume', 'PolySkipMenu']
+            assert [var_name(c, actions) for c in enclosing(actions, blind)] == ['PolyResume', 'PolySkipMenu']
         else:
             gates = [var_name(c, actions) for c in enclosing(actions, gpt)]
             assert gates == ['PolyCritique', 'PolyDraftPassA', 'PolyChatGPTAnswer', 'PolySkipChatGPT']

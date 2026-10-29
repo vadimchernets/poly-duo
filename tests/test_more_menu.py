@@ -14,7 +14,7 @@ def params(a):
 def test_more_menu(tmp_path, lang):
     ui = json.loads((ROOT / 'locales' / lang / 'ui.json').read_text(encoding='utf-8'))
     m = ui['menu']
-    assert (len(m['extra_items']), len(m['finale_items']), len(m['finale_more_items'])) == (10, 3, 4)
+    assert (len(m['extra_items']), len(m['finale_items']), len(m['finale_more_items'])) == (10, 3, 7)   # D-29: +3 in «More actions» (Critique right away / ask without editing / reset)
     assert len(m['recipes_items']) == len(m['recipes_texts']) == 5
     actions = build(tmp_path, lang)
 
@@ -40,7 +40,7 @@ def test_more_menu(tmp_path, lang):
 
     # Recipes put a ready wording into the question box by running Duo with it as input; Critique ⇄ asks Claude first and ChatGPT second
     texts = [params(a)['WFTextActionText']['Value']['string'] for a in actions if kind(a) == 'gettext']
-    assert all(r in texts for r in m['recipes_texts'])
+    assert all('⟦duo-menu⟧\n' + r in texts for r in m['recipes_texts'])
     assert 'my_mode_missing' not in ui['notify']   # Duo 6.1: a menu, not a dead-end notice (test_duo61)
     rev = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody')
                == ui['notify']['reverse_start'])
