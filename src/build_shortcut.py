@@ -156,7 +156,7 @@ def act_date(uid):
 
 def act_notify(body):
     return {'WFWorkflowActionIdentifier': 'is.workflow.actions.notification',
-            'WFWorkflowActionParameters': {'WFNotificationActionTitle': 'Poly',
+            'WFWorkflowActionParameters': {'WFNotificationActionTitle': 'Duo',
                                            'WFNotificationActionBody': body,
                                            'WFNotificationActionSound': False}}
 
