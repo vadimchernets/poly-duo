@@ -141,8 +141,12 @@ def test_own_answer_not_prefilled(tmp_path, lang):
     # one result screen and the journal
     got = actions[uid[src(tail)]]
     assert kind(got) == 'getvariable' and params(got)['WFVariable']['Value']['VariableName'] == ui['variables']['result']
-    assert kind(actions[tail - 4]) == 'conditional' and params(actions[tail - 4])['WFCondition'] == 100
-    assert kind(actions[tail + 1]) == 'conditional' and params(actions[tail + 1])['WFControlFlowMode'] == 2
+    # Duo 6.4: the tail's one clipboard write comes right before it, in the same «RESULT has text», after the
+    # «Claude did not answer» menu (which no longer copies anything itself)
+    assert kind(actions[tail - 4]) == 'setclipboard'
+    assert kind(actions[tail - 5]) == 'conditional' and params(actions[tail - 5])['WFCondition'] == 100
+    assert kind(actions[tail + 1]) == 'notification' and params(actions[tail + 1])['WFNotificationActionBody'] == ui['notify']['tail_done']
+    assert kind(actions[tail + 2]) == 'conditional' and params(actions[tail + 2])['WFControlFlowMode'] == 2
     look = next(i for i in range(tail, len(actions)) if kind(actions[i]) == 'previewdocument')
     journal = next(i for i in range(tail, len(actions)) if kind(actions[i]) == 'append')
     # D-100 (6.3.1): the journal permission window comes before the result screen, not after it

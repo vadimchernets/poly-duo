@@ -42,9 +42,10 @@ def test_critique_blind_scheme_and_claude_down_is_reachable(tmp_path, lang):
     ui = ui_of(lang)
     actions = build(tmp_path, lang)
     n = ui['notify']
-    start = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == n['critique_start'])
-    s2 = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == n['critique_blind'])
-    s3 = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == n['critique_step3'])
+    # Duo 6.4: the main Critique runs after the mode menu (the last of the two Critique blocks; My mode's is first)
+    start = max(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == n['critique_start'])
+    s2 = next(i for i in range(start, len(actions)) if params(actions[i]).get('WFNotificationActionBody') == n['critique_blind'])
+    s3 = next(i for i in range(start, len(actions)) if params(actions[i]).get('WFNotificationActionBody') == n['critique_step3'])
     assert start < s2 < s3
     # exactly three messages in the happy path: ChatGPT, Claude (blind), Claude (compare)
     asks = [(i, kind(actions[i])) for i in range(start, s3 + 12) if kind(actions[i]) in ('AskIntent', 'ClaudeAppIntentsExtension')]
@@ -60,7 +61,9 @@ def test_critique_blind_scheme_and_claude_down_is_reachable(tmp_path, lang):
     msg_gpt = list(params(actions[gpt1])['prompt']['Value']['attachmentsByRange'].values())[0]['OutputUUID']
     assert msg_blind == msg_gpt
     wrap = by_uid[msg_blind]
-    question = next(a for a in actions if kind(a) == 'ask')['WFWorkflowActionParameters']['UUID']
+    # the question is read from PolyQuestion (typed now, or from a resumed draft)
+    question = next(params(a)['UUID'] for a in actions if kind(a) == 'getvariable'
+                    and params(a)['WFVariable']['Value']['VariableName'] == 'PolyQuestion')
     assert {v['OutputUUID'] for v in params(wrap)['WFTextActionText']['Value']['attachmentsByRange'].values()} == {question}
     # step 3 sees both answers and the numbers found by rule
     compare = next(i for i in range(s3, len(actions)) if kind(actions[i]) == 'ClaudeAppIntentsExtension')
@@ -129,8 +132,9 @@ def test_ai_build_uses_existing_version_key(tmp_path):
     report = next(params(a)['WFInput']['Value']['string'] for a in ai if kind(a) == 'openurl'
                   and 'run-report' in str(params(a)))
     assert f"version=duo%20{VERSION['duo']}" in report
-    saves = {params(a)['WFFileDestinationPath'] for a in ai if kind(a) == 'save'}
-    assert not any(s.startswith('Duo-draft-') for s in saves)   # D-100: no drafts in either build
+    saves = [params(a)['WFFileDestinationPath'] for a in ai if kind(a) == 'save']
+    # Duo 6.4: one draft «Save File», named for the build, so the plain build never resumes an ai draft
+    assert [s for s in saves if s.startswith('Duo-draft-')] == ['Duo-draft-en-ai.txt']
 
 
 def token_text(node):
@@ -186,16 +190,28 @@ def test_no_variable_is_emptied_with_an_empty_text(tmp_path, lang):
             assert value['string'] != '' or value['attachmentsByRange'], \
                 f"{params(a)['WFVariableName']} is set from an empty Text"
     ui = ui_of(lang)
-    start = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['critique_start'])
-    gpt = next(i for i in range(start, len(actions)) if kind(actions[i]) == 'AskIntent')
-    blind = next(i for i in range(gpt, len(actions)) if kind(actions[i]) == 'ClaudeAppIntentsExtension')
-    # both blind answers are always asked: no If around the first ChatGPT call nor around Claude's own answer
-    assert enclosing(actions, gpt) == [] and enclosing(actions, blind) == []
-    # their retries test the answer by its characters (Match Text `\S`), not by «has any value»
-    for call, var in ((gpt, 'PolyChatGPTAnswer'), (blind, 'PolyClaudeOwn')):
-        guard = next(a for a in actions[call:] if kind(a) == 'conditional')
-        assert var_name(guard, actions) == var and params(guard)['WFCondition'] == 101
-        assert params(guard)['WFInput']['Variable']['Value']['OutputName'] == 'Matches'
+    starts = [i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['critique_start']]
+    assert len(starts) == 2   # My mode, then the main Critique after the mode menu (Duo 6.4)
+    for start in starts:
+        gpt = next(i for i in range(start, len(actions)) if kind(actions[i]) == 'AskIntent')
+        blind = next(i for i in range(gpt, len(actions)) if kind(actions[i]) == 'ClaudeAppIntentsExtension')
+        # both blind answers are asked unless a resumed draft says otherwise (Duo 6.4): every If around the first
+        # ChatGPT call and Claude's own answer tests a variable by its characters (Match Text `\S`), never «has any
+        # value» on a text (D-100)
+        for call in (gpt, blind):
+            for cond in enclosing(actions, call):
+                assert params(cond)['WFInput']['Variable']['Value']['OutputName'] == 'Matches', var_name(cond, actions)
+        if start == starts[0]:   # My mode: inside the mode menu, which runs only when nothing is resumed
+            assert [var_name(c, actions) for c in enclosing(actions, gpt)] == ['PolyResume']
+            assert [var_name(c, actions) for c in enclosing(actions, blind)] == ['PolyResume']
+        else:
+            gates = [var_name(c, actions) for c in enclosing(actions, gpt)]
+            assert gates == ['PolyCritique', 'PolyDraftPassA', 'PolyChatGPTAnswer', 'PolySkipChatGPT']
+        # their retries test the answer by its characters (Match Text `\S`), not by «has any value»
+        for call, var in ((gpt, 'PolyChatGPTAnswer'), (blind, 'PolyClaudeOwn')):
+            guard = next(a for a in actions[call:] if kind(a) == 'conditional')
+            assert var_name(guard, actions) == var and params(guard)['WFCondition'] == 101
+            assert params(guard)['WFInput']['Variable']['Value']['OutputName'] == 'Matches'
 
 
 @pytest.mark.parametrize('lang', LANGS)
@@ -206,11 +222,15 @@ def test_critique_first_run_asks_few_permissions(tmp_path, lang):
     once, remembers it once and appends one journal entry."""
     ui = ui_of(lang)
     actions = build(tmp_path, lang)
-    start = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['critique_start'])
-    end = next(i for i in range(start, len(actions)) if kind(actions[i]) == 'choosefrommenu')
-    block = [kind(a) for a in actions[start:end]]
-    assert block.count('save') == 0 and block.count('append') == 0
-    assert block.count('setclipboard') == 1
+    starts = [i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['critique_start']]
+    tail_empty = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['tail_empty'])
+    # My mode's block (ends at the mode menu's close) writes no file; the main one (Duo 6.4) writes its draft through
+    # exactly ONE «Save File», run three times by a loop
+    for start, end, drafts in ((starts[0], next(i for i in range(starts[0], len(actions)) if kind(actions[i]) == 'choosefrommenu'), 0),
+                               (starts[1], tail_empty, 1)):
+        block = [kind(a) for a in actions[start:end]]
+        assert block.count('save') == drafts and block.count('append') == 0
+        assert block.count('setclipboard') == 1
     tail = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['tail_done'])
     finale = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
                   and params(a).get('WFMenuPrompt') == ui['menu']['finale_title'])
@@ -220,7 +240,8 @@ def test_critique_first_run_asks_few_permissions(tmp_path, lang):
                     and params(actions[i]).get('WFControlFlowMode') == 2
                     and params(actions[i])['GroupingIdentifier'] == params(actions[down])['GroupingIdentifier'])
     # the happy path: everything from the tail to the finale menu except the «Claude did not answer» menu
-    seen = [kind(a) for i, a in enumerate(actions[tail - 3:finale], tail - 3) if not down <= i <= down_end]
+    seen = [kind(a) for i, a in enumerate(actions[tail_empty:finale], tail_empty) if not down <= i <= down_end]
+    assert tail_empty < down < tail < finale
     assert seen.count('setclipboard') == 1 and seen.count('save') == 1 and seen.count('append') == 1
 
 

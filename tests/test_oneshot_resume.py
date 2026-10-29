@@ -26,8 +26,9 @@ def test_oneshot_resume_long(tmp_path, lang):
     # is no Shortcut Input), and the field itself is the single screen
     ask = next(i for i, a in enumerate(actions) if kind(a) == 'ask'
                and params(a)['WFAskActionPrompt'] == ui['ask']['question'])
-    shin = next(i for i, a in enumerate(actions[:ask]) if kind(a) == 'conditional'
-                and params(a).get('WFInput', {}).get('Variable', {}).get('Value') == {'Type': 'ExtensionInput'})
+    # (the first such If is the Duo 6.4 resume check, which only runs without input; the start's is the last one)
+    shin = max(i for i, a in enumerate(actions[:ask]) if kind(a) == 'conditional'
+               and params(a).get('WFInput', {}).get('Variable', {}).get('Value') == {'Type': 'ExtensionInput'})
     group = params(actions[shin])['GroupingIdentifier']
     same = [i for i, a in enumerate(actions) if params(a).get('GroupingIdentifier') == group]
     assert len(same) == 3  # If / Otherwise / End If
@@ -58,11 +59,11 @@ def test_oneshot_resume_long(tmp_path, lang):
     assert list(default['attachmentsByRange'].values())[0]['OutputUUID'] == params(actions[ask - 1])['UUID']
     main = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
                 and params(a).get('WFMenuPrompt') == ui['menu']['main_title'])
-    assert assert_duo_blank_guard(actions, ui) == main
+    assert assert_duo_blank_guard(actions, ui) == main - 1   # then the question goes to PolyQuestion (Duo 6.4)
 
-    # --- one retry after 3 s; D-100: no drafts and no resume (each «Save File» is a permission window)
+    # --- one retry after 3 s; Duo 6.4: the resume is back, through ONE draft «Save File» (test_duo64)
     n = ui['notify']
-    assert not any(params(a).get('WFNotificationActionBody') == n['resume'] for a in actions)
+    assert sum(params(a).get('WFNotificationActionBody') == n['resume'] for a in actions) == 1
     gpt_calls = [i for i, a in enumerate(actions) if kind(a) == 'AskIntent'
                  and a['WFWorkflowActionIdentifier'] == 'com.openai.chat.AskIntent']
     delay = next(i for i, a in enumerate(actions) if kind(a) == 'delay')
@@ -70,7 +71,7 @@ def test_oneshot_resume_long(tmp_path, lang):
     first, second = [i for i in gpt_calls if i < delay][-1], [i for i in gpt_calls if i > delay][0]
     assert first < delay < second
     assert kind(actions[delay - 1]) == 'conditional' and params(actions[delay - 1])['WFCondition'] == 101
-    assert not any(str(params(a).get('WFFileDestinationPath')).startswith('Duo-draft-') for a in actions)
+    assert sum(str(params(a).get('WFFileDestinationPath')).startswith('Duo-draft-') for a in actions) == 1
     same = [a for a in actions if kind(a) == 'conditional' and params(a).get('WFCondition') == 4]
     assert len(same) == 1  # Duo's own answer (test_duo61)
 

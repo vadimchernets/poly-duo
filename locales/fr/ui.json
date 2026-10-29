@@ -115,6 +115,19 @@
       "🔑 Une clé gratuite d'un fournisseur — configuration requise",
       "📱 Cet iPhone : Apple Intelligence (iPhone 15 Pro ou plus récent)",
       "📋 À la main dans Gemini ou Meta AI"
+    ],
+    "resume1_title": "La dernière vérification s'est arrêtée avant la fin de Claude (limite de messages ?). La réponse de ChatGPT est enregistrée.",
+    "resume1_items": [
+      "⏯ Continuer : demander seulement à Claude · 2✉",
+      "🔑 Vérifier la réponse de ChatGPT avec les clés gratuites de Trio",
+      "📋 Afficher la réponse enregistrée de ChatGPT",
+      "✍️ Nouvelle question"
+    ],
+    "resume0_title": "La dernière vérification s'est arrêtée sur ChatGPT (limite de messages ou déconnexion ?). Votre question est enregistrée.",
+    "resume0_items": [
+      "⏯ Demander seulement à Claude · 1✉",
+      "🔁 Redemander aux deux · 3✉",
+      "✍️ Nouvelle question"
     ]
   },
   "notify": {
@@ -164,7 +177,8 @@
     "ratify": "ChatGPT cherche des erreurs dans le résultat final…",
     "manual_copied": "La demande de vérification est dans le presse-papiers. Colle-la dans Gemini ou Meta AI.",
     "no_key_file": "Il n'y a pas de poly-key.txt dans le dossier Raccourcis d'iCloud Drive. Enregistre-y une clé gratuite (voir le guide d'installation) ou choisis une autre option.",
-    "resume_debate": "Je reprends le débat là où il s'est arrêté : aucun nouveau message ChatGPT n'est dépensé pour les tours déjà faits."
+    "resume_debate": "Je reprends le débat là où il s'est arrêté : aucun nouveau message ChatGPT n'est dépensé pour les tours déjà faits.",
+    "gpt_down": "ChatGPT n'a pas envoyé de réponse — probablement sa limite de messages. Claude répond seul ; pas de comparaison cette fois."
   },
   "alert": {
     "multi_next_title": "Poly Multi — IA suivante",
@@ -189,7 +203,9 @@
     "argue_side_a": "■ ChatGPT (camp A)",
     "argue_side_b_round": "■ Claude (camp B), tour {N}",
     "argue_side_a_round": "■ ChatGPT (camp A), tour {N}",
-    "ratify": "{R}\n\n— — —\n🔍 Seconde vérification de ChatGPT :\n{X}"
+    "ratify": "{R}\n\n— — —\n🔍 Seconde vérification de ChatGPT :\n{X}",
+    "claude_down": "⚠️ Claude n'a pas répondu — probablement sa limite de messages. Voici la réponse de ChatGPT ; pas de comparaison cette fois. Relancez Duo plus tard pour la vérification complète, ou vérifiez-la maintenant avec les clés gratuites de Trio (sans limite d'abonnement). Avec un forfait gratuit, après la limite, un modèle plus léger peut répondre.\n\n{A}",
+    "gpt_down": "⚠️ ChatGPT n'a pas répondu — probablement sa limite de messages. Voici la réponse de Claude ; pas de comparaison cette fois. Relancez Duo plus tard pour la vérification complète, ou essayez Trio (clés gratuites de fournisseurs, sans limite d'abonnement). Avec un forfait gratuit, après la limite, un modèle plus léger peut répondre.\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\nQUESTION : {Q}\n\n{R}\n",

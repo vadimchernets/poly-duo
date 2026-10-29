@@ -115,6 +115,19 @@
       "🔑 プロバイダーの無料キー — 設定が必要",
       "📱 この iPhone — Apple Intelligence（iPhone 15 Pro 以降）",
       "📋 Gemini または Meta AI に手動で"
+    ],
+    "resume1_title": "前回のチェックはClaudeが終わる前に止まりました（メッセージ上限？）。ChatGPTの回答は保存されています。",
+    "resume1_items": [
+      "⏯ 続ける：Claudeだけに聞く · 2✉",
+      "🔑 ChatGPTの回答をTrioの無料キーで確認",
+      "📋 保存したChatGPTの回答を表示",
+      "✍️ 新しい質問"
+    ],
+    "resume0_title": "前回のチェックはChatGPTで止まりました（メッセージ上限、またはサインアウト？）。質問は保存されています。",
+    "resume0_items": [
+      "⏯ Claudeだけに聞く · 1✉",
+      "🔁 両方にもう一度聞く · 3✉",
+      "✍️ 新しい質問"
     ]
   },
   "notify": {
@@ -164,7 +177,8 @@
     "ratify": "ChatGPT が最終結果の誤りを探しています…",
     "manual_copied": "確認用のリクエストをクリップボードにコピーしました。Gemini または Meta AI に貼り付けてください。",
     "no_key_file": "iCloud Drive の「ショートカット」フォルダに poly-key.txt がありません。無料のキーを保存するか（インストールガイド参照）、別の項目を選んでください。",
-    "resume_debate": "中断したところから議論を続けます。済んだラウンドでは ChatGPT のメッセージは新たに消費されません。"
+    "resume_debate": "中断したところから議論を続けます。済んだラウンドでは ChatGPT のメッセージは新たに消費されません。",
+    "gpt_down": "ChatGPTから回答がありません。メッセージ上限に達した可能性が高いです。Claudeだけが回答します。今回は比較はありません。"
   },
   "alert": {
     "multi_next_title": "Poly Multi — 次の AI",
@@ -189,7 +203,9 @@
     "argue_side_a": "■ ChatGPT（A側）",
     "argue_side_b_round": "■ Claude（B側）第{N}ラウンド",
     "argue_side_a_round": "■ ChatGPT（A側）第{N}ラウンド",
-    "ratify": "{R}\n\n— — —\n🔍 ChatGPT による2回目のチェック：\n{X}"
+    "ratify": "{R}\n\n— — —\n🔍 ChatGPT による2回目のチェック：\n{X}",
+    "claude_down": "⚠️ Claudeが回答しませんでした。メッセージ上限に達した可能性が高いです。以下はChatGPTの回答で、今回は比較はありません。完全なチェックは後でDuoをもう一度実行するか、今すぐTrioの無料キー（サブスクの上限なし）で確認してください。無料プランでは上限後に軽量モデルが回答することがあります。\n\n{A}",
+    "gpt_down": "⚠️ ChatGPTが回答しませんでした。メッセージ上限に達した可能性が高いです。以下はClaudeの回答で、今回は比較はありません。完全なチェックは後でDuoをもう一度実行するか、Trio（プロバイダーの無料キー、サブスクの上限なし）を試してください。無料プランでは上限後に軽量モデルが回答することがあります。\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\n質問: {Q}\n\n{R}\n",

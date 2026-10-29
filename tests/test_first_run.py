@@ -104,15 +104,25 @@ def test_first_minute(tmp_path, lang):
     # an empty question never reaches the mode menu, so it spends nothing; it offers the Recipes instead (Duo 6.1)
     main = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
                 and a['WFWorkflowActionParameters'].get('WFMenuPrompt') == ui['menu']['main_title'])
-    assert assert_duo_blank_guard(actions, ui) == main
+    end = assert_duo_blank_guard(actions, ui)
+    # Duo 6.4: the question goes to a variable (a resumed draft fills the same one), then the mode menu
+    assert kind(actions[end]) == 'setvariable' and main == end + 1
+    assert actions[end]['WFWorkflowActionParameters']['WFVariableName'] == 'PolyQuestion'
 
-    # «done» and «empty» are the two branches of one check, never shown together
+    # «empty» comes only when RESULT has no text; «done» only inside «RESULT has text», right after its one clipboard
+    # write and its save (Duo 6.4: the «check with…» menu comes between them, never together with «done»)
     done = next(i for i, a in enumerate(actions) if notification(a) == ui['notify']['tail_done'])
     empty = next(i for i, a in enumerate(actions) if notification(a) == ui['notify']['tail_empty'])
-    assert kind(actions[done - 2]) == 'conditional' and kind(actions[done - 1]) == 'setclipboard'
+    assert empty < done
+    for i, cond in ((empty, 101), (done, 100)):
+        opener = max(j for j in range(i) if kind(actions[j]) == 'conditional'
+                     and actions[j]['WFWorkflowActionParameters'].get('WFControlFlowMode') == 0)
+        assert actions[opener]['WFWorkflowActionParameters']['WFCondition'] == cond
+        assert guard_var(actions, actions[opener]) == ui['variables']['result']
+    between = [kind(a) for a in actions[done - 5:done]]
+    assert between[0] == 'setclipboard' and 'save' in between
     assert kind(actions[done + 1]) == 'conditional'
-    assert actions[done + 1]['WFWorkflowActionParameters']['WFControlFlowMode'] == 1
-    assert empty == done + 2
+    assert actions[done + 1]['WFWorkflowActionParameters']['WFControlFlowMode'] == 2
 
 
 def key_ask_of(actions, trio):

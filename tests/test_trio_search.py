@@ -48,9 +48,10 @@ def test_search_branch(tmp_path, lang, nokey):
         assert 'google_search' in dump(p['WFJSONValues'])
         assert 'contents' in dump(p['WFJSONValues'])
 
-    # sources: groundingChunks → at most 5 → repeat each → web.uri / web.title
+    # sources: the «title» fields of the raw JSON answer → at most 5 → «• title» lines (D-101: no dictionary walk)
     keys = [params(a).get('WFDictionaryKey') for a in actions]
-    assert {'groundingChunks', 'web', 'uri', 'title'} <= set(keys)
+    assert not {'groundingChunks', 'web', 'uri'} & set(keys)
+    assert any(params(a).get('WFMatchTextPattern') == r'"title"\s*:\s*"[^"]+"' for a in actions)
     assert any(params(a).get('WFItemSpecifier') == 'Items in Range' and params(a).get('WFItemRangeStart') == 1
                and params(a).get('WFItemRangeEnd') == 5 for a in actions)
     assert not any('WFItemCount' in params(a) for a in actions)
@@ -88,13 +89,17 @@ def _guarded(actions, i):
 
 @pytest.mark.parametrize('nokey', [False, True])
 def test_sources_guarded_when_no_chunks(tmp_path, nokey):
+    """D-101 (live iPhone 29.10): walking groundingChunks with «Get Dictionary Value» stopped Trio with «Choose values
+    for each parameter in this action». The sources are matched in the answer's text; the line is added only when a
+    title came (Match Text `\\S` on the result, then «has any value» on its Matches)."""
     actions = build(tmp_path, 'en', nokey)
     firsts = [i for i, a in enumerate(actions) if params(a).get('WFItemSpecifier') == 'Items in Range']
     assert firsts
     for i in firsts:
-        prev = actions[i - 1]
-        assert prev['WFWorkflowActionIdentifier'].endswith('conditional')
-        assert params(prev)['WFCondition'] == 100  # has any value
+        assert actions[i - 1]['WFWorkflowActionIdentifier'].endswith('text.match')
+        guard = actions[i + 4]
+        assert guard['WFWorkflowActionIdentifier'].endswith('conditional') and params(guard)['WFCondition'] == 100
+        assert params(guard)['WFInput']['Variable']['Value']['OutputName'] == 'Matches'
 
 
 def test_nokey_no_ai_shows_provider_none(tmp_path):

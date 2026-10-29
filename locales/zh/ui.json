@@ -115,6 +115,19 @@
       "🔑 使用服务商的免费密钥——需要先设置",
       "📱 本机 iPhone — Apple Intelligence（iPhone 15 Pro 及更新机型）",
       "📋 手动用 Gemini 或 Meta AI"
+    ],
+    "resume1_title": "上次检查在 Claude 完成前中断了（消息上限？）。ChatGPT 的回答已保存。",
+    "resume1_items": [
+      "⏯ 继续：只问 Claude · 2✉",
+      "🔑 用 Trio 的免费密钥检查 ChatGPT 的回答",
+      "📋 显示已保存的 ChatGPT 回答",
+      "✍️ 新问题"
+    ],
+    "resume0_title": "上次检查在 ChatGPT 处中断了（消息上限或已退出登录？）。你的问题已保存。",
+    "resume0_items": [
+      "⏯ 只问 Claude · 1✉",
+      "🔁 重新问两个 · 3✉",
+      "✍️ 新问题"
     ]
   },
   "notify": {
@@ -164,7 +177,8 @@
     "ratify": "ChatGPT 正在检查最终结果中的错误…",
     "manual_copied": "核查请求已放入剪贴板，请粘贴到 Gemini 或 Meta AI。",
     "no_key_file": "iCloud Drive 的“快捷指令”文件夹里没有 poly-key.txt。请在那里保存一个免费密钥（见安装指南），或选择其他选项。",
-    "resume_debate": "从中断处继续辩论，已完成的轮次不会消耗新的 ChatGPT 消息。"
+    "resume_debate": "从中断处继续辩论，已完成的轮次不会消耗新的 ChatGPT 消息。",
+    "gpt_down": "ChatGPT 没有返回回答，很可能是达到了消息上限。由 Claude 单独回答，这次没有对比。"
   },
   "alert": {
     "multi_next_title": "Poly Multi —— 下一个 AI",
@@ -189,7 +203,9 @@
     "argue_side_a": "■ ChatGPT（A 方）",
     "argue_side_b_round": "■ Claude（B 方），第 {N} 轮",
     "argue_side_a_round": "■ ChatGPT（A 方），第 {N} 轮",
-    "ratify": "{R}\n\n— — —\n🔍 ChatGPT 的第二次检查：\n{X}"
+    "ratify": "{R}\n\n— — —\n🔍 ChatGPT 的第二次检查：\n{X}",
+    "claude_down": "⚠️ Claude 没有回答，很可能是达到了消息上限。下面是 ChatGPT 的回答，这次没有对比。稍后再运行 Duo 进行完整检查，或现在用 Trio 的免费密钥（不受订阅上限限制）检查。免费套餐在达到上限后，可能由更轻量的模型回答。\n\n{A}",
+    "gpt_down": "⚠️ ChatGPT 没有回答，很可能是达到了消息上限。下面是 Claude 的回答，这次没有对比。稍后再运行 Duo 进行完整检查，或试试 Trio（服务商免费密钥，不受订阅上限限制）。免费套餐在达到上限后，可能由更轻量的模型回答。\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\n问题：{Q}\n\n{R}\n",

@@ -64,7 +64,7 @@ from build_shortcut import (  # noqa: E402
     act_comment, act_clipboard, act_quick_look, act_get_file, act_save_file, act_alert,
     if_has_value, if_else, if_close, if_output, version_check,
     act_delay, act_first_match, act_first_chars, repeat_open, repeat_close, if_item_missing, if_no_value, LONG_TEXT,
-    clear_variable, if_text,
+    clear_variable, if_text, if_output_text, act_replace_text, act_match_number,
 )
 
 # Endpoints and model ids live in src/models.json (tools/check_models.py checks them against the providers).
@@ -344,6 +344,21 @@ def if_output_has_value(group, src_uid, src_name):
                                                        'Variable': attachment(src_uid, src_name)}}}
 
 
+def if_dict_text(group, src_uid):
+    """If a Dictionary Value holds visible text: a Text made from it, Match Text `\\S`, If its Matches has a value."""
+    t = new_uuid()
+    return [act_text(text_token('{V}', {'V': (src_uid, 'Dictionary Value')}), t), *if_output_text(group, t, 'Text')]
+
+
+def if_number_missing(group, var_name, item_uid):
+    """If the number `item_uid` (a Get Variable of the Repeat Item) does not stand, as a whole number, in `var_name`."""
+    esc, other, m = new_uuid(), new_uuid(), new_uuid()
+    return [act_replace_text(item_uid, 'Variable', '.', '\\.', esc),
+            act_get_variable(var_name, other),
+            act_match_number(other, 'Variable', esc, 'Updated Text', m),
+            if_output(group, m, 'Matches', 101)]
+
+
 def if_no_value(group, var_name):
     action = if_has_value(group, var_name)
     action['WFWorkflowActionParameters']['WFCondition'] = 101  # «does not have any value»
@@ -502,7 +517,7 @@ def search_voice(T, V, prompt_uid, keys_uid, keys_name='Variable'):
         cands, cand, content, parts, part, text, has_text = (u() for _ in range(7))
         meta, chunks, five, loop = u(), u(), u(), u()
         c_get, web, uri, title, s_old, s_new = (u() for _ in range(6))
-        s_has, s_get, joined_t, joined, g_chunks = u(), u(), u(), u(), u()
+        s_has, s_get, joined_t, joined, g_chunks, n_chunks = u(), u(), u(), u(), u(), u()
         actions += [
             if_no_value(todo, V['third']),
             act_get_variable(gkey_v, k_get),
@@ -517,35 +532,26 @@ def search_voice(T, V, prompt_uid, keys_uid, keys_name='Variable'):
             act_value('parts', content, 'Dictionary Value', parts),
             act_first_item(parts, 'Dictionary Value', part),
             act_value('text', part, 'Item from List', text),
-            if_output_has_value(has_text, text, 'Dictionary Value'),
+            # D-101 (live iPhone 29.10): «has any value» straight on a Dictionary Value stops the run with «Choose values for
+            # each parameter in this action»; a Text made from it is tested by its characters instead
+            *if_dict_text(has_text, text),
             act_set_variable(V['third'], text, 'Dictionary Value'),
             act_text(text_token(T['provider.gemini_search'] + ' · ' + model), joined_t),
             act_set_variable(V['provider'], joined_t, 'Text'),
-            # sources: up to N «title — uri» lines from groundingChunks
-            act_value('groundingMetadata', cand, 'Item from List', meta),
-            act_value('groundingChunks', meta, 'Dictionary Value', chunks),
-            # no groundingChunks (Gemini chose not to search): the answer is already written, skip the sources
-            if_output_has_value(g_chunks, chunks, 'Dictionary Value'),
-            act_first_items(chunks, 'Dictionary Value', GEMINI_SEARCH_MAX_SOURCES, five),
-            *set_text(srcs_v, '', u()),
-            repeat_each(loop, five, 'Items from List'),
-            act_set_from_repeat_item(chunk_v),
-            act_get_variable(chunk_v, c_get),
-            act_value('web', c_get, 'Variable', web),
-            act_value('uri', web, 'Dictionary Value', uri),
-            act_value('title', web, 'Dictionary Value', title),
-            act_get_variable(srcs_v, s_old),
-            act_text(text_token('{S}\n• {T} — {U}', {'S': (s_old, 'Variable'), 'T': (title, 'Dictionary Value'),
-                                                    'U': (uri, 'Dictionary Value')}), s_new),
-            act_set_variable(srcs_v, s_new, 'Text'),
-            repeat_each_close(loop),
-            if_has_value(s_has, srcs_v),
-            act_get_variable(srcs_v, s_get),
+            # sources: up to N «• title» lines, read from the answer's own JSON text (the raw response). D-101 (live
+            # iPhone 29.10): walking groundingChunks with «Get Dictionary Value» stopped Trio with «Choose values for
+            # each parameter in this action» — a chunk without «web», or a condition straight on the list; Match / Replace
+            # Text on the text never has an empty required input. Titles are the sites' names (the uris are Google
+            # redirect links). No titles (Gemini chose not to search): the answer stays as it is.
+            act_match(r'"title"\s*:\s*"[^"]+"', raw, 'Text', chunks),
+            act_first_items(chunks, 'Matches', GEMINI_SEARCH_MAX_SOURCES, five),
+            act_combine(five, 'Items from List', c_get),
+            act_replace(c_get, 'Combined Text', r'"title"\s*:\s*"([^"]+)"', '• $1', s_new),
+            *if_output_text(s_has, s_new, 'Updated Text'),
             act_get_variable(V['third'], joined),
-            *set_text(V['third'], '{R}\n\n' + T['search.sources'] + '{S}', u(),
-                      {'R': (joined, 'Variable'), 'S': (s_get, 'Variable')}),
+            *set_text(V['third'], '{R}\n\n' + T['search.sources'] + '\n{S}', u(),
+                      {'R': (joined, 'Variable'), 'S': (s_new, 'Updated Text')}),
             if_close(s_has),
-            if_close(g_chunks),
             if_close(has_text),
             if_close(ok),
             if_close(todo),
@@ -618,7 +624,9 @@ def third_voice(T, V, prompt_uid, keys_uid, keys_name='Variable', providers=None
             act_first_item(choices, 'Dictionary Value', first),
             act_value('message', first, 'Item from List', message),
             act_value('content', message, 'Dictionary Value', content),
-            if_output_has_value(has_text, content, 'Dictionary Value'),
+            # D-101 (live iPhone 29.10): «has any value» straight on a Dictionary Value stops the run with «Choose values for
+            # each parameter in this action»; a Text made from it is tested by its characters instead
+            *if_dict_text(has_text, content),
             act_replace(content, 'Dictionary Value', TOKEN_TAIL_RE, '', c_tail),
             act_replace(c_tail, 'Updated Text', TOKEN_RE, '', c_clean),
             act_set_variable(V['third'], c_clean, 'Updated Text'),
@@ -695,7 +703,9 @@ def third_voice(T, V, prompt_uid, keys_uid, keys_name='Variable', providers=None
         act_first_item(choices, 'Dictionary Value', first),
         act_value('message', first, 'Item from List', message),
         act_value('content', message, 'Dictionary Value', content),
-        if_output_has_value(has_text, content, 'Dictionary Value'),
+        # D-101 (live iPhone 29.10): «has any value» straight on a Dictionary Value stops the run with «Choose values for
+        # each parameter in this action»; a Text made from it is tested by its characters instead
+        *if_dict_text(has_text, content),
         act_replace(content, 'Dictionary Value', TOKEN_TAIL_RE, '', c_tail),
         act_replace(c_tail, 'Updated Text', TOKEN_RE, '', c_clean),
         act_set_variable(V['third'], c_clean, 'Updated Text'),
@@ -711,7 +721,9 @@ def third_voice(T, V, prompt_uid, keys_uid, keys_name='Variable', providers=None
         act_value('content', a_data, 'Variable', a_content),
         act_first_item(a_content, 'Dictionary Value', a_first),
         act_value('text', a_first, 'Item from List', a_text),
-        if_output_has_value(a_has, a_text, 'Dictionary Value'),
+        # D-101 (live iPhone 29.10): «has any value» straight on a Dictionary Value stops the run with «Choose values for
+        # each parameter in this action»; a Text made from it is tested by its characters instead
+        *if_dict_text(a_has, a_text),
         act_set_variable(V['third'], a_text, 'Dictionary Value'),
         act_set_variable(V['provider'], label, 'Text'),
         if_else(a_has),
@@ -954,8 +966,11 @@ def build(lang, nokey=False):
         act_first_match(gpt_f, 'Variable', r'\d+(?:[.,:/-]\d+)*', nums_a),
         repeat_open(g_rep, nums_a, 'Matches'),
         act_get_variable('Repeat Item', item_a),
-        if_item_missing(g_miss, OWN_VAR, item_a),
-        if_item_missing(g_dup_a, NUMS_VAR, item_a),
+        # D-101 (live iPhone 29.10): «If <variable> does not contain <the Repeat Item>» stopped Trio with «Choose values
+        # for each parameter in this action»; as in Duo's Critique: the number, its dots escaped, is matched as a WHOLE
+        # number (Match Text), and the If tests that Match's «Matches»
+        *if_number_missing(g_miss, OWN_VAR, item_a),
+        *if_number_missing(g_dup_a, NUMS_VAR, item_a),
         act_get_variable(NUMS_VAR, nget_a),
         act_text(text_token('{N} {I}', {'N': (nget_a, 'Variable'), 'I': (item_a, 'Variable')}), nadd_a),
         act_set_variable(NUMS_VAR, nadd_a, 'Text'),
@@ -965,8 +980,11 @@ def build(lang, nokey=False):
         act_first_match(own_f2, 'Variable', r'\d+(?:[.,:/-]\d+)*', nums_b),
         repeat_open(g_rep2, nums_b, 'Matches'),
         act_get_variable('Repeat Item', item_b),
-        if_item_missing(g_miss2, GPT_VAR, item_b),
-        if_item_missing(g_dup_b, NUMS_VAR, item_b),
+        # D-101 (live iPhone 29.10): «If <variable> does not contain <the Repeat Item>» stopped Trio with «Choose values
+        # for each parameter in this action»; as in Duo's Critique: the number, its dots escaped, is matched as a WHOLE
+        # number (Match Text), and the If tests that Match's «Matches»
+        *if_number_missing(g_miss2, GPT_VAR, item_b),
+        *if_number_missing(g_dup_b, NUMS_VAR, item_b),
         act_get_variable(NUMS_VAR, nget_b),
         act_text(text_token('{N} {I}', {'N': (nget_b, 'Variable'), 'I': (item_b, 'Variable')}), nadd_b),
         act_set_variable(NUMS_VAR, nadd_b, 'Text'),

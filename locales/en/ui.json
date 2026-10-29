@@ -115,6 +115,19 @@
       "🔑 Use a free provider key — setup needed",
       "📱 This iPhone — Apple Intelligence (iPhone 15 Pro or newer)",
       "📋 By hand in Gemini or Meta AI"
+    ],
+    "resume1_title": "The last check stopped before Claude finished (message limit?). ChatGPT's answer is saved.",
+    "resume1_items": [
+      "⏯ Go on: ask only Claude · 2✉",
+      "🔑 Check ChatGPT's answer with Trio's free keys",
+      "📋 Show ChatGPT's saved answer",
+      "✍️ New question"
+    ],
+    "resume0_title": "The last check stopped at ChatGPT (message limit or signed out?). Your question is saved.",
+    "resume0_items": [
+      "⏯ Ask Claude alone · 1✉",
+      "🔁 Ask both again · 3✉",
+      "✍️ New question"
     ]
   },
   "notify": {
@@ -164,7 +177,8 @@
     "ratify": "ChatGPT is looking for mistakes in the final result…",
     "manual_copied": "The check request is in the clipboard. Paste it into Gemini or Meta AI.",
     "no_key_file": "There is no poly-key.txt in the Shortcuts folder of iCloud Drive. Save a free key there (see the install guide) or pick another option.",
-    "resume_debate": "Continuing the debate from where it stopped — no new ChatGPT message is spent for the rounds already done."
+    "resume_debate": "Continuing the debate from where it stopped — no new ChatGPT message is spent for the rounds already done.",
+    "gpt_down": "ChatGPT sent no answer — most likely its message limit. Claude answers alone; there is no comparison this time."
   },
   "alert": {
     "multi_next_title": "Poly Multi — next AI",
@@ -189,7 +203,9 @@
     "argue_side_a": "■ ChatGPT (side A)",
     "argue_side_b_round": "■ Claude (side B), round {N}",
     "argue_side_a_round": "■ ChatGPT (side A), round {N}",
-    "ratify": "{R}\n\n— — —\n🔍 ChatGPT's second check:\n{X}"
+    "ratify": "{R}\n\n— — —\n🔍 ChatGPT's second check:\n{X}",
+    "claude_down": "⚠️ Claude did not answer — most likely its message limit. Below is ChatGPT's answer; there is no comparison this time. Run Duo again later for the full check, or check it now with Trio's free keys (no subscription limit). On a free plan, after the limit an assistant may answer with a lighter model.\n\n{A}",
+    "gpt_down": "⚠️ ChatGPT did not answer — most likely its message limit. Below is Claude's answer; there is no comparison this time. Run Duo again later for the full check, or try Trio (free provider keys, no subscription limit). On a free plan, after the limit an assistant may answer with a lighter model.\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\nQUESTION: {Q}\n\n{R}\n",

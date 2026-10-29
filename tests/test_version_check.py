@@ -46,7 +46,7 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
     assert [p['WFTimeUntilUnit'] for p in params(actions, 'gettimebetweendates')
             if p['WFTimeUntilUnit'] == 'Days'] == ['Days']
     newer = [p['WFNumberValue'] for p in params(actions, 'conditional') if p.get('WFCondition') == 2
-             and p['WFNumberValue'] != 6000]  # 6000 = the long-text threshold for Claude
+             and p['WFNumberValue'] not in (6000, 0)]  # 6000 = Claude's long-text threshold; 0 = Trio's sources count
     assert newer == [VERSION[key]]
     keys = [p['WFDictionaryKey'] for p in params(actions, 'getvalueforkey')]
     assert f'{key}_{lang}' in keys
@@ -98,3 +98,7 @@ def test_conditions_have_inputs_shortcuts_accepts(tmp_path, builder, name):
             assert node.get('OutputName') in ('Number', 'Count'), node
         if p['WFCondition'] in (99, 999, 4, 5):
             assert node.get('OutputName') != 'Contents of URL', node
+        # D-101 (live iPhone 29.10, Trio): «has any value / does not have any value» straight on a Dictionary Value
+        # stopped the run with the same dialog; a Text made from it (or a Count) works
+        if p['WFCondition'] in (100, 101):
+            assert node.get('OutputName') not in ('Dictionary Value', 'Contents of URL'), node

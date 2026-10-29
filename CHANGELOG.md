@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed (Trio source, D-101, 2026-10-29; Trio release follows)
+- **Trio stopped on the iPhone with «Choose values for each parameter in this action».** Live iPhone 29.10: after the
+  third voice. Bisected on Shortcuts for Mac: «If <variable> does not contain <the Repeat Item>» in the number pass is
+  rejected (the same dialog as D-100); it is now the whole-number Match Text of Duo's Critique. Also no «has any value»
+  straight on a Dictionary Value (a Text made from it is tested), and Gemini's search sources are read from the
+  answer's text instead of walking groundingChunks. The light key chain Duo's «Claude did not answer» menu reuses gets
+  the same fix. Trio from source then ran to the end on the iPhone.
+
+### Added (Duo 6.4, D-101, 2026-10-29; built-in number duo 11)
+- **Whoever answered, you get that answer.** When one app stops on its message limit (or signs out),
+  Critique no longer leaves you with nothing: ChatGPT gave nothing → Claude's own answer with a line
+  «ChatGPT did not answer — most likely its message limit; no comparison this time; run Duo later or try
+  Trio» (no comparing message is spent on a single answer); Claude did not compare → ChatGPT's answer with
+  the same line about Claude, then the «check with…» menu (Trio's free keys, this iPhone, by hand).
+- **A Critique cut off by a limit goes on where it stopped.** When the Claude app hits its limit, iOS stops
+  the whole shortcut with a system alert (Shortcuts has no try/catch). Critique now keeps one draft file
+  (the question, then ChatGPT's answer, then «done») through ONE «Save File» action run three times by a
+  loop — one permission window, once. The next run within 30 minutes, started without input, offers: go on
+  asking only Claude (no new ChatGPT message), check ChatGPT's answer without Claude, show it, or a new
+  question; after a stop at ChatGPT: Claude alone, both again, or a new question. This brings back the
+  resume removed in 6.3.
+- The free-plan note: after the limit, an assistant may answer with a lighter model (said in the limit
+  line; the apps' actions do not say which model answered, so Duo does not claim it).
+
 ### Fixed (Duo 6.3.1, 2026-10-28; built-in number duo 10)
 - **The journal entry is written before the result screen.** On a real iPhone (28.10, Duo 6.3) the
   «Append to file» permission window that came right after the result screen was closed vanished on

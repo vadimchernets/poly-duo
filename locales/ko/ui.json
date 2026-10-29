@@ -115,6 +115,19 @@
       "🔑 제공업체 무료 키 — 설정 필요",
       "📱 이 iPhone — Apple Intelligence (iPhone 15 Pro 이상)",
       "📋 Gemini 또는 Meta AI에서 직접"
+    ],
+    "resume1_title": "지난 검증이 Claude가 끝내기 전에 멈췄습니다(메시지 한도?). ChatGPT의 답은 저장되어 있습니다.",
+    "resume1_items": [
+      "⏯ 계속: Claude에게만 묻기 · 2✉",
+      "🔑 Trio 무료 키로 ChatGPT의 답 확인",
+      "📋 저장된 ChatGPT 답 보기",
+      "✍️ 새 질문"
+    ],
+    "resume0_title": "지난 검증이 ChatGPT에서 멈췄습니다(메시지 한도 또는 로그아웃?). 질문은 저장되어 있습니다.",
+    "resume0_items": [
+      "⏯ Claude에게만 묻기 · 1✉",
+      "🔁 둘 다 다시 묻기 · 3✉",
+      "✍️ 새 질문"
     ]
   },
   "notify": {
@@ -164,7 +177,8 @@
     "ratify": "ChatGPT가 최종 결과에서 실수를 찾고 있어요…",
     "manual_copied": "확인 요청이 클립보드에 있습니다. Gemini 또는 Meta AI에 붙여넣으세요.",
     "no_key_file": "iCloud Drive의 단축어 폴더에 poly-key.txt가 없습니다. 무료 키를 저장하거나(설치 안내 참고) 다른 항목을 선택하세요.",
-    "resume_debate": "중단된 지점부터 토론을 이어갑니다. 이미 끝난 라운드에는 ChatGPT 메시지가 새로 소모되지 않습니다."
+    "resume_debate": "중단된 지점부터 토론을 이어갑니다. 이미 끝난 라운드에는 ChatGPT 메시지가 새로 소모되지 않습니다.",
+    "gpt_down": "ChatGPT가 답을 보내지 않았습니다. 메시지 한도에 도달했을 가능성이 큽니다. Claude 혼자 답하며, 이번에는 비교가 없습니다."
   },
   "alert": {
     "multi_next_title": "Poly Multi — 다음 AI",
@@ -189,7 +203,9 @@
     "argue_side_a": "■ ChatGPT (A 입장)",
     "argue_side_b_round": "■ Claude (B 입장), {N}라운드",
     "argue_side_a_round": "■ ChatGPT (A 입장), {N}라운드",
-    "ratify": "{R}\n\n— — —\n🔍 ChatGPT의 두 번째 확인:\n{X}"
+    "ratify": "{R}\n\n— — —\n🔍 ChatGPT의 두 번째 확인:\n{X}",
+    "claude_down": "⚠️ Claude가 답하지 않았습니다. 메시지 한도에 도달했을 가능성이 큽니다. 아래는 ChatGPT의 답이며, 이번에는 비교가 없습니다. 전체 검증은 나중에 Duo를 다시 실행하거나, 지금 Trio의 무료 키(구독 한도 없음)로 확인하세요. 무료 요금제에서는 한도 이후 더 가벼운 모델이 답할 수 있습니다.\n\n{A}",
+    "gpt_down": "⚠️ ChatGPT가 답하지 않았습니다. 메시지 한도에 도달했을 가능성이 큽니다. 아래는 Claude의 답이며, 이번에는 비교가 없습니다. 전체 검증은 나중에 Duo를 다시 실행하거나 Trio(제공업체 무료 키, 구독 한도 없음)를 사용해 보세요. 무료 요금제에서는 한도 이후 더 가벼운 모델이 답할 수 있습니다.\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\n질문: {Q}\n\n{R}\n",

@@ -13,7 +13,7 @@ C1M Duo is a "shortcut" for iPhone: ask one question, and it's handled by two AI
 
 On your iPhone, tap the link → the Shortcuts app opens → **Add**. On the first run the shortcut asks for permission 4–6 times — tap **Always Allow** each time.
 
-- **Duo:** https://www.icloud.com/shortcuts/d8aecf72df8544da9f6d7f0c9eb203b9
+- **Duo:** https://www.icloud.com/shortcuts/9baa76c3d00e4c08ae1380c8ee3eb1c1
 - **Trio, iPhone 15 Pro or newer — no key** (the third voice is Apple Intelligence; see below): https://www.icloud.com/shortcuts/2a24e0157e4a445bae92ed1410907b9f
 - **Trio, older iPhone — free key** (the third voice, see below): https://www.icloud.com/shortcuts/ca730c3d887648a0a380dc397ede7ab7
 

@@ -52,7 +52,8 @@ def test_debate_no_drafts_and_retries(tmp_path, lang):
     actions = build(tmp_path, lang)
     # D-100: no draft files (each «Save File» is one more permission window on the first run), so no resume
     saves = [params(a).get('WFFileDestinationPath') for a in actions if kind(a) == 'save']
-    assert not any(str(s).startswith('Duo-draft-') for s in saves)
+    # Duo 6.4: ONE draft «Save File», the main Critique's (test_duo64); the debate keeps none
+    assert sum(str(s).startswith('Duo-draft-') for s in saves) == 1
     assert not any(params(a).get('WFNotificationActionBody') == ui['notify']['resume_debate'] for a in actions)
     # each of the three rounds runs only while «rounds done» is between 0 and n-1, and records itself when over
     rounds = [a for a in actions if kind(a) == 'conditional' and params(a).get('WFCondition') == 1003

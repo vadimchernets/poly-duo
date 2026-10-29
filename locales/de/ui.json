@@ -115,6 +115,19 @@
       "🔑 Kostenloser Anbieter-Schlüssel – Einrichtung nötig",
       "📱 Diesem iPhone: Apple Intelligence (iPhone 15 Pro oder neuer)",
       "📋 Von Hand in Gemini oder Meta AI"
+    ],
+    "resume1_title": "Die letzte Prüfung brach ab, bevor Claude fertig war (Nachrichtenlimit?). Die Antwort von ChatGPT ist gespeichert.",
+    "resume1_items": [
+      "⏯ Weiter: nur Claude fragen · 2✉",
+      "🔑 ChatGPTs Antwort mit Trios kostenlosen Schlüsseln prüfen",
+      "📋 Gespeicherte ChatGPT-Antwort zeigen",
+      "✍️ Neue Frage"
+    ],
+    "resume0_title": "Die letzte Prüfung brach bei ChatGPT ab (Nachrichtenlimit oder abgemeldet?). Deine Frage ist gespeichert.",
+    "resume0_items": [
+      "⏯ Nur Claude fragen · 1✉",
+      "🔁 Beide noch einmal fragen · 3✉",
+      "✍️ Neue Frage"
     ]
   },
   "notify": {
@@ -164,7 +177,8 @@
     "ratify": "ChatGPT sucht Fehler im Endergebnis…",
     "manual_copied": "Die Prüfanfrage liegt in der Zwischenablage. Fügen Sie sie in Gemini oder Meta AI ein.",
     "no_key_file": "Im Ordner «Kurzbefehle» von iCloud Drive gibt es keine poly-key.txt. Speichern Sie dort einen kostenlosen Schlüssel (siehe Installationsanleitung) oder wählen Sie eine andere Option.",
-    "resume_debate": "Weiter mit der Debatte an der Stelle, an der sie stehen blieb — für die bereits gelaufenen Runden wird keine neue ChatGPT-Nachricht verbraucht."
+    "resume_debate": "Weiter mit der Debatte an der Stelle, an der sie stehen blieb — für die bereits gelaufenen Runden wird keine neue ChatGPT-Nachricht verbraucht.",
+    "gpt_down": "ChatGPT hat keine Antwort geschickt — vermutlich sein Nachrichtenlimit. Claude antwortet allein; diesmal gibt es keinen Vergleich."
   },
   "alert": {
     "multi_next_title": "Poly Multi — nächste KI",
@@ -189,7 +203,9 @@
     "argue_side_a": "■ ChatGPT (Seite A)",
     "argue_side_b_round": "■ Claude (Seite B), Runde {N}",
     "argue_side_a_round": "■ ChatGPT (Seite A), Runde {N}",
-    "ratify": "{R}\n\n— — —\n🔍 Zweite Prüfung durch ChatGPT:\n{X}"
+    "ratify": "{R}\n\n— — —\n🔍 Zweite Prüfung durch ChatGPT:\n{X}",
+    "claude_down": "⚠️ Claude hat nicht geantwortet — vermutlich sein Nachrichtenlimit. Unten steht die Antwort von ChatGPT; diesmal gibt es keinen Vergleich. Starte Duo später für die volle Prüfung oder prüfe jetzt mit den kostenlosen Schlüsseln von Trio (ohne Abo-Limit). Im kostenlosen Tarif kann nach dem Limit ein leichteres Modell antworten.\n\n{A}",
+    "gpt_down": "⚠️ ChatGPT hat nicht geantwortet — vermutlich sein Nachrichtenlimit. Unten steht die Antwort von Claude; diesmal gibt es keinen Vergleich. Starte Duo später für die volle Prüfung oder probiere Trio (kostenlose Anbieter-Schlüssel, ohne Abo-Limit). Im kostenlosen Tarif kann nach dem Limit ein leichteres Modell antworten.\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\nFRAGE: {Q}\n\n{R}\n",
