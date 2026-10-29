@@ -1,9 +1,10 @@
 # Why a pair: the evidence, 2025–2026
 
 Poly puts two models from two families on one question and keeps the argument. This page collects
-what was measured about that pattern in 2025 and 2026, so that the project does not need a benchmark
-of its own: the pattern is established, and Poly is a phone-sized implementation of it. The page
-keeps the negative results too. They are not an objection to the pair; they are the exact conditions
+what was measured about that pattern in 2025 and 2026: the pattern is established by other groups, and
+Poly is a phone-sized implementation of it. Poly also ran its own blind check of the pair (26 Oct 2026,
+two rounds, data and limits in [evidence/pair-check-2026-10-26/](../../evidence/pair-check-2026-10-26/README.md)).
+The page keeps the negative results too. They are not an objection to the pair; they are the exact conditions
 Poly's prompts are built around.
 
 Scope: only work published in 2025 or 2026, only setups with two models or with a second model
