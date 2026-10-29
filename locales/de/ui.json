@@ -134,7 +134,7 @@
     ]
   },
   "notify": {
-    "critique_start": "⚖️ Kritik: ChatGPT antwortet → Claude antwortet selbst → Claude vergleicht beide. ≈1 Min., bitte kurz warten und das Handy in Ruhe lassen. Hängt es? ChatGPT öffnen und anmelden.",
+    "critique_start": "⚖️ Kritik: ChatGPT antwortet → Claude antwortet selbst → Claude vergleicht beide. ≈1 Min., bitte kurz warten und das Handy in Ruhe lassen. Hängt es? ChatGPT öffnen und einloggen.",
     "critique_step2": "[2/3] Claude prüft nach und baut die finale Antwort…",
     "critique_blind": "[2/3] Claude antwortet selbst, ohne die Antwort von ChatGPT zu sehen…",
     "gpt_kept": "📋 Die Antwort von ChatGPT ist in der Zwischenablage. Stoppt Claude wegen seines Nachrichtenlimits, kannst du sie trotzdem überall einfügen; frag Claude später noch einmal.",
