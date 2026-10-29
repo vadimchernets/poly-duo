@@ -134,7 +134,7 @@
     ]
   },
   "notify": {
-    "critique_start": "⚖️ Crítica: o ChatGPT responde → o Claude responde por conta própria → o Claude compara as duas. ≈1 min, aguarde um instante e deixe o telefone como está.",
+    "critique_start": "⚖️ Crítica: o ChatGPT responde → o Claude responde por conta própria → o Claude compara as duas. ≈1 min, aguarde um instante e deixe o telefone como está. Travou? Abra o ChatGPT e entre na conta.",
     "critique_step2": "[2/3] O Claude está verificando e montando a resposta final…",
     "critique_blind": "[2/3] O Claude responde por conta própria, sem ver a resposta do ChatGPT…",
     "gpt_kept": "📋 A resposta do ChatGPT está na área de transferência. Se o Claude parar pelo limite de mensagens, você ainda pode colá-la onde quiser; pergunte ao Claude de novo mais tarde.",

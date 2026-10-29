@@ -134,7 +134,7 @@
     ]
   },
   "notify": {
-    "critique_start": "⚖️ Crítica: ChatGPT responde → Claude responde por su cuenta → Claude compara ambas. ≈1 min, espere por favor y deje el teléfono como está.",
+    "critique_start": "⚖️ Crítica: ChatGPT responde → Claude responde por su cuenta → Claude compara ambas. ≈1 min, espere por favor y deje el teléfono como está. ¿Se detuvo? Abra ChatGPT e inicie sesión.",
     "critique_step2": "[2/3] Claude verifica y monta la respuesta final…",
     "critique_blind": "[2/3] Claude responde por su cuenta, sin ver la respuesta de ChatGPT…",
     "gpt_kept": "📋 La respuesta de ChatGPT está en el portapapeles. Si Claude se detiene por su límite de mensajes, puede pegarla donde quiera; vuelva a preguntar a Claude más tarde.",

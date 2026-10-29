@@ -134,7 +134,7 @@
     ]
   },
   "notify": {
-    "critique_start": "⚖️ Critique : ChatGPT répond → Claude répond de son côté → Claude compare les deux. ≈1 min, patiente un instant et laisse le téléphone tranquille.",
+    "critique_start": "⚖️ Critique : ChatGPT répond → Claude répond de son côté → Claude compare les deux. ≈1 min, patiente un instant et laisse le téléphone tranquille. Bloqué ? Ouvre ChatGPT et connecte-toi.",
     "critique_step2": "[2/3] Claude vérifie et assemble la réponse finale…",
     "critique_blind": "[2/3] Claude répond de son côté, sans voir la réponse de ChatGPT…",
     "gpt_kept": "📋 La réponse de ChatGPT est dans le presse-papiers. Si Claude s'arrête à cause de sa limite de messages, vous pouvez quand même la coller où vous voulez ; redemandez à Claude plus tard.",

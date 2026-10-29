@@ -50,9 +50,10 @@ def test_hint_moved_out_of_start_notifications(tmp_path, lang):
     ui = ui_of(lang)
     n = ui['notify']
     for k, v in n.items():
-        if k != 'gpt_down':
+        if k not in ('gpt_down', 'critique_start'):   # critique_start keeps the short «Stuck? Open ChatGPT and sign in»
             assert 'logged out' not in v, k
     assert 'logged out' in n['gpt_down'] and 'logged out' in ui['alert']['first_run_body']
+    assert 'ChatGPT' in ui['notify']['critique_start'].split('.')[-2 if ui['notify']['critique_start'].endswith('.') else -1] or 'ChatGPT' in ui['notify']['critique_start'][-40:]
     assert len(ui['menu']['finale_more_items']) == 7
     for k in ('pref_mode', 'pref_quick', 'pref_reset'):
         assert n[k].strip()

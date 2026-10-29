@@ -134,7 +134,7 @@
     ]
   },
   "notify": {
-    "critique_start": "⚖️ 批評：ChatGPT が答え → Claude が自分で答え → Claude が両方を比較。約1分、しばらくお待ちください（スマホはそのままで）。",
+    "critique_start": "⚖️ 批評：ChatGPT が答え → Claude が自分で答え → Claude が両方を比較。約1分、しばらくお待ちください（スマホはそのままで）。止まったら ChatGPT を開いてサインインしてください。",
     "critique_step2": "[2/3] Claude が検証して最終回答をまとめています…",
     "critique_blind": "[2/3] Claude が ChatGPT の回答を見ずに、自分で答えています…",
     "gpt_kept": "📋 ChatGPT の回答はクリップボードにあります。Claude がメッセージ上限で止まっても、どこにでも貼り付けられます。Claude にはあとでもう一度聞いてください。",
