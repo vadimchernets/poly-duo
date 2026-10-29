@@ -12,8 +12,8 @@ C1M Duo 是 iPhone 上的一条“快捷指令”：你问一个问题，两个 
 **最简单——iCloud 链接（点一下）。** 在 iPhone 上点链接 → “快捷指令”App 打开 → **添加快捷指令**。首次运行时会询问 4–6 次权限，每次都点 **始终允许**。
 
 - **Duo:** https://www.icloud.com/shortcuts/47912cf4201949b899497f4f22d9069e
-- **Trio，iPhone 15 Pro 或更新机型——无需密钥（第三个声音是 Apple Intelligence）:** https://www.icloud.com/shortcuts/0a339cb1b3fd4ddea6b2ec40808debd9
-- **Trio——免费密钥（第三个声音）:** https://www.icloud.com/shortcuts/8c7639cf0be9421e884b075ee9b794e4
+- **Trio，iPhone 15 Pro 或更新机型——无需密钥（第三个声音是 Apple Intelligence）:** https://www.icloud.com/shortcuts/d0d6e02ff93443e8812327d60de2b623
+- **Trio——免费密钥（第三个声音）:** https://www.icloud.com/shortcuts/10617126d26b4144bd2d0335f1d8f8bc
 
 **或者用文件：**
 

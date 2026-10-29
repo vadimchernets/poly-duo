@@ -6,13 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-### Fixed (Trio source, D-101, 2026-10-29; Trio release follows)
+### Fixed (Trio 7 / Trio without a key 4, D-101, 2026-10-29)
 - **Trio stopped on the iPhone with «Choose values for each parameter in this action».** Live iPhone 29.10: after the
   third voice. Bisected on Shortcuts for Mac: «If <variable> does not contain <the Repeat Item>» in the number pass is
   rejected (the same dialog as D-100); it is now the whole-number Match Text of Duo's Critique. Also no «has any value»
   straight on a Dictionary Value (a Text made from it is tested), and Gemini's search sources are read from the
   answer's text instead of walking groundingChunks. The light key chain Duo's «Claude did not answer» menu reuses gets
   the same fix. Trio from source then ran to the end on the iPhone.
+- Review by Kimi (other family): a Gemini answer WITHOUT search left the sources Match empty and the next action
+  would have stopped the run; and «Get Items in Range 1…5» stops it when there are fewer than 5 sources (found on
+  Shortcuts for Mac). Sources are now read only from a source's «web» object, guarded, and cut to 5 lines by Match
+  Text; checked on Mac with and without sources. Built-in numbers trio 7, trio_nokey 4; iCloud links 11 + 9.
 
 ### Added (Duo 6.4, D-101, 2026-10-29; built-in number duo 11)
 - **Whoever answered, you get that answer.** When one app stops on its message limit (or signs out),

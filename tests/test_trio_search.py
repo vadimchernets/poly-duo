@@ -51,9 +51,12 @@ def test_search_branch(tmp_path, lang, nokey):
     # sources: the «title» fields of the raw JSON answer → at most 5 → «• title» lines (D-101: no dictionary walk)
     keys = [params(a).get('WFDictionaryKey') for a in actions]
     assert not {'groundingChunks', 'web', 'uri'} & set(keys)
-    assert any(params(a).get('WFMatchTextPattern') == r'"title"\s*:\s*"[^"]+"' for a in actions)
-    assert any(params(a).get('WFItemSpecifier') == 'Items in Range' and params(a).get('WFItemRangeStart') == 1
-               and params(a).get('WFItemRangeEnd') == 5 for a in actions)
+    assert any('"title"' in str(params(a).get('WFMatchTextPattern')) and '"web"' in str(params(a).get('WFMatchTextPattern'))
+               for a in actions)
+    # no «Get Items in Range»: it stops the run when there are fewer items than the range (Shortcuts for Mac 29.10);
+    # the first 5 source lines are cut by Match Text
+    assert not any(params(a).get('WFItemSpecifier') == 'Items in Range' for a in actions)
+    assert any(params(a).get('WFMatchTextPattern') == r'\A[^\n]*(?:\n[^\n]*){0,4}' for a in actions)
     assert not any('WFItemCount' in params(a) for a in actions)
     # every Google key is tried: a Repeat with Each over the matches encloses the search attempts
     assert any(a['WFWorkflowActionIdentifier'].endswith('repeat.each') and params(a)['WFControlFlowMode'] == 0
@@ -93,11 +96,12 @@ def test_sources_guarded_when_no_chunks(tmp_path, nokey):
     for each parameter in this action». The sources are matched in the answer's text; the line is added only when a
     title came (Match Text `\\S` on the result, then «has any value» on its Matches)."""
     actions = build(tmp_path, 'en', nokey)
-    firsts = [i for i, a in enumerate(actions) if params(a).get('WFItemSpecifier') == 'Items in Range']
-    assert firsts
-    for i in firsts:
-        assert actions[i - 1]['WFWorkflowActionIdentifier'].endswith('text.match')
-        guard = actions[i + 4]
+    combos = [i for i, a in enumerate(actions) if a['WFWorkflowActionIdentifier'].endswith('text.combine')
+              and i > 1 and '"web"' in str(params(actions[i - 2]).get('WFMatchTextPattern'))]
+    assert combos
+    for i in combos:
+        # Kimi (D-101): nothing reads the title Matches when it is empty — the If on it comes first
+        guard = actions[i - 1]
         assert guard['WFWorkflowActionIdentifier'].endswith('conditional') and params(guard)['WFCondition'] == 100
         assert params(guard)['WFInput']['Variable']['Value']['OutputName'] == 'Matches'
 

@@ -14,7 +14,7 @@ C1M Duo (на цих сторінках — Poly) — це «швидка ком
 На iPhone торкніться посилання → відкриється застосунок «Команди» → **Додати команду**. Під час першого запуску команда 4–6 разів попросить дозвіл — щоразу торкайтеся **Завжди дозволяти**.
 
 - **Duo:** https://www.icloud.com/shortcuts/9af937cd07a544e493b9db9f63a9e283
-- **Trio** (третій голос, див. нижче): https://www.icloud.com/shortcuts/2ee4ec0be50e4e2c85c10626bd5adf01
+- **Trio** (третій голос, див. нижче): https://www.icloud.com/shortcuts/02842cdd1e32411b85c8b139c65f72ca
 
 ### Запасний варіант — файл
 
@@ -83,7 +83,7 @@ C1M Duo (на цих сторінках — Poly) — це «швидка ком
 
 `Trio.shortcut` додає до пари третій ШІ: він читає питання, відповідь ChatGPT і фінальну відповідь Claude та називає лише те, що пропустили обидва.
 
-**Без ключа (iPhone 15 Pro чи новіший, iOS 26+):** третій голос — сам Apple Intelligence, без ключа й реєстрації. Не впевнені щодо свого iPhone? Параметри → Загальні → Про цей пристрій → Назва моделі. Встановіть Trio без ключа: [English](https://www.icloud.com/shortcuts/2a24e0157e4a445bae92ed1410907b9f) · [Español](https://www.icloud.com/shortcuts/281f56b82f7444438220fdffcbb46f22) · [Português](https://www.icloud.com/shortcuts/4000dcb2b9d64dcfaa44062c92e51b69).
+**Без ключа (iPhone 15 Pro чи новіший, iOS 26+):** третій голос — сам Apple Intelligence, без ключа й реєстрації. Не впевнені щодо свого iPhone? Параметри → Загальні → Про цей пристрій → Назва моделі. Встановіть Trio без ключа: [English](https://www.icloud.com/shortcuts/e09ac625b719401fa8ca91360ba23a20) · [Español](https://www.icloud.com/shortcuts/3167e5dba4f1447797d85849c279be61) · [Português](https://www.icloud.com/shortcuts/30de98250b784e7181fbee4c17444b43).
 
 **Старіший iPhone або віддаєте перевагу ключу:** Trio один раз просить безкоштовний ключ — довгий пароль від ШІ-компанії (хвилина, без картки). Працює з будь-яким безкоштовним ключем — чи кількома — у такому порядку:
 - **console.groq.com/keys** → Create API Key (починається з `gsk_`; без SMS, вхід через акаунт Google);

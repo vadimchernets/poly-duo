@@ -14,8 +14,8 @@ C1M Duo is a "shortcut" for iPhone: ask one question, and it's handled by two AI
 On your iPhone, tap the link → the Shortcuts app opens → **Add**. On the first run the shortcut asks for permission 4–6 times — tap **Always Allow** each time.
 
 - **Duo:** https://www.icloud.com/shortcuts/9baa76c3d00e4c08ae1380c8ee3eb1c1
-- **Trio, iPhone 15 Pro or newer — no key** (the third voice is Apple Intelligence; see below): https://www.icloud.com/shortcuts/2a24e0157e4a445bae92ed1410907b9f
-- **Trio, older iPhone — free key** (the third voice, see below): https://www.icloud.com/shortcuts/ca730c3d887648a0a380dc397ede7ab7
+- **Trio, iPhone 15 Pro or newer — no key** (the third voice is Apple Intelligence; see below): https://www.icloud.com/shortcuts/e09ac625b719401fa8ca91360ba23a20
+- **Trio, older iPhone — free key** (the third voice, see below): https://www.icloud.com/shortcuts/fca5ce69fd254fb58dc5032b0c11f4a8
 
 ### Backup — the file
 
@@ -86,7 +86,7 @@ Right after you pick a mode, a **status notification** arrives ("what's happenin
 `Trio.shortcut` adds a third AI to the pair: it reads the question, ChatGPT's answer and Claude's
 final answer, and names only what both missed.
 
-**No key (iPhone 15 Pro or newer, iOS 26+):** the third voice is Apple Intelligence itself, with no key and no sign-up. Not sure about your iPhone? Settings → General → About → Model Name. Install the no-key Trio: [English](https://www.icloud.com/shortcuts/2a24e0157e4a445bae92ed1410907b9f) · [Español](https://www.icloud.com/shortcuts/281f56b82f7444438220fdffcbb46f22) · [Português](https://www.icloud.com/shortcuts/4000dcb2b9d64dcfaa44062c92e51b69).
+**No key (iPhone 15 Pro or newer, iOS 26+):** the third voice is Apple Intelligence itself, with no key and no sign-up. Not sure about your iPhone? Settings → General → About → Model Name. Install the no-key Trio: [English](https://www.icloud.com/shortcuts/e09ac625b719401fa8ca91360ba23a20) · [Español](https://www.icloud.com/shortcuts/3167e5dba4f1447797d85849c279be61) · [Português](https://www.icloud.com/shortcuts/30de98250b784e7181fbee4c17444b43).
 
 **Older iPhone, or you prefer a key:** Trio asks once for a free key, a long password from an AI company (a minute, no card). It runs on any free key — or several — in this order:
 - **console.groq.com/keys** → Create API Key (starts with `gsk_`; no SMS, sign in with your Google account);

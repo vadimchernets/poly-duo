@@ -504,8 +504,6 @@ def search_voice(T, V, prompt_uid, keys_uid, keys_name='Variable'):
     """If a Google key is among the keys: ask Gemini with search; on success V['third'] = text + «Sources:» lines."""
     u = new_uuid
     gkey_v = V.get('gkey', 'GoogleKey')
-    srcs_v = V.get('sources', 'Sources')
-    chunk_v = V.get('chunk', 'SearchChunk')
     found, g_loop = u(), u()
     # every Google key in turn (a revoked first one must not hide a working second one); once a model
     # has answered, V['third'] has a value and every later attempt is skipped by its own guard
@@ -515,9 +513,9 @@ def search_voice(T, V, prompt_uid, keys_uid, keys_name='Variable'):
     for model in GEMINI_SEARCH_MODELS:
         todo, k_get, post, raw, ok = u(), u(), u(), u(), u()
         cands, cand, content, parts, part, text, has_text = (u() for _ in range(7))
-        meta, chunks, five, loop = u(), u(), u(), u()
-        c_get, web, uri, title, s_old, s_new = (u() for _ in range(6))
-        s_has, s_get, joined_t, joined, g_chunks, n_chunks = u(), u(), u(), u(), u(), u()
+        chunks, five = u(), u()
+        c_get, s_new = u(), u()
+        s_has, joined_t, joined = u(), u(), u()
         actions += [
             if_no_value(todo, V['third']),
             act_get_variable(gkey_v, k_get),
@@ -543,14 +541,19 @@ def search_voice(T, V, prompt_uid, keys_uid, keys_name='Variable'):
             # each parameter in this action» — a chunk without «web», or a condition straight on the list; Match / Replace
             # Text on the text never has an empty required input. Titles are the sites' names (the uris are Google
             # redirect links). No titles (Gemini chose not to search): the answer stays as it is.
-            act_match(r'"title"\s*:\s*"[^"]+"', raw, 'Text', chunks),
-            act_first_items(chunks, 'Matches', GEMINI_SEARCH_MAX_SOURCES, five),
-            act_combine(five, 'Items from List', c_get),
-            act_replace(c_get, 'Combined Text', r'"title"\s*:\s*"([^"]+)"', '• $1', s_new),
-            *if_output_text(s_has, s_new, 'Updated Text'),
+            # only the «title» inside a source's «web» object, never words of the answer itself (Kimi, D-101)
+            act_match(r'"web"\s*:\s*\{[^{}]*?"title"\s*:\s*"[^"]+"', raw, 'Text', chunks),
+            # no titles (Gemini chose not to search): Matches has no value and nothing below may read it — «Get Items
+            # from List» with an empty required input is the same «Choose values» stop (Kimi, D-101)
+            if_output(s_has, chunks, 'Matches', 100),
+            # all of them, one per line, then the first N lines — not «Get Items in Range 1…N», which stops the run
+            # when there are fewer than N («you asked for items 1 to 5, the list has 2», Shortcuts for Mac 29.10)
+            act_combine(chunks, 'Matches', c_get),
+            act_replace(c_get, 'Combined Text', r'"web"\s*:\s*\{[^{}]*?"title"\s*:\s*"([^"]+)"', '• $1', s_new),
+            act_first_match(s_new, 'Updated Text', r'\A[^\n]*(?:\n[^\n]*){0,%d}' % (GEMINI_SEARCH_MAX_SOURCES - 1), five),
             act_get_variable(V['third'], joined),
             *set_text(V['third'], '{R}\n\n' + T['search.sources'] + '\n{S}', u(),
-                      {'R': (joined, 'Variable'), 'S': (s_new, 'Updated Text')}),
+                      {'R': (joined, 'Variable'), 'S': (five, 'Matches')}),
             if_close(s_has),
             if_close(has_text),
             if_close(ok),
