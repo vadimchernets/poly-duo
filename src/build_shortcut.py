@@ -744,6 +744,7 @@ def build(lang, ai=False):
     g_rat, g_rem = ids(2)
     g_mmenu, mm_ask, mm_new, mm_save, tl_rget, g_tlrem, g_mmempty, mm_chars = ids(8)
     fn_date, fn_jx, fn_entry = ids(3)
+    pf_m1, pf_m2 = ids(2)
     pf_get, pf_txt, g_pf1, g_pf2, g_sh, mk_get, mk_m, mk_rep, g_mk, g_ka, g_kb, g_qa, g_qb, g_qc, g_qd = ids(15)
     qw_get, qw_m, g_askq, g_skm = ids(4)
     g_pc, pm_get, pq_get, pf_new, pf_save, sk_get = ids(6)
@@ -1258,10 +1259,13 @@ def build(lang, ai=False):
         *clear_variable(PREF_MODE), *clear_variable(PREF_QUICK),
         act_get_file(PREFS_FILE, pf_get),
         act_text(text_token('{F}', {'F': (pf_get, 'File')}), pf_txt),
-        if_output(g_pf1, pf_txt, 'Text', 99, WFConditionalActionString='MODE=critique'),
+        # whole lines only (Codex): «QUICK=10» or «XMODE=critique» switch nothing on
+        act_first_match(pf_txt, 'Text', r'(?m)^MODE=critique$', pf_m1),
+        if_output(g_pf1, pf_m1, 'Matches', 100),
         *set_text(PREF_MODE, 'MODE=critique\n'),
         if_close(g_pf1),
-        if_output(g_pf2, pf_txt, 'Text', 99, WFConditionalActionString='QUICK=1'),
+        act_first_match(pf_txt, 'Text', r'(?m)^QUICK=1$', pf_m2),
+        if_output(g_pf2, pf_m2, 'Matches', 100),
         *set_text(PREF_QUICK, 'QUICK=1\n'),
         if_close(g_pf2),
         # Shortcut Input first, the clipboard ONLY when there is none (so a Share-Sheet run never reads, or asks
@@ -1315,11 +1319,12 @@ def build(lang, ai=False):
         # D-29: Duo's own re-runs («Another mode», Recipes, «go back») start with MENU_MARK: cut it off, and show the
         # question box and the mode menu whatever the person's two optional shortcuts say.
         act_get_variable(START_VAR, mk_get),
-        act_first_match(mk_get, 'Variable', '⟦duo-menu⟧', mk_m),
+        # only at the very START of the text (Codex): a marker typed in the middle of a question is just text
+        act_first_match(mk_get, 'Variable', r'^⟦duo-menu⟧\n', mk_m),
         if_output(g_mk, mk_m, 'Matches', 100),
         *set_text(FORCE_MENU, '1'),
-        act_replace_text(mk_get, 'Variable', MENU_MARK, '', mk_rep),
-        act_set_variable(START_VAR, mk_rep, 'Updated Text'),
+        act_first_match(mk_get, 'Variable', r'(?s)(?<=^⟦duo-menu⟧\n).*', mk_rep),
+        act_set_variable(START_VAR, mk_rep, 'Matches'),
         if_close(g_mk),
         # «Critique right away» (C-1): skip the mode menu. «Ask without editing» (C-3): a text SHARED to Duo with at
         # least three words (a lone link or a code is still put in the box) goes without the question box.
@@ -1332,7 +1337,8 @@ def build(lang, ai=False):
         *if_text(g_qb, SHARED_VAR),
         *if_text(g_qc, FORCE_MENU, present=False),
         act_get_variable(START_VAR, qw_get),
-        act_first_match(qw_get, 'Variable', r'\S+\s+\S+\s+\S+', qw_m),
+        # three words, or six Chinese / Japanese / Korean characters in a row (their text has no spaces between words)
+        act_first_match(qw_get, 'Variable', r'\S+\s+\S+\s+\S+|[\u3040-\u9fff\uac00-\ud7af]{6,}', qw_m),
         if_output(g_qd, qw_m, 'Matches', 100),
         *set_text(SKIP_Q, '1'),
         if_close(g_qd),

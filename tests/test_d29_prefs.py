@@ -27,8 +27,8 @@ def test_prefs_file_is_read_once_and_written_once(tmp_path, lang):
     # the read comes before the question box; both options are off when the file is missing (default)
     ask = next(i for i, a in enumerate(actions) if kind(a) == 'ask')
     assert actions.index(reads[0]) < ask
-    conds = [params(a).get('WFConditionalActionString') for a in actions[:ask] if kind(a) == 'conditional']
-    assert 'MODE=critique' in conds and 'QUICK=1' in conds
+    pats = [params(a).get('WFMatchTextPattern') for a in actions[:ask] if kind(a) == 'match']
+    assert r'(?m)^MODE=critique$' in pats and r'(?m)^QUICK=1$' in pats   # whole lines only
 
 
 @pytest.mark.parametrize('lang', LANGS)
@@ -41,7 +41,8 @@ def test_every_rerun_carries_the_menu_marker(tmp_path, lang):
         src = by_uid[params(r)['WFInput']['Value']['OutputUUID']]
         assert kind(src) == 'gettext' and params(src)['WFTextActionText']['Value']['string'].startswith(MARK)
     # the marker is cut off again before the question box
-    assert any(kind(a) == 'replace' and params(a)['WFReplaceTextFind'] == MARK for a in actions)
+    pats = [params(a).get('WFMatchTextPattern') for a in actions if kind(a) == 'match']
+    assert r'^⟦duo-menu⟧\n' in pats and r'(?s)(?<=^⟦duo-menu⟧\n).*' in pats   # only at the very start of the text
 
 
 @pytest.mark.parametrize('lang', LANGS)
