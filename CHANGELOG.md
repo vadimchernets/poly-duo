@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-### Added / Fixed (Duo, D-29, 2026-10-30)
+### Added / Fixed (Duo 6.5, D-29, 2026-10-30; built-in number duo 12)
 - **Optional switches in «➕ More…» at the end of a run (off by default):** «Critique right away next time» (skips the
   mode menu), «Shared text: ask without editing» (a shared text of three words, or six Chinese / Japanese / Korean
   characters in a row, goes without the question box) and «Show all menus again». Kept in one small file,
