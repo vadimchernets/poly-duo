@@ -192,7 +192,7 @@
     "pc_notice_title": "Mais em um notebook ou PC",
     "pc_notice_body": "💻 Em um notebook ou PC, o PolyHelper faz mais: pastas, agentes, canais, agendamentos, um conselho de várias IAs. O Poly no telefone é a versão leve, sem as funções de PC.",
     "first_run_title": "Antes da sua primeira pergunta",
-    "first_run_body": "Agora o iPhone vai pedir 4–6 vezes acesso ao ChatGPT e ao Claude. Toda vez, toque logo em «Permitir Sempre» (ou «Permitir»). Só uma vez. Se um dia o ChatGPT disser «logged out», abra o app dele, entre na conta e rode o Duo de novo."
+    "first_run_body": "Agora o iPhone vai pedir acesso várias vezes (ChatGPT, Claude, arquivos, área de transferência). Toda vez, toque logo em «Permitir Sempre» (ou «Permitir»). Só uma vez. Se um dia o ChatGPT disser «logged out», abra o app dele, entre na conta e rode o Duo de novo."
   },
   "output": {
     "critique": "{S}\n\n■ RESPOSTA VERIFICADA (Claude)\n{C}",

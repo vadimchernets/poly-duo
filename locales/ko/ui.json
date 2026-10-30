@@ -192,7 +192,7 @@
     "pc_notice_title": "노트북이나 PC에서는 더 많이 해요",
     "pc_notice_body": "💻 노트북이나 PC에서는 PolyHelper가 더 많은 일을 해요: 폴더, 에이전트, 채널, 일정, 여러 AI의 협의회. 휴대폰의 Poly는 PC 기능이 없는 가벼운 버전이에요.",
     "first_run_title": "첫 질문 전에",
-    "first_run_body": "이제 iPhone이 ChatGPT와 Claude 접근 권한을 4–6번 물어봐요. 매번 바로 «항상 허용»(또는 «허용»)을 누르세요. 딱 한 번만 하면 돼요. ChatGPT가 «logged out»이라고 하면 ChatGPT 앱을 열고 로그인한 뒤 Duo를 다시 실행하세요."
+    "first_run_body": "이제 iPhone이 접근 권한을 여러 번 물어봐요 (ChatGPT, Claude, 파일, 클립보드). 매번 바로 «항상 허용»(또는 «허용»)을 누르세요. 딱 한 번만 하면 돼요. ChatGPT가 «logged out»이라고 하면 ChatGPT 앱을 열고 로그인한 뒤 Duo를 다시 실행하세요."
   },
   "output": {
     "critique": "{S}\n\n■ 확인된 답 (Claude)\n{C}",

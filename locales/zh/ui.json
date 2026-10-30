@@ -192,7 +192,7 @@
     "pc_notice_title": "在笔记本或台式电脑上功能更多",
     "pc_notice_body": "💻 在笔记本或台式电脑上，PolyHelper 能做得更多：文件夹、智能体、频道、定时任务、由多个 AI 组成的评审团。手机上的 Poly 是轻量版，不含电脑端功能。",
     "first_run_title": "提第一个问题之前",
-    "first_run_body": "接下来 iPhone 会 4–6 次请求访问 ChatGPT 和 Claude。每次都请立即点“始终允许”（或“允许”）。只有这一次。如果 ChatGPT 日后提示“logged out”，请打开它的 App、登录，再重新运行 Duo。"
+    "first_run_body": "接下来 iPhone 会多次请求访问权限（ChatGPT、Claude、文件、剪贴板）。每次都请立即点“始终允许”（或“允许”）。只有这一次。如果 ChatGPT 日后提示“logged out”，请打开它的 App、登录，再重新运行 Duo。"
   },
   "output": {
     "critique": "{S}\n\n■ 复核后的答案（Claude）\n{C}",

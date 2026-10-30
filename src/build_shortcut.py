@@ -1230,7 +1230,7 @@ def build(lang, ai=False):
         act_comment(L['comment.main']),
 
         # ---- Once, on the very first run: what the next minute looks like. Right after it the iPhone asks for
-        # permission 4–6 times and an unanswered request vanishes in seconds, so the person is told before, not
+        # permission several times and an unanswered request vanishes in seconds, so the person is told before, not
         # after. A marker file next to the journal (iCloud Drive → Shortcuts) says it was shown, so it never comes
         # back; a missing file is not an error. The laptop/PC paragraph lives on the help screen.
         act_get_file(L['files.pc_notice'], pc_get),

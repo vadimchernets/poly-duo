@@ -192,7 +192,7 @@
     "pc_notice_title": "ノートPCやパソコンならもっと",
     "pc_notice_body": "💻 ノートPCやパソコンでは、PolyHelper がもっと多くのことをこなします: フォルダ、エージェント、チャンネル、スケジュール、複数の AI による合議。スマホの Poly は、PC 向け機能を省いた軽量版です。",
     "first_run_title": "最初の質問の前に",
-    "first_run_body": "このあと iPhone が ChatGPT と Claude へのアクセスを 4〜6 回求めます。毎回すぐに「常に許可」（または「許可」）をタップしてください。最初の一度だけです。ChatGPT が「logged out」と出たら、その App を開いてサインインし、Duo をやり直してください。"
+    "first_run_body": "このあと iPhone がアクセスを何度か求めます（ChatGPT、Claude、ファイル、クリップボード）。毎回すぐに「常に許可」（または「許可」）をタップしてください。最初の一度だけです。ChatGPT が「logged out」と出たら、その App を開いてサインインし、Duo をやり直してください。"
   },
   "output": {
     "critique": "{S}\n\n■ 検証済みの回答（Claude）\n{C}",

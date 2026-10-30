@@ -160,7 +160,7 @@
     "image_judge": "[3/3] Claude als Richter vergleicht die Skizzen…",
     "delta_step1": "➕ Delta [1/2]: Claude schreibt die Ankerantwort…",
     "delta_step2": "[2/2] ChatGPT sucht, was sich ergänzen lässt…",
-    "help": "ℹ️ Poly-Hilfe — keine KI-Aufrufe, kostenlos.",
+    "help": "ℹ️ Duo-Hilfe — keine KI-Aufrufe, kostenlos.",
     "tail_done": "✅ Fertig. Die Antwort liegt auch in der Zwischenablage: überall einfügen.",
     "tail_empty": "⚠️ Es kam keine Antwort zurück. Schau in der Claude-App nach; die Entwürfe stehen im Journal.",
     "voice_start": "🎧 Poly Voice: ChatGPT → Claude, die finale Antwort lese ich dir vor. ≈1 Min.",
@@ -192,7 +192,7 @@
     "pc_notice_title": "Mehr auf dem Laptop oder PC",
     "pc_notice_body": "💻 Auf dem Laptop oder PC kann PolyHelper mehr: Ordner, Agenten, Kanäle, Zeitpläne, ein Rat aus mehreren KIs. Poly auf dem Handy ist die leichte Version, ohne die PC-Funktionen.",
     "first_run_title": "Vor deiner ersten Frage",
-    "first_run_body": "Gleich fragt dein iPhone 4–6 Mal nach Zugriff auf ChatGPT und Claude. Tippe jedes Mal sofort auf „Immer erlauben“ (oder „Erlauben“). Nur einmal. Sagt ChatGPT einmal „logged out“, öffne seine App, melde dich an und starte Duo neu."
+    "first_run_body": "Gleich fragt dein iPhone mehrmals nach Zugriff (ChatGPT, Claude, Dateien, Zwischenablage). Tippe jedes Mal sofort auf „Immer erlauben“ (oder „Erlauben“). Nur einmal. Sagt ChatGPT einmal „logged out“, öffne seine App, melde dich an und starte Duo neu."
   },
   "output": {
     "critique": "{S}\n\n■ GEPRÜFTE ANTWORT (Claude)\n{C}",
