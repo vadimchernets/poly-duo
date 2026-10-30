@@ -1,0 +1,42 @@
+name: Feedback
+description: Duo or Trio worked, didn't work, or you have an idea. One minute.
+title: "[Feedback]: "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Please don't paste the question you asked or the AI answers: only what happened. Prefer email? info@polyhelper.ai
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What happened?
+      options:
+        - It worked
+        - It didn't work
+        - An idea
+    validations:
+      required: true
+  - type: dropdown
+    id: lang
+    attributes:
+      label: Language of your Duo
+      options: [English, Deutsch, Español, Français, Português, Русский, Українська, हिन्दी, 日本語, 한국어, 中文]
+    validations:
+      required: true
+  - type: dropdown
+    id: device
+    attributes:
+      label: Where did you run it?
+      options:
+        - iPhone
+        - Mac
+    validations:
+      required: true
+  - type: textarea
+    id: text
+    attributes:
+      label: Tell us
+      description: What you did, what you expected, what you saw. A screenshot helps.
+    validations:
+      required: true
