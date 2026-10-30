@@ -193,3 +193,35 @@ def test_the_leak_test_follows_an_action_without_input_after_end_if_and_the_othe
     # «Nothing» breaks the chain
     nothing = _act('is.workflow.actions.nothing', UUID='N')
     assert _taint_violations([get, cond, end, nothing, _act('is.workflow.actions.openurl')]) == []
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_prefs_are_known_before_the_resume_menu_and_every_more_item_is_safe(tmp_path, lang):
+    """B-1: on a run that goes on from a saved draft the file used to be read AFTER the resume branch, so the «OFF»
+    flags were unset (= «on») and «More… → Critique right away» wrote QUICK=1 (and the other way round)."""
+    actions = build(tmp_path, lang)
+    names = [(i, params(a).get('WFVariableName')) for i, a in enumerate(actions) if kind(a) == 'setvariable']
+    read = next(i for i, a in enumerate(actions) if params(a).get('WFGetFilePath') == 'Duo-prefs.txt')
+    draft = next(i for i, a in enumerate(actions) if str(params(a).get('WFGetFilePath', '')).startswith('Duo-draft'))
+    first_flag = {n: min(i for i, x in names if x == n) for n in ('PolyModeOff', 'PolyQuickOff')}
+    resume_menu = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
+                       and params(a).get('WFMenuPrompt') == ui_of(lang)['menu']['resume1_title'])
+    # the two flags are set, the file is read and its Ifs are done BEFORE the draft is looked at
+    assert max(first_flag.values()) < read < draft < resume_menu
+    # …and at the top level: no If or menu is open when the file is read, so every run (fresh, resumed, shared) reads it
+    depth = 0
+    for a in actions[:read]:
+        if kind(a) in ('conditional', 'choosefrommenu'):
+            mode = params(a)['WFControlFlowMode']
+            depth += 1 if mode == 0 else (-1 if mode == 2 else 0)
+    assert depth == 0
+    # every use of the flags (the save block after «More…») comes after that read
+    uses = [i for i, a in enumerate(actions) if kind(a) == 'getvariable'
+            and params(a)['WFVariable']['Value'].get('VariableName') in ('PolyModeOff', 'PolyQuickOff')]
+    assert uses and min(uses) > read
+    # «Saved» is told after the file is written, once per switch
+    save = next(i for i, a in enumerate(actions) if params(a).get('WFFileDestinationPath') == 'Duo-prefs.txt')
+    n = ui_of(lang)['notify']
+    for key in ('pref_mode', 'pref_quick', 'pref_reset'):
+        at = [i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == n[key]]
+        assert len(at) == 1 and at[0] > save

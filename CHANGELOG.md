@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added / Fixed (Duo, D-29, 2026-10-30)
+- **Optional switches in «➕ More…» at the end of a run (off by default):** «Critique right away next time» (skips the
+  mode menu), «Shared text: ask without editing» (a shared text of three words, or six Chinese / Japanese / Korean
+  characters in a row, goes without the question box) and «Show all menus again». Kept in one small file,
+  `Duo-prefs.txt`. «Another mode», the Recipes and «go back» start with a marker that is cut off at once and force
+  the question box and the menu.
+- **The text of `Duo-prefs.txt` no longer reaches the ChatGPT and Claude requests or the clipboard** (found on the
+  iPhone 29.10 on the «Critique right away» path). The flags that depend on the file are only ever cleared; a leak
+  test follows every request, clipboard write, file write, notification, link and speech action.
+- **A run that goes on from an interrupted Critique reads the file first**, so «More… → Critique right away» can no
+  longer write `QUICK=1` there (and the other way round). «Saved» is shown after the file is written.
+- Shorter start notifications: the «logged out» hint moved to the first-run window and to the «ChatGPT sent no
+  answer» notification, and the Critique start keeps a five-word «Stuck? Open ChatGPT and sign in». Gentler «please
+  wait» wording and «Duo» instead of «Poly» in the notifications, 12 languages. The first-run window no longer
+  promises a number of permission prompts.
+
 ### Fixed (Trio 7 / Trio without a key 4, D-101, 2026-10-29)
 - **Trio stopped on the iPhone with «Choose values for each parameter in this action».** Live iPhone 29.10: after the
   third voice. Bisected on Shortcuts for Mac: «If <variable> does not contain <the Repeat Item>» in the number pass is

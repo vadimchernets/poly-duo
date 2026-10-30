@@ -752,6 +752,8 @@ def build(lang, ai=False):
     pf_get, pf_txt, g_pf1, g_pf2, g_sh, mk_get, mk_m, mk_rep, g_mk, g_ka, g_kb, g_qa, g_qb, g_qc, g_qd = ids(15)
     qw_get, qw_m, g_askq, g_skm = ids(4)
     g_pc, pm_get, pq_get, pf_new, pf_save, sk_get = ids(6)
+    g_n1, g_n2, g_n3 = ids(3)
+    NOTE_MODE, NOTE_QUICK, NOTE_RESET = 'PolyNoteMode', 'PolyNoteQuick', 'PolyNoteReset'
 
     def journal_note(entry, refs=None):
         """Per-branch note: mode name plus the raw drafts that produced the result. `entry` is
@@ -1259,19 +1261,10 @@ def build(lang, ai=False):
         act_save_file(L['files.pc_notice'], pc_text, pc_save),
         if_close(g_notice),
 
-        # ---- Duo 6.4: a Critique cut off by a message limit within DRAFT_MINUTES → go on from its draft (D-101)
-        *resume_block(),
-        *if_text(g_fresh, RESUME_VAR, present=False),
-
-        # One-tap start (U-16): the question field is pre-filled with the Share input, else with the clipboard,
-        # so Action Button / Back Tap / Lock Screen / Siri need no typing. The field is still shown (the person
-        # may edit or clear it; clearing it hits the empty-question guard below) — no screen or tap is added.
-        # `is.workflow.actions.getclipboard` is standard; its output is called «Clipboard» (not checked on device).
-        # The clipboard counts only when it holds at least three words: a password, a one-time code or a lone
-        # link must never land in the question field, where a busy person would send it on with one tap.
-        *clear_variable(START_VAR),
         # D-29: the person's two optional shortcuts (C-1 «Critique right away», C-3 «ask without editing»), read from
-        # ONE small file; a missing file (the default) is no value and nothing changes. Each run starts with them unset.
+        # ONE small file; a missing file (the default) is no value and nothing changes. Each run starts with them unset. READ BEFORE the resume menu (D-29 B-1):
+        # on a run that goes on from a saved draft the final «More…» menu still saves these two switches, and an unset
+        # «OFF» flag would read as «on» and write QUICK=1 / MODE=critique the person never chose.
         *clear_variable(FORCE_MENU), *clear_variable(SHARED_VAR), *clear_variable(PREFS_CHANGED),
         *set_text(MODE_OFF, '1'), *set_text(QUICK_OFF, '1'),
         act_get_file(PREFS_FILE, pf_get),
@@ -1285,6 +1278,19 @@ def build(lang, ai=False):
         if_output(g_pf2, pf_m2, 'Matches', 100),
         *clear_variable(QUICK_OFF),
         if_close(g_pf2),
+        *clear_variable(PREFS_CHANGED),   # a plain Nothing right after the file's Ifs ends any chain from them
+
+        # ---- Duo 6.4: a Critique cut off by a message limit within DRAFT_MINUTES → go on from its draft (D-101)
+        *resume_block(),
+        *if_text(g_fresh, RESUME_VAR, present=False),
+
+        # One-tap start (U-16): the question field is pre-filled with the Share input, else with the clipboard,
+        # so Action Button / Back Tap / Lock Screen / Siri need no typing. The field is still shown (the person
+        # may edit or clear it; clearing it hits the empty-question guard below) — no screen or tap is added.
+        # `is.workflow.actions.getclipboard` is standard; its output is called «Clipboard» (not checked on device).
+        # The clipboard counts only when it holds at least three words: a password, a one-time code or a lone
+        # link must never land in the question field, where a busy person would send it on with one tap.
+        *clear_variable(START_VAR),
         # Shortcut Input first, the clipboard ONLY when there is none (so a Share-Sheet run never reads, or asks
         # permission for, the clipboard). Share: «Get Text from Input» first (text, a URL, an article, a text PDF); a
         # result that is only a picture's file name counts as no text; only then «Get Images from Input» → Extract
@@ -1797,17 +1803,14 @@ def build(lang, ai=False):
         # writes the file when a case ran. «Show all menus again» empties both.
         menu_case(g_more, L['menu.finale_more_items'][4]),
         *clear_variable(MODE_OFF),
-        *set_text(PREFS_CHANGED, '1'),
-        act_notify(L['notify.pref_mode']),
+        *set_text(PREFS_CHANGED, '1'), *set_text(NOTE_MODE, '1'),
         menu_case(g_more, L['menu.finale_more_items'][5]),
         *clear_variable(QUICK_OFF),
-        *set_text(PREFS_CHANGED, '1'),
-        act_notify(L['notify.pref_quick']),
+        *set_text(PREFS_CHANGED, '1'), *set_text(NOTE_QUICK, '1'),
         menu_case(g_more, L['menu.finale_more_items'][6]),
         *set_text(MODE_OFF, '1'),
         *set_text(QUICK_OFF, '1'),
-        *set_text(PREFS_CHANGED, '1'),
-        act_notify(L['notify.pref_reset']),
+        *set_text(PREFS_CHANGED, '1'), *set_text(NOTE_RESET, '1'),
         menu_close(g_more),
         *if_text(g_pc, PREFS_CHANGED),
         # the file is rebuilt from the two clean flags: the header, then one line for each option that is ON
@@ -1817,6 +1820,16 @@ def build(lang, ai=False):
         act_get_variable(PREFS_BODY, pm_get),
         act_text(text_token('{B}', {'B': (pm_get, 'Variable')}), pf_new),
         act_save_file(PREFS_FILE, pf_new, pf_save),
+        # «Saved» is told only AFTER the file is written (a refused or failed save must not say it worked)
+        *if_text(g_n1, NOTE_MODE),
+        act_notify(L['notify.pref_mode']),
+        if_close(g_n1),
+        *if_text(g_n2, NOTE_QUICK),
+        act_notify(L['notify.pref_quick']),
+        if_close(g_n2),
+        *if_text(g_n3, NOTE_RESET),
+        act_notify(L['notify.pref_reset']),
+        if_close(g_n3),
         if_close(g_pc),
         menu_close(g_finale),
 
