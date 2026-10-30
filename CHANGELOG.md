@@ -187,7 +187,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   forms «Run report» and «Worse after review», `docs/en/compat.md`.
 
 ### Changed (2026-10-26, the first minute; not yet in the iCloud links)
-- **Duo: the first run warns before the permission prompts.** One window: iPhone will ask 4–6 times
+- **Duo: the first run warns before the permission prompts.** One window: iPhone will ask several times
   for access to ChatGPT and Claude, tap «Always Allow» (or «Allow») right away. It replaces the
   laptop/PC notice, which stays on the help screen. People who already ran Duo do not see it again.
 - **Duo and Trio: an empty question stops the run** with one notification, before any AI is asked.

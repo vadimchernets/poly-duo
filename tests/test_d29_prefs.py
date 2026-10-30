@@ -71,6 +71,7 @@ def test_hint_moved_out_of_start_notifications(tmp_path, lang):
 #    Duo and every question box must be untainted. Branches are all treated as run (the worst case).
 def _taint_violations(actions):
     tainted_uid, tainted_var, ctx, bad = set(), set(), [], []
+    prev = False   # is the output of the PREVIOUS action tainted (what an action with no input of its own may take)
 
     def refs(value, out):
         if isinstance(value, dict):
@@ -92,29 +93,36 @@ def _taint_violations(actions):
         tainted_in = any((t == 'uid' and v in tainted_uid) or (t == 'var' and v in tainted_var) for t, v in found)
         if p.get('WFGetFilePath') == 'Duo-prefs.txt':
             tainted_uid.add(uid)
+            prev = True
             continue
         if k == 'conditional':
             mode = p['WFControlFlowMode']
             if mode == 0:
                 ctx.append(tainted_in)
-            elif mode == 2 and ctx:
-                ctx.pop()
+                prev = tainted_in
+            elif mode == 1:
+                prev = prev or (ctx[-1] if ctx else False)   # the Otherwise branch starts from the If's input
+            elif ctx:
+                closed = ctx.pop()
+                prev = prev or closed   # «End If» hands on the output of the branch that ran, or the If's input
             continue
         in_tainted_if = any(ctx)
-        sink = (k in ('AskIntent', 'ClaudeAppIntentsExtension', 'setclipboard', 'append', 'runworkflow', 'ask', 'notification')
+        taken = tainted_in or in_tainted_if or prev   # worst case: an action with no input takes the previous output
+        sink = (k in ('AskIntent', 'ClaudeAppIntentsExtension', 'setclipboard', 'append', 'runworkflow', 'ask',
+                      'notification', 'openurl', 'speaktext')
                 or (k == 'save' and p.get('WFFileDestinationPath') != 'Duo-prefs.txt'))
-        if sink and (tainted_in or in_tainted_if):
+        if sink and taken:
             bad.append((i, k))
         if k == 'nothing':
             out = False
         elif k == 'setvariable':
             out = tainted_in
             (tainted_var.add if out else tainted_var.discard)(p['WFVariableName'])
-            continue
-        else:   # any other action may take the previous output when it has no input of its own (Kimi: not only Text)
-            out = tainted_in or in_tainted_if
+        else:
+            out = taken
         if out and uid:
             tainted_uid.add(uid)
+        prev = out
     return bad
 
 
@@ -139,14 +147,16 @@ def test_the_leak_test_catches_the_old_shape():
     gpt = {'WFWorkflowActionIdentifier': 'com.openai.chat.AskIntent',
            'WFWorkflowActionParameters': {'prompt': {'Value': {'attachmentsByRange': {'{0, 1}': {
                'OutputUUID': 'X', 'Type': 'ActionOutput'}}}}}}
-    assert _taint_violations([get, cond, text, setv, end, gpt]) == []   # a Text in the If is tainted, but unused
+    nothing_ = {'WFWorkflowActionIdentifier': 'is.workflow.actions.nothing', 'WFWorkflowActionParameters': {'UUID': 'N'}}
+    # a Text in the If is tainted but unused; a «Nothing» after «End If» ends the chain
+    assert _taint_violations([get, cond, text, setv, end, nothing_, gpt]) == []
     use = {'WFWorkflowActionIdentifier': 'is.workflow.actions.getvariable',
            'WFWorkflowActionParameters': {'WFVariable': {'Value': {'Type': 'Variable', 'VariableName': 'Flag'}},
                                           'UUID': 'U'}}
     gpt2 = {'WFWorkflowActionIdentifier': 'com.openai.chat.AskIntent',
             'WFWorkflowActionParameters': {'prompt': {'Value': {'attachmentsByRange': {'{0, 1}': {
                 'OutputUUID': 'U', 'Type': 'ActionOutput'}}}}}}
-    assert _taint_violations([get, cond, text, setv, end, use, gpt2]) == [(6, 'AskIntent')]
+    assert _taint_violations([get, cond, text, setv, end, use, gpt2]) == [(6, 'AskIntent')]   # taken through the variable
     inside = {'WFWorkflowActionIdentifier': 'com.openai.chat.AskIntent', 'WFWorkflowActionParameters': {'prompt': 'x'}}
     assert _taint_violations([get, cond, inside, end]) == [(2, 'AskIntent')]
 
@@ -161,3 +171,25 @@ def test_prefs_flags_are_only_cleared_inside_the_file_dependent_ifs(tmp_path, la
                   and params(actions[i])['WFControlFlowMode'] == 2][1]
     inside = [kind(a) for a in actions[read + 2:end_of_ifs + 1]]
     assert set(inside) <= {'match', 'conditional', 'nothing', 'setvariable'}, inside
+
+
+def _act(identifier, **p):
+    return {'WFWorkflowActionIdentifier': identifier, 'WFWorkflowActionParameters': p}
+
+
+def test_the_leak_test_follows_an_action_without_input_after_end_if_and_the_other_sinks():
+    get = _act('is.workflow.actions.documentpicker.open', WFGetFilePath='Duo-prefs.txt', UUID='F')
+    cond = _act('is.workflow.actions.conditional', WFControlFlowMode=0, GroupingIdentifier='g',
+                WFInput={'Value': {'OutputUUID': 'F'}})
+    end = _act('is.workflow.actions.conditional', WFControlFlowMode=2, GroupingIdentifier='g')
+    # an action with no input of its own right after «End If» takes the If's output
+    assert _taint_violations([get, cond, end, _act('is.workflow.actions.openurl')]) == [(3, 'openurl')]
+    assert _taint_violations([get, cond, end, _act('is.workflow.actions.speaktext')]) == [(3, 'speaktext')]
+    assert _taint_violations([get, cond, end, _act('is.workflow.actions.setclipboard')]) == [(3, 'setclipboard')]
+    # …and a Text made there carries it on to a later request
+    text = _act('is.workflow.actions.gettext', WFTextActionText='x', UUID='T')
+    gpt = _act('com.openai.chat.AskIntent', prompt={'Value': {'attachmentsByRange': {'{0, 1}': {'OutputUUID': 'T'}}}})
+    assert _taint_violations([get, cond, end, text, gpt]) == [(4, 'AskIntent')]
+    # «Nothing» breaks the chain
+    nothing = _act('is.workflow.actions.nothing', UUID='N')
+    assert _taint_violations([get, cond, end, nothing, _act('is.workflow.actions.openurl')]) == []
