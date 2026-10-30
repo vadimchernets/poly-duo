@@ -11,7 +11,7 @@ C1M Duo es un «atajo» para iPhone: usted hace una sola pregunta y la trabajan 
 
 ### Lo más fácil — el enlace de iCloud (un toque)
 
-En su iPhone, toque el enlace → se abre la app Atajos → **Añadir**. En la primera ejecución el atajo pide permiso 4–6 veces — pulse **Permitir siempre** cada vez.
+En su iPhone, toque el enlace → se abre la app Atajos → **Añadir**. En la primera ejecución el atajo pide permiso varias veces — pulse **Permitir siempre** cada vez.
 
 - **Duo:** https://www.icloud.com/shortcuts/e24c2d192350498f8684ce51d950bb20
 - **Trio, iPhone 15 Pro o posterior — sin clave** (la tercera voz es Apple Intelligence; ver abajo): https://www.icloud.com/shortcuts/3167e5dba4f1447797d85849c279be61
@@ -98,7 +98,7 @@ Basta una; con más, Trio casi nunca se calla. Su propia clave de pago (`xai-`, 
 
 Ejecute Trio y pegue la(s) clave(s) cuando lo pida — varias, cada una en una línea nueva. Se guardan en
 iCloud Drive → Shortcuts → `poly-key.txt`, no dentro del atajo. En la primera ejecución el iPhone
-pide permiso 4–6 veces: toque **Permitir siempre** cada vez, enseguida.
+pide permiso varias veces: toque **Permitir siempre** cada vez, enseguida.
 
 Trio prueba todas las claves con todos los modelos gratuitos hasta que uno responde; solo si fallan
 todos dice qué respondió cada uno (sin saldo, límite, saturado, clave no válida) y qué hacer. Para

@@ -735,7 +735,11 @@ def build(lang, ai=False):
     DRAFT = draft_file(lang, ai)
     RETRY_SKIP = set()   # ChatGPT calls that have their own retry or are not a mode's first call (see with_gpt_retry)
     NUMS_VAR, MODE_VAR, MY_RULE = 'PolyOnlyInOne', 'PolyMode', 'PolyMyRule'
-    PREF_MODE, PREF_QUICK, FORCE_MENU = 'PolyPrefMode', 'PolyPrefQuick', 'PolyForceMenu'
+    # D-29 (the leak found on the iPhone 29.10: the text of Duo-prefs.txt rode into the ChatGPT request and the
+    # clipboard on the «Critique right away» path): everything computed from that file is an «OFF» flag that is only
+    # ever CLEARED («Nothing», the pattern last_answer already uses) inside an If that depends on the file. A Text
+    # created inside such an If is never used; the skip flags below are constants made OUTSIDE it.
+    MODE_OFF, QUICK_OFF, FORCE_MENU, PREFS_BODY = 'PolyModeOff', 'PolyQuickOff', 'PolyForceMenu', 'PolyPrefsBody'
     SHARED_VAR, SKIP_MENU, SKIP_Q, PREFS_CHANGED = 'PolyShared', 'PolySkipMenu', 'PolySkipQuestion', 'PolyPrefsChanged'
     g_rec, g_mm, g_more = ids(3)
     rv_wrap, rv_claude, rv_prompt, rv_gpt, rv_sum_prompt, rv_sum, rv_out, mm_file, mm_rule = ids(9)
@@ -788,6 +792,19 @@ def build(lang, ai=False):
                 act_notify(kept + '\n' + note if note else kept),
                 *([if_else(g), act_notify(note)] if note else []),
                 if_close(g)]
+
+    def clear_when(test_var, present, target):
+        """If <test_var> has text (present=True) or has none: set <target> to NOTHING. Used for every flag that depends
+        on the prefs file: a flag is only ever cleared, never built from a Text inside such an If."""
+        g = new_uuid()
+        return [*if_text(g, test_var, present=present), *clear_variable(target), if_close(g)]
+
+    def append_line_when(off_var, line):
+        """The option is ON when its OFF flag has no value: add its line to PREFS_BODY."""
+        g, get, txt = new_uuid(), new_uuid(), new_uuid()
+        return [*if_text(g, off_var, present=False), act_get_variable(PREFS_BODY, get),
+                act_text(text_token('{B}' + line + '\n', {'B': (get, 'Variable')}), txt),
+                act_set_variable(PREFS_BODY, txt, 'Text'), if_close(g)]
 
     def rerun_with_menu(src_uid, src_name):
         """Run Duo again with this question and MENU_MARK in front: the new run forces the question box and the
@@ -1255,18 +1272,18 @@ def build(lang, ai=False):
         *clear_variable(START_VAR),
         # D-29: the person's two optional shortcuts (C-1 «Critique right away», C-3 «ask without editing»), read from
         # ONE small file; a missing file (the default) is no value and nothing changes. Each run starts with them unset.
-        *clear_variable(FORCE_MENU), *clear_variable(SHARED_VAR), *clear_variable(SKIP_MENU), *clear_variable(SKIP_Q),
-        *clear_variable(PREF_MODE), *clear_variable(PREF_QUICK),
+        *clear_variable(FORCE_MENU), *clear_variable(SHARED_VAR),
+        *set_text(MODE_OFF, '1'), *set_text(QUICK_OFF, '1'),
         act_get_file(PREFS_FILE, pf_get),
         act_text(text_token('{F}', {'F': (pf_get, 'File')}), pf_txt),
         # whole lines only (Codex): «QUICK=10» or «XMODE=critique» switch nothing on
         act_first_match(pf_txt, 'Text', r'(?m)^MODE=critique$', pf_m1),
         if_output(g_pf1, pf_m1, 'Matches', 100),
-        *set_text(PREF_MODE, 'MODE=critique\n'),
+        *clear_variable(MODE_OFF),
         if_close(g_pf1),
         act_first_match(pf_txt, 'Text', r'(?m)^QUICK=1$', pf_m2),
         if_output(g_pf2, pf_m2, 'Matches', 100),
-        *set_text(PREF_QUICK, 'QUICK=1\n'),
+        *clear_variable(QUICK_OFF),
         if_close(g_pf2),
         # Shortcut Input first, the clipboard ONLY when there is none (so a Share-Sheet run never reads, or asks
         # permission for, the clipboard). Share: «Get Text from Input» first (text, a URL, an article, a text PDF); a
@@ -1328,23 +1345,21 @@ def build(lang, ai=False):
         if_close(g_mk),
         # «Critique right away» (C-1): skip the mode menu. «Ask without editing» (C-3): a text SHARED to Duo with at
         # least three words (a lone link or a code is still put in the box) goes without the question box.
-        *if_text(g_ka, PREF_MODE),
-        *if_text(g_kb, FORCE_MENU, present=False),
+        # Both start as constants and are only cleared (see MODE_OFF above): nothing here is built inside an If that
+        # depends on the prefs file.
         *set_text(SKIP_MENU, '1'),
-        if_close(g_kb),
-        if_close(g_ka),
-        *if_text(g_qa, PREF_QUICK),
-        *if_text(g_qb, SHARED_VAR),
-        *if_text(g_qc, FORCE_MENU, present=False),
+        *clear_when(MODE_OFF, True, SKIP_MENU),
+        *clear_when(FORCE_MENU, True, SKIP_MENU),
+        *set_text(SKIP_Q, '1'),
+        *clear_when(QUICK_OFF, True, SKIP_Q),
+        *clear_when(SHARED_VAR, False, SKIP_Q),
+        *clear_when(FORCE_MENU, True, SKIP_Q),
         act_get_variable(START_VAR, qw_get),
         # three words, or six Chinese / Japanese / Korean characters in a row (their text has no spaces between words)
         act_first_match(qw_get, 'Variable', r'\S+\s+\S+\s+\S+|[\u3040-\u9fff\uac00-\ud7af]{6,}', qw_m),
-        if_output(g_qd, qw_m, 'Matches', 100),
-        *set_text(SKIP_Q, '1'),
+        if_output(g_qd, qw_m, 'Matches', 101),
+        *clear_variable(SKIP_Q),
         if_close(g_qd),
-        if_close(g_qc),
-        if_close(g_qb),
-        if_close(g_qa),
         *if_text(g_askq, SKIP_Q, present=False),
         act_get_variable(START_VAR, st_get),
         act_ask(L['ask.question'], question, default_from=(st_get, 'Variable')),
@@ -1781,23 +1796,26 @@ def build(lang, ai=False):
         # D-29: the person's two optional shortcuts. Each case only changes the variables; ONE «Save File» below
         # writes the file when a case ran. «Show all menus again» empties both.
         menu_case(g_more, L['menu.finale_more_items'][4]),
-        *set_text(PREF_MODE, 'MODE=critique\n'),
+        *clear_variable(MODE_OFF),
         *set_text(PREFS_CHANGED, '1'),
         act_notify(L['notify.pref_mode']),
         menu_case(g_more, L['menu.finale_more_items'][5]),
-        *set_text(PREF_QUICK, 'QUICK=1\n'),
+        *clear_variable(QUICK_OFF),
         *set_text(PREFS_CHANGED, '1'),
         act_notify(L['notify.pref_quick']),
         menu_case(g_more, L['menu.finale_more_items'][6]),
-        *clear_variable(PREF_MODE),
-        *clear_variable(PREF_QUICK),
+        *set_text(MODE_OFF, '1'),
+        *set_text(QUICK_OFF, '1'),
         *set_text(PREFS_CHANGED, '1'),
         act_notify(L['notify.pref_reset']),
         menu_close(g_more),
         *if_text(g_pc, PREFS_CHANGED),
-        act_get_variable(PREF_MODE, pm_get),
-        act_get_variable(PREF_QUICK, pq_get),
-        act_text(text_token(PREFS_HEAD + '{M}{Q}', {'M': (pm_get, 'Variable'), 'Q': (pq_get, 'Variable')}), pf_new),
+        # the file is rebuilt from the two clean flags: the header, then one line for each option that is ON
+        *set_text(PREFS_BODY, PREFS_HEAD),
+        *append_line_when(MODE_OFF, 'MODE=critique'),
+        *append_line_when(QUICK_OFF, 'QUICK=1'),
+        act_get_variable(PREFS_BODY, pm_get),
+        act_text(text_token('{B}', {'B': (pm_get, 'Variable')}), pf_new),
         act_save_file(PREFS_FILE, pf_new, pf_save),
         if_close(g_pc),
         menu_close(g_finale),

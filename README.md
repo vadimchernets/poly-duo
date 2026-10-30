@@ -32,7 +32,7 @@
 
 1. On your iPhone, open [`releases/`](releases) and pick your language — `en`, `es`, `pt`, `ru`, `uk`, `de`, `fr`, `hi`, `ja`, `ko` or `zh`.
 2. Tap **`Duo.shortcut`** (or **`Trio.shortcut`**) → **Add**.
-3. Run it once and tap **Always Allow** each time it asks about ChatGPT, Claude and the clipboard (4–6 times on the first run).
+3. Run it once and tap **Always Allow** each time it asks about ChatGPT, Claude and the clipboard (several times on the first run).
 
 The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (Duo 6.4) and in the [`releases/`](releases) folder of this repository (the same files that `releases/SHA256SUMS` lists). The [GitHub releases](https://github.com/vadimchernets/poly-duo/releases) page does not carry the current files: its only attached files, in v1.0.0–v1.0.4, are the old 1.0 builds named `Duo-en.shortcut` and so on. Do not use them: the name becomes the shortcut's name, and Siri and «another mode — same question» then cannot find it. Keep the file name
 `Duo.shortcut`: the name in Shortcuts comes from it, and Siri and «another mode — same question»
@@ -258,7 +258,7 @@ where it describes the sources.*
   phone needed; or [OpenRouter](https://openrouter.ai/keys) (turn on free models once in
   [privacy settings](https://openrouter.ai/settings/privacy), otherwise they answer «No endpoints
   found»). Several keys, one per line, help when they are from different companies — limits are
-  per account, not per key. On the first run iPhone asks for permission 4–6 times — tap
+  per account, not per key. On the first run iPhone asks for permission several times — tap
   **Always Allow** each time.
 - Don't touch the screen while it runs — that cancels the run on Apple's platform.
 

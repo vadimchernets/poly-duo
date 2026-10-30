@@ -11,7 +11,7 @@ C1M Duo is a "shortcut" for iPhone: ask one question, and it's handled by two AI
 
 ### Easiest — the iCloud link (one tap)
 
-On your iPhone, tap the link → the Shortcuts app opens → **Add**. On the first run the shortcut asks for permission 4–6 times — tap **Always Allow** each time.
+On your iPhone, tap the link → the Shortcuts app opens → **Add**. On the first run the shortcut asks for permission several times — tap **Always Allow** each time.
 
 - **Duo:** https://www.icloud.com/shortcuts/9baa76c3d00e4c08ae1380c8ee3eb1c1
 - **Trio, iPhone 15 Pro or newer — no key** (the third voice is Apple Intelligence; see below): https://www.icloud.com/shortcuts/e09ac625b719401fa8ca91360ba23a20
@@ -98,7 +98,7 @@ One key is enough; more keys = Trio almost never goes quiet. Your own paid key (
 
 Run Trio and paste the key(s) when it asks — several keys, each on a new line. They are saved in
 iCloud Drive → Shortcuts → `poly-key.txt`, not inside the shortcut. On the first run iPhone asks for
-permission 4–6 times — tap **Always Allow** each time, right away (an unanswered prompt closes and the
+permission several times — tap **Always Allow** each time, right away (an unanswered prompt closes and the
 shortcut then says it can't access).
 
 Trio tries every key with every free model until one answers: an overloaded model or a spent daily

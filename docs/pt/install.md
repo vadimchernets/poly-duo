@@ -11,7 +11,7 @@ O C1M Duo é um "atalho" para iPhone: você faz uma pergunta e ela é trabalhada
 
 ### O mais fácil — o link do iCloud (um toque)
 
-No iPhone, toque no link → o app Atalhos abre → **Adicionar**. Na primeira execução o atalho pede permissão 4–6 vezes — toque em **Sempre Permitir** todas as vezes.
+No iPhone, toque no link → o app Atalhos abre → **Adicionar**. Na primeira execução o atalho pede permissão várias vezes — toque em **Sempre Permitir** todas as vezes.
 
 - **Duo:** https://www.icloud.com/shortcuts/92ebfac5dee9458e9c5ffae6fd13e5b8
 - **Trio, iPhone 15 Pro ou mais novo — sem chave** (a terceira voz é a Apple Intelligence; veja abaixo): https://www.icloud.com/shortcuts/30de98250b784e7181fbee4c17444b43
@@ -98,7 +98,7 @@ Uma basta; com mais, o Trio quase nunca fica mudo. Sua própria chave paga (`xai
 
 Rode o Trio e cole a(s) chave(s) quando ele pedir — várias, cada uma numa linha nova. Elas ficam em
 iCloud Drive → Shortcuts → `poly-key.txt`, não dentro do atalho. Na primeira execução o iPhone pede
-permissão 4–6 vezes: toque em **Sempre Permitir** toda vez, na hora.
+permissão várias vezes: toque em **Sempre Permitir** toda vez, na hora.
 
 O Trio tenta todas as chaves com todos os modelos gratuitos até um responder; só se todos falharem
 ele diz o que cada um respondeu (sem saldo, limite, sobrecarregado, chave inválida) e o que fazer.
