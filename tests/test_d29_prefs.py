@@ -225,3 +225,29 @@ def test_prefs_are_known_before_the_resume_menu_and_every_more_item_is_safe(tmp_
     for key in ('pref_mode', 'pref_quick', 'pref_reset'):
         at = [i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == n[key]]
         assert len(at) == 1 and at[0] > save
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_each_more_switch_changes_only_its_own_flag(tmp_path, lang):
+    ui = ui_of(lang)
+    actions = build(tmp_path, lang)
+    read = next(i for i, a in enumerate(actions) if params(a).get('WFGetFilePath') == 'Duo-prefs.txt')
+    # both menus of the resumed run come after the read, and both prefs Ifs are closed before the draft is looked at
+    for key in ('resume0_title', 'resume1_title'):
+        menu = next(i for i, a in enumerate(actions) if params(a).get('WFMenuPrompt') == ui['menu'][key])
+        assert menu > read
+    draft = next(i for i, a in enumerate(actions) if str(params(a).get('WFGetFilePath', '')).startswith('Duo-draft'))
+    closes = [i for i in range(read, draft) if kind(actions[i]) == 'conditional'
+              and params(actions[i])['WFControlFlowMode'] == 2]
+    assert len(closes) >= 2
+    items = ui['menu']['finale_more_items']
+    cases = []
+    for item in items[4:7]:
+        start = next(i for i, a in enumerate(actions)
+                     if kind(a) == 'choosefrommenu' and params(a).get('WFMenuItemTitle') == item)
+        end = next(i for i in range(start + 1, len(actions)) if kind(actions[i]) == 'choosefrommenu')
+        cases.append([params(a)['WFVariableName'] for a in actions[start:end] if kind(a) == 'setvariable'])
+    mode, quick, reset = cases
+    assert mode == ['PolyModeOff', 'PolyPrefsChanged', 'PolyNoteMode']
+    assert quick == ['PolyQuickOff', 'PolyPrefsChanged', 'PolyNoteQuick']
+    assert reset == ['PolyModeOff', 'PolyQuickOff', 'PolyPrefsChanged', 'PolyNoteReset']
