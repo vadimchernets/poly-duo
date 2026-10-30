@@ -5,7 +5,7 @@
   "files.key": "poly-key.txt",
   "files.first_run": "Trio-first-run.txt",
   "ask.question": "トリオに何を聞きますか？",
-  "ask.key": "iPhone 15 Pro 以降ですか？ キーは不要です。「キャンセル」をタップして、キーなしの Trio をインストールしてください（リンクは Trio のページにあります）。\n\nこのあと iPhone が許可を 4–6 回求めます：毎回すぐに「常に許可」をタップしてください。\n\nTrio は第3のAIにも聞きます。そのために無料のキーが必要です（一度だけ取得する長いパスワードで、カードは不要）。いちばん簡単な方法（約1分、SMSなし）：Safari を開いて aistudio.google.com/apikey にアクセスし、Google でログインして「Create API key」をタップし、キーをコピーして戻り、ここに貼り付けます。\n\nほかの無料の選択肢：Groq（console.groq.com/keys）、NVIDIA（build.nvidia.com/settings/api-keys、SMSコードが必要）、OpenRouter（openrouter.ai/keys）。お持ちの有料キーも使えます。料金は提供元に直接支払います。\nキーが複数ある場合は1行に1つ。一度だけ iCloud Drive → Shortcuts → poly-key.txt に保存されます。",
+  "ask.key": "iPhone 15 Pro 以降ですか？ キーは不要です。「キャンセル」をタップして、キーなしの Trio をインストールしてください（リンクは Trio のページにあります）。\n\nこのあと iPhone が許可を何度か求めます：毎回すぐに「常に許可」をタップしてください。\n\nTrio は第3のAIにも聞きます。そのために無料のキーが必要です（一度だけ取得する長いパスワードで、カードは不要）。いちばん簡単な方法（約1分、SMSなし）：Safari を開いて aistudio.google.com/apikey にアクセスし、Google でログインして「Create API key」をタップし、キーをコピーして戻り、ここに貼り付けます。\n\nほかの無料の選択肢：Groq（console.groq.com/keys）、NVIDIA（build.nvidia.com/settings/api-keys、SMSコードが必要）、OpenRouter（openrouter.ai/keys）。お持ちの有料キーも使えます。料金は提供元に直接支払います。\nキーが複数ある場合は1行に1つ。一度だけ iCloud Drive → Shortcuts → poly-key.txt に保存されます。",
   "notify.start": "🎻 Trio [1/4]：ChatGPT が答えています。約90秒、スマホには触らないでください。",
   "notify.step2": "[2/4] Claude が ChatGPT の回答を見ずに自分の答えを書いています…",
   "notify.step3": "[3/4] 第3のAIが2つとも見落としたことを探しています… Claude の回答はクリップボードに入っています。",

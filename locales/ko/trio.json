@@ -5,7 +5,7 @@
   "files.key": "poly-key.txt",
   "files.first_run": "Trio-first-run.txt",
   "ask.question": "트리오에게 무엇을 물어볼까요?",
-  "ask.key": "iPhone 15 Pro 이상인가요? 키가 필요 없어요. «취소»를 누르고 키 없는 Trio를 설치하세요(링크는 Trio 페이지에 있어요).\n\n이제 iPhone이 권한을 4–6번 물어봐요. 매번 바로 «항상 허용»을 누르세요.\n\nTrio는 세 번째 AI에게 물어보는데, 그러려면 무료 키가 필요해요(한 번만 받으면 되는 긴 비밀번호이고 카드는 필요 없어요). 가장 쉬운 방법, 약 1분, 문자 인증 없음: Safari를 열어 aistudio.google.com/apikey로 가서 Google로 로그인하고 «Create API key»를 누른 뒤 키를 복사하고, 돌아와서 여기에 붙여 넣으세요.\n\n그 밖의 무료 옵션: Groq(console.groq.com/keys), NVIDIA(build.nvidia.com/settings/api-keys, 문자 인증 코드 필요), OpenRouter(openrouter.ai/keys). 직접 쓰는 유료 키도 쓸 수 있고, 비용은 제공사에 직접 내요.\n키가 여러 개면 한 줄에 하나씩, 한 번 iCloud Drive → Shortcuts → poly-key.txt에 저장돼요.",
+  "ask.key": "iPhone 15 Pro 이상인가요? 키가 필요 없어요. «취소»를 누르고 키 없는 Trio를 설치하세요(링크는 Trio 페이지에 있어요).\n\n이제 iPhone이 권한을 여러 번 물어봐요. 매번 바로 «항상 허용»을 누르세요.\n\nTrio는 세 번째 AI에게 물어보는데, 그러려면 무료 키가 필요해요(한 번만 받으면 되는 긴 비밀번호이고 카드는 필요 없어요). 가장 쉬운 방법, 약 1분, 문자 인증 없음: Safari를 열어 aistudio.google.com/apikey로 가서 Google로 로그인하고 «Create API key»를 누른 뒤 키를 복사하고, 돌아와서 여기에 붙여 넣으세요.\n\n그 밖의 무료 옵션: Groq(console.groq.com/keys), NVIDIA(build.nvidia.com/settings/api-keys, 문자 인증 코드 필요), OpenRouter(openrouter.ai/keys). 직접 쓰는 유료 키도 쓸 수 있고, 비용은 제공사에 직접 내요.\n키가 여러 개면 한 줄에 하나씩, 한 번 iCloud Drive → Shortcuts → poly-key.txt에 저장돼요.",
   "notify.start": "🎻 트리오 [1/4]: ChatGPT가 답하고 있어요. 약 90초 — 휴대폰을 만지지 마세요.",
   "notify.step2": "[2/4] Claude가 ChatGPT의 답을 보지 않고 직접 답하고 있어요…",
   "notify.step3": "[3/4] 세 번째 AI가 둘 다 놓친 것을 찾고 있어요… Claude의 답이 지금 클립보드에 있어요.",

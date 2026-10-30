@@ -153,7 +153,7 @@ def test_trio_stops_on_empty_question(tmp_path, lang):
     # the keyed Trio warns about the permission windows first thing in its key prompt, adding no screen
     key_ask = next(a for a in actions
                    if kind(a) == 'ask' and a['WFWorkflowActionParameters']['WFAskActionPrompt'] == trio['ask.key'])
-    assert '4–6' in '\n\n'.join(trio['ask.key'].split('\n\n')[:2])  # the warning is in the first two paragraphs
+    assert '4–6' not in trio['ask.key']  # D-29: the permission warning has no count
     assert actions.index(key_ask) < actions.index(next(a for a in actions if kind(a) == 'ask'
                                                       and a['WFWorkflowActionParameters']['WFAskActionPrompt'] == prompt))
     nokey = tmp_path / lang / 'nokey' / 'Trio.shortcut'

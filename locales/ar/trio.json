@@ -5,7 +5,7 @@
   "files.key": "poly-key.txt",
   "files.first_run": "Trio-first-run.txt",
   "ask.question": "ماذا تريد أن تسأل الثلاثي؟",
-  "ask.key": "بعد ذلك سيطلب iPhone الإذن 4–6 مرات: اضغط «السماح دومًا» في كل مرة فورًا.\n\nيستشير Trio ذكاءً اصطناعيًا ثالثًا، ويحتاج إلى مفتاح مجاني (كلمة مرور طويلة تحصل عليها مرة واحدة، بلا بطاقة). الأسهل، نحو دقيقة، بلا SMS: افتح Safari، وادخل إلى aistudio.google.com/apikey، وسجّل الدخول بحساب Google، واضغط «Create API key»، وانسخ المفتاح، ثم عد والصقه هنا.\n\nخيارات مجانية أخرى: Groq (console.groq.com/keys)، وNVIDIA (build.nvidia.com/settings/api-keys، تطلب رمز SMS)، وOpenRouter (openrouter.ai/keys). مفتاحك المدفوع يصلح أيضًا؛ تدفع لمزوّدك مباشرة.\nعدة مفاتيح: مفتاح في كل سطر، تُحفظ مرة واحدة في iCloud Drive ← Shortcuts ← poly-key.txt.",
+  "ask.key": "بعد ذلك سيطلب iPhone الإذن عدة مرات: اضغط «السماح دومًا» في كل مرة فورًا.\n\nيستشير Trio ذكاءً اصطناعيًا ثالثًا، ويحتاج إلى مفتاح مجاني (كلمة مرور طويلة تحصل عليها مرة واحدة، بلا بطاقة). الأسهل، نحو دقيقة، بلا SMS: افتح Safari، وادخل إلى aistudio.google.com/apikey، وسجّل الدخول بحساب Google، واضغط «Create API key»، وانسخ المفتاح، ثم عد والصقه هنا.\n\nخيارات مجانية أخرى: Groq (console.groq.com/keys)، وNVIDIA (build.nvidia.com/settings/api-keys، تطلب رمز SMS)، وOpenRouter (openrouter.ai/keys). مفتاحك المدفوع يصلح أيضًا؛ تدفع لمزوّدك مباشرة.\nعدة مفاتيح: مفتاح في كل سطر، تُحفظ مرة واحدة في iCloud Drive ← Shortcuts ← poly-key.txt.",
   "notify.start": "🎻 Trio [1/4]: يجيب ChatGPT. نحو 90 ثانية — لا تلمس الهاتف.",
   "notify.step2": "[2/4] يجيب Claude بمفرده دون أن يرى إجابة ChatGPT…",
   "notify.step3": "[3/4] ذكاء اصطناعي ثالث يبحث عمّا فاتهما معًا… إجابة Claude الآن في الحافظة.",

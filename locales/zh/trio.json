@@ -5,7 +5,7 @@
   "files.key": "poly-key.txt",
   "files.first_run": "Trio-first-run.txt",
   "ask.question": "你想问三重奏什么问题？",
-  "ask.key": "iPhone 15 Pro 或更新机型？不需要密钥：点“取消”，改装不用密钥的 Trio（链接在 Trio 页面上）。\n\n接下来 iPhone 会请求授权 4–6 次：每次都请立即点“始终允许”。\n\nTrio 会问第三个 AI，它需要一个免费密钥（一长串密码，只需获取一次，不用银行卡）。最简单，约一分钟，不用短信：打开 Safari，访问 aistudio.google.com/apikey，用 Google 账号登录，点“Create API key”，复制密钥，再回来粘贴在这里。\n\n其他免费选项：Groq（console.groq.com/keys）、NVIDIA（build.nvidia.com/settings/api-keys，需要短信验证码）、OpenRouter（openrouter.ai/keys）。你自己的付费密钥也可以；费用直接付给你的服务商。\n多个密钥：每行一个，只保存一次，位置 iCloud Drive → Shortcuts → poly-key.txt。",
+  "ask.key": "iPhone 15 Pro 或更新机型？不需要密钥：点“取消”，改装不用密钥的 Trio（链接在 Trio 页面上）。\n\n接下来 iPhone 会多次请求授权：每次都请立即点“始终允许”。\n\nTrio 会问第三个 AI，它需要一个免费密钥（一长串密码，只需获取一次，不用银行卡）。最简单，约一分钟，不用短信：打开 Safari，访问 aistudio.google.com/apikey，用 Google 账号登录，点“Create API key”，复制密钥，再回来粘贴在这里。\n\n其他免费选项：Groq（console.groq.com/keys）、NVIDIA（build.nvidia.com/settings/api-keys，需要短信验证码）、OpenRouter（openrouter.ai/keys）。你自己的付费密钥也可以；费用直接付给你的服务商。\n多个密钥：每行一个，只保存一次，位置 iCloud Drive → Shortcuts → poly-key.txt。",
   "notify.start": "🎻 Trio [1/4]：ChatGPT 正在回答。约 90 秒，别碰手机。",
   "notify.step2": "[2/4] Claude 在不看 ChatGPT 回答的情况下独立作答……",
   "notify.step3": "[3/4] 第三个 AI 正在找前两者都漏掉的内容… Claude 的答案现在在剪贴板里。",
