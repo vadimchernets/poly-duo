@@ -377,6 +377,7 @@ whether it was obvious what C1M Duo does, who it's for and how to run it. If it 
 write to info@polyhelper.ai and say where you got lost — that's the feedback we can't
 get any other way.
 
+- **Feedback:** worked, didn't work, or an idea? [One-minute form](https://github.com/vadimchernets/poly-duo/issues/new?template=feedback.yml&ref=duo-feedback) or info@polyhelper.ai.
 - **Discussions** — ideas, questions, proposals for new modes.
 - **Issues** — bugs and concrete tasks, using the issue template.
 - **Ran it on your phone?** Tell us what worked or broke with the [run report](../../issues/new?template=run-report.yml) (no question text needed); what has been seen so far is in [docs/en/compat.md](docs/en/compat.md).
