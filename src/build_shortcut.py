@@ -1272,7 +1272,7 @@ def build(lang, ai=False):
         *clear_variable(START_VAR),
         # D-29: the person's two optional shortcuts (C-1 «Critique right away», C-3 «ask without editing»), read from
         # ONE small file; a missing file (the default) is no value and nothing changes. Each run starts with them unset.
-        *clear_variable(FORCE_MENU), *clear_variable(SHARED_VAR),
+        *clear_variable(FORCE_MENU), *clear_variable(SHARED_VAR), *clear_variable(PREFS_CHANGED),
         *set_text(MODE_OFF, '1'), *set_text(QUICK_OFF, '1'),
         act_get_file(PREFS_FILE, pf_get),
         act_text(text_token('{F}', {'F': (pf_get, 'File')}), pf_txt),

@@ -101,7 +101,7 @@ def _taint_violations(actions):
                 ctx.pop()
             continue
         in_tainted_if = any(ctx)
-        sink = (k in ('AskIntent', 'ClaudeAppIntentsExtension', 'setclipboard', 'append', 'runworkflow', 'ask')
+        sink = (k in ('AskIntent', 'ClaudeAppIntentsExtension', 'setclipboard', 'append', 'runworkflow', 'ask', 'notification')
                 or (k == 'save' and p.get('WFFileDestinationPath') != 'Duo-prefs.txt'))
         if sink and (tainted_in or in_tainted_if):
             bad.append((i, k))
@@ -111,10 +111,8 @@ def _taint_violations(actions):
             out = tainted_in
             (tainted_var.add if out else tainted_var.discard)(p['WFVariableName'])
             continue
-        elif k in ('gettext', 'notification'):
+        else:   # any other action may take the previous output when it has no input of its own (Kimi: not only Text)
             out = tainted_in or in_tainted_if
-        else:
-            out = tainted_in
         if out and uid:
             tainted_uid.add(uid)
     return bad
