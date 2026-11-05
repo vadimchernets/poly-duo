@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (2026-11-05)
+- **Android Duo engine is now open code in `android/engine/`** (duoAuto, duoAgree, duoArgue, duoFind, duoKeys, duoLink; Apache-2.0). The Poly A1 app pulls it from here instead of keeping its own copy. The "US models only" switch is injected with `setDuoUsa`, so the engine does not depend on Poly code.
+
 ### Added / Fixed (Duo 6.5, D-29, 2026-10-30; built-in number duo 12)
 - **Optional switches in «➕ More…» at the end of a run (off by default):** «Critique right away next time» (skips the
   mode menu), «Shared text: ask without editing» (a shared text of three words, or six Chinese / Japanese / Korean

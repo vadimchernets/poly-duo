@@ -2,6 +2,8 @@
 
 **Start here instead:** C1M Duo inside the free **Poly A1** app (Google Play) runs the same pair automatically on a free key, and also by hand with your ChatGPT and Claude through Share. It was run on an Android emulator on 2026-10-01. This page describes the older Tasker path, built and checked on paper, **not tested on a real device**.
 
+The Android Duo engine is open source in [`android/engine/`](../../android/engine/); the Poly A1 app on Google Play embeds it.
+
 On iPhone, Poly runs on the "Ask Claude" and ChatGPT Shortcuts actions — official hooks that hand a question to an AI app and get the answer back. Android has no equivalent: the Claude and ChatGPT apps don't publish an action that a third-party app can call to ask a question and receive the answer. Nothing on Android plays the role of App Intents here.
 
 So Poly on Android runs through **Tasker**, a general-purpose automation app, and the hand-off between apps is the **system clipboard**. Tasker opens Claude or ChatGPT for you, and the moment you copy the answer, Tasker notices the clipboard changed and moves on to the next step. You still do the tapping inside each app — Tasker does the choreography around it.
