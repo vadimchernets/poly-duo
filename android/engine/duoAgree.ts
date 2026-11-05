@@ -1,10 +1,10 @@
-// "Both agree / They differ (who is likely right)" (P-013, 18.10.2026): the second AI is asked to end its
+// "Both agree / They differ (who is likely right)": the second AI is asked to end its
 // check with two labelled lines (`duo.a.check`, `duo.a.trio_text`); the automatic Duo reads them and shows
 // them as a block of their own above the answers. The labels are the words of the person's language
 // (the instruction quotes them), and this parser knows all eleven, so it works even when the model
 // answers in another language than the screen.
 //
-// Under the block goes one small honest line (P-014, `duo.a.notproof`): agreement is a strong sign, not proof.
+// Under the block goes one small honest line: agreement is a strong sign, not proof.
 
 export type Agreement = {
   /** What they agree on. */

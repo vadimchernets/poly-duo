@@ -113,7 +113,7 @@ export const KEY_PAGE: Record<Provider, string> = {
   deepseek: 'https://platform.deepseek.com/api_keys',
 };
 
-/** One-minute video "how to get the free Google key" (Z-109): the /app/ page of the site in the person's language. */
+/** One-minute video "how to get the free Google key": the /app/ page of the site in the person's language. */
 export const keyVideoUrl = (lang: string): string => `https://polyhelper.ai${lang === 'en' ? '' : `/${lang}`}/app/#key-video`;
 
 /** Provider name on screen (in the "what each key answered" line). */
@@ -174,7 +174,7 @@ export const GEMINI: Voice = {
     // The free tier's limit is per model (~20 a day), hence all the Flash models in a row.
     // Gemini Pro is no longer free: 3.1-pro — 429 "limit 0", 2.5-pro — 404 "no longer available
     // to new users" (live run 01.10.2026).
-    // Live run 05.11.2026 (Yuri's test 04.11, Z-815: four "overloaded" in a row on a free key): 3.8-flash — 503 "high
+    // Live run 05.11.2026 (four "overloaded" in a row on a free key): 3.8-flash — 503 "high
     // demand" in 2s, 3.7-flash — 503 only after 47s (past TIMEOUT_MS, so it goes last), 2.5-flash — 404 (deprecated;
     // Google routes it to 3.5-flash-lite from 01.12.2026); 3.6-flash, 3.5-flash and both Flash-Lite answered at once.
     // Flash-Lite is a separate pool with its own per-model limit, so it holds when the big Flash models are busy.
@@ -528,7 +528,7 @@ export const NVIDIA_MAX_TOKENS = 4096;
 export const PAID_MAX_TOKENS = 8000;
 
 /**
- * A photo going with the question (Z-681, a job "by photo" answered right in Poly on Android): the JPEG itself, base64. It goes
+ * A photo going with the question: the JPEG itself, base64. It goes
  * ONLY to the provider of the person's own key, inside the same one request as the question; nothing through us.
  */
 export type Picture = { mime: string; base64: string };
@@ -618,7 +618,7 @@ export const PAID_TIMEOUT_MS = 90_000;
 export const MAX_REQUESTS = 16;
 
 /**
- * Google's 503 "This model is currently experiencing high demand… usually temporary" (live 05.11.2026, Z-815): when no
+ * Google's 503 "This model is currently experiencing high demand… usually temporary" (live 05.11.2026): when no
  * model answered in the first round, the models that said 503 are asked once more, after this pause, in the second
  * round. A timeout is not retried (that model stays `slow`). Tests set it to 0.
  */

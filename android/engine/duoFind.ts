@@ -1,4 +1,4 @@
-// **Find the mistake** — the strict critic (P-015, 18.10.2026), next to "check" and "debate until agreement".
+// **Find the mistake** — the strict critic, next to "check" and "debate until agreement".
 // The second AI is given the first answer (or the person's own text) and one job: find at least three
 // weak points, rank them, quote the exact line; if there are none, say so plainly. The template is the
 // dictionary's `duo.find.prompt` (eleven languages); it works by hand (copy → the other company's AI) and

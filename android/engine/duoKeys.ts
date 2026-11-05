@@ -23,7 +23,7 @@ export const DRAFT_KEY = 'poly-a1-duo-draft';
 /** Secure-store item name prefix; the provider id is appended. */
 export const SECURE_PREFIX = 'poly-a1-duo-key.';
 
-/** The duel's signing key (Z-510): its own item, removed by "Delete my data" with the Duo keys. */
+/** The duel's signing key: its own item, removed by "Delete my data" with the Duo keys. */
 export const DUEL_KEY_ITEM = 'poly-a1-duel-signing-key';
 
 export const secureItem = (p: Provider) => `${SECURE_PREFIX}${p}`;

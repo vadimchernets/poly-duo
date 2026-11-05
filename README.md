@@ -301,7 +301,7 @@ name «Poly», so rename yours to «Poly» or edit the Run Shortcut step in each
 
 **Duo inside Poly A1 (Google Play).** The free Poly A1 app runs the same pair automatically on a free key: one AI answers, one from another company checks (NVIDIA, Google AI Studio, Groq, OpenRouter — see «How it works»). It also shows «both agree / where they differ», «Find the mistake» and a debate to agreement, can use the AI on the phone itself, and is in 11 languages. With ChatGPT and Claude subscriptions on Android the path is by hand: Share → the other app → copy the answer back. Verified on an Android emulator on 2026-10-01, not on a real phone.
 
-**Open code:** the Android Duo engine is open source in [`android/engine/`](android/engine/) (Apache-2.0); the Poly A1 app on Google Play embeds it.
+**Open code:** the Android Duo engine is open source in [`android/engine/`](android/engine/) (Apache-2.0; [developer README](android/engine/README.md)); the Poly A1 app on Google Play embeds it.
 
 **Older path: Tasker (not tested on a device).** The same idea through **Tasker** and the clipboard: Tasker prepares the prompt, opens each app in turn and picks the answer up when you copy it. It is built and structurally verified, and nobody has run it on a real phone yet — if you try it, tell us what happened at info@polyhelper.ai. Files and guide: [android/](android/), [docs/en/android.md](docs/en/android.md).
 
