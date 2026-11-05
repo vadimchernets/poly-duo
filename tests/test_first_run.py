@@ -163,3 +163,19 @@ def test_trio_stops_on_empty_question(tmp_path, lang):
         # asks nothing before the question, so it warns once with Duo's window
         alerts = [a['WFWorkflowActionParameters']['WFAlertActionTitle'] for a in nk[:ask] if kind(a) == 'alert']
         assert alerts == [ui['alert']['first_run_title']]
+
+
+@pytest.mark.parametrize('lang', TRIO_LANGS)
+def test_trio_start_hint_is_shown_once_and_empty_tail_says_run_again(tmp_path, lang):
+    """Z-260 (second look): «please wait» only while a marker file is missing (first run), and it writes that marker."""
+    ui = json.loads((ROOT / 'locales' / lang / 'ui.json').read_text(encoding='utf-8'))
+    trio = json.loads((ROOT / 'locales' / lang / 'trio.json').read_text(encoding='utf-8'))
+    actions = build(tmp_path, lang, builder='build_trio.py', name='Trio.shortcut')
+    texts = [a['WFWorkflowActionParameters'].get('WFNotificationActionBody') for a in actions]
+    start = next(i for i, t in enumerate(texts) if t == trio['notify.start'])
+    window = [a['WFWorkflowActionIdentifier'] for a in actions[start - 4:start + 4]]
+    assert 'is.workflow.actions.documentpicker.open' in window and 'is.workflow.actions.documentpicker.save' in window
+    saved = actions[start + 1:start + 4]
+    assert any(a['WFWorkflowActionParameters'].get('WFFileDestinationPath', '').endswith('-start-hint.txt') for a in saved)
+    notify = ui.get('notify', ui)
+    assert 'Poly Voice' not in notify['voice_start']

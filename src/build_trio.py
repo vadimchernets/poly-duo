@@ -822,6 +822,7 @@ def build(lang, nokey=False):
     f_third, f_provider, f_out, f_body = ids(4)
     s_claude = new_uuid()
     g_key, g_apple, g_blank, g_first, g_nokey, g_noai = ids(6)
+    hint_get, hint_text, hint_save, g_hint = ids(4)
     g_own_clip, g_dup_a, g_dup_b, g_dup_c = ids(4)
     r_get, r_text, r_save = ids(3)
     Q = {'Q': (question, 'Provided Input')}
@@ -925,7 +926,15 @@ def build(lang, nokey=False):
         act_notify(NAME, T.get('notify.empty_question', L['notify.empty_question'])),
         {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
         if_close(g_blank),
+        # Z-260 (second look): the soft «please wait» hint once, on the first run only; a marker file is the memory,
+        # as with the weekly version check
+        act_get_file(f'{NAME}-start-hint.txt', hint_get),
+        if_output(g_hint, hint_get, 'File', 100),
+        if_else(g_hint),
         act_notify(NAME, T['notify.start']),
+        act_text('1', hint_text),
+        act_save_file(f'{NAME}-start-hint.txt', hint_text, hint_save),
+        if_close(g_hint),
         act_text(text_token(L.prompt('wrap'), Q), wrap),
         # D-100: emptied with «Nothing» and tested by their characters: an empty Text «has any value» in Shortcuts
         *clear_variable(GPT_VAR),
