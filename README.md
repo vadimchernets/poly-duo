@@ -8,6 +8,8 @@
 
 ## Install in 60 seconds
 
+**First run: about 5 quick taps on “Always Allow”, then one tap forever.** iPhone asks permission once for each thing Duo does (send your question to ChatGPT and to Claude, use the clipboard, save the journal). Keep the phone in your hand and tap **Always Allow** each time — about 20 seconds, once, only for Duo.
+
 **Step 1 — apps.** On iPhone (iOS 18+) install the free **ChatGPT** and **Claude** apps and sign in to both once. No Claude yet? [Get the Claude app in the App Store](https://apps.apple.com/app/id6473753684) (about a minute). Free accounts are enough.
 
 **Step 2 — shortcut.** Tap the iCloud link for your language below → the Shortcuts app opens → **Add**.
@@ -40,7 +42,17 @@ find the shortcut by that name.
 
 **Faster next time (optional, off by default).** At the end of a run, «➕ More…» has three switches: «📌 Critique right away next time» (skips the mode menu), «⚡ Shared text: ask without editing» (a text shared to Duo with three words or more goes without the question box) and «↩️ Show all menus again». «🔁 Another mode» always shows the question box and the menu. The choice is one small file, `Duo-prefs.txt`, next to the journal in iCloud Drive → Shortcuts.
 
-**If it doesn't work:** no «Ask Claude» in the action list — update the Claude app and iOS (18+). Empty answer — open the Claude app and check that you are signed in (no app yet: [App Store](https://apps.apple.com/app/id6473753684)), and open ChatGPT once. Duo stopped while you were scrolling — a touch of the screen stops it; run it again and wait a minute. ChatGPT says «logged out» — open ChatGPT, close it, run Duo again. The permission prompt vanished before you tapped — just run it again and tap **Always Allow** at once. More: [docs/en/install.md](docs/en/install.md#if-somethings-wrong).
+<details>
+<summary><b>If it doesn't work</b></summary>
+
+- Open the Claude app first and keep it signed in; open ChatGPT once too. No «Ask Claude» in the action list — update the Claude app and iOS (18+).
+- Tap **Always Allow** on every request, right away. An unanswered request vanishes and the run ends with «no access» — just run Duo again.
+- Keep the phone in your hand for the first minute: a touch of the screen stops Duo.
+- Had Duo before? Tap **Replace**, not **Keep Both**.
+- Still nothing? Swipe the shortcut away and run it again, or restart the iPhone and try in a few minutes. Empty answer or ChatGPT «logged out» — open the app, sign in, run again.
+
+More: [docs/en/install.md](docs/en/install.md#if-somethings-wrong).
+</details>
 ## How it works
 
 Ask ChatGPT → Ask Claude, blind → compare.
