@@ -144,7 +144,12 @@ def test_own_answer_not_prefilled(tmp_path, lang):
     # Duo 6.4: the tail's one clipboard write comes right before it, in the same «RESULT has text», after the
     # «Claude did not answer» menu (which no longer copies anything itself)
     assert kind(actions[tail - 4]) == 'setclipboard'
-    assert kind(actions[tail - 5]) == 'conditional' and params(actions[tail - 5])['WFCondition'] == 100
+    # Yuri 10.11 (No.56): between the If and the copy, only the Markdown clean-up of RESULT (read, 3 × replace, store)
+    # (skipped when the answer holds a code block)
+    assert [kind(a) for a in actions[tail - 12:tail - 4]] == ['getvariable', 'match', 'conditional', 'replace', 'replace',
+                                                              'replace', 'setvariable', 'conditional']
+    assert params(actions[tail - 6])['WFVariableName'] == ui['variables']['result']
+    assert kind(actions[tail - 13]) == 'conditional' and params(actions[tail - 13])['WFCondition'] == 100
     assert kind(actions[tail + 1]) == 'notification' and params(actions[tail + 1])['WFNotificationActionBody'] == ui['notify']['tail_done']
     assert kind(actions[tail + 2]) == 'conditional' and params(actions[tail + 2])['WFControlFlowMode'] == 2
     look = next(i for i in range(tail, len(actions)) if kind(actions[i]) == 'previewdocument')
@@ -152,8 +157,12 @@ def test_own_answer_not_prefilled(tmp_path, lang):
     # D-100 (6.3.1): the journal permission window comes before the result screen, not after it
     assert tail < journal < look
     # the re-check: Copy <RESULT> where RESULT was just set from the same text
+    # (Yuri 10.11, No.56: RESULT is cleaned of Markdown first, then copied, then read back for the save)
+    got_r = actions[uid[src(ratify)]]
+    assert kind(got_r) == 'getvariable' and params(got_r)['WFVariable']['Value']['VariableName'] == ui['variables']['result']
     set_ratify = next(a for a in reversed(actions[:ratify]) if kind(a) == 'setvariable')
-    assert params(set_ratify)['WFInput']['Value']['OutputUUID'] == src(ratify)
+    assert params(set_ratify)['WFVariableName'] == ui['variables']['result'] and \
+        kind(actions[uid[params(set_ratify)['WFInput']['Value']['OutputUUID']]]) == 'replace'
     # D-100 (6.3.1): its journal entry is written before its result screen
     look2 = next(i for i in range(ratify, len(actions)) if kind(actions[i]) == 'previewdocument')
     assert kind(actions[look2 - 1]) == 'append' and kind(actions[look2 + 1]) != 'append'

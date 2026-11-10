@@ -6,6 +6,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed (Duo 6.6, tester report of 2026-11-10: iPhone XR, iOS 18.7.11, Ukrainian; built-in number duo 13 at release)
+- **Side by side stopped with the bare iOS alert «There was a problem running the shortcut»** (2 runs out of 2, right
+  after the ChatGPT step), while Critique and Advisor ran to the end on the same phone. Side by side was the only one of
+  the three that put Claude's output straight into a Text; Critique reads it from a variable, Advisor only stores it.
+  Every «Ask Claude» output in Duo is now read through Set Variable → Get Variable first (the form that runs on iOS 18
+  and on newer iOS). Side by side also names its step («[2/2] Claude answers on its own…», next to «ChatGPT's answer is
+  already in your clipboard»), asks Claude once more after an empty answer, and gives ChatGPT's answer with the line
+  «Claude did not answer» when Claude gives nothing. Not yet re-run on an iOS 18 iPhone.
+- **A long question (~1800 characters) was cut off at ChatGPT** («the action was interrupted because it did not finish
+  in time»): iOS gives an app action a time limit that a shortcut cannot change or catch. From 1200 characters on, Critique,
+  My mode and Side by side ask both AIs for a shorter answer (one line in front of the request) and say so in one
+  notification. The menu after a Critique cut off at ChatGPT now names this cause too and says that ChatGPT's answer,
+  if it came, is in the ChatGPT app. The other modes (Synthesis, Dispute map, Debate, Decision, Delta, Image, Debate to
+  agreement) do not get the shorter-answer line yet.
+- **Raw Markdown** («**1. Matched independently**», «**Bottom line:**») is taken off the result (bold, italic, heading
+  marks) before it is copied, written to the journal and shown — also in the result screen's title. An answer with a
+  code block is left as it is («x**2», «# comment» are code there).
+- **Advisor on a question** (not a text) no longer answers «there is nothing to check»: it says that it checks a ready
+  text, names Critique for questions, answers briefly and lists what to verify.
+
+### Changed (same release, 12 languages)
+- The mode menu says what each main mode is for («Advisor — checks a text you already have») and what ✉ counts
+  («✉ = messages to the AIs»).
+- Times: Critique, Side by side and Advisor say «1–3 min» (Advisor said «≈40 sec»; measured 2–3 min).
+- The first-run window says that each mode asks for 1–3 more permissions the first time it is chosen.
+- «logged out» is said in the language of the build (it stays in English only in English).
+- «Done» adds: did not open by itself? tap the Duo notification (iOS shows the result as a notification when Shortcuts
+  is not in front).
+
 ### Added (2026-11-05)
 - **Android Duo engine is now open code in `android/engine/`** (duoAuto, duoAgree, duoArgue, duoFind, duoKeys, duoLink; Apache-2.0). The Poly A1 app pulls it from here instead of keeping its own copy. The "US models only" switch is injected with `setDuoUsa`, so the engine does not depend on Poly code.
 

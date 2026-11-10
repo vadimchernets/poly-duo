@@ -46,7 +46,8 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
     assert [p['WFTimeUntilUnit'] for p in params(actions, 'gettimebetweendates')
             if p['WFTimeUntilUnit'] == 'Days'] == ['Days']
     newer = [p['WFNumberValue'] for p in params(actions, 'conditional') if p.get('WFCondition') == 2
-             and p['WFNumberValue'] not in (6000, 0)]  # 6000 = Claude's long-text threshold; 0 = Trio's sources count
+             and p['WFNumberValue'] not in (6000, 0, 1199)]  # 6000 = Claude's long-text threshold; 0 = Trio's sources
+    # count; 1199 = the long-question threshold (Yuri 10.11)
     assert newer == [VERSION[key]]
     keys = [p['WFDictionaryKey'] for p in params(actions, 'getvalueforkey')]
     assert f'{key}_{lang}' in keys

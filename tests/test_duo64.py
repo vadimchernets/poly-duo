@@ -142,7 +142,7 @@ def test_whoever_answered_is_delivered(tmp_path, lang):
         head = ui['output'][key].split(needle)[0]
         found = [(i, t) for i, t in sets(actions, result) if t and t.startswith(head)]
         if key == 'claude_down':
-            assert len(found) == 4   # both Critique blocks, and the resume's «check» and «show»
+            assert len(found) == 5   # both Critique blocks, the resume's «check» and «show», Side by side (Yuri 10.11)
         else:
             assert len(found) == 2   # both Critique blocks
     # in-run: Claude did not compare → ChatGPT's answer + CLAUDE_DOWN, in the Otherwise of «Claude compared»

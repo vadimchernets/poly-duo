@@ -52,7 +52,12 @@ def test_hint_moved_out_of_start_notifications(tmp_path, lang):
     for k, v in n.items():
         if k not in ('gpt_down', 'critique_start'):   # critique_start keeps the short «Stuck? Open ChatGPT and sign in»
             assert 'logged out' not in v, k
-    assert 'logged out' in n['gpt_down'] and 'logged out' in ui['alert']['first_run_body']
+    # Yuri 10.11 (No.60): the words «logged out» stay English only in the English build; the others say it in their
+    # own language
+    if lang == 'en':
+        assert 'logged out' in n['gpt_down'] and 'logged out' in ui['alert']['first_run_body']
+    else:
+        assert 'logged out' not in n['gpt_down'] and 'logged out' not in ui['alert']['first_run_body']
     assert 'ChatGPT' in ui['notify']['critique_start'].split('.')[-2 if ui['notify']['critique_start'].endswith('.') else -1] or 'ChatGPT' in ui['notify']['critique_start'][-40:]
     assert len(ui['menu']['finale_more_items']) == 7
     for k in ('pref_mode', 'pref_quick', 'pref_reset'):

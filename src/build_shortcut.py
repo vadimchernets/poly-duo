@@ -124,7 +124,7 @@ def act_gpt(prompt, uid):
 
 
 def act_claude(message, uid):
-    return {'WFWorkflowActionIdentifier': 'com.anthropic.claude.ClaudeAppIntentsExtension',
+    return {'WFWorkflowActionIdentifier': CLAUDE_INTENT,
             'WFWorkflowActionParameters': {
                 'AppIntentDescriptor': {'TeamIdentifier': 'Q6L2SF6YDW',
                                         'BundleIdentifier': 'com.anthropic.claude',
@@ -369,6 +369,30 @@ def act_replace_text(src_uid, src_name, find, replacement, uid):
                                            'WFInput': text_token('{T}', {'T': (src_uid, src_name)}), 'UUID': uid}}
 
 
+def act_replace_regex(src_uid, src_name, find, replacement, uid):
+    """Replace Text with a regular expression (ICU; `$1` is the first group); output name «Updated Text»."""
+    action = act_replace_text(src_uid, src_name, find, replacement, uid)
+    action['WFWorkflowActionParameters']['WFReplaceTextRegularExpression'] = True
+    return action
+
+
+def strip_markdown(var):
+    """Yuri 10.11 (No.56): the models answer in Markdown, and the result screen, its title (the first line) and the
+    clipboard showed raw «**1. Matched independently**», «**Bottom line:**». Bold and italic marks and heading hashes are
+    taken off the text in `var`; the words stay. A single star with a space after it (a list bullet) and a star between
+    letters or digits («2*3») are not touched."""
+    get, r1, r2, r3, code, g = (new_uuid() for _ in range(6))
+    return [act_get_variable(var, get),
+            # an answer with a code block is left as it is: «x**2», «**kwargs» and «# comment» are code there
+            act_first_match(get, 'Variable', '```', code),
+            if_output(g, code, 'Matches', 101),
+            act_replace_regex(get, 'Variable', r'(?<![\*\w])\*\*(?=\S)(.+?)(?<=\S)\*\*(?![\*\w])', '$1', r1),
+            act_replace_regex(r1, 'Updated Text', r'(?<![\*\w])\*(?=[^\s*])([^*\n]+?)(?<=[^\s*])\*(?![\*\w])', '$1', r2),
+            act_replace_regex(r2, 'Updated Text', r'(?m)^[ \t]*#{1,6}[ \t]+', '', r3),
+            act_set_variable(var, r3, 'Updated Text'),
+            if_close(g)]
+
+
 def act_number(src_uid, src_name, uid):
     """Number action fed with an earlier output (text → a real number); output name «Number». Not checked on device."""
     return {'WFWorkflowActionIdentifier': 'is.workflow.actions.number',
@@ -491,6 +515,15 @@ MENU_MARK = '⟦duo-menu⟧\n'
 LAST_ANSWER_CHARS = 200
 REPORT_URL = 'https://github.com/vadimchernets/poly-duo/issues/new?template=run-report.yml'
 LONG_TEXT = 6000
+# A long question (Yuri 10.11, No.53, iPhone XR, iOS 18.7): with a question of ~1800 characters iOS stopped «Ask ChatGPT»
+# with «the action was interrupted because it did not finish in time» while ChatGPT was still writing a long answer; the
+# answer stayed in the ChatGPT app and the run never reached Claude. iOS gives an app action a time limit that a
+# shortcut cannot change or catch. From LONG_QUESTION characters on, both AIs are asked for a shorter answer (the line
+# goes in front of the usual request) and one notification says so; the Critique draft still lets the next run go on.
+LONG_QUESTION = 1200
+BRIEF_LINE = ('The question is long, and this answer has to arrive within the time limit iOS gives one phone action: '
+              'put the essentials first and keep the whole answer under about 500 words.\n\n')
+CLAUDE_INTENT = 'com.anthropic.claude.ClaudeAppIntentsExtension'
 
 
 def built_version(key):
@@ -668,6 +701,31 @@ def with_gpt_retry(actions, skip=()):
     return out
 
 
+def with_claude_vars(actions):
+    """Every «Ask Claude» output is read through a variable (Set Variable → Get Variable) before anything else uses it.
+    Yuri 10.11 (No.52, iPhone XR, iOS 18.7.11): Side by side stopped twice out of two with the bare iOS alert «There was
+    a problem running the shortcut» right after ChatGPT's step, while Critique and Advisor ran to the end on the same
+    phone. Side by side was the only one of the three that put Claude's output straight into a Text; Critique reads it
+    from a variable and Advisor only stores it in one. On a newer iOS (iPhone 30.10) the direct form ran, so this is the
+    form proven on both. A Claude call already followed by a Set Variable of its output is left as it is."""
+    out, rewrites, n = [], {}, 0
+    for i, action in enumerate(actions):
+        action = rename_outputs(action, rewrites)
+        out.append(action)
+        if action['WFWorkflowActionIdentifier'] != CLAUDE_INTENT:
+            continue
+        uid = action['WFWorkflowActionParameters']['UUID']
+        nxt = actions[i + 1] if i + 1 < len(actions) else None
+        if (nxt and nxt['WFWorkflowActionIdentifier'] == 'is.workflow.actions.setvariable'
+                and nxt['WFWorkflowActionParameters']['WFInput']['Value'].get('OutputUUID') == uid):
+            continue
+        n += 1
+        var, final = f'PolyClaudeOut{n}', new_uuid()
+        out += [act_set_variable(var, uid, 'Ask Claude'), act_get_variable(var, final)]
+        rewrites[uid] = final
+    return out
+
+
 def rename_outputs(node, rewrites):
     """A copy of `node` in which every reference to an output in `rewrites` reads «Variable» of the new action."""
     if isinstance(node, dict):
@@ -747,13 +805,14 @@ def build(lang, ai=False):
      md_get, rp_get, rp_title) = ids(15)
     g_rat, g_rem = ids(2)
     g_mmenu, mm_ask, mm_new, mm_save, tl_rget, g_tlrem, g_mmempty, mm_chars = ids(8)
-    fn_date, fn_jx, fn_entry = ids(3)
+    fn_date, fn_jx, fn_entry, fn_clean = ids(4)
     pf_m1, pf_m2 = ids(2)
     pf_get, pf_txt, g_pf1, g_pf2, g_sh, mk_get, mk_m, mk_rep, g_mk, g_ka, g_kb, g_qa, g_qb, g_qc, g_qd = ids(15)
     qw_get, qw_m, g_askq, g_skm = ids(4)
     g_pc, pm_get, pq_get, pf_new, pf_save, sk_get = ids(6)
     g_n1, g_n2, g_n3 = ids(3)
     NOTE_MODE, NOTE_QUICK, NOTE_RESET = 'PolyNoteMode', 'PolyNoteQuick', 'PolyNoteReset'
+    BRIEF_VAR, SIDE_CLAUDE = 'PolyBrief', 'PolySideClaude'   # Yuri 10.11: No.53 (long question), No.52 (Side by side)
 
     def journal_note(entry, refs=None):
         """Per-branch note: mode name plus the raw drafts that produced the result. `entry` is
@@ -794,6 +853,19 @@ def build(lang, ai=False):
                 act_notify(kept + '\n' + note if note else kept),
                 *([if_else(g), act_notify(note)] if note else []),
                 if_close(g)]
+
+    def brief_for_long(src_uid, src_name):
+        """Yuri 10.11 (No.53): a question of LONG_QUESTION characters or more → BRIEF_LINE goes in front of the request
+        and one notification says why. Returns (actions, uid of a Get Variable whose text is BRIEF_LINE or empty)."""
+        txt, cnt, g, get = new_uuid(), new_uuid(), new_uuid(), new_uuid()
+        return [act_text(text_token('{Q}', {'Q': (src_uid, src_name)}), txt),
+                act_count_chars(txt, 'Text', cnt),
+                *set_text(BRIEF_VAR, '\n'),   # not an empty Text (D-100); a blank line in front of the request is harmless
+                if_output(g, cnt, 'Count', 2, WFNumberValue=LONG_QUESTION - 1),
+                *set_text(BRIEF_VAR, BRIEF_LINE),
+                act_notify(L['notify.long_question']),
+                if_close(g),
+                act_get_variable(BRIEF_VAR, get)], get
 
     def clear_when(test_var, present, target):
         """If <test_var> has text (present=True) or has none: set <target> to NOTHING. Used for every flag that depends
@@ -841,6 +913,8 @@ def build(lang, ai=False):
     ad_prompt, ad_claude = ids(2)
     # --- Side by side
     sb_wrap, sb_gpt, sb_claude, sb_join = ids(4)
+    sb_claude2, sb_cget, g_sbretry, g_sbok, g_sbgpt = ids(5)
+    sb_brief, sb_brief_get = brief_for_long(qpre, 'Variable')
     # --- Synthesis, Claude anchors / ChatGPT anchors
     sc_wrap, sc_gpt, sc_claude, sc_prompt, sc_final = ids(5)
     sg_wrap, sg_gpt, sg_claude, sg_prompt, sg_final = ids(5)
@@ -951,6 +1025,7 @@ def build(lang, ai=False):
         rule_prefix = 'Extra instruction from the user for this check (apply it): {RULE}\n\n' if rule_uid else ''
         rule_ref = {'RULE': (rule_uid, 'Variable')} if rule_uid else {}
         item_name = INNER_REPEAT_ITEM if draft else 'Repeat Item'
+        brief_acts, brief_get = brief_for_long(*qsrc)   # Yuri 10.11, No.53
 
         def number_pass(src_var_uid, other_var):
             """Every number of the answer `src_var_uid` (a Get Variable output) that does NOT stand, as a whole
@@ -1068,7 +1143,8 @@ def build(lang, ai=False):
                 *clear_variable(OWN_VAR),
                 act_notify(L['notify.critique_start']),
                 # the wrapped question is needed by step 1 AND step 2, so it is built outside both
-                act_text(text_token(L.prompt('wrap'), QQ), cr_wrap),
+                *brief_acts,
+                act_text(text_token('{B}' + L.prompt('wrap'), {**QQ, 'B': (brief_get, 'Variable')}), cr_wrap),
                 *step1,
                 *steps23,
             ]
@@ -1080,7 +1156,8 @@ def build(lang, ai=False):
             *pre,
             *clear_variable(OWN_VAR),
             act_notify(L['notify.critique_start']),
-            act_text(text_token(L.prompt('wrap'), QQ), cr_wrap),
+            *brief_acts,
+            act_text(text_token('{B}' + L.prompt('wrap'), {**QQ, 'B': (brief_get, 'Variable')}), cr_wrap),
             *set_text(DRAFT_VAR, DRAFT_STEP0 + '\n' + DRAFT_Q + '\n{Q}\n' + DRAFT_A + '\n', QQ),
             repeat_count_open(g_loop, 3),
             *if_text(g_dsave, DRAFT_VAR),
@@ -1429,7 +1506,7 @@ def build(lang, ai=False):
         # ---- Advisor: Claude reviews the user's own text without rewriting it
         menu_case(g_main, MAIN[2]),
         act_notify(L['notify.advisor_start']),
-        act_text(text_token(L.prompt('advisor'), Q), ad_prompt),
+        act_text(text_token(L.prompt('advisor').replace('{CRITIQUE}', MAIN[0].split(' · ')[0].split(' — ')[0]), Q), ad_prompt),
         act_claude(text_token('{P}', {'P': (ad_prompt, 'Text')}), ad_claude),
         act_set_variable(RESULT, ad_claude, 'Ask Claude'),
         *journal_note(('advisor', L['journal.advisor'])),
@@ -1437,13 +1514,31 @@ def build(lang, ai=False):
         # ---- Side by side: both answer independently, answers shown together
         menu_case(g_main, MAIN[3]),
         act_notify(L['notify.survey_start']),
-        act_text(text_token(L.prompt('wrap'), Q), sb_wrap),
+        *sb_brief,
+        act_text(text_token('{B}' + L.prompt('wrap'), {**Q, 'B': (sb_brief_get, 'Variable')}), sb_wrap),
         act_gpt(text_token('{P}', {'P': (sb_wrap, 'Text')}), sb_gpt),
-        *keep_gpt(sb_gpt, 'Ask ChatGPT'),
+        # Yuri 10.11 (No.52): the step is named in the notification, so a run that iOS stops here says where it stopped
+        # (and that ChatGPT's answer is in the clipboard)
+        *keep_gpt(sb_gpt, 'Ask ChatGPT', L['notify.survey_step2']),
         act_claude(text_token('{P}', {'P': (sb_wrap, 'Text')}), sb_claude),
+        act_set_variable(SIDE_CLAUDE, sb_claude, 'Ask Claude'),
+        # an empty Claude answer: ask once more, as Critique does
+        *if_text(g_sbretry, SIDE_CLAUDE, present=False),
+        act_claude(text_token('{P}', {'P': (sb_wrap, 'Text')}), sb_claude2),
+        act_set_variable(SIDE_CLAUDE, sb_claude2, 'Ask Claude'),
+        if_close(g_sbretry),
+        *if_text(g_sbok, SIDE_CLAUDE),
+        act_get_variable(SIDE_CLAUDE, sb_cget),
         act_text(text_token(L['output.survey'],
-                            {'G': (sb_gpt, 'Ask ChatGPT'), 'C': (sb_claude, 'Ask Claude')}), sb_join),
+                            {'G': (sb_gpt, 'Ask ChatGPT'), 'C': (sb_cget, 'Variable')}), sb_join),
         act_set_variable(RESULT, sb_join, 'Text'),
+        if_else(g_sbok),
+        # Claude gave nothing: ChatGPT's answer with the line about Claude (as in Critique); nothing at all → the tail
+        # says «no answer came»
+        *if_output_text(g_sbgpt, sb_gpt, 'Ask ChatGPT'),
+        *set_text(RESULT, L['output.claude_down'], {'A': (sb_gpt, 'Ask ChatGPT')}),
+        if_close(g_sbgpt),
+        if_close(g_sbok),
         *journal_note(('survey', L['journal.survey'])),
 
         # ---- Synthesis: both answer blind, then one of them anchors the assembly
@@ -1715,6 +1810,7 @@ def build(lang, ai=False):
         # the result is copied and, at once, remembered (before any screen), so the next run does not offer it back
         # as a question
         *if_text(g_tlrem, RESULT),
+        *strip_markdown(RESULT),   # Yuri 10.11, No.56: no raw «**» on the result screen, in its title or the clipboard
         act_clipboard(variable(RESULT)),
         act_get_variable(RESULT, tl_rget),
         *remember_answer(tl_rget, 'Variable'),
@@ -1750,14 +1846,16 @@ def build(lang, ai=False):
         act_gpt(text_token('{P}', {'P': (fn_prompt, 'Text')}), fn_gpt),
         act_text(text_token(L['output.ratify'], {'R': (fn_get, 'Variable'), 'X': (fn_gpt, 'Ask ChatGPT')}), fn_out),
         act_set_variable(RESULT, fn_out, 'Text'),
+        *strip_markdown(RESULT),
         act_clipboard(variable(RESULT)),
-        *remember_answer(fn_out, 'Text'),
+        act_get_variable(RESULT, fn_clean),
+        *remember_answer(fn_clean, 'Variable'),
         # the corrected final answer goes into the journal as its own entry (the main entry above was written before
         # this menu and holds the earlier version) — BEFORE its result screen, as in the shared tail (D-100, 6.3.1)
         act_date(fn_date),
         act_get_variable(JOURNAL_EXTRA, fn_jx),
         act_text(text_token(L['journal.entry'],
-                            {**QV, 'D': (fn_date, 'Date'), 'JX': (fn_jx, 'Variable'), 'R': (fn_out, 'Text')}), fn_entry),
+                            {**QV, 'D': (fn_date, 'Date'), 'JX': (fn_jx, 'Variable'), 'R': (fn_clean, 'Variable')}), fn_entry),
         act_append_file(L['files.journal'], fn_entry),
         act_quick_look(variable(RESULT)),
 
@@ -1838,6 +1936,7 @@ def build(lang, ai=False):
     ]
 
     actions = with_gpt_retry(actions, skip=RETRY_SKIP)
+    actions = with_claude_vars(actions)
     validate(actions)
     workflow = plistlib.loads((ROOT / 'src' / 'metadata.plist').read_bytes())
     workflow['WFWorkflowIcon'] = {'WFWorkflowIconStartColor': 2071128575,   # violet (lilac, near Poly A1 accent)

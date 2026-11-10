@@ -37,14 +37,14 @@
     "my_rule_sample": "Verifique apenas os números e as datas"
   },
   "menu": {
-    "main_title": "Escolha um modo · primeira vez? ⚖️ Crítica",
+    "main_title": "Escolha um modo · ✉ = mensagens às IAs · primeira vez? ⚖️ Crítica",
     "main_items": [
-      "⚖️ Crítica · 3✉",
-      "🤝 Debate até o acordo · 3–8✉",
-      "🩺 Consultor · 1✉",
-      "👀 Lado a lado · 2✉",
-      "🔀 Síntese · 3✉",
-      "🧭 Auto · +1✉",
+      "⚖️ Crítica — resposta checada pelas duas IAs · 3✉",
+      "🤝 Debate até o acordo — para uma questão polêmica · 3–8✉",
+      "🩺 Consultor — revisa um texto seu já pronto · 1✉",
+      "👀 Lado a lado — duas respostas separadas · 2✉",
+      "🔀 Síntese — uma resposta combinada · 3✉",
+      "🧭 Auto — o Duo escolhe o modo · +1✉",
       "📂 Mais…"
     ],
     "extra_title": "Mais modos",
@@ -126,7 +126,7 @@
       "📋 Mostrar a resposta guardada do ChatGPT",
       "✍️ Nova pergunta"
     ],
-    "resume0_title": "A última verificação parou no ChatGPT (limite de mensagens ou sessão terminada?). A sua pergunta está guardada.",
+    "resume0_title": "A última verificação parou no ChatGPT (limite de mensagens, sessão terminada ou o iOS não esperou uma resposta longa?). A sua pergunta está guardada. Se o ChatGPT chegou a responder, a resposta está no app do ChatGPT.",
     "resume0_items": [
       "⏯ Perguntar só ao Claude · 1✉",
       "🔁 Perguntar aos dois de novo · 3✉",
@@ -134,14 +134,16 @@
     ]
   },
   "notify": {
-    "critique_start": "⚖️ Crítica: o ChatGPT responde → o Claude responde por conta própria → o Claude compara as duas. ≈1 min, aguarde um instante e deixe o telefone como está. Travou? Abra o ChatGPT e entre na conta.",
+    "critique_start": "⚖️ Crítica: o ChatGPT responde → o Claude responde por conta própria → o Claude compara as duas. 1–3 min, aguarde um instante e deixe o telefone como está. Travou? Abra o ChatGPT e entre na conta.",
     "critique_step2": "[2/3] O Claude está verificando e montando a resposta final…",
     "critique_blind": "[2/3] O Claude responde por conta própria, sem ver a resposta do ChatGPT…",
     "gpt_kept": "📋 A resposta do ChatGPT está na área de transferência. Se o Claude parar pelo limite de mensagens, você ainda pode colá-la onde quiser; pergunte ao Claude de novo mais tarde.",
     "critique_step3": "[3/3] O Claude compara as duas: coincidiram de forma independente / não coincidiram / o que conferir você mesmo, e depois a resposta final…",
     "critique_summary": "[3/3] O Claude está organizando as duas respostas: em que concordam / onde divergem / o que conferir você mesmo… (a resposta verificada já está na área de transferência)",
-    "advisor_start": "🩺 Consultor: o Claude analisa o seu texto sem reescrevê-lo. ≈40 s, aguarde um instante e deixe a tela como está.",
-    "survey_start": "👀 Lado a lado: perguntando aos dois separadamente. ≈1 min, aguarde um instante e deixe o telefone como está.",
+    "advisor_start": "🩺 Consultor: o Claude analisa o seu texto sem reescrevê-lo. 1–3 min, aguarde um instante e deixe a tela como está.",
+    "survey_start": "👀 Lado a lado: perguntando aos dois separadamente. 1–3 min, aguarde um instante e deixe o telefone como está.",
+    "survey_step2": "[2/2] O Claude responde por conta própria, sem ver a resposta do ChatGPT…",
+    "long_question": "📏 Pergunta longa: peço às duas IAs respostas mais curtas para o iOS não cortar uma etapa. Se o Duo parar mesmo assim, rode-o de novo em até 30 min (uma Crítica continua de onde parou).",
     "synthesis_claude_start": "🔀 Síntese (âncora: Claude): duas respostas às cegas → montagem. ≈1,5 min, aguarde um instante e deixe o telefone como está.",
     "synthesis_gpt_start": "🔀 Síntese (âncora: ChatGPT): duas respostas às cegas → montagem. ≈1,5 min, aguarde um instante e deixe o telefone como está.",
     "auto_start": "🧭 Auto: escolhendo o modo certo para a sua pergunta… (+1 mensagem do ChatGPT)",
@@ -161,7 +163,7 @@
     "delta_step1": "➕ Delta [1/2]: o Claude está escrevendo a resposta-âncora…",
     "delta_step2": "[2/2] O ChatGPT está procurando o que acrescentar…",
     "help": "ℹ️ Ajuda do Duo — sem chamadas de IA, de graça.",
-    "tail_done": "✅ Pronto. A resposta também está na área de transferência: cole onde quiser.",
+    "tail_done": "✅ Pronto. A resposta também está na área de transferência: cole onde quiser. Não abriu sozinha? Toque na notificação do Duo.",
     "tail_empty": "⚠️ Nenhuma resposta chegou. Execute de novo e espere um pouco; depois veja no app do Claude. Os rascunhos estão salvos no diário.",
     "voice_start": "🎧 Duo Voice: ChatGPT → Claude, eu leio a resposta final em voz alta. ≈1 min.",
     "photo_done": "📸 Texto reconhecido — abrindo o Duo.",
@@ -181,7 +183,7 @@
     "manual_copied": "O pedido de verificação está na área de transferência. Cole-o no Gemini ou no Meta AI.",
     "no_key_file": "Não há poly-key.txt na pasta Atalhos do iCloud Drive. Salve lá uma chave gratuita (veja o guia de instalação) ou escolha outra opção.",
     "resume_debate": "Continuando o debate de onde parou: nenhuma mensagem nova do ChatGPT é gasta com as rodadas já feitas.",
-    "gpt_down": "O ChatGPT não enviou resposta — provavelmente atingiu o limite de mensagens. O Claude responde sozinho; desta vez não haverá comparação. (Se o app do ChatGPT disser «logged out»: abra-o, entre na conta e rode o Duo de novo.)",
+    "gpt_down": "O ChatGPT não enviou resposta — provavelmente atingiu o limite de mensagens. O Claude responde sozinho; desta vez não haverá comparação. (Se o app do ChatGPT disser que você saiu da conta: abra-o, entre na conta e rode o Duo de novo.)",
     "pref_mode": "📌 Salvo. Da próxima vez o Duo vai direto à Crítica. Outros modos: «🔁 Outro modo» no final.",
     "pref_quick": "⚡ Salvo. Um texto compartilhado com o Duo (3+ palavras) segue sem a caixa de pergunta. «🔁 Outro modo» ainda a mostra.",
     "pref_reset": "↩️ Pronto. O Duo volta a mostrar a caixa de pergunta e o menu de modos."
@@ -192,7 +194,7 @@
     "pc_notice_title": "Mais em um notebook ou PC",
     "pc_notice_body": "💻 Em um notebook ou PC, o PolyHelper faz mais: pastas, agentes, canais, agendamentos, um conselho de várias IAs. O Poly no telefone é a versão leve, sem as funções de PC.",
     "first_run_title": "Antes da sua primeira pergunta",
-    "first_run_body": "Agora o iPhone vai pedir acesso várias vezes (ChatGPT, Claude, arquivos, área de transferência). Toda vez, toque logo em «Permitir Sempre» (ou «Permitir»). Só uma vez. Se um dia o ChatGPT disser «logged out», abra o app dele, entre na conta e rode o Duo de novo."
+    "first_run_body": "Agora o iPhone vai pedir acesso muitas vezes (ChatGPT, Claude, arquivos, área de transferência), e cada modo escolhido pela primeira vez pede mais 1–3 vezes. Toda vez, toque logo em «Permitir Sempre» (ou «Permitir»): cada pedido aparece só uma vez. Se um dia o ChatGPT disser que você saiu da conta, abra o app dele, entre na conta e rode o Duo de novo."
   },
   "output": {
     "critique": "{S}\n\n■ RESPOSTA VERIFICADA (Claude)\n{C}",

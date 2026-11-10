@@ -116,8 +116,14 @@ def test_first_minute(tmp_path, lang):
     empty = next(i for i, a in enumerate(actions) if notification(a) == ui['notify']['tail_empty'])
     assert empty < done
     for i, cond in ((empty, 101), (done, 100)):
-        opener = max(j for j in range(i) if kind(actions[j]) == 'conditional'
-                     and actions[j]['WFWorkflowActionParameters'].get('WFControlFlowMode') == 0)
+        stack = []   # the If still open at i (a closed one before it, e.g. the Markdown clean-up, is not it)
+        for j in range(i):
+            pj = actions[j]['WFWorkflowActionParameters']
+            if kind(actions[j]) == 'conditional' and pj.get('WFControlFlowMode') == 0:
+                stack.append(j)
+            elif kind(actions[j]) == 'conditional' and pj.get('WFControlFlowMode') == 2:
+                stack.pop()
+        opener = stack[-1]
         assert actions[opener]['WFWorkflowActionParameters']['WFCondition'] == cond
         assert guard_var(actions, actions[opener]) == ui['variables']['result']
     between = [kind(a) for a in actions[done - 5:done]]

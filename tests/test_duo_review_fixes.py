@@ -64,7 +64,11 @@ def test_critique_blind_scheme_and_claude_down_is_reachable(tmp_path, lang):
     # the question is read from PolyQuestion (typed now, or from a resumed draft)
     question = [params(a)['UUID'] for a in actions if kind(a) == 'getvariable'
                 and params(a)['WFVariable']['Value']['VariableName'] == 'PolyQuestion'][-1]   # D-29: the first reads it before the menu
-    assert {v['OutputUUID'] for v in params(wrap)['WFTextActionText']['Value']['attachmentsByRange'].values()} == {question}
+    # Yuri 10.11 (No.53): plus the «long question: answer shorter» line, read from PolyBrief — and nothing else
+    brief = {params(a)['UUID'] for a in actions if kind(a) == 'getvariable'
+             and params(a)['WFVariable']['Value']['VariableName'] == 'PolyBrief'}
+    wrap_refs = {v['OutputUUID'] for v in params(wrap)['WFTextActionText']['Value']['attachmentsByRange'].values()}
+    assert question in wrap_refs and len(wrap_refs) == 2 and (wrap_refs - {question}) <= brief
     # step 3 sees both answers and the numbers found by rule
     compare = next(i for i in range(s3, len(actions)) if kind(actions[i]) == 'ClaudeAppIntentsExtension')
     prompt_uid = list(params(actions[compare])['message']['Value']['attachmentsByRange'].values())[0]['OutputUUID']
