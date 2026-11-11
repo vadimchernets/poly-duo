@@ -966,14 +966,21 @@ export async function runDuo(opts: {
 }
 
 /** Markdown markup (`**bold**`, `*italic*`, `###`) is shown as plain text on the phone screen and in «Copy everything»
- *  (tester 10.11, No.56). A fenced code block (```) is left as it is: «x**2» and «# comment» are code there. Bold and
- *  italic need a non-word, non-star character (or the line start) before them and after them, so «2*3*4» and «x**2»
- *  stay. No lookbehind: the capture of the character in front keeps it. */
+ *  (tester 10.11, No.56). A fenced code block (``` or ~~~, indented or not, closed or running to the end) is left as it
+ *  is: «x**2» and «# comment» are code there. Bold and italic need a non-word, non-star character (or the line start)
+ *  before them and after them, so «2*3*4» and «x**2» stay. No lookbehind: the capture of the character in front keeps it. */
+const FENCE = /^[ \t]*(```|~~~)[^\n]*\n[\s\S]*?(?:^[ \t]*\1[ \t]*\r?$|(?![\s\S]))/gm;
+
 export function plain(text: string): string {
-  return text
-    .split(/(^```[^\n]*\n[\s\S]*?^```[ \t]*$)/m)
-    .map((part, i) => (i % 2 ? part : plainProse(part)))
-    .join('');
+  let out = '';
+  let at = 0;
+  FENCE.lastIndex = 0;
+  for (let m = FENCE.exec(text); m; m = FENCE.exec(text)) {
+    out += plainProse(text.slice(at, m.index)) + m[0];
+    at = m.index + m[0].length;
+    if (!m[0].length) FENCE.lastIndex++;
+  }
+  return out + plainProse(text.slice(at));
 }
 
 function plainProse(text: string): string {

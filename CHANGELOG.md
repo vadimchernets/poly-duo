@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `BRIEF_LINE` in front of the question in `runDuo`, `runFind` and `runArgue`, so a free model is less often dropped
   at `TIMEOUT_MS` mid-answer. `isLong` tells the host when to say so.
 - **Markdown** (No.56): `plain` now also takes off `*italic*`, keeps «x**2» and «2*3*4», and leaves a fenced code block
-  (```) as it is.
+  as it is (``` or ~~~, indented or not, and one left open runs to the end).
 
 ### Fixed (Duo 6.6, tester report of 2026-11-10: iPhone XR, iOS 18.7.11, Ukrainian; built-in number duo 13 at release)
 - **Side by side stopped with the bare iOS alert «There was a problem running the shortcut»** (2 runs out of 2, right
