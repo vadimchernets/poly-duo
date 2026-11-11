@@ -452,6 +452,9 @@ export class DuoError extends Error {
   status: number;
   /** What each key answered, when no one answered. */
   tried: Attempt[];
+  /** The answer that had already come when a later step failed (the check in `runDuo`, the critic in `runFind`):
+   *  the host shows it with the error instead of nothing. */
+  got?: { voice: string; text: string };
   constructor(kind: Fail, voice: string, status = 0, tried: Attempt[] = []) {
     super(`${voice}: ${kind} ${status}`);
     this.kind = kind;
@@ -841,6 +844,27 @@ export function answersLog(r: DuoResult): string {
  * (Trio) looks for what both of them missed. Check texts come from the dictionary (`duo.auto.check`,
  * `duo.auto.trio`).
  */
+/** A question this long or longer gets BRIEF_LINE in front of it (tester 10.11, No.53, the same number as the iPhone
+ *  shortcut): a long question draws a long answer, and a free model that has not finished within TIMEOUT_MS is dropped
+ *  for the next one. Every AI of the run (the answer, the check, the third voice, the debate) reads the same question. */
+export const LONG_QUESTION = 1200;
+export const BRIEF_LINE =
+  'The question is long: put the essentials first and keep the whole answer under about 500 words, in the language of the question.';
+
+export const isLong = (question: string) => question.trim().length >= LONG_QUESTION;
+
+/** The question as the AIs get it: with BRIEF_LINE in front when it is long. */
+export function briefed(question: string): string {
+  return isLong(question) ? `${BRIEF_LINE}\n\n${question}` : question;
+}
+
+/** A later step failed after the first answer came: the error carries that answer (`DuoError.got`). */
+export function withGot(e: unknown, voice: string, first: { name: string; text: string }): DuoError {
+  const err = e instanceof DuoError ? e : new DuoError('other', voice);
+  err.got = { voice: first.name, text: first.text };
+  return err;
+}
+
 export async function runDuo(opts: {
   question: string;
   keys: Keys;
@@ -860,11 +884,12 @@ export async function runDuo(opts: {
   const f = opts.doFetch ?? fetch;
   const dead: Dead = new Set();
 
+  const question = briefed(opts.question);
   opts.onStage?.('first', voices.first.name);
   const first = await ask(
     chainFor(voices.first, opts.keys, [], false, phone),
     opts.keys,
-    opts.question,
+    question,
     f,
     undefined,
     dead,
@@ -873,16 +898,22 @@ export async function runDuo(opts: {
   );
 
   opts.onStage?.('check', voices.check.name);
-  const check = await ask(
-    chainFor(voices.check, opts.keys, [first.company], true, phone),
-    opts.keys,
-    fill(opts.checkText, { question: opts.question, answer: first.text }),
-    f,
-    undefined,
-    dead,
-    (n) => opts.onStage?.('check', n),
-    phone,
-  );
+  let check: Awaited<ReturnType<typeof ask>>;
+  try {
+    check = await ask(
+      chainFor(voices.check, opts.keys, [first.company], true, phone),
+      opts.keys,
+      fill(opts.checkText, { question, answer: first.text }),
+      f,
+      undefined,
+      dead,
+      (n) => opts.onStage?.('check', n),
+      phone,
+    );
+  } catch (e) {
+    // The first answer is already here: it goes to the person with the error, not into the bin (tester 10.11, No.52).
+    throw withGot(e, voices.check.name, first);
+  }
 
   const out: DuoResult = {
     first: { voice: first.name, text: first.text },
@@ -895,7 +926,7 @@ export async function runDuo(opts: {
       const third = await ask(
         chainFor(voices.third, opts.keys, [first.company, check.company], false, phone),
         opts.keys,
-        fill(opts.trioText, { question: opts.question, answer: first.text, check: check.text }),
+        fill(opts.trioText, { question, answer: first.text, check: check.text }),
         f,
         undefined,
         dead,
@@ -920,7 +951,7 @@ export async function runDuo(opts: {
     const sum = await ask(
       chainFor(recorder, opts.keys, avoid.filter(Boolean), true, phone).slice(0, 4),
       opts.keys,
-      SUMMARY_PROMPT.replace(/\{(question|answers)\}/g, (_, k: string) => (k === 'question' ? opts.question : answersLog(out))),
+      SUMMARY_PROMPT.replace(/\{(question|answers)\}/g, (_, k: string) => (k === 'question' ? question : answersLog(out))),
       f,
       TIMEOUT_MS,
       dead,
@@ -934,12 +965,23 @@ export async function runDuo(opts: {
   return out;
 }
 
-/** Markdown markup (`**`, `###`) is shown as plain text on the phone screen. */
+/** Markdown markup (`**bold**`, `*italic*`, `###`) is shown as plain text on the phone screen and in «Copy everything»
+ *  (tester 10.11, No.56). A fenced code block (```) is left as it is: «x**2» and «# comment» are code there. Bold and
+ *  italic need a non-word, non-star character (or the line start) before them and after them, so «2*3*4» and «x**2»
+ *  stay. No lookbehind: the capture of the character in front keeps it. */
 export function plain(text: string): string {
   return text
-    .replace(/^#{1,6}\s+/gm, '')
-    .replace(/\*\*(.+?)\*\*/g, '$1')
-    .replace(/^\s*[-*]\s+/gm, '• ')
+    .split(/(^```[^\n]*\n[\s\S]*?^```[ \t]*$)/m)
+    .map((part, i) => (i % 2 ? part : plainProse(part)))
+    .join('');
+}
+
+function plainProse(text: string): string {
+  return text
+    .replace(/^[ \t]*#{1,6}[ \t]+/gm, '')
+    .replace(/^[ \t]*[-*][ \t]+/gm, '• ')
+    .replace(/(^|[^*\w])\*\*(?=\S)([^\n]*?\S)\*\*(?![*\w])/gm, '$1$2')
+    .replace(/(^|[^*\w])\*(?=[^\s*])([^*\n]*?[^\s*])\*(?![*\w])/gm, '$1$2')
     // LaTeX formulas ($2028 \div 4 = 507$ — a live Gemini answer, emulator 01.10.2026) — as symbols.
     // Only formulas with a LaTeX command inside: "$5 and $10" are prices, we leave those alone.
     .replace(/\$([^$\n]*\\[a-z]+[^$\n]*)\$/g, '$1')

@@ -3,7 +3,7 @@
 // weak points, rank them, quote the exact line; if there are none, say so plainly. The template is the
 // dictionary's `duo.find.prompt` (eleven languages); it works by hand (copy → the other company's AI) and
 // in the automatic Duo (`runFind`: first AI answers, an AI of another company breaks the answer).
-import { ask, chainFor, DuoError, pickVoices, type Dead, type Fetch, type Keys, type PhoneVoice } from './duoAuto';
+import { ask, briefed, chainFor, DuoError, pickVoices, withGot, type Dead, type Fetch, type Keys, type PhoneVoice } from './duoAuto';
 
 /** The empty question — a person's own text has none; the template still reads naturally. */
 export const NO_QUESTION = '—';
@@ -39,11 +39,12 @@ export async function runFind(opts: {
   if (!voices) throw new DuoError('key', 'AI');
   const f = opts.doFetch ?? fetch;
   const dead: Dead = new Set();
+  const question = briefed(opts.question);
   opts.onStage?.('first', voices.first.name);
   const first = await ask(
     chainFor(voices.first, opts.keys, [], false, phone),
     opts.keys,
-    opts.question,
+    question,
     f,
     undefined,
     dead,
@@ -51,16 +52,22 @@ export async function runFind(opts: {
     phone,
   );
   opts.onStage?.('find', voices.check.name);
-  const critic = await ask(
-    chainFor(voices.check, opts.keys, [first.company], true, phone),
-    opts.keys,
-    fillFind(opts.findText, { question: opts.question, answer: first.text }),
-    f,
-    undefined,
-    dead,
-    (n) => opts.onStage?.('find', n),
-    phone,
-  );
+  let critic: Awaited<ReturnType<typeof ask>>;
+  try {
+    critic = await ask(
+      chainFor(voices.check, opts.keys, [first.company], true, phone),
+      opts.keys,
+      fillFind(opts.findText, { question, answer: first.text }),
+      f,
+      undefined,
+      dead,
+      (n) => opts.onStage?.('find', n),
+      phone,
+    );
+  } catch (e) {
+    // The first answer is already here: it goes to the person with the error (tester 10.11, No.52).
+    throw withGot(e, voices.check.name, first);
+  }
   return { first: { voice: first.name, text: first.text }, critic: { voice: critic.name, text: critic.text } };
 }
 

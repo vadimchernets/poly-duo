@@ -10,7 +10,7 @@
 // the marker `[[CONCEDE]]`, and the rounds stop there. The prompts are English on purpose (the models
 // follow English instructions best; each one answers in the language of the question) and are word
 // for word the ones of the iPhone Duo (C1M `locales/en/prompts/argue-*.txt`).
-import { ask, chainFor, DuoError, pickVoices, type Dead, type Keys } from './duoAuto';
+import { ask, briefed, chainFor, DuoError, pickVoices, type Dead, type Keys } from './duoAuto';
 
 export const CONCEDE = '[[CONCEDE]]';
 export const ROUNDS = 3;
@@ -114,7 +114,8 @@ export async function runArgue(opts: {
   if (!voices) throw new DuoError('key', 'AI');
   const f = opts.doFetch ?? fetch;
   const dead: Dead = new Set();
-  const { question, keys } = opts;
+  const { keys } = opts;
+  const question = briefed(opts.question);
 
   opts.onStage?.('open', voices.first.name, 0);
   // The opening position has nothing to fall back on: if no one answers, the error goes to the screen.

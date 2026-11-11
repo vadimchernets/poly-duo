@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed (Android engine, the same tester report of 2026-11-10 carried over from the iPhone)
+- **A check that failed no longer throws the first answer away** (the Android side of No.52). When every model of the
+  check (`runDuo`) or of the critic (`runFind`) fails, the `DuoError` now carries the answer that already came
+  (`DuoError.got`, made by `withGot`), so the host shows it with the reason instead of an error alone. The debate
+  already kept its turns (`ArgueResult.cut`).
+- **A long question asks for a shorter answer** (No.53): from `LONG_QUESTION` (1200) characters on, `briefed` puts
+  `BRIEF_LINE` in front of the question in `runDuo`, `runFind` and `runArgue`, so a free model is less often dropped
+  at `TIMEOUT_MS` mid-answer. `isLong` tells the host when to say so.
+- **Markdown** (No.56): `plain` now also takes off `*italic*`, keeps «x**2» and «2*3*4», and leaves a fenced code block
+  (```) as it is.
+
 ### Fixed (Duo 6.6, tester report of 2026-11-10: iPhone XR, iOS 18.7.11, Ukrainian; built-in number duo 13 at release)
 - **Side by side stopped with the bare iOS alert «There was a problem running the shortcut»** (2 runs out of 2, right
   after the ChatGPT step), while Critique and Advisor ran to the end on the same phone. Side by side was the only one of
