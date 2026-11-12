@@ -2,9 +2,13 @@
 
 **For the first time, your own ChatGPT and Claude apps work together on your phone — one tap, free.** **Poly Duo — ChatGPT + Claude on iPhone; a free pair of AIs on Android.** Nothing like this exists on phones yet: ChatGPT and Claude work as a pair, each answers on its own and then the answers are compared, on the accounts you already have. Free ones are enough. No card, no computer. You can run the strongest models of two companies together, and a paid plan adds no extra fee.
 
+<p align="center"><img src="assets/demo.gif" alt="Poly Duo: one question, ChatGPT and Claude answer, then compare" height="420"></p>
+
 [![Watch Duo run on YouTube](https://img.youtube.com/vi/Oj8ZQ_rVtQc/hqdefault.jpg)](https://youtu.be/Oj8ZQ_rVtQc)
 
 **Install:** [iPhone — add the Duo shortcut](https://www.icloud.com/shortcuts/d8265e4794c046d480f548ee6485ec48) · [Android — Poly Duo on Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1) · [other languages](#install-in-60-seconds) · [polyhelper.ai/duo](https://polyhelper.ai/duo/)
+
+**Related research tool:** [memory-agreement-check](https://github.com/vadimchernets/memory-agreement-check) measures when two models from different companies agree on the same wrong answer.
 
 ## Install in 60 seconds
 
