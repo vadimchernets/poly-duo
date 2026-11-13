@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed (Critique and Trio: a value chosen between two answers is marked, KI Forum, Harry, 2026-11-06, owner «да» 2026-11-13)
+- **«Adopted» became «Selected, the originals differ»**. Where ChatGPT and Claude gave a value differently (the ibuprofen
+  example: 4–6 against 6–8 hours), «Did not match» now names the kept one as «Selected, the originals differ: … — because …»,
+  and the FINAL ANSWER marks such a value right where it stands: «(selected, the originals differ: ChatGPT …, Claude …)»,
+  so a person who reads only the final answer sees that the answers differed. `locales/en/prompts/critique-blind.txt`,
+  `trio-compare.txt` and their Russian overrides. Android already shows «They differ» as a block of its own.
+
 ### Fixed (Android engine, the same tester report of 2026-11-10 carried over from the iPhone)
 - **A check that failed no longer throws the first answer away** (the Android side of No.52). When every model of the
   check (`runDuo`) or of the critic (`runFind`) fails, the `DuoError` now carries the answer that already came

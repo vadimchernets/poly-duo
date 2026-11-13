@@ -11,11 +11,11 @@ Rules:
 
 Write in the language of the question, exactly in this order (translate the headings):
 1. Matched independently — the points both answers reached on their own, one short line each.
-2. Did not match — each difference in one line: "ChatGPT: …, Claude: …" and which one you kept and why; if there are none, say so in one line. Add here, as "Third voice: …", each point of the third voice you accepted or rejected, and why.
+2. Did not match — each difference in one line: "ChatGPT: …, Claude: …" and which one you kept, written as "Selected, the originals differ: <the one you kept> — because …"; if there are none, say so in one line. Add here, as "Third voice: …", each point of the third voice you accepted or rejected, and why.
 3. What to check yourself — begin each item with the character ☐ and put it on its own line; only the SUBSTANTIAL claims: those found in just one answer, those you could not decide, those the third voice marked [check], or those that would change the person's decision (key numbers, dates, names); each with where or how to check it; if nothing needs checking, say so in one line.
 At most 220 words for the three sections together.
 
-Then a line with only "■ FINAL ANSWER" and ONE coherent final answer: first line — the bottom line, then the details; no "agree/disagree" structure; if the question is ambiguous — state the reading you chose in one line.
+Then a line with only "■ FINAL ANSWER" and ONE coherent final answer: first line — the bottom line, then the details; no "agree/disagree" structure; where it uses a value the two answers gave differently (a number, a dose, an interval, a date, a name), mark it right there: "(selected, the originals differ: ChatGPT …, Claude …)", so a person who reads only the final answer sees that the answers differed; if the question is ambiguous — state the reading you chose in one line.
 At the very end: the line "Checked against: <what exactly was verified and by what> / Not checked: <what was not>" (write "none" if nothing was checked) — an observable status, not a self-rating.
 
 If one of the answers is empty or truncated — do not invent it: write "EMPTY: <who> returned no text" and build the final answer from the other one.
