@@ -482,19 +482,19 @@ ARGUE_MARKER = '[[CONCEDE]]'
 # DRAFT_MINUTES, offers to go on from there.
 DRAFT_MINUTES = 30
 # Yuri 13.11 (No.63): iOS shows the start of the file in the «Save File» permission window, and the person saw
-# «⟦duo-draft:0⟧ ⟦Q⟧» in front of the question. The markers are now invisible format characters (U+2060…U+2064): the
+# «⟦duo-draft:0⟧ ⟦Q⟧» in front of the question. The markers are invisible format characters (U+2060…U+2064) now: the
 # window shows the question and the answer only. They are tested with Match Text (ICU, literal code points), never with
-# «contains», which may compare ignoring such characters. An older draft (visible markers) matches nothing and is
-# never offered (No.62).
-DRAFT_STEP0, DRAFT_STEP1, DRAFT_DONE = '⁣⁠⁣', '⁣⁡⁣', '⁣⁢⁣'
-DRAFT_Q, DRAFT_A = '⁤⁠⁤', '⁤⁡⁤'
-# which mode wrote the draft: Critique, or Side by side (Yuri 13.11, No.52: Side by side runs through the same loop)
-DRAFT_CRIT, DRAFT_SIDE = '⁤⁣⁤', '⁤⁢⁤'
-# «between −30 and 30 minutes» as text: 0…30 with an optional minus sign. A Number made from «Time Between Dates»
-# goes through the phone's number format: in Ukrainian or Russian 4320 minutes read «4 320», which a Number action may
-# take for 4, so a three-day-old draft was offered as fresh (Yuri 13.11, No.62).
+# «contains», which may compare ignoring such characters.
+DRAFT_STEP0, DRAFT_STEP1, DRAFT_DONE = '\u2063\u2060\u2063', '\u2063\u2061\u2063', '\u2063\u2062\u2063'
+DRAFT_Q, DRAFT_A = '\u2064\u2060\u2064', '\u2064\u2061\u2064'
+# «between −30 and 30 minutes» as TEXT: 0…30 with an optional minus. A Number made from «Time Between Dates» goes
+# through the phone's number format: in Ukrainian or Russian 4320 minutes read «4 320», which a Number may take for 4,
+# so a draft days old was offered as fresh (Yuri 13.11, No.62).
 DRAFT_FRESH = r'^\s*[-−]?(?:[0-9]|[12][0-9]|30)(?:[.,]0+)?\s*$'
 assert DRAFT_MINUTES == 30, 'DRAFT_FRESH is written for 30 minutes'
+# «Back» from «More…» (Yuri 13.11, No.67): Duo runs itself with this mark in front of the question — the mode menu
+# again, WITHOUT the question field (the question is already there)
+MODE_MARK = '⟦duo-mode⟧\n'
 # a «Repeat with Each» inside another loop: Shortcuts calls its item «Repeat Item 2» (checked on Shortcuts, see
 # critique_block — the number pass runs inside the draft loop)
 INNER_REPEAT_ITEM = 'Repeat Item 2'
@@ -503,7 +503,20 @@ INNER_REPEAT_ITEM = 'Repeat Item 2'
 def draft_file(lang, ai):
     """The language and the build variant are in the name, so another language or the Apple Intelligence build on the
     same iCloud never picks up a draft written with other prompts."""
-    return f"Duo-draft-{lang}-{'ai' if ai else 'std'}.txt"
+    # the build is in the name too (Yuri 13.11, No.62): deleting the shortcut keeps iCloud Drive → Shortcuts, so a draft
+    # left by an older build raised the resume menu on the first run of a fresh install. The version number alone is
+    # not enough (a candidate carries the released number until its release), so the name holds a short hash of the
+    # builder and of this language's texts: any change of either gives the drafts a new name.
+    return f"Duo-draft-{lang}-{'ai' if ai else 'std'}-{build_id(lang)}.txt"
+
+
+def build_id(lang):
+    import hashlib
+    h = hashlib.sha256(Path(__file__).read_bytes())
+    for f in sorted((ROOT / 'locales' / lang).rglob('*')) + sorted((ROOT / 'locales' / 'en' / 'prompts').glob('*.txt')):
+        if f.is_file():
+            h.update(f.read_bytes())
+    return h.hexdigest()[:6]
 
 
 def version_key(ai):
@@ -738,6 +751,51 @@ def with_claude_vars(actions):
     return out
 
 
+def with_diag(actions):
+    """C1_DIAG=1: the diagnostic build for a live run (Yuri 13.11, No.52/53: from the Shortcuts app a run stopped with the
+    bare iOS alert or ended empty, through Siri it ran; which action fails could only be guessed). Around EVERY «Ask
+    ChatGPT» / «Ask Claude»: a notification «→ #n ChatGPT» before it, and «← #n ChatGPT: N characters, S s» after it,
+    read from the variable the output is stored in. The last «→» without its «←» in Notification Centre names the
+    action iOS stopped; «0 characters» names one that came back empty; the seconds measure the time limit. Never
+    released: dist-diag/, «Duo-diag» on the phone."""
+    out, n = [], 0
+    names = {'com.openai.chat.AskIntent': ('ChatGPT', 'Ask ChatGPT'), CLAUDE_INTENT: ('Claude', 'Ask Claude')}
+    i = 0
+    while i < len(actions):
+        action = actions[i]
+        kind_ = action['WFWorkflowActionIdentifier']
+        if kind_ not in names:
+            out.append(action)
+            i += 1
+            continue
+        n += 1
+        who, output = names[kind_]
+        uid = action['WFWorkflowActionParameters']['UUID']
+        t0, t1, dt, get, txt, cnt = (new_uuid() for _ in range(6))
+        out += [act_date(t0), act_notify(f'🔧 → #{n} {who}'), action]
+        nxt = actions[i + 1] if i + 1 < len(actions) else None
+        if (nxt and nxt['WFWorkflowActionIdentifier'] == 'is.workflow.actions.setvariable'
+                and nxt['WFWorkflowActionParameters']['WFInput']['Value'].get('OutputUUID') == uid):
+            var = nxt['WFWorkflowActionParameters']['WFVariableName']
+            out.append(nxt)
+            i += 2
+        else:
+            var = 'PolyDiagOut'
+            out.append(act_set_variable(var, uid, output))
+            i += 1
+        out += [act_date(t1),
+                {'WFWorkflowActionIdentifier': 'is.workflow.actions.gettimebetweendates',
+                 'WFWorkflowActionParameters': {'WFInput': attachment(t1, 'Date'),
+                                                'WFTimeUntilFromDate': text_token('{D}', {'D': (t0, 'Date')}),
+                                                'WFTimeUntilUnit': 'Seconds', 'UUID': dt}},
+                act_get_variable(var, get),
+                act_text(text_token('{V}', {'V': (get, 'Variable')}), txt),
+                act_count_chars(txt, 'Text', cnt),
+                act_notify(text_token(f'🔧 ← #{n} {who}: {{C}} chars, {{S}} s',
+                                      {'C': (cnt, 'Count'), 'S': (dt, 'Time Between Dates')}))]
+    return out
+
+
 def rename_outputs(node, rewrites):
     """A copy of `node` in which every reference to an output in `rewrites` reads «Variable» of the new action."""
     if isinstance(node, dict):
@@ -823,10 +881,10 @@ def build(lang, ai=False):
     qw_get, qw_m, g_askq, g_skm = ids(4)
     g_pc, pm_get, pq_get, pf_new, pf_save, sk_get = ids(6)
     g_n1, g_n2, g_n3 = ids(3)
+    bk_text, bk_m, bk_rep, g_bk, g_keepq, bk_get = ids(6)
+    KEEP_Q = 'PolyKeepQuestion'   # set by MODE_MARK: the question field is skipped, the mode menu is shown
     NOTE_MODE, NOTE_QUICK, NOTE_RESET = 'PolyNoteMode', 'PolyNoteQuick', 'PolyNoteReset'
-    BRIEF_VAR = 'PolyBrief'   # Yuri 10.11: No.53 (long question)
-    # Yuri 13.11 (No.52): set → the shared Critique loop runs Side by side (no step 3; both answers shown together)
-    SIDE_VAR, DRAFT_TAG = 'PolySide', 'PolyDraftTag'
+    BRIEF_VAR, SIDE_CLAUDE = 'PolyBrief', 'PolySideClaude'   # Yuri 10.11: No.53 (long question), No.52 (Side by side)
 
     def journal_note(entry, refs=None):
         """Per-branch note: mode name plus the raw drafts that produced the result. `entry` is
@@ -925,6 +983,10 @@ def build(lang, ai=False):
     ARGUE_LOG = L['variables.argue_log']
     # --- Advisor
     ad_prompt, ad_claude = ids(2)
+    # --- Side by side
+    sb_wrap, sb_gpt, sb_claude, sb_join = ids(4)
+    sb_claude2, sb_cget, g_sbretry, g_sbok, g_sbgpt = ids(5)
+    sb_brief, sb_brief_get = brief_for_long(qpre, 'Variable')
     # --- Synthesis, Claude anchors / ChatGPT anchors
     sc_wrap, sc_gpt, sc_claude, sc_prompt, sc_final = ids(5)
     sg_wrap, sg_gpt, sg_claude, sg_prompt, sg_final = ids(5)
@@ -1036,7 +1098,6 @@ def build(lang, ai=False):
         rule_ref = {'RULE': (rule_uid, 'Variable')} if rule_uid else {}
         item_name = INNER_REPEAT_ITEM if draft else 'Repeat Item'
         brief_acts, brief_get = brief_for_long(*qsrc)   # Yuri 10.11, No.53
-        g_dt, cr_tag = ids(2)
 
         def number_pass(src_var_uid, other_var):
             """Every number of the answer `src_var_uid` (a Get Variable output) that does NOT stand, as a whole
@@ -1078,22 +1139,17 @@ def build(lang, ai=False):
             act_set_variable(GPT_VAR, cr_gpt2, 'Ask ChatGPT'),
             if_close(g_retry),
             # ChatGPT gave nothing (its limit, signed out, iOS cut the step): Claude answers alone, and the person is
-            # told now. Only where ChatGPT was really asked: after «Ask Claude alone» from the resume menu ChatGPT is
-            # skipped by the person's choice, and «ChatGPT sent no answer» was a false alarm (Yuri 13.11, No.61).
+            # told now. Only where ChatGPT was really asked: after «Ask Claude alone» in the resume menu ChatGPT is
+            # skipped by choice, and «ChatGPT sent no answer» was a false alarm (Yuri 13.11, No.61).
             *if_text(g_gdown, GPT_VAR, present=False),
             act_notify(L['notify.gpt_down']),
             if_close(g_gdown),
             *([if_close(g_skip), if_close(g_need)] if draft else []),
         ]
         # ---- Steps 2 and 3: Claude answers blind, then compares (only when there are two answers to compare)
-        g_sk, g_side, g_s1, g_s2, g_s3, g_cs = ids(6)
-        keep = keep_gpt(cr_kget, 'Variable', L['notify.critique_blind'])
-        if draft:   # Side by side names its own step 2 of 2
-            keep = [*if_text(g_sk, SIDE_VAR), *keep_gpt(cr_kget, 'Variable', L['notify.survey_step2']),
-                    if_else(g_sk), *keep, if_close(g_sk)]
         steps23 = [
             act_get_variable(GPT_VAR, cr_kget),
-            *keep,
+            *keep_gpt(cr_kget, 'Variable', L['notify.critique_blind']),
             act_claude(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_own),
             act_set_variable(OWN_VAR, cr_own, 'Ask Claude'),
             *if_text(g_oretry, OWN_VAR, present=False),
@@ -1103,23 +1159,6 @@ def build(lang, ai=False):
             if_close(g_oretry),
             act_get_variable(GPT_VAR, cr_gpt_f),
             act_get_variable(OWN_VAR, cr_own_f),
-        ]
-        # Side by side (Yuri 13.11, No.52): the two blind answers are the result; no step 3. Whoever answered is shown.
-        side_result = [
-            *if_text(g_s1, GPT_VAR),
-            *if_text(g_s2, OWN_VAR),
-            *set_text(RESULT, L['output.survey'], {'G': (cr_gpt_f, 'Variable'), 'C': (cr_own_f, 'Variable')}),
-            if_else(g_s2),
-            *set_text(RESULT, L['output.claude_down'], {'A': (cr_gpt_f, 'Variable')}),
-            if_close(g_s2),
-            if_else(g_s1),
-            *if_text(g_s3, OWN_VAR),
-            *set_text(RESULT, L['output.gpt_down'], {'C': (cr_own_f, 'Variable')}),
-            if_close(g_s3),
-            if_close(g_s1),
-            *journal_note(('survey', L['journal.survey'])),
-        ]
-        step3 = [
             *if_text(g_both, GPT_VAR),
             # ---- Step 3: Claude compares both. Numbers that stand in only one of the two answers are found by rule,
             # not by Claude's attention, and handed over as data. Only when both answers exist: with one of them
@@ -1170,8 +1209,6 @@ def build(lang, ai=False):
             act_get_variable(GPT_VAR, cr_jg),
             *journal_note(('critique', L['journal.critique']), {'X': (cr_jg, 'Variable')}),
         ]
-        steps23 += ([*if_text(g_side, SIDE_VAR), *side_result, if_else(g_side), *step3, if_close(g_side)]
-                    if draft else step3)
         if not draft:
             return [
                 *pre,
@@ -1192,20 +1229,10 @@ def build(lang, ai=False):
         return [
             *pre,
             *clear_variable(OWN_VAR),
-            # Side by side said its own start in its menu case
-            *if_text(g_cs, SIDE_VAR, present=False),
             act_notify(L['notify.critique_start']),
-            if_close(g_cs),
             *brief_acts,
             act_text(text_token('{B}' + L.prompt('wrap'), {**QQ, 'B': (brief_get, 'Variable')}), cr_wrap),
-            # the draft says which mode wrote it, so a resumed run goes on in the same mode
-            *set_text(DRAFT_TAG, DRAFT_CRIT),
-            *if_text(g_dt, SIDE_VAR),
-            *set_text(DRAFT_TAG, DRAFT_SIDE),
-            if_close(g_dt),
-            act_get_variable(DRAFT_TAG, cr_tag),
-            *set_text(DRAFT_VAR, DRAFT_STEP0 + '{T}\n' + DRAFT_Q + '\n{Q}\n' + DRAFT_A + '\n',
-                      {**QQ, 'T': (cr_tag, 'Variable')}),
+            *set_text(DRAFT_VAR, DRAFT_STEP0 + '\n' + DRAFT_Q + '\n{Q}\n' + DRAFT_A + '\n', QQ),
             repeat_count_open(g_loop, 3),
             *if_text(g_dsave, DRAFT_VAR),
             act_get_variable(DRAFT_VAR, cr_dq),
@@ -1219,8 +1246,8 @@ def build(lang, ai=False):
             *clear_variable(DRAFT_VAR),
             *if_text(g_d1, GPT_VAR),
             act_get_variable(GPT_VAR, cr_g1),
-            *set_text(DRAFT_VAR, DRAFT_STEP1 + '{T}\n' + DRAFT_Q + '\n{Q}\n' + DRAFT_A + '\n{A}',
-                      {**QQ, 'A': (cr_g1, 'Variable'), 'T': (cr_tag, 'Variable')}),
+            *set_text(DRAFT_VAR, DRAFT_STEP1 + '\n' + DRAFT_Q + '\n{Q}\n' + DRAFT_A + '\n{A}',
+                      {**QQ, 'A': (cr_g1, 'Variable')}),
             # ChatGPT gave nothing: no second write, the step-0 draft already on disk stays as it is
             if_close(g_d1),
             if_else(g_pa),
@@ -1249,15 +1276,8 @@ def build(lang, ai=False):
         I1, I0 = L['menu.resume1_items'], L['menu.resume0_items']
         A = {'A': (ra, 'Text')}
 
-        def side_flag():
-            # a draft written by Side by side goes on as Side by side (Yuri 13.11, No.52)
-            g, m = u(), u()
-            return [act_first_match(rt, 'Text', DRAFT_SIDE, m), if_output(g, m, 'Matches', 100),
-                    *set_text(SIDE_VAR, '1'), if_close(g)]
-
-        def resumed(*extra, mode=False):
-            return [*set_text(QVAR, '{Q}', {'Q': (rq, 'Text')}), *set_text(RESUME_VAR, '1'),
-                    *(side_flag() if mode else []), *extra]
+        def resumed(*extra):
+            return [*set_text(QVAR, '{Q}', {'Q': (rq, 'Text')}), *set_text(RESUME_VAR, '1'), *extra]
 
         def check_request():
             # the comparing prompt with ChatGPT's answer alone (it says how to treat a missing one)
@@ -1279,7 +1299,7 @@ def build(lang, ai=False):
                                                 '{D}', {'D': (rdate, 'Last Modified Date')}),
                                             'WFTimeUntilUnit': 'Minutes', 'UUID': rage}},
             # «between −30 and 30 minutes» reads the same whichever way the system counts (as in version_check); tested
-            # on the text, not on a Number (see DRAFT_FRESH, Yuri 13.11, No.62)
+            # on the text, not on a Number (DRAFT_FRESH, Yuri 13.11, No.62)
             act_text(text_token('{M}', {'M': (rage, 'Time Between Dates')}), rnum),
             act_first_match(rnum, 'Text', DRAFT_FRESH, rfresh),
             if_output(g_age, rfresh, 'Matches', 100),
@@ -1292,7 +1312,7 @@ def build(lang, ai=False):
             if_output(g_1, rs1, 'Matches', 100),
             menu_open(g_m1, L['menu.resume1_title'], I1),
             menu_case(g_m1, I1[0]),
-            *resumed(*set_text(GPT_VAR, '{A}', A), *set_text(CRIT_VAR, '1'), act_notify(L['notify.resume']), mode=True),
+            *resumed(*set_text(GPT_VAR, '{A}', A), *set_text(CRIT_VAR, '1'), act_notify(L['notify.resume'])),
             menu_case(g_m1, I1[1]),
             *resumed(*set_text(RESULT, L['output.claude_down'], A), *check_request(), *set_text(CLAUDE_DOWN, '1'),
                      *journal_note(('critique', L['journal.critique']), {'X': (ra, 'Text')})),
@@ -1306,9 +1326,9 @@ def build(lang, ai=False):
             if_output(g_0, rs0, 'Matches', 100),
             menu_open(g_m0, L['menu.resume0_title'], I0),
             menu_case(g_m0, I0[0]),
-            *resumed(*set_text(SKIP_GPT, '1'), *set_text(CRIT_VAR, '1'), mode=True),
+            *resumed(*set_text(SKIP_GPT, '1'), *set_text(CRIT_VAR, '1')),
             menu_case(g_m0, I0[1]),
-            *resumed(*set_text(CRIT_VAR, '1'), mode=True),
+            *resumed(*set_text(CRIT_VAR, '1')),
             menu_case(g_m0, I0[2]),
             menu_close(g_m0),
             if_close(g_0),
@@ -1485,6 +1505,15 @@ def build(lang, ai=False):
         act_first_match(mk_get, 'Variable', r'(?s)(?<=^⟦duo-menu⟧\n).*', mk_rep),
         act_set_variable(START_VAR, mk_rep, 'Matches'),
         if_close(g_mk),
+        *clear_variable(KEEP_Q),
+        act_get_variable(START_VAR, bk_get),
+        act_first_match(bk_get, 'Variable', r'^⟦duo-mode⟧\n', bk_m),
+        if_output(g_bk, bk_m, 'Matches', 100),
+        *set_text(FORCE_MENU, '1'),
+        *set_text(KEEP_Q, '1'),
+        act_first_match(bk_get, 'Variable', r'(?s)(?<=^⟦duo-mode⟧\n).*', bk_rep),
+        act_set_variable(START_VAR, bk_rep, 'Matches'),
+        if_close(g_bk),
         # «Critique right away» (C-1): skip the mode menu. «Ask without editing» (C-3): a text SHARED to Duo with at
         # least three words (a lone link or a code is still put in the box) goes without the question box.
         # Both start as constants and are only cleared (see MODE_OFF above): nothing here is built inside an If that
@@ -1502,6 +1531,10 @@ def build(lang, ai=False):
         if_output(g_qd, qw_m, 'Matches', 101),
         *clear_variable(SKIP_Q),
         if_close(g_qd),
+        # «Back» from «More…»: the question is already there, the field is skipped (whatever its length)
+        *if_text(g_keepq, KEEP_Q),
+        *set_text(SKIP_Q, '1'),
+        if_close(g_keepq),
         *if_text(g_askq, SKIP_Q, present=False),
         act_get_variable(START_VAR, st_get),
         act_ask(L['ask.question'], question, default_from=(st_get, 'Variable')),
@@ -1570,16 +1603,35 @@ def build(lang, ai=False):
         act_set_variable(RESULT, ad_claude, 'Ask Claude'),
         *journal_note(('advisor', L['journal.advisor'])),
 
-        # ---- Side by side: both answer independently, answers shown together. Yuri 13.11 (No.52): run from the
-        # Shortcuts app it stopped 2 times out of 2 with the bare iOS alert right after Claude's step (both apps had
-        # answered), while Critique, whose first two steps send the same requests, ran. It now runs in the same loop
-        # as Critique (after the mode menu, CRIT_VAR) and keeps the same draft through the same «Save File»: one form
-        # proven on the phone instead of two, and a run that iOS still stops is offered back by the next run (ChatGPT's
-        # saved answer, Claude alone) instead of being lost. Step 3 (comparison) is skipped: 2 messages, as before.
+        # ---- Side by side: both answer independently, answers shown together
         menu_case(g_main, MAIN[3]),
         act_notify(L['notify.survey_start']),
-        *set_text(SIDE_VAR, '1'),
-        *set_text(CRIT_VAR, '1'),
+        *sb_brief,
+        act_text(text_token('{B}' + L.prompt('wrap'), {**Q, 'B': (sb_brief_get, 'Variable')}), sb_wrap),
+        act_gpt(text_token('{P}', {'P': (sb_wrap, 'Text')}), sb_gpt),
+        # Yuri 10.11 (No.52): the step is named in the notification, so a run that iOS stops here says where it stopped
+        # (and that ChatGPT's answer is in the clipboard)
+        *keep_gpt(sb_gpt, 'Ask ChatGPT', L['notify.survey_step2']),
+        act_claude(text_token('{P}', {'P': (sb_wrap, 'Text')}), sb_claude),
+        act_set_variable(SIDE_CLAUDE, sb_claude, 'Ask Claude'),
+        # an empty Claude answer: ask once more, as Critique does
+        *if_text(g_sbretry, SIDE_CLAUDE, present=False),
+        act_claude(text_token('{P}', {'P': (sb_wrap, 'Text')}), sb_claude2),
+        act_set_variable(SIDE_CLAUDE, sb_claude2, 'Ask Claude'),
+        if_close(g_sbretry),
+        *if_text(g_sbok, SIDE_CLAUDE),
+        act_get_variable(SIDE_CLAUDE, sb_cget),
+        act_text(text_token(L['output.survey'],
+                            {'G': (sb_gpt, 'Ask ChatGPT'), 'C': (sb_cget, 'Variable')}), sb_join),
+        act_set_variable(RESULT, sb_join, 'Text'),
+        if_else(g_sbok),
+        # Claude gave nothing: ChatGPT's answer with the line about Claude (as in Critique); nothing at all → the tail
+        # says «no answer came»
+        *if_output_text(g_sbgpt, sb_gpt, 'Ask ChatGPT'),
+        *set_text(RESULT, L['output.claude_down'], {'A': (sb_gpt, 'Ask ChatGPT')}),
+        if_close(g_sbgpt),
+        if_close(g_sbok),
+        *journal_note(('survey', L['journal.survey'])),
 
         # ---- Synthesis: both answer blind, then one of them anchors the assembly
         menu_case(g_main, MAIN[4]),
@@ -1825,9 +1877,10 @@ def build(lang, ai=False):
             menu_close(g_mmenu),
             if_close(g_mm),
             act_get_variable(MY_RULE, mm_rule)], rule_uid=mm_rule),
-        # Back (Yuri 13.11, No.67): the main mode menu again, with the same question in the field; nothing is spent
+        # Back (Yuri 13.11, No.67): the main mode menu again with the same question; no question field, nothing spent
         menu_case(g_extra, L['menu.back']),
-        *rerun_with_menu(qpre, 'Variable'),
+        act_text(text_token(MODE_MARK + '{Q}', {'Q': (qpre, 'Variable')}), bk_text),
+        act_run_self(RELEASE_NAME, bk_text, 'Text'),
         {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
         menu_close(g_extra),
         menu_close(g_main),
@@ -1846,6 +1899,11 @@ def build(lang, ai=False):
         # ChatGPT's answer is already in the clipboard then (keep_gpt).
         *if_text(g_empty, RESULT, present=False),
         act_notify(L['notify.tail_empty']),
+        # Yuri 13.11 (No.53): a run whose AI actions came back empty ended with nothing on screen, although both apps
+        # held answers. One window says so and where the answers are; no clipboard write (the person's own clipboard,
+        # often their question, stays as it is). Whoever DID answer is shown by the modes themselves (claude_down /
+        # gpt_down) and never reaches this branch.
+        act_alert(L['alert.no_answer_title'], L['alert.no_answer_body']),
         *set_text(CLAUDE_DOWN, '1'),
         if_close(g_empty),
         *if_text(g_down, CLAUDE_DOWN),
@@ -1981,6 +2039,9 @@ def build(lang, ai=False):
 
     actions = with_gpt_retry(actions, skip=RETRY_SKIP)
     actions = with_claude_vars(actions)
+    diag = os.environ.get('C1_DIAG') == '1'
+    if diag:
+        actions = with_diag(actions)
     validate(actions)
     workflow = plistlib.loads((ROOT / 'src' / 'metadata.plist').read_bytes())
     workflow['WFWorkflowIcon'] = {'WFWorkflowIconStartColor': 2071128575,   # violet (lilac, near Poly A1 accent)
@@ -1993,9 +2054,9 @@ def build(lang, ai=False):
     workflow['WFQuickActionSurfaces'] = ['ShareSheet']
     workflow['WFWorkflowActions'] = actions
 
-    out_dir = Path(os.environ.get('C1_DIST', ROOT / 'dist')) / lang / ('ai' if ai else '')
+    out_dir = Path(os.environ.get('C1_DIST', ROOT / ('dist-diag' if diag else 'dist'))) / lang / ('ai' if ai else '')
     out_dir.mkdir(parents=True, exist_ok=True)
-    out = out_dir / f"{L['shortcut_names.main']}.shortcut"
+    out = out_dir / f"{L['shortcut_names.main']}{'-diag' if diag else ''}.shortcut"
     with out.open('wb') as f:
         plistlib.dump(workflow, f, fmt=plistlib.FMT_BINARY)
     print(f'{lang}: {out.name} — {len(actions)} actions')

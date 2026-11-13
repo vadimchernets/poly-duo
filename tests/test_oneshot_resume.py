@@ -88,4 +88,5 @@ def test_oneshot_resume_long(tmp_path, lang):
         assert params(actions[retry + 1])['WFMatchTextPattern'].endswith('{1,6000}')
         assert kind(actions[retry + 2]) == 'ClaudeAppIntentsExtension'
     alerts = [a for a in actions if kind(a) == 'alert']
-    assert len(alerts) == 1  # still only the first-run warning
+    # the first-run warning, and (Yuri 13.11, No.53) the one shown only when no answer reached Duo at all
+    assert len(alerts) == 2

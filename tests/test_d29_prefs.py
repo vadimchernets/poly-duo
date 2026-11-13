@@ -39,10 +39,12 @@ def test_every_rerun_carries_the_menu_marker(tmp_path, lang):
     assert len(runs) >= 7   # 5 recipes x2 menus is 10, plus «go back» and «Another mode»
     for r in runs:
         src = by_uid[params(r)['WFInput']['Value']['OutputUUID']]
-        assert kind(src) == 'gettext' and params(src)['WFTextActionText']['Value']['string'].startswith(MARK)
+        # «Back» from «More…» (Yuri 13.11, No.67) carries the mode mark: the mode menu without the question field
+        assert kind(src) == 'gettext' and params(src)['WFTextActionText']['Value']['string'].startswith((MARK, '⟦duo-mode⟧\n'))
     # the marker is cut off again before the question box
     pats = [params(a).get('WFMatchTextPattern') for a in actions if kind(a) == 'match']
     assert r'^⟦duo-menu⟧\n' in pats and r'(?s)(?<=^⟦duo-menu⟧\n).*' in pats   # only at the very start of the text
+    assert r'^⟦duo-mode⟧\n' in pats and r'(?s)(?<=^⟦duo-mode⟧\n).*' in pats
 
 
 @pytest.mark.parametrize('lang', LANGS)

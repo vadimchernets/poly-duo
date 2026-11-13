@@ -138,7 +138,9 @@ def test_ai_build_uses_existing_version_key(tmp_path):
     assert f"version=duo%20{VERSION['duo']}" in report
     saves = [params(a)['WFFileDestinationPath'] for a in ai if kind(a) == 'save']
     # Duo 6.4: one draft «Save File», named for the build, so the plain build never resumes an ai draft
-    assert [s for s in saves if s.startswith('Duo-draft-')] == ['Duo-draft-en-ai.txt']
+    # Yuri 13.11 (No.62): and for the build, so an older build's draft is never offered
+    drafts = [s for s in saves if s.startswith('Duo-draft-')]
+    assert len(drafts) == 1 and drafts[0].startswith('Duo-draft-en-ai-')
 
 
 def token_text(node):
@@ -231,12 +233,11 @@ def test_critique_first_run_asks_few_permissions(tmp_path, lang):
     tail_empty = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['tail_empty'])
     # My mode's block (ends at the mode menu's close) writes no file; the main one (Duo 6.4) writes its draft through
     # exactly ONE «Save File», run three times by a loop
-    # (the main one copies ChatGPT's answer in one of two branches: Side by side or Critique, Yuri 13.11)
-    for start, end, drafts, copies in ((starts[0], next(i for i in range(starts[0], len(actions)) if kind(actions[i]) == 'choosefrommenu'), 0, 1),
-                                       (starts[1], tail_empty, 1, 2)):
+    for start, end, drafts in ((starts[0], next(i for i in range(starts[0], len(actions)) if kind(actions[i]) == 'choosefrommenu'), 0),
+                               (starts[1], tail_empty, 1)):
         block = [kind(a) for a in actions[start:end]]
         assert block.count('save') == drafts and block.count('append') == 0
-        assert block.count('setclipboard') == copies
+        assert block.count('setclipboard') == 1
     tail = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['tail_done'])
     finale = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
                   and params(a).get('WFMenuPrompt') == ui['menu']['finale_title'])

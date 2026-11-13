@@ -11,3 +11,6 @@ __pycache__/
 secrets/
 *.key
 *.pem
+
+# diagnostic builds for a live run, never released
+dist-diag/

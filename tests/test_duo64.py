@@ -8,8 +8,7 @@ from test_first_run import LANGS, ROOT, build, kind, guard_var
 
 import sys
 sys.path.insert(0, str(ROOT / 'src'))
-from build_shortcut import (DRAFT_STEP0, DRAFT_STEP1, DRAFT_DONE, DRAFT_Q, DRAFT_FRESH,  # noqa: E402
-                            DRAFT_CRIT, DRAFT_SIDE, OBJ)
+from build_shortcut import DRAFT_STEP0, DRAFT_STEP1, DRAFT_DONE, DRAFT_Q, DRAFT_FRESH, draft_file  # noqa: E402
 
 
 def params(a):
@@ -65,7 +64,9 @@ def test_one_draft_save_runs_three_times(tmp_path, lang):
     actions = build(tmp_path, lang)
     saves = [i for i, a in enumerate(actions) if kind(a) == 'save'
              and str(params(a)['WFFileDestinationPath']).startswith('Duo-draft-')]
-    assert len(saves) == 1 and params(actions[saves[0]])['WFFileDestinationPath'] == f'Duo-draft-{lang}-std.txt'
+    # the build number is in the name: an older build's draft is never offered (Yuri 13.11, No.62)
+    assert len(saves) == 1 and params(actions[saves[0]])['WFFileDestinationPath'] == draft_file(lang, False)
+    assert draft_file(lang, False).startswith(f'Duo-draft-{lang}-std-') and len(draft_file(lang, False)) == len(f'Duo-draft-{lang}-std-123456.txt')
     s = saves[0]
     loop = [g for g in groups_open(actions, s) if kind(g) == 'count']
     assert len(loop) == 1 and params(loop[0])['WFRepeatCount'] == 3
@@ -73,7 +74,7 @@ def test_one_draft_save_runs_three_times(tmp_path, lang):
     assert guard_var(actions, groups_open(actions, s)[-1]) == 'PolyDraft'
     # step 0 before the loop, step 1 after ChatGPT, «done» after Claude's comparison, in this order
     drafts = sets(actions, 'PolyDraft')
-    steps = [(i, t.split('\n')[0].replace(OBJ, '')) for i, t in drafts if t]
+    steps = [(i, t.split('\n')[0]) for i, t in drafts if t]
     assert [t for _, t in steps] == [DRAFT_STEP0, DRAFT_STEP1, DRAFT_DONE]
     loop_start = actions.index(loop[0])
     gpt = next(i for i in range(loop_start, len(actions)) if kind(actions[i]) == 'AskIntent')
@@ -105,12 +106,12 @@ def test_resume_menu_before_the_question(tmp_path, lang):
         outer = groups_open(actions, menu)
         # only without Shortcut Input (in its Otherwise), with a draft file younger than 30 minutes
         assert params(outer[0])['WFInput']['Variable']['Value'] == {'Type': 'ExtensionInput'}
-        # the age is tested as text (Yuri 13.11, No.62: a Number of «4 320» minutes read as 4)
+        # the age is tested as text (Yuri 13.11, No.62: a Number of «4 320» minutes may read as 4)
         assert not any(params(c).get('WFCondition') == 1003 for c in outer)
         assert DRAFT_FRESH in pats_of(actions, outer)
-    assert pats_of(actions, groups_open(actions, m0)) [-2:] == [DRAFT_STEP1, DRAFT_STEP0]   # step 0 in the Otherwise of «step 1»
+    assert pats_of(actions, groups_open(actions, m0))[-2:] == [DRAFT_STEP1, DRAFT_STEP0]   # step 0 in the Otherwise of «step 1»
     assert pats_of(actions, groups_open(actions, m1))[-1] == DRAFT_STEP1
-    # no «contains» on the invisible markers (Match Text only)
+    # the invisible markers are never tested with «contains»
     assert not any(params(c).get('WFConditionalActionString') in (DRAFT_STEP0, DRAFT_STEP1, DRAFT_DONE)
                    for c in actions if kind(c) == 'conditional')
     import re as _re
@@ -163,18 +164,18 @@ def test_whoever_answered_is_delivered(tmp_path, lang):
         if key == 'claude_down':
             assert len(found) == 5   # both Critique blocks, the resume's «check» and «show», Side by side (Yuri 10.11)
         else:
-            assert len(found) == 3   # both Critique blocks, Side by side (Yuri 13.11: Side by side in the shared loop)
+            assert len(found) == 2   # both Critique blocks
     # in-run: Claude did not compare → ChatGPT's answer + CLAUDE_DOWN, in the Otherwise of «Claude compared»
     main_start = max(i for i, a in enumerate(actions)
                      if params(a).get('WFNotificationActionBody') == ui['notify']['critique_start'])
     head = ui['output']['claude_down'].split('{A}')[0]
-    i = max(i for i, t in sets(actions, result) if i > main_start and t and t.startswith(head))   # step 3, after Side by side
+    i = next(i for i, t in sets(actions, result) if i > main_start and t and t.startswith(head))
     assert guard_var(actions, groups_open(actions, i, ('conditional',))[-1]) == 'PolyClaudeAnswer'
     down = next(j for j, _ in sets(actions, 'PolyClaudeDown') if j > i)
     assert down - i <= 3
     # ChatGPT gave nothing → Claude's own answer, no comparing message (the compare call is not in that branch)
     head = ui['output']['gpt_down'].split('{C}')[0]
-    j = max(j for j, t in sets(actions, result) if j > main_start and t and t.startswith(head))
+    j = next(j for j, t in sets(actions, result) if j > main_start and t and t.startswith(head))
     assert guard_var(actions, groups_open(actions, j, ('conditional',))[-1]) == 'PolyClaudeOwn'
     both = groups_open(actions, j, ('conditional',))[-2]
     assert guard_var(actions, both) == 'PolyChatGPTAnswer'

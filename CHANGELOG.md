@@ -7,25 +7,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Fixed (tester report of 2026-11-13: iPhone XR, iOS 18.7.11, Ukrainian; not yet re-run on that iPhone)
-- **Side by side stopped with the bare iOS alert** when run from the Shortcuts app (2 runs out of 2; through Siri it ran),
-  right after Claude's step, with both apps holding their answers. Its two requests are the same as Critique's first
-  two (the same wrapped question to ChatGPT, then to Claude blind), but it ran them in a block of its own. It now runs
-  inside the Critique loop and skips the comparison: one form instead of two, 2 messages as before, and the same single
-  «Save File» keeps its draft. A run iOS still stops is offered back by the next run within 30 minutes («show ChatGPT's
-  saved answer», «go on with Claude only»), and goes on as Side by side.
+- **Side by side and a long Critique from the Shortcuts app** (Side by side stopped with the bare iOS alert 2 runs out
+  of 2, through Siri it ran; a ~2400-character Critique ended with no result while both apps held answers): the cause is
+  not proven yet. Duo's actions are the same whichever way it is started, so iOS stops or empties an app action there.
+  Side by side keeps its form. Added: a diagnostic build (`C1_DIAG=1 python3 src/build_shortcut.py <lang>` →
+  `dist-diag/`, never released) with a notification before and after every «Ask ChatGPT» / «Ask Claude» — characters
+  returned and seconds — to see on the phone which action fails and how long it took.
+- **No answer at all ended in silence**: when no AI answer reached Duo, one window now says that ChatGPT and Claude may
+  have answered in their apps, iOS did not pass it on, and to open the app or run Duo through Siri (12 languages).
 - **«ChatGPT sent no answer — most likely its limit»** after «Ask Claude alone» in the resume menu, where ChatGPT was
   not asked at all; and the «most likely its limit» wording in general. The lines now list the causes (limit, signed
   out, iOS cut a long step) and say that an answer that came is in that AI's app (12 languages).
 - **The resume menu on the very first run** of a fresh install: the draft's age («Time Between Dates» in minutes) went
   through a Number, and in the Ukrainian or Russian number format «4 320» minutes could read as 4. The age is now tested
-  as text (0–30, optional minus).
+  as text (0–30, optional minus), and the draft's file name carries a short hash of the builder and the language's
+  texts: deleting the shortcut keeps iCloud Drive → Shortcuts, and an older build's draft is never offered.
 - **«⟦duo-draft:0⟧ ⟦Q⟧» in the Save File permission window**: the draft markers are invisible format characters now and
   are tested with Match Text only. A draft in the old format is not offered.
 - **English headings in a Ukrainian result** («What to verify:», «■ FINAL ANSWER»): the prompts ask for the heading
   in the language of the question (`advisor.txt`, `critique-blind.txt`, `trio-compare.txt`).
-- **«More…» had no way back**: «↩️ Back» (`menu.back`) opens the question field and the mode menu again; nothing is spent.
-- README: a tap on the screen does not stop Duo (leaving Shortcuts or locking the phone may); each mode asks 1–4 more
-  permissions the first time it is chosen. docs/uk/install.md: the Russian word for «several» replaced with the Ukrainian one (#6, #7).
+- **«More…» had no way back**: «↩️ Back» (`menu.back`) opens the mode menu again with the same question, without the
+  question field; nothing is spent.
+- README and the built-in help (11 languages): a tap on the screen does not stop Duo (leaving Shortcuts or locking the
+  phone may); README and the first-run window: each mode asks 1–4 more permissions the first time it is chosen. docs/uk/install.md: the Russian word for «several» replaced with the Ukrainian one (#6, #7).
 
 ### Fixed (Android engine, issues #1–#5 from the same tester)
 - `ask()` and `testKey()` keep the time limit on while the response body is read (#1).
