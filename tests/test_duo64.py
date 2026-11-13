@@ -6,7 +6,10 @@ import pytest
 
 from test_first_run import LANGS, ROOT, build, kind, guard_var
 
-DRAFT_STEP0, DRAFT_STEP1, DRAFT_DONE = '⟦duo-draft:0⟧', '⟦duo-draft:1⟧', '⟦duo-draft:done⟧'
+import sys
+sys.path.insert(0, str(ROOT / 'src'))
+from build_shortcut import (DRAFT_STEP0, DRAFT_STEP1, DRAFT_DONE, DRAFT_Q, DRAFT_FRESH,  # noqa: E402
+                            DRAFT_CRIT, DRAFT_SIDE, OBJ)
 
 
 def params(a):
@@ -28,6 +31,17 @@ def groups_open(actions, index, kinds=('conditional', 'count', 'each', 'choosefr
         elif p['WFControlFlowMode'] == 2:
             stack.pop()
     return stack
+
+
+def pats_of(actions, conditions):
+    """The Match Text patterns whose «Matches» the given conditions test."""
+    by = {params(a).get('UUID'): a for a in actions if params(a).get('UUID')}
+    out = []
+    for c in conditions:
+        src = params(c).get('WFInput', {}).get('Variable', {}).get('Value', {}).get('OutputUUID')
+        if src in by and kind(by[src]) == 'match':
+            out.append(params(by[src])['WFMatchTextPattern'])
+    return out
 
 
 def text_of(actions, uid):
@@ -59,14 +73,14 @@ def test_one_draft_save_runs_three_times(tmp_path, lang):
     assert guard_var(actions, groups_open(actions, s)[-1]) == 'PolyDraft'
     # step 0 before the loop, step 1 after ChatGPT, «done» after Claude's comparison, in this order
     drafts = sets(actions, 'PolyDraft')
-    steps = [(i, t.split('\n')[0]) for i, t in drafts if t]
+    steps = [(i, t.split('\n')[0].replace(OBJ, '')) for i, t in drafts if t]
     assert [t for _, t in steps] == [DRAFT_STEP0, DRAFT_STEP1, DRAFT_DONE]
     loop_start = actions.index(loop[0])
     gpt = next(i for i in range(loop_start, len(actions)) if kind(actions[i]) == 'AskIntent')
     compare = max(i for i in range(loop_start, steps[2][0]) if kind(actions[i]) == 'ClaudeAppIntentsExtension')
     assert steps[0][0] < loop_start < s < gpt < steps[1][0] < compare < steps[2][0]
     # the step-1 draft carries the question and ChatGPT's answer, between the markers the resume reads
-    assert '⟦Q⟧\n' in drafts[[i for i, _ in drafts].index(steps[1][0])][1]
+    assert DRAFT_Q + '\n' in drafts[[i for i, _ in drafts].index(steps[1][0])][1]
     # the number pass inside the loop reads the inner loop's item: «Repeat Item 2» (checked on Shortcuts 28.10)
     inner = [params(a)['WFVariable']['Value']['VariableName'] for a in actions[loop_start:steps[2][0]]
              if kind(a) == 'getvariable' and params(a)['WFVariable']['Value']['VariableName'].startswith('Repeat Item')]
@@ -91,13 +105,18 @@ def test_resume_menu_before_the_question(tmp_path, lang):
         outer = groups_open(actions, menu)
         # only without Shortcut Input (in its Otherwise), with a draft file younger than 30 minutes
         assert params(outer[0])['WFInput']['Variable']['Value'] == {'Type': 'ExtensionInput'}
-        age = next(c for c in outer if params(c)['WFCondition'] == 1003)
-        assert (params(age)['WFNumberValue'], params(age)['WFAnotherNumber']) == (-30, 30)
-        assert params(age)['WFInput']['Variable']['Value']['OutputName'] == 'Number'
-    marks = [params(c).get('WFConditionalActionString') for c in groups_open(actions, m0) if params(c)['WFCondition'] == 99]
-    assert marks == [DRAFT_STEP1, DRAFT_STEP0]   # step 0 is tested in the Otherwise of «step 1»
-    marks = [params(c).get('WFConditionalActionString') for c in groups_open(actions, m1) if params(c)['WFCondition'] == 99]
-    assert marks == [DRAFT_STEP1]
+        # the age is tested as text (Yuri 13.11, No.62: a Number of «4 320» minutes read as 4)
+        assert not any(params(c).get('WFCondition') == 1003 for c in outer)
+        assert DRAFT_FRESH in pats_of(actions, outer)
+    assert pats_of(actions, groups_open(actions, m0)) [-2:] == [DRAFT_STEP1, DRAFT_STEP0]   # step 0 in the Otherwise of «step 1»
+    assert pats_of(actions, groups_open(actions, m1))[-1] == DRAFT_STEP1
+    # no «contains» on the invisible markers (Match Text only)
+    assert not any(params(c).get('WFConditionalActionString') in (DRAFT_STEP0, DRAFT_STEP1, DRAFT_DONE)
+                   for c in actions if kind(c) == 'conditional')
+    import re as _re
+    for minutes, fresh in (('0', True), ('17', True), ('30', True), ('-30', True), ('−12', True), ('31', False),
+                           ('4 320', False), ('4\u00a0320', False), ('1,440', False), ('1.440', False), ('300', False)):
+        assert bool(_re.search(DRAFT_FRESH, minutes)) == fresh, minutes
     # every choice but «new question» resumes: PolyResume set, the question from the draft
     for menu, items in ((m1, m['resume1_items']), (m0, m['resume0_items'])):
         group = params(actions[menu])['GroupingIdentifier']
@@ -144,18 +163,18 @@ def test_whoever_answered_is_delivered(tmp_path, lang):
         if key == 'claude_down':
             assert len(found) == 5   # both Critique blocks, the resume's «check» and «show», Side by side (Yuri 10.11)
         else:
-            assert len(found) == 2   # both Critique blocks
+            assert len(found) == 3   # both Critique blocks, Side by side (Yuri 13.11: Side by side in the shared loop)
     # in-run: Claude did not compare → ChatGPT's answer + CLAUDE_DOWN, in the Otherwise of «Claude compared»
     main_start = max(i for i, a in enumerate(actions)
                      if params(a).get('WFNotificationActionBody') == ui['notify']['critique_start'])
     head = ui['output']['claude_down'].split('{A}')[0]
-    i = next(i for i, t in sets(actions, result) if i > main_start and t and t.startswith(head))
+    i = max(i for i, t in sets(actions, result) if i > main_start and t and t.startswith(head))   # step 3, after Side by side
     assert guard_var(actions, groups_open(actions, i, ('conditional',))[-1]) == 'PolyClaudeAnswer'
     down = next(j for j, _ in sets(actions, 'PolyClaudeDown') if j > i)
     assert down - i <= 3
     # ChatGPT gave nothing → Claude's own answer, no comparing message (the compare call is not in that branch)
     head = ui['output']['gpt_down'].split('{C}')[0]
-    j = next(j for j, t in sets(actions, result) if j > main_start and t and t.startswith(head))
+    j = max(j for j, t in sets(actions, result) if j > main_start and t and t.startswith(head))
     assert guard_var(actions, groups_open(actions, j, ('conditional',))[-1]) == 'PolyClaudeOwn'
     both = groups_open(actions, j, ('conditional',))[-2]
     assert guard_var(actions, both) == 'PolyChatGPTAnswer'

@@ -131,13 +131,14 @@
       "⏯ Ask Claude alone · 1✉",
       "🔁 Ask both again · 3✉",
       "✍️ New question"
-    ]
+    ],
+    "back": "↩️ Back"
   },
   "notify": {
     "critique_start": "⚖️ Critique: ChatGPT answers → Claude answers on its own → Claude compares both. 1–3 min, please wait, leave the phone as it is. Stuck? Open ChatGPT and sign in.",
     "critique_step2": "[2/3] Claude is verifying and assembling the final answer…",
     "critique_blind": "[2/3] Claude answers on its own, without seeing ChatGPT's answer…",
-    "gpt_kept": "📋 ChatGPT's answer is in the clipboard. If Claude stops on its message limit, you can still paste it anywhere; ask Claude again later.",
+    "gpt_kept": "📋 ChatGPT's answer is in the clipboard. If Duo stops before Claude answers, you can still paste it anywhere; Claude's answer, if it came, is in the Claude app.",
     "critique_step3": "[3/3] Claude compares both: matched independently / did not match / what to check yourself, then the final answer…",
     "critique_summary": "[3/3] Claude is sorting both answers: both agree / where they differ / what to check yourself… (the checked answer is already in the clipboard)",
     "advisor_start": "🩺 Advisor: Claude reviews your text without rewriting it. 1–3 min, please wait, leave the screen as it is.",
@@ -183,7 +184,7 @@
     "manual_copied": "The check request is in the clipboard. Paste it into Gemini or Meta AI.",
     "no_key_file": "There is no poly-key.txt in the Shortcuts folder of iCloud Drive. Save a free key there (see the install guide) or pick another option.",
     "resume_debate": "Continuing the debate from where it stopped — no new ChatGPT message is spent for the rounds already done.",
-    "gpt_down": "ChatGPT sent no answer — most likely its message limit. Claude answers alone; there is no comparison this time. (If the ChatGPT app says «logged out»: open it, sign in, then run Duo again.)",
+    "gpt_down": "ChatGPT did not pass an answer to Duo (message limit, signed out, or iOS cut a long step; if it did answer, the answer is in its app). Claude answers alone; there is no comparison this time. (If the ChatGPT app says «logged out»: open it, sign in, then run Duo again.)",
     "pref_mode": "📌 Saved. Next time Duo goes straight to Critique. Other modes: «🔁 Another mode» at the end.",
     "pref_quick": "⚡ Saved. A text shared to Duo (3+ words) is sent without the question box. «🔁 Another mode» still shows it.",
     "pref_reset": "↩️ Done. Duo shows the question box and the mode menu as before."
@@ -212,8 +213,8 @@
     "argue_side_b_round": "■ Claude (side B), round {N}",
     "argue_side_a_round": "■ ChatGPT (side A), round {N}",
     "ratify": "{R}\n\n— — —\n🔍 ChatGPT's second check:\n{X}",
-    "claude_down": "⚠️ Claude did not answer — most likely its message limit. Below is ChatGPT's answer; there is no comparison this time. Run Duo again later for the full check, or check it now with Trio's free keys (no subscription limit). On a free plan, after the limit an assistant may answer with a lighter model.\n\n{A}",
-    "gpt_down": "⚠️ ChatGPT did not answer — most likely its message limit. Below is Claude's answer; there is no comparison this time. Run Duo again later for the full check, or try Trio (free provider keys, no subscription limit). On a free plan, after the limit an assistant may answer with a lighter model.\n\n{C}"
+    "claude_down": "⚠️ Claude did not pass an answer to Duo (message limit, signed out, or iOS cut a long step; if it did answer, the answer is in its app). Below is ChatGPT's answer; there is no comparison this time. Run Duo again later for the full check, or check it now with Trio's free keys (no subscription limit). On a free plan, after the limit an assistant may answer with a lighter model.\n\n{A}",
+    "gpt_down": "⚠️ ChatGPT did not pass an answer to Duo (message limit, signed out, or iOS cut a long step; if it did answer, the answer is in its app). Below is Claude's answer; there is no comparison this time. Run Duo again later for the full check, or try Trio (free provider keys, no subscription limit). On a free plan, after the limit an assistant may answer with a lighter model.\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\nQUESTION: {Q}\n\n{R}\n",

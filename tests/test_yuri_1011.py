@@ -46,28 +46,36 @@ def test_claude_output_is_never_put_straight_into_a_text(tmp_path, lang):
 
 
 @pytest.mark.parametrize('lang', LANGS)
-def test_side_by_side_names_its_step_and_keeps_chatgpt(tmp_path, lang):
+def test_side_by_side_runs_in_the_critique_loop(tmp_path, lang):
+    """Yuri 13.11 (No.52): Side by side runs in the shared Critique loop (draft, resume), skips step 3, names its step and
+    keeps ChatGPT's answer in the clipboard before Claude."""
     ui = ui_of(lang)
-    actions = build(tmp_path, lang)
     n = ui['notify']
+    actions = build(tmp_path, lang)
     start = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == n['survey_start'])
     end = next(i for i in range(start, len(actions)) if kind(actions[i]) == 'choosefrommenu'
                and params(actions[i]).get('WFMenuItemTitle') == ui['menu']['main_items'][4])
-    block = actions[start:end]
-    gpt = next(i for i, a in enumerate(block) if kind(a) == 'AskIntent')
-    first_claude = next(i for i, a in enumerate(block) if kind(a) == CLAUDE)
-    # before Claude: ChatGPT's answer to the clipboard, and a notification that names step 2 of 2
-    assert any(kind(a) == 'setclipboard' for a in block[gpt:first_claude])
-    bodies = [params(a).get('WFNotificationActionBody') for a in block[gpt:first_claude] if kind(a) == 'notification']
-    assert bodies and all(n['survey_step2'] in b for b in bodies)
-    # Claude asked at most twice (one retry of an empty answer), both into PolySideClaude
-    claudes = [i for i, a in enumerate(block) if kind(a) == CLAUDE]
-    assert len(claudes) == 2
-    for i in claudes:
-        assert kind(block[i + 1]) == 'setvariable' and params(block[i + 1])['WFVariableName'] == 'PolySideClaude'
-    # Claude gave nothing → ChatGPT's answer with the line about Claude
-    head = ui['output']['claude_down'].split('{A}')[0]
-    assert any(kind(a) == 'gettext' and params(a)['WFTextActionText']['Value']['string'].startswith(head) for a in block)
+    case = actions[start:end]
+    assert not any(kind(a) in ('AskIntent', CLAUDE) for a in case)   # no AI call of its own
+    names = [params(a)['WFVariableName'] for a in case if kind(a) == 'setvariable']
+    assert 'PolySide' in names and 'PolyCritique' in names
+    # in the loop: the Side branch copies ChatGPT's answer and names step 2 of 2 before Claude's blind answer
+    step2 = [i for i, a in enumerate(actions) if n['survey_step2'] in str(params(a).get('WFNotificationActionBody', ''))]
+    assert step2 and all(any(kind(actions[j]) == 'setclipboard' for j in range(i - 3, i)) for i in step2[:1])
+    loop = next(i for i, a in enumerate(actions) if kind(a) == 'count' and params(a).get('WFRepeatCount') == 3)
+    assert all(i > loop for i in step2)
+    # the result: both answers together, in the PolySide branch; no comparing call there
+    head = ui['output']['survey'].split('{G}')[0]
+    joins = [i for i, a in enumerate(actions) if kind(a) == 'gettext'
+             and params(a)['WFTextActionText']['Value']['string'].startswith(head)]
+    assert len(joins) == 1 and joins[0] > loop
+    from test_first_run import guard_var
+    side = next(g for g in groups_open(actions, joins[0]) if kind(g) == 'conditional' and guard_var(actions, g) == 'PolySide')
+    gid = params(side)['GroupingIdentifier']
+    other = next(i for i, a in enumerate(actions) if params(a).get('GroupingIdentifier') == gid and params(a)['WFControlFlowMode'] == 1)
+    assert not any(kind(a) == CLAUDE for a in actions[actions.index(side):other])
+    # a Side by side draft goes on as Side by side
+    assert any(kind(a) == 'match' and params(a)['WFMatchTextPattern'] == '\u2064\u2062\u2064' for a in actions)
 
 
 @pytest.mark.parametrize('lang', LANGS)
@@ -78,7 +86,7 @@ def test_long_question_asks_for_a_shorter_answer(tmp_path, lang):
     actions = build(tmp_path, lang)
     u = by_uid(actions)
     notes = [i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['long_question']]
-    assert len(notes) == 3
+    assert len(notes) == 2   # My mode and the shared loop (Critique and, since 13.11, Side by side)
     for i in notes:
         cond = groups_open(actions, i)[-1]
         p = params(cond)
@@ -92,7 +100,7 @@ def test_long_question_asks_for_a_shorter_answer(tmp_path, lang):
              and first_words in params(a)['WFTextActionText']['Value']['string']]
     briefed = [a for a in wraps if any(params(u[r]).get('WFVariable', {}).get('Value', {}).get('VariableName') == 'PolyBrief'
                                        for r in text_refs(params(a)) if r in u)]
-    assert len(briefed) == 3
+    assert len(briefed) == 2
     for a in briefed:
         assert params(a)['WFTextActionText']['Value']['string'].startswith('￼' + first_words)
 

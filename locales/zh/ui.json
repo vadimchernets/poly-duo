@@ -131,13 +131,14 @@
       "⏯ 只问 Claude · 1✉",
       "🔁 重新问两个 · 3✉",
       "✍️ 新问题"
-    ]
+    ],
+    "back": "↩️ 返回"
   },
   "notify": {
     "critique_start": "⚖️ 审校：ChatGPT 先答 → Claude 独立作答 → Claude 对比两份。1–3 分钟，请稍等，先不用动手机。卡住了？打开 ChatGPT 并登录。",
     "critique_step2": "[2/3] Claude 正在复核并整理最终答案……",
     "critique_blind": "[2/3] Claude 在看不到 ChatGPT 回答的情况下独立作答……",
-    "gpt_kept": "📋 ChatGPT 的回答已在剪贴板中。如果 Claude 因消息额度用完而停止，仍可将回答粘贴到任何地方；稍后再问 Claude。",
+    "gpt_kept": "📋 ChatGPT 的回答已在剪贴板中。如果 Duo 在 Claude 回答前停止，仍可将回答粘贴到任何地方；Claude 若已回答，回答在 Claude App 里。",
     "critique_step3": "[3/3] Claude 正在对比两份回答：独立一致之处／不一致之处／需要你自己核实的内容，然后给出最终答案……",
     "critique_summary": "[3/3] Claude 正在整理两份回答：一致之处／分歧之处／需要你自己核实的内容……（复核后的答案已在剪贴板中）",
     "advisor_start": "🩺 顾问：Claude 只点评你的文字，不改写。1–3 分钟，请稍等，先不用动屏幕。",
@@ -183,7 +184,7 @@
     "manual_copied": "核查请求已放入剪贴板，请粘贴到 Gemini 或 Meta AI。",
     "no_key_file": "iCloud Drive 的“快捷指令”文件夹里没有 poly-key.txt。请在那里保存一个免费密钥（见安装指南），或选择其他选项。",
     "resume_debate": "从中断处继续辩论，已完成的轮次不会消耗新的 ChatGPT 消息。",
-    "gpt_down": "ChatGPT 没有返回回答，很可能是达到了消息上限。由 Claude 单独回答，这次没有对比。（如果 ChatGPT 的 App 提示你已退出登录：打开它、登录，再重新运行 Duo。）",
+    "gpt_down": "ChatGPT 没有把回答交给 Duo（消息上限、已退出登录，或 iOS 中断了较长的一步；如果它已回答，回答在它的 App 里）。由 Claude 单独回答，这次没有对比。（如果 ChatGPT 的 App 提示你已退出登录：打开它、登录，再重新运行 Duo。）",
     "pref_mode": "📌 已保存。下次 Duo 直接进入审校。其他模式：结束时点“🔁 换个模式”。",
     "pref_quick": "⚡ 已保存。分享给 Duo 的文字（不是过短的）会不经提问框直接发送。“🔁 换个模式”仍会显示提问框。",
     "pref_reset": "↩️ 已恢复。Duo 重新显示提问框和模式菜单。"
@@ -212,8 +213,8 @@
     "argue_side_b_round": "■ Claude（B 方），第 {N} 轮",
     "argue_side_a_round": "■ ChatGPT（A 方），第 {N} 轮",
     "ratify": "{R}\n\n— — —\n🔍 ChatGPT 的第二次检查：\n{X}",
-    "claude_down": "⚠️ Claude 没有回答，很可能是达到了消息上限。下面是 ChatGPT 的回答，这次没有对比。稍后再运行 Duo 进行完整检查，或现在用 Trio 的免费密钥（不受订阅上限限制）检查。免费套餐在达到上限后，可能由更轻量的模型回答。\n\n{A}",
-    "gpt_down": "⚠️ ChatGPT 没有回答，很可能是达到了消息上限。下面是 Claude 的回答，这次没有对比。稍后再运行 Duo 进行完整检查，或试试 Trio（服务商免费密钥，不受订阅上限限制）。免费套餐在达到上限后，可能由更轻量的模型回答。\n\n{C}"
+    "claude_down": "⚠️ Claude 没有把回答交给 Duo（消息上限、已退出登录，或 iOS 中断了较长的一步；如果它已回答，回答在它的 App 里）。下面是 ChatGPT 的回答，这次没有对比。稍后再运行 Duo 进行完整检查，或现在用 Trio 的免费密钥（不受订阅上限限制）检查。免费套餐在达到上限后，可能由更轻量的模型回答。\n\n{A}",
+    "gpt_down": "⚠️ ChatGPT 没有把回答交给 Duo（消息上限、已退出登录，或 iOS 中断了较长的一步；如果它已回答，回答在它的 App 里）。下面是 Claude 的回答，这次没有对比。稍后再运行 Duo 进行完整检查，或试试 Trio（服务商免费密钥，不受订阅上限限制）。免费套餐在达到上限后，可能由更轻量的模型回答。\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\n问题：{Q}\n\n{R}\n",

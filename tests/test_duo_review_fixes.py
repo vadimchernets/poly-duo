@@ -231,11 +231,12 @@ def test_critique_first_run_asks_few_permissions(tmp_path, lang):
     tail_empty = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['tail_empty'])
     # My mode's block (ends at the mode menu's close) writes no file; the main one (Duo 6.4) writes its draft through
     # exactly ONE «Save File», run three times by a loop
-    for start, end, drafts in ((starts[0], next(i for i in range(starts[0], len(actions)) if kind(actions[i]) == 'choosefrommenu'), 0),
-                               (starts[1], tail_empty, 1)):
+    # (the main one copies ChatGPT's answer in one of two branches: Side by side or Critique, Yuri 13.11)
+    for start, end, drafts, copies in ((starts[0], next(i for i in range(starts[0], len(actions)) if kind(actions[i]) == 'choosefrommenu'), 0, 1),
+                                       (starts[1], tail_empty, 1, 2)):
         block = [kind(a) for a in actions[start:end]]
         assert block.count('save') == drafts and block.count('append') == 0
-        assert block.count('setclipboard') == 1
+        assert block.count('setclipboard') == copies
     tail = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['tail_done'])
     finale = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
                   and params(a).get('WFMenuPrompt') == ui['menu']['finale_title'])

@@ -131,13 +131,14 @@
       "⏯ Preguntar solo a Claude · 1✉",
       "🔁 Preguntar a ambos otra vez · 3✉",
       "✍️ Pregunta nueva"
-    ]
+    ],
+    "back": "↩️ Atrás"
   },
   "notify": {
     "critique_start": "⚖️ Crítica: ChatGPT responde → Claude responde por su cuenta → Claude compara ambas. 1–3 min, espere por favor y deje el teléfono como está. ¿Se detuvo? Abra ChatGPT e inicie sesión.",
     "critique_step2": "[2/3] Claude verifica y monta la respuesta final…",
     "critique_blind": "[2/3] Claude responde por su cuenta, sin ver la respuesta de ChatGPT…",
-    "gpt_kept": "📋 La respuesta de ChatGPT está en el portapapeles. Si Claude se detiene por su límite de mensajes, puede pegarla donde quiera; vuelva a preguntar a Claude más tarde.",
+    "gpt_kept": "📋 La respuesta de ChatGPT está en el portapapeles. Si Duo se detiene antes de la respuesta de Claude, puede pegarla donde quiera; la respuesta de Claude, si llegó, está en la app de Claude.",
     "critique_step3": "[3/3] Claude compara ambas: coincidieron por separado / no coincidieron / qué comprobar usted, y luego la respuesta final…",
     "critique_summary": "[3/3] Claude ordena las dos respuestas: en qué coinciden / en qué difieren / qué comprobar tú… (la respuesta verificada ya está en el portapapeles)",
     "advisor_start": "🩺 Asesor: Claude revisa su texto sin reescribirlo. 1–3 min, espere por favor y deje la pantalla como está.",
@@ -183,7 +184,7 @@
     "manual_copied": "La petición de comprobación está en el portapapeles. Péguela en Gemini o Meta AI.",
     "no_key_file": "No hay ningún poly-key.txt en la carpeta Atajos de iCloud Drive. Guarde allí una clave gratuita (vea la guía de instalación) o elija otra opción.",
     "resume_debate": "Continúo el debate donde se detuvo: no se gasta ningún mensaje nuevo de ChatGPT por las rondas ya hechas.",
-    "gpt_down": "ChatGPT no envió respuesta: lo más probable es que haya llegado a su límite de mensajes. Claude responde solo; esta vez no habrá comparación. (Si la app de ChatGPT dice que se cerró la sesión: ábrala, inicie sesión y vuelva a lanzar Duo.)",
+    "gpt_down": "ChatGPT no entregó respuesta a Duo (límite de mensajes, sesión cerrada o iOS cortó un paso largo; si respondió, la respuesta está en su app). Claude responde solo; esta vez no habrá comparación. (Si la app de ChatGPT dice que se cerró la sesión: ábrala, inicie sesión y vuelva a lanzar Duo.)",
     "pref_mode": "📌 Guardado. La próxima vez Duo irá directo a Crítica. Otros modos: «🔁 Otro modo» al final.",
     "pref_quick": "⚡ Guardado. Un texto compartido con Duo (3+ palabras) se envía sin el cuadro de pregunta. «🔁 Otro modo» lo sigue mostrando.",
     "pref_reset": "↩️ Hecho. Duo vuelve a mostrar el cuadro de pregunta y el menú de modos."
@@ -212,8 +213,8 @@
     "argue_side_b_round": "■ Claude (lado B), ronda {N}",
     "argue_side_a_round": "■ ChatGPT (lado A), ronda {N}",
     "ratify": "{R}\n\n— — —\n🔍 Segunda revisión de ChatGPT:\n{X}",
-    "claude_down": "⚠️ Claude no respondió: lo más probable es que haya llegado a su límite de mensajes. Abajo está la respuesta de ChatGPT; esta vez no hay comparación. Vuelve a ejecutar Duo más tarde para la revisión completa o compruébala ahora con las claves gratuitas de Trio (sin límite de suscripción). En un plan gratuito, tras el límite puede responder un modelo más ligero.\n\n{A}",
-    "gpt_down": "⚠️ ChatGPT no respondió: lo más probable es que haya llegado a su límite de mensajes. Abajo está la respuesta de Claude; esta vez no hay comparación. Vuelve a ejecutar Duo más tarde para la revisión completa o prueba Trio (claves gratuitas de proveedores, sin límite de suscripción). En un plan gratuito, tras el límite puede responder un modelo más ligero.\n\n{C}"
+    "claude_down": "⚠️ Claude no entregó respuesta a Duo (límite de mensajes, sesión cerrada o iOS cortó un paso largo; si respondió, la respuesta está en su app). Abajo está la respuesta de ChatGPT; esta vez no hay comparación. Vuelve a ejecutar Duo más tarde para la revisión completa o compruébala ahora con las claves gratuitas de Trio (sin límite de suscripción). En un plan gratuito, tras el límite puede responder un modelo más ligero.\n\n{A}",
+    "gpt_down": "⚠️ ChatGPT no entregó respuesta a Duo (límite de mensajes, sesión cerrada o iOS cortó un paso largo; si respondió, la respuesta está en su app). Abajo está la respuesta de Claude; esta vez no hay comparación. Vuelve a ejecutar Duo más tarde para la revisión completa o prueba Trio (claves gratuitas de proveedores, sin límite de suscripción). En un plan gratuito, tras el límite puede responder un modelo más ligero.\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\nPREGUNTA: {Q}\n\n{R}\n",

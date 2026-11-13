@@ -131,13 +131,14 @@
       "⏯ Nur Claude fragen · 1✉",
       "🔁 Beide noch einmal fragen · 3✉",
       "✍️ Neue Frage"
-    ]
+    ],
+    "back": "↩️ Zurück"
   },
   "notify": {
     "critique_start": "⚖️ Kritik: ChatGPT antwortet → Claude antwortet selbst → Claude vergleicht beide. 1–3 Min., bitte kurz warten und das Handy in Ruhe lassen. Hängt es? ChatGPT öffnen und einloggen.",
     "critique_step2": "[2/3] Claude prüft nach und baut die finale Antwort…",
     "critique_blind": "[2/3] Claude antwortet selbst, ohne die Antwort von ChatGPT zu sehen…",
-    "gpt_kept": "📋 Die Antwort von ChatGPT ist in der Zwischenablage. Stoppt Claude wegen seines Nachrichtenlimits, kannst du sie trotzdem überall einfügen; frag Claude später noch einmal.",
+    "gpt_kept": "📋 Die Antwort von ChatGPT ist in der Zwischenablage. Stoppt Duo vor der Antwort von Claude, kannst du sie trotzdem überall einfügen; die Antwort von Claude, falls sie kam, steht in der Claude-App.",
     "critique_step3": "[3/3] Claude vergleicht beide: unabhängig übereinstimmend / nicht übereinstimmend / was du selbst prüfen solltest, dann die Endantwort…",
     "critique_summary": "[3/3] Claude sortiert beide Antworten: worin sie übereinstimmen / wo sie sich unterscheiden / was du selbst prüfen solltest… (die geprüfte Antwort ist schon in der Zwischenablage)",
     "advisor_start": "🩺 Berater: Claude prüft deinen Text, ohne ihn umzuschreiben. 1–3 Min., bitte kurz warten und den Bildschirm in Ruhe lassen.",
@@ -183,7 +184,7 @@
     "manual_copied": "Die Prüfanfrage liegt in der Zwischenablage. Fügen Sie sie in Gemini oder Meta AI ein.",
     "no_key_file": "Im Ordner «Kurzbefehle» von iCloud Drive gibt es keine poly-key.txt. Speichern Sie dort einen kostenlosen Schlüssel (siehe Installationsanleitung) oder wählen Sie eine andere Option.",
     "resume_debate": "Weiter mit der Debatte an der Stelle, an der sie stehen blieb — für die bereits gelaufenen Runden wird keine neue ChatGPT-Nachricht verbraucht.",
-    "gpt_down": "ChatGPT hat keine Antwort geschickt — vermutlich sein Nachrichtenlimit. Claude antwortet allein; diesmal gibt es keinen Vergleich. (Meldet die ChatGPT-App, dass du abgemeldet bist: App öffnen, anmelden, dann Duo neu starten.)",
+    "gpt_down": "ChatGPT hat Duo keine Antwort übergeben (Nachrichtenlimit, abgemeldet oder iOS hat einen langen Schritt abgebrochen; gab es eine Antwort, steht sie in seiner App). Claude antwortet allein; diesmal gibt es keinen Vergleich. (Meldet die ChatGPT-App, dass du abgemeldet bist: App öffnen, anmelden, dann Duo neu starten.)",
     "pref_mode": "📌 Gespeichert. Beim nächsten Mal geht Duo gleich zur Kritik. Andere Modi: „🔁 Anderer Modus“ am Ende.",
     "pref_quick": "⚡ Gespeichert. Ein an Duo geteilter Text (3+ Wörter) geht ohne Fragefeld ab. „🔁 Anderer Modus“ zeigt es weiter.",
     "pref_reset": "↩️ Erledigt. Duo zeigt wieder Fragefeld und Modusmenü."
@@ -212,8 +213,8 @@
     "argue_side_b_round": "■ Claude (Seite B), Runde {N}",
     "argue_side_a_round": "■ ChatGPT (Seite A), Runde {N}",
     "ratify": "{R}\n\n— — —\n🔍 Zweite Prüfung durch ChatGPT:\n{X}",
-    "claude_down": "⚠️ Claude hat nicht geantwortet — vermutlich sein Nachrichtenlimit. Unten steht die Antwort von ChatGPT; diesmal gibt es keinen Vergleich. Starte Duo später für die volle Prüfung oder prüfe jetzt mit den kostenlosen Schlüsseln von Trio (ohne Abo-Limit). Im kostenlosen Tarif kann nach dem Limit ein leichteres Modell antworten.\n\n{A}",
-    "gpt_down": "⚠️ ChatGPT hat nicht geantwortet — vermutlich sein Nachrichtenlimit. Unten steht die Antwort von Claude; diesmal gibt es keinen Vergleich. Starte Duo später für die volle Prüfung oder probiere Trio (kostenlose Anbieter-Schlüssel, ohne Abo-Limit). Im kostenlosen Tarif kann nach dem Limit ein leichteres Modell antworten.\n\n{C}"
+    "claude_down": "⚠️ Claude hat Duo keine Antwort übergeben (Nachrichtenlimit, abgemeldet oder iOS hat einen langen Schritt abgebrochen; gab es eine Antwort, steht sie in seiner App). Unten steht die Antwort von ChatGPT; diesmal gibt es keinen Vergleich. Starte Duo später für die volle Prüfung oder prüfe jetzt mit den kostenlosen Schlüsseln von Trio (ohne Abo-Limit). Im kostenlosen Tarif kann nach dem Limit ein leichteres Modell antworten.\n\n{A}",
+    "gpt_down": "⚠️ ChatGPT hat Duo keine Antwort übergeben (Nachrichtenlimit, abgemeldet oder iOS hat einen langen Schritt abgebrochen; gab es eine Antwort, steht sie in seiner App). Unten steht die Antwort von Claude; diesmal gibt es keinen Vergleich. Starte Duo später für die volle Prüfung oder probiere Trio (kostenlose Anbieter-Schlüssel, ohne Abo-Limit). Im kostenlosen Tarif kann nach dem Limit ein leichteres Modell antworten.\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\nFRAGE: {Q}\n\n{R}\n",
