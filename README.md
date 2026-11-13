@@ -12,13 +12,13 @@
 
 ## Install in 60 seconds
 
-**First run: about 5 quick taps on “Always Allow”, then one tap forever.** iPhone asks permission once for each thing Duo does (send your question to ChatGPT and to Claude, use the clipboard, save the journal). Keep the phone in your hand and tap **Always Allow** each time — about 20 seconds, once, only for Duo.
+**First run: a few quick taps on “Always Allow”, and 1–4 more the first time you pick each mode; after that, one tap.** iPhone asks permission once for each thing Duo does (send your question to ChatGPT and to Claude, use the clipboard, save the journal). Keep the phone in your hand and tap **Always Allow** each time — about 20 seconds, once, only for Duo.
 
 **Step 1 — apps.** On iPhone (iOS 18+) install the free **ChatGPT** and **Claude** apps and sign in to both once. No Claude yet? [Get the Claude app in the App Store](https://apps.apple.com/app/id6473753684) (about a minute). Free accounts are enough.
 
 **Step 2 — shortcut.** Tap the iCloud link for your language below → the Shortcuts app opens → **Add**.
 
-**Step 3 — first run: keep the phone in your hand.** iPhone asks several times whether Duo may pass your question to ChatGPT and Claude, copy the result to the clipboard and write the journal file. Each time tap **Always Allow**: it applies only to Duo and only to your own apps, not to the rest of the phone. An unanswered prompt vanishes within seconds and the run ends with «no access» — then just run it again. After that there are no more prompts. **Then do not touch the screen for about a minute: a touch stops Duo.**
+**Step 3 — first run: keep the phone in your hand.** iPhone asks several times whether Duo may pass your question to ChatGPT and Claude, copy the result to the clipboard and write the journal file. Each time tap **Always Allow**: it applies only to Duo and only to your own apps, not to the rest of the phone. An unanswered prompt vanishes within seconds and the run ends with «no access» — then just run it again. Each mode you pick for the first time asks 1–4 more times (once per mode); after that there are no more prompts. **Then let it run for about a minute: stay in Shortcuts and do not lock the phone (leaving the app may stop the run on Apple's platform). A tap on the screen does not stop Duo.**
 
 | Language | Duo | Trio |
 |---|---|---|
@@ -51,7 +51,7 @@ find the shortcut by that name.
 
 - Open the Claude app first and keep it signed in; open ChatGPT once too. No «Ask Claude» in the action list — update the Claude app and iOS (18+).
 - Tap **Always Allow** on every request, right away. An unanswered request vanishes and the run ends with «no access» — just run Duo again.
-- Keep the phone in your hand for the first minute: a touch of the screen stops Duo.
+- Keep the phone in your hand for the first minute, stay in Shortcuts and do not lock it: leaving the app may stop the run (a tap on the screen does not).
 - Had Duo before? Tap **Replace**, not **Keep Both**.
 - Still nothing? Swipe the shortcut away and run it again, or restart the iPhone and try in a few minutes. Empty answer or ChatGPT «logged out» — open the app, sign in, run again.
 
@@ -89,8 +89,8 @@ Worth knowing before you install:
   note at the end of this page.
 - **A run takes about a minute**, closer to two in the multi-step modes.
 - **It spends messages from your own plans**, not from an API budget.
-- **Touching the screen cancels the run.** That's a limit of Apple's platform, not a choice we
-  made. The one exception is **Clarify**, which opens its own window and asks you to answer.
+- **Leaving Shortcuts or locking the phone may cancel the run.** That's a limit of Apple's platform,
+  not a choice we made. A tap on the screen does not stop it (checked on an iPhone XR, iOS 18.7, 2026-11-13).
 - **You can't pick the model from inside Duo.** Each app uses the model set in it — choose it in the
   Claude and ChatGPT apps first, and check it before a run that matters.
 - **Very long questions are risky.** The Claude action can time out and hand back an empty result
@@ -280,7 +280,7 @@ where it describes the sources.*
   found»). Several keys, one per line, help when they are from different companies — limits are
   per account, not per key. On the first run iPhone asks for permission several times — tap
   **Always Allow** each time.
-- Don't touch the screen while it runs — that cancels the run on Apple's platform.
+- Stay in Shortcuts and don't lock the phone while it runs — leaving the app may cancel the run on Apple's platform (a tap on the screen does not).
 
 Docs in twelve languages: [English](docs/en/install.md) · [العربية](docs/ar/install.md) · [Deutsch](docs/de/install.md) · [Español](docs/es/install.md) · [Français](docs/fr/install.md) · [हिन्दी](docs/hi/install.md) · [日本語](docs/ja/install.md) · [한국어](docs/ko/install.md) · [Português](docs/pt/install.md) · [Русский](docs/ru/install.md) · [Українська](docs/uk/install.md) · [中文](docs/zh/install.md)
 
