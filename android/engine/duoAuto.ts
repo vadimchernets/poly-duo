@@ -485,7 +485,9 @@ export function failOf(status: number, body: unknown): Fail {
   // too low", xAI — 403 "doesn't have any credits", DeepSeek — 402 "Insufficient Balance".
   if (/insufficient_quota|exceeded your current quota|credit balance|insufficient balance|any credits|purchase credits/.test(msg)) return 'billing';
   if (/data policy|no endpoints found matching/.test(msg)) return 'policy';
-  if (/location|region|country/.test(msg)) return 'region';
+  // A region block comes as 400, 403 or 451; the same words in a 429 or 5xx («quota for this country», «invalid region
+  // parameter») are a limit or an outage, and the status decides (issue #2).
+  if ((status === 400 || status === 403 || status === 451) && /location|region|country/.test(msg)) return 'region';
   if (status === 401 || status === 403 || /api key|api_key/.test(msg)) return 'key';
   if (status === 413 || /too large|request_too_large|context.length|maximum context/.test(msg)) return 'long';
   if (status === 429 && /per.minute|\brpm\b|\btpm\b|tokens per minute|requests per minute/.test(msg)) return 'minute';
@@ -728,8 +730,15 @@ export async function ask(
           for (const k of keyList(keys, s.provider)) dead.add(`${s.provider}|${k}`);
           break;
         }
-        clearTimeout(timer);
+        // The timer stays on while the body is read: a host that sends the headers at once and then the body slowly
+        // (or never) is cut at the same TIMEOUT_MS / PAID_TIMEOUT_MS (issue #1).
         const body: unknown = await res.json().catch(() => null);
+        clearTimeout(timer);
+        if (ctl.signal.aborted) {
+          note(s.provider, key, 'busy', res.status);
+          dead.add(`slow|${s.provider}|${s.model}`);
+          break;
+        }
         if (res.ok) {
           const text = clean(answerOf(s.provider, body));
           if (text) return { text, model: s.model, name: s.name, company: s.company };
@@ -1014,19 +1023,36 @@ export function joinResult(r: DuoResult, hidden: ReadonlySet<string> = new Set()
   return parts.join('\n\n');
 }
 
+/** The models a Google key is checked with: the Flash-Lite steps of the main GEMINI chain (their own per-model pool, so
+ *  the check does not spend the main Flash model's daily limit), then the rest of that chain — never a list of its own,
+ *  which went stale (gemini-2.5-* while the chain moved to 3.x, issue #3). */
+export function googleCheckChain(): Step[] {
+  const google = GEMINI.steps.filter((s) => s.provider === 'google');
+  return [...google.filter((s) => /flash-lite/.test(s.model)), ...google.filter((s) => !/flash-lite/.test(s.model))];
+}
+
 /** Checks a key with one short request (the "Paste the key" button, `duo.k.paste`). */
 export async function testKey(provider: Provider, key: string, doFetch: Fetch = fetch): Promise<void> {
   // A paid key is checked with the models list: that's a GET with no generation — not a cent from the person.
   const models = MODELS_URL[provider];
   if (models) {
+    // the same time limit as a question, over the headers AND the body (issue #1)
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 30_000);
     let res: Response;
     try {
-      res = await doFetch(models, { method: 'GET', headers: headersFor(provider, key) });
+      res = await doFetch(models, { method: 'GET', headers: headersFor(provider, key), signal: ctl.signal });
     } catch {
-      throw new DuoError('net', PROVIDER_NAME[provider]);
+      clearTimeout(timer);
+      throw new DuoError(ctl.signal.aborted ? 'busy' : 'net', PROVIDER_NAME[provider]);
     }
-    if (res.ok) return;
+    if (res.ok) {
+      clearTimeout(timer);
+      return;
+    }
     const body: unknown = await res.json().catch(() => null);
+    clearTimeout(timer);
+    if (ctl.signal.aborted) throw new DuoError('busy', PROVIDER_NAME[provider], res.status);
     throw new DuoError(failOf(res.status, body), PROVIDER_NAME[provider], res.status);
   }
   // The check doesn't spend the main Flash model's daily limit (~20 a day): for Google — Flash-Lite;
@@ -1040,7 +1066,7 @@ export async function testKey(provider: Provider, key: string, doFetch: Fetch = 
           ? [NEMOTRON.steps[0], GPT_OSS_USA.steps[0]]
           : [NEMOTRON_USA.steps[1], GEMINI_USA.steps[GEMINI_USA.steps.length - 2], INKLING.steps[0]]
       : provider === 'google'
-      ? [step('Gemini', 'Google', 'google', 'gemini-2.5-flash-lite'), step('Gemini', 'Google', 'google', 'gemini-2.5-flash')]
+      ? googleCheckChain()
       : provider === 'groq'
         ? [QWEN.steps[0]]
         : provider === 'nvidia'

@@ -76,9 +76,14 @@ export function fillArgue(template: string, parts: { question: string; log?: str
   );
 }
 
-export const conceded = (text: string) => text.includes(CONCEDE);
-/** The marker is for the program, not for the person: removed from what is shown. */
-export const withoutMarker = (text: string) => text.replace(CONCEDE, '').trim();
+/** Conceded only when the marker opens the reply, as the prompt asks («the very first line of your reply»): a reply
+ *  that merely mentions or quotes it («I will not write [[CONCEDE]]…») does not end the debate (issue #4). Markdown
+ *  emphasis or a quote mark in front of it is allowed. */
+const LEADING = /^[\s>*_`"'«“]*\[\[CONCEDE\]\][*_`"'»”]*/;
+export const conceded = (text: string) => LEADING.test(text);
+/** The marker is for the program, not for the person: the leading one is removed from what is shown, and so is any
+ *  other copy of it. */
+export const withoutMarker = (text: string) => text.replace(LEADING, '').split(CONCEDE).join('').trim();
 
 export type Side = 'A' | 'B';
 /** One turn: round 0 is A's opening position. */

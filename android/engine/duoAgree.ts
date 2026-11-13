@@ -32,6 +32,19 @@ export const AGREE_LABELS: Record<string, Labels> = {
   zh: { agree: '双方一致', all: '全部一致', differ: '分歧' },
 };
 
+/** The first words of the sections that follow the two lines: confidence, corrections, check — in every language. */
+export const SECTION_END = new RegExp(
+  '^[\\s>#•*_\\-–—\\d.)]*(' +
+    [
+      'confidence', 'corrections', '\u0443\u0432\u0435\u0440\u0435\u043d\u043d', '\u043f\u043e\u043f\u0440\u0430\u0432\u043a', '\u0443\u043f\u0435\u0432\u043d\u0435\u043d', '\u0432\u0438\u043f\u0440\u0430\u0432\u043b\u0435\u043d', 'confianza', 'correcciones',
+      'confiança', 'correções', 'confiance', 'corrections', 'konfidenz', 'korrekturen',
+      'विश्वास', 'आत्मविश्वास', 'सुधार', '確信度', '信頼度', '修正', '신뢰도', '수정',
+      '置信度', '更正', 'الثقة', 'درجة الثقة', 'تصحيحات', 'التصحيحات',
+    ].join('|') +
+    ')',
+  'i',
+);
+
 const norm = (s: string) => s.replace(/['’`]/g, '’').toLowerCase();
 
 /** A line's label, if it starts with one: `**Both agree:** …`, `- They differ: …`, `Both agree：…`. */
@@ -79,7 +92,10 @@ export function parseAgreement(text: string): Agreement | null {
       continue;
     }
     // Another section starts (the confidence line, the corrections, a [check] list): the line is over.
-    if (/^\W*(confidence|corrections|\u0443\u0432\u0435\u0440\u0435\u043d\u043d|\u043f\u043e\u043f\u0440\u0430\u0432\u043a|\u0432\u0438\u043f\u0440\u0430\u0432\u043b\u0435\u043d|confianza|confiança|confiance|konfidenz)/i.test(line)) {
+    // Every language of AGREE_LABELS (issue #5: hi, ja, ko, zh and ar were missing, and their confidence line was glued
+    // to «They differ»). `\W` does not skip Devanagari, kana, hangul or hanzi marks, so the start is matched after
+    // bullets, digits and spaces only.
+    if (SECTION_END.test(line)) {
       at = null;
       continue;
     }
