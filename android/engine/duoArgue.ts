@@ -78,8 +78,8 @@ export function fillArgue(template: string, parts: { question: string; log?: str
 
 /** Conceded only when the marker opens the reply, as the prompt asks («the very first line of your reply»): a reply
  *  that merely mentions or quotes it («I will not write [[CONCEDE]]…») does not end the debate (issue #4). Markdown
- *  emphasis or a quote mark in front of it is allowed. */
-const LEADING = /^[\s>*_`"'«“]*\[\[CONCEDE\]\][*_`"'»”]*/;
+ *  emphasis or a quote mark in front of it is allowed, but not a quoted line («> [[CONCEDE]]»: the reply is citing it). */
+const LEADING = /^[\s*_`"'«“]*\[\[CONCEDE\]\][*_`"'»”]*/;
 export const conceded = (text: string) => LEADING.test(text);
 /** The marker is for the program, not for the person: the leading one is removed from what is shown, and so is any
  *  other copy of it. */

@@ -165,7 +165,8 @@
     "delta_step2": "[2/2] O ChatGPT está procurando o que acrescentar…",
     "help": "ℹ️ Ajuda do Duo — sem chamadas de IA, de graça.",
     "tail_done": "✅ Pronto. A resposta também está na área de transferência: cole onde quiser. Não abriu sozinha? Toque na notificação do Duo.",
-    "tail_empty": "⚠️ Nenhuma resposta chegou. Execute de novo e espere um pouco; depois veja no app do Claude. Os rascunhos estão salvos no diário.",
+    "tail_empty": "O ChatGPT e o Claude podem ter respondido nos seus apps, mas o iOS não passou a resposta ao Duo. Abra o app do ChatGPT ou do Claude para lê-la, ou rode o Duo pela Siri («E aí Siri, Duo»).",
+    "tail_empty_claude": "O Claude pode ter respondido no app dele, mas o iOS não passou a resposta ao Duo. Abra o app do Claude para lê-la, ou rode o Duo pela Siri («E aí Siri, Duo»).",
     "voice_start": "🎧 Duo Voice: ChatGPT → Claude, eu leio a resposta final em voz alta. ≈1 min.",
     "photo_done": "📸 Texto reconhecido — abrindo o Duo.",
     "multi_step1": "🎼 Coro [1/3]: ChatGPT e Claude estão respondendo por conta própria…",
@@ -197,7 +198,8 @@
     "first_run_title": "Antes da sua primeira pergunta",
     "first_run_body": "Agora o iPhone vai pedir acesso muitas vezes (ChatGPT, Claude, arquivos, área de transferência), e cada modo escolhido pela primeira vez pede mais 1–4 vezes. Toda vez, toque logo em «Permitir Sempre» (ou «Permitir»): cada pedido aparece só uma vez. Se um dia o ChatGPT disser que você saiu da conta, abra o app dele, entre na conta e rode o Duo de novo.",
     "no_answer_title": "A resposta não chegou ao Duo",
-    "no_answer_body": "O ChatGPT e o Claude podem ter respondido nos seus apps, mas o iOS não passou a resposta ao Duo. Abra o app do ChatGPT ou do Claude para lê-la, ou rode o Duo pela Siri («E aí Siri, Duo»)."
+    "no_answer_body": "O ChatGPT e o Claude podem ter respondido nos seus apps, mas o iOS não passou a resposta ao Duo. Abra o app do ChatGPT ou do Claude para lê-la, ou rode o Duo pela Siri («E aí Siri, Duo»).",
+    "no_answer_claude_body": "O Claude pode ter respondido no app dele, mas o iOS não passou a resposta ao Duo. Abra o app do Claude para lê-la, ou rode o Duo pela Siri («E aí Siri, Duo»)."
   },
   "output": {
     "critique": "{S}\n\n■ RESPOSTA VERIFICADA (Claude)\n{C}",
@@ -216,7 +218,8 @@
     "argue_side_a_round": "■ ChatGPT (lado A), rodada {N}",
     "ratify": "{R}\n\n— — —\n🔍 Segunda verificação do ChatGPT:\n{X}",
     "claude_down": "⚠️ O Claude não entregou resposta ao Duo (limite de mensagens, saiu da conta ou o iOS cortou uma etapa longa; se respondeu, a resposta está no app dele). Abaixo está a resposta do ChatGPT; desta vez não há comparação. Execute o Duo mais tarde para a verificação completa ou verifique agora com as chaves gratuitas do Trio (sem limite de assinatura). Num plano gratuito, depois do limite, pode responder um modelo mais leve.\n\n{A}",
-    "gpt_down": "⚠️ O ChatGPT não entregou resposta ao Duo (limite de mensagens, saiu da conta ou o iOS cortou uma etapa longa; se respondeu, a resposta está no app dele). Abaixo está a resposta do Claude; desta vez não há comparação. Execute o Duo mais tarde para a verificação completa ou experimente o Trio (chaves gratuitas de provedores, sem limite de assinatura). Num plano gratuito, depois do limite, pode responder um modelo mais leve.\n\n{C}"
+    "gpt_down": "⚠️ O ChatGPT não entregou resposta ao Duo (limite de mensagens, saiu da conta ou o iOS cortou uma etapa longa; se respondeu, a resposta está no app dele). Abaixo está a resposta do Claude; desta vez não há comparação. Execute o Duo mais tarde para a verificação completa ou experimente o Trio (chaves gratuitas de provedores, sem limite de assinatura). Num plano gratuito, depois do limite, pode responder um modelo mais leve.\n\n{C}",
+    "claude_only": "Desta vez só o Claude foi consultado, então não há comparação. Resposta do Claude:\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\nPERGUNTA: {Q}\n\n{R}\n",

@@ -472,6 +472,8 @@ VERSION_DAYS = 7
 # The name the main shortcut is released under (releases/<lang>/Duo.shortcut, the iCloud record, the
 # site). iOS names an imported shortcut after it, so «another mode — same question» calls this name.
 RELEASE_NAME = 'Duo'
+# «Another mode», «Back», recipes start this shortcut again by name: in the diagnostic build that is Duo-diag, not Duo
+RUN_NAME = RELEASE_NAME + ('-diag' if os.environ.get('C1_DIAG') == '1' else '')
 # «Debate until agreement»: a side that is genuinely convinced starts its reply with this marker
 # (the prompts argue-2-object / argue-3-reply ask for it); the shortcut stops the rounds when it appears.
 ARGUE_MARKER = '[[CONCEDE]]'
@@ -513,6 +515,7 @@ def draft_file(lang, ai):
 def build_id(lang):
     import hashlib
     h = hashlib.sha256(Path(__file__).read_bytes())
+    h.update(b'diag' if os.environ.get('C1_DIAG') == '1' else b'std')   # Duo and Duo-diag never share drafts
     for f in sorted((ROOT / 'locales' / lang).rglob('*')) + sorted((ROOT / 'locales' / 'en' / 'prompts').glob('*.txt')):
         if f.is_file():
             h.update(f.read_bytes())
@@ -842,7 +845,7 @@ def build(lang, ai=False):
     q_get, g_fresh, g_crit, g_down = ids(4)
     QV = {'Q': (q_get, 'Variable')}   # the question after the mode menu (typed now, or from a resumed draft)
 
-    g_main, g_extra, g_anchor, g_image, g_empty, g_finale = ids(6)
+    g_main, g_extra, g_anchor, g_image, g_empty, g_finale, g_oc2 = ids(7)
     g_notice, g_blank, g_start, g_show = ids(4)
     st_clip, st_share, st_get, st_empty, st_words, g_words = ids(6)
     st_img, st_ocr, st_dtext, g_img = ids(4)
@@ -857,6 +860,7 @@ def build(lang, ai=False):
     QVAR = 'PolyQuestion'            # the question, whether typed now or taken from a resumed draft
     RESUME_VAR = 'PolyResume'        # set → this run goes on from a saved draft: no question field, no mode menu
     CRIT_VAR = 'PolyCritique'        # set → the shared Critique runs after the mode menu
+    ONLY_CLAUDE = 'PolyOnlyClaude'   # set → only Claude was asked in this run (Advisor, «Ask Claude alone»)
     SKIP_GPT = 'PolySkipChatGPT'     # set → ChatGPT is not asked (it stopped on its limit last time)
     CLAUDE_DOWN = 'PolyClaudeDown'   # set → the «check with…» menu follows the answer in the shared tail
     DRAFT_VAR, DRAFT_PASS_A, DRAFT_PASS_B = 'PolyDraft', 'PolyDraftPassA', 'PolyDraftPassB'
@@ -957,7 +961,7 @@ def build(lang, ai=False):
         mode menu even when the person chose «Critique right away» or «ask without editing» (D-29)."""
         uid = new_uuid()
         return [act_text(text_token(MENU_MARK + '{Q}', {'Q': (src_uid, src_name)}), uid),
-                act_run_self(RELEASE_NAME, uid, 'Text')]
+                act_run_self(RUN_NAME, uid, 'Text')]
 
     def recipes_menu(group, title):
         """Recipes: a ready task → the question box opens pre-filled with its wording (Duo runs itself with that
@@ -967,7 +971,7 @@ def build(lang, ai=False):
             uid = new_uuid()
             out += [menu_case(group, item),
                     act_text(text_token(MENU_MARK + L['menu.recipes_texts'][i]), uid),
-                    act_run_self(RELEASE_NAME, uid, 'Text'),
+                    act_run_self(RUN_NAME, uid, 'Text'),
                     {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}}]
         return out + [menu_close(group)]
 
@@ -985,7 +989,7 @@ def build(lang, ai=False):
     ad_prompt, ad_claude = ids(2)
     # --- Side by side
     sb_wrap, sb_gpt, sb_claude, sb_join = ids(4)
-    sb_claude2, sb_cget, g_sbretry, g_sbok, g_sbgpt = ids(5)
+    sb_claude2, sb_cget, g_sbretry, g_sbok, g_sbgpt, g_sbg2 = ids(6)
     sb_brief, sb_brief_get = brief_for_long(qpre, 'Variable')
     # --- Synthesis, Claude anchors / ChatGPT anchors
     sc_wrap, sc_gpt, sc_claude, sc_prompt, sc_final = ids(5)
@@ -1091,7 +1095,7 @@ def build(lang, ai=False):
         (cr_gpt2, cr_gpt_f, cr_len, cr_cut, cr_claude2, cr_claude_f, cr_numfin, cr_kget, cr_own, cr_own2,
          cr_own_f, cr_g1, cr_o1, cr_save, cr_dq, cr_da, cr_jg) = ids(17)
         (g_retry, g_long, g_cretry, g_cok, g_oretry, g_n1, g_n2, g_need, g_skip, g_gdown, g_both, g_own1,
-         g_loop, g_dsave, g_pa, g_pb, g_d1) = ids(17)
+         g_loop, g_dsave, g_pa, g_pb, g_d1, g_oc) = ids(18)
         cr_wrap, cr_gpt, cr_prompt, cr_claude = ids(4)
         RETRY_SKIP.update((cr_gpt, cr_gpt2))
         rule_prefix = 'Extra instruction from the user for this check (apply it): {RULE}\n\n' if rule_uid else ''
@@ -1203,7 +1207,12 @@ def build(lang, ai=False):
             if_else(g_both),
             # ChatGPT gave nothing: Claude's own answer, with the line about ChatGPT; no comparing message is spent
             *if_text(g_own1, OWN_VAR),
+            # ChatGPT was not asked at all («Ask Claude alone»): a neutral line, not «ChatGPT did not pass» (No.61)
+            *if_text(g_oc, ONLY_CLAUDE),
+            *set_text(RESULT, L['output.claude_only'], {'C': (cr_own_f, 'Variable')}),
+            if_else(g_oc),
             *set_text(RESULT, L['output.gpt_down'], {'C': (cr_own_f, 'Variable')}),
+            if_close(g_oc),
             if_close(g_own1),
             if_close(g_both),
             act_get_variable(GPT_VAR, cr_jg),
@@ -1326,7 +1335,7 @@ def build(lang, ai=False):
             if_output(g_0, rs0, 'Matches', 100),
             menu_open(g_m0, L['menu.resume0_title'], I0),
             menu_case(g_m0, I0[0]),
-            *resumed(*set_text(SKIP_GPT, '1'), *set_text(CRIT_VAR, '1')),
+            *resumed(*set_text(SKIP_GPT, '1'), *set_text(ONLY_CLAUDE, '1'), *set_text(CRIT_VAR, '1')),
             menu_case(g_m0, I0[1]),
             *resumed(*set_text(CRIT_VAR, '1')),
             menu_case(g_m0, I0[2]),
@@ -1598,6 +1607,7 @@ def build(lang, ai=False):
         # ---- Advisor: Claude reviews the user's own text without rewriting it
         menu_case(g_main, MAIN[2]),
         act_notify(L['notify.advisor_start']),
+        *set_text(ONLY_CLAUDE, '1'),
         act_text(text_token(L.prompt('advisor').replace('{CRITIQUE}', MAIN[0].split(' · ')[0].split(' — ')[0]), Q), ad_prompt),
         act_claude(text_token('{P}', {'P': (ad_prompt, 'Text')}), ad_claude),
         act_set_variable(RESULT, ad_claude, 'Ask Claude'),
@@ -1621,9 +1631,14 @@ def build(lang, ai=False):
         if_close(g_sbretry),
         *if_text(g_sbok, SIDE_CLAUDE),
         act_get_variable(SIDE_CLAUDE, sb_cget),
+        # ChatGPT empty, Claude answered: the honest line about ChatGPT instead of an empty block
+        *if_output_text(g_sbg2, sb_gpt, 'Ask ChatGPT'),
         act_text(text_token(L['output.survey'],
                             {'G': (sb_gpt, 'Ask ChatGPT'), 'C': (sb_cget, 'Variable')}), sb_join),
         act_set_variable(RESULT, sb_join, 'Text'),
+        if_else(g_sbg2),
+        *set_text(RESULT, L['output.gpt_down'], {'C': (sb_cget, 'Variable')}),
+        if_close(g_sbg2),
         if_else(g_sbok),
         # Claude gave nothing: ChatGPT's answer with the line about Claude (as in Critique); nothing at all → the tail
         # says «no answer came»
@@ -1880,7 +1895,7 @@ def build(lang, ai=False):
         # Back (Yuri 13.11, No.67): the main mode menu again with the same question; no question field, nothing spent
         menu_case(g_extra, L['menu.back']),
         act_text(text_token(MODE_MARK + '{Q}', {'Q': (qpre, 'Variable')}), bk_text),
-        act_run_self(RELEASE_NAME, bk_text, 'Text'),
+        act_run_self(RUN_NAME, bk_text, 'Text'),
         {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
         menu_close(g_extra),
         menu_close(g_main),
@@ -1898,12 +1913,17 @@ def build(lang, ai=False):
         # (each such action is its own permission window on the first run). Cancelling the menu ends the run, but
         # ChatGPT's answer is already in the clipboard then (keep_gpt).
         *if_text(g_empty, RESULT, present=False),
+        *if_text(g_oc2, ONLY_CLAUDE),
+        act_notify(L['notify.tail_empty_claude']),
+        act_alert(L['alert.no_answer_title'], L['alert.no_answer_claude_body']),
+        if_else(g_oc2),
         act_notify(L['notify.tail_empty']),
         # Yuri 13.11 (No.53): a run whose AI actions came back empty ended with nothing on screen, although both apps
         # held answers. One window says so and where the answers are; no clipboard write (the person's own clipboard,
         # often their question, stays as it is). Whoever DID answer is shown by the modes themselves (claude_down /
         # gpt_down) and never reaches this branch.
         act_alert(L['alert.no_answer_title'], L['alert.no_answer_body']),
+        if_close(g_oc2),
         *set_text(CLAUDE_DOWN, '1'),
         if_close(g_empty),
         *if_text(g_down, CLAUDE_DOWN),

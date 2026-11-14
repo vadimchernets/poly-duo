@@ -164,7 +164,7 @@ def test_whoever_answered_is_delivered(tmp_path, lang):
         if key == 'claude_down':
             assert len(found) == 5   # both Critique blocks, the resume's «check» and «show», Side by side (Yuri 10.11)
         else:
-            assert len(found) == 2   # both Critique blocks
+            assert len(found) == 3   # both Critique blocks and Side by side (ChatGPT empty, Claude answered)
     # in-run: Claude did not compare → ChatGPT's answer + CLAUDE_DOWN, in the Otherwise of «Claude compared»
     main_start = max(i for i, a in enumerate(actions)
                      if params(a).get('WFNotificationActionBody') == ui['notify']['critique_start'])
@@ -176,8 +176,10 @@ def test_whoever_answered_is_delivered(tmp_path, lang):
     # ChatGPT gave nothing → Claude's own answer, no comparing message (the compare call is not in that branch)
     head = ui['output']['gpt_down'].split('{C}')[0]
     j = next(j for j, t in sets(actions, result) if j > main_start and t and t.startswith(head))
-    assert guard_var(actions, groups_open(actions, j, ('conditional',))[-1]) == 'PolyClaudeOwn'
-    both = groups_open(actions, j, ('conditional',))[-2]
+    # inside «Claude was not asked alone» (PolyOnlyClaude: «Ask Claude alone» has its own neutral line, No.61)
+    assert guard_var(actions, groups_open(actions, j, ('conditional',))[-1]) == 'PolyOnlyClaude'
+    assert guard_var(actions, groups_open(actions, j, ('conditional',))[-2]) == 'PolyClaudeOwn'
+    both = groups_open(actions, j, ('conditional',))[-3]
     assert guard_var(actions, both) == 'PolyChatGPTAnswer'
     # the person is told at once when ChatGPT gave nothing
     assert sum(params(a).get('WFNotificationActionBody') == ui['notify']['gpt_down'] for a in actions) == 2

@@ -165,7 +165,8 @@
     "delta_step2": "[2/2] ChatGPT 正在找可以补充的内容……",
     "help": "ℹ️ Duo 帮助 —— 不调用 AI，免费。",
     "tail_done": "✅ 完成。答案也在剪贴板里：可以粘贴到任何地方。没有自动打开？点一下 Duo 的通知。",
-    "tail_empty": "⚠️ 没有收到答案。请再运行一次并稍等片刻，然后查看 Claude 应用；草稿已保存在日志中。",
+    "tail_empty": "ChatGPT 和 Claude 可能已在各自的 App 里回答，但 iOS 没有把回答交给 Duo。打开 ChatGPT 或 Claude App 查看，或通过 Siri 运行 Duo（“嘿 Siri，Duo”）。",
+    "tail_empty_claude": "Claude 可能已在自己的 App 里回答，但 iOS 没有把回答交给 Duo。打开 Claude App 查看，或通过 Siri 运行 Duo（“嘿 Siri，Duo”）。",
     "voice_start": "🎧 Duo Voice：ChatGPT → Claude，最终答案我会念给你听。约 1 分钟。",
     "photo_done": "📸 文字已识别 —— 正在打开 Duo。",
     "multi_step1": "🎼 合唱 [1/3]：ChatGPT 和 Claude 正在各自作答……",
@@ -197,7 +198,8 @@
     "first_run_title": "提第一个问题之前",
     "first_run_body": "接下来 iPhone 会多次请求访问权限（ChatGPT、Claude、文件、剪贴板），每个第一次选用的模式还会再请求 1–4 次。每次都请立即点“始终允许”（或“允许”）：同一个请求只出现一次。如果 ChatGPT 日后提示你已退出登录，请打开它的 App、登录，再重新运行 Duo。",
     "no_answer_title": "回答没有到达 Duo",
-    "no_answer_body": "ChatGPT 和 Claude 可能已在各自的 App 里回答，但 iOS 没有把回答交给 Duo。打开 ChatGPT 或 Claude App 查看，或通过 Siri 运行 Duo（“嘿 Siri，Duo”）。"
+    "no_answer_body": "ChatGPT 和 Claude 可能已在各自的 App 里回答，但 iOS 没有把回答交给 Duo。打开 ChatGPT 或 Claude App 查看，或通过 Siri 运行 Duo（“嘿 Siri，Duo”）。",
+    "no_answer_claude_body": "Claude 可能已在自己的 App 里回答，但 iOS 没有把回答交给 Duo。打开 Claude App 查看，或通过 Siri 运行 Duo（“嘿 Siri，Duo”）。"
   },
   "output": {
     "critique": "{S}\n\n■ 复核后的答案（Claude）\n{C}",
@@ -216,7 +218,8 @@
     "argue_side_a_round": "■ ChatGPT（A 方），第 {N} 轮",
     "ratify": "{R}\n\n— — —\n🔍 ChatGPT 的第二次检查：\n{X}",
     "claude_down": "⚠️ Claude 没有把回答交给 Duo（消息上限、已退出登录，或 iOS 中断了较长的一步；如果它已回答，回答在它的 App 里）。下面是 ChatGPT 的回答，这次没有对比。稍后再运行 Duo 进行完整检查，或现在用 Trio 的免费密钥（不受订阅上限限制）检查。免费套餐在达到上限后，可能由更轻量的模型回答。\n\n{A}",
-    "gpt_down": "⚠️ ChatGPT 没有把回答交给 Duo（消息上限、已退出登录，或 iOS 中断了较长的一步；如果它已回答，回答在它的 App 里）。下面是 Claude 的回答，这次没有对比。稍后再运行 Duo 进行完整检查，或试试 Trio（服务商免费密钥，不受订阅上限限制）。免费套餐在达到上限后，可能由更轻量的模型回答。\n\n{C}"
+    "gpt_down": "⚠️ ChatGPT 没有把回答交给 Duo（消息上限、已退出登录，或 iOS 中断了较长的一步；如果它已回答，回答在它的 App 里）。下面是 Claude 的回答，这次没有对比。稍后再运行 Duo 进行完整检查，或试试 Trio（服务商免费密钥，不受订阅上限限制）。免费套餐在达到上限后，可能由更轻量的模型回答。\n\n{C}",
+    "claude_only": "这次只问了 Claude，所以没有对比。Claude 的回答：\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\n问题：{Q}\n\n{R}\n",

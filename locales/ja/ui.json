@@ -165,7 +165,8 @@
     "delta_step2": "[2/2] ChatGPT が足すべき点を探しています…",
     "help": "ℹ️ Duo のヘルプ — AI を呼ばないので無料です。",
     "tail_done": "✅ 完了。答えはクリップボードにも入っています。どこにでも貼り付けられます。自動で開かないときは Duo の通知をタップしてください。",
-    "tail_empty": "⚠️ 答えが届きませんでした。もう一度実行して、少し待ってから Claude アプリを確認してください。下書きはジャーナルに保存されています。",
+    "tail_empty": "ChatGPTとClaudeはそれぞれのアプリで回答した可能性がありますが、iOSが回答をDuoに渡しませんでした。ChatGPTかClaudeのアプリを開いて読むか、Siriで Duo を実行してください（「Hey Siri, Duo」）。",
+    "tail_empty_claude": "Claudeは自分のアプリで回答した可能性がありますが、iOSが回答をDuoに渡しませんでした。Claudeのアプリを開いて読むか、Siriで Duo を実行してください（「Hey Siri, Duo」）。",
     "voice_start": "🎧 Duo Voice：ChatGPT → Claude、最終回答を読み上げます。約1分。",
     "photo_done": "📸 文字を認識しました — Duo を開きます。",
     "multi_step1": "🎼 合唱 [1/3]：ChatGPT と Claude が自分で答えています…",
@@ -197,7 +198,8 @@
     "first_run_title": "最初の質問の前に",
     "first_run_body": "このあと iPhone がアクセスを何度も求めます（ChatGPT、Claude、ファイル、クリップボード）。初めて選ぶモードごとに、さらに1〜4回求めます。毎回すぐに「常に許可」（または「許可」）をタップしてください。同じ確認は一度だけです。ChatGPT にサインアウトしたと表示されたら、その App を開いてサインインし、Duo をやり直してください。",
     "no_answer_title": "回答がDuoに届きませんでした",
-    "no_answer_body": "ChatGPTとClaudeはそれぞれのアプリで回答した可能性がありますが、iOSが回答をDuoに渡しませんでした。ChatGPTかClaudeのアプリを開いて読むか、Siriで Duo を実行してください（「Hey Siri, Duo」）。"
+    "no_answer_body": "ChatGPTとClaudeはそれぞれのアプリで回答した可能性がありますが、iOSが回答をDuoに渡しませんでした。ChatGPTかClaudeのアプリを開いて読むか、Siriで Duo を実行してください（「Hey Siri, Duo」）。",
+    "no_answer_claude_body": "Claudeは自分のアプリで回答した可能性がありますが、iOSが回答をDuoに渡しませんでした。Claudeのアプリを開いて読むか、Siriで Duo を実行してください（「Hey Siri, Duo」）。"
   },
   "output": {
     "critique": "{S}\n\n■ 検証済みの回答（Claude）\n{C}",
@@ -216,7 +218,8 @@
     "argue_side_a_round": "■ ChatGPT（A側）第{N}ラウンド",
     "ratify": "{R}\n\n— — —\n🔍 ChatGPT による2回目のチェック：\n{X}",
     "claude_down": "⚠️ ClaudeからDuoに回答が届きませんでした（メッセージ上限、サインアウト、またはiOSが長いステップを打ち切った可能性。回答していれば、そのアプリに残っています）。以下はChatGPTの回答で、今回は比較はありません。完全なチェックは後でDuoをもう一度実行するか、今すぐTrioの無料キー（サブスクの上限なし）で確認してください。無料プランでは上限後に軽量モデルが回答することがあります。\n\n{A}",
-    "gpt_down": "⚠️ ChatGPTからDuoに回答が届きませんでした（メッセージ上限、サインアウト、またはiOSが長いステップを打ち切った可能性。回答していれば、そのアプリに残っています）。以下はClaudeの回答で、今回は比較はありません。完全なチェックは後でDuoをもう一度実行するか、Trio（プロバイダーの無料キー、サブスクの上限なし）を試してください。無料プランでは上限後に軽量モデルが回答することがあります。\n\n{C}"
+    "gpt_down": "⚠️ ChatGPTからDuoに回答が届きませんでした（メッセージ上限、サインアウト、またはiOSが長いステップを打ち切った可能性。回答していれば、そのアプリに残っています）。以下はClaudeの回答で、今回は比較はありません。完全なチェックは後でDuoをもう一度実行するか、Trio（プロバイダーの無料キー、サブスクの上限なし）を試してください。無料プランでは上限後に軽量モデルが回答することがあります。\n\n{C}",
+    "claude_only": "今回はClaudeだけに質問したので、比較はありません。Claudeの回答：\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\n質問: {Q}\n\n{R}\n",

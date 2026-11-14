@@ -165,7 +165,8 @@
     "delta_step2": "[2/2] ChatGPT is looking for what to add…",
     "help": "ℹ️ Duo help — no AI calls, free.",
     "tail_done": "✅ Done. The answer is also in your clipboard: paste it anywhere. Did not open by itself? Tap the Duo notification.",
-    "tail_empty": "⚠️ No answer came back. Run it again and wait a little; then look in the Claude app. The drafts are saved in the journal.",
+    "tail_empty": "ChatGPT and Claude may have answered in their own apps, but iOS did not pass the answer to Duo. Open the ChatGPT or Claude app to read it, or run Duo through Siri («Hey Siri, Duo»).",
+    "tail_empty_claude": "Claude may have answered in its own app, but iOS did not pass the answer to Duo. Open the Claude app to read it, or run Duo through Siri («Hey Siri, Duo»).",
     "voice_start": "🎧 Duo Voice: ChatGPT → Claude, I'll read the final answer aloud. ≈1 min.",
     "photo_done": "📸 Text recognized — opening Duo.",
     "multi_step1": "🎼 Choir [1/3]: ChatGPT and Claude are answering on their own…",
@@ -197,7 +198,8 @@
     "first_run_title": "Before your first question",
     "first_run_body": "Next, iPhone will ask for access many times (ChatGPT, Claude, files, clipboard), and each mode you pick for the first time asks 1–4 more times. Each time, tap «Always Allow» (or «Allow») right away: each request comes only once. If ChatGPT ever says «logged out», open its app, sign in and run Duo again.",
     "no_answer_title": "No answer reached Duo",
-    "no_answer_body": "ChatGPT and Claude may have answered in their own apps, but iOS did not pass the answer to Duo. Open the ChatGPT or Claude app to read it, or run Duo through Siri («Hey Siri, Duo»)."
+    "no_answer_body": "ChatGPT and Claude may have answered in their own apps, but iOS did not pass the answer to Duo. Open the ChatGPT or Claude app to read it, or run Duo through Siri («Hey Siri, Duo»).",
+    "no_answer_claude_body": "Claude may have answered in its own app, but iOS did not pass the answer to Duo. Open the Claude app to read it, or run Duo through Siri («Hey Siri, Duo»)."
   },
   "output": {
     "critique": "{S}\n\n■ CHECKED ANSWER (Claude)\n{C}",
@@ -216,7 +218,8 @@
     "argue_side_a_round": "■ ChatGPT (side A), round {N}",
     "ratify": "{R}\n\n— — —\n🔍 ChatGPT's second check:\n{X}",
     "claude_down": "⚠️ Claude did not pass an answer to Duo (message limit, signed out, or iOS cut a long step; if it did answer, the answer is in its app). Below is ChatGPT's answer; there is no comparison this time. Run Duo again later for the full check, or check it now with Trio's free keys (no subscription limit). On a free plan, after the limit an assistant may answer with a lighter model.\n\n{A}",
-    "gpt_down": "⚠️ ChatGPT did not pass an answer to Duo (message limit, signed out, or iOS cut a long step; if it did answer, the answer is in its app). Below is Claude's answer; there is no comparison this time. Run Duo again later for the full check, or try Trio (free provider keys, no subscription limit). On a free plan, after the limit an assistant may answer with a lighter model.\n\n{C}"
+    "gpt_down": "⚠️ ChatGPT did not pass an answer to Duo (message limit, signed out, or iOS cut a long step; if it did answer, the answer is in its app). Below is Claude's answer; there is no comparison this time. Run Duo again later for the full check, or try Trio (free provider keys, no subscription limit). On a free plan, after the limit an assistant may answer with a lighter model.\n\n{C}",
+    "claude_only": "Only Claude was asked this time, so there is no comparison. Claude's answer:\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\nQUESTION: {Q}\n\n{R}\n",

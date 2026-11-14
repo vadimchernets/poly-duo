@@ -165,7 +165,8 @@
     "delta_step2": "[2/2] ChatGPT가 보탤 점을 찾고 있어요…",
     "help": "ℹ️ Duo 도움말 — AI를 부르지 않아서 무료예요.",
     "tail_done": "✅ 완료. 답은 클립보드에도 있어요. 어디에든 붙여 넣으세요. 저절로 열리지 않으면 Duo 알림을 누르세요.",
-    "tail_empty": "⚠️ 돌아온 답이 없어요. 한 번 더 실행하고 잠시 기다린 다음 Claude 앱을 확인해 보세요. 초안은 저널에 저장되어 있어요.",
+    "tail_empty": "ChatGPT와 Claude가 각자의 앱에서 답했을 수 있지만, iOS가 답을 Duo에 넘기지 않았습니다. ChatGPT나 Claude 앱을 열어 읽거나, Siri로 Duo를 실행하세요(「Siri야, Duo」).",
+    "tail_empty_claude": "Claude가 자기 앱에서 답했을 수 있지만, iOS가 답을 Duo에 넘기지 않았습니다. Claude 앱을 열어 읽거나, Siri로 Duo를 실행하세요(「Siri야, Duo」).",
     "voice_start": "🎧 Duo Voice: ChatGPT → Claude, 최종 답은 소리 내어 읽어 드려요. 약 1분.",
     "photo_done": "📸 글자를 인식했어요 — Duo를 여는 중이에요.",
     "multi_step1": "🎼 합창 [1/3]: ChatGPT와 Claude가 각자 답하고 있어요…",
@@ -197,7 +198,8 @@
     "first_run_title": "첫 질문 전에",
     "first_run_body": "이제 iPhone이 접근 권한을 여러 번 물어봐요 (ChatGPT, Claude, 파일, 클립보드). 처음 고르는 모드마다 1~4번 더 물어요. 매번 바로 «항상 허용»(또는 «허용»)을 누르세요. 같은 요청은 한 번만 나와요. ChatGPT가 로그아웃되었다고 하면 ChatGPT 앱을 열고 로그인한 뒤 Duo를 다시 실행하세요.",
     "no_answer_title": "답이 Duo에 도착하지 않았습니다",
-    "no_answer_body": "ChatGPT와 Claude가 각자의 앱에서 답했을 수 있지만, iOS가 답을 Duo에 넘기지 않았습니다. ChatGPT나 Claude 앱을 열어 읽거나, Siri로 Duo를 실행하세요(「Siri야, Duo」)."
+    "no_answer_body": "ChatGPT와 Claude가 각자의 앱에서 답했을 수 있지만, iOS가 답을 Duo에 넘기지 않았습니다. ChatGPT나 Claude 앱을 열어 읽거나, Siri로 Duo를 실행하세요(「Siri야, Duo」).",
+    "no_answer_claude_body": "Claude가 자기 앱에서 답했을 수 있지만, iOS가 답을 Duo에 넘기지 않았습니다. Claude 앱을 열어 읽거나, Siri로 Duo를 실행하세요(「Siri야, Duo」)."
   },
   "output": {
     "critique": "{S}\n\n■ 확인된 답 (Claude)\n{C}",
@@ -216,7 +218,8 @@
     "argue_side_a_round": "■ ChatGPT (A 입장), {N}라운드",
     "ratify": "{R}\n\n— — —\n🔍 ChatGPT의 두 번째 확인:\n{X}",
     "claude_down": "⚠️ Claude의 답이 Duo에 전달되지 않았습니다(메시지 한도, 로그아웃, 또는 iOS가 긴 단계를 중단함. 답했다면 해당 앱에 있습니다). 아래는 ChatGPT의 답이며, 이번에는 비교가 없습니다. 전체 검증은 나중에 Duo를 다시 실행하거나, 지금 Trio의 무료 키(구독 한도 없음)로 확인하세요. 무료 요금제에서는 한도 이후 더 가벼운 모델이 답할 수 있습니다.\n\n{A}",
-    "gpt_down": "⚠️ ChatGPT의 답이 Duo에 전달되지 않았습니다(메시지 한도, 로그아웃, 또는 iOS가 긴 단계를 중단함. 답했다면 해당 앱에 있습니다). 아래는 Claude의 답이며, 이번에는 비교가 없습니다. 전체 검증은 나중에 Duo를 다시 실행하거나 Trio(제공업체 무료 키, 구독 한도 없음)를 사용해 보세요. 무료 요금제에서는 한도 이후 더 가벼운 모델이 답할 수 있습니다.\n\n{C}"
+    "gpt_down": "⚠️ ChatGPT의 답이 Duo에 전달되지 않았습니다(메시지 한도, 로그아웃, 또는 iOS가 긴 단계를 중단함. 답했다면 해당 앱에 있습니다). 아래는 Claude의 답이며, 이번에는 비교가 없습니다. 전체 검증은 나중에 Duo를 다시 실행하거나 Trio(제공업체 무료 키, 구독 한도 없음)를 사용해 보세요. 무료 요금제에서는 한도 이후 더 가벼운 모델이 답할 수 있습니다.\n\n{C}",
+    "claude_only": "이번에는 Claude에게만 물었으므로 비교는 없습니다. Claude의 답:\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\n질문: {Q}\n\n{R}\n",

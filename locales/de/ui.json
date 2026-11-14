@@ -165,7 +165,8 @@
     "delta_step2": "[2/2] ChatGPT sucht, was sich ergänzen lässt…",
     "help": "ℹ️ Duo-Hilfe — keine KI-Aufrufe, kostenlos.",
     "tail_done": "✅ Fertig. Die Antwort liegt auch in der Zwischenablage: überall einfügen. Nicht von selbst geöffnet? Tippe auf die Duo-Mitteilung.",
-    "tail_empty": "⚠️ Es kam keine Antwort zurück. Starte es noch einmal und warte ein wenig; schau dann in der Claude-App nach. Die Entwürfe stehen im Journal.",
+    "tail_empty": "ChatGPT und Claude haben vielleicht in ihren Apps geantwortet, aber iOS hat die Antwort nicht an Duo übergeben. Öffne die ChatGPT- oder Claude-App, um sie zu lesen, oder starte Duo über Siri („Hey Siri, Duo“).",
+    "tail_empty_claude": "Claude hat vielleicht in seiner App geantwortet, aber iOS hat die Antwort nicht an Duo übergeben. Öffne die Claude-App, um sie zu lesen, oder starte Duo über Siri („Hey Siri, Duo“).",
     "voice_start": "🎧 Duo Voice: ChatGPT → Claude, die finale Antwort lese ich dir vor. ≈1 Min.",
     "photo_done": "📸 Text erkannt — ich öffne Duo.",
     "multi_step1": "🎼 Chor [1/3]: ChatGPT und Claude antworten von selbst…",
@@ -197,7 +198,8 @@
     "first_run_title": "Vor deiner ersten Frage",
     "first_run_body": "Gleich fragt dein iPhone viele Male nach Zugriff (ChatGPT, Claude, Dateien, Zwischenablage), und jeder Modus, den du zum ersten Mal wählst, noch 1–4 Mal. Tippe jedes Mal sofort auf „Immer erlauben“ (oder „Erlauben“): Jede Anfrage kommt nur einmal. Meldet ChatGPT einmal, dass du abgemeldet bist, öffne seine App, melde dich an und starte Duo neu.",
     "no_answer_title": "Keine Antwort bei Duo angekommen",
-    "no_answer_body": "ChatGPT und Claude haben vielleicht in ihren Apps geantwortet, aber iOS hat die Antwort nicht an Duo übergeben. Öffne die ChatGPT- oder Claude-App, um sie zu lesen, oder starte Duo über Siri („Hey Siri, Duo“)."
+    "no_answer_body": "ChatGPT und Claude haben vielleicht in ihren Apps geantwortet, aber iOS hat die Antwort nicht an Duo übergeben. Öffne die ChatGPT- oder Claude-App, um sie zu lesen, oder starte Duo über Siri („Hey Siri, Duo“).",
+    "no_answer_claude_body": "Claude hat vielleicht in seiner App geantwortet, aber iOS hat die Antwort nicht an Duo übergeben. Öffne die Claude-App, um sie zu lesen, oder starte Duo über Siri („Hey Siri, Duo“)."
   },
   "output": {
     "critique": "{S}\n\n■ GEPRÜFTE ANTWORT (Claude)\n{C}",
@@ -216,7 +218,8 @@
     "argue_side_a_round": "■ ChatGPT (Seite A), Runde {N}",
     "ratify": "{R}\n\n— — —\n🔍 Zweite Prüfung durch ChatGPT:\n{X}",
     "claude_down": "⚠️ Claude hat Duo keine Antwort übergeben (Nachrichtenlimit, abgemeldet oder iOS hat einen langen Schritt abgebrochen; gab es eine Antwort, steht sie in seiner App). Unten steht die Antwort von ChatGPT; diesmal gibt es keinen Vergleich. Starte Duo später für die volle Prüfung oder prüfe jetzt mit den kostenlosen Schlüsseln von Trio (ohne Abo-Limit). Im kostenlosen Tarif kann nach dem Limit ein leichteres Modell antworten.\n\n{A}",
-    "gpt_down": "⚠️ ChatGPT hat Duo keine Antwort übergeben (Nachrichtenlimit, abgemeldet oder iOS hat einen langen Schritt abgebrochen; gab es eine Antwort, steht sie in seiner App). Unten steht die Antwort von Claude; diesmal gibt es keinen Vergleich. Starte Duo später für die volle Prüfung oder probiere Trio (kostenlose Anbieter-Schlüssel, ohne Abo-Limit). Im kostenlosen Tarif kann nach dem Limit ein leichteres Modell antworten.\n\n{C}"
+    "gpt_down": "⚠️ ChatGPT hat Duo keine Antwort übergeben (Nachrichtenlimit, abgemeldet oder iOS hat einen langen Schritt abgebrochen; gab es eine Antwort, steht sie in seiner App). Unten steht die Antwort von Claude; diesmal gibt es keinen Vergleich. Starte Duo später für die volle Prüfung oder probiere Trio (kostenlose Anbieter-Schlüssel, ohne Abo-Limit). Im kostenlosen Tarif kann nach dem Limit ein leichteres Modell antworten.\n\n{C}",
+    "claude_only": "Diesmal wurde nur Claude gefragt, deshalb gibt es keinen Vergleich. Antwort von Claude:\n\n{C}"
   },
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\nFRAGE: {Q}\n\n{R}\n",

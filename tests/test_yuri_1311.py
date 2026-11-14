@@ -8,17 +8,22 @@ import sys
 import pytest
 
 from test_first_run import LANGS, ROOT, build, kind, guard_var
-from test_duo64 import groups_open, params, ui_of
+from test_duo64 import groups_open, params, sets, ui_of
 
 
 @pytest.mark.parametrize('lang', LANGS)
 def test_no_answer_says_where_the_answers_are(tmp_path, lang):
     ui = ui_of(lang)
     actions = build(tmp_path, lang)
-    i = next(i for i, a in enumerate(actions) if params(a).get('WFAlertActionTitle') == ui['alert']['no_answer_title'])
-    assert params(actions[i])['WFAlertActionMessage'] == ui['alert']['no_answer_body']
+    both = [i for i, a in enumerate(actions) if params(a).get('WFAlertActionTitle') == ui['alert']['no_answer_title']]
+    assert [params(actions[i])['WFAlertActionMessage'] for i in both] == [ui['alert']['no_answer_claude_body'],
+                                                                           ui['alert']['no_answer_body']]
+    # the notification gives the same advice as the window, in both wordings
+    assert ui['notify']['tail_empty'] == ui['alert']['no_answer_body']
+    assert ui['notify']['tail_empty_claude'] == ui['alert']['no_answer_claude_body']
+    i = both[-1]
     # only when RESULT has no text, and nothing is copied there
-    cond = groups_open(actions, i, ('conditional',))[-1]
+    cond = [c for c in groups_open(actions, i, ('conditional',)) if guard_var(actions, c) != 'PolyOnlyClaude'][-1]
     assert guard_var(actions, cond) == ui['variables']['result'] and params(cond)['WFCondition'] == 101
     end = next(j for j in range(i, len(actions)) if params(actions[j]).get('GroupingIdentifier') == params(cond)['GroupingIdentifier'])
     assert not any(kind(a) in ('setclipboard', 'save') for a in actions[i:end])
@@ -67,3 +72,16 @@ def test_diagnostic_build_names_every_ai_call(tmp_path):
     # the release build has none of it
     plain = build(tmp_path / 'plain', 'uk')
     assert not any('🔧' in str(params(a).get('WFNotificationActionBody', '')) for a in plain)
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_claude_only_has_its_own_neutral_line(tmp_path, lang):
+    """After the review of 13.11: «Ask Claude alone» is not «ChatGPT did not pass» (No.61); the Advisor and the
+    «alone» resume set PolyOnlyClaude, and the Side by side with an empty ChatGPT says so instead of an empty block."""
+    ui = ui_of(lang)
+    actions = build(tmp_path, lang)
+    assert '{C}' in ui['output']['claude_only'] and 'ChatGPT' not in ui['output']['claude_only'].split('{C}')[0]
+    only = [i for i, a in enumerate(actions) if kind(a) == 'setvariable' and params(a).get('WFVariableName') == 'PolyOnlyClaude']
+    assert len(only) == 2   # the Advisor, and «Ask Claude alone» in the resume menu
+    texts = [t for _, t in sets(actions, ui['variables']['result']) if t]
+    assert any(t.startswith(ui['output']['claude_only'].split('{C}')[0]) for t in texts)

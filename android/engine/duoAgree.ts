@@ -34,7 +34,7 @@ export const AGREE_LABELS: Record<string, Labels> = {
 
 /** The first words of the sections that follow the two lines: confidence, corrections, check — in every language. */
 export const SECTION_END = new RegExp(
-  '^[\\s>#•*_\\-–—\\d.)]*(' +
+  '^[\\s>#•*_\\-–—\\d.)■▪●◆□☐▶►✓✔]*(' +
     [
       'confidence', 'corrections', '\u0443\u0432\u0435\u0440\u0435\u043d\u043d', '\u043f\u043e\u043f\u0440\u0430\u0432\u043a', '\u0443\u043f\u0435\u0432\u043d\u0435\u043d', '\u0432\u0438\u043f\u0440\u0430\u0432\u043b\u0435\u043d', 'confianza', 'correcciones',
       'confiança', 'correções', 'confiance', 'corrections', 'konfidenz', 'korrekturen',

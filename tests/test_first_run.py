@@ -123,6 +123,7 @@ def test_first_minute(tmp_path, lang):
                 stack.append(j)
             elif kind(actions[j]) == 'conditional' and pj.get('WFControlFlowMode') == 2:
                 stack.pop()
+        stack = [j for j in stack if guard_var(actions, actions[j]) != 'PolyOnlyClaude']   # the Claude-only wording split
         opener = stack[-1]
         assert actions[opener]['WFWorkflowActionParameters']['WFCondition'] == cond
         assert guard_var(actions, actions[opener]) == ui['variables']['result']

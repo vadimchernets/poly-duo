@@ -89,4 +89,5 @@ def test_oneshot_resume_long(tmp_path, lang):
         assert kind(actions[retry + 2]) == 'ClaudeAppIntentsExtension'
     alerts = [a for a in actions if kind(a) == 'alert']
     # the first-run warning, and (Yuri 13.11, No.53) the one shown only when no answer reached Duo at all
-    assert len(alerts) == 2
+    # the «no answer» window comes in two wordings: both AIs asked, or only Claude (Advisor, «Ask Claude alone»)
+    assert len(alerts) == 3
