@@ -729,6 +729,50 @@ def with_gpt_retry(actions, skip=()):
     return out
 
 
+PUA = r'[\x{E000}-\x{F8FF}]'   # ChatGPT wraps its markup in private-use marker characters (U+E200..U+E206)
+GPT_MARKUP = [
+    # entity["city","Ottawa","..."] -> Ottawa (the second argument is the name shown to the reader)
+    (PUA + r'*entity' + PUA + r'*\[\s*"(?:[^"\\]|\\.)*"\s*,\s*"((?:[^"\\]|\\.)*)"(?:[^\[\]]|\[[^\]]*\])*\]' + PUA + '*', '$1'),
+    # image_group{"query":[...],"aspect_ratio":"5:3","layout":"carousel"} -> removed whole (one nested level of braces)
+    (PUA + r'*image_group' + PUA + r'*\{(?:[^{}]|\{[^{}]*\})*\}' + PUA + '*', ''),
+    # any marker character left over
+    (PUA, ''),
+]
+
+
+def with_gpt_clean(actions):
+    """Every «Ask ChatGPT» output goes through Replace Text (regex) right after the call (14.11 live run on iPhone):
+    (1) the raw markup Ask ChatGPT returns («entity[...]», «image_group{...}», private-use marker characters) is taken
+    off before the answer is shown or compared; (2) the text that continues is a NEW text made by Replace Text, not the
+    app's output itself. Critique wrote ChatGPT's output straight into «Save File» and iOS asked «Allow to add 1 text
+    object to a text file?» in the middle of the run (from Shortcuts the run then ended, «Always Allow» was not
+    remembered); Survey passed the same output through strip_markdown (Replace Text) before the file and ran on.
+    Call → Set Variable → Get Variable → Replace Text ×3 → Set Variable → Get Variable; later references to the call's
+    output point at that last read (an empty answer stays empty: Replace Text of an empty text is an empty text, and
+    every test of an answer looks for a visible character, see if_text)."""
+    out, rewrites, n = [], {}, 0
+    for action in actions:
+        action = rename_outputs(action, rewrites)
+        out.append(action)
+        params = action['WFWorkflowActionParameters']
+        if action['WFWorkflowActionIdentifier'] != 'com.openai.chat.AskIntent':
+            continue
+        n += 1
+        var, final = f'PolyGPTClean{n}', new_uuid()
+        get, src, steps = new_uuid(), params['UUID'], []
+        src_uid, src_name = get, 'Variable'
+        for find, repl in GPT_MARKUP:
+            r = new_uuid()
+            steps.append(act_replace_regex(src_uid, src_name, find, repl, r))
+            src_uid, src_name = r, 'Updated Text'
+        out += [act_set_variable(var, src, 'Ask ChatGPT'),
+                act_get_variable(var, get), *steps,
+                act_set_variable(var, src_uid, 'Updated Text'),
+                act_get_variable(var, final)]
+        rewrites[src] = final
+    return out
+
+
 def with_claude_vars(actions):
     """Every «Ask Claude» output is read through a variable (Set Variable → Get Variable) before anything else uses it.
     Yuri 10.11 (No.52, iPhone XR, iOS 18.7.11): Side by side stopped twice out of two with the bare iOS alert «There was
@@ -2074,6 +2118,7 @@ def build(lang, ai=False):
     ]
 
     actions = with_gpt_retry(actions, skip=RETRY_SKIP)
+    actions = with_gpt_clean(actions)
     actions = with_claude_vars(actions)
     diag = os.environ.get('C1_DIAG') == '1'
     if diag:

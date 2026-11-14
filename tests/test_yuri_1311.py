@@ -93,3 +93,54 @@ def test_claude_only_has_its_own_neutral_line(tmp_path, lang):
     assert len(only) == 2   # the Advisor, and «Ask Claude alone» in the resume menu
     texts = [t for _, t in sets(actions, ui['variables']['result']) if t]
     assert any(t.startswith(ui['output']['claude_only'].split('{C}')[0]) for t in texts)
+
+
+# ---- 14.11 live run on iPhone: raw markup in ChatGPT's answer, and the permission window on writing it to a file
+AI_KINDS = ('AskIntent', 'ClaudeAppIntentsExtension')
+
+
+def _refs(node):
+    if isinstance(node, dict):
+        if node.get('Type') == 'ActionOutput' and 'OutputUUID' in node:
+            yield node['OutputUUID']
+        for v in node.values():
+            yield from _refs(v)
+    elif isinstance(node, list):
+        for v in node:
+            yield from _refs(v)
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_chatgpt_output_is_cleaned_and_never_used_raw(tmp_path, lang):
+    actions = build(tmp_path, lang)
+    asks = [i for i, a in enumerate(actions) if kind(a) == 'AskIntent']
+    assert asks
+    for i in asks:
+        uid = params(actions[i])['UUID']
+        users = [j for j, a in enumerate(actions) if uid in set(_refs(params(a))) and j != i]
+        # the only user of the raw output is the Set Variable that starts the cleaning block
+        assert [kind(actions[j]) for j in users] == ['setvariable'], (i, users)
+        block = actions[users[0]:users[0] + 12]
+        replaces = [a for a in block if kind(a) == 'text.replace' or kind(a) == 'replace']
+        assert len(replaces) == 3 and all(params(a)['WFReplaceTextRegularExpression'] for a in replaces)
+    # no file action (Save File / Append to File) takes the output of an AI app directly
+    ai_uids = {params(a)['UUID'] for a in actions if kind(a) in AI_KINDS}
+    for a in actions:
+        if kind(a) in ('save', 'append', 'file.append', 'documentpicker.save'):
+            assert not (set(_refs(params(a))) & ai_uids)
+
+
+def _py(pattern):
+    import re
+    return re.compile(re.sub(r'\\x\{([0-9A-Fa-f]+)\}', lambda m: '\\u' + m.group(1).rjust(4, '0'), pattern))
+
+
+def test_chatgpt_markup_regexes():
+    sys.path.insert(0, str(ROOT / 'src'))
+    import build_shortcut as b
+    text = ('The capital is \ue200entity\ue202["city","Ottawa","capital of Canada"]\ue201, on the Ottawa River.\n'
+            '\ue200image_group\ue202{"query":["Ottawa skyline","Parliament Hill"],"aspect_ratio":"5:3","layout":"carousel"}\ue201\n'
+            'Also entity["city","Toronto"] and a stray \ue206 mark.')
+    for find, repl in b.GPT_MARKUP:
+        text = _py(find).sub(repl.replace('$1', r'\1'), text)
+    assert text == 'The capital is Ottawa, on the Ottawa River.\n\nAlso Toronto and a stray  mark.'
