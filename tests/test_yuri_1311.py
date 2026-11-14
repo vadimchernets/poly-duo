@@ -66,9 +66,17 @@ def test_diagnostic_build_names_every_ai_call(tmp_path):
     calls = [i for i, a in enumerate(actions) if kind(a) in ('AskIntent', 'ClaudeAppIntentsExtension')]
     assert calls
     for n, i in enumerate(calls, 1):
-        assert params(actions[i - 1]).get('WFNotificationActionBody', '').startswith(f'🔧 → #{n} ')
+        # 14.11: «→» notification, its line appended to Duo-diag-log.txt, then the AI call
+        before = next(a for a in reversed(actions[:i]) if kind(a) == 'notification')
+        assert params(before).get('WFNotificationActionBody', '').startswith(f'🔧 → #{n} ')
+        assert kind(actions[i - 1]) == 'append'
+        assert params(actions[i - 1])['WFFilePath'] == 'Duo-diag-log.txt'
         after = next(a for a in actions[i:] if kind(a) == 'notification')
         assert params(after)['WFNotificationActionBody']['Value']['string'].startswith(f'🔧 ← #{n} ')
+        # the log lines carry HH:mm:ss, so the seconds of each step are readable even if «Time Between Dates» is blank
+        log_after = next(a for a in actions[i:] if kind(a) == 'append')
+        src = next(a for a in reversed(actions[:actions.index(log_after)]) if kind(a) == 'gettext')
+        assert "'WFDateFormat': 'HH:mm:ss'" in str(params(src))
     # the release build has none of it
     plain = build(tmp_path / 'plain', 'uk')
     assert not any('🔧' in str(params(a).get('WFNotificationActionBody', '')) for a in plain)

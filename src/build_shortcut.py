@@ -754,6 +754,14 @@ def with_claude_vars(actions):
     return out
 
 
+def hms(uid):
+    """A «Current Date» output formatted HH:mm:ss: the diag log lines carry seconds, so the time of each AI step is
+    readable from the stamps even when «Time Between Dates» comes back blank (14.11 run: «1697 chars,  s»)."""
+    return {'OutputUUID': uid, 'Type': 'ActionOutput', 'OutputName': 'Date',
+            'Aggrandizements': [{'Type': 'WFDateFormatVariableAggrandizement', 'WFDateFormatStyle': 'Custom',
+                                 'WFDateFormat': 'HH:mm:ss'}]}
+
+
 def with_diag(actions):
     """C1_DIAG=1: the diagnostic build for a live run (Yuri 13.11, No.52/53: from the Shortcuts app a run stopped with the
     bare iOS alert or ended empty, through Siri it ran; which action fails could only be guessed). Around EVERY «Ask
@@ -775,7 +783,10 @@ def with_diag(actions):
         who, output = names[kind_]
         uid = action['WFWorkflowActionParameters']['UUID']
         t0, t1, dt, get, txt, cnt = (new_uuid() for _ in range(6))
-        out += [act_date(t0), act_notify(f'🔧 → #{n} {who}'), action]
+        l0 = new_uuid()
+        out += [act_date(t0), act_notify(f'🔧 → #{n} {who}'),
+                act_text(text_token(f'{{D}} 🔧 → #{n} {who}\n', special={'D': hms(t0)}), l0),
+                act_append_file('Duo-diag-log.txt', l0), action]
         nxt = actions[i + 1] if i + 1 < len(actions) else None
         if (nxt and nxt['WFWorkflowActionIdentifier'] == 'is.workflow.actions.setvariable'
                 and nxt['WFWorkflowActionParameters']['WFInput']['Value'].get('OutputUUID') == uid):
@@ -795,7 +806,12 @@ def with_diag(actions):
                 act_text(text_token('{V}', {'V': (get, 'Variable')}), txt),
                 act_count_chars(txt, 'Text', cnt),
                 act_notify(text_token(f'🔧 ← #{n} {who}: {{C}} chars, {{S}} s',
-                                      {'C': (cnt, 'Count'), 'S': (dt, 'Time Between Dates')}))]
+                                      {'C': (cnt, 'Count'), 'S': (dt, 'Time Between Dates')})),
+                # the same line into iCloud Drive → Shortcuts/Duo-diag-log.txt: readable from the Mac (14.11 run:
+                # Notification Centre cannot be opened through iPhone Mirroring)
+                act_text(text_token(f'{{D}} 🔧 ← #{n} {who}: {{C}} chars, {{S}} s\n',
+                                    {'C': (cnt, 'Count'), 'S': (dt, 'Time Between Dates')}, {'D': hms(t1)}), l1 := new_uuid()),
+                act_append_file('Duo-diag-log.txt', l1)]
     return out
 
 
