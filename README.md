@@ -400,8 +400,7 @@ write to info@polyhelper.ai and say where you got lost — that's the feedback w
 get any other way.
 
 - **Feedback:** worked, didn't work, or an idea? [One-minute form](https://github.com/vadimchernets/poly-duo/issues/new?template=feedback.yml&ref=duo-feedback) or info@polyhelper.ai.
-- **Discussions** — ideas, questions, proposals for new modes.
-- **Issues** — bugs and concrete tasks, using the issue template.
+- **Issues** — ideas, questions, bugs and concrete tasks, using the issue templates.
 - **Ran it on your phone?** Tell us what worked or broke with the [run report](../../issues/new?template=run-report.yml) (no question text needed); what has been seen so far is in [docs/en/compat.md](docs/en/compat.md).
 - **Security** — please don't file a vulnerability as an issue; follow [SECURITY.md](SECURITY.md).
 
