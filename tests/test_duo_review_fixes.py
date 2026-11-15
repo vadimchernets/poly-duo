@@ -236,7 +236,8 @@ def test_critique_first_run_asks_few_permissions(tmp_path, lang):
     for start, end, drafts in ((starts[0], next(i for i in range(starts[0], len(actions)) if kind(actions[i]) == 'choosefrommenu'), 0),
                                (starts[1], tail_empty, 1)):
         block = [kind(a) for a in actions[start:end]]
-        assert block.count('save') == drafts and block.count('append') == 0
+        # 14.11: keep_gpt remembers ChatGPT's answer (files.last_answer) as well: one more «Save File» in each block
+        assert block.count('save') == drafts + 1 and block.count('append') == 0
         assert block.count('setclipboard') == 1
     tail = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['tail_done'])
     finale = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'

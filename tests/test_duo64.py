@@ -116,7 +116,7 @@ def test_resume_menu_before_the_question(tmp_path, lang):
                    for c in actions if kind(c) == 'conditional')
     import re as _re
     for minutes, fresh in (('0', True), ('17', True), ('30', True), ('-30', True), ('−12', True), ('31', False),
-                           ('4 320', False), ('4\u00a0320', False), ('1,440', False), ('1.440', False), ('300', False)):
+                           ('4 320', False), ('4\u00a0320', False), ('1,440', False), ('1.440', False), ('0,6', True), ('12.5', True), ('300', False)):
         assert bool(_re.search(DRAFT_FRESH, minutes)) == fresh, minutes
     # every choice but «new question» resumes: PolyResume set, the question from the draft
     for menu, items in ((m1, m['resume1_items']), (m0, m['resume0_items'])):
@@ -220,3 +220,16 @@ def test_trio_search_sources_need_no_dictionary_walk(tmp_path):
     actions = build(tmp_path, 'en', 'build_trio.py', 'Trio.shortcut')
     keys = {params(a).get('WFDictionaryKey') for a in actions if kind(a) == 'getvalueforkey'}
     assert not keys & {'groundingChunks', 'groundingMetadata', 'web', 'uri', 'title'}
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_draft_age_dates_passed_as_variables(tmp_path, lang):
+    """14.11 live run: «Time Between Dates» came back blank (the other date went in as a Text made of a formatted date,
+    which the action could not read back), so the age test never passed and no resume menu was shown. The other date
+    is a plain variable reference now."""
+    actions = build(tmp_path, lang)
+    tb = [params(a) for a in actions if a['WFWorkflowActionIdentifier'] == 'is.workflow.actions.gettimebetweendates']
+    tb = [p for p in tb if p['WFTimeUntilUnit'] == 'Minutes']
+    assert tb
+    for p in tb:
+        assert p['WFTimeUntilFromDate']['WFSerializationType'] == 'WFTextTokenAttachment'

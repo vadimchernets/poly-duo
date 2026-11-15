@@ -70,8 +70,8 @@ def test_debate_no_drafts_and_retries(tmp_path, lang):
         start = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify'][key])
         gpt = next(i for i in range(start, len(actions)) if kind(actions[i]) == 'AskIntent'
                    and actions[i]['WFWorkflowActionIdentifier'] == 'com.openai.chat.AskIntent')
-        assert [kind(a) for a in actions[gpt + 1:gpt + 8]] == ['setvariable', 'getvariable'] + ['replace'] * 3 + ['setvariable', 'getvariable']
-        gpt += 7   # the ChatGPT markup cleaning block (with_gpt_clean) sits first, the retry follows it
+        assert [kind(a) for a in actions[gpt + 1:gpt + 9]] == ['setvariable', 'getvariable'] + ['replace'] * 4 + ['setvariable', 'getvariable']
+        gpt += 8   # the ChatGPT markup cleaning block (with_gpt_clean) sits first, the retry follows it
         # D-100: the answer is tested by its characters (Get Variable → Match Text `\S` → If no value)
         assert [kind(a) for a in actions[gpt + 1:gpt + 4]] == ['setvariable', 'getvariable', 'match']
         assert params(actions[gpt + 4])['WFCondition'] == 101

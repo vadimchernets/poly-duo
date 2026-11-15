@@ -492,7 +492,7 @@ DRAFT_Q, DRAFT_A = '\u2064\u2060\u2064', '\u2064\u2061\u2064'
 # «between −30 and 30 minutes» as TEXT: 0…30 with an optional minus. A Number made from «Time Between Dates» goes
 # through the phone's number format: in Ukrainian or Russian 4320 minutes read «4 320», which a Number may take for 4,
 # so a draft days old was offered as fresh (Yuri 13.11, No.62).
-DRAFT_FRESH = r'^\s*[-−]?(?:[0-9]|[12][0-9]|30)(?:[.,]0+)?\s*$'
+DRAFT_FRESH = r'^\s*[-−]?(?:[0-9]|[12][0-9]|30)(?:[.,][0-9]{1,2})?\s*$'
 assert DRAFT_MINUTES == 30, 'DRAFT_FRESH is written for 30 minutes'
 # «Back» from «More…» (Yuri 13.11, No.67): Duo runs itself with this mark in front of the question — the mode menu
 # again, WITHOUT the question field (the question is already there)
@@ -735,6 +735,8 @@ GPT_MARKUP = [
     (PUA + r'*entity' + PUA + r'*\[\s*"(?:[^"\\]|\\.)*"\s*,\s*"((?:[^"\\]|\\.)*)"(?:[^\[\]]|\[[^\]]*\])*\]' + PUA + '*', '$1'),
     # image_group{"query":[...],"aspect_ratio":"5:3","layout":"carousel"} -> removed whole (one nested level of braces)
     (PUA + r'*image_group' + PUA + r'*\{(?:[^{}]|\{[^{}]*\})*\}' + PUA + '*', ''),
+    # citeturn752459search6turn752459search11 (and navlist/filecite relatives): citation markers, removed whole
+    (PUA + r'*(?:file|nav)?(?:cite|list)(?:' + PUA + r'*turn[0-9]+[a-z]+[0-9]+)+' + PUA + '*', ''),
     # any marker character left over
     (PUA, ''),
 ]
@@ -844,7 +846,7 @@ def with_diag(actions):
         out += [act_date(t1),
                 {'WFWorkflowActionIdentifier': 'is.workflow.actions.gettimebetweendates',
                  'WFWorkflowActionParameters': {'WFInput': attachment(t1, 'Date'),
-                                                'WFTimeUntilFromDate': text_token('{D}', {'D': (t0, 'Date')}),
+                                                'WFTimeUntilFromDate': attachment(t0, 'Date'),
                                                 'WFTimeUntilUnit': 'Seconds', 'UUID': dt}},
                 act_get_variable(var, get),
                 act_text(text_token('{V}', {'V': (get, 'Variable')}), txt),
@@ -987,6 +989,7 @@ def build(lang, ai=False):
                 *if_output_text(g, txt, 'Text'),
                 act_clipboard(attachment(txt, 'Text')),
                 act_notify(kept + '\n' + note if note else kept),
+                *remember_answer(txt, 'Text'),   # 14.11 live run: the next run took this answer for a new question
                 *([if_else(g), act_notify(note)] if note else []),
                 if_close(g)]
 
@@ -1364,8 +1367,7 @@ def build(lang, ai=False):
             act_date(rnow),
             {'WFWorkflowActionIdentifier': 'is.workflow.actions.gettimebetweendates',
              'WFWorkflowActionParameters': {'WFInput': attachment(rnow, 'Date'),
-                                            'WFTimeUntilFromDate': text_token(
-                                                '{D}', {'D': (rdate, 'Last Modified Date')}),
+                                            'WFTimeUntilFromDate': attachment(rdate, 'Last Modified Date'),
                                             'WFTimeUntilUnit': 'Minutes', 'UUID': rage}},
             # «between −30 and 30 minutes» reads the same whichever way the system counts (as in version_check); tested
             # on the text, not on a Number (DRAFT_FRESH, Yuri 13.11, No.62)

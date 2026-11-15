@@ -70,9 +70,19 @@ def test_own_answer_not_prefilled(tmp_path, lang):
     # --- every text Duo leaves in the clipboard is remembered RIGHT AFTER it is written — before any screen that waits
     # for the person and before any further AI call: «by hand» check request, Image (both), Claude writes / ChatGPT
     # checks, the tail (RESULT, also when the «Claude did not answer» menu delivered it), and the re-checked result.
-    saves = saves_of(actions, last)
-    # 6 as in Duo 6.1. D-98's copies of ChatGPT's answer are no longer remembered (D-100: one «Save File» each, one
-    # more permission window on the first run); they are checked below on their own
+    all_saves = saves_of(actions, last)
+    # 14.11 live run: keep_gpt remembers the ChatGPT answer it puts into the clipboard too (right after its notification)
+    def is_kept_save(sv):
+        c = max(i for i, a in enumerate(actions[:sv]) if kind(a) == 'setclipboard')
+        return ui['notify']['gpt_kept'] in (params(actions[c + 1]).get('WFNotificationActionBody') or '')
+    kept_saves = [sv for sv in all_saves if is_kept_save(sv)]
+    assert len(kept_saves) == 11
+    for sv in kept_saves:
+        c = max(i for i, a in enumerate(actions[:sv]) if kind(a) == 'setclipboard')
+        assert params(actions[c])['WFInput']['Value']['OutputUUID'] == ref(params(actions[sv - 2])['text'])[0]
+        assert kind(actions[sv - 2]) == 'match' and params(actions[sv - 2])['WFMatchTextPattern'] == '(?s)^.{1,200}'
+    saves = [sv for sv in all_saves if sv not in kept_saves]
+    # 6 as in Duo 6.1; D-98's copies of ChatGPT's answer are remembered again (kept_saves above)
     assert len(saves) == 6
     for s in saves:
         txt, cut = actions[s - 1], actions[s - 2]

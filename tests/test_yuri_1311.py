@@ -120,9 +120,9 @@ def test_chatgpt_output_is_cleaned_and_never_used_raw(tmp_path, lang):
         users = [j for j, a in enumerate(actions) if uid in set(_refs(params(a))) and j != i]
         # the only user of the raw output is the Set Variable that starts the cleaning block
         assert [kind(actions[j]) for j in users] == ['setvariable'], (i, users)
-        block = actions[users[0]:users[0] + 12]
+        block = actions[users[0]:users[0] + 13]
         replaces = [a for a in block if kind(a) == 'text.replace' or kind(a) == 'replace']
-        assert len(replaces) == 3 and all(params(a)['WFReplaceTextRegularExpression'] for a in replaces)
+        assert len(replaces) == 4 and all(params(a)['WFReplaceTextRegularExpression'] for a in replaces)
     # no file action (Save File / Append to File) takes the output of an AI app directly
     ai_uids = {params(a)['UUID'] for a in actions if kind(a) in AI_KINDS}
     for a in actions:
@@ -144,3 +144,17 @@ def test_chatgpt_markup_regexes():
     for find, repl in b.GPT_MARKUP:
         text = _py(find).sub(repl.replace('$1', r'\1'), text)
     assert text == 'The capital is Ottawa, on the Ottawa River.\n\nAlso Toronto and a stray  mark.'
+
+
+def test_chatgpt_cite_markers_removed():
+    sys.path.insert(0, str(ROOT / 'src'))
+    import build_shortcut as b
+
+    def clean(text):
+        for find, repl in b.GPT_MARKUP:
+            text = _py(find).sub(repl.replace('$1', r'\1'), text)
+        return text
+    assert clean('ok. citeturn752459search6turn752459search11') == 'ok. '
+    assert clean('a\ue200cite\ue202turn0search1\ue202turn0news2\ue201 b') == 'a b'
+    assert clean('x \ue200filecite\ue202turn3file0\ue201.') == 'x .'
+    assert clean('He cited turn-by-turn directions; a list of things') == 'He cited turn-by-turn directions; a list of things'
