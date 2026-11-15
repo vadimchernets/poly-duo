@@ -177,6 +177,16 @@ def act_date(uid):
             'WFWorkflowActionParameters': {'WFDateActionMode': 'Current Date', 'UUID': uid}}
 
 
+def act_time_between(later_uid, later_name, earlier_uid, earlier_name, unit, uid):
+    """«Get Time Between Dates» (output «Time Between Dates»). BOTH dates go in as text tokens: on iPhone 15.11 a probe
+    (3 s apart, Seconds) gave «» for attachment/attachment and attachment/token, «3» only for token/token. Before
+    that the resume age, the version check age and the diag seconds all came back blank."""
+    return {'WFWorkflowActionIdentifier': 'is.workflow.actions.gettimebetweendates',
+            'WFWorkflowActionParameters': {'WFInput': text_token('{D}', {'D': (later_uid, later_name)}),
+                                           'WFTimeUntilFromDate': text_token('{D}', {'D': (earlier_uid, earlier_name)}),
+                                           'WFTimeUntilUnit': unit, 'UUID': uid}}
+
+
 def act_notify(body):
     return {'WFWorkflowActionIdentifier': 'is.workflow.actions.notification',
             'WFWorkflowActionParameters': {'WFNotificationActionTitle': 'Duo',
@@ -639,11 +649,7 @@ def version_check(L, key, name, lang):
                                         'WFContentItemPropertyName': 'Last Modified Date',
                                         'UUID': f_date}},
         act_date(now),
-        {'WFWorkflowActionIdentifier': 'is.workflow.actions.gettimebetweendates',
-         'WFWorkflowActionParameters': {'WFInput': attachment(now, 'Date'),
-                                        'WFTimeUntilFromDate': text_token(
-                                            '{D}', {'D': (f_date, 'Last Modified Date')}),
-                                        'WFTimeUntilUnit': 'Days', 'UUID': age}},
+        act_time_between(now, 'Date', f_date, 'Last Modified Date', 'Days', age),
         act_set_variable(age_var, age, 'Time Between Dates'),
         if_else(g_file),
         {'WFWorkflowActionIdentifier': 'is.workflow.actions.number',
@@ -871,10 +877,7 @@ def with_diag(actions):
             out.append(act_set_variable(var, uid, output))
             i += 1
         out += [act_date(t1),
-                {'WFWorkflowActionIdentifier': 'is.workflow.actions.gettimebetweendates',
-                 'WFWorkflowActionParameters': {'WFInput': attachment(t1, 'Date'),
-                                                'WFTimeUntilFromDate': attachment(t0, 'Date'),
-                                                'WFTimeUntilUnit': 'Seconds', 'UUID': dt}},
+                act_time_between(t1, 'Date', t0, 'Date', 'Seconds', dt),
                 act_get_variable(var, get),
                 act_text(text_token('{V}', {'V': (get, 'Variable')}), txt),
                 act_count_chars(txt, 'Text', cnt),
@@ -1409,10 +1412,7 @@ def build(lang, ai=False):
              'WFWorkflowActionParameters': {'WFInput': attachment(rf, 'File'),
                                             'WFContentItemPropertyName': 'Last Modified Date', 'UUID': rdate}},
             act_date(rnow),
-            {'WFWorkflowActionIdentifier': 'is.workflow.actions.gettimebetweendates',
-             'WFWorkflowActionParameters': {'WFInput': attachment(rnow, 'Date'),
-                                            'WFTimeUntilFromDate': attachment(rdate, 'Last Modified Date'),
-                                            'WFTimeUntilUnit': 'Minutes', 'UUID': rage}},
+            act_time_between(rnow, 'Date', rdate, 'Last Modified Date', 'Minutes', rage),
             # «between −30 and 30 minutes» reads the same whichever way the system counts (as in version_check); tested
             # on the text, not on a Number (DRAFT_FRESH, Yuri 13.11, No.62)
             act_text(text_token('{M}', {'M': (rage, 'Time Between Dates')}), rnum),
@@ -2237,6 +2237,11 @@ def validate(actions):
 
         # «contains» on a variable or a file stops the run on device with «Choose values for each parameter in this
         # action» (D-100 28.10, Debate 15.11); only a Text action's output works
+        # «Get Time Between Dates» with a date as an attachment returns blank on iPhone (probe 15.11): both as text tokens
+        if action['WFWorkflowActionIdentifier'] == 'is.workflow.actions.gettimebetweendates':
+            for key in ('WFInput', 'WFTimeUntilFromDate'):
+                assert params[key].get('WFSerializationType') == 'WFTextTokenString', \
+                    f'Time Between Dates at {i}: {key} must be a text token'
         # (the debate log was first set from «Nothing», so its type was not text)
         if action['WFWorkflowActionIdentifier'] == 'is.workflow.actions.setvariable':
             var_sources.setdefault(params['WFVariableName'], set()).add(

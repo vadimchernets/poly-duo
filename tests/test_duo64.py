@@ -223,13 +223,14 @@ def test_trio_search_sources_need_no_dictionary_walk(tmp_path):
 
 
 @pytest.mark.parametrize('lang', LANGS)
-def test_draft_age_dates_passed_as_variables(tmp_path, lang):
-    """14.11 live run: «Time Between Dates» came back blank (the other date went in as a Text made of a formatted date,
-    which the action could not read back), so the age test never passed and no resume menu was shown. The other date
-    is a plain variable reference now."""
+def test_draft_age_dates_passed_as_text_tokens(tmp_path, lang):
+    """14.11 live run: «Time Between Dates» came back blank, so the age test never passed and no resume menu was shown.
+    15.11 probe on iPhone (two dates 3 s apart, Seconds): attachment/attachment «», attachment/token «», token/token «3».
+    Both dates are text tokens now (act_time_between)."""
     actions = build(tmp_path, lang)
     tb = [params(a) for a in actions if a['WFWorkflowActionIdentifier'] == 'is.workflow.actions.gettimebetweendates']
     tb = [p for p in tb if p['WFTimeUntilUnit'] == 'Minutes']
     assert tb
     for p in tb:
-        assert p['WFTimeUntilFromDate']['WFSerializationType'] == 'WFTextTokenAttachment'
+        assert p['WFInput']['WFSerializationType'] == 'WFTextTokenString'
+        assert p['WFTimeUntilFromDate']['WFSerializationType'] == 'WFTextTokenString'
