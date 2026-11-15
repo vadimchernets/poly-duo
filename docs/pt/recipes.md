@@ -27,7 +27,7 @@ O C1M Duo é generalista: qualquer tarefa se resume à formulação certa mais o
 | Pergunta vaga, sem saber direito o que você quer | pergunte do jeito que está — primeiro você recebe perguntas de acompanhamento | ❓ Esclarecer · 2✉ |
 | Logotipo, diagrama, cartão comemorativo, ilustração | "Desenhe [o quê, em que estilo]" — dois esboços vetoriais para escolher | 🎨 Imagem · 2–3✉ |
 | Foto de um documento, placa ou cardápio | Compartilhe a foto → Poly Photo (o OCR cuida do resto) | complemento Poly Photo |
-| Tela pequena / em movimento | pergunte por voz — a resposta é lida em voz alta e o texto vai para a área de transferência | complemento Poly Voice |
+| Tela pequena / em movimento | pergunte por voz — a resposta é lida em voz alta e o texto vai para a área de transferência | complemento Duo Voice |
 | Sem saber qual modo escolher | pergunte do jeito que está — não escolha um modo por conta própria | 🧭 Auto · +1✉ (o ChatGPT recomenda um; o Duo recomeça com a mesma pergunta) |
 | Orçamento de mensagens apertado, mas você ainda quer dois olhares | pergunte do jeito que está | ➕ Delta · 2✉ (alternativa mais barata à 🔀 Síntese: a âncora do Claude + a lista de melhorias do ChatGPT — 2 mensagens em vez de 3) |
 

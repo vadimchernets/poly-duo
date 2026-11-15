@@ -8,7 +8,7 @@
   },
   "shortcut_names": {
     "main": "Poly",
-    "voice": "Poly Voice",
+    "voice": "Duo Voice",
     "photo": "Poly Photo",
     "quiet": "Poly Quiet",
     "compress": "Poly Compress",
@@ -29,7 +29,7 @@
     "question": "Sua pergunta para o ChatGPT e o Claude (em qualquer idioma):",
     "clarify_suffix": "\n\nResponda a tudo isso em uma única mensagem (ou escreva «pular»):",
     "clarify_default": "pular",
-    "voice_question": "Dite sua pergunta para o Poly",
+    "voice_question": "Dite sua pergunta para o Duo",
     "quiet_question": "Pergunta (modo silencioso — o resultado vai para a área de transferência e o diário)",
     "multi_question": "O que você quer perguntar ao coro de IAs?",
     "multi_count": "O prompt já está na sua ÁREA DE TRANSFERÊNCIA. A quantas IAs mais você vai perguntar na mão (Gemini, Grok, DeepSeek…)? 0 — só a dupla automática.",
@@ -89,7 +89,8 @@
       "🐞 Relatar esta execução",
       "📌 Da próxima vez, direto na Crítica",
       "⚡ Texto compartilhado: perguntar sem editar",
-      "↩️ Mostrar todos os menus de novo"
+      "↩️ Mostrar todos os menus de novo",
+      "💬 Funcionou / não funcionou / ideia — formulário no GitHub"
     ],
     "recipes_title": "O que o senhor precisa?",
     "recipes_items": [
@@ -167,7 +168,7 @@
     "tail_done": "✅ Pronto. A resposta também está na área de transferência: cole onde quiser. Não abriu sozinha? Toque na notificação do Duo.",
     "tail_empty": "O ChatGPT e o Claude podem ter respondido nos seus apps, mas o iOS não passou a resposta ao Duo. Abra o app do ChatGPT ou do Claude para lê-la, ou rode o Duo pela Siri («E aí Siri, Duo»).",
     "tail_empty_claude": "O Claude pode ter respondido no app dele, mas o iOS não passou a resposta ao Duo. Abra o app do Claude para lê-la, ou rode o Duo pela Siri («E aí Siri, Duo»).",
-    "voice_start": "🎧 Duo Voice: ChatGPT → Claude, eu leio a resposta final em voz alta. ≈1 min.",
+    "voice_start": "Duo Voice: ChatGPT → Claude, eu leio a resposta final em voz alta. ≈1 min.",
     "photo_done": "📸 Texto reconhecido — abrindo o Duo.",
     "multi_step1": "🎼 Coro [1/3]: ChatGPT e Claude estão respondendo por conta própria…",
     "multi_step3": "[3/3] O Claude está fundindo o coro…",

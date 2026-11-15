@@ -301,7 +301,7 @@ Small single-purpose shortcuts that share the same engine. They are for people w
 name «Poly», so rename yours to «Poly» or edit the Run Shortcut step in each companion.
 
 
-- **Poly Voice** — tap, dictate, hear the final answer read back.
+- **Duo Voice** — tap, dictate, hear the final answer read back.
 - **Poly Photo** — share a photo or PDF; the text is recognized on device, then answered.
 - **Poly Quiet** — the Critique pipeline with no screens at all: clipboard and journal only.
 - **Poly Compress** — shrink a long text with Apple's on-device model before the pair sees it.

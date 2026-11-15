@@ -8,7 +8,7 @@
   },
   "shortcut_names": {
     "main": "Poly",
-    "voice": "Poly Voice",
+    "voice": "Duo Voice",
     "photo": "Poly Photo",
     "quiet": "Poly Quiet",
     "compress": "Poly Compress",
@@ -29,7 +29,7 @@
     "question": "你要问 ChatGPT 和 Claude 的问题（任何语言都可以）：",
     "clarify_suffix": "\n\n请在一条消息里把这些都回答掉（或者输入“跳过”）：",
     "clarify_default": "跳过",
-    "voice_question": "请口述你要问 Poly 的问题",
+    "voice_question": "请口述你要问 Duo 的问题",
     "quiet_question": "问题（静默模式 —— 结果只进剪贴板和日志）",
     "multi_question": "你想问 AI 合唱团什么？",
     "multi_count": "提示词已经在你的剪贴板里。你还要手动去问几个 AI（Gemini、Grok、DeepSeek……）？0 —— 只用自动的这一对。",
@@ -89,7 +89,8 @@
       "🐞 报告本次运行",
       "📌 下次直接审校",
       "⚡ 分享的文字：不编辑直接问",
-      "↩️ 恢复所有菜单"
+      "↩️ 恢复所有菜单",
+      "💬 能用 / 不能用 / 想法 — GitHub 表单"
     ],
     "recipes_title": "您需要什么？",
     "recipes_items": [
@@ -167,7 +168,7 @@
     "tail_done": "✅ 完成。答案也在剪贴板里：可以粘贴到任何地方。没有自动打开？点一下 Duo 的通知。",
     "tail_empty": "ChatGPT 和 Claude 可能已在各自的 App 里回答，但 iOS 没有把回答交给 Duo。打开 ChatGPT 或 Claude App 查看，或通过 Siri 运行 Duo（“嘿 Siri，Duo”）。",
     "tail_empty_claude": "Claude 可能已在自己的 App 里回答，但 iOS 没有把回答交给 Duo。打开 Claude App 查看，或通过 Siri 运行 Duo（“嘿 Siri，Duo”）。",
-    "voice_start": "🎧 Duo Voice：ChatGPT → Claude，最终答案我会念给你听。约 1 分钟。",
+    "voice_start": "Duo Voice：ChatGPT → Claude，最终答案我会念给你听。约 1 分钟。",
     "photo_done": "📸 文字已识别 —— 正在打开 Duo。",
     "multi_step1": "🎼 合唱 [1/3]：ChatGPT 和 Claude 正在各自作答……",
     "multi_step3": "[3/3] Claude 正在合并整个合唱团的回答……",

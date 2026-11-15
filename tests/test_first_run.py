@@ -186,3 +186,17 @@ def test_trio_start_hint_is_shown_once_and_empty_tail_says_run_again(tmp_path, l
     assert any(a['WFWorkflowActionParameters'].get('WFFileDestinationPath', '').endswith('-start-hint.txt') for a in saved)
     notify = ui.get('notify', ui)
     assert 'Poly Voice' not in notify['voice_start']
+
+
+def test_help_headed_what_is_duo_in_all_languages():
+    """D-29: the help screen is headed «what is DUO» in every language and states no permission count."""
+    import json, pathlib
+    root = pathlib.Path(__file__).resolve().parent.parent / 'locales'
+    for lang_dir in sorted(root.iterdir()):
+        ui_file = lang_dir / 'ui.json'
+        if not ui_file.exists():
+            continue
+        h = json.loads(ui_file.read_text(encoding='utf-8'))['help']
+        head = h.split('\n')[0]
+        assert head.startswith('ℹ️ ') and 'DUO' in head and 'POLY' not in head.upper(), lang_dir.name
+        assert '4–6' not in h and '4-6' not in h, lang_dir.name

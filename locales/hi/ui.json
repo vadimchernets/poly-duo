@@ -8,7 +8,7 @@
   },
   "shortcut_names": {
     "main": "Poly",
-    "voice": "Poly Voice",
+    "voice": "Duo Voice",
     "photo": "Poly Photo",
     "quiet": "Poly Quiet",
     "compress": "Poly Compress",
@@ -29,7 +29,7 @@
     "question": "ChatGPT और Claude के लिए आपका सवाल (किसी भी भाषा में):",
     "clarify_suffix": "\n\nइन सबका जवाब एक ही संदेश में दें (या «छोड़ें» लिखें):",
     "clarify_default": "छोड़ें",
-    "voice_question": "Poly के लिए अपना सवाल बोलें",
+    "voice_question": "Duo के लिए अपना सवाल बोलें",
     "quiet_question": "सवाल (चुप मोड — नतीजा क्लिपबोर्ड और डायरी में जाएगा)",
     "multi_question": "AI मंडली से क्या पूछना चाहते हैं?",
     "multi_count": "प्रॉम्प्ट पहले से आपके क्लिपबोर्ड में है। और कितने AI से हाथ से पूछेंगे (Gemini, Grok, DeepSeek…)? 0 — सिर्फ़ अपने-आप चलने वाली जोड़ी।",
@@ -89,7 +89,8 @@
       "🐞 इस रन की रिपोर्ट करें",
       "📌 अगली बार सीधे समीक्षा",
       "⚡ भेजा गया टेक्स्ट: बिना बदले पूछें",
-      "↩️ सभी मेन्यू फिर दिखाएँ"
+      "↩️ सभी मेन्यू फिर दिखाएँ",
+      "💬 चला / नहीं चला / सुझाव — GitHub पर फ़ॉर्म"
     ],
     "recipes_title": "आपको क्या चाहिए?",
     "recipes_items": [
@@ -167,7 +168,7 @@
     "tail_done": "✅ हो गया। जवाब क्लिपबोर्ड में भी है: कहीं भी पेस्ट करें। अपने आप नहीं खुला? Duo की सूचना पर टैप करें।",
     "tail_empty": "ChatGPT और Claude ने अपने ऐप में जवाब दिया हो सकता है, पर iOS ने जवाब Duo तक नहीं पहुँचाया। पढ़ने के लिए ChatGPT या Claude ऐप खोलें, या Duo को Siri से चलाएँ («Hey Siri, Duo»)।",
     "tail_empty_claude": "Claude ने अपने ऐप में जवाब दिया हो सकता है, पर iOS ने जवाब Duo तक नहीं पहुँचाया। पढ़ने के लिए Claude ऐप खोलें, या Duo को Siri से चलाएँ («Hey Siri, Duo»)।",
-    "voice_start": "🎧 Duo Voice: ChatGPT → Claude, अंतिम जवाब मैं पढ़कर सुनाऊँगा। ≈1 मिनट।",
+    "voice_start": "Duo Voice: ChatGPT → Claude, अंतिम जवाब मैं पढ़कर सुनाऊँगा। ≈1 मिनट।",
     "photo_done": "📸 टेक्स्ट पहचान लिया — Duo खोल रहा हूँ।",
     "multi_step1": "🎼 मंडली [1/3]: ChatGPT और Claude खुद जवाब दे रहे हैं…",
     "multi_step3": "[3/3] Claude पूरी मंडली को मिला रहा है…",

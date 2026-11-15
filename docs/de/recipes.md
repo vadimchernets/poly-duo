@@ -27,7 +27,7 @@ C1M Duo ist ein Allrounder: Jede Aufgabe läuft auf die richtige Formulierung pl
 | Vage Frage, du weißt selbst nicht genau, was du willst | Frag sie, wie sie ist — du bekommst zuerst Rückfragen | ❓ Rückfrage · 2✉ |
 | Logo, Diagramm, Grußkarte, Illustration | „Zeichne [was, in welchem Stil]“ — zwei Vektorskizzen zur Auswahl | 🎨 Bild · 2–3✉ |
 | Foto eines Dokuments, Schilds oder einer Speisekarte | Foto teilen → Poly Photo (die Texterkennung erledigt den Rest) | Begleiter Poly Photo |
-| Kleiner Bildschirm / unterwegs | Per Stimme fragen — die Antwort wird vorgelesen, der Text landet in der Zwischenablage | Begleiter Poly Voice |
+| Kleiner Bildschirm / unterwegs | Per Stimme fragen — die Antwort wird vorgelesen, der Text landet in der Zwischenablage | Begleiter Duo Voice |
 | Unsicher, welchen Modus du nehmen sollst | Frag es, wie es ist — wähl selbst keinen Modus | 🧭 Auto · +1✉ (ChatGPT empfiehlt einen; Duo startet mit derselben Frage neu) |
 | Das Nachrichtenbudget ist knapp, du willst trotzdem zwei Sichtweisen | Frag es, wie es ist | ➕ Delta · 2✉ (die günstigere Alternative zur 🔀 Synthese: Claudes Anker + ChatGPTs Liste an Verbesserungen — 2 statt 3 Nachrichten) |
 

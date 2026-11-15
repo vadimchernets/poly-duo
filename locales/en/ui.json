@@ -8,7 +8,7 @@
   },
   "shortcut_names": {
     "main": "Poly",
-    "voice": "Poly Voice",
+    "voice": "Duo Voice",
     "photo": "Poly Photo",
     "quiet": "Poly Quiet",
     "compress": "Poly Compress",
@@ -29,7 +29,7 @@
     "question": "Your question for ChatGPT and Claude (any language):",
     "clarify_suffix": "\n\nAnswer these in one message (or type «skip»):",
     "clarify_default": "skip",
-    "voice_question": "Dictate your question for Poly",
+    "voice_question": "Dictate your question for Duo",
     "quiet_question": "Question (quiet mode — result goes to clipboard and journal)",
     "multi_question": "What do you want to ask the AI choir?",
     "multi_count": "The prompt is already in your CLIPBOARD. How many more AIs will you poll by hand (Gemini, Grok, DeepSeek…)? 0 — just the automatic pair.",
@@ -89,7 +89,8 @@
       "🐞 Report this run",
       "📌 Critique right away next time",
       "⚡ Shared text: ask without editing",
-      "↩️ Show all menus again"
+      "↩️ Show all menus again",
+      "💬 Worked / didn't work / idea — form on GitHub"
     ],
     "recipes_title": "What do you need?",
     "recipes_items": [
@@ -167,7 +168,7 @@
     "tail_done": "✅ Done. The answer is also in your clipboard: paste it anywhere. Did not open by itself? Tap the Duo notification.",
     "tail_empty": "ChatGPT and Claude may have answered in their own apps, but iOS did not pass the answer to Duo. Open the ChatGPT or Claude app to read it, or run Duo through Siri («Hey Siri, Duo»).",
     "tail_empty_claude": "Claude may have answered in its own app, but iOS did not pass the answer to Duo. Open the Claude app to read it, or run Duo through Siri («Hey Siri, Duo»).",
-    "voice_start": "🎧 Duo Voice: ChatGPT → Claude, I'll read the final answer aloud. ≈1 min.",
+    "voice_start": "Duo Voice: ChatGPT → Claude, I'll read the final answer aloud. ≈1 min.",
     "photo_done": "📸 Text recognized — opening Duo.",
     "multi_step1": "🎼 Choir [1/3]: ChatGPT and Claude are answering on their own…",
     "multi_step3": "[3/3] Claude is merging the choir…",

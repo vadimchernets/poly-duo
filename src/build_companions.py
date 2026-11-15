@@ -2,7 +2,7 @@
 """Build the C1 companion shortcuts for one locale.
 
 Usage:  python3 src/build_companions.py <lang>
-Output: dist/<lang>/Poly Voice.shortcut, Poly Photo.shortcut, Poly Quiet.shortcut,
+Output: dist/<lang>/Duo Voice.shortcut, Poly Photo.shortcut, Poly Quiet.shortcut,
         Poly Compress.shortcut, Poly Multi.shortcut
 
 Voice     — tap, dictate, hear the final answer read aloud.

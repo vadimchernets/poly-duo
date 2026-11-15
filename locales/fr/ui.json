@@ -8,7 +8,7 @@
   },
   "shortcut_names": {
     "main": "Poly",
-    "voice": "Poly Voice",
+    "voice": "Duo Voice",
     "photo": "Poly Photo",
     "quiet": "Poly Quiet",
     "compress": "Poly Compress",
@@ -29,7 +29,7 @@
     "question": "Ta question pour ChatGPT et Claude (dans n’importe quelle langue) :",
     "clarify_suffix": "\n\nRéponds à tout ça en un seul message (ou écris « passer ») :",
     "clarify_default": "passer",
-    "voice_question": "Dicte ta question pour Poly",
+    "voice_question": "Dicte ta question pour Duo",
     "quiet_question": "Question (mode discret — le résultat part dans le presse-papiers et le journal)",
     "multi_question": "Que veux-tu demander au chœur d’IA ?",
     "multi_count": "Le prompt est déjà dans ton PRESSE-PAPIERS. Combien d’IA vas-tu encore interroger à la main (Gemini, Grok, DeepSeek…) ? 0 — seulement le duo automatique.",
@@ -89,7 +89,8 @@
       "🐞 Signaler cette exécution",
       "📌 La prochaine fois, direct à Critique",
       "⚡ Texte partagé : sans modifier la question",
-      "↩️ Réafficher tous les menus"
+      "↩️ Réafficher tous les menus",
+      "💬 Ça marche / ça ne marche pas / idée — formulaire sur GitHub"
     ],
     "recipes_title": "De quoi as-tu besoin ?",
     "recipes_items": [
@@ -167,7 +168,7 @@
     "tail_done": "✅ Terminé. La réponse est aussi dans le presse-papiers : colle-la où tu veux. Elle ne s’est pas ouverte ? Touche la notification Duo.",
     "tail_empty": "ChatGPT et Claude ont peut-être répondu dans leurs apps, mais iOS n’a pas transmis la réponse à Duo. Ouvrez l’app ChatGPT ou Claude pour la lire, ou lancez Duo avec Siri (« Dis Siri, Duo »).",
     "tail_empty_claude": "Claude a peut-être répondu dans son app, mais iOS n’a pas transmis la réponse à Duo. Ouvrez l’app Claude pour la lire, ou lancez Duo avec Siri (« Dis Siri, Duo »).",
-    "voice_start": "🎧 Duo Voice : ChatGPT → Claude, je lirai la réponse finale à voix haute. ≈1 min.",
+    "voice_start": "Duo Voice : ChatGPT → Claude, je lirai la réponse finale à voix haute. ≈1 min.",
     "photo_done": "📸 Texte reconnu — j’ouvre Duo.",
     "multi_step1": "🎼 Chœur [1/3] : ChatGPT et Claude répondent d’eux-mêmes…",
     "multi_step3": "[3/3] Claude fusionne le chœur…",

@@ -27,7 +27,7 @@ C1M Duo est un généraliste : toute tâche se ramène à la bonne formulation p
 | Question floue, tu ne sais pas bien ce que tu veux | pose-la telle quelle — on te posera d’abord des questions complémentaires | ❓ Clarification · 2✉ |
 | Logo, schéma, carte de vœux, illustration | « Dessine [quoi, dans quel style] » — deux croquis vectoriels au choix | 🎨 Image · 2–3✉ |
 | Photo d’un document, d’un panneau ou d’un menu | Partage la photo → Poly Photo (l’OCR s’occupe du reste) | compagnon Poly Photo |
-| Petit écran / en déplacement | demande à la voix — la réponse est lue à voix haute et le texte arrive dans ton presse-papiers | compagnon Poly Voice |
+| Petit écran / en déplacement | demande à la voix — la réponse est lue à voix haute et le texte arrive dans ton presse-papiers | compagnon Duo Voice |
 | Tu ne sais pas quel mode prendre | pose-la telle quelle — ne choisis pas de mode toi-même | 🧭 Auto · +1✉ (ChatGPT en recommande un ; Duo redémarre avec la même question) |
 | Budget de messages serré, mais tu veux deux points de vue | pose-la telle quelle | ➕ Delta · 2✉ (alternative moins chère à 🔀 Synthèse : l’ancre de Claude + la liste d’améliorations de ChatGPT — 2 messages au lieu de 3) |
 

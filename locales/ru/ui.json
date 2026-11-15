@@ -8,7 +8,7 @@
   },
   "shortcut_names": {
     "main": "Poly",
-    "voice": "Poly Voice",
+    "voice": "Duo Voice",
     "photo": "Poly Photo",
     "quiet": "Poly Quiet",
     "compress": "Poly Compress",
@@ -29,7 +29,7 @@
     "question": "Ваш вопрос для ChatGPT и Claude (на любом языке):",
     "clarify_suffix": "\n\nОтветьте на уточнения одним сообщением (или напишите «пропустить»):",
     "clarify_default": "пропустить",
-    "voice_question": "Надиктуйте вопрос для Poly",
+    "voice_question": "Надиктуйте вопрос для Duo",
     "quiet_question": "Вопрос (тихий режим — итог в буфер и журнал)",
     "multi_question": "Вопрос для хора ИИ?",
     "multi_count": "Промпт уже в БУФЕРЕ. Сколько ещё ИИ опросите вручную (Gemini, Grok, DeepSeek…)? 0 — только авто-пара.",
@@ -89,7 +89,8 @@
       "🐞 Сообщить о запуске",
       "📌 В следующий раз сразу Критика",
       "⚡ Присланный текст: без правки вопроса",
-      "↩️ Вернуть все меню"
+      "↩️ Вернуть все меню",
+      "💬 Сработало / не сработало / идея — форма на GitHub"
     ],
     "recipes_title": "Что вам нужно?",
     "recipes_items": [
@@ -167,7 +168,7 @@
     "tail_done": "✅ Готово. Ответ ещё и в буфере обмена — вставьте куда угодно. Не открылся сам? Нажмите на уведомление Duo.",
     "tail_empty": "ChatGPT и Claude могли ответить в своих приложениях, но iOS не передала ответ в Duo. Откройте приложение ChatGPT или Claude, чтобы его прочитать, или запустите Duo через Siri («Hey Siri, Duo»).",
     "tail_empty_claude": "Claude мог ответить в своём приложении, но iOS не передала ответ в Duo. Откройте приложение Claude, чтобы его прочитать, или запустите Duo через Siri («Hey Siri, Duo»).",
-    "voice_start": "🎧 Duo Voice: ChatGPT → Claude, финал прочту вслух. ≈1 мин.",
+    "voice_start": "Duo Voice: ChatGPT → Claude, финал прочту вслух. ≈1 мин.",
     "photo_done": "📸 Текст распознан — открываю Duo.",
     "multi_step1": "🎼 Хор [1/3]: ChatGPT и Claude отвечают сами…",
     "multi_step3": "[3/3] Claude сводит хор…",

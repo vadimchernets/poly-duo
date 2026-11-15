@@ -61,7 +61,7 @@ def test_hint_moved_out_of_start_notifications(tmp_path, lang):
     else:
         assert 'logged out' not in n['gpt_down'] and 'logged out' not in ui['alert']['first_run_body']
     assert 'ChatGPT' in ui['notify']['critique_start'].split('.')[-2 if ui['notify']['critique_start'].endswith('.') else -1] or 'ChatGPT' in ui['notify']['critique_start'][-40:]
-    assert len(ui['menu']['finale_more_items']) == 7
+    assert len(ui['menu']['finale_more_items']) == 8
     for k in ('pref_mode', 'pref_quick', 'pref_reset'):
         assert n[k].strip()
 

@@ -579,6 +579,7 @@ MENU_MARK = '⟦duo-menu⟧\n'
 # How much of the answer Duo left in the clipboard is remembered (files.last_answer), to recognise it next run
 LAST_ANSWER_CHARS = 200
 REPORT_URL = 'https://github.com/vadimchernets/poly-duo/issues/new?template=run-report.yml'
+FEEDBACK_URL = 'https://github.com/vadimchernets/poly-duo/issues/new?template=feedback.yml'
 LONG_TEXT = 6000
 # A long question (Yuri 10.11, No.53, iPhone XR, iOS 18.7): with a question of ~1800 characters iOS stopped «Ask ChatGPT»
 # with «the action was interrupted because it did not finish in time» while ChatGPT was still writing a long answer; the
@@ -2149,6 +2150,10 @@ def build(lang, ai=False):
         *set_text(MODE_OFF, '1'),
         *set_text(QUICK_OFF, '1'),
         *set_text(PREFS_CHANGED, '1'), *set_text(NOTE_RESET, '1'),
+        # D-128: «Worked / didn't work / idea» — opens the Feedback issue form on GitHub (nothing is sent here)
+        menu_case(g_more, L['menu.finale_more_items'][7]),
+        {'WFWorkflowActionIdentifier': 'is.workflow.actions.openurl',
+         'WFWorkflowActionParameters': {'WFInput': text_token(FEEDBACK_URL, {}), 'Show-WFInput': True}},
         menu_close(g_more),
         *if_text(g_pc, PREFS_CHANGED),
         # the file is rebuilt from the two clean flags: the header, then one line for each option that is ON

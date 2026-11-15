@@ -8,7 +8,7 @@
   },
   "shortcut_names": {
     "main": "Poly",
-    "voice": "Poly Voice",
+    "voice": "Duo Voice",
     "photo": "Poly Photo",
     "quiet": "Poly Quiet",
     "compress": "Poly Compress",
@@ -29,7 +29,7 @@
     "question": "ChatGPT と Claude への質問（どの言語でも可）：",
     "clarify_suffix": "\n\nこれらにまとめて1通で答えてください（不要なら「スキップ」と入力）：",
     "clarify_default": "スキップ",
-    "voice_question": "Poly への質問を話してください",
+    "voice_question": "Duo への質問を話してください",
     "quiet_question": "質問（サイレントモード — 結果はクリップボードと記録へ）",
     "multi_question": "AI の合唱に何を聞きますか？",
     "multi_count": "プロンプトはすでにクリップボードにあります。あと何個の AI を手作業で聞きますか（Gemini、Grok、DeepSeek…）？ 0 — 自動のペアだけ。",
@@ -89,7 +89,8 @@
       "🐞 この実行を報告",
       "📌 次回からすぐ批評",
       "⚡ 共有した文章：編集せずに送る",
-      "↩️ すべてのメニューを元に戻す"
+      "↩️ すべてのメニューを元に戻す",
+      "💬 動いた／動かない／アイデア — GitHub のフォーム"
     ],
     "recipes_title": "何が必要ですか？",
     "recipes_items": [
@@ -167,7 +168,7 @@
     "tail_done": "✅ 完了。答えはクリップボードにも入っています。どこにでも貼り付けられます。自動で開かないときは Duo の通知をタップしてください。",
     "tail_empty": "ChatGPTとClaudeはそれぞれのアプリで回答した可能性がありますが、iOSが回答をDuoに渡しませんでした。ChatGPTかClaudeのアプリを開いて読むか、Siriで Duo を実行してください（「Hey Siri, Duo」）。",
     "tail_empty_claude": "Claudeは自分のアプリで回答した可能性がありますが、iOSが回答をDuoに渡しませんでした。Claudeのアプリを開いて読むか、Siriで Duo を実行してください（「Hey Siri, Duo」）。",
-    "voice_start": "🎧 Duo Voice：ChatGPT → Claude、最終回答を読み上げます。約1分。",
+    "voice_start": "Duo Voice：ChatGPT → Claude、最終回答を読み上げます。約1分。",
     "photo_done": "📸 文字を認識しました — Duo を開きます。",
     "multi_step1": "🎼 合唱 [1/3]：ChatGPT と Claude が自分で答えています…",
     "multi_step3": "[3/3] Claude が合唱をまとめています…",

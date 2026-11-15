@@ -27,7 +27,7 @@ C1M Duo is a generalist: any task boils down to the right phrasing plus the righ
 | Vague question, not sure what you actually want | ask it as-is — you'll get follow-up questions first | ❓ Clarify · 2✉ |
 | Logo, diagram, greeting card, illustration | "Draw [what, in what style]" — two vector sketches to choose from | 🎨 Image · 2–3✉ |
 | Photo of a document, sign, or menu | Share the photo → Poly Photo (OCR handles the rest) | Poly Photo companion |
-| Small screen / on the move | ask by voice — the answer is read aloud, and the text lands in your clipboard | Poly Voice companion |
+| Small screen / on the move | ask by voice — the answer is read aloud, and the text lands in your clipboard | Duo Voice companion |
 | Not sure which mode to pick | ask it as-is — don't choose a mode yourself | 🧭 Auto · +1✉ (ChatGPT recommends one; Duo restarts with the same question) |
 | Message budget is tight, but you still want two takes | ask it as-is | ➕ Delta · 2✉ (a cheaper alternative to 🔀 Synthesis: Claude's anchor + ChatGPT's list of improvements — 2 messages instead of 3) |
 
