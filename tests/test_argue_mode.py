@@ -90,3 +90,22 @@ def test_blind_first_in_argue_and_debate(tmp_path):
     asks = [a for a in actions if a['WFWorkflowActionIdentifier'].endswith('askllm')
             or 'claude' in a['WFWorkflowActionIdentifier'].lower()]
     assert asks  # the model calls exist; counts are pinned by the mode tests above
+
+
+@pytest.mark.parametrize('lang', ['en', 'uk', 'ru'])
+def test_trio_has_duo_fixes(tmp_path, lang):
+    """15.11: Trio gets the brevity line before every Ask Claude and the ChatGPT output cleaning, as Duo does."""
+    import os, plistlib, subprocess, sys
+    from pathlib import Path
+    root = Path(__file__).resolve().parent.parent
+    subprocess.run([sys.executable, str(root / 'src' / 'build_trio.py'), lang], check=True, capture_output=True,
+                   env={**os.environ, 'C1_DIST': str(tmp_path)})
+    sys.path.insert(0, str(root / 'src'))
+    import build_shortcut as b
+    brief = b.Locale(lang)['brief.claude']
+    actions = plistlib.loads((tmp_path / lang / 'Trio.shortcut').read_bytes())['WFWorkflowActions']
+    claude = [a for a in actions if a['WFWorkflowActionIdentifier'] == b.CLAUDE_INTENT]
+    assert claude and all(a['WFWorkflowActionParameters']['message']['Value']['string'].startswith(brief) for a in claude)
+    gpt = sum(a['WFWorkflowActionIdentifier'] == 'com.openai.chat.AskIntent' for a in actions)
+    cleans = sum('image_group' in str(a['WFWorkflowActionParameters'].get('WFReplaceTextFind', '')) for a in actions)
+    assert gpt and cleans == gpt
