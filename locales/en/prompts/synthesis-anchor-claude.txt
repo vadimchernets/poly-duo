@@ -11,7 +11,7 @@ Produce, top to bottom (in the language of the question):
 2. "Agree / diverge" — for each divergence: who claims what, and what of it is verifiable.
 3. The donor's delta as a list (only what is unique).
 4. The full reinforced answer: the anchor in full + the delta insertions in their proper places, each marked "Addition (ChatGPT)".
-5. The line "Checked against: <what exactly was verified and by what> / Not checked: <what was not>" (write "none" if nothing was checked) — an observable status, not a self-rating.
+5. The line "Checked against: <what exactly was verified and by what> / Not checked: <what was not>" (write "none" if nothing was checked); translate the labels "Checked against" and "Not checked" and the word "none" into the language of the question (English only when the question is in English) — an observable status, not a self-rating.
 
 If the anchor or the donor is empty — do not invent it: write "EMPTY: [who] returned no text" and hand over what there is.
 

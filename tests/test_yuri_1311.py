@@ -180,3 +180,36 @@ def test_every_claude_request_starts_with_brevity_line(tmp_path, lang):
         for key in v['attachmentsByRange']:
             pos = int(key.strip('{}').split(',')[0])
             assert v['string'].encode('utf-16-le')[pos * 2:pos * 2 + 2].decode('utf-16-le') == '￼'
+
+
+def test_run_name_follows_dated_diag_name(tmp_path):
+    """15.11, No.67: Back / Another mode must run the SAME shortcut that is installed (Duo-diag-0154), not an old Duo-diag."""
+    env = dict(os.environ, C1_DIST=str(tmp_path), C1_DIAG='1', C1_RUN_NAME='Duo-diag-0154')
+    subprocess.run([sys.executable, str(ROOT / 'src' / 'build_shortcut.py'), 'uk'], check=True, cwd=ROOT, env=env,
+                   capture_output=True)
+    actions = plistlib.loads((tmp_path / 'uk' / 'Poly-diag.shortcut').read_bytes())['WFWorkflowActions']
+    names = {str(params(a)['WFWorkflowName']) for a in actions if kind(a) == 'runworkflow'}
+    assert names and all('Duo-diag-0154' in n for n in names), names
+
+
+def test_finale_another_mode_ends_the_run():
+    """«Another mode» in What next? starts a new run and ends this one (no fall-through into More…)."""
+    src = (ROOT / 'src' / 'build_shortcut.py').read_text()
+    i = src.index("*rerun_with_menu(q_get, 'Variable'),")
+    assert 'is.workflow.actions.exit' in src[i:i + 200]
+
+
+SVERENO = '\u0421\u0432\u0435\u0440\u0435\u043d\u043e'
+RU_LANG = '\u043d\u0430 \u044f\u0437\u044b\u043a\u0435 \u0432\u043e\u043f\u0440\u043e\u0441\u0430'
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_checked_against_line_follows_question_language(lang):
+    """15.11: the status line «Checked against / Not checked» is written in the language of the question."""
+    import glob
+    d = ROOT / 'locales' / ('ru' if lang == 'ru' else 'en') / 'prompts'
+    hits = [f for f in glob.glob(str(d / '*.txt')) if 'Checked against' in open(f).read() or SVERENO in open(f).read()]
+    assert len(hits) >= 10
+    for f in hits:
+        t = open(f).read()
+        assert 'language of the question' in t or RU_LANG in t, f

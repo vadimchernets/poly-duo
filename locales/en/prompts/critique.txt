@@ -10,7 +10,7 @@ Do three things:
 3. Produce ONE coherent final answer: in the language of the question; first line — the bottom line, then the details; no "agree/disagree" structure; if the question is ambiguous — state the reading you chose in one line.
 
 At the very end add:
-- the line "Checked against: <what exactly was verified and by what> / Not checked: <what was not>" (write "none" if nothing was checked) — an observable status, not a self-rating;
+- the line "Checked against: <what exactly was verified and by what> / Not checked: <what was not>" (write "none" if nothing was checked); translate the labels "Checked against" and "Not checked" and the word "none" into the language of the question (English only when the question is in English) — an observable status, not a self-rating;
 - a "Corrections to the colleague's answer" block — only if you found real errors; if there are none — one line: "No errors in the colleague's answer".
 
 If the colleague's answer is empty or truncated — do not invent it: write "EMPTY: ChatGPT returned no text" and give your own full answer instead.

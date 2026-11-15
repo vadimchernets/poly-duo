@@ -11,7 +11,7 @@ Rules:
 6. Language — the language of the question. Keep it short: at most 8 items.
 7. If an answer below is empty, that assistant gave no answer: do not invent its content and do not treat its silence as agreement.
 
-At the very end add the line "Checked against: <what exactly was verified and by what> / Not checked: <what was not>" (write "none" if nothing was checked) — an observable status, not a self-rating.
+At the very end add the line "Checked against: <what exactly was verified and by what> / Not checked: <what was not>" (write "none" if nothing was checked); translate the labels "Checked against" and "Not checked" and the word "none" into the language of the question (English only when the question is in English) — an observable status, not a self-rating.
 
 ORIGINAL QUESTION:
 {QUESTION}

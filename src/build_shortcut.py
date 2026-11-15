@@ -496,7 +496,9 @@ VERSION_DAYS = 7
 # site). iOS names an imported shortcut after it, so «another mode — same question» calls this name.
 RELEASE_NAME = 'Duo'
 # «Another mode», «Back», recipes start this shortcut again by name: in the diagnostic build that is Duo-diag, not Duo
-RUN_NAME = RELEASE_NAME + ('-diag' if os.environ.get('C1_DIAG') == '1' else '')
+# C1_RUN_NAME: the diag file is installed on the phone under a dated name (Duo-diag-0154), and «Back»/«Another mode»
+# must start THAT shortcut, not an older «Duo-diag» still sitting there (15.11 run, No.67)
+RUN_NAME = os.environ.get('C1_RUN_NAME') or RELEASE_NAME + ('-diag' if os.environ.get('C1_DIAG') == '1' else '')
 # «Debate until agreement»: a side that is genuinely convinced starts its reply with this marker
 # (the prompts argue-2-object / argue-3-reply ask for it); the shortcut stops the rounds when it appears.
 ARGUE_MARKER = '[[CONCEDE]]'
@@ -2069,6 +2071,7 @@ def build(lang, ai=False):
         menu_case(g_finale, L['menu.finale_items'][0]),
         menu_case(g_finale, L['menu.finale_items'][1]),
         *rerun_with_menu(q_get, 'Variable'),
+        {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
         # ---- More…: one extra step for the person who wants it; the usual «Done / Another mode» stays two taps
         menu_case(g_finale, L['menu.finale_items'][2]),
         menu_open(g_more, L['menu.finale_more_title'], L['menu.finale_more_items']),
