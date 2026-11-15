@@ -256,5 +256,8 @@
     "prompt": "Saiu uma nova versão do {NAME} — quer instalar?",
     "install": "Instalar",
     "later": "Agora não"
+  },
+  "brief": {
+    "claude": "Responda de forma breve: no máximo cerca de 150 palavras, sem introdução. Apenas o resultado, as principais divergências e o que verificar. Sem pesquisar na web e sem pensar por muito tempo."
   }
 }

@@ -123,7 +123,30 @@ def act_gpt(prompt, uid):
                 'ShowWhenRun': False, 'prompt': prompt, 'UUID': uid}}
 
 
-def act_claude(message, uid):
+CLAUDE_BRIEF = ''   # set per build from ui.json «brief.claude»; goes first in every request to Claude (14.11 live run)
+
+
+def with_brief(message):
+    """Put CLAUDE_BRIEF in front of a Text token, moving its attachments by the length of the line (UTF-16 units)."""
+    if not CLAUDE_BRIEF:
+        return message
+    pre = CLAUDE_BRIEF + '\n\n'
+    shift = len(pre.encode('utf-16-le')) // 2
+    value = message['Value']
+    moved = {}
+    for key, att in value['attachmentsByRange'].items():
+        pos, n = (int(x) for x in key.strip('{}').split(','))
+        moved['{%d, %d}' % (pos + shift, n)] = att
+    return {'Value': {'string': pre + value['string'], 'attachmentsByRange': moved},
+            'WFSerializationType': 'WFTextTokenString'}
+
+
+def act_claude(message, uid, brief=True):
+    """14.11 live run (Critique, Opus 5.5): a long Claude answer made iOS fail «Ask Claude» with «unknown error» after
+    30-60 s although the answer was in the Claude app; short answers came back in 4-9 s. So every request to Claude
+    starts with the line «ui.brief.claude» (about 150 words, essentials only). brief=False: the SVG image steps."""
+    if brief:
+        message = with_brief(message)
     return {'WFWorkflowActionIdentifier': CLAUDE_INTENT,
             'WFWorkflowActionParameters': {
                 'AppIntentDescriptor': {'TeamIdentifier': 'Q6L2SF6YDW',
@@ -550,7 +573,7 @@ LONG_TEXT = 6000
 # goes in front of the usual request) and one notification says so; the Critique draft still lets the next run go on.
 LONG_QUESTION = 1200
 BRIEF_LINE = ('The question is long, and this answer has to arrive within the time limit iOS gives one phone action: '
-              'put the essentials first and keep the whole answer under about 500 words.\n\n')
+              'put the essentials first and keep the whole answer under about 200 words.\n\n')
 CLAUDE_INTENT = 'com.anthropic.claude.ClaudeAppIntentsExtension'
 
 
@@ -879,6 +902,8 @@ def build(lang, ai=False):
     trio.json has the nokey.* words)."""
     import build_trio  # lazy: build_trio imports this module
     L = Locale(lang)
+    global CLAUDE_BRIEF
+    CLAUDE_BRIEF = L['brief.claude']
     TRIO = ROOT / 'locales' / lang / 'trio.json'
     if ai and 'nokey.comment' not in json.loads(TRIO.read_text(encoding='utf-8') if TRIO.exists() else '{}'):
         print(f'{lang}: no Apple Intelligence words in trio.json — Duo with Apple Intelligence not built')
@@ -1864,7 +1889,7 @@ def build(lang, ai=False):
         act_text(text_token(L.prompt('image-svg-brief'), Q), i1_brief),
         act_gpt(text_token('{P}', {'P': (i1_brief, 'Text')}), i1_gpt),
         *keep_gpt(i1_gpt, 'Ask ChatGPT', L['notify.image_step2']),
-        act_claude(text_token('{P}', {'P': (i1_brief, 'Text')}), i1_claude),
+        act_claude(text_token('{P}', {'P': (i1_brief, 'Text')}), i1_claude, brief=False),
         act_text(text_token(IMAGE_GALLERY_HTML.replace('{TITLE}', L['output.image_html_title'])
                             .replace('{CAP_C}', L['output.image_html_claude'])
                             .replace('{CAP_G}', L['output.image_html_gpt']),
@@ -1884,7 +1909,7 @@ def build(lang, ai=False):
         act_text(text_token(L.prompt('image-svg-brief'), Q), i2_brief),
         act_gpt(text_token('{P}', {'P': (i2_brief, 'Text')}), i2_gpt),
         *keep_gpt(i2_gpt, 'Ask ChatGPT', L['notify.image_step2']),
-        act_claude(text_token('{P}', {'P': (i2_brief, 'Text')}), i2_claude),
+        act_claude(text_token('{P}', {'P': (i2_brief, 'Text')}), i2_claude, brief=False),
         act_text(text_token(IMAGE_GALLERY_HTML.replace('{TITLE}', L['output.image_html_title'])
                             .replace('{CAP_C}', L['output.image_html_claude'])
                             .replace('{CAP_G}', L['output.image_html_gpt']),

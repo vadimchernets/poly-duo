@@ -256,5 +256,8 @@
     "prompt": "A new version of {NAME} is out — install it?",
     "install": "Install",
     "later": "Not now"
+  },
+  "brief": {
+    "claude": "Keep your reply short: at most about 150 words, no introduction. Give only the result, the main disagreements and what to check. Do not search the web and do not think for long."
   }
 }

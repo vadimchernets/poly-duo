@@ -163,3 +163,20 @@ def test_chatgpt_cite_markers_removed():
     assert clean('a\ue200cite\ue202turn0search1\ue202turn0news2\ue201 b') == 'a b'
     assert clean('x \ue200filecite\ue202turn3file0\ue201.') == 'x .'
     assert clean('He cited turn-by-turn directions; a list of things') == 'He cited turn-by-turn directions; a list of things'
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_every_claude_request_starts_with_brevity_line(tmp_path, lang):
+    """14.11 live run: a long Claude answer broke «Ask Claude»; every request (except SVG image steps) is short-first."""
+    ui = ui_of(lang)
+    line = ui['brief']['claude']
+    actions = build(tmp_path, lang)
+    claude = [a for a in actions if a['WFWorkflowActionIdentifier'] == 'com.anthropic.claude.ClaudeAppIntentsExtension']
+    assert claude
+    with_line = [a for a in claude if params(a)['message']['Value']['string'].startswith(line)]
+    assert len(claude) - len(with_line) == 2   # the two SVG image steps
+    for a in with_line:
+        v = params(a)['message']['Value']
+        for key in v['attachmentsByRange']:
+            pos = int(key.strip('{}').split(',')[0])
+            assert v['string'].encode('utf-16-le')[pos * 2:pos * 2 + 2].decode('utf-16-le') == '￼'
