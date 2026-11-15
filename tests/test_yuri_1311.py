@@ -77,9 +77,14 @@ def test_diagnostic_build_names_every_ai_call(tmp_path):
         log_after = next(a for a in actions[i:] if kind(a) == 'append')
         src = next(a for a in reversed(actions[:actions.index(log_after)]) if kind(a) == 'gettext')
         assert "'WFDateFormat': 'HH:mm:ss'" in str(params(src))
+    # 14.11: resume_block logs each decision point (file, age, step, branch) in the diag build only
+    logs = [str(params(a)) for a in actions if kind(a) == 'gettext' and 'resume:' in str(params(a))]
+    for word in ('found', 'age', 'step', 'branch'):
+        assert any(word in l for l in logs), word
     # the release build has none of it
     plain = build(tmp_path / 'plain', 'uk')
     assert not any('🔧' in str(params(a).get('WFNotificationActionBody', '')) for a in plain)
+    assert not any('🔧' in str(a) for a in plain)
 
 
 @pytest.mark.parametrize('lang', LANGS)

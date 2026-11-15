@@ -1347,6 +1347,18 @@ def build(lang, ai=False):
         rfresh, rs1, rs0 = u(), u(), u()
         I1, I0 = L['menu.resume1_items'], L['menu.resume0_items']
         A = {'A': (ra, 'Text')}
+        diag = os.environ.get('C1_DIAG') == '1'
+
+        def dlog(msg, refs=None):
+            # C1_DIAG only: a line «HH:mm:ss 🔧 resume: ...» into Duo-diag-log.txt at each decision point
+            if not diag:
+                return []
+            t, lu = u(), u()
+            return [act_date(t), act_text(text_token('{D} 🔧 resume: ' + msg + '\n', refs or {}, {'D': hms(t)}), lu),
+                    act_append_file('Duo-diag-log.txt', lu)]
+
+        def delse(g, msg):
+            return [if_else(g), *dlog(msg)] if diag else []
 
         def resumed(*extra):
             return [*set_text(QVAR, '{Q}', {'Q': (rq, 'Text')}), *set_text(RESUME_VAR, '1'), *extra]
@@ -1355,11 +1367,14 @@ def build(lang, ai=False):
             # the comparing prompt with ChatGPT's answer alone (it says how to treat a missing one)
             prompt = L.prompt('critique-blind').replace('{CLAUDE_OWN}', '').replace('{NUMS}', '')
             return set_text(CHECK_VAR, prompt, {'QUESTION': (rq, 'Text'), 'GPT_ANSWER': (ra, 'Text')})
+        rline = u()
         return [
             if_shortcut_input(g_in),
+            *dlog('branch: Shortcut Input present, resume menu skipped'),
             if_else(g_in),
             act_get_file(DRAFT, rf),
             if_output(g_f, rf, 'File', 100),
+            *dlog(f'file {DRAFT} found'),
             act_text(text_token('{F}', {'F': (rf, 'File')}), rt),
             {'WFWorkflowActionIdentifier': 'is.workflow.actions.properties.files',
              'WFWorkflowActionParameters': {'WFInput': attachment(rf, 'File'),
@@ -1372,15 +1387,21 @@ def build(lang, ai=False):
             # «between −30 and 30 minutes» reads the same whichever way the system counts (as in version_check); tested
             # on the text, not on a Number (DRAFT_FRESH, Yuri 13.11, No.62)
             act_text(text_token('{M}', {'M': (rage, 'Time Between Dates')}), rnum),
+            *dlog("age '{V}'", {'V': (rnum, 'Text')}),
+            *((act_first_match(rt, 'Text', '^[^\\n]*', rline),
+               *dlog("step '{V}'", {'V': (rline, 'Matches')})) if diag else ()),
             act_first_match(rnum, 'Text', DRAFT_FRESH, rfresh),
             if_output(g_age, rfresh, 'Matches', 100),
+            *dlog('branch: age passed, looking for the question'),
             act_first_match(rt, 'Text', '(?s)(?<=' + DRAFT_Q + '\\n).*?(?=\\n' + DRAFT_A + ')', rqm),
             act_text(text_token('{M}', {'M': (rqm, 'Matches')}), rq),
             act_first_match(rt, 'Text', '(?s)(?<=' + DRAFT_A + '\\n).*', ram),
             act_text(text_token('{M}', {'M': (ram, 'Matches')}), ra),
             *if_output_text(g_q, rq, 'Text'),
+            *dlog('branch: question found in the draft'),
             act_first_match(rt, 'Text', DRAFT_STEP1, rs1),
             if_output(g_1, rs1, 'Matches', 100),
+            *dlog('branch: step 1, resume menu shown'),
             menu_open(g_m1, L['menu.resume1_title'], I1),
             menu_case(g_m1, I1[0]),
             *resumed(*set_text(GPT_VAR, '{A}', A), *set_text(CRIT_VAR, '1'), act_notify(L['notify.resume'])),
@@ -1395,6 +1416,7 @@ def build(lang, ai=False):
             if_else(g_1),
             act_first_match(rt, 'Text', DRAFT_STEP0, rs0),
             if_output(g_0, rs0, 'Matches', 100),
+            *dlog('branch: step 0, resume menu shown'),
             menu_open(g_m0, L['menu.resume0_title'], I0),
             menu_case(g_m0, I0[0]),
             *resumed(*set_text(SKIP_GPT, '1'), *set_text(ONLY_CLAUDE, '1'), *set_text(CRIT_VAR, '1')),
@@ -1402,10 +1424,14 @@ def build(lang, ai=False):
             *resumed(*set_text(CRIT_VAR, '1')),
             menu_case(g_m0, I0[2]),
             menu_close(g_m0),
+            *delse(g_0, 'branch: step is neither 0 nor 1 (done?), no menu'),
             if_close(g_0),
             if_close(g_1),
+            *delse(g_q, 'branch: no question in the draft, no menu'),
             if_close(g_q),
+            *delse(g_age, 'branch: age failed, no menu'),
             if_close(g_age),
+            *delse(g_f, 'branch: file not found, no menu'),
             if_close(g_f),
             if_close(g_in),
         ]
