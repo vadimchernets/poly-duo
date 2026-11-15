@@ -49,13 +49,20 @@ def test_mode_sits_next_to_critique(lang):
 def test_three_rounds_that_stop_on_the_marker(tmp_path, lang):
     actions = build(tmp_path, lang)
     log = ui(lang)['variables']['argue_log']
-    guards = [a['WFWorkflowActionParameters'] for a in actions
+    guards = [i for i, a in enumerate(actions)
               if a['WFWorkflowActionIdentifier'] == 'is.workflow.actions.conditional'
               and a['WFWorkflowActionParameters'].get('WFConditionalActionString') == MARKER]
     # each round: before Claude objects and before ChatGPT answers
     assert len(guards) == 6
-    assert all(g['WFCondition'] == 99 and g['WFInput']['Variable']['Value']['VariableName'] == log
-               for g in guards)
+    # 15.11 live run: «contains» straight on the log variable stopped the run («Choose values for each parameter»);
+    # now Get Variable (the log) → Text → If Text contains the marker
+    for i in guards:
+        g = actions[i]['WFWorkflowActionParameters']
+        get, txt = actions[i - 2]['WFWorkflowActionParameters'], actions[i - 1]['WFWorkflowActionParameters']
+        assert g['WFCondition'] == 99
+        assert get['WFVariable']['Value']['VariableName'] == log
+        assert g['WFInput']['Variable']['Value'] == {'OutputUUID': txt['UUID'], 'Type': 'ActionOutput',
+                                                    'OutputName': 'Text'}
     start = next(i for i, a in enumerate(actions)
                  if a['WFWorkflowActionParameters'].get('WFMenuItemTitle') == ui(lang)['menu']['main_items'][1])
     end = next(i for i, a in enumerate(actions)

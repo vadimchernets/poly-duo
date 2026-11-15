@@ -145,12 +145,13 @@ def act_match(pattern, src_uid, src_name, uid):
 
 
 def if_contains(group, var_name, needle):
-    return {'WFWorkflowActionIdentifier': 'is.workflow.actions.conditional',
-            'WFWorkflowActionParameters': {'GroupingIdentifier': group, 'WFControlFlowMode': 0,
-                                           'WFCondition': 99,  # «contains»
-                                           'WFConditionalActionString': needle,
-                                           'WFInput': {'Type': 'Variable',
-                                                       'Variable': variable(var_name)}}}
+    """If the variable's text contains `needle`: Get Variable → Text → If Text contains. «contains» put straight on a
+    variable that was set from «Contents of URL» or «Nothing» stops the run with «Choose values for each parameter in
+    this action» (Duo D-100 28.10 and the Debate 15.11, live on iPhone); on a Text action's output it works."""
+    get, txt = new_uuid(), new_uuid()
+    return [act_get_variable(var_name, get),
+            act_text(text_token('{V}', {'V': (get, 'Variable')}), txt),
+            if_output(group, txt, 'Text', 99, WFConditionalActionString=needle)]
 
 
 def act_use_model(prompt_uid, uid):
@@ -330,10 +331,10 @@ def act_set_from_repeat_item(var_name):
 
 def if_contains_ref(group, var_name, src_uid, src_name):
     """If <variable> contains the text of an earlier action's output."""
-    action = if_contains(group, var_name, '')
-    action['WFWorkflowActionParameters']['WFConditionalActionString'] = \
+    actions = if_contains(group, var_name, '')
+    actions[-1]['WFWorkflowActionParameters']['WFConditionalActionString'] = \
         text_token('{N}', {'N': (src_uid, src_name)})
-    return action
+    return actions
 
 
 def if_output_has_value(group, src_uid, src_name):
@@ -523,7 +524,7 @@ def search_voice(T, V, prompt_uid, keys_uid, keys_name='Variable'):
             act_text(text_token('{R}', {'R': (post, 'Contents of URL')}), raw),
             act_set_variable(V['raw'], raw, 'Text'),
             # an answer carries "candidates"; every error (4xx, 429, 5xx) does not → fall through quietly
-            if_contains(ok, V['raw'], '"candidates"'),
+            *if_contains(ok, V['raw'], '"candidates"'),
             act_value('candidates', post, 'Contents of URL', cands),
             act_first_item(cands, 'Dictionary Value', cand),
             act_value('content', cand, 'Item from List', content),
@@ -621,7 +622,7 @@ def third_voice(T, V, prompt_uid, keys_uid, keys_name='Variable', providers=None
             act_set_variable(V['data'], post, 'Contents of URL'),
             act_text(text_token('{R}', {'R': (post, 'Contents of URL')}), raw),
             act_set_variable(V['raw'], raw, 'Text'),
-            if_contains(ok, V['raw'], '"choices"'),
+            *if_contains(ok, V['raw'], '"choices"'),
             act_get_variable(V['data'], data),
             act_value('choices', data, 'Variable', choices),
             act_first_item(choices, 'Dictionary Value', first),
@@ -667,24 +668,24 @@ def third_voice(T, V, prompt_uid, keys_uid, keys_name='Variable', providers=None
         act_item_at(split, 'Split Text', 5, f_max),
         act_get_variable(V['key'], k_get),
         # a key that already said «no money» / «invalid» is not asked again
-        if_contains_ref(skip_dead, dead_v, k_get, 'Variable'),
+        *if_contains_ref(skip_dead, dead_v, k_get, 'Variable'),
         if_else(skip_dead),
         # a provider (or, at Google and Groq, a model) that answered 429 is not asked again this run
         act_get_variable(V['url'], p_url), act_get_variable(V['model'], p_model),
         act_text(text_token('{U}#all', {'U': (p_url, 'Variable')}), p_all),
-        if_contains_ref(skip_all, paused_v, p_all, 'Text'),
+        *if_contains_ref(skip_all, paused_v, p_all, 'Text'),
         if_else(skip_all),
         act_text(text_token('{U}|{M}#', {'U': (p_url, 'Variable'), 'M': (p_model, 'Variable')}), p_one),
-        if_contains_ref(skip_one, paused_v, p_one, 'Text'),
+        *if_contains_ref(skip_one, paused_v, p_one, 'Text'),
         if_else(skip_one),
         # three dialects: Anthropic's own, OpenAI's with max_completion_tokens, everyone else
-        if_contains(g_ant, V['url'], 'api.anthropic.com'),
+        *if_contains(g_ant, V['url'], 'api.anthropic.com'),
         act_post_anthropic(f_url, f_key, f_model, prompt_uid, f_max, post_a),
         act_set_variable(V['data'], post_a, 'Contents of URL'),
         act_text(text_token('{R}', {'R': (post_a, 'Contents of URL')}), raw_a),
         act_set_variable(V['raw'], raw_a, 'Text'),
         if_else(g_ant),
-        if_contains(g_oai, V['url'], 'api.openai.com'),
+        *if_contains(g_oai, V['url'], 'api.openai.com'),
         act_post_json(f_url, f_key, f_model, prompt_uid, post_o, max_uid=f_max,
                       max_field='max_completion_tokens'),
         act_set_variable(V['data'], post_o, 'Contents of URL'),
@@ -700,7 +701,7 @@ def third_voice(T, V, prompt_uid, keys_uid, keys_name='Variable', providers=None
         act_get_variable(V['provider'], label_n),
         act_get_variable(V['model'], label_m),
         act_text(text_token('{N} · {M}', {'N': (label_n, 'Variable'), 'M': (label_m, 'Variable')}), label),
-        if_contains(ok, V['raw'], '"choices"'),
+        *if_contains(ok, V['raw'], '"choices"'),
         act_get_variable(V['data'], data),
         act_value('choices', data, 'Variable', choices),
         act_first_item(choices, 'Dictionary Value', first),
@@ -719,7 +720,7 @@ def third_voice(T, V, prompt_uid, keys_uid, keys_name='Variable', providers=None
         if_else(ok),
         # Anthropic's answer: {"content":[{"type":"text","text":…}], "stop_reason":…}; its errors
         # never carry stop_reason
-        if_contains(a_ok, V['raw'], 'stop_reason'),
+        *if_contains(a_ok, V['raw'], 'stop_reason'),
         act_get_variable(V['data'], a_data),
         act_value('content', a_data, 'Variable', a_content),
         act_first_item(a_content, 'Dictionary Value', a_first),
@@ -740,7 +741,7 @@ def third_voice(T, V, prompt_uid, keys_uid, keys_name='Variable', providers=None
         for needle in needles:
             group = u()
             groups.append(group)
-            actions += [if_contains(group, V['raw'], needle), *set_text(why_v, T[f'why.{kind}'], u())]
+            actions += [*if_contains(group, V['raw'], needle), *set_text(why_v, T[f'why.{kind}'], u())]
             if kind == 'limit':
                 actions += pause_actions(u, V, paused_v)
             if dead:
@@ -888,7 +889,7 @@ def build(lang, nokey=False):
             *set_text(V['provider'], T['provider.none'], new_uuid()),
             if_close(g_key),
             # no key file, or none of the keys answered → «Use Model»
-            if_contains(g_apple, V['provider'], T['provider.none']),
+            *if_contains(g_apple, V['provider'], T['provider.none']),
             act_notify(NAME, T['nokey.notify.step3']),
             act_text(text_token(L.prompt('trio-nokey'),
                                 {'QUESTION': (question, 'Provided Input'),

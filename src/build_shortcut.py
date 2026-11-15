@@ -319,12 +319,14 @@ def if_has_value(group, var_name):
 
 
 def if_contains(group, var_name, needle):
-    return {'WFWorkflowActionIdentifier': 'is.workflow.actions.conditional',
-            'WFWorkflowActionParameters': {'GroupingIdentifier': group, 'WFControlFlowMode': 0,
-                                           'WFCondition': 99,  # «contains»
-                                           'WFConditionalActionString': needle,
-                                           'WFInput': {'Type': 'Variable',
-                                                       'Variable': variable(var_name)}}}
+    """If the variable's text contains `needle`. 15.11 live run (iPhone, «Debate to agreement»): «contains» put straight on
+    the variable stopped the run with «Choose values for each parameter in this action» (the editor marks the
+    condition red), as «contains» on «Contents of URL» did in D-100; on a Text made from it, it works. So: Get Variable
+    → Text → If Text contains."""
+    get, txt = new_uuid(), new_uuid()
+    return [act_get_variable(var_name, get),
+            act_text(text_token('{V}', {'V': (get, 'Variable')}), txt),
+            if_output(group, txt, 'Text', 99, WFConditionalActionString=needle)]
 
 
 def if_shortcut_input(group):
@@ -1124,7 +1126,7 @@ def build(lang, ai=False):
             act_get_variable(ARGUE_ROUNDS, rd_get),
             act_number(rd_get, 'Variable', rd_num),
             if_output(g_rd, rd_num, 'Number', 1003, WFNumberValue=0, WFAnotherNumber=n - 1),
-            if_contains(g_obj, ARGUE_LOG, ARGUE_MARKER),
+            *if_contains(g_obj, ARGUE_LOG, ARGUE_MARKER),
             if_else(g_obj),
             act_get_variable(ARGUE_LOG, get1),
             *([act_get_variable(ARGUE_OPEN, op_get)] if n == 1 else []),
@@ -1143,7 +1145,7 @@ def build(lang, ai=False):
             act_text(text_token('{L}\n\n' + L['output.argue_side_b_round'].replace('{N}', rnd) + '\n{B}',
                                 {'L': (get2, 'Variable'), 'B': (cl1, 'Ask Claude')}), add1),
             act_set_variable(ARGUE_LOG, add1, 'Text'),
-            if_contains(g_rep, ARGUE_LOG, ARGUE_MARKER),
+            *if_contains(g_rep, ARGUE_LOG, ARGUE_MARKER),
             if_else(g_rep),
             act_notify(L['notify.argue_reply'].replace('{N}', rnd)),
             act_get_variable(ARGUE_LOG, get3),
@@ -2201,7 +2203,7 @@ def build(lang, ai=False):
 
 def validate(actions):
     """Structural checks that must hold for the shortcut to run correctly."""
-    seen_uuid, flow_stack, produced = {}, [], set()
+    seen_uuid, flow_stack, produced, var_sources = {}, [], set(), {}
     menus = {}
     for i, action in enumerate(actions):
         params = action['WFWorkflowActionParameters']
@@ -2232,6 +2234,20 @@ def validate(actions):
             assert ref in produced or ref == uid, f'action {i} references a later action'
         if uid:
             produced.add(uid)
+
+        # «contains» on a variable or a file stops the run on device with «Choose values for each parameter in this
+        # action» (D-100 28.10, Debate 15.11); only a Text action's output works
+        # (the debate log was first set from «Nothing», so its type was not text)
+        if action['WFWorkflowActionIdentifier'] == 'is.workflow.actions.setvariable':
+            var_sources.setdefault(params['WFVariableName'], set()).add(
+                params['WFInput'].get('Value', {}).get('OutputName'))
+        if action['WFWorkflowActionIdentifier'] == 'is.workflow.actions.conditional' and params.get('WFCondition') == 99:
+            src = params['WFInput'].get('Variable', {}).get('Value', {})
+            if src.get('Type') == 'Variable':
+                assert var_sources.get(src.get('VariableName'), set()) <= {'Text'}, \
+                    f'«contains» at {i} tests a variable not always set from Text'
+            else:
+                assert src.get('OutputName') == 'Text', f'«contains» at {i} must test a Text action output'
 
     assert not flow_stack, 'unbalanced control flow'
     for group, leftovers in menus.items():
