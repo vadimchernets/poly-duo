@@ -33,6 +33,22 @@ body:
         - Mac
     validations:
       required: true
+  - type: input
+    id: ios
+    attributes:
+      label: iOS version
+      description: Settings → General → About → Software Version.
+      placeholder: "e.g. 18.4"
+    validations:
+      required: true
+  - type: input
+    id: models
+    attributes:
+      label: Model pair
+      description: Which two AIs and models you used.
+      placeholder: "e.g. ChatGPT GPT-5 + Claude Sonnet"
+    validations:
+      required: true
   - type: textarea
     id: text
     attributes:
