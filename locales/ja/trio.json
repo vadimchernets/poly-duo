@@ -57,5 +57,6 @@
   "notify.third_silent": "第3のAIは答えませんでした。Claude の回答は完全です。",
   "nokey.no_ai": "この iPhone では Apple Intelligence を使えません。無料の提供元キーを使う版の Trio をインストールしてください：polyhelper.ai/duo/。上の Claude の回答は完全です。",
   "output.draft": "■ 回答（Claude、独立に作成）\n{C}\n\n— 第3の声（{P}）：\n{T}",
-  "error.compare": "⚠️ Claude の比較が届きませんでした。ChatGPT の回答を見る前に Claude が書いた自分の回答：\n\n{C}"
+  "error.compare": "⚠️ Claude の比較が届きませんでした。ChatGPT の回答を見る前に Claude が書いた自分の回答：\n\n{C}",
+  "menu.open_poly": "🔗 Poly で開く"
 }

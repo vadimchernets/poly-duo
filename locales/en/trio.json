@@ -57,5 +57,6 @@
   "notify.third_silent": "The third AI was silent; Claude's answer is complete.",
   "nokey.no_ai": "This iPhone cannot use Apple Intelligence. Install the Trio version that uses a free provider key: polyhelper.ai/duo/. Claude's answer above is complete.",
   "output.draft": "■ ANSWER (Claude, written independently)\n{C}\n\n— Third voice ({P}):\n{T}",
-  "error.compare": "⚠️ Claude's comparison did not come. Claude's own answer, written before it saw ChatGPT's:\n\n{C}"
+  "error.compare": "⚠️ Claude's comparison did not come. Claude's own answer, written before it saw ChatGPT's:\n\n{C}",
+  "menu.open_poly": "🔗 Open in Poly"
 }

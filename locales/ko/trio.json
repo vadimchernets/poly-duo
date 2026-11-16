@@ -57,5 +57,6 @@
   "notify.third_silent": "세 번째 AI가 답하지 않았어요. Claude의 답은 완전해요.",
   "nokey.no_ai": "이 iPhone에서는 Apple Intelligence를 쓸 수 없어요. 무료 제공사 키를 쓰는 Trio 버전을 설치하세요: polyhelper.ai/duo/. 위에 있는 Claude의 답은 완전해요.",
   "output.draft": "■ 답 (Claude, 독립적으로 작성)\n{C}\n\n— 세 번째 목소리 ({P}):\n{T}",
-  "error.compare": "⚠️ Claude의 비교가 오지 않았어요. ChatGPT의 답을 보기 전에 Claude가 쓴 자기 답:\n\n{C}"
+  "error.compare": "⚠️ Claude의 비교가 오지 않았어요. ChatGPT의 답을 보기 전에 Claude가 쓴 자기 답:\n\n{C}",
+  "menu.open_poly": "🔗 Poly에서 열기"
 }

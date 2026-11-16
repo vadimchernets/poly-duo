@@ -309,6 +309,12 @@ def menu_open(group, title, items):
                                            'WFMenuPrompt': title, 'WFMenuItems': items}}
 
 
+def open_poly_url(src):
+    """D-185: Open URL polyhelper.ai/get/?to=answer&from=<duo|trio>; no encoding, no extra parameters."""
+    return {'WFWorkflowActionIdentifier': 'is.workflow.actions.openurl',
+            'WFWorkflowActionParameters': {'WFInput': text_token(POLY_URL + src, {}), 'Show-WFInput': True}}
+
+
 def menu_case(group, title):
     return {'WFWorkflowActionIdentifier': 'is.workflow.actions.choosefrommenu',
             'WFWorkflowActionParameters': {'GroupingIdentifier': group, 'WFControlFlowMode': 1,
@@ -579,6 +585,7 @@ MENU_MARK = '⟦duo-menu⟧\n'
 # How much of the answer Duo left in the clipboard is remembered (files.last_answer), to recognise it next run
 LAST_ANSWER_CHARS = 200
 REPORT_URL = 'https://github.com/vadimchernets/poly-duo/issues/new?template=run-report.yml'
+POLY_URL = 'https://polyhelper.ai/get/?to=answer&from='   # D-185: Poly takes the answer from the clipboard
 FEEDBACK_URL = 'https://github.com/vadimchernets/poly-duo/issues/new?template=feedback.yml'
 LONG_TEXT = 6000
 # A long question (Yuri 10.11, No.53, iPhone XR, iOS 18.7): with a question of ~1800 characters iOS stopped «Ask ChatGPT»
@@ -2076,7 +2083,10 @@ def build(lang, ai=False):
         *rerun_with_menu(q_get, 'Variable'),
         {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
         # ---- More…: one extra step for the person who wants it; the usual «Done / Another mode» stays two taps
+        # D-185: «Open in Poly» — a menu item only; the answer is already in the clipboard (copied before the screen)
         menu_case(g_finale, L['menu.finale_items'][2]),
+        open_poly_url('duo'),
+        menu_case(g_finale, L['menu.finale_items'][3]),
         menu_open(g_more, L['menu.finale_more_title'], L['menu.finale_more_items']),
 
         # Check the result again: ChatGPT looks for errors in the final result; the block is added below it
@@ -2154,6 +2164,8 @@ def build(lang, ai=False):
         menu_case(g_more, L['menu.finale_more_items'][7]),
         {'WFWorkflowActionIdentifier': 'is.workflow.actions.openurl',
          'WFWorkflowActionParameters': {'WFInput': text_token(FEEDBACK_URL, {}), 'Show-WFInput': True}},
+        menu_case(g_more, L['menu.finale_more_items'][8]),
+        open_poly_url('duo'),
         menu_close(g_more),
         *if_text(g_pc, PREFS_CHANGED),
         # the file is rebuilt from the two clean flags: the header, then one line for each option that is ON

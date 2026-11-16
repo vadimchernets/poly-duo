@@ -821,7 +821,7 @@ def build(lang, nokey=False):
     gpt_f, own_f, own_f2, own_g, gpt_g = ids(5)
     n0, n_get, n_f, n_g = ids(4)
     nums_a, nums_b, item_a, item_b, nget_a, nget_b, nadd_a, nadd_b = ids(8)
-    g_retry, g_oretry, g_cretry, g_cfail, g_n1, g_n2, g_rep, g_miss, g_rep2, g_miss2 = ids(10)
+    g_retry, g_oretry, g_cretry, g_cfail, g_n1, g_n2, g_rep, g_miss, g_rep2, g_miss2, g_next = ids(11)
     c_prompt, c_cut, c_fail = ids(3)
     GPT_VAR, OWN_VAR, NUMS_VAR, CMP_VAR = 'TrioGpt', 'TrioClaudeOwn', 'TrioNums', 'TrioCompare'
     t_prompt, n_prompt, apple = ids(3)
@@ -1052,6 +1052,12 @@ def build(lang, nokey=False):
         act_clipboard(attachment(f_out, 'Text')),
         act_notify(NAME, T['notify.done']),
         act_quick_look(attachment(f_out, 'Text')),
+        # D-185: «What next?» — Done / Open in Poly (a menu item only; the answer is already in the clipboard)
+        build_shortcut.menu_open(g_next, L['menu.finale_title'], [L['menu.finale_items'][0], T['menu.open_poly']]),
+        build_shortcut.menu_case(g_next, L['menu.finale_items'][0]),
+        build_shortcut.menu_case(g_next, T['menu.open_poly']),
+        build_shortcut.open_poly_url('trio'),
+        build_shortcut.menu_close(g_next),
 
         # ---- Last of all, at most once a week: is there a newer Trio? (build_shortcut.version_check)
         *version_check(L, 'trio_nokey' if nokey else 'trio', NAME, lang),

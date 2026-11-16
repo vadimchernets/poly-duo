@@ -57,5 +57,6 @@
   "notify.third_silent": "第三个 AI 没有回答；Claude 的答案是完整的。",
   "nokey.no_ai": "这部 iPhone 无法使用 Apple Intelligence。请安装使用免费服务商密钥的 Trio 版本：polyhelper.ai/duo/。上面 Claude 的答案是完整的。",
   "output.draft": "■ 答案（Claude，独立作答）\n{C}\n\n— 第三个声音（{P}）：\n{T}",
-  "error.compare": "⚠️ Claude 的对比没有送达。这是 Claude 在看到 ChatGPT 的回答之前自己写的答案：\n\n{C}"
+  "error.compare": "⚠️ Claude 的对比没有送达。这是 Claude 在看到 ChatGPT 的回答之前自己写的答案：\n\n{C}",
+  "menu.open_poly": "🔗 在 Poly 中打开"
 }

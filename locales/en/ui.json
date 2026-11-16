@@ -74,6 +74,7 @@
     "finale_items": [
       "✅ Done",
       "🔁 Another mode — same question",
+      "🔗 Open in Poly",
       "➕ More…"
     ],
     "multi_merge_title": "Which merge?",
@@ -90,7 +91,8 @@
       "📌 Critique right away next time",
       "⚡ Shared text: ask without editing",
       "↩️ Show all menus again",
-      "💬 Worked / didn't work / idea — form on GitHub"
+      "💬 Worked / didn't work / idea — form on GitHub",
+      "🔗 Open in Poly"
     ],
     "recipes_title": "What do you need?",
     "recipes_items": [
@@ -133,7 +135,8 @@
       "🔁 Ask both again · 3✉",
       "✍️ New question"
     ],
-    "back": "↩️ Back"
+    "back": "↩️ Back",
+    "open_poly": "🔗 Open in Poly"
   },
   "notify": {
     "critique_start": "⚖️ Critique: ChatGPT answers → Claude answers on its own → Claude compares both. 1–3 min, please wait, leave the phone as it is. Stuck? Open ChatGPT and sign in.",
@@ -252,7 +255,7 @@
     "pc_notice_seen": "PCNoticeSeen",
     "argue_log": "DebateLog"
   },
-  "help": "ℹ️ WHAT IS DUO\n\nOne question — and two AIs (ChatGPT and Claude) work on it as a pair. It runs on your own subscriptions; the ✉ badge on a mode tells you how many messages it will spend.\n\nEVERYDAY MODES (main menu):\n⚖️ Critique — ChatGPT and Claude answer separately, without seeing each other; then Claude compares them: matched independently / did not match / what to check yourself, and gives the final answer. Your default.\n🤝 Debate to agreement — for life choices with no right answer («which to choose», «should I agree»): each gives its own view first, not seeing the other's; then they see each other and argue, up to 3 rounds until one concedes; then: where they agreed, what is still disputed, what is yours to decide.\n🩺 Advisor — Claude reviews YOUR text without rewriting it. The cheapest mode.\n👀 Side by side — two independent opinions, no blending.\n🔀 Synthesis — both answer blind, then the best is assembled. For what matters.\n🧭 Auto — not sure what to pick? Duo chooses the mode for you.\n\nIn «📂 More…»:\n⚔️ Decision — first steps and risks. 🗺 Dispute map — where the AIs agree and where they don't.\n🥊 Debate — ChatGPT's draft and Claude's own answer, written separately → ChatGPT compares and revises → judge. For the hardest questions; expensive.\n❓ Clarify — asks you follow-up questions first (the only mode where you must touch the screen mid-run — just its dialog).\n➕ Additions (Delta) — a cheap stand-in for Synthesis: anchor + a list of additions. 🎨 Image — two vector sketches to choose from.\n✍️ Claude writes, ChatGPT checks — Claude drafts, ChatGPT edits tone and wording (editing, not a fact-check). 📝 My own checking rule — the same, with your own one-line instruction for the checker, read from the file Poly-my-mode.txt (Files → iCloud Drive → Shortcuts).\n\nThe result always arrives three ways: on screen, in your clipboard (paste it anywhere) and in the journal Poly-journal.md (Files → iCloud Drive → Shortcuts).\nWhile Duo is running — please wait, leave the phone as it is: stay in Shortcuts and do not lock the phone (a tap on the screen does not stop it). Details and troubleshooting: INSTALL.md in the kit.\n\nAt the end, «➕ More…» has three switches: «📌 Critique right away next time» (skips the mode menu), «⚡ Shared text: ask without editing» (a text shared to Duo goes without the question box; off by default) and «↩️ Show all menus again». «🔁 Another mode» always shows the question box and the menu. The choice is kept in Duo-prefs.txt (Files → iCloud Drive → Shortcuts).\n\n💻 On a laptop or PC, PolyHelper does more: folders, agents, channels, schedules, a council of several AIs. Duo on your phone is the light version, without the PC features.\n\nTap «Done» below, then pick «🔁 Another mode — same question» on the next screen — Duo restarts with your question and you choose a mode.",
+  "help": "ℹ️ WHAT IS DUO\n\nOne question — and two AIs (ChatGPT and Claude) work on it as a pair. It runs on your own subscriptions; the ✉ badge on a mode tells you how many messages it will spend.\n\nEVERYDAY MODES (main menu):\n⚖️ Critique — ChatGPT and Claude answer separately, without seeing each other; then Claude compares them: matched independently / did not match / what to check yourself, and gives the final answer. Your default.\n🤝 Debate to agreement — for life choices with no right answer («which to choose», «should I agree»): each gives its own view first, not seeing the other's; then they see each other and argue, up to 3 rounds until one concedes; then: where they agreed, what is still disputed, what is yours to decide.\n🩺 Advisor — Claude reviews YOUR text without rewriting it. The cheapest mode.\n👀 Side by side — two independent opinions, no blending.\n🔀 Synthesis — both answer blind, then the best is assembled. For what matters.\n🧭 Auto — not sure what to pick? Duo chooses the mode for you.\n\nIn «📂 More…»:\n⚔️ Decision — first steps and risks. 🗺 Dispute map — where the AIs agree and where they don't.\n🥊 Debate — ChatGPT's draft and Claude's own answer, written separately → ChatGPT compares and revises → judge. For the hardest questions; expensive.\n❓ Clarify — asks you follow-up questions first (the only mode where you must touch the screen mid-run — just its dialog).\n➕ Additions (Delta) — a cheap stand-in for Synthesis: anchor + a list of additions. 🎨 Image — two vector sketches to choose from.\n✍️ Claude writes, ChatGPT checks — Claude drafts, ChatGPT edits tone and wording (editing, not a fact-check). 📝 My own checking rule — the same, with your own one-line instruction for the checker, read from the file Poly-my-mode.txt (Files → iCloud Drive → Shortcuts).\n\nThe result always arrives three ways: on screen, in your clipboard (paste it anywhere) and in the journal Poly-journal.md (Files → iCloud Drive → Shortcuts).\nWhile Duo is running — please wait, leave the phone as it is: stay in Shortcuts and do not lock the phone (a tap on the screen does not stop it). Details and troubleshooting: INSTALL.md in the kit.\n\nAt the end, «➕ More…» has three switches: «📌 Critique right away next time» (skips the mode menu), «⚡ Shared text: ask without editing» (a text shared to Duo goes without the question box; off by default) and «↩️ Show all menus again». «🔁 Another mode» always shows the question box and the menu. The choice is kept in Duo-prefs.txt (Files → iCloud Drive → Shortcuts).\n\n💻 On a laptop or PC, PolyHelper does more: folders, agents, channels, schedules, a council of several AIs. Duo on your phone is the light version, without the PC features.\n\nTap «Done» below, then pick «🔁 Another mode — same question» on the next screen — Duo restarts with your question and you choose a mode.\n\n🔓 Open source on GitHub: https://github.com/vadimchernets/poly-duo",
   "update": {
     "prompt": "A new version of {NAME} is out — install it?",
     "install": "Install",

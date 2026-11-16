@@ -53,5 +53,6 @@
   "notify.empty_key": "لا يوجد مفتاح، لذلك توقف Trio. شغّله مرة أخرى والصق مفتاحًا واحدًا.",
   "notify.third_silent": "الذكاء الاصطناعي الثالث صامت؛ إجابة Claude كاملة.",
   "output.draft": "■ الإجابة (Claude، كُتبت باستقلال)\n{C}\n\n— الصوت الثالث ({P}):\n{T}",
-  "error.compare": "⚠️ لم تصل مقارنة Claude. هذه إجابة Claude نفسه، كتبها قبل أن يرى إجابة ChatGPT:\n\n{C}"
+  "error.compare": "⚠️ لم تصل مقارنة Claude. هذه إجابة Claude نفسه، كتبها قبل أن يرى إجابة ChatGPT:\n\n{C}",
+  "menu.open_poly": "🔗 افتح في Poly"
 }
