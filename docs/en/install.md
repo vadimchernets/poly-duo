@@ -13,9 +13,9 @@ C1M Duo is a "shortcut" for iPhone: ask one question, and it's handled by two AI
 
 On your iPhone, tap the link → the Shortcuts app opens → **Add**. **First run: about 5 quick taps on “Always Allow”, then one tap forever.** The shortcut asks permission once for each thing it does — tap **Always Allow** each time (about 20 seconds, once). Prompt gone before you tapped, no «Ask Claude», or Duo stops on its own: see [If something's wrong](#if-somethings-wrong). Had Duo before? Tap **Replace**, not **Keep Both**.
 
-- **Duo:** https://www.icloud.com/shortcuts/d8265e4794c046d480f548ee6485ec48
-- **Trio, iPhone 15 Pro or newer — no key** (the third voice is Apple Intelligence; see below): https://www.icloud.com/shortcuts/e09ac625b719401fa8ca91360ba23a20
-- **Trio, older iPhone — free key** (the third voice, see below): https://www.icloud.com/shortcuts/fca5ce69fd254fb58dc5032b0c11f4a8
+- **Duo:** https://www.icloud.com/shortcuts/2d45613f7605441db10acdf4ffe7665d
+- **Trio, iPhone 15 Pro or newer — no key** (the third voice is Apple Intelligence; see below): https://www.icloud.com/shortcuts/0cf1cf3ec0b34511b42bd0620d2c4676
+- **Trio, older iPhone — free key** (the third voice, see below): https://www.icloud.com/shortcuts/73edfa30e400437fa48a792d04fdc2b8
 
 ### Backup — the file
 
@@ -86,7 +86,7 @@ Right after you pick a mode, a **status notification** arrives ("what's happenin
 `Trio.shortcut` adds a third AI to the pair: it reads the question, ChatGPT's answer and Claude's
 final answer, and names only what both missed.
 
-**No key (iPhone 15 Pro or newer, iOS 26+):** the third voice is Apple Intelligence itself, with no key and no sign-up. Not sure about your iPhone? Settings → General → About → Model Name. Install the no-key Trio: [English](https://www.icloud.com/shortcuts/e09ac625b719401fa8ca91360ba23a20) · [Español](https://www.icloud.com/shortcuts/3167e5dba4f1447797d85849c279be61) · [Português](https://www.icloud.com/shortcuts/30de98250b784e7181fbee4c17444b43).
+**No key (iPhone 15 Pro or newer, iOS 26+):** the third voice is Apple Intelligence itself, with no key and no sign-up. Not sure about your iPhone? Settings → General → About → Model Name. Install the no-key Trio: [English](https://www.icloud.com/shortcuts/0cf1cf3ec0b34511b42bd0620d2c4676) · [Español](https://www.icloud.com/shortcuts/7b35ac3499ce4fcf88f2794baf191a59) · [Português](https://www.icloud.com/shortcuts/631befe3c116442fa4c79c5b27d2067b).
 
 **Older iPhone, or you prefer a key:** Trio asks once for a free key, a long password from an AI company (a minute, no card). It runs on any free key — or several — in this order:
 - **console.groq.com/keys** → Create API Key (starts with `gsk_`; no SMS, sign in with your Google account);

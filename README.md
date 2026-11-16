@@ -6,7 +6,7 @@
 
 [![Watch Duo run on YouTube](https://img.youtube.com/vi/Oj8ZQ_rVtQc/hqdefault.jpg)](https://youtu.be/Oj8ZQ_rVtQc)
 
-**Install:** [iPhone — add the Duo shortcut](https://www.icloud.com/shortcuts/d8265e4794c046d480f548ee6485ec48) · [Android — Poly Duo on Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1) · [other languages](#install-in-60-seconds) · [polyhelper.ai/duo](https://polyhelper.ai/duo/)
+**Install:** [iPhone — add the Duo shortcut](https://www.icloud.com/shortcuts/2d45613f7605441db10acdf4ffe7665d) · [Android — Poly Duo on Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1) · [other languages](#install-in-60-seconds) · [polyhelper.ai/duo](https://polyhelper.ai/duo/)
 
 **Related research tool:** [memory-agreement-check](https://github.com/vadimchernets/memory-agreement-check) measures when two models from different companies agree on the same wrong answer.
 
@@ -22,17 +22,17 @@
 
 | Language | Duo | Trio |
 |---|---|---|
-| English | [Duo](https://www.icloud.com/shortcuts/d8265e4794c046d480f548ee6485ec48) | [Trio](https://www.icloud.com/shortcuts/fca5ce69fd254fb58dc5032b0c11f4a8) |
-| Español | [Duo](https://www.icloud.com/shortcuts/bd7e092c82434b79b38c1d6bb24f8143) | [Trio](https://www.icloud.com/shortcuts/cb9321448e67464a9a4a3299156abff0) |
-| Português | [Duo](https://www.icloud.com/shortcuts/0dfbcc7993ff4550b3dbaa778357c5a6) | [Trio](https://www.icloud.com/shortcuts/bc58d0a87b6e4c029dd2552dab42ef29) |
-| Русский | [Duo](https://www.icloud.com/shortcuts/970ce37032e742c9b7d5541811c705ee) | [Trio](https://www.icloud.com/shortcuts/b02b703fcfb84646bdc082665a9aab03) |
-| Українська | [Duo](https://www.icloud.com/shortcuts/ceb87caac5d449cd848a3aea4a4855df) | [Trio](https://www.icloud.com/shortcuts/02842cdd1e32411b85c8b139c65f72ca) |
-| Deutsch | [Duo](https://www.icloud.com/shortcuts/047a79a4eda24f619905e89e4e1363d1) | [Trio](https://www.icloud.com/shortcuts/dae423ab7b9646639560d2104175b4bd) |
-| Français | [Duo](https://www.icloud.com/shortcuts/bcfd256fdd394196af21d4dec224cfb4) | [Trio](https://www.icloud.com/shortcuts/1d56d388ef924930a7b0787835019dd1) |
-| हिन्दी | [Duo](https://www.icloud.com/shortcuts/210c14093fa346b8a5fe8c20998627a4) | [Trio](https://www.icloud.com/shortcuts/2d1aeaad69fd47eb994061f7b511f5b4) |
-| 日本語 | [Duo](https://www.icloud.com/shortcuts/7daa65ea84fb4897a6d9e7ecd32d12a2) | [Trio](https://www.icloud.com/shortcuts/286c5ab3ded9441e985fd3904f5d87fe) |
-| 한국어 | [Duo](https://www.icloud.com/shortcuts/4db99c2550ff46a3b88ecfc731754fdc) | [Trio](https://www.icloud.com/shortcuts/eed7898164de43a0a9ec848c8ebcc8b0) |
-| 中文 | [Duo](https://www.icloud.com/shortcuts/ee777fb2b3714b9087d96ceefc4d4d50) | [Trio](https://www.icloud.com/shortcuts/10617126d26b4144bd2d0335f1d8f8bc) |
+| English | [Duo](https://www.icloud.com/shortcuts/2d45613f7605441db10acdf4ffe7665d) | [Trio](https://www.icloud.com/shortcuts/73edfa30e400437fa48a792d04fdc2b8) |
+| Español | [Duo](https://www.icloud.com/shortcuts/3046e60ac0aa4feab20dd2bb602be8d3) | [Trio](https://www.icloud.com/shortcuts/ca7f36481f024fceb9ecca0de0ecb63c) |
+| Português | [Duo](https://www.icloud.com/shortcuts/1d1ae50db7c244bf8be76f186c433087) | [Trio](https://www.icloud.com/shortcuts/4e72f237e8c54b118c4d38a4282db76a) |
+| Русский | [Duo](https://www.icloud.com/shortcuts/9774f10d77744ef0a36e5a08a6772369) | [Trio](https://www.icloud.com/shortcuts/55a359d379464fd9b710f7892f1fdc43) |
+| Українська | [Duo](https://www.icloud.com/shortcuts/dc04e24ff3ca47ce80bb3ffdd740355a) | [Trio](https://www.icloud.com/shortcuts/d3c86b63d73548339c6e4ebed0eb21b4) |
+| Deutsch | [Duo](https://www.icloud.com/shortcuts/8f57b3728a9a4374bd9afd44d0574779) | [Trio](https://www.icloud.com/shortcuts/6ee78cb376ad4520a01ee252d4eeb73a) |
+| Français | [Duo](https://www.icloud.com/shortcuts/36aaf94687874afaa13a6e009e02db22) | [Trio](https://www.icloud.com/shortcuts/d4719ea732704249ae410b4a3e244735) |
+| हिन्दी | [Duo](https://www.icloud.com/shortcuts/16e87db57dd94ca9b59e606b666da68a) | [Trio](https://www.icloud.com/shortcuts/6f91f6b59c364fb3bbedbc2c69c0c2bb) |
+| 日本語 | [Duo](https://www.icloud.com/shortcuts/37d5e4c5d74948e39cb87f7be942435a) | [Trio](https://www.icloud.com/shortcuts/fa5484761d9c426ebcffa086ee3c7e7f) |
+| 한국어 | [Duo](https://www.icloud.com/shortcuts/eb989fd86dd94bb28b92837e1025e244) | [Trio](https://www.icloud.com/shortcuts/c3cd9618baa947669b7937442062f7af) |
+| 中文 | [Duo](https://www.icloud.com/shortcuts/b4e54cbc9dd0497996a364868bbe7930) | [Trio](https://www.icloud.com/shortcuts/eeec59ad082e47c69611bcca7da02745) |
 
 **Backup: the signed file.**
 
@@ -252,10 +252,10 @@ On an iPhone with Apple Intelligence (iPhone 15 Pro or newer, iOS 26 or later) t
   Drive (`Shortcuts/poly-key.txt`).
 - **Trio without a key** — on an iPhone with Apple Intelligence (iPhone 15 Pro or newer, iOS 26+) the
   third voice can be Apple Intelligence on the phone: no key, no sign-up. Same install, a different
-  file: [English](https://www.icloud.com/shortcuts/e09ac625b719401fa8ca91360ba23a20) ·
-  [Español](https://www.icloud.com/shortcuts/3167e5dba4f1447797d85849c279be61) ·
-  [Português](https://www.icloud.com/shortcuts/30de98250b784e7181fbee4c17444b43) ·
-  [Deutsch](https://www.icloud.com/shortcuts/29ad3c2317ee4042a3c2c44f644faf6e) · [Français](https://www.icloud.com/shortcuts/58aaa1fb8b3443e5a4a3cee19fceac6d) · [日本語](https://www.icloud.com/shortcuts/c9b9f5aa7d634684bd362cd4fd15e5ac) · [한국어](https://www.icloud.com/shortcuts/3ec2d812eac14c6cbbc8833a9a1b6904) · [中文](https://www.icloud.com/shortcuts/d0d6e02ff93443e8812327d60de2b623) · [हिन्दी](https://www.icloud.com/shortcuts/2f36d14dd24e48439d199be5269a6408). Not for
+  file: [English](https://www.icloud.com/shortcuts/0cf1cf3ec0b34511b42bd0620d2c4676) ·
+  [Español](https://www.icloud.com/shortcuts/7b35ac3499ce4fcf88f2794baf191a59) ·
+  [Português](https://www.icloud.com/shortcuts/631befe3c116442fa4c79c5b27d2067b) ·
+  [Deutsch](https://www.icloud.com/shortcuts/2a4cb52d196146dab2d8b752c1452c87) · [Français](https://www.icloud.com/shortcuts/ba24ef12b27646bcb46e4d0307ba9e95) · [日本語](https://www.icloud.com/shortcuts/70fed48161ec41fba6e95ab952769d47) · [한국어](https://www.icloud.com/shortcuts/45f5ddd822624aac8d4fee08505e2afa) · [中文](https://www.icloud.com/shortcuts/2dbd0874b9384931b9d214936169adf5) · [हिन्दी](https://www.icloud.com/shortcuts/ecfdce5502664d76b2dffdce2f8ae21d). Not for
   Russian or Ukrainian yet (no such file for them).
 
 *In the sources the main shortcut is still called **Poly** — `tools/build.sh` writes

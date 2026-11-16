@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.0.7] — 2026-11-15 — Duo 6.7 / Trio 8 / Trio without a key 5 (built-in numbers duo 13, trio 8, trio_nokey 5)
+
+Signed files in `releases/` (SHA256SUMS) and new iCloud links in `releases/version.json`, README and
+`docs/*/install.md`. Duo built from 253b185 (its shortcut is the same as at ea2bff7, checked on an iPhone on 2026-11-15),
+Trio from 253b185. Everything below down to «Duo 6.5» reaches people with this release.
+
+### Fixed (live iPhone runs of 2026-11-14 and 2026-11-15)
+- **Time Between Dates came back blank on the device** (the resume menu never appeared, the weekly version check age
+  was blank): every date in it is now a text token (`act_time_between`); `validate()` rejects an attachment date.
+- **Debate to agreement and Trio stopped with «Choose values for each parameter in this action»** right after
+  ChatGPT's opening: «contains» now tests a Text action (Get Variable → Text → If Text contains), not a variable first
+  set from «Nothing» or Contents of URL.
+- **Long Claude answers broke «Ask Claude»** («unknown error»): every Claude request starts with a brevity line
+  (about 150 words, no search) in all 12 languages; in Trio too (its four Claude requests).
+- **ChatGPT output** is cleaned through Replace Text right after every «Ask ChatGPT» (citation markers,
+  `entity[...]` / `image_group{...}` markup), in Duo and in Trio.
+
 ### Fixed (tester report of 2026-11-13: iPhone XR, iOS 18.7.11, Ukrainian; not yet re-run on that iPhone)
 - **Side by side and a long Critique from the Shortcuts app** (Side by side stopped with the bare iOS alert 2 runs out
   of 2, through Siri it ran; a ~2400-character Critique ended with no result while both apps held answers): the cause is
@@ -56,7 +73,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Markdown** (No.56): `plain` now also takes off `*italic*`, keeps «x**2» and «2*3*4», and leaves a fenced code block
   as it is (``` or ~~~, indented or not, and one left open runs to the end).
 
-### Fixed (Duo 6.6, tester report of 2026-11-10: iPhone XR, iOS 18.7.11, Ukrainian; built-in number duo 13 at release)
+### Fixed (Duo 6.6 source, tester report of 2026-11-10: iPhone XR, iOS 18.7.11, Ukrainian; released as Duo 6.7, duo 13)
 - **Side by side stopped with the bare iOS alert «There was a problem running the shortcut»** (2 runs out of 2, right
   after the ChatGPT step), while Critique and Advisor ran to the end on the same phone. Side by side was the only one of
   the three that put Claude's output straight into a Text; Critique reads it from a variable, Advisor only stores it.
@@ -87,6 +104,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added (2026-11-05)
 - **Android Duo engine is now open code in `android/engine/`** (duoAuto, duoAgree, duoArgue, duoFind, duoKeys, duoLink; Apache-2.0). The Poly A1 app pulls it from here instead of keeping its own copy. The "US models only" switch is injected with `setDuoUsa`, so the engine does not depend on Poly code.
+
+## Earlier Duo / Trio releases (iCloud links only)
 
 ### Added / Fixed (Duo 6.5, D-29, 2026-10-30; built-in number duo 12)
 - **Optional switches in «➕ More…» at the end of a run (off by default):** «Critique right away next time» (skips the
