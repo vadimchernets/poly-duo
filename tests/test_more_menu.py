@@ -3,7 +3,7 @@ import json
 
 import pytest
 
-from test_first_run import LANGS, ROOT, build, kind
+from test_first_run import LANGS, ROOT, build, kind, is_step
 
 
 def params(a):
@@ -21,7 +21,7 @@ def test_more_menu(tmp_path, lang):
     # the ordinary ending stays «Done / Another mode»; everything else sits behind «More…»
     finale = next(a for a in actions if kind(a) == 'choosefrommenu'
                   and params(a).get('WFMenuItems') == m['finale_items'])
-    assert params(finale)['WFMenuItems'][0].startswith('✅')
+    assert len(params(finale)['WFMenuItems'][0].split()) <= 2   # D-128: «Done», a word Siri and VoiceOver can say
     more = next(a for a in actions if kind(a) == 'choosefrommenu'
                 and params(a).get('WFMenuItems') == m['finale_more_items'])
     assert more
@@ -42,8 +42,7 @@ def test_more_menu(tmp_path, lang):
     texts = [params(a)['WFTextActionText']['Value']['string'] for a in actions if kind(a) == 'gettext']
     assert all('⟦duo-menu⟧\n' + r in texts for r in m['recipes_texts'])
     assert 'my_mode_missing' not in ui['notify']   # Duo 6.1: a menu, not a dead-end notice (test_duo61)
-    rev = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody')
-               == ui['notify']['reverse_start'])
+    rev = next(i for i, a in enumerate(actions) if is_step(a, 'reverse_start'))
     order = [kind(a) for a in actions[rev:rev + 14] if kind(a) in ('AskIntent', 'ClaudeAppIntentsExtension')]
     assert order[:2] == ['ClaudeAppIntentsExtension', 'AskIntent']  # then ChatGPT's one retry, then the summary
 

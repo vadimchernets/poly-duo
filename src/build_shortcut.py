@@ -199,6 +199,14 @@ def act_comment(text):
             'WFWorkflowActionParameters': {'WFCommentActionText': text}}
 
 
+def act_step(key):
+    """D-128 (18.11, the owner's voice run with Siri and VoiceOver): a step of the run is a Comment, not a
+    notification. VoiceOver read every progress banner aloud, several per run, and the person could not speak until
+    it finished; Duo now sends ONE notification, at the end («Answer ready»). The Comment shows nothing and asks for
+    nothing; it names the step for whoever reads the shortcut (and for the tests)."""
+    return act_comment('Duo step: ' + key)
+
+
 def act_clipboard(source):
     return {'WFWorkflowActionIdentifier': 'is.workflow.actions.setclipboard',
             'WFWorkflowActionParameters': {'WFInput': source, 'WFLocalOnly': False}}
@@ -1019,30 +1027,29 @@ def build(lang, ai=False):
         system alert — Shortcuts has no built-in try/catch or «continue on error» for an app action (x-error of a
         shortcuts:// x-callback-url only opens another URL after the run has ended), so the «Claude did not answer» menu (made for an
         EMPTY answer) is never reached and the answer ChatGPT already gave would be lost. Now it is in the clipboard
-        and the step's notification says so. D-100: it is no longer also remembered as Duo's own (that was one more
+        and the person can paste it. D-100: it is no longer also remembered as Duo's own (that was one more
         «Save File», one more permission window on the first run); when the run goes on, the tail's clipboard write
-        replaces it and is remembered there. No extra screen, tap or message; only when there is an answer. `note`: that step's own notification; the
-        clipboard line goes FIRST (a banner may cut a long text); with no note one notification with that line alone."""
+        replaces it and is remembered there. No extra screen, tap or message; only when there is an answer.
+        D-128: no notification (one per run, at the end); `note` names the next step as a Comment (act_step)."""
         txt, g = new_uuid(), new_uuid()
-        kept = L['notify.gpt_kept']
         return [act_text(text_token('{A}', {'A': (src_uid, src_name)}), txt),
                 *if_output_text(g, txt, 'Text'),
                 act_clipboard(attachment(txt, 'Text')),
-                act_notify(kept + '\n' + note if note else kept),
+                act_step('gpt_kept'),
                 *remember_answer(txt, 'Text'),   # 14.11 live run: the next run took this answer for a new question
-                *([if_else(g), act_notify(note)] if note else []),
-                if_close(g)]
+                if_close(g),
+                *([act_step(note)] if note else [])]
 
     def brief_for_long(src_uid, src_name):
         """Yuri 10.11 (No.53): a question of LONG_QUESTION characters or more → BRIEF_LINE goes in front of the request
-        and one notification says why. Returns (actions, uid of a Get Variable whose text is BRIEF_LINE or empty)."""
+        and a Comment names the step (D-128: no notification). Returns (actions, uid of a Get Variable whose text is BRIEF_LINE or empty)."""
         txt, cnt, g, get = new_uuid(), new_uuid(), new_uuid(), new_uuid()
         return [act_text(text_token('{Q}', {'Q': (src_uid, src_name)}), txt),
                 act_count_chars(txt, 'Text', cnt),
                 *set_text(BRIEF_VAR, '\n'),   # not an empty Text (D-100); a blank line in front of the request is harmless
                 if_output(g, cnt, 'Count', 2, WFNumberValue=LONG_QUESTION - 1),
                 *set_text(BRIEF_VAR, BRIEF_LINE),
-                act_notify(L['notify.long_question']),
+                act_step('long_question'),
                 if_close(g),
                 act_get_variable(BRIEF_VAR, get)], get
 
@@ -1146,8 +1153,8 @@ def build(lang, ai=False):
             # round 1: ChatGPT's opening goes to the clipboard first, see keep_gpt. The opening itself, not the log
             # (whose side-A header is there even when ChatGPT sent nothing); a resumed debate has no opening in memory
             # and copies nothing
-            *(keep_gpt(op_get, 'Variable', L['notify.argue_blind'].replace('{N}', rnd)) if n == 1 else
-              [act_notify(L['notify.argue_object'].replace('{N}', rnd))]),
+            *(keep_gpt(op_get, 'Variable', 'argue_blind') if n == 1 else
+              [act_step('argue_object')]),
             (act_text(text_token(L.prompt('argue-1-open-b'), Q), pr1) if n == 1 else
              act_text(text_token(L.prompt('argue-2-object').replace('{ROUND}', rnd),
                                  {**QUESTION, 'LOG': (get1, 'Variable')}), pr1)),
@@ -1158,7 +1165,7 @@ def build(lang, ai=False):
             act_set_variable(ARGUE_LOG, add1, 'Text'),
             *if_contains(g_rep, ARGUE_LOG, ARGUE_MARKER),
             if_else(g_rep),
-            act_notify(L['notify.argue_reply'].replace('{N}', rnd)),
+            act_step('argue_reply'),
             act_get_variable(ARGUE_LOG, get3),
             act_text(text_token(L.prompt('argue-3-reply').replace('{ROUND}', rnd),
                                 {**QUESTION, 'LOG': (get3, 'Variable')}), pr2),
@@ -1256,11 +1263,11 @@ def build(lang, ai=False):
         # ---- Steps 2 and 3: Claude answers blind, then compares (only when there are two answers to compare)
         steps23 = [
             act_get_variable(GPT_VAR, cr_kget),
-            *keep_gpt(cr_kget, 'Variable', L['notify.critique_blind']),
+            *keep_gpt(cr_kget, 'Variable', 'critique_blind'),
             act_claude(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_own),
             act_set_variable(OWN_VAR, cr_own, 'Ask Claude'),
             *if_text(g_oretry, OWN_VAR, present=False),
-            act_notify(L['notify.claude_retry']),
+            act_step('claude_retry'),
             act_claude(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_own2),
             act_set_variable(OWN_VAR, cr_own2, 'Ask Claude'),
             if_close(g_oretry),
@@ -1282,17 +1289,17 @@ def build(lang, ai=False):
                                  'CLAUDE_OWN': (cr_own_f, 'Variable'), 'NUMS': (cr_numfin, 'Variable'),
                                  **rule_ref}), cr_prompt),
             act_set_variable(CHECK_VAR, cr_prompt, 'Text'),   # U-06: what the three fallbacks send
-            act_notify(L['notify.critique_step3']),
+            act_step('critique_step3'),
             # ---- A long request (U-08): one notification, not a window; and if Claude returns nothing, one
             # automatic retry with the request cut to the first LONG_TEXT characters.
             act_count_chars(cr_prompt, 'Text', cr_len),
             if_output(g_long, cr_len, 'Count', 2, WFNumberValue=LONG_TEXT),
-            act_notify(L['notify.long_text']),
+            act_step('long_text'),
             if_close(g_long),
             act_claude(text_token('{P}', {'P': (cr_prompt, 'Text')}), cr_claude),
             act_set_variable(CLAUDE_VAR, cr_claude, 'Ask Claude'),
             *if_text(g_cretry, CLAUDE_VAR, present=False),
-            act_notify(L['notify.claude_retry']),
+            act_step('claude_retry'),
             act_first_chars(cr_prompt, 'Text', LONG_TEXT, cr_cut),
             act_claude(text_token('{P}', {'P': (cr_cut, 'Matches')}), cr_claude2),
             act_set_variable(CLAUDE_VAR, cr_claude2, 'Ask Claude'),
@@ -1327,7 +1334,7 @@ def build(lang, ai=False):
                 # Emptied with «Nothing», not with an empty Text (an empty Text «has any value»).
                 *clear_variable(GPT_VAR),
                 *clear_variable(OWN_VAR),
-                act_notify(L['notify.critique_start']),
+                act_step('critique_start'),
                 # the wrapped question is needed by step 1 AND step 2, so it is built outside both
                 *brief_acts,
                 act_text(text_token('{B}' + L.prompt('wrap'), {**QQ, 'B': (brief_get, 'Variable')}), cr_wrap),
@@ -1341,7 +1348,7 @@ def build(lang, ai=False):
         return [
             *pre,
             *clear_variable(OWN_VAR),
-            act_notify(L['notify.critique_start']),
+            act_step('critique_start'),
             *brief_acts,
             act_text(text_token('{B}' + L.prompt('wrap'), {**QQ, 'B': (brief_get, 'Variable')}), cr_wrap),
             *set_text(DRAFT_VAR, DRAFT_STEP0 + '\n' + DRAFT_Q + '\n{Q}\n' + DRAFT_A + '\n', QQ),
@@ -1441,7 +1448,7 @@ def build(lang, ai=False):
             *dlog('branch: step 1, resume menu shown'),
             menu_open(g_m1, L['menu.resume1_title'], I1),
             menu_case(g_m1, I1[0]),
-            *resumed(*set_text(GPT_VAR, '{A}', A), *set_text(CRIT_VAR, '1'), act_notify(L['notify.resume'])),
+            *resumed(*set_text(GPT_VAR, '{A}', A), *set_text(CRIT_VAR, '1'), act_step('resume')),
             menu_case(g_m1, I1[1]),
             *resumed(*set_text(RESULT, L['output.claude_down'], A), *check_request(), *set_text(CLAUDE_DOWN, '1'),
                      *journal_note(('critique', L['journal.critique']), {'X': (ra, 'Text')})),
@@ -1700,7 +1707,7 @@ def build(lang, ai=False):
         # rounds; a side that is convinced starts its reply with the marker and the debate stops there.
         # Then Claude, as a neutral recorder: where they agreed / what is still disputed / what you decide.
         menu_case(g_main, MAIN[1]),
-        act_notify(L['notify.argue_start']),
+        act_step('argue_start'),
         # D-100: no drafts (each «Save File» is one more permission window on the first run), so no resume either
         *clear_variable(ARGUE_LOG),
         act_text(text_token('0'), ar_zero0),
@@ -1718,7 +1725,7 @@ def build(lang, ai=False):
         act_text(text_token(L['output.argue_side_a'] + '\n{A}', {'A': (ar_open_get, 'Variable')}), ar_log0),
         act_set_variable(ARGUE_LOG, ar_log0, 'Text'),
         *argue_round(1), *argue_round(2), *argue_round(3),
-        act_notify(L['notify.argue_verdict']),
+        act_step('argue_verdict'),
         act_get_variable(ARGUE_LOG, ar_get),
         act_text(text_token(L.prompt('argue-4-verdict'),
                             {**QUESTION, 'LOG': (ar_get, 'Variable')}), ar_prompt),
@@ -1731,7 +1738,7 @@ def build(lang, ai=False):
 
         # ---- Advisor: Claude reviews the user's own text without rewriting it
         menu_case(g_main, MAIN[2]),
-        act_notify(L['notify.advisor_start']),
+        act_step('advisor_start'),
         *set_text(ONLY_CLAUDE, '1'),
         act_text(text_token(L.prompt('advisor').replace('{CRITIQUE}', MAIN[0].split(' · ')[0].split(' — ')[0]), Q), ad_prompt),
         act_claude(text_token('{P}', {'P': (ad_prompt, 'Text')}), ad_claude),
@@ -1740,13 +1747,13 @@ def build(lang, ai=False):
 
         # ---- Side by side: both answer independently, answers shown together
         menu_case(g_main, MAIN[3]),
-        act_notify(L['notify.survey_start']),
+        act_step('survey_start'),
         *sb_brief,
         act_text(text_token('{B}' + L.prompt('wrap'), {**Q, 'B': (sb_brief_get, 'Variable')}), sb_wrap),
         act_gpt(text_token('{P}', {'P': (sb_wrap, 'Text')}), sb_gpt),
         # Yuri 10.11 (No.52): the step is named in the notification, so a run that iOS stops here says where it stopped
         # (and that ChatGPT's answer is in the clipboard)
-        *keep_gpt(sb_gpt, 'Ask ChatGPT', L['notify.survey_step2']),
+        *keep_gpt(sb_gpt, 'Ask ChatGPT', 'survey_step2'),
         act_claude(text_token('{P}', {'P': (sb_wrap, 'Text')}), sb_claude),
         act_set_variable(SIDE_CLAUDE, sb_claude, 'Ask Claude'),
         # an empty Claude answer: ask once more, as Critique does
@@ -1778,7 +1785,7 @@ def build(lang, ai=False):
         menu_open(g_anchor, L['menu.anchor_title'], L['menu.anchor_items']),
 
         menu_case(g_anchor, L['menu.anchor_items'][0]),
-        act_notify(L['notify.synthesis_claude_start']),
+        act_step('synthesis_claude_start'),
         act_text(text_token(L.prompt('wrap'), Q), sc_wrap),
         act_gpt(text_token('{P}', {'P': (sc_wrap, 'Text')}), sc_gpt),
         *keep_gpt(sc_gpt, 'Ask ChatGPT'),
@@ -1792,7 +1799,7 @@ def build(lang, ai=False):
                       {'X': (sc_gpt, 'Ask ChatGPT'), 'Y': (sc_claude, 'Ask Claude')}),
 
         menu_case(g_anchor, L['menu.anchor_items'][1]),
-        act_notify(L['notify.synthesis_gpt_start']),
+        act_step('synthesis_gpt_start'),
         act_text(text_token(L.prompt('wrap'), Q), sg_wrap),
         act_gpt(text_token('{P}', {'P': (sg_wrap, 'Text')}), sg_gpt),
         *keep_gpt(sg_gpt, 'Ask ChatGPT'),
@@ -1808,7 +1815,7 @@ def build(lang, ai=False):
 
         # ---- Auto: one classification call recommends the mode to use
         menu_case(g_main, MAIN[5]),
-        act_notify(L['notify.auto_start']),
+        act_step('auto_start'),
         act_text(text_token(L.prompt('auto-router'), Q), au_prompt),
         service_call(au_prompt, au_gpt)[0],
         act_text(text_token(L['output.auto'], {'R': (au_gpt, service_call(au_prompt, au_gpt)[1])}), au_text),
@@ -1821,13 +1828,13 @@ def build(lang, ai=False):
 
         # ---- Decision: fast view, cautious view, referee
         menu_case(g_extra, EXTRA[0]),
-        act_notify(L['notify.decision_start']),
+        act_step('decision_start'),
         act_text(text_token(L.prompt('decision-1-fast'), Q), de_fast),
         act_gpt(text_token('{P}', {'P': (de_fast, 'Text')}), de_gpt),
-        *keep_gpt(de_gpt, 'Ask ChatGPT', L['notify.decision_step2']),
+        *keep_gpt(de_gpt, 'Ask ChatGPT', 'decision_step2'),
         act_text(text_token(L.prompt('decision-2-cautious'), Q), de_caution),
         act_claude(text_token('{P}', {'P': (de_caution, 'Text')}), de_claude),
-        act_notify(L['notify.decision_step3']),
+        act_step('decision_step3'),
         act_text(text_token(L.prompt('decision-3-referee'),
                             {**QUESTION, 'FAST': (de_gpt, 'Ask ChatGPT'),
                              'CAUTIOUS': (de_claude, 'Ask Claude')}), de_referee),
@@ -1838,7 +1845,7 @@ def build(lang, ai=False):
 
         # ---- Dispute map: where the two agree, where they don't, what to verify
         menu_case(g_extra, EXTRA[1]),
-        act_notify(L['notify.disputemap_start']),
+        act_step('disputemap_start'),
         act_text(text_token(L.prompt('wrap'), Q), dm_wrap),
         act_gpt(text_token('{P}', {'P': (dm_wrap, 'Text')}), dm_gpt),
         *keep_gpt(dm_gpt, 'Ask ChatGPT'),
@@ -1853,19 +1860,19 @@ def build(lang, ai=False):
 
         # ---- Debate: draft, opponent, revision, judge
         menu_case(g_extra, EXTRA[2]),
-        act_notify(L['notify.debate_start']),
+        act_step('debate_start'),
         act_text(text_token(L.prompt('wrap'), Q), db_wrap),
         act_gpt(text_token('{P}', {'P': (db_wrap, 'Text')}), db_draft),
-        *keep_gpt(db_draft, 'Ask ChatGPT', L['notify.debate_step2']),
+        *keep_gpt(db_draft, 'Ask ChatGPT', 'debate_step2'),
         # blind first: Claude answers the question on its own (it does not see ChatGPT's draft); only then
         # ChatGPT sees both and revises, and the judge sees both originals and the revision — still 4 messages
         act_claude(text_token('{P}', {'P': (db_wrap, 'Text')}), db_crit),
-        act_notify(L['notify.debate_step3']),
+        act_step('debate_step3'),
         act_text(text_token(L.prompt('debate-2-compare'),
                             {**QUESTION, 'DRAFT': (db_draft, 'Ask ChatGPT'),
                              'OTHER': (db_crit, 'Ask Claude')}), db_rev_prompt),
         act_gpt(text_token('{P}', {'P': (db_rev_prompt, 'Text')}), db_rev),
-        act_notify(L['notify.debate_step4']),
+        act_step('debate_step4'),
         act_text(text_token(L.prompt('debate-3-judge-compare'),
                             {**QUESTION, 'DRAFT': (db_draft, 'Ask ChatGPT'),
                              'OTHER': (db_crit, 'Ask Claude'),
@@ -1878,12 +1885,12 @@ def build(lang, ai=False):
 
         # ---- Clarify: ask the user what's missing, then answer
         menu_case(g_extra, EXTRA[3]),
-        act_notify(L['notify.clarify_step1']),
+        act_step('clarify_step1'),
         act_text(text_token(L.prompt('clarify-1-questions'), Q), cl_prompt),
         service_call(cl_prompt, cl_gpt)[0],
         act_ask(text_token('{Q}' + L['ask.clarify_suffix'], {'Q': (cl_gpt, service_call(cl_prompt, cl_gpt)[1])}),
                 cl_ask, default=L['ask.clarify_default']),
-        act_notify(L['notify.clarify_step2']),
+        act_step('clarify_step2'),
         act_text(text_token(L.prompt('clarify-2-final'),
                             {**Q, 'QUESTIONS': (cl_gpt, service_call(cl_prompt, cl_gpt)[1]),
                              'USER_ANSWERS': (cl_ask, 'Provided Input')}), cl_final_prompt),
@@ -1897,10 +1904,10 @@ def build(lang, ai=False):
         menu_open(g_image, L['menu.image_title'], L['menu.image_items']),
 
         menu_case(g_image, L['menu.image_items'][0]),
-        act_notify(L['notify.image_step1']),
+        act_step('image_step1'),
         act_text(text_token(L.prompt('image-svg-brief'), Q), i1_brief),
         act_gpt(text_token('{P}', {'P': (i1_brief, 'Text')}), i1_gpt),
-        *keep_gpt(i1_gpt, 'Ask ChatGPT', L['notify.image_step2']),
+        *keep_gpt(i1_gpt, 'Ask ChatGPT', 'image_step2'),
         act_claude(text_token('{P}', {'P': (i1_brief, 'Text')}), i1_claude, brief=False),
         act_text(text_token(IMAGE_GALLERY_HTML.replace('{TITLE}', L['output.image_html_title'])
                             .replace('{CAP_C}', L['output.image_html_claude'])
@@ -1917,10 +1924,10 @@ def build(lang, ai=False):
         *journal_note(('image', L['journal.image'])),
 
         menu_case(g_image, L['menu.image_items'][1]),
-        act_notify(L['notify.image_step1']),
+        act_step('image_step1'),
         act_text(text_token(L.prompt('image-svg-brief'), Q), i2_brief),
         act_gpt(text_token('{P}', {'P': (i2_brief, 'Text')}), i2_gpt),
-        *keep_gpt(i2_gpt, 'Ask ChatGPT', L['notify.image_step2']),
+        *keep_gpt(i2_gpt, 'Ask ChatGPT', 'image_step2'),
         act_claude(text_token('{P}', {'P': (i2_brief, 'Text')}), i2_claude, brief=False),
         act_text(text_token(IMAGE_GALLERY_HTML.replace('{TITLE}', L['output.image_html_title'])
                             .replace('{CAP_C}', L['output.image_html_claude'])
@@ -1932,7 +1939,7 @@ def build(lang, ai=False):
         *remember_answer(i2_raw, 'Text'),
         act_save_file(L['files.image_html'], i2_html, i2_file),
         act_quick_look(attachment(i2_file, 'Saved File')),
-        act_notify(L['notify.image_judge']),
+        act_step('image_judge'),
         act_text(text_token(L.prompt('image-judge'),
                             {**QUESTION, 'SKETCH1': (i2_claude, 'Ask Claude'),
                              'SKETCH2': (i2_gpt, 'Ask ChatGPT')}), i2_judge_prompt),
@@ -1946,10 +1953,10 @@ def build(lang, ai=False):
 
         # ---- Delta: Claude anchors, ChatGPT returns only what it would add
         menu_case(g_extra, EXTRA[5]),
-        act_notify(L['notify.delta_step1']),
+        act_step('delta_step1'),
         act_text(text_token(L.prompt('wrap'), Q), dl_wrap),
         act_claude(text_token('{P}', {'P': (dl_wrap, 'Text')}), dl_claude),
-        act_notify(L['notify.delta_step2']),
+        act_step('delta_step2'),
         act_text(text_token(L.prompt('delta'),
                             {**QUESTION, 'ANCHOR': (dl_claude, 'Ask Claude')}), dl_prompt),
         act_gpt(text_token('{P}', {'P': (dl_prompt, 'Text')}), dl_gpt),
@@ -1971,16 +1978,16 @@ def build(lang, ai=False):
 
         # ---- Critique ⇄: Claude writes first, ChatGPT checks (texts, tone, strategy)
         menu_case(g_extra, EXTRA[8]),
-        act_notify(L['notify.reverse_start']),
+        act_step('reverse_start'),
         act_text(text_token(L.prompt('wrap'), Q), rv_wrap),
         act_claude(text_token('{P}', {'P': (rv_wrap, 'Text')}), rv_claude),
         act_text(text_token(L.prompt('critique-reverse'),
                             {**QUESTION, 'CLAUDE_ANSWER': (rv_claude, 'Ask Claude')}), rv_prompt),
-        act_notify(L['notify.critique_step2']),
+        act_step('critique_step2'),
         act_gpt(text_token('{P}', {'P': (rv_prompt, 'Text')}), rv_gpt),
         act_clipboard(attachment(rv_gpt, 'Ask ChatGPT')),
         *remember_answer(rv_gpt, 'Ask ChatGPT'),
-        act_notify(L['notify.critique_summary']),
+        act_step('critique_summary'),
         act_text(text_token(L.prompt('summary-reverse'),
                             {**QUESTION, 'CLAUDE_ANSWER': (rv_claude, 'Ask Claude'),
                              'GPT_ANSWER': (rv_gpt, 'Ask ChatGPT')}), rv_sum_prompt),
@@ -2091,7 +2098,7 @@ def build(lang, ai=False):
 
         # Check the result again: ChatGPT looks for errors in the final result; the block is added below it
         menu_case(g_more, L['menu.finale_more_items'][0]),
-        act_notify(L['notify.ratify']),
+        act_step('ratify'),
         act_get_variable(RESULT, fn_get),
         act_text(text_token(L.prompt('ratify'), {'QUESTION': QV['Q'], 'RESULT': (fn_get, 'Variable')}), fn_prompt),
         act_gpt(text_token('{P}', {'P': (fn_prompt, 'Text')}), fn_gpt),

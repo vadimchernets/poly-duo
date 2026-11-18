@@ -1,6 +1,7 @@
 """Duo «Debate until agreement»: ChatGPT takes a side, Claude objects, up to three rounds, a side
 that is convinced starts its reply with the marker and the rounds stop; then Claude sums up."""
 import json
+import re
 import os
 import plistlib
 import subprocess
@@ -41,7 +42,9 @@ def test_prompts_carry_the_marker_and_the_three_sections():
 @pytest.mark.parametrize('lang', LANGS)
 def test_mode_sits_next_to_critique(lang):
     items = ui(lang)['menu']['main_items']
-    assert len(items) == 7 and items[1].startswith('🤝') and '3–8✉' in items[1]
+    # D-128: the item is one short word; what it is for and its price («3–8») are in the menu title
+    title = ui(lang)['menu']['main_title']
+    assert len(items) == 7 and items[1] in title and re.search(r'3\s*[–〜~-]\s*8', title)
     assert '🤝' in ui(lang)['help']
 
 

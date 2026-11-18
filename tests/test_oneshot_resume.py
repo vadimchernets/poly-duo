@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from test_first_run import LANGS, ROOT, assert_blank_guard, assert_duo_blank_guard, build, kind, guard_var
+from test_first_run import LANGS, ROOT, assert_blank_guard, assert_duo_blank_guard, build, kind, guard_var, is_step
 
 
 def params(a):
@@ -64,7 +64,7 @@ def test_oneshot_resume_long(tmp_path, lang):
 
     # --- one retry after 3 s; Duo 6.4: the resume is back, through ONE draft «Save File» (test_duo64)
     n = ui['notify']
-    assert sum(params(a).get('WFNotificationActionBody') == n['resume'] for a in actions) == 1
+    assert sum(is_step(a, 'resume') for a in actions) == 1
     gpt_calls = [i for i, a in enumerate(actions) if kind(a) == 'AskIntent'
                  and a['WFWorkflowActionIdentifier'] == 'com.openai.chat.AskIntent']
     delay = next(i for i, a in enumerate(actions) if kind(a) == 'delay')
@@ -77,10 +77,10 @@ def test_oneshot_resume_long(tmp_path, lang):
     assert len(same) == 1  # Duo's own answer (test_duo61)
 
     # --- U-08: one notification (no alert) for a long request, one retry with the cut text
-    long_note = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == n['long_text'])
+    long_note = next(i for i, a in enumerate(actions) if is_step(a, 'long_text'))
     count = actions[long_note - 2]
     assert kind(count) == 'count' and params(actions[long_note - 1])['WFNumberValue'] == 6000
-    retries = [i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == n['claude_retry']]
+    retries = [i for i, a in enumerate(actions) if is_step(a, 'claude_retry')]
     # per block: step 2 (Claude's own answer) is re-asked as it was; step 3 is re-asked with the request cut
     cut = [i for i in retries if kind(actions[i + 1]) == 'match']
     assert len(retries) == 4 and len(cut) == 2

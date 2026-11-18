@@ -5,7 +5,7 @@ import re
 
 import pytest
 
-from test_first_run import LANGS, ROOT, build, kind
+from test_first_run import LANGS, ROOT, build, kind, is_step
 from test_duo64 import groups_open, params, ui_of
 
 CLAUDE = 'ClaudeAppIntentsExtension'
@@ -50,16 +50,17 @@ def test_side_by_side_names_its_step_and_keeps_chatgpt(tmp_path, lang):
     ui = ui_of(lang)
     actions = build(tmp_path, lang)
     n = ui['notify']
-    start = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == n['survey_start'])
+    start = next(i for i, a in enumerate(actions) if is_step(a, 'survey_start'))
     end = next(i for i in range(start, len(actions)) if kind(actions[i]) == 'choosefrommenu'
                and params(actions[i]).get('WFMenuItemTitle') == ui['menu']['main_items'][4])
     block = actions[start:end]
     gpt = next(i for i, a in enumerate(block) if kind(a) == 'AskIntent')
     first_claude = next(i for i, a in enumerate(block) if kind(a) == CLAUDE)
-    # before Claude: ChatGPT's answer to the clipboard, and a notification that names step 2 of 2
+    # before Claude: ChatGPT's answer to the clipboard, and step 2 of 2 is named — as a Comment, not a notification
+    # (D-128: VoiceOver read every progress banner aloud; one notification per run, at the end)
     assert any(kind(a) == 'setclipboard' for a in block[gpt:first_claude])
-    bodies = [params(a).get('WFNotificationActionBody') for a in block[gpt:first_claude] if kind(a) == 'notification']
-    assert bodies and all(n['survey_step2'] in b for b in bodies)
+    assert any(is_step(a, 'survey_step2') for a in block[gpt:first_claude])
+    assert not any(kind(a) == 'notification' for a in block[gpt:first_claude])
     # Claude asked at most twice (one retry of an empty answer), both into PolySideClaude
     claudes = [i for i, a in enumerate(block) if kind(a) == CLAUDE]
     assert len(claudes) == 2
@@ -77,7 +78,7 @@ def test_long_question_asks_for_a_shorter_answer(tmp_path, lang):
     ui = ui_of(lang)
     actions = build(tmp_path, lang)
     u = by_uid(actions)
-    notes = [i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['long_question']]
+    notes = [i for i, a in enumerate(actions) if is_step(a, 'long_question')]
     assert len(notes) == 3
     for i in notes:
         cond = groups_open(actions, i)[-1]
@@ -137,12 +138,13 @@ def test_advisor_on_a_question_points_to_critique(tmp_path, lang):
 
 @pytest.mark.parametrize('lang', LANGS)
 def test_menu_says_what_each_mode_is_for(tmp_path, lang):
-    """No.54, No.59: each main mode has a few words of what it is for; the title says what ✉ counts."""
+    """No.54, No.59: each main mode has a few words of what it is for and its price. D-128: they live in the menu
+    title, read once; the items themselves are the bare mode names (test_voice_menu)."""
     ui = ui_of(lang)
     m = ui['menu']
-    assert '✉ =' in m['main_title']
     for item in m['main_items'][:6]:
-        assert ' — ' in item and item.endswith('✉')
+        assert item in m['main_title']
+    assert re.search(r'[(（]\+?1[)）]', m['main_title']) and re.search(r'[(（]3[)）]', m['main_title'])
     n = ui['notify']
     assert not re.search(r'40\s?(s|sec|\u0441)', n['advisor_start'])   # \u0441: the Cyrillic «s»
     if lang != 'en':

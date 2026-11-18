@@ -84,6 +84,12 @@ def guard_var(actions, cond):
     return node.get('VariableName') or node.get('OutputName')
 
 
+def is_step(action, key):
+    """D-128: a step of the run is a Comment «Duo step: <key>», not a notification (one notification per run)."""
+    return (action['WFWorkflowActionIdentifier'] == 'is.workflow.actions.comment'
+            and action['WFWorkflowActionParameters'].get('WFCommentActionText') == 'Duo step: ' + key)
+
+
 def notification(action):
     body = action['WFWorkflowActionParameters'].get('WFNotificationActionBody')
     return body if isinstance(body, str) else None

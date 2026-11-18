@@ -4,7 +4,7 @@ import plistlib
 
 import pytest
 
-from test_first_run import LANGS, ROOT, build, kind
+from test_first_run import LANGS, ROOT, build, kind, is_step
 
 
 def params(a):
@@ -67,7 +67,7 @@ def test_debate_no_drafts_and_retries(tmp_path, lang):
         assert actions[i + 1]['WFWorkflowActionIdentifier'] == 'com.openai.chat.AskIntent'
     # Critique ⇄ and Delta (the ChatGPT call that follows their notifications) are retried too
     for key in ('reverse_start', 'delta_step1'):
-        start = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify'][key])
+        start = next(i for i, a in enumerate(actions) if is_step(a, key))
         gpt = next(i for i in range(start, len(actions)) if kind(actions[i]) == 'AskIntent'
                    and actions[i]['WFWorkflowActionIdentifier'] == 'com.openai.chat.AskIntent')
         assert [kind(a) for a in actions[gpt + 1:gpt + 9]] == ['setvariable', 'getvariable'] + ['replace'] * 4 + ['setvariable', 'getvariable']

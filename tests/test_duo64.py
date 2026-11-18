@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from test_first_run import LANGS, ROOT, build, kind, guard_var
+from test_first_run import LANGS, ROOT, build, kind, guard_var, is_step
 
 import sys
 sys.path.insert(0, str(ROOT / 'src'))
@@ -134,7 +134,7 @@ def test_resume_menu_before_the_question(tmp_path, lang):
     c1 = [i for i, a in enumerate(actions) if params(a).get('GroupingIdentifier') == g1]
     go = [params(a)['WFVariableName'] for a in actions[c1[1]:c1[2]] if kind(a) == 'setvariable']
     assert {'PolyChatGPTAnswer', 'PolyCritique'} <= set(go)
-    assert any(params(a).get('WFNotificationActionBody') == ui['notify']['resume'] for a in actions[c1[1]:c1[2]])
+    assert any(is_step(a, 'resume') for a in actions[c1[1]:c1[2]])
     check = [params(a)['WFVariableName'] for a in actions[c1[2]:c1[3]] if kind(a) == 'setvariable']
     assert {'PolyCheckRequest', 'PolyClaudeDown', ui['variables']['result']} <= set(check)
     show = [params(a)['WFVariableName'] for a in actions[c1[3]:c1[4]] if kind(a) == 'setvariable']
@@ -167,7 +167,7 @@ def test_whoever_answered_is_delivered(tmp_path, lang):
             assert len(found) == 3   # both Critique blocks and Side by side (ChatGPT empty, Claude answered)
     # in-run: Claude did not compare → ChatGPT's answer + CLAUDE_DOWN, in the Otherwise of «Claude compared»
     main_start = max(i for i, a in enumerate(actions)
-                     if params(a).get('WFNotificationActionBody') == ui['notify']['critique_start'])
+                     if is_step(a, 'critique_start'))
     head = ui['output']['claude_down'].split('{A}')[0]
     i = next(i for i, t in sets(actions, result) if i > main_start and t and t.startswith(head))
     assert guard_var(actions, groups_open(actions, i, ('conditional',))[-1]) == 'PolyClaudeAnswer'

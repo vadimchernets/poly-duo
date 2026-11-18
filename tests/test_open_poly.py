@@ -32,10 +32,12 @@ def test_duo_open_poly(tmp_path, lang):
     ui = json.loads((ROOT / 'locales' / lang / 'ui.json').read_text(encoding='utf-8'))
     m = ui['menu']
     assert 'Poly' in m['open_poly']
-    assert m['open_poly'] in m['finale_items'] and m['open_poly'] in m['finale_more_items']
+    # D-128: in «What next?» the item is two short words without the emoji; «More actions» keeps the long label
+    assert 'Poly' in m['finale_items'][2] and m['open_poly'] in m['finale_more_items']
     assert 'https://github.com/vadimchernets/poly-duo' in ui['help']
     actions = build(tmp_path, lang)
     assert len(poly_urls(actions, 'duo')) == 2
+    _menu_case_then_url(actions, m['finale_items'][2], 'duo')
     _menu_case_then_url(actions, m['open_poly'], 'duo')
     assert not any(kind(a) == 'urlencode' and 'polyhelper' in str(a) for a in actions)
     # a menu item, not an automatic last step: the last action is not the Poly URL

@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from test_first_run import LANGS, ROOT, build, kind
+from test_first_run import LANGS, ROOT, build, kind, is_step
 
 
 def params(a):
@@ -74,7 +74,7 @@ def test_own_answer_not_prefilled(tmp_path, lang):
     # 14.11 live run: keep_gpt remembers the ChatGPT answer it puts into the clipboard too (right after its notification)
     def is_kept_save(sv):
         c = max(i for i, a in enumerate(actions[:sv]) if kind(a) == 'setclipboard')
-        return ui['notify']['gpt_kept'] in (params(actions[c + 1]).get('WFNotificationActionBody') or '')
+        return is_step(actions[c + 1], 'gpt_kept')
     kept_saves = [sv for sv in all_saves if is_kept_save(sv)]
     assert len(kept_saves) == 11
     for sv in kept_saves:
@@ -119,7 +119,7 @@ def test_own_answer_not_prefilled(tmp_path, lang):
             i += 1
         return path
     # D-98: the ChatGPT-answer copies, told apart by the clipboard line in the notification right after the copy
-    kept = [c for c in copies if ui['notify']['gpt_kept'] in (params(actions[c + 1]).get('WFNotificationActionBody') or '')]
+    kept = [c for c in copies if is_step(actions[c + 1], 'gpt_kept')]
     # Side by side, both Syntheses, Decision, Dispute map, Debate, both Images, round 1 of Debate until agreement,
     # Critique and My mode (once each now: no resumed drafts, D-100)
     assert len(kept) == 11

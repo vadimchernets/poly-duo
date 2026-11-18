@@ -5,7 +5,7 @@ import plistlib
 
 import pytest
 
-from test_first_run import LANGS, ROOT, build, kind, guard_var
+from test_first_run import LANGS, ROOT, build, kind, guard_var, is_step
 
 VERSION = json.loads((ROOT / 'releases' / 'version.json').read_text(encoding='utf-8'))
 
@@ -43,9 +43,9 @@ def test_critique_blind_scheme_and_claude_down_is_reachable(tmp_path, lang):
     actions = build(tmp_path, lang)
     n = ui['notify']
     # Duo 6.4: the main Critique runs after the mode menu (the last of the two Critique blocks; My mode's is first)
-    start = max(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == n['critique_start'])
-    s2 = next(i for i in range(start, len(actions)) if params(actions[i]).get('WFNotificationActionBody') == n['critique_blind'])
-    s3 = next(i for i in range(start, len(actions)) if params(actions[i]).get('WFNotificationActionBody') == n['critique_step3'])
+    start = max(i for i, a in enumerate(actions) if is_step(a, 'critique_start'))
+    s2 = next(i for i in range(start, len(actions)) if is_step(actions[i], 'critique_blind'))
+    s3 = next(i for i in range(start, len(actions)) if is_step(actions[i], 'critique_step3'))
     assert start < s2 < s3
     # exactly three messages in the happy path: ChatGPT, Claude (blind), Claude (compare)
     asks = [(i, kind(actions[i])) for i in range(start, s3 + 12) if kind(actions[i]) in ('AskIntent', 'ClaudeAppIntentsExtension')]
@@ -196,7 +196,7 @@ def test_no_variable_is_emptied_with_an_empty_text(tmp_path, lang):
             assert value['string'] != '' or value['attachmentsByRange'], \
                 f"{params(a)['WFVariableName']} is set from an empty Text"
     ui = ui_of(lang)
-    starts = [i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['critique_start']]
+    starts = [i for i, a in enumerate(actions) if is_step(a, 'critique_start')]
     assert len(starts) == 2   # My mode, then the main Critique after the mode menu (Duo 6.4)
     for start in starts:
         gpt = next(i for i in range(start, len(actions)) if kind(actions[i]) == 'AskIntent')
@@ -229,7 +229,7 @@ def test_critique_first_run_asks_few_permissions(tmp_path, lang):
     once, remembers it once and appends one journal entry."""
     ui = ui_of(lang)
     actions = build(tmp_path, lang)
-    starts = [i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['critique_start']]
+    starts = [i for i, a in enumerate(actions) if is_step(a, 'critique_start')]
     tail_empty = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['tail_empty'])
     # My mode's block (ends at the mode menu's close) writes no file; the main one (Duo 6.4) writes its draft through
     # exactly ONE «Save File», run three times by a loop
