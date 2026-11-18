@@ -56,9 +56,9 @@ def test_side_by_side_names_its_step_and_keeps_chatgpt(tmp_path, lang):
     block = actions[start:end]
     gpt = next(i for i, a in enumerate(block) if kind(a) == 'AskIntent')
     first_claude = next(i for i, a in enumerate(block) if kind(a) == CLAUDE)
-    # before Claude: ChatGPT's answer to the clipboard, and step 2 of 2 is named — as a Comment, not a notification
-    # (D-128: VoiceOver read every progress banner aloud; one notification per run, at the end)
-    assert any(kind(a) == 'setclipboard' for a in block[gpt:first_claude])
+    # before Claude: step 2 of 2 is named — as a Comment, not a notification, and nothing is copied (D-128, Siri run:
+    # a notification and a «Copy to Clipboard» permission window are both lost on a locked phone)
+    assert not any(kind(a) == 'setclipboard' for a in block[gpt:first_claude])
     assert any(is_step(a, 'survey_step2') for a in block[gpt:first_claude])
     assert not any(kind(a) == 'notification' for a in block[gpt:first_claude])
     # Claude asked at most twice (one retry of an empty answer), both into PolySideClaude

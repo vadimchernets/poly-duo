@@ -29,6 +29,7 @@ def test_no_answer_says_where_the_answers_are(tmp_path, lang):
     assert not any(kind(a) in ('setclipboard', 'save') for a in actions[i:end])
 
 
+@pytest.mark.skip(reason='D-128 (18.11): no Critique draft and no resume — its «Save File» was a second file window (rule No.7)')
 @pytest.mark.parametrize('lang', LANGS)
 def test_gpt_down_only_when_chatgpt_was_asked(tmp_path, lang):
     ui = ui_of(lang)
@@ -77,10 +78,7 @@ def test_diagnostic_build_names_every_ai_call(tmp_path):
         log_after = next(a for a in actions[i:] if kind(a) == 'append')
         src = next(a for a in reversed(actions[:actions.index(log_after)]) if kind(a) == 'gettext')
         assert "'WFDateFormat': 'HH:mm:ss'" in str(params(src))
-    # 14.11: resume_block logs each decision point (file, age, step, branch) in the diag build only
-    logs = [str(params(a)) for a in actions if kind(a) == 'gettext' and 'resume:' in str(params(a))]
-    for word in ('found', 'age', 'step', 'branch'):
-        assert any(word in l for l in logs), word
+    # D-128: no resume (no Critique draft), so its diag log lines are gone too
     # the release build has none of it
     plain = build(tmp_path / 'plain', 'uk')
     assert not any('🔧' in str(params(a).get('WFNotificationActionBody', '')) for a in plain)
@@ -95,7 +93,7 @@ def test_claude_only_has_its_own_neutral_line(tmp_path, lang):
     actions = build(tmp_path, lang)
     assert '{C}' in ui['output']['claude_only'] and 'ChatGPT' not in ui['output']['claude_only'].split('{C}')[0]
     only = [i for i, a in enumerate(actions) if kind(a) == 'setvariable' and params(a).get('WFVariableName') == 'PolyOnlyClaude']
-    assert len(only) == 2   # the Advisor, and «Ask Claude alone» in the resume menu
+    assert len(only) == 1   # the Advisor (D-128: the resume menu and its «Ask Claude alone» are gone)
     texts = [t for _, t in sets(actions, ui['variables']['result']) if t]
     assert any(t.startswith(ui['output']['claude_only'].split('{C}')[0]) for t in texts)
 
@@ -174,7 +172,7 @@ def test_every_claude_request_starts_with_brevity_line(tmp_path, lang):
     claude = [a for a in actions if a['WFWorkflowActionIdentifier'] == 'com.anthropic.claude.ClaudeAppIntentsExtension']
     assert claude
     with_line = [a for a in claude if params(a)['message']['Value']['string'].startswith(line)]
-    assert len(claude) - len(with_line) == 2   # the two SVG image steps
+    assert len(claude) - len(with_line) == 3   # the two SVG image steps and the one-word Setup call (D-128)
     for a in with_line:
         v = params(a)['message']['Value']
         for key in v['attachmentsByRange']:

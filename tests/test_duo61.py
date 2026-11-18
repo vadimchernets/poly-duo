@@ -67,115 +67,31 @@ def test_own_answer_not_prefilled(tmp_path, lang):
     # no screen and no tap are added: the only things the person sees before the field are the same as in Duo 6
     assert not any(kind(a) in ('alert', 'choosefrommenu', 'ask') for a in actions[clip:ask])
 
-    # --- every text Duo leaves in the clipboard is remembered RIGHT AFTER it is written — before any screen that waits
-    # for the person and before any further AI call: «by hand» check request, Image (both), Claude writes / ChatGPT
-    # checks, the tail (RESULT, also when the «Claude did not answer» menu delivered it), and the re-checked result.
+    # --- every text Duo leaves in the clipboard is remembered RIGHT AFTER it is written, before any screen that waits
+    # for the person and before any further AI call. D-128 (18.11, Siri run): the main path copies nothing any more
+    # (each «Copy to Clipboard» was a permission window Siri does not read); what is left is the person's own pick —
+    # the «by hand» check request, both Images, and «Open Poly» (twice: «What next?» and «More actions»).
     all_saves = saves_of(actions, last)
-    # 14.11 live run: keep_gpt remembers the ChatGPT answer it puts into the clipboard too (right after its notification)
-    def is_kept_save(sv):
-        c = max(i for i, a in enumerate(actions[:sv]) if kind(a) == 'setclipboard')
-        return is_step(actions[c + 1], 'gpt_kept')
-    kept_saves = [sv for sv in all_saves if is_kept_save(sv)]
-    assert len(kept_saves) == 11
-    for sv in kept_saves:
-        c = max(i for i, a in enumerate(actions[:sv]) if kind(a) == 'setclipboard')
-        assert params(actions[c])['WFInput']['Value']['OutputUUID'] == ref(params(actions[sv - 2])['text'])[0]
-        assert kind(actions[sv - 2]) == 'match' and params(actions[sv - 2])['WFMatchTextPattern'] == '(?s)^.{1,200}'
-    saves = [sv for sv in all_saves if sv not in kept_saves]
-    # 6 as in Duo 6.1; D-98's copies of ChatGPT's answer are remembered again (kept_saves above)
-    assert len(saves) == 6
-    for s in saves:
+    copies = [i for i, a in enumerate(actions) if kind(a) == 'setclipboard']
+    assert len(all_saves) == len(copies) == 5
+    waits = ('previewdocument', 'choosefrommenu', 'ask', 'alert', 'AskIntent', 'ClaudeAppIntentsExtension', 'askllm',
+             'openurl')
+    for s in all_saves:
         txt, cut = actions[s - 1], actions[s - 2]
         assert kind(txt) == 'gettext' and kind(cut) == 'match'
         assert params(cut)['WFMatchTextPattern'] == '(?s)^.{1,200}'
         assert ref(params(txt)['WFTextActionText']) == (params(cut)['UUID'], 'Matches')
         assert ref(params(actions[s])['WFInput']) == (params(txt)['UUID'], 'Text')
         assert params(actions[s])['WFSaveFileOverwrite'] is True and params(actions[s])['WFAskWhereToSave'] is False
-    src = lambda s: ref(params(actions[s - 2])['text'])[0]
-    copies = [i for i, a in enumerate(actions) if kind(a) == 'setclipboard']
-    waits = ('previewdocument', 'choosefrommenu', 'ask', 'alert', 'AskIntent', 'ClaudeAppIntentsExtension', 'askllm')
-    for s in saves:
         copy = max(i for i in copies if i < s)
         assert not any(kind(a) in waits and params(a).get('WFControlFlowMode', 0) == 0 for a in actions[copy:s]), \
             'a screen or an AI call between the clipboard write and its save'
-    down = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
-                and params(a).get('WFMenuPrompt') == ui['menu']['claude_down_title'])
-    down_end = next(i for i in range(down + 1, len(actions)) if params(actions[i]).get('GroupingIdentifier')
-                    == params(actions[down])['GroupingIdentifier'] and params(actions[i])['WFControlFlowMode'] == 2)
-    def run_from(c):
-        """Actions executed after index c up to the next last-answer save: at the end of a menu case (or of an If
-        branch) execution jumps to that group's End."""
-        end_of = {}
-        for i, a in enumerate(actions):
-            if params(a).get('WFControlFlowMode') == 2:
-                end_of[params(a)['GroupingIdentifier']] = i
-        i, path = c + 1, []
-        while i not in saves:
-            g, m = params(actions[i]).get('GroupingIdentifier'), params(actions[i]).get('WFControlFlowMode')
-            if m == 1:      # the next case / Otherwise: follow the branch already taken (the first one) to the End
-                i = end_of[g]
-                continue
-            path.append(actions[i])
-            i += 1
-        return path
-    # D-98: the ChatGPT-answer copies, told apart by the clipboard line in the notification right after the copy
-    kept = [c for c in copies if is_step(actions[c + 1], 'gpt_kept')]
-    # Side by side, both Syntheses, Decision, Dispute map, Debate, both Images, round 1 of Debate until agreement,
-    # Critique and My mode (once each now: no resumed drafts, D-100)
-    assert len(kept) == 11
-    for c in copies:
-        if down < c < down_end or c in kept:
-            continue      # its three branches are checked through the tail save (the menu itself comes first)
-        assert not any(kind(a) in waits and params(a).get('WFControlFlowMode', 0) == 0 for a in run_from(c)), \
-            f'clipboard write at {c} is not remembered before a screen or an AI call'
-    by_uid = {params(a).get('UUID'): a for a in actions}
-    for c in kept:
-        # each is followed (before anything else that waits) by a Claude call, and copies only a text with characters
-        assert kind(actions[c - 1]) == 'conditional' and params(actions[c - 1])['WFCondition'] == 100
-        assert kind(actions[c - 2]) == 'match' and params(actions[c - 2])['WFMatchTextPattern'] == r'\S'
-        nxt = next(a for a in actions[c:] if kind(a) in waits and params(a).get('WFControlFlowMode', 0) == 0)
-        assert kind(nxt) == 'ClaudeAppIntentsExtension'
-        # the copied text is an answer itself, never the debate log (its side-A header is there without an answer)
-        src_a = by_uid[ref(params(actions[c - 3])['WFTextActionText'])[0]]
-        if kind(src_a) == 'getvariable':
-            assert params(src_a)['WFVariable']['Value']['VariableName'] in (
-                'PolyChatGPTAnswer', 'PolyArgueOpening') or params(src_a)['WFVariable']['Value']['VariableName'].startswith('PolyGPTRetry')
-        else:
-            assert kind(src_a) == 'AskIntent'
-    img1, img2, rev, manual, tail, ratify = saves
-    for s in (manual, img1, img2, rev):                # Copy <an action output> → remember the same output
-        copy = max(i for i in copies if i < s)
-        assert params(actions[copy])['WFInput']['Value']['OutputUUID'] == src(s)
+    img1, img2, manual, poly1, poly2 = all_saves
     assert params(actions[manual + 1]).get('WFNotificationActionBody') == ui['notify']['manual_copied']
-    # the tail one: after «done / empty» (and the Claude-did-not-answer menu), only when there is a result, before the
-    # one result screen and the journal
-    got = actions[uid[src(tail)]]
-    assert kind(got) == 'getvariable' and params(got)['WFVariable']['Value']['VariableName'] == ui['variables']['result']
-    # Duo 6.4: the tail's one clipboard write comes right before it, in the same «RESULT has text», after the
-    # «Claude did not answer» menu (which no longer copies anything itself)
-    assert kind(actions[tail - 4]) == 'setclipboard'
-    # Yuri 10.11 (No.56): between the If and the copy, only the Markdown clean-up of RESULT (read, 3 × replace, store)
-    # (skipped when the answer holds a code block)
-    assert [kind(a) for a in actions[tail - 12:tail - 4]] == ['getvariable', 'match', 'conditional', 'replace', 'replace',
-                                                              'replace', 'setvariable', 'conditional']
-    assert params(actions[tail - 6])['WFVariableName'] == ui['variables']['result']
-    assert kind(actions[tail - 13]) == 'conditional' and params(actions[tail - 13])['WFCondition'] == 100
-    assert kind(actions[tail + 1]) == 'notification' and params(actions[tail + 1])['WFNotificationActionBody'] == ui['notify']['tail_done']
-    assert kind(actions[tail + 2]) == 'conditional' and params(actions[tail + 2])['WFControlFlowMode'] == 2
-    look = next(i for i in range(tail, len(actions)) if kind(actions[i]) == 'previewdocument')
-    journal = next(i for i in range(tail, len(actions)) if kind(actions[i]) == 'append')
-    # D-100 (6.3.1): the journal permission window comes before the result screen, not after it
-    assert tail < journal < look
-    # the re-check: Copy <RESULT> where RESULT was just set from the same text
-    # (Yuri 10.11, No.56: RESULT is cleaned of Markdown first, then copied, then read back for the save)
-    got_r = actions[uid[src(ratify)]]
-    assert kind(got_r) == 'getvariable' and params(got_r)['WFVariable']['Value']['VariableName'] == ui['variables']['result']
-    set_ratify = next(a for a in reversed(actions[:ratify]) if kind(a) == 'setvariable')
-    assert params(set_ratify)['WFVariableName'] == ui['variables']['result'] and \
-        kind(actions[uid[params(set_ratify)['WFInput']['Value']['OutputUUID']]]) == 'replace'
-    # D-100 (6.3.1): its journal entry is written before its result screen
-    look2 = next(i for i in range(ratify, len(actions)) if kind(actions[i]) == 'previewdocument')
-    assert kind(actions[look2 - 1]) == 'append' and kind(actions[look2 + 1]) != 'append'
+    for s in (poly1, poly2):
+        assert kind(actions[s + 1]) == 'openurl'
+    # no journal entry any more: one file write per run (rule No.7), the Critique draft
+    assert not any(kind(a) == 'append' for a in actions)
 
 
 @pytest.mark.parametrize('lang', LANGS)

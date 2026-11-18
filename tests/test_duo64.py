@@ -59,6 +59,7 @@ def sets(actions, var):
     return out
 
 
+@pytest.mark.skip(reason='D-128 (18.11): no Critique draft and no resume — its «Save File» was a second file window (rule No.7)')
 @pytest.mark.parametrize('lang', LANGS)
 def test_one_draft_save_runs_three_times(tmp_path, lang):
     actions = build(tmp_path, lang)
@@ -92,6 +93,7 @@ def test_one_draft_save_runs_three_times(tmp_path, lang):
     assert before == ['Repeat Item', 'Repeat Item']
 
 
+@pytest.mark.skip(reason='D-128 (18.11): no Critique draft and no resume — its «Save File» was a second file window (rule No.7)')
 @pytest.mark.parametrize('lang', LANGS)
 def test_resume_menu_before_the_question(tmp_path, lang):
     ui = ui_of(lang)
@@ -162,7 +164,7 @@ def test_whoever_answered_is_delivered(tmp_path, lang):
         head = ui['output'][key].split(needle)[0]
         found = [(i, t) for i, t in sets(actions, result) if t and t.startswith(head)]
         if key == 'claude_down':
-            assert len(found) == 5   # both Critique blocks, the resume's «check» and «show», Side by side (Yuri 10.11)
+            assert len(found) == 3   # both Critique blocks and Side by side (D-128: no resume any more)
         else:
             assert len(found) == 3   # both Critique blocks and Side by side (ChatGPT empty, Claude answered)
     # in-run: Claude did not compare → ChatGPT's answer + CLAUDE_DOWN, in the Otherwise of «Claude compared»
@@ -222,6 +224,7 @@ def test_trio_search_sources_need_no_dictionary_walk(tmp_path):
     assert not keys & {'groundingChunks', 'groundingMetadata', 'web', 'uri', 'title'}
 
 
+@pytest.mark.skip(reason='D-128 (18.11): no Critique draft and no resume — its «Save File» was a second file window (rule No.7)')
 @pytest.mark.parametrize('lang', LANGS)
 def test_draft_age_dates_passed_as_text_tokens(tmp_path, lang):
     """14.11 live run: «Time Between Dates» came back blank, so the age test never passed and no resume menu was shown.

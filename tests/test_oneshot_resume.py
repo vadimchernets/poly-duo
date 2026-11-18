@@ -16,6 +16,7 @@ def notes(actions):
     return [params(a).get('WFNotificationActionBody') for a in actions if kind(a) == 'notification']
 
 
+@pytest.mark.skip(reason='D-128 (18.11): no Critique draft and no resume — its «Save File» was a second file window (rule No.7)')
 @pytest.mark.parametrize('lang', LANGS)
 def test_oneshot_resume_long(tmp_path, lang):
     ui = json.loads((ROOT / 'locales' / lang / 'ui.json').read_text(encoding='utf-8'))

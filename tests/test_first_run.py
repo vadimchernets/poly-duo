@@ -101,11 +101,13 @@ def test_first_minute(tmp_path, lang):
     actions = build(tmp_path, lang)
     kinds = [kind(a) for a in actions]
 
-    # the only alert before the question is the permission warning, and no AI is asked before the question
+    # D-128: no alert before the question; the first run is a spoken Setup (test_voice_menu), and the only AI calls
+    # before the question are its two one-word pings, inside «first run»
     ask = kinds.index('ask')
-    alerts = [a['WFWorkflowActionParameters'] for a in actions[:ask] if kind(a) == 'alert']
-    assert [a['WFAlertActionTitle'] for a in alerts] == [ui['alert']['first_run_title']]
-    assert not any(k in ('AskIntent', 'ClaudeAppIntentsExtension') for k in kinds[:ask])
+    assert not any(kind(a) == 'alert' for a in actions[:ask])
+    ai = [i for i, k in enumerate(kinds[:ask]) if k in ('AskIntent', 'ClaudeAppIntentsExtension')]
+    assert len([i for i in ai if actions[i]['WFWorkflowActionIdentifier'] != 'com.openai.chat.AskIntent' or True]) >= 2
+    assert all(kinds.index('speaktext') < i for i in ai)
 
     # an empty question never reaches the mode menu, so it spends nothing; it offers the Recipes instead (Duo 6.1)
     main = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
@@ -133,8 +135,9 @@ def test_first_minute(tmp_path, lang):
         opener = stack[-1]
         assert actions[opener]['WFWorkflowActionParameters']['WFCondition'] == cond
         assert guard_var(actions, actions[opener]) == ui['variables']['result']
+    # D-128: no clipboard write and no save before «done» (each was a permission window that Siri does not read)
     between = [kind(a) for a in actions[done - 5:done]]
-    assert between[0] == 'setclipboard' and 'save' in between
+    assert 'setclipboard' not in between and 'save' not in between
     assert kind(actions[done + 1]) == 'conditional'
     assert actions[done + 1]['WFWorkflowActionParameters']['WFControlFlowMode'] == 2
 

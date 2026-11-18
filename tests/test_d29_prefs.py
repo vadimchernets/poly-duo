@@ -202,6 +202,7 @@ def test_the_leak_test_follows_an_action_without_input_after_end_if_and_the_othe
     assert _taint_violations([get, cond, end, nothing, _act('is.workflow.actions.openurl')]) == []
 
 
+@pytest.mark.skip(reason='D-128 (18.11): no Critique draft and no resume — its «Save File» was a second file window (rule No.7)')
 @pytest.mark.parametrize('lang', LANGS)
 def test_prefs_are_known_before_the_resume_menu_and_every_more_item_is_safe(tmp_path, lang):
     """B-1: on a run that goes on from a saved draft the file used to be read AFTER the resume branch, so the «OFF»
@@ -234,6 +235,7 @@ def test_prefs_are_known_before_the_resume_menu_and_every_more_item_is_safe(tmp_
         assert len(at) == 1 and at[0] > save
 
 
+@pytest.mark.skip(reason='D-128 (18.11): no Critique draft and no resume — its «Save File» was a second file window (rule No.7)')
 @pytest.mark.parametrize('lang', LANGS)
 def test_each_more_switch_changes_only_its_own_flag(tmp_path, lang):
     ui = ui_of(lang)

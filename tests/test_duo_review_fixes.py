@@ -129,7 +129,8 @@ def test_ai_build_uses_existing_version_key(tmp_path):
     build(tmp_path, 'en')
     ai = plistlib.loads((tmp_path / 'en' / 'ai' / 'Poly.shortcut').read_bytes())['WFWorkflowActions']
     keys = [params(a)['WFDictionaryKey'] for a in ai if kind(a) == 'getvalueforkey']
-    assert keys[-2:] == ['duo', 'duo_en']  # the version check's two lookups (the key chain's come earlier)
+    assert keys[keys.index('duo'):keys.index('duo') + 2] == ['duo', 'duo_en']  # the version check's two lookups
+    assert 'duo_ai' not in keys
     needles = [params(a)['WFConditionalActionString'] for a in ai if kind(a) == 'conditional' and params(a).get('WFCondition') == 99
                and isinstance(params(a).get('WFConditionalActionString'), str)]
     assert '"duo":' in needles
@@ -139,8 +140,7 @@ def test_ai_build_uses_existing_version_key(tmp_path):
     saves = [params(a)['WFFileDestinationPath'] for a in ai if kind(a) == 'save']
     # Duo 6.4: one draft «Save File», named for the build, so the plain build never resumes an ai draft
     # Yuri 13.11 (No.62): and for the build, so an older build's draft is never offered
-    drafts = [s for s in saves if s.startswith('Duo-draft-')]
-    assert len(drafts) == 1 and drafts[0].startswith('Duo-draft-en-ai-')
+    assert not [s for s in saves if s.startswith('Duo-draft-')]   # D-128: no Critique draft
 
 
 def token_text(node):
@@ -213,7 +213,7 @@ def test_no_variable_is_emptied_with_an_empty_text(tmp_path, lang):
             assert [var_name(c, actions) for c in enclosing(actions, blind)] == ['PolyResume', 'PolySkipMenu']
         else:
             gates = [var_name(c, actions) for c in enclosing(actions, gpt)]
-            assert gates == ['PolyCritique', 'PolyDraftPassA', 'PolyChatGPTAnswer', 'PolySkipChatGPT']
+            assert gates == ['PolyCritique']   # D-128: no draft, so no resume gates
         # their retries test the answer by its characters (Match Text `\S`), not by «has any value»
         for call, var in ((gpt, 'PolyChatGPTAnswer'), (blind, 'PolyClaudeOwn')):
             guard = next(a for a in actions[call:] if kind(a) == 'conditional')
@@ -234,11 +234,11 @@ def test_critique_first_run_asks_few_permissions(tmp_path, lang):
     # My mode's block (ends at the mode menu's close) writes no file; the main one (Duo 6.4) writes its draft through
     # exactly ONE «Save File», run three times by a loop
     for start, end, drafts in ((starts[0], next(i for i in range(starts[0], len(actions)) if kind(actions[i]) == 'choosefrommenu'), 0),
-                               (starts[1], tail_empty, 1)):
+                               (starts[1], tail_empty, 0)):
         block = [kind(a) for a in actions[start:end]]
-        # 14.11: keep_gpt remembers ChatGPT's answer (files.last_answer) as well: one more «Save File» in each block
-        assert block.count('save') == drafts + 1 and block.count('append') == 0
-        assert block.count('setclipboard') == 1
+        # D-128 (18.11, Siri run): no clipboard write and no «remember» save — only the main Critique's draft
+        assert block.count('save') == drafts and block.count('append') == 0
+        assert block.count('setclipboard') == 0
     tail = next(i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == ui['notify']['tail_done'])
     finale = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
                   and params(a).get('WFMenuPrompt') == ui['menu']['finale_title'])
@@ -250,7 +250,9 @@ def test_critique_first_run_asks_few_permissions(tmp_path, lang):
     # the happy path: everything from the tail to the finale menu except the «Claude did not answer» menu
     seen = [kind(a) for i, a in enumerate(actions[tail_empty:finale], tail_empty) if not down <= i <= down_end]
     assert tail_empty < down < tail < finale
-    assert seen.count('setclipboard') == 1 and seen.count('save') == 1 and seen.count('append') == 1
+    # D-128: the tail copies nothing, remembers nothing and appends no journal entry (one file write per run:
+    # the Critique draft); only «Open Poly» copies the answer, when the person picks it
+    assert seen.count('setclipboard') == 0 and seen.count('save') == 0 and seen.count('append') == 0
 
 
 @pytest.mark.parametrize('lang', LANGS)

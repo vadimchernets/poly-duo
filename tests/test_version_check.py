@@ -38,8 +38,14 @@ def test_version_file_has_every_link():
 def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
     actions = build(tmp_path, builder, lang, name)
     urls = [p['WFURL'] for p in params(actions, 'downloadurl') if isinstance(p['WFURL'], str)]
-    assert urls == ['https://raw.githubusercontent.com/vadimchernets/c1m-duo/main/releases/version.json',
-                    'https://polyhelper.ai/duo/version.json']
+    pair = ['https://raw.githubusercontent.com/vadimchernets/c1m-duo/main/releases/version.json',
+            'https://polyhelper.ai/duo/version.json']
+    if key == 'duo':
+        # D-128: the first-run Setup (before the question) visits both addresses, the weekly check stays at the end
+        assert urls == pair + [pair[1]] + pair
+        actions = actions[max(i for i, a in enumerate(actions) if a['WFWorkflowActionIdentifier'].endswith('.ask')):]
+        urls = [p['WFURL'] for p in params(actions, 'downloadurl') if isinstance(p['WFURL'], str)]
+    assert urls == pair
     weekly = [p for p in params(actions, 'conditional') if p.get('WFCondition') == 1003
               and p['WFAnotherNumber'] == 7]  # the 15-minute draft window of Critique is another check
     assert [(p['WFNumberValue'], p['WFAnotherNumber']) for p in weekly] == [(-7, 7)]
@@ -63,7 +69,7 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
     assert first_net < first_get
     guards = [p for p in params(actions, 'conditional') if p.get('WFConditionalActionString') == f'"{key}":']
     assert len(guards) == 3
-    # the check is the last thing a run does: nothing of the answer waits on the network
+    # the weekly check is the last thing a run does: nothing of the answer waits on the network
     assert actions[-1]['WFWorkflowActionIdentifier'] == 'is.workflow.actions.conditional'
 
 

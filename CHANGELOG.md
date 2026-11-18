@@ -6,15 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-### Changed — candidate, not released (D-128, the owner's run with Siri and VoiceOver, 2026-11-18)
+### Changed — next Duo, built and run, not released yet (D-128, the owner's run with Siri and VoiceOver, 2026-11-18)
 - **The mode menu and «What next?» can be used by voice**: each item is one or two plain words without emoji
   («Critique», «Argue», «Advisor», «Compare», «Synthesis», «Auto», «More»; «Done», «Another mode», «Open Poly», «More»),
   12 languages. What each mode is for and its price in messages sit once in the menu title. VoiceOver used to read the
   emoji's name and the whole explanation before every item, and Siri looped on «Survey».
-- **One notification per run**, at the end: «Duo — Answer ready, also in your clipboard». The progress banners
+- **One notification per run**, at the end: «Duo — Answer ready». The progress banners
   (start, steps, retries) are now Comments in the shortcut; VoiceOver read each of them aloud. «1–4 minutes, do not
   lock the phone» moved into the question box. Failure notices (no answer, ChatGPT down) stay.
 - Run on an iPhone (ru, through iPhone Mirroring): question → Critique → both answers → «What next?» → Done.
+- **First run is a spoken Setup, before the question** (the owner's Siri run: a «Copy to clipboard» permission window
+  came up silently on the locked phone and the run stood still). Duo says aloud that several windows follow and to tap
+  «Always Allow» / «Allow» (ask someone to help if tapping is hard; only this once), then calls in a row everything
+  that asks: ChatGPT and Claude (a one-word request each), the notification, the update check on both web addresses, the one file write (`Duo-setup.txt`, written last so a
+  Setup cut short runs again) — and says «Done, Duo now works by voice». The weekly update check stays at the end of a run.
+- **No permission window in a working run**: no «Copy to Clipboard» on the main path (only when the person picks
+  «Open Poly», the by-hand check or an Image), no journal entry (`Poly-journal.md` is no longer written; «Save to Notes»
+  keeps a result), and no Critique draft — so a Critique cut off by a message limit no longer resumes (its answers stay
+  in the ChatGPT and Claude apps). Draft for the site: `docs/draft-first-setup.md`, `docs/draft-first-setup.ru.md`.
 
 ## [1.0.7] — 2026-11-15 — Duo 6.7 / Trio 8 / Trio without a key 5 (built-in numbers duo 13, trio 8, trio_nokey 5)
 

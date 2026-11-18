@@ -207,6 +207,12 @@ def act_step(key):
     return act_comment('Duo step: ' + key)
 
 
+def act_speak(text):
+    """«Speak Text» (is.workflow.actions.speaktext): said aloud in the system voice; asks for no permission."""
+    return {'WFWorkflowActionIdentifier': 'is.workflow.actions.speaktext',
+            'WFWorkflowActionParameters': {'WFText': text_token(text, {})}}
+
+
 def act_clipboard(source):
     return {'WFWorkflowActionIdentifier': 'is.workflow.actions.setclipboard',
             'WFWorkflowActionParameters': {'WFInput': source, 'WFLocalOnly': False}}
@@ -521,6 +527,8 @@ VERSION_DAYS = 7
 # The name the main shortcut is released under (releases/<lang>/Duo.shortcut, the iCloud record, the
 # site). iOS names an imported shortcut after it, so «another mode — same question» calls this name.
 RELEASE_NAME = 'Duo'
+# D-128: its presence means the first-run Setup has run (and when the update check last ran)
+SETUP_FILE = RELEASE_NAME + '-setup.txt'
 # «Another mode», «Back», recipes start this shortcut again by name: in the diagnostic build that is Duo-diag, not Duo
 # C1_RUN_NAME: the diag file is installed on the phone under a dated name (Duo-diag-0154), and «Back»/«Another mode»
 # must start THAT shortcut, not an older «Duo-diag» still sitting there (15.11 run, No.67)
@@ -643,15 +651,22 @@ def if_no_value(group, var_name):
     return action
 
 
-def version_check(L, key, name, lang):
+def version_check(L, key, name, lang, setup=None, stamp_name=None):
+    # D-128: with `setup` the block is the first-run Setup only: an existing stamp file means «not due» here (the weekly
+    # check stays at the end of the run, where a network error cannot stop a run before its question)
     """Actions of the weekly version check for the shortcut `key` ('duo' or 'trio') in `lang`."""
     ids = lambda n: [new_uuid() for _ in range(n)]
     (f_get, f_date, now, age, far, age_get, stamp_now, stamp, stamp_save,
      wifi, cell, net_get, gh, site, json_get, remote, link) = ids(17)
     age_num, remote_num, gh_t, site_t, json_t = ids(5)
+    far0, site2 = ids(2)
     g_file, g_due, g_wifi, g_net, g_gh, g_site, g_json, g_new, g_menu, g_link = ids(10)
     age_var, json_var, net_var = f'{name}VersionAge', f'{name}VersionJson', f'{name}Network'
-    stamp_file = f'{name}-version-check.txt'
+    stamp_file = stamp_name or f'{name}-version-check.txt'
+    # D-128 (18.11, the owner's Siri run): `setup` = (actions before, actions after). With it, a missing stamp file is
+    # the FIRST run: the setup actions run right here, at the very start, and the stamp's one «Save File» is this
+    # run's one file write — the same action every week after, so no other file window ever comes.
+    first_var, g_first, g_first2 = f'{name}FirstRun', new_uuid(), new_uuid()
     needle = f'"{key}":'
     install, later = L['update.install'], L['update.later']
     return [
@@ -660,18 +675,24 @@ def version_check(L, key, name, lang):
                     f'{key} {built_version(key)}.'),
         act_get_file(stamp_file, f_get),
         if_output(g_file, f_get, 'File', 100),
+        *([{'WFWorkflowActionIdentifier': 'is.workflow.actions.number',
+            'WFWorkflowActionParameters': {'WFNumberActionNumber': 0, 'UUID': far0}},
+           act_set_variable(age_var, far0, 'Number')] if setup else []),
+        *([] if setup else [
         {'WFWorkflowActionIdentifier': 'is.workflow.actions.properties.files',
          'WFWorkflowActionParameters': {'WFInput': attachment(f_get, 'File'),
                                         'WFContentItemPropertyName': 'Last Modified Date',
                                         'UUID': f_date}},
         act_date(now),
         act_time_between(now, 'Date', f_date, 'Last Modified Date', 'Days', age),
-        act_set_variable(age_var, age, 'Time Between Dates'),
+        act_set_variable(age_var, age, 'Time Between Dates')]),
         if_else(g_file),
         {'WFWorkflowActionIdentifier': 'is.workflow.actions.number',
          'WFWorkflowActionParameters': {'WFNumberActionNumber': 999, 'UUID': far}},
         act_set_variable(age_var, far, 'Number'),
+        *(set_text(first_var, '1') if setup else []),
         if_close(g_file),
+        *([*if_text(g_first, first_var), *setup[0], if_close(g_first)] if setup else []),
         act_get_variable(age_var, age_get),
         # D-100 (6.3.1): a number condition on a «Get Variable» output stops the run with «Choose values for each
         # parameter in this action» (iPhone and Mac, 28.10: right after «Done» of every run, so the check never ran and
@@ -696,9 +717,8 @@ def version_check(L, key, name, lang):
         if_close(g_wifi),
         act_get_variable(net_var, net_get),
         if_output(g_net, net_get, 'Variable', 100),
-        act_date(stamp_now),
-        act_text(text_token('{D}', {'D': (stamp_now, 'Date')}), stamp),
-        act_save_file(stamp_file, stamp, stamp_save),
+        *([] if setup else [act_date(stamp_now), act_text(text_token('{D}', {'D': (stamp_now, 'Date')}), stamp),
+                            act_save_file(stamp_file, stamp, stamp_save)]),
         # An empty answer, a 404 page or HTML from a proxy is «no update»: only a text that
         # contains the key is ever read as a dictionary.
         # D-100 (6.3.1): «contains» straight on «Contents of URL» (a file) stops the run with «Choose values for each
@@ -714,6 +734,7 @@ def version_check(L, key, name, lang):
         act_set_variable(json_var, site_t, 'Text'),
         if_close(g_site),
         if_close(g_gh),
+        *([act_download(VERSION_URLS[1], site2)] if setup else []),
         act_get_variable(json_var, json_get),
         act_text(text_token('{J}', {'J': (json_get, 'Variable')}), json_t),
         if_output(g_json, json_t, 'Text', 99, WFConditionalActionString=needle),
@@ -735,6 +756,10 @@ def version_check(L, key, name, lang):
         if_close(g_json),
         if_close(g_net),
         if_close(g_due),
+        *([*if_text(g_first2, first_var),
+           act_date(stamp_now), act_text(text_token('{D}', {'D': (stamp_now, 'Date')}), stamp),
+           act_save_file(stamp_file, stamp, stamp_save),
+           *setup[1], if_close(g_first2)] if setup else []),
     ]
 
 
@@ -988,6 +1013,7 @@ def build(lang, ai=False):
     (fn_get, fn_prompt, fn_gpt, fn_out, nt_get, rm_get, rm_match, rm_item, dv_model, dv_ios, ue_model, ue_ios,
      md_get, rp_get, rp_title) = ids(15)
     g_rat, g_rem = ids(2)
+    op_get, op_get2 = ids(2)
     g_mmenu, mm_ask, mm_new, mm_save, tl_rget, g_tlrem, g_mmempty, mm_chars = ids(8)
     fn_date, fn_jx, fn_entry, fn_clean = ids(4)
     pf_m1, pf_m2 = ids(2)
@@ -1030,15 +1056,11 @@ def build(lang, ai=False):
         and the person can paste it. D-100: it is no longer also remembered as Duo's own (that was one more
         «Save File», one more permission window on the first run); when the run goes on, the tail's clipboard write
         replaces it and is remembered there. No extra screen, tap or message; only when there is an answer.
-        D-128: no notification (one per run, at the end); `note` names the next step as a Comment (act_step)."""
-        txt, g = new_uuid(), new_uuid()
-        return [act_text(text_token('{A}', {'A': (src_uid, src_name)}), txt),
-                *if_output_text(g, txt, 'Text'),
-                act_clipboard(attachment(txt, 'Text')),
-                act_step('gpt_kept'),
-                *remember_answer(txt, 'Text'),   # 14.11 live run: the next run took this answer for a new question
-                if_close(g),
-                *([act_step(note)] if note else [])]
+        D-128: no notification (one per run, at the end); `note` names the next step as a Comment (act_step).
+        D-128 (18.11, the owner's Siri run): no clipboard write either. «Copy to Clipboard» is a permission window of
+        its own, and with the phone locked under Siri it came up silently and the run stood still. A run cut off on
+        Claude keeps ChatGPT's answer in the ChatGPT app."""
+        return [*([act_step(note)] if note else [])]
 
     def brief_for_long(src_uid, src_name):
         """Yuri 10.11 (No.53): a question of LONG_QUESTION characters or more → BRIEF_LINE goes in front of the request
@@ -1542,21 +1564,27 @@ def build(lang, ai=False):
             if_close(g_chk),
         ]
 
+    su_gpt, su_claude, su_ping = ids(3)
+    RETRY_SKIP.add(su_gpt)
+    SETUP_PING = 'Reply with the single word OK.'
+    # the ping goes in as a Text action's output, as every real request does: iOS asks a separate «send text to Claude»
+    # permission for content passed in (iPhone 18.11: a constant text asked only «run actions from Claude»)
+    setup_before = [act_speak(L['speak.first_run']),
+                    act_text(text_token(SETUP_PING), su_ping),
+                    act_gpt(text_token('{P}', {'P': (su_ping, 'Text')}), su_gpt),
+                    act_claude(text_token('{P}', {'P': (su_ping, 'Text')}), su_claude, brief=False)]
+    setup_before.append(act_notify(L['speak.ready']))
+    setup_after = [act_speak(L['speak.ready'])]
+
     actions = [
         act_comment(L['comment.main']),
 
-        # ---- Once, on the very first run: what the next minute looks like. Right after it the iPhone asks for
-        # permission several times and an unanswered request vanishes in seconds, so the person is told before, not
-        # after. A marker file next to the journal (iCloud Drive → Shortcuts) says it was shown, so it never comes
-        # back; a missing file is not an error. The laptop/PC paragraph lives on the help screen.
-        act_get_file(L['files.pc_notice'], pc_get),
-        act_set_variable(L['variables.pc_notice_seen'], pc_get, 'File'),
-        if_has_value(g_notice, L['variables.pc_notice_seen']),
-        if_else(g_notice),
-        act_alert(L['alert.first_run_title'], L['alert.first_run_body']),
-        act_text(text_token(L['alert.first_run_body']), pc_text),
-        act_save_file(L['files.pc_notice'], pc_text, pc_save),
-        if_close(g_notice),
+        # ---- D-128 (18.11, the owner's Siri run): the first run is a «Setup» step, before the question. Under Siri with
+        # the phone locked a permission window comes up silently and the run stands still, and the windows came at
+        # different steps. So, once: Duo says what is coming, then calls in a row every action that asks — ChatGPT,
+        # Claude, the one file write (the stamp below), the update check on the web, the notification — and says it is
+        # ready. A working run after that asks nothing. The two AI calls are one-word requests (one message each).
+        *version_check(L, VK, RELEASE_NAME, lang, setup=(setup_before, setup_after), stamp_name=SETUP_FILE),
 
         # D-29: the person's two optional shortcuts (C-1 «Critique right away», C-3 «ask without editing»), read from
         # ONE small file; a missing file (the default) is no value and nothing changes. Each run starts with them unset. READ BEFORE the resume menu (D-29 B-1):
@@ -1578,7 +1606,7 @@ def build(lang, ai=False):
         *clear_variable(PREFS_CHANGED),   # a plain Nothing right after the file's Ifs ends any chain from them
 
         # ---- Duo 6.4: a Critique cut off by a message limit within DRAFT_MINUTES → go on from its draft (D-101)
-        *resume_block(),
+        # D-128: no Critique draft any more (its «Save File» was a second file window, rule No.7), so nothing to resume
         *if_text(g_fresh, RESUME_VAR, present=False),
 
         # One-tap start (U-16): the question field is pre-filled with the Share input, else with the clipboard,
@@ -1985,8 +2013,6 @@ def build(lang, ai=False):
                             {**QUESTION, 'CLAUDE_ANSWER': (rv_claude, 'Ask Claude')}), rv_prompt),
         act_step('critique_step2'),
         act_gpt(text_token('{P}', {'P': (rv_prompt, 'Text')}), rv_gpt),
-        act_clipboard(attachment(rv_gpt, 'Ask ChatGPT')),
-        *remember_answer(rv_gpt, 'Ask ChatGPT'),
         act_step('critique_summary'),
         act_text(text_token(L.prompt('summary-reverse'),
                             {**QUESTION, 'CLAUDE_ANSWER': (rv_claude, 'Ask Claude'),
@@ -2036,7 +2062,7 @@ def build(lang, ai=False):
         # from here on the question is QVAR: typed now, or from a resumed draft (the question field did not run then)
         act_get_variable(QVAR, q_get),
         *if_text(g_crit, CRIT_VAR),
-        *critique_block(qsrc=(q_get, 'Variable'), draft=True),
+        *critique_block(qsrc=(q_get, 'Variable')),
         if_close(g_crit),
 
         # ---- Shared tail: deliver, then record, then offer another run
@@ -2061,25 +2087,14 @@ def build(lang, ai=False):
         *if_text(g_down, CLAUDE_DOWN),
         *claude_down_menu(),
         if_close(g_down),
-        # the result is copied and, at once, remembered (before any screen), so the next run does not offer it back
-        # as a question
+        # D-128 (18.11, the owner's Siri run): no «Copy to Clipboard» and no journal «Append to File» here. Each was a
+        # permission window of its own on the first run, and under Siri with the phone locked such a window comes up
+        # silently and the run stands still. The answer is shown; «Open Poly» and «Save to Notes» take it from there.
+        # The Critique draft stays the run's one file write (rule No.7).
         *if_text(g_tlrem, RESULT),
-        *strip_markdown(RESULT),   # Yuri 10.11, No.56: no raw «**» on the result screen, in its title or the clipboard
-        act_clipboard(variable(RESULT)),
-        act_get_variable(RESULT, tl_rget),
-        *remember_answer(tl_rget, 'Variable'),
+        *strip_markdown(RESULT),   # Yuri 10.11, No.56: no raw «**» on the result screen or in its title
         act_notify(L['notify.tail_done']),
         if_close(g_tlrem),
-        # the journal entry is written BEFORE the result screen (D-100, 6.3.1): on the iPhone (28.10) the «Append to
-        # file» permission window that came right after closing the result vanished on its own within ~1.5 s, and the
-        # run ended there — no journal entry, no «What next?». Now every permission window comes before the result.
-        act_date(tl_date),
-        act_get_variable(JOURNAL_EXTRA, tl_extra),
-        act_get_variable(RESULT, tl_result),
-        act_text(text_token(L['journal.entry'],
-                            {**QV, 'D': (tl_date, 'Date'), 'JX': (tl_extra, 'Variable'),
-                             'R': (tl_result, 'Variable')}), tl_entry),
-        act_append_file(L['files.journal'], tl_entry),
         # ONE Quick Look, after the «Claude did not answer» menu too, and only when there is something to show
         *if_text(g_show, RESULT),
         act_quick_look(variable(RESULT)),
@@ -2090,8 +2105,12 @@ def build(lang, ai=False):
         *rerun_with_menu(q_get, 'Variable'),
         {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
         # ---- More…: one extra step for the person who wants it; the usual «Done / Another mode» stays two taps
-        # D-185: «Open in Poly» — a menu item only; the answer is already in the clipboard (copied before the screen)
+        # D-185: «Open in Poly» — a menu item only; Poly reads the answer from the clipboard, so it is copied here,
+        # when the person picks it (D-128: no clipboard write on the main path)
         menu_case(g_finale, L['menu.finale_items'][2]),
+        act_clipboard(variable(RESULT)),
+        act_get_variable(RESULT, op_get),
+        *remember_answer(op_get, 'Variable'),   # the next run must not take this answer for a new question
         open_poly_url('duo'),
         menu_case(g_finale, L['menu.finale_items'][3]),
         menu_open(g_more, L['menu.finale_more_title'], L['menu.finale_more_items']),
@@ -2105,16 +2124,6 @@ def build(lang, ai=False):
         act_text(text_token(L['output.ratify'], {'R': (fn_get, 'Variable'), 'X': (fn_gpt, 'Ask ChatGPT')}), fn_out),
         act_set_variable(RESULT, fn_out, 'Text'),
         *strip_markdown(RESULT),
-        act_clipboard(variable(RESULT)),
-        act_get_variable(RESULT, fn_clean),
-        *remember_answer(fn_clean, 'Variable'),
-        # the corrected final answer goes into the journal as its own entry (the main entry above was written before
-        # this menu and holds the earlier version) — BEFORE its result screen, as in the shared tail (D-100, 6.3.1)
-        act_date(fn_date),
-        act_get_variable(JOURNAL_EXTRA, fn_jx),
-        act_text(text_token(L['journal.entry'],
-                            {**QV, 'D': (fn_date, 'Date'), 'JX': (fn_jx, 'Variable'), 'R': (fn_clean, 'Variable')}), fn_entry),
-        act_append_file(L['files.journal'], fn_entry),
         act_quick_look(variable(RESULT)),
 
         # Save to Notes (Create Note: the text goes to WFCreateNoteBody, Notes takes the first line as the title; not checked on device)
@@ -2172,6 +2181,9 @@ def build(lang, ai=False):
         {'WFWorkflowActionIdentifier': 'is.workflow.actions.openurl',
          'WFWorkflowActionParameters': {'WFInput': text_token(FEEDBACK_URL, {}), 'Show-WFInput': True}},
         menu_case(g_more, L['menu.finale_more_items'][8]),
+        act_clipboard(variable(RESULT)),   # D-128: Poly reads the answer from the clipboard; copied only on this pick
+        act_get_variable(RESULT, op_get2),
+        *remember_answer(op_get2, 'Variable'),
         open_poly_url('duo'),
         menu_close(g_more),
         *if_text(g_pc, PREFS_CHANGED),
@@ -2195,8 +2207,8 @@ def build(lang, ai=False):
         if_close(g_pc),
         menu_close(g_finale),
 
-        # ---- Last of all, at most once a week: is there a newer Duo? (see version_check)
-        *version_check(L, VK, RELEASE_NAME, lang),
+        # ---- Last of all, at most once a week: is there a newer Duo? (version_check; the first run's Setup checked)
+        *version_check(L, VK, RELEASE_NAME, lang, stamp_name=SETUP_FILE),
     ]
 
     actions = with_gpt_retry(actions, skip=RETRY_SKIP)

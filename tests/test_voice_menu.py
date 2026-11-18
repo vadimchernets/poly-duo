@@ -16,6 +16,7 @@ EMOJI = re.compile('[\U0001F000-\U0001FAFF☀-➿⬀-⯿←-⇿️‍]')
 
 # the notifications Duo may still send: the end of the run, an answer that did not come, and answers to something
 # the person chose (help, a saved switch, a fallback); none of them reports a step of the run
+ALLOWED_SPEAK = ('ready',)   # the Setup's own notification (first run only): it asks for the permission there
 ALLOWED = ('tail_done', 'tail_empty', 'tail_empty_claude', 'gpt_down', 'empty_question', 'no_key_file',
            'manual_copied', 'help', 'pref_mode', 'pref_quick', 'pref_reset')
 
@@ -44,7 +45,7 @@ def test_one_notification_per_run(tmp_path, lang):
     ui = ui_of(lang)
     n = ui['notify']
     actions = build(tmp_path, lang)
-    allowed = {n[k] for k in ALLOWED}
+    allowed = {n[k] for k in ALLOWED} | {ui['speak'][k] for k in ALLOWED_SPEAK}
     bodies = [a['WFWorkflowActionParameters'].get('WFNotificationActionBody') for a in actions
               if kind(a) == 'notification']
     assert bodies and all(b in allowed for b in bodies), [b for b in bodies if b not in allowed][:3]
@@ -54,3 +55,47 @@ def test_one_notification_per_run(tmp_path, lang):
                 and a['WFWorkflowActionParameters'].get('WFNotificationActionBody') == n['tail_done'])
     assert done['WFWorkflowActionParameters']['WFNotificationActionTitle'] == 'Duo'
     assert len(n['tail_done']) <= 50 and not EMOJI.search(n['tail_done'])
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_first_run_setup_asks_everything_at_once(tmp_path, lang):
+    """D-128 (18.11, the owner's Siri run): permission windows come up silently on a locked phone, at different steps.
+    The first run (no Duo-setup.txt) is a Setup before the question: say what is coming → ChatGPT → Claude → the one
+    file write → the update check on the web → the notification → say «ready». A working run asks nothing more."""
+    ui = ui_of(lang)
+    actions = build(tmp_path, lang)
+    ask = next(i for i, a in enumerate(actions) if kind(a) == 'ask')
+    head = actions[:ask]
+    kinds = [kind(a) for a in head]
+    speaks = [i for i, k in enumerate(kinds) if k == 'speaktext']
+    assert len(speaks) == 2
+    said = [head[i]['WFWorkflowActionParameters']['WFText']['Value']['string'] for i in speaks]
+    assert said == [ui['speak']['first_run'], ui['speak']['ready']]
+    first, ready = speaks
+    order = [k for k in kinds[first:ready] if k in ('AskIntent', 'ClaudeAppIntentsExtension', 'save', 'downloadurl',
+                                                    'notification')]
+    # ChatGPT, Claude, the notification, both update addresses on the web, then the one file write (the stamp, last: a
+    # Setup cut short runs again next time)
+    assert order[:3] == ['AskIntent', 'ClaudeAppIntentsExtension', 'notification'] and order[-1] == 'save'
+    assert order.count('downloadurl') == 3   # GitHub, the site as its fallback, and the site once more in the Setup
+    # every action that can ask for a permission on the main path sits in the Setup: no save, append or copy elsewhere
+    # before the finale menu, and the Setup is gated by the file
+    assert any(a['WFWorkflowActionParameters'].get('WFGetFilePath') == 'Duo-setup.txt' for a in head[:first])
+    assert sum(k == 'save' for k in kinds) == 1   # before the question: only the Setup's stamp
+    for k in ('first_run', 'ready'):
+        assert not EMOJI.search(ui['speak'][k])
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_main_path_copies_nothing(tmp_path, lang):
+    """D-128: «Copy to Clipboard» only where the person picks it (Open Poly, by-hand check, Images)."""
+    actions = build(tmp_path, lang)
+    ui = ui_of(lang)
+    done = next(i for i, a in enumerate(actions) if kind(a) == 'notification'
+                and a['WFWorkflowActionParameters'].get('WFNotificationActionBody') == ui['notify']['tail_done'])
+    finale = next(i for i, a in enumerate(actions) if kind(a) == 'choosefrommenu'
+                  and a['WFWorkflowActionParameters'].get('WFMenuPrompt') == ui['menu']['finale_title'])
+    # the copies left are the person's own picks: the by-hand check (Claude did not answer), both Images, Open Poly ×2
+    assert sum(kind(a) == 'setclipboard' for a in actions) == 5
+    assert not any(kind(a) == 'append' for a in actions)
+    assert sum(kind(a) == 'setclipboard' for a in actions[done:finale]) == 0
