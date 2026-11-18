@@ -16,7 +16,6 @@ def notes(actions):
     return [params(a).get('WFNotificationActionBody') for a in actions if kind(a) == 'notification']
 
 
-@pytest.mark.skip(reason='D-128 (18.11): no Critique draft and no resume — its «Save File» was a second file window (rule No.7)')
 @pytest.mark.parametrize('lang', LANGS)
 def test_oneshot_resume_long(tmp_path, lang):
     ui = json.loads((ROOT / 'locales' / lang / 'ui.json').read_text(encoding='utf-8'))
@@ -89,6 +88,6 @@ def test_oneshot_resume_long(tmp_path, lang):
         assert params(actions[retry + 1])['WFMatchTextPattern'].endswith('{1,6000}')
         assert kind(actions[retry + 2]) == 'ClaudeAppIntentsExtension'
     alerts = [a for a in actions if kind(a) == 'alert']
-    # the first-run warning, and (Yuri 13.11, No.53) the one shown only when no answer reached Duo at all
-    # the «no answer» window comes in two wordings: both AIs asked, or only Claude (Advisor, «Ask Claude alone»)
-    assert len(alerts) == 3
+    # (Yuri 13.11, No.53) the one shown only when no answer reached Duo at all, in two wordings: both AIs asked, or
+    # only Claude (Advisor, «Ask Claude alone»). D-128: the first-run warning is the spoken Setup now, not an alert
+    assert len(alerts) == 2

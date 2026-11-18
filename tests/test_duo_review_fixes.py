@@ -140,7 +140,8 @@ def test_ai_build_uses_existing_version_key(tmp_path):
     saves = [params(a)['WFFileDestinationPath'] for a in ai if kind(a) == 'save']
     # Duo 6.4: one draft «Save File», named for the build, so the plain build never resumes an ai draft
     # Yuri 13.11 (No.62): and for the build, so an older build's draft is never offered
-    assert not [s for s in saves if s.startswith('Duo-draft-')]   # D-128: no Critique draft
+    drafts = [s for s in saves if s.startswith('Duo-draft-')]
+    assert len(drafts) == 1 and drafts[0].startswith('Duo-draft-en-ai-')
 
 
 def token_text(node):
@@ -213,7 +214,7 @@ def test_no_variable_is_emptied_with_an_empty_text(tmp_path, lang):
             assert [var_name(c, actions) for c in enclosing(actions, blind)] == ['PolyResume', 'PolySkipMenu']
         else:
             gates = [var_name(c, actions) for c in enclosing(actions, gpt)]
-            assert gates == ['PolyCritique']   # D-128: no draft, so no resume gates
+            assert gates == ['PolyCritique', 'PolyDraftPassA', 'PolyChatGPTAnswer', 'PolySkipChatGPT']
         # their retries test the answer by its characters (Match Text `\S`), not by «has any value»
         for call, var in ((gpt, 'PolyChatGPTAnswer'), (blind, 'PolyClaudeOwn')):
             guard = next(a for a in actions[call:] if kind(a) == 'conditional')
@@ -234,7 +235,7 @@ def test_critique_first_run_asks_few_permissions(tmp_path, lang):
     # My mode's block (ends at the mode menu's close) writes no file; the main one (Duo 6.4) writes its draft through
     # exactly ONE «Save File», run three times by a loop
     for start, end, drafts in ((starts[0], next(i for i in range(starts[0], len(actions)) if kind(actions[i]) == 'choosefrommenu'), 0),
-                               (starts[1], tail_empty, 0)):
+                               (starts[1], tail_empty, 1)):
         block = [kind(a) for a in actions[start:end]]
         # D-128 (18.11, Siri run): no clipboard write and no «remember» save — only the main Critique's draft
         assert block.count('save') == drafts and block.count('append') == 0

@@ -1606,7 +1606,7 @@ def build(lang, ai=False):
         *clear_variable(PREFS_CHANGED),   # a plain Nothing right after the file's Ifs ends any chain from them
 
         # ---- Duo 6.4: a Critique cut off by a message limit within DRAFT_MINUTES → go on from its draft (D-101)
-        # D-128: no Critique draft any more (its «Save File» was a second file window, rule No.7), so nothing to resume
+        *resume_block(),
         *if_text(g_fresh, RESUME_VAR, present=False),
 
         # One-tap start (U-16): the question field is pre-filled with the Share input, else with the clipboard,
@@ -2062,7 +2062,7 @@ def build(lang, ai=False):
         # from here on the question is QVAR: typed now, or from a resumed draft (the question field did not run then)
         act_get_variable(QVAR, q_get),
         *if_text(g_crit, CRIT_VAR),
-        *critique_block(qsrc=(q_get, 'Variable')),
+        *critique_block(qsrc=(q_get, 'Variable'), draft=True),
         if_close(g_crit),
 
         # ---- Shared tail: deliver, then record, then offer another run
