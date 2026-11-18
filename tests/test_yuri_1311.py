@@ -174,7 +174,7 @@ def test_every_claude_request_starts_with_brevity_line(tmp_path, lang):
     claude = [a for a in actions if a['WFWorkflowActionIdentifier'] == 'com.anthropic.claude.ClaudeAppIntentsExtension']
     assert claude
     with_line = [a for a in claude if params(a)['message']['Value']['string'].startswith(line)]
-    assert len(claude) - len(with_line) == 3   # the two SVG image steps and the one-word Setup call (D-128)
+    assert len(claude) - len(with_line) == 2   # the two SVG image steps (the Setup's ping carries the line, D-128)
     for a in with_line:
         v = params(a)['message']['Value']
         for key in v['attachmentsByRange']:

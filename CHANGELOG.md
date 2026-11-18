@@ -18,12 +18,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **First run is a spoken Setup, before the question** (the owner's Siri run: a «Copy to clipboard» permission window
   came up silently on the locked phone and the run stood still). Duo says aloud that several windows follow and to tap
   «Always Allow» / «Allow» (ask someone to help if tapping is hard; only this once), then calls in a row everything
-  that asks: ChatGPT and Claude (a one-word request each), the notification, the update check on both web addresses, the one file write (`Duo-setup.txt`, written last so a
-  Setup cut short runs again) — and says «Done, Duo now works by voice». The weekly update check stays at the end of a run.
+  that asks: ChatGPT and Claude (a one-word request each), the notification, the update check on both web addresses, the one file write (`Duo-setup-<version>.txt`, written last so a
+  Setup cut short runs again; a new version runs its own Setup) — and says «Done, Duo now works by voice». The weekly update check stays at the end of a run.
 - **No permission window in a working run**: no «Copy to Clipboard» on the main path (only when the person picks
   «Open Poly», the by-hand check or an Image), no journal entry (`Poly-journal.md` is no longer written; «Save to Notes»
-  keeps a result). The Critique draft stays (its «Save File» asks no permission: Duo-setup.txt was written without a
-  window on the iPhone), so a Critique cut off by a message limit still resumes. Draft for the site: `docs/draft-first-setup.md`, `docs/draft-first-setup.ru.md`.
+  keeps a result). The Critique draft stays (its «Save File» asks no permission: (it does ask once, in the first Critique: iOS asks
+  per action, so the Setup cannot ask it in advance), so a Critique cut off by a message limit still resumes. Draft for the site: `docs/draft-first-setup.md`, `docs/draft-first-setup.ru.md`.
 
 ## [1.0.7] — 2026-11-15 — Duo 6.7 / Trio 8 / Trio without a key 5 (built-in numbers duo 13, trio 8, trio_nokey 5)
 

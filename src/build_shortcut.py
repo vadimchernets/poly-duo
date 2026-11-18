@@ -528,7 +528,9 @@ VERSION_DAYS = 7
 # site). iOS names an imported shortcut after it, so «another mode — same question» calls this name.
 RELEASE_NAME = 'Duo'
 # D-128: its presence means the first-run Setup has run (and when the update check last ran)
-SETUP_FILE = RELEASE_NAME + '-setup.txt'
+# Named for the built version: a new Duo is a new shortcut on the iPhone, its permissions start empty, so its Setup runs
+# again (iPhone 18.11: the reinstalled Duo found the previous version's file, skipped the Setup and asked 5 windows
+# during its first Critique)
 # «Another mode», «Back», recipes start this shortcut again by name: in the diagnostic build that is Duo-diag, not Duo
 # C1_RUN_NAME: the diag file is installed on the phone under a dated name (Duo-diag-0154), and «Back»/«Another mode»
 # must start THAT shortcut, not an older «Duo-diag» still sitting there (15.11 run, No.67)
@@ -1564,15 +1566,22 @@ def build(lang, ai=False):
             if_close(g_chk),
         ]
 
-    su_gpt, su_claude, su_ping = ids(3)
+    SETUP_FILE = f'{RELEASE_NAME}-setup-{built_version(VK)}.txt'
+    su_gpt, su_claude, su_ping, su_txt, su_save = ids(5)
     RETRY_SKIP.add(su_gpt)
     SETUP_PING = 'Reply with the single word OK.'
-    # the ping goes in as a Text action's output, as every real request does: iOS asks a separate «send text to Claude»
-    # permission for content passed in (iPhone 18.11: a constant text asked only «run actions from Claude»)
+    # iPhone 18.11: a text of Duo's own asked only «run actions from Claude»; the first real Critique then asked «send
+    # 2 text items to Claude» and «save 1 text item to a file» (the draft). Content that came from another app is what
+    # those windows are about, so the Setup passes ChatGPT's own reply on to Claude. A «Save File» is asked for per
+    # action (a Save File in the Setup did not spare the draft's own window), so the draft's one window stays in the
+    # first Critique.
     setup_before = [act_speak(L['speak.first_run']),
                     act_text(text_token(SETUP_PING), su_ping),
                     act_gpt(text_token('{P}', {'P': (su_ping, 'Text')}), su_gpt),
-                    act_claude(text_token('{P}', {'P': (su_ping, 'Text')}), su_claude, brief=False)]
+                    act_text(text_token('{A}', {'A': (su_gpt, 'Ask ChatGPT')}), su_txt),
+                    # the same shape as every real request (the brevity line + the text): iOS asked «send 2 text items to
+                    # Claude» in the first Critique after a 1-item ping in the Setup
+                    act_claude(text_token('{P}', {'P': (su_txt, 'Text')}), su_claude)]
     setup_before.append(act_notify(L['speak.ready']))
     setup_after = [act_speak(L['speak.ready'])]
 

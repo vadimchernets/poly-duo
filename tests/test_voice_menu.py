@@ -61,7 +61,7 @@ def test_one_notification_per_run(tmp_path, lang):
 def test_first_run_setup_asks_everything_at_once(tmp_path, lang):
     """D-128 (18.11, the owner's Siri run): permission windows come up silently on a locked phone, at different steps.
     The first run (no Duo-setup.txt) is a Setup before the question: say what is coming → ChatGPT → Claude → the one
-    file write → the update check on the web → the notification → say «ready». A working run asks nothing more."""
+    notification → the update check on the web → the stamp file, named for the built version → say «ready»."""
     ui = ui_of(lang)
     actions = build(tmp_path, lang)
     ask = next(i for i, a in enumerate(actions) if kind(a) == 'ask')
@@ -80,7 +80,7 @@ def test_first_run_setup_asks_everything_at_once(tmp_path, lang):
     assert order.count('downloadurl') == 3   # GitHub, the site as its fallback, and the site once more in the Setup
     # every action that can ask for a permission on the main path sits in the Setup: no save, append or copy elsewhere
     # before the finale menu, and the Setup is gated by the file
-    assert any(a['WFWorkflowActionParameters'].get('WFGetFilePath') == 'Duo-setup.txt' for a in head[:first])
+    assert any(a['WFWorkflowActionParameters'].get('WFGetFilePath') == f"Duo-setup-{json.loads((ROOT / 'releases' / 'version.json').read_text())['duo']}.txt" for a in head[:first])
     assert sum(k == 'save' for k in kinds) == 1   # before the question: only the Setup's stamp
     for k in ('first_run', 'ready'):
         assert not EMOJI.search(ui['speak'][k])
