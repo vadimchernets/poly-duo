@@ -9,7 +9,7 @@ C1M Duo ist ein Kurzbefehl fürs iPhone: Du stellst eine Frage, und zwei KIs kü
 
 ## Installieren (ein Tipp)
 
-**Am einfachsten — iCloud-Link (ein Tipp).** Tippe auf dem iPhone den Link an → Kurzbefehle öffnet sich → **Kurzbefehl hinzufügen**. Beim ersten Lauf fragt der Kurzbefehl mehrmals nach Berechtigungen; tippe jedes Mal **Immer erlauben**.
+**Am einfachsten — iCloud-Link (ein Tipp).** Tippe auf dem iPhone den Link an → Kurzbefehle öffnet sich → **Kurzbefehl hinzufügen**. Beim ersten Lauf fragt der Kurzbefehl mehrmals nach Berechtigungen; tippe jedes Mal **Immer erlauben**. Wenn das Tippen schwerfällt, bitte jemanden um Hilfe – das ist nur beim ersten Start nötig.
 
 - **Duo:** https://www.icloud.com/shortcuts/a16ac3a61591480dbb9a66f7e51d4cd0
 - **Trio, iPhone 15 Pro oder neuer — ohne Schlüssel (die dritte Stimme ist Apple Intelligence):** https://www.icloud.com/shortcuts/2a4cb52d196146dab2d8b752c1452c87
