@@ -6,7 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-### Changed — next Duo, built and run, not released yet (D-128, the owner's run with Siri and VoiceOver, 2026-11-18)
+## [1.0.8] — 2026-11-18 — Duo 6.8 (built-in number duo 14)
+
+Signed files in `releases/` (SHA256SUMS; Arabic added: `releases/ar/Duo.shortcut`) and new iCloud links for 12
+languages in `releases/version.json` and README. Built from e4ab303 with duo 14; run on an iPhone (ru) through iPhone
+Mirroring, and by voice by the owner. Trio files are unchanged.
+
+### Changed — voice-first Duo (D-128, the owner's run with Siri and VoiceOver, 2026-11-18)
 - **The mode menu and «What next?» can be used by voice**: each item is one or two plain words without emoji
   («Critique», «Argue», «Advisor», «Compare», «Synthesis», «Auto», «More»; «Done», «Another mode», «Open Poly», «More»),
   12 languages. What each mode is for and its price in messages sit once in the menu title. VoiceOver used to read the

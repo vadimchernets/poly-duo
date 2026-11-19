@@ -11,7 +11,7 @@ C1M Duo は iPhone 用の「ショートカット」です。質問をひとつ�
 
 **いちばん簡単な方法 — iCloud リンク（タップ1回）。** iPhone でリンクをタップ → ショートカット App が開く → **ショートカットを追加**。初回実行時に許可を 何度かたずねられます。そのたびに **常に許可** をタップしてください。
 
-- **Duo:** https://www.icloud.com/shortcuts/37d5e4c5d74948e39cb87f7be942435a
+- **Duo:** https://www.icloud.com/shortcuts/bc3d77bc670b46dd82b033fda1bee9f4
 - **Trio、iPhone 15 Pro 以降 — キー不要（3番目の声は Apple Intelligence）:** https://www.icloud.com/shortcuts/70fed48161ec41fba6e95ab952769d47
 - **Trio — 無料のキー（3番目の声）:** https://www.icloud.com/shortcuts/fa5484761d9c426ebcffa086ee3c7e7f
 

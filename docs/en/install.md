@@ -13,7 +13,7 @@ C1M Duo is a "shortcut" for iPhone: ask one question, and it's handled by two AI
 
 On your iPhone, tap the link → the Shortcuts app opens → **Add**. **First run: about 5 quick taps on “Always Allow”, then one tap forever.** The shortcut asks permission once for each thing it does — tap **Always Allow** each time (about 20 seconds, once). Prompt gone before you tapped, no «Ask Claude», or Duo stops on its own: see [If something's wrong](#if-somethings-wrong). Had Duo before? Tap **Replace**, not **Keep Both**.
 
-- **Duo:** https://www.icloud.com/shortcuts/2d45613f7605441db10acdf4ffe7665d
+- **Duo:** https://www.icloud.com/shortcuts/ed393577880e437eb3417d00b6b66a06
 - **Trio, iPhone 15 Pro or newer — no key** (the third voice is Apple Intelligence; see below): https://www.icloud.com/shortcuts/0cf1cf3ec0b34511b42bd0620d2c4676
 - **Trio, older iPhone — free key** (the third voice, see below): https://www.icloud.com/shortcuts/73edfa30e400437fa48a792d04fdc2b8
 
