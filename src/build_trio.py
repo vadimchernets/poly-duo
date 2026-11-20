@@ -807,7 +807,7 @@ def build(lang, nokey=False):
     # request to Claude (a long Claude answer made iOS fail «Ask Claude» with «unknown error») and the ChatGPT output
     # cleaning (raw entity[...] / image_group{...} markup; the answer goes on as a NEW text, see with_gpt_clean)
     import build_shortcut
-    build_shortcut.CLAUDE_BRIEF = L['brief.claude']
+    build_shortcut.set_claude_brief(L['brief.claude'])
     T = json.loads(trio_file.read_text(encoding='utf-8'))
     if nokey and 'nokey.comment' not in T:
         print(f'{lang}: no nokey words in trio.json — Trio without a key not built for this language')
