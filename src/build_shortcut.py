@@ -544,7 +544,7 @@ def build(lang, ai=False):
          cr_own_f, cr_g1, cr_o1, cr_save, cr_dq, cr_da, cr_jg) = ids(17)
         (g_retry, g_long, g_cretry, g_cok, g_oretry, g_n1, g_n2, g_need, g_skip, g_gdown, g_both, g_own1,
          g_loop, g_dsave, g_pa, g_pb, g_d1, g_oc) = ids(18)
-        cr_wrap, cr_gpt, cr_prompt, cr_claude = ids(4)
+        cr_wrap, cr_gpt, cr_prompt, cr_claude, cr_today = ids(5)
         RETRY_SKIP.update((cr_gpt, cr_gpt2))
         rule_prefix = 'Extra instruction from the user for this check (apply it): {RULE}\n\n' if rule_uid else ''
         rule_ref = {'RULE': (rule_uid, 'Variable')} if rule_uid else {}
@@ -622,10 +622,13 @@ def build(lang, ai=False):
             *number_pass(cr_own_f, GPT_VAR),
             if_close(g_n1),
             act_get_variable(NUMS_VAR, cr_numfin),
+            # today's date from the phone: the Freshness rule of critique-blind.txt (Karl, KI Forum 226/1762) needs it
+            # to tell a fact that may have changed since the models were trained; no permission, no message
+            act_date(cr_today),
             act_text(text_token(rule_prefix + L.prompt('critique-blind'),
                                 {**QQUESTION, 'GPT_ANSWER': (cr_gpt_f, 'Variable'),
                                  'CLAUDE_OWN': (cr_own_f, 'Variable'), 'NUMS': (cr_numfin, 'Variable'),
-                                 **rule_ref}), cr_prompt),
+                                 **rule_ref}, {'TODAY': ymd(cr_today)}), cr_prompt),
             act_set_variable(CHECK_VAR, cr_prompt, 'Text'),   # U-06: what the three fallbacks send
             act_step('critique_step3'),
             # ---- A long request (U-08): one notification, not a window; and if Claude returns nothing, one
@@ -751,7 +754,11 @@ def build(lang, ai=False):
         def check_request():
             # the comparing prompt with ChatGPT's answer alone (it says how to treat a missing one)
             prompt = L.prompt('critique-blind').replace('{CLAUDE_OWN}', '').replace('{NUMS}', '')
-            return set_text(CHECK_VAR, prompt, {'QUESTION': (rq, 'Text'), 'GPT_ANSWER': (ra, 'Text')})
+            today, text = u(), u()
+            return [act_date(today),
+                    act_text(text_token(prompt, {'QUESTION': (rq, 'Text'), 'GPT_ANSWER': (ra, 'Text')},
+                                        {'TODAY': ymd(today)}), text),
+                    act_set_variable(CHECK_VAR, text, 'Text')]
         rline = u()
         return [
             if_shortcut_input(g_in),

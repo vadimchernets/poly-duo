@@ -114,6 +114,16 @@ def hms(uid):
                                  'WFDateFormat': 'HH:mm:ss'}]}
 
 
+def ymd(uid):
+    """A «Current Date» output formatted yyyy-MM-dd: the comparing step of Critique is told today's date (KI Forum
+    226, post 1762, Karl, 22.11.2026: two answers about events after the models' training are two guesses, not a
+    confirmation). One unambiguous form whatever the phone's region (22.11 vs 11/22); the same custom-format
+    attachment as hms()."""
+    return {'OutputUUID': uid, 'Type': 'ActionOutput', 'OutputName': 'Date',
+            'Aggrandizements': [{'Type': 'WFDateFormatVariableAggrandizement', 'WFDateFormatStyle': 'Custom',
+                                 'WFDateFormat': 'yyyy-MM-dd'}]}
+
+
 def with_diag(actions):
     """C1_DIAG=1: the diagnostic build for a live run (Yuri 13.11, No.52/53: from the Shortcuts app a run stopped with the
     bare iOS alert or ended empty, through Siri it ran; which action fails could only be guessed). Around EVERY «Ask

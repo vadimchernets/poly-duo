@@ -1,0 +1,46 @@
+# Freshness — the manual check on an iPhone
+
+What it checks: on a question whose answer may have changed after the models were trained, Critique says
+«⚠ Both models may not know this … Check a fresh source that shows its date» instead of presenting the match as a
+confirmation; on every other question nothing new appears. Source: KI Forum 226, post 1762 (Karl, 22.11.2026).
+
+How: run each question through **Critique** (3 messages). Keep both independent answers and the result. Note the
+date of the run. The automatic tests (`tests/test_freshness.py`) only prove that the rule and today's date reach the
+comparing request; this sheet is the behaviour.
+
+| # | Question | Kind | Expected result |
+|---|---|---|---|
+| 1 | Who won the most recent Formula 1 drivers' championship? | fresh | ⚠ line at the top; the name in «Matched independently» ends «(from memory — not confirmed)»; the first ☐ says what to look for and where (the season's official standings); the fact is under «Not checked» |
+| 2 | What is the ECB deposit facility rate today? | fresh, a number | ⚠ line even if both give the same rate; ☐ points to the ECB's dated rate page |
+| 3 | Who is the current CEO of OpenAI? | fresh, no «latest» word | ⚠ line; ☐ — the company's leadership page or a dated announcement |
+| 4 | Was hat sich 2026 beim Bürgergeld geändert? | fresh, German | ⚠ line in German («Beide Modelle wissen das möglicherweise nicht: …»), headings in German |
+| 5 | Who will win the 2027 Champions League? | after today | «⚠ This has not happened yet: both answers are forecasts, not facts.» |
+| 6 | Why is the sky blue? | timeless | no ⚠ line, not a word about freshness |
+| 7 | When did the Berlin Wall fall, and why? | history with a year | no ⚠ line |
+| 8 | Today I'm helping my daughter with geometry. How many sides does a hexagon have? | «today» that is not about the fact | no ⚠ line |
+| 9 | Should I take a better-paid job with a 90-minute commute? | opinion | no ⚠ line |
+| 10 | How does compound interest work, and what is the best savings rate in Germany right now? | mixed | the ⚠ line names only the savings rate; the explanation of interest stays in «Matched independently» without a mark |
+
+Also: if in 1–3 one answer names a source and its date (ChatGPT searched), there is no ⚠ line and that source is
+named. With Claude's answer empty (the «check by hand» path after a resumed draft) a fresh question gives
+«⚠ This answer may be out of date: …».
+
+**Pass:** the ⚠ line on 1–5 and 10 (when both answers are from memory), and on none of 6–9. A false line on 6–9 counts
+as worse than a missed one on 1–5: then narrow the Freshness rule in `critique-blind.txt`, do not add caveats.
+
+The line as it should read in the 12 languages (reference for the reader; the model writes it in the language of the
+question):
+
+| | |
+|---|---|
+| en | Both models may not know this |
+| de | Beide Modelle wissen das möglicherweise nicht |
+| fr | Les deux modèles ne le savent peut-être pas |
+| es | Es posible que ninguno de los dos modelos lo sepa |
+| pt | É possível que nenhum dos dois modelos saiba isto |
+| ar | قد لا يعرف النموذجان هذا |
+| hi | हो सकता है दोनों मॉडल यह न जानते हों |
+| ja | 両方のモデルがこれを知らない可能性があります |
+| ko | 두 모델 모두 이 내용을 모를 수 있습니다 |
+| zh | 两个模型可能都不知道这一点 |
+| ru, uk | see `locales/ru/prompts/critique-blind.txt` (the Russian edition holds its own wording) |

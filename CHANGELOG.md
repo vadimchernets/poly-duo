@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.0.9] — not released — Duo 6.9 (built-in number duo 15 when released)
+
+### Added — «Both models may not know this» (KI Forum 226, post 1762, Karl, 22.11.2026)
+- **Critique no longer counts two matching guesses as a confirmation.** The comparing step is told today's date (from
+  the phone, `yyyy-MM-dd`, one «Current Date» action: no permission, no extra message) and a Freshness rule: when the
+  answer could have changed in about the last two years, or lies after today, and neither answer names a dated source,
+  the result opens with one line «⚠ Both models may not know this: <fact>. Check a fresh source that shows its date —
+  <where>», the matched point is marked «(from memory — not confirmed)», the first ☐ says what to look for and where,
+  the bottom line says the models may be out of date on it and the fact goes under «Not checked». A question about
+  the future gets «⚠ This has not happened yet: both answers are forecasts, not facts»; a single answer gets «⚠ This
+  answer may be out of date». Ordinary questions (history, science, how-to, opinions, a pasted text, a year or
+  «today» in the question) get no line and no word about freshness. Written by the model in the language of the
+  question, 12 languages; English prompt and the Russian edition (`locales/ru/prompts/critique-blind.txt`). Same in
+  My mode and in the by-hand check after a resumed draft. The two answering models do not see the rule.
+- Tests: `tests/test_freshness.py` (the rule and today's date reach all three comparing requests, never the
+  answering models; every prompt override keeps the English placeholders; the rule survives the cut retry);
+  the manual sheet `tests/behavior/en/freshness.md` (10 questions: fresh / timeless / opinion / mixed).
+- README: the agreement figures hold for what the models could have learned; after their training Duo does not count
+  a match.
+
 ## [1.0.8] — 2026-11-18 — Duo 6.8 (built-in number duo 14)
 
 Signed files in `releases/` (SHA256SUMS; Arabic added: `releases/ar/Duo.shortcut`) and new iCloud links for 12
