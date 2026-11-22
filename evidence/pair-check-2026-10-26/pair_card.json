@@ -1,0 +1,1085 @@
+{
+  "measurement_date": "2026-10-26",
+  "derived_on": "2026-11-22",
+  "samples": {
+    "round-1": [
+      {
+        "group": "ALL",
+        "n": 67,
+        "cells": {
+          "00": [
+            "e01",
+            "e02",
+            "e03",
+            "e04",
+            "e05",
+            "e06",
+            "e08",
+            "e09",
+            "e10",
+            "h01",
+            "h02",
+            "h03",
+            "h05",
+            "h06",
+            "h07",
+            "h08",
+            "h09",
+            "h10",
+            "h11",
+            "h12",
+            "h14",
+            "o01",
+            "o02",
+            "o03",
+            "o04",
+            "o05",
+            "o06",
+            "o07",
+            "o08",
+            "o09",
+            "o10",
+            "o11",
+            "o12",
+            "o13",
+            "o14",
+            "o15",
+            "t01",
+            "t02",
+            "t03",
+            "t04",
+            "t05",
+            "t06",
+            "t07",
+            "t08",
+            "t10",
+            "t11",
+            "t12",
+            "t13",
+            "t14",
+            "t15",
+            "x01",
+            "x02",
+            "x03",
+            "x04",
+            "x05",
+            "x06",
+            "x07",
+            "x08",
+            "x09",
+            "x10",
+            "x11",
+            "x12"
+          ],
+          "01": [
+            "e07",
+            "h04",
+            "h13",
+            "t09"
+          ],
+          "10": [],
+          "11": [
+            "h15"
+          ]
+        },
+        "phi": 0.4334498677803327,
+        "A_errors": 1,
+        "C_errors": 5,
+        "A_error_wilson95": [
+          0.002639503757676784,
+          0.0798205197313466
+        ],
+        "C_error_wilson95": [
+          0.032295572977927914,
+          0.16309244762013875
+        ]
+      },
+      {
+        "group": "adversarial",
+        "n": 12,
+        "cells": {
+          "00": [
+            "x01",
+            "x02",
+            "x03",
+            "x04",
+            "x05",
+            "x06",
+            "x07",
+            "x08",
+            "x09",
+            "x10",
+            "x11",
+            "x12"
+          ],
+          "01": [],
+          "10": [],
+          "11": []
+        },
+        "phi": null,
+        "A_errors": 0,
+        "C_errors": 0,
+        "A_error_wilson95": [
+          0,
+          0.2425007574992425
+        ],
+        "C_error_wilson95": [
+          0,
+          0.2425007574992425
+        ]
+      },
+      {
+        "group": "everyday",
+        "n": 10,
+        "cells": {
+          "00": [
+            "e01",
+            "e02",
+            "e03",
+            "e04",
+            "e05",
+            "e06",
+            "e08",
+            "e09",
+            "e10"
+          ],
+          "01": [
+            "e07"
+          ],
+          "10": [],
+          "11": []
+        },
+        "phi": null,
+        "A_errors": 0,
+        "C_errors": 1,
+        "A_error_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "C_error_wilson95": [
+          0.01787574951572113,
+          0.4041563854975721
+        ]
+      },
+      {
+        "group": "hard",
+        "n": 15,
+        "cells": {
+          "00": [
+            "h01",
+            "h02",
+            "h03",
+            "h05",
+            "h06",
+            "h07",
+            "h08",
+            "h09",
+            "h10",
+            "h11",
+            "h12",
+            "h14"
+          ],
+          "01": [
+            "h04",
+            "h13"
+          ],
+          "10": [],
+          "11": [
+            "h15"
+          ]
+        },
+        "phi": 0.5345224838248488,
+        "A_errors": 1,
+        "C_errors": 3,
+        "A_error_wilson95": [
+          0.011866588606194856,
+          0.2981707755242399
+        ],
+        "C_error_wilson95": [
+          0.07047420643610414,
+          0.4518593533465045
+        ]
+      },
+      {
+        "group": "ordinary",
+        "n": 15,
+        "cells": {
+          "00": [
+            "o01",
+            "o02",
+            "o03",
+            "o04",
+            "o05",
+            "o06",
+            "o07",
+            "o08",
+            "o09",
+            "o10",
+            "o11",
+            "o12",
+            "o13",
+            "o14",
+            "o15"
+          ],
+          "01": [],
+          "10": [],
+          "11": []
+        },
+        "phi": null,
+        "A_errors": 0,
+        "C_errors": 0,
+        "A_error_wilson95": [
+          0,
+          0.20388926630434784
+        ],
+        "C_error_wilson95": [
+          0,
+          0.20388926630434784
+        ]
+      },
+      {
+        "group": "tricky",
+        "n": 15,
+        "cells": {
+          "00": [
+            "t01",
+            "t02",
+            "t03",
+            "t04",
+            "t05",
+            "t06",
+            "t07",
+            "t08",
+            "t10",
+            "t11",
+            "t12",
+            "t13",
+            "t14",
+            "t15"
+          ],
+          "01": [
+            "t09"
+          ],
+          "10": [],
+          "11": []
+        },
+        "phi": null,
+        "A_errors": 0,
+        "C_errors": 1,
+        "A_error_wilson95": [
+          0,
+          0.20388926630434784
+        ],
+        "C_error_wilson95": [
+          0.011866588606194856,
+          0.2981707755242399
+        ]
+      }
+    ],
+    "round-2": [
+      {
+        "group": "ALL",
+        "n": 46,
+        "cells": {
+          "00": [
+            "b04",
+            "b06",
+            "b08",
+            "c09",
+            "d02",
+            "d06",
+            "h03",
+            "h04",
+            "h06",
+            "h10",
+            "i04",
+            "m02",
+            "m03",
+            "m04",
+            "n04",
+            "p03",
+            "r04",
+            "w01",
+            "w04",
+            "x05"
+          ],
+          "01": [
+            "h07",
+            "m05",
+            "s07"
+          ],
+          "10": [
+            "c10",
+            "d04",
+            "h05",
+            "h20",
+            "n03",
+            "p05",
+            "q01",
+            "q03",
+            "q05",
+            "q06",
+            "r02",
+            "r03",
+            "r05",
+            "r08",
+            "w05",
+            "x01",
+            "x03",
+            "x06"
+          ],
+          "11": [
+            "q02",
+            "s04",
+            "s05",
+            "s08",
+            "x04"
+          ]
+        },
+        "phi": 0.11470786693528089,
+        "A_errors": 23,
+        "C_errors": 8,
+        "A_error_wilson95": [
+          0.3611870167007236,
+          0.6388129832992764
+        ],
+        "C_error_wilson95": [
+          0.09085683568889254,
+          0.3072363234392253
+        ]
+      },
+      {
+        "group": "arithmetic",
+        "n": 16,
+        "cells": {
+          "00": [
+            "i04",
+            "m02",
+            "m03",
+            "m04",
+            "n04",
+            "x05"
+          ],
+          "01": [
+            "m05",
+            "s07"
+          ],
+          "10": [
+            "n03",
+            "x01",
+            "x03",
+            "x06"
+          ],
+          "11": [
+            "s04",
+            "s05",
+            "s08",
+            "x04"
+          ]
+        },
+        "phi": 0.2581988897471611,
+        "A_errors": 8,
+        "C_errors": 6,
+        "A_error_wilson95": [
+          0.2799923761135083,
+          0.7200076238864916
+        ],
+        "C_error_wilson95": [
+          0.18480982554752806,
+          0.613593529020652
+        ]
+      },
+      {
+        "group": "calendar",
+        "n": 8,
+        "cells": {
+          "00": [
+            "b04",
+            "b06",
+            "b08",
+            "d02",
+            "d06",
+            "p03"
+          ],
+          "01": [],
+          "10": [
+            "d04",
+            "p05"
+          ],
+          "11": []
+        },
+        "phi": null,
+        "A_errors": 2,
+        "C_errors": 0,
+        "A_error_wilson95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "C_error_wilson95": [
+          0,
+          0.3244156195108769
+        ]
+      },
+      {
+        "group": "characters",
+        "n": 5,
+        "cells": {
+          "00": [
+            "r04"
+          ],
+          "01": [],
+          "10": [
+            "r02",
+            "r03",
+            "r05",
+            "r08"
+          ],
+          "11": []
+        },
+        "phi": null,
+        "A_errors": 4,
+        "C_errors": 0,
+        "A_error_wilson95": [
+          0.3755282641185388,
+          0.9637768390302125
+        ],
+        "C_error_wilson95": [
+          0,
+          0.43449149475208104
+        ]
+      },
+      {
+        "group": "letters",
+        "n": 2,
+        "cells": {
+          "00": [
+            "c09"
+          ],
+          "01": [],
+          "10": [
+            "c10"
+          ],
+          "11": []
+        },
+        "phi": null,
+        "A_errors": 1,
+        "C_errors": 0,
+        "A_error_wilson95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ],
+        "C_error_wilson95": [
+          0,
+          0.6576280471103807
+        ]
+      },
+      {
+        "group": "percent",
+        "n": 5,
+        "cells": {
+          "00": [],
+          "01": [],
+          "10": [
+            "q01",
+            "q03",
+            "q05",
+            "q06"
+          ],
+          "11": [
+            "q02"
+          ]
+        },
+        "phi": null,
+        "A_errors": 5,
+        "C_errors": 1,
+        "A_error_wilson95": [
+          0.5655085052479191,
+          1
+        ],
+        "C_error_wilson95": [
+          0.03622316096978745,
+          0.6244717358814613
+        ]
+      },
+      {
+        "group": "puzzle",
+        "n": 6,
+        "cells": {
+          "00": [
+            "h03",
+            "h04",
+            "h06",
+            "h10"
+          ],
+          "01": [
+            "h07"
+          ],
+          "10": [
+            "h05"
+          ],
+          "11": []
+        },
+        "phi": -0.2,
+        "A_errors": 1,
+        "C_errors": 1,
+        "A_error_wilson95": [
+          0.03005258587173032,
+          0.563509436563646
+        ],
+        "C_error_wilson95": [
+          0.03005258587173032,
+          0.563509436563646
+        ]
+      },
+      {
+        "group": "units",
+        "n": 1,
+        "cells": {
+          "00": [],
+          "01": [],
+          "10": [
+            "h20"
+          ],
+          "11": []
+        },
+        "phi": null,
+        "A_errors": 1,
+        "C_errors": 0,
+        "A_error_wilson95": [
+          0.20654329147389294,
+          1
+        ],
+        "C_error_wilson95": [
+          0,
+          0.7934567085261071
+        ]
+      },
+      {
+        "group": "words",
+        "n": 3,
+        "cells": {
+          "00": [
+            "w01",
+            "w04"
+          ],
+          "01": [],
+          "10": [
+            "w05"
+          ],
+          "11": []
+        },
+        "phi": null,
+        "A_errors": 1,
+        "C_errors": 0,
+        "A_error_wilson95": [
+          0.0614903152761605,
+          0.7923450448735121
+        ],
+        "C_error_wilson95": [
+          0,
+          0.5615060804490177
+        ]
+      }
+    ],
+    "round-2-no-tool-artifacts": [
+      {
+        "group": "ALL",
+        "n": 38,
+        "cells": {
+          "00": [
+            "b04",
+            "b06",
+            "b08",
+            "c09",
+            "d02",
+            "d06",
+            "h03",
+            "h04",
+            "h06",
+            "h10",
+            "i04",
+            "m02",
+            "m03",
+            "m04",
+            "p03",
+            "r04",
+            "w01",
+            "w04",
+            "x05"
+          ],
+          "01": [
+            "h07"
+          ],
+          "10": [
+            "c10",
+            "d04",
+            "h05",
+            "h20",
+            "p05",
+            "q01",
+            "q03",
+            "q05",
+            "q06",
+            "r02",
+            "r03",
+            "r05",
+            "r08",
+            "w05",
+            "x01",
+            "x03",
+            "x06"
+          ],
+          "11": [
+            "q02"
+          ]
+        },
+        "phi": 0.012422599874998832,
+        "A_errors": 18,
+        "C_errors": 2,
+        "A_error_wilson95": [
+          0.3247877880894159,
+          0.6274128925728913
+        ],
+        "C_error_wilson95": [
+          0.014553902448536798,
+          0.17285766881068843
+        ]
+      },
+      {
+        "group": "arithmetic",
+        "n": 8,
+        "cells": {
+          "00": [
+            "i04",
+            "m02",
+            "m03",
+            "m04",
+            "x05"
+          ],
+          "01": [],
+          "10": [
+            "x01",
+            "x03",
+            "x06"
+          ],
+          "11": []
+        },
+        "phi": null,
+        "A_errors": 3,
+        "C_errors": 0,
+        "A_error_wilson95": [
+          0.13684175946152105,
+          0.6942621454161981
+        ],
+        "C_error_wilson95": [
+          0,
+          0.3244156195108769
+        ]
+      },
+      {
+        "group": "calendar",
+        "n": 8,
+        "cells": {
+          "00": [
+            "b04",
+            "b06",
+            "b08",
+            "d02",
+            "d06",
+            "p03"
+          ],
+          "01": [],
+          "10": [
+            "d04",
+            "p05"
+          ],
+          "11": []
+        },
+        "phi": null,
+        "A_errors": 2,
+        "C_errors": 0,
+        "A_error_wilson95": [
+          0.07147768885802763,
+          0.5907301208974108
+        ],
+        "C_error_wilson95": [
+          0,
+          0.3244156195108769
+        ]
+      },
+      {
+        "group": "characters",
+        "n": 5,
+        "cells": {
+          "00": [
+            "r04"
+          ],
+          "01": [],
+          "10": [
+            "r02",
+            "r03",
+            "r05",
+            "r08"
+          ],
+          "11": []
+        },
+        "phi": null,
+        "A_errors": 4,
+        "C_errors": 0,
+        "A_error_wilson95": [
+          0.3755282641185388,
+          0.9637768390302125
+        ],
+        "C_error_wilson95": [
+          0,
+          0.43449149475208104
+        ]
+      },
+      {
+        "group": "letters",
+        "n": 2,
+        "cells": {
+          "00": [
+            "c09"
+          ],
+          "01": [],
+          "10": [
+            "c10"
+          ],
+          "11": []
+        },
+        "phi": null,
+        "A_errors": 1,
+        "C_errors": 0,
+        "A_error_wilson95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ],
+        "C_error_wilson95": [
+          0,
+          0.6576280471103807
+        ]
+      },
+      {
+        "group": "percent",
+        "n": 5,
+        "cells": {
+          "00": [],
+          "01": [],
+          "10": [
+            "q01",
+            "q03",
+            "q05",
+            "q06"
+          ],
+          "11": [
+            "q02"
+          ]
+        },
+        "phi": null,
+        "A_errors": 5,
+        "C_errors": 1,
+        "A_error_wilson95": [
+          0.5655085052479191,
+          1
+        ],
+        "C_error_wilson95": [
+          0.03622316096978745,
+          0.6244717358814613
+        ]
+      },
+      {
+        "group": "puzzle",
+        "n": 6,
+        "cells": {
+          "00": [
+            "h03",
+            "h04",
+            "h06",
+            "h10"
+          ],
+          "01": [
+            "h07"
+          ],
+          "10": [
+            "h05"
+          ],
+          "11": []
+        },
+        "phi": -0.2,
+        "A_errors": 1,
+        "C_errors": 1,
+        "A_error_wilson95": [
+          0.03005258587173032,
+          0.563509436563646
+        ],
+        "C_error_wilson95": [
+          0.03005258587173032,
+          0.563509436563646
+        ]
+      },
+      {
+        "group": "units",
+        "n": 1,
+        "cells": {
+          "00": [],
+          "01": [],
+          "10": [
+            "h20"
+          ],
+          "11": []
+        },
+        "phi": null,
+        "A_errors": 1,
+        "C_errors": 0,
+        "A_error_wilson95": [
+          0.20654329147389294,
+          1
+        ],
+        "C_error_wilson95": [
+          0,
+          0.7934567085261071
+        ]
+      },
+      {
+        "group": "words",
+        "n": 3,
+        "cells": {
+          "00": [
+            "w01",
+            "w04"
+          ],
+          "01": [],
+          "10": [
+            "w05"
+          ],
+          "11": []
+        },
+        "phi": null,
+        "A_errors": 1,
+        "C_errors": 0,
+        "A_error_wilson95": [
+          0.0614903152761605,
+          0.7923450448735121
+        ],
+        "C_error_wilson95": [
+          0,
+          0.5615060804490177
+        ]
+      }
+    ]
+  },
+  "excluded_tool_artifacts": [
+    "m05",
+    "n03",
+    "n04",
+    "s04",
+    "s05",
+    "s07",
+    "s08",
+    "x04"
+  ],
+  "candidate_A_precheck": [
+    {
+      "group": "arithmetic",
+      "n": 32,
+      "errors": 8
+    },
+    {
+      "group": "calendar",
+      "n": 23,
+      "errors": 2
+    },
+    {
+      "group": "characters",
+      "n": 8,
+      "errors": 4
+    },
+    {
+      "group": "letters",
+      "n": 10,
+      "errors": 1
+    },
+    {
+      "group": "logic",
+      "n": 4,
+      "errors": 0
+    },
+    {
+      "group": "percent",
+      "n": 8,
+      "errors": 5
+    },
+    {
+      "group": "premise",
+      "n": 4,
+      "errors": 0
+    },
+    {
+      "group": "puzzle",
+      "n": 10,
+      "errors": 1
+    },
+    {
+      "group": "units",
+      "n": 2,
+      "errors": 1
+    },
+    {
+      "group": "words",
+      "n": 6,
+      "errors": 1
+    }
+  ],
+  "candidate_exclusions": {
+    "h01": "excluded: A answered dime + US twenty-cent coin; the 20-cent piece (1875-78) is a real US coin, so my reference (impossible) is too narrow"
+  },
+  "input_sha256": {
+    "round-1/tasks.json": "dd683c42bba0a6536c34545e9c0bc203ff62cf9a2772c17863236b31063b819f",
+    "round-1/tasks_hard.json": "a7446926aa389783359016a47c52e82975d7e4250d9219d2f62a56e534f167da",
+    "round-1/tasks_hard2.json": "834bdfb6ce8c31c18b0b257213b7ba4a2960b70cc76d58543d7df09a35b195c5",
+    "round-1/judge/final.json": "dbf303e26fe748135b238720fd2a6ea84fa5b057ed0f37e26353b4d7dcf5c36f",
+    "round-2/tasks.json": "78efdd5794e8ffa4e7ac8b1f4c2bb002bed3e6889512dbf4a3bdb6f2f4f6a4e9",
+    "round-2/judge/final.json": "16da8c4a2790eaf3c9206c2c77093ce00bf61ea08b4a2d404d9d494e73fdeac4",
+    "round-2/raw/c09.C.txt": "df66095b8f6f9ea73d2c93d8a1e29619351a772cf22ca1ca1b366c5d4cbfb7d0",
+    "round-2/raw/c09.D.txt": "0ddd0d93ca67846c948e4c22836e22f276f2d27c9f092069de70f690970e00ee",
+    "round-2/raw/c09.B.txt": "1e497e4bc47124875a554bba27539fed0212506a4573590a329f4add9bc09807",
+    "round-2/raw/c10.C.ru.txt": "aee48e037a2aad928003ec9e3ce02ca23d1e69265dedb197d718065d67640ba0",
+    "round-2/raw/c10.D.txt": "abc01e1bece154437eefc770816e6c7dcf11ac38c192be4a00742c83a5579186",
+    "round-2/raw/c10.B.txt": "9924d9d564498f9bbf02b9fe5a17cd3823d8e7dcb7a04b4ed3d6904a736692e3",
+    "round-2/raw/w01.C.txt": "9d90a59aef264b87181f5a77bf1920f699bb466bbfe2dc72c85803f82f222a26",
+    "round-2/raw/w01.D.txt": "19b91fdbc56988f0f86a4de8dbbdf7bb0be5188e6f85c0b07436bad24afa4526",
+    "round-2/raw/w01.B.txt": "385f94c71ee9a1cdfd7c86cdd7158d62bdd648b851bedeb663f45bc260cadd74",
+    "round-2/raw/w04.C.txt": "c8e14996fe142cd10f43ef79df325ed876bb2960e7f575ea881c0bd3da241a8a",
+    "round-2/raw/w04.D.txt": "246668c0b338a5c832c2d0bc0bd5d4a78e3a6c17a1d9a6e5850eead8c04ffb8f",
+    "round-2/raw/w04.B.txt": "2fd7508f7db89965b5058c9579f5efb6afb43e5e40d5fc76bbdc4653c437a7c0",
+    "round-2/raw/w05.C.txt": "83ee2ac166ecb9f5fe02d56e8cca52591bac95fee4c8a3d63d2fdc898533ccf1",
+    "round-2/raw/w05.D.txt": "7b5316cdb7f7fc29ec40697f6b145a7e212e18af456f78ed9b6e83935fb0ee15",
+    "round-2/raw/w05.B.txt": "ead56f9dd6be7cae29029538645afdbdd3ad844467eb37720082bf318e83903c",
+    "round-2/raw/d02.C.txt": "1aa69f5823b59973fb85f83dc42084fef620b90bca1e082abe0a9455e954be37",
+    "round-2/raw/d02.D.txt": "2c4797544a24622e4b1ba618a4b0fdaa585a330c9611304902eca35477adf4a6",
+    "round-2/raw/d02.B.txt": "7d8a66e20bfa08269eb92583aba98fec8231e627b0c2fe00bbfd65828f8aa643",
+    "round-2/raw/d04.C.txt": "b79c7c3453d6d45954cd08c8b6129531acc495a00eb6a15615184432ebba51b4",
+    "round-2/raw/d04.D.txt": "383ae58da18988a498046a24135b1fe912fd98c7121ea56463facde564ad982d",
+    "round-2/raw/d04.B.txt": "e79121b98cd4f5480d2fa52adca739e700b258664a25c2068f828928d6aa4842",
+    "round-2/raw/d06.C.txt": "e2dfbe3a764699b7efaa1bebea92089bb37eba27978063a34257a723d168ca40",
+    "round-2/raw/d06.D.txt": "1d197111eee9f66bf59d2d171aae1258d6a1499432d0409b90b419718cdbbd21",
+    "round-2/raw/d06.B.txt": "cfb14c3d320f3842db8227d9b72d86eda24e04458b7cf895d009e350a7eeeece",
+    "round-2/raw/b04.C.txt": "6d3a337ef73dfbcf76292bb64ec3af541d9ca8db172db7e361204b2e20f029a4",
+    "round-2/raw/b04.D.txt": "1dabf88a78734b343ae176aae6e31b8fccb3a6d2d7dd467bf170e7aa45193188",
+    "round-2/raw/b04.B.txt": "84f61c0070b3b77741c7494f31b568835ba5a8baee1a3564e78b18769e51587e",
+    "round-2/raw/b06.C.txt": "ae66fee29171fe6ee408db62296ce8112c7101826516381b7abd937d869c69a7",
+    "round-2/raw/b06.D.txt": "8eec1f534f698d9bc4c0be5059a68f510949753ebda22358e5eb01b44e3254bc",
+    "round-2/raw/b06.B.txt": "5632b596348759ccba9e13a55c90ddfb6a667c69130049fb0dd8ca909722ad26",
+    "round-2/raw/b08.C.txt": "6b2115901c0e64db5f46c19dfc5b57d26c7bb90c25d1036383bbb98246f9385c",
+    "round-2/raw/b08.D.txt": "f6cb6a8415f8f001724ac2b61de80b37e20ab284197c376b00560e4746b31c7d",
+    "round-2/raw/b08.B.txt": "719fa107e5afbe6b9d399765364efa274883a3ef94d0d171c867e9159664ad1b",
+    "round-2/raw/p03.C.txt": "e3aea70e59341a117d70da22d025bd2765c2bdfa7b36af9681363e2c20468afa",
+    "round-2/raw/p03.D.txt": "238e9018318560821cb4e5837bc9e5a2117498f9cd7a6af5144a57cbf8e7026d",
+    "round-2/raw/p03.B.txt": "98d8b024be30232667389dd65fad1f7566a26db9c34bf33aab8fe047a2be6e50",
+    "round-2/raw/p05.C.txt": "a15919bad73276462a6af53963c00ef7f5f32546b8f5c525d67d3d5ced7ba3e2",
+    "round-2/raw/p05.D.txt": "71eab969e267e9089b8bd827aa3e6fc5552ecc48a455e2f0c807ac5a223d9557",
+    "round-2/raw/p05.B.txt": "3b87637d16b51a5fb16956c84fbc15b381631107aac475c72e7a32d4ebb2097f",
+    "round-2/raw/s04.C.txt": "785fd7d21da0e59e9fb9e87a65405a9b2099b92ac714d468dcdf7fe8c50d6d49",
+    "round-2/raw/s04.D.txt": "eaab58d287697322865ae43fef40c675da8e4b719c1374383578db17c4f69728",
+    "round-2/raw/s04.B.txt": "a63b00329282462796525fa620f6b0306e7edae7350a1a2124b740c4623fe6e8",
+    "round-2/raw/s05.C.txt": "eae633e53328132bbfcf8a43b83dfe7b251d3c43b22d4eb1d573005a31a12333",
+    "round-2/raw/s05.D.txt": "e907945fd46aba73ca0e38c952d2d35caeb29765f482fa203841db227a1defbd",
+    "round-2/raw/s05.B.txt": "baed068ce59350b4bc39e9e7f4742097e37570f813970ba3d00ae44213400c66",
+    "round-2/raw/s07.C.txt": "302a4ef42e9a93d98015cc6b1a4f4deef5c6bdad63e6a85a11a1606b28871da8",
+    "round-2/raw/s07.D.txt": "565116f0ac8b971dfc4a2e4ca65cb1165ac58de985ed6a2d1f6f8df65474a6fe",
+    "round-2/raw/s07.B.txt": "b1374d7d0547d4e3ca81e9281edf9b6e9ba67ad8aca2c467ef80a1092d9ddc17",
+    "round-2/raw/s08.C.txt": "becefce1f8d148e3add7d4df9516b53c50e37e9f2e5d2b093caa6d39d8c6d726",
+    "round-2/raw/s08.D.txt": "4c307c4f1f5f9e4e3da3283735b53325875e363a54188963070509803c034916",
+    "round-2/raw/s08.B.txt": "07929de6f5fd4adcc5d95fde5f893e2a4355891d4971d2f1a10e78bdb15b705f",
+    "round-2/raw/m02.C.txt": "55ac3793b8b1ceaf959c4bc42622836cb56f34888fb8f15b22601e5b81d53a70",
+    "round-2/raw/m02.D.txt": "ee445f7e04f0e2230b6cf4bed0392671cabb3468cc6c8948f7e15bb7898eed45",
+    "round-2/raw/m02.B.txt": "f41ce1a3f533f95cf0d289f31dde5a2bca555bfa2d964e8395d7156e2a03b728",
+    "round-2/raw/m03.C.txt": "a45df70deaebae9de0cb217d236d071cd5b77a626f1013a2e6c246d69161e8cb",
+    "round-2/raw/m03.D.txt": "ad9ca701e0ee43903f8103067596f0270a5fb1846e3a4755cfa3a7115e9db2ad",
+    "round-2/raw/m03.B.txt": "bb1ea089c005036f02bc6d4b905b38e0e0a7b1cc36f1eb26d1bb61aec80ffc7f",
+    "round-2/raw/m04.C.txt": "b534bb4828457cf8d85d3eee2bc1bda1dcb0ba84bf47f09c198f1fcd7993ff4f",
+    "round-2/raw/m04.D.txt": "3f800c5f68df5842af004d98d4e234a807457e25ef0f572c829a9818f22a2e1a",
+    "round-2/raw/m04.B.txt": "aef14cfb7c5ceaa69f6c4a8410c2b30c8db32338a6065d6d0d15efff5249d481",
+    "round-2/raw/m05.C.txt": "4b293f69edd6c6615b5ba760f112bf8cc9af47000a71ebbc7ba9ffb2dc5aa789",
+    "round-2/raw/m05.D.txt": "fe74be343940d84879030317da04b822cfc1989cf2515a0e8bbec76291eeb6cf",
+    "round-2/raw/m05.B.txt": "ca9904fe3c151cd7e6b3db8b4c0fd6d153016782c695379e9cedf8a5f199f3fc",
+    "round-2/raw/x01.C.txt": "edb7cd36dd8016664fd605483cd97150307bffa43eca8b66c3b90006b3120b1d",
+    "round-2/raw/x01.D.txt": "ca3df0cc38d2d8a0f43ecdc8d10cb32367975cf32fbf7577c901c02b7acbf34a",
+    "round-2/raw/x01.B.txt": "83ccdf94b22c976af5f81f5a6bf51b242d3aa856e2e4ec6f809d7aaed65cf9db",
+    "round-2/raw/x03.C.txt": "51655b34c490d77c60053f8dcb9b78b057ea43ef8d1b2a0aa6de2d81eb607c81",
+    "round-2/raw/x03.D.txt": "788f6258eb3fdf0b697da1886c4d5aa7f9ab0303a9c39d7b2c938e635935d061",
+    "round-2/raw/x03.B.txt": "240c3136a25cf3d10dc6edf6a0919196d0142fc05e3a03c7018efac80849cc49",
+    "round-2/raw/x04.C.txt": "4a8920f1cea08c6bd71b577423aaa73de2ee255a54af34c1aff12e74a42f0d2e",
+    "round-2/raw/x04.D.txt": "4a8920f1cea08c6bd71b577423aaa73de2ee255a54af34c1aff12e74a42f0d2e",
+    "round-2/raw/x04.B.txt": "40c9d109471c41056b1469a834d06409e0de45651477099c1448488758262d3f",
+    "round-2/raw/x05.C.txt": "6ab592bec8c99c47c8f460627fd9405f2b6fbf618c32e06aab536c7fc066beda",
+    "round-2/raw/x05.D.txt": "1d3a172a54add0c2162385b2118ef3014f3e220d61f2382a2e768d8edf1cbf68",
+    "round-2/raw/x05.B.txt": "66a62ce5a6ecb6d12fc01d1f71fe06f9e410abd3f64f9097ead40c058f7fb4fa",
+    "round-2/raw/x06.C.txt": "19c60efec8efbbf8c156f9a6a788db8956f9b04aec392f260c80d813e609d36e",
+    "round-2/raw/x06.D.txt": "7f6b1674467a09ed6d1f93831f4f3a253a19548b8310c46aa35790a15d097dde",
+    "round-2/raw/x06.B.txt": "73f97cf10f3c65b36ff6789a8b2af631c96c858eca006443a9fcc213db98bf03",
+    "round-2/raw/r02.C.txt": "c43378de10686a0d969a95ed6a72b34d9f8dc874a2a169975ac4fff183229d1f",
+    "round-2/raw/r02.D.txt": "a640ec7c0f0f292b25bc1b408cfd801f08a3f4d052934a91fb50bf46e2ecb6fa",
+    "round-2/raw/r02.B.txt": "1591d024b5691dcd90bc3175ec194f52d0373d2f4996d3359d97f3ebbba7dfda",
+    "round-2/raw/r03.C.txt": "f84e0d658ec1c5a6733e8f4825a6921552c135faaf78d40a3eae7fbd48f32d10",
+    "round-2/raw/r03.D.txt": "1df38c4853356493f031d3fede7fa39f547a8c74978f1201f225cc245e193500",
+    "round-2/raw/r03.B.txt": "0a45a3f3b92ed05fb6bf4a10e492d31fef5d51a234ff436e11c5bc976b5032e4",
+    "round-2/raw/r04.C.txt": "22a34b69057f70471767c8cdfc68571ef3e0de17352982018f662a4c3b51fb49",
+    "round-2/raw/r04.D.txt": "bdb6f16b411c8090927775af5c4a62a631c192793dff135964042964212be1c6",
+    "round-2/raw/r04.B.txt": "2e7ed0b878d9114d7b65780b86244149a7f9df0cc45de4b892e6fbadbacfddd7",
+    "round-2/raw/r05.C.txt": "83450fbe7e5aee32439bc9f06edfbba000b455699a73b22fc98b0814c64fd0e7",
+    "round-2/raw/r05.D.txt": "a7da349f8c4d49a177d0bfba75eab869aa3e343c659273682f8e9b9f9c1e25e4",
+    "round-2/raw/r05.B.txt": "85696f85fe1263bce111c7bcd910630215197768a3931bde23b601580d6aee95",
+    "round-2/raw/r08.C.txt": "bfd2b65d29e5e5460f82cb88beeea3f8fd8828a6638ad441af96ce0ba9d9ebcd",
+    "round-2/raw/r08.D.txt": "86e2d4084f8b60e08ab6845886bd32051e305dd19e55bc055409d81084782bda",
+    "round-2/raw/r08.B.txt": "1abdeb743cc088245b4b8dcdf8260716d863f69e34bacd9b830e38db2caebb73",
+    "round-2/raw/i04.C.txt": "b2e506ca0e4094abcb0a24e32ff5752ae21b151daf9bc3474052d1539c686be4",
+    "round-2/raw/i04.D.txt": "a63cc5f0f8eadd536264f51dd231eaf02767b772856946ed4685037bcea47a0b",
+    "round-2/raw/i04.B.txt": "87025c0b7e9fa0e764fa7a026f08482e585dcee9e2a932f854992141577a1232",
+    "round-2/raw/q01.C.txt": "18657d74ae0250d34446076c45c6b92906c99388d8cd13e3511599512a76cad0",
+    "round-2/raw/q01.D.txt": "8bbba73285865b4eefeab7ccf93a3af4b5b52d38124f0019535301982d9d7114",
+    "round-2/raw/q01.B.txt": "376c6989fa3b6a69b54e40697c2414b87b809e3f0e8e109f60cb03a35d8c91a3",
+    "round-2/raw/q02.C.ru.txt": "ee2c73d64c69b8c99ca959038be2511c9754e38397bf591e17faccb38dc88c3f",
+    "round-2/raw/q02.D.txt": "8f8881c6d22fb0765327a260f4cb63d8ba00b1d304696a746945837615c2d1c8",
+    "round-2/raw/q02.B.ru.txt": "c0d5d6d1ef051a54917368a319e83435b73528685b7d7beef849472828c311f8",
+    "round-2/raw/q03.C.txt": "3785f7c76ceef47491e9db98410914c4764d3d19b4592b1583e8400eded54e3b",
+    "round-2/raw/q03.D.txt": "014b7a6170de1e3e16eefe6ea09f282d35aa7d3ea72078d5060fe8ea9007ee2a",
+    "round-2/raw/q03.B.txt": "354f6c0bc29424349683076264faaa5b7b4fcb907aaf83739d072613cc5f57b4",
+    "round-2/raw/q05.C.txt": "df82204c814933a8ba4637f63cbdb0db5ac080a98f949d9eaffc63da8726d6d5",
+    "round-2/raw/q05.D.txt": "cd44cfe68a6491196c77fd5e0885a8ac0de8148de5e25493f67d74c00341380c",
+    "round-2/raw/q05.B.txt": "9473c798de9aa8a414ddbf1ba85d01557aec30772c4c0a4058ac38914e691456",
+    "round-2/raw/q06.C.txt": "9366b098dd6f6ee652c532daf39c88d1515d41952f9f6c0830058c35d09ce6d2",
+    "round-2/raw/q06.D.txt": "9556d8eb59a9817d2aca71c41907ab5d963ef066cd44765cc5c5c174ca586bbf",
+    "round-2/raw/q06.B.txt": "07d96d54390c9a9be4246d480a8df2fb55de8215ff2035f66238bb8feaa5de2e",
+    "round-2/raw/n03.C.txt": "f4160ed03ca4d09d25162d80dc9cff161d364bc8be8c83afe8709a18d8f4eaa9",
+    "round-2/raw/n03.D.txt": "f06069de8d7d5a76468feb7e7d8998a8dba6d2e2ba12dc52533714b34d36f871",
+    "round-2/raw/n03.B.txt": "3a53468ab2b2de7befa9d46d1ef8aa4d055878bf3d8b45e012c45bb9b332ab3a",
+    "round-2/raw/n04.C.txt": "90e69a687efdfe22b93c541cb9817ccd6a14957ce1a51dcfb4b28a02fe6a0e9c",
+    "round-2/raw/n04.D.txt": "424cfe1e65994040a6ae8032bed639ca5add3d0172008a7ab04678bd5ab635d7",
+    "round-2/raw/n04.B.txt": "5a5fad65b257b33a04037377b0530e5fcf272f696ee0e1be3503fe505945fea2",
+    "round-2/raw/h03.C.txt": "476fef5a1be2ba1dbe100e8afba0f90383a32a4aa3932c61b15f0322922acb2a",
+    "round-2/raw/h03.D.txt": "a85d3d560458e8eae8010e500abcf8118cf94cfc255f63734d2b927c569e6814",
+    "round-2/raw/h03.B.txt": "3a9936e1c42a1b807330fdb1f192d79a16f391db367fb62b06120bd17dbbe3f8",
+    "round-2/raw/h04.C.txt": "f9c640a66a7cf98d40c8d997c38586c11c4cfb7d7904a2c00bbc40d793264bba",
+    "round-2/raw/h04.D.ru.txt": "b4e7cbc3394751e645b90f193b4c20fc82fe9d4839d36fa2de8ff61757d97910",
+    "round-2/raw/h04.B.ru.txt": "27947cd9a640701d596c192a929d6182d83c9835c5453fe82fd725b942ad14b3",
+    "round-2/raw/h05.C.txt": "20066cd00bc6851cad85f059b00cc7e18bd70830750493b3443e7a8c7e9298fc",
+    "round-2/raw/h05.D.txt": "4467211c77a197924fa1207585ab384374763662ffb6a1c0c59452b7f21c3262",
+    "round-2/raw/h05.B.txt": "22c435a7347ba30b39afc354b0bcd622fc09e01618e2ad00a3b6976eda8cf2b7",
+    "round-2/raw/h06.C.ru.txt": "2ce6f40acfa9333d3ef406ce24649e537b2879341791fa8d13854e0fe67c4821",
+    "round-2/raw/h06.D.txt": "9c21ddb54fecb9e9f3030ab23e38ae18fba941fa22ea9b3eb6c6f520eaf8e7a5",
+    "round-2/raw/h06.B.ru.txt": "40661ced924702d49962706d6ff4d02fadc52330fafebb882f2a5d532c39f632",
+    "round-2/raw/h07.C.txt": "e16c0c6802d2a8a2a574701629b76c857f02511a3cdd0b562099705f4afdfdd8",
+    "round-2/raw/h07.D.txt": "3e885b5e1a7ab1b682bce7e5c38179b29eaa79aac819e2d2f4865a167ae81965",
+    "round-2/raw/h07.B.txt": "a4d996bb696fdeb93ddb846cbb7e858a5625600ada0498134a699a57b5e7f132",
+    "round-2/raw/h10.C.txt": "f8abc8ad1a03d4f8edbb64ec3ae3223edd6bb9646a43b5fc7076724dfbdd2d6f",
+    "round-2/raw/h10.D.ru.txt": "4c32c5483b57d6d71c1a255cdc151d7db6112931cc8826d4f3879f38a4bdbbee",
+    "round-2/raw/h10.B.txt": "823072b1ca91604b951569a8c450e546342520f31037e880c59150f56c5d1789",
+    "round-2/raw/h20.C.txt": "1bd481e53d1dbc599ddd3643408c94b16d46f0b63da8cc7109100ce740658f99",
+    "round-2/raw/h20.D.txt": "5d33583c573078b7516f4ce6b6933ca968824bff724b24ec8a4e67cb090d5376",
+    "round-2/raw/h20.B.txt": "674ac985973860ef3d6f148eadf2bd177827f421313b8037c6288384c01a383d",
+    "round-2/tasks_candidates.json": "78efdd5794e8ffa4e7ac8b1f4c2bb002bed3e6889512dbf4a3bdb6f2f4f6a4e9",
+    "round-2/selection.json": "31a6808fef65bfa761fc47c81463839a9dc8fc5699a6afdb5651c03c5386a8b9"
+  }
+}
