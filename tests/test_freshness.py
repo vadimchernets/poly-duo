@@ -6,21 +6,31 @@ the phone (tests/behavior/en/freshness.md); these tests check that the rule reac
 today's date, and nowhere else."""
 import json
 import re
+import sys
 
 import pytest
 
-from test_first_run import LANGS, ROOT, build, kind
+from test_first_run import LANGS, ROOT, build, kind, is_step
+
+sys.path.insert(0, str(ROOT / 'src'))
+from build_shortcut import LONG_DATA, RETRY_CUT, compare_head_len  # noqa: E402
+from shortcut_actions import Locale  # noqa: E402
 
 PROMPTS = ROOT / 'locales'
-LONG_TEXT = int(re.search(r'^LONG_TEXT = (\d+)', (ROOT / 'src' / 'build_shortcut.py').read_text(encoding='utf-8'),
-                          re.M).group(1))
 # the visible warning line of each prompt edition (ru in escapes: Cyrillic lives only in a language place)
 WARNING = {'en': 'Both models may not know this',
            'ru': '\u041e\u0431\u0435 \u043c\u043e\u0434\u0435\u043b\u0438 '
                  '\u043c\u043e\u0433\u0443\u0442 \u044d\u0442\u043e\u0433\u043e \u043d\u0435 \u0437\u043d\u0430\u0442\u044c'}
-EN_CONTRACT = ('Today is {TODAY}', 'not a confirmation', 'not enough', 'never fresh', 'Never invent',
-               'never mention freshness', '(from memory — not confirmed)', 'This answer may be out of date',
-               'This has not happened yet', 'Outside the 220 words', 'A ⚠ fact is the first ☐', 'a ⚠ fact is "Not checked"')
+EN_CONTRACT = ('Today is {TODAY}', 'not a confirmation', 'materially change the answer', 'for the period asked about',
+               'a bare link, a citation date', 'merely because a date appears', 'says it searched',
+               'the rule above does not keep them', 'Not fresh: history', 'Never invent', 'never mention freshness',
+               '(from memory — not confirmed)', 'This answer may be out of date', 'This has not happened yet',
+               'this answer is a forecast', 'no line 0 at all', 'Outside the 220 words', 'A ⚠ fact is the first ☐',
+               'put any ⚠ fact under "Not checked"')
+# what the Freshness change added to the English prompt; without it the prompt is the one before, character for character
+EN_ADDED = ('; a ⚠ fact ends "(from memory — not confirmed)"', ' A ⚠ fact is the first ☐: what exactly to look for, and where.',
+            '; if there is a ⚠ line, the bottom line says the models may be out of date on it',
+            '; put any ⚠ fact under "Not checked"')
 
 
 def edition(lang):
@@ -42,10 +52,10 @@ def test_compare_prompt_carries_the_freshness_rule(lang):
     # line 0 (the warning) comes right before section 1, and the skeleton of the three sections is kept
     zero, one = text.index('\n0. '), text.index('\n1. ')
     assert zero < one < text.index('\n2. ') < text.index('\n3. ') and '220' in text and '■' in text
-    # the rule sits in the head, before the data: a retry cut to LONG_TEXT characters still carries it, and leaves
-    # at least 1000 characters for the question and the answers
-    assert text.index('{TODAY}') < text.index('{NUMS}') <= LONG_TEXT - 1000
-    assert text.count('⚠') >= 6
+    # the rule sits in the head, before the data (the retry rebuilds the whole head, see test_retry_keeps_both_answers)
+    assert text.index('{TODAY}') < text.index('{NUMS}') < text.index('{QUESTION}')
+    assert 'two years' not in text   # no arbitrary window: «since the models were trained» and «materially»
+    assert text.count('⚠') >= 5
     if edition(lang) == 'en':
         for phrase in EN_CONTRACT:
             assert phrase in text, phrase
@@ -78,15 +88,18 @@ def test_every_comparing_request_gets_todays_date(tmp_path, lang):
     actions = build(tmp_path, lang)
     assert '{TODAY}' not in json.dumps(actions, ensure_ascii=False)
     found = texts_with(actions, WARNING[edition(lang)])
-    # My mode, the main Critique, and the by-hand check after a resumed draft (ChatGPT's answer alone)
-    assert len(found) == 3
+    # My mode and the main Critique (each: the request and its cut retry), and the by-hand check after a resumed draft
+    # (ChatGPT's answer alone)
+    assert len(found) == 5
     index = {a['WFWorkflowActionParameters'].get('UUID'): i for i, a in enumerate(actions)}
     for i in found:
         attached = actions[i]['WFWorkflowActionParameters']['WFTextActionText']['Value']['attachmentsByRange'].values()
         dates = [v for v in attached if v.get('Aggrandizements')]
         assert len(dates) == 1
         (fmt,) = dates[0]['Aggrandizements']
-        assert fmt['WFDateFormat'] == 'yyyy-MM-dd' and dates[0]['OutputName'] == 'Date'
+        # ISO 8601 without time: 2026-11-22 in any region and in the Gregorian year on any calendar setting
+        assert fmt['WFDateFormatStyle'] == 'ISO 8601' and fmt['WFISO8601IncludeTime'] is False
+        assert dates[0]['OutputName'] == 'Date'
         source = index[dates[0]['OutputUUID']]
         assert kind(actions[source]) == 'date' and source < i
         assert actions[source]['WFWorkflowActionParameters']['WFDateActionMode'] == 'Current Date'
@@ -103,5 +116,118 @@ def test_the_two_answering_models_never_see_the_rule(tmp_path, lang):
     for a in asks:
         refs = {v.get('OutputUUID') for v in a['WFWorkflowActionParameters']['prompt']['Value']['attachmentsByRange'].values()}
         assert not refs & marked
-    wrap = (PROMPTS / 'en' / 'prompts' / 'wrap.txt').read_text(encoding='utf-8')
-    assert 'Freshness' not in wrap and '⚠' not in wrap
+    # Claude's blind answer (step 2) gets the wrapped question, not the comparing text; only step 3 and its retry do
+    claude = [a for a in actions if kind(a) == 'ClaudeAppIntentsExtension']
+    fed = [a for a in claude
+           if {v.get('OutputUUID') for v in a['WFWorkflowActionParameters']['message']['Value']['attachmentsByRange']
+               .values()} & marked]
+    # step 3 and its cut retry, in My mode and in the main Critique; never the blind answer of step 2
+    assert len(fed) == 4 and len(claude) > len(fed)
+    wrap = Locale(lang).prompt('wrap')
+    assert 'Freshness' not in wrap and '⚠' not in wrap and '{TODAY}' not in wrap
+
+
+def test_ordinary_instruction_is_untouched():
+    """Without what Freshness added, the English comparing prompt is the one before it, character for character: the
+    ordinary run keeps its instruction."""
+    text = template('en')
+    lines = [line for line in text.split('\n') if not line.startswith(('- Freshness.', '0. '))]
+    text = '\n'.join(lines)
+    for added in EN_ADDED:
+        assert text.count(added) == 1, added
+        text = text.replace(added, '')
+    before = (ROOT / 'tests' / 'fixtures' / 'en' / 'critique-blind.before-freshness.txt').read_text(encoding='utf-8')
+    assert text == before
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_long_text_notice_counts_the_data_only(tmp_path, lang):
+    """The «Long text» notice comes when the question, the answers and the numbers pass LONG_DATA characters, as
+    before the Freshness rule; the longer instructions do not make an ordinary run «long»."""
+    actions = build(tmp_path, lang)
+    notes = [i for i, a in enumerate(actions) if is_step(a, 'long_text')]
+    assert len(notes) == 2
+    prompt = Locale(lang).prompt('critique-blind')
+    heads = sorted(compare_head_len(t) for t in (prompt, 'Extra instruction from the user for this check '
+                                                         '(apply it): {RULE}\n\n' + prompt))
+    limits = sorted(actions[i - 1]['WFWorkflowActionParameters']['WFNumberValue'] for i in notes)
+    assert limits == [h + LONG_DATA for h in heads]
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_retry_keeps_both_answers(tmp_path, lang):
+    """After an empty comparison the retry rebuilds the same request with each part cut on its own: the rule, the
+    date, the question and BOTH answers always reach it (before, the whole request was cut and Claude's own answer,
+    which comes last, fell off)."""
+    actions = build(tmp_path, lang)
+    index = {a['WFWorkflowActionParameters'].get('UUID'): i for i, a in enumerate(actions)}
+    retries = [i for i, a in enumerate(actions) if is_step(a, 'claude_retry') and kind(actions[i + 1]) == 'match']
+    assert len(retries) == 2
+    for r in retries:
+        cuts = actions[r + 1:r + 5]
+        assert [kind(a) for a in cuts] == ['match'] * 4
+        limits = [int(re.search(r'\{1,(\d+)\}$', a['WFWorkflowActionParameters']['WFMatchTextPattern']).group(1))
+                  for a in cuts]
+        assert limits == [RETRY_CUT[k] for k in ('QUESTION', 'GPT_ANSWER', 'CLAUDE_OWN', 'NUMS')]
+        text = actions[r + 5]
+        assert kind(text) == 'gettext' and WARNING[edition(lang)] in json.dumps(text, ensure_ascii=False)
+        attached = list(text['WFWorkflowActionParameters']['WFTextActionText']['Value']['attachmentsByRange'].values())
+        cut_ids = {a['WFWorkflowActionParameters']['UUID'] for a in cuts}
+        assert {v['OutputUUID'] for v in attached if v.get('OutputName') == 'Matches'} == cut_ids
+        assert sum(1 for v in attached if v.get('Aggrandizements')) == 1   # today's date
+        ask = actions[r + 6]
+        assert kind(ask) == 'ClaudeAppIntentsExtension'
+        assert text['WFWorkflowActionParameters']['UUID'] in json.dumps(ask)
+        # the request Claude did not answer comes from the same template, with the whole data
+        full = next(v['OutputUUID'] for v in attached if v.get('Aggrandizements'))
+        assert kind(actions[index[full]]) == 'date'
+
+
+# a reply in the shape the rule asks for: the ⚠ line first, the fact marked, the ⚠ fact as the first ☐
+SAMPLE_REPLY = ('⚠ Both models may not know this: who chairs the ECB today. Check a fresh source that shows its date '
+                '— the ECB website, «Executive Board».\n\n'
+                '**1. Matched independently**\n- Christine Lagarde chairs the ECB (from memory — not confirmed).\n'
+                '**2. Did not match**\nNo differences.\n'
+                '**3. What to check yourself**\n☐ The current ECB President on ecb.europa.eu, page dated 2026.\n'
+                '☐ Her term end date in the same place.\n\n'
+                '■ **Final answer**\nBoth models may be out of date here: they name Christine Lagarde from memory.\n'
+                'Checked against: none / Not checked: the current ECB President\n')
+
+
+def test_output_keeps_the_warning_and_sends_the_check_to_reminders(tmp_path):
+    """The ⚠ line and the ☐ items survive strip_markdown as the phone runs it, the ⚠ line stays the first line (the
+    title of the result screen and of the note), and the ⚠ fact's ☐ reaches Reminders by the same pattern."""
+    actions = build(tmp_path, 'en')
+    finds = (r'(?<![\*\w])\*\*(?=\S)(.+?)(?<=\S)\*\*(?![\*\w])',
+             r'(?<![\*\w])\*(?=[^\s*])([^*\n]+?)(?<=[^\s*])\*(?![\*\w])', r'(?m)^[ \t]*#{1,6}[ \t]+')
+    reps = []
+    for f in finds:
+        p = next(a['WFWorkflowActionParameters'] for a in actions if kind(a) == 'replace'
+                 and a['WFWorkflowActionParameters'].get('WFReplaceTextFind') == f)
+        reps.append((p['WFReplaceTextFind'], p.get('WFReplaceTextReplace', '').replace('$1', r'\1')))
+    cleaned = SAMPLE_REPLY
+    for find, repl in reps:
+        cleaned = re.sub(find, repl, cleaned)
+    assert '**' not in cleaned
+    assert cleaned.split('\n')[0].startswith('⚠ Both models may not know this')
+    pattern = next(a['WFWorkflowActionParameters']['WFMatchTextPattern'] for a in actions
+                   if kind(a) == 'match' and '☐' in a['WFWorkflowActionParameters'].get('WFMatchTextPattern', ''))
+    items = re.findall(pattern, cleaned)
+    assert items[0] == '☐ The current ECB President on ecb.europa.eu, page dated 2026.' and len(items) == 2
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_freshness_adds_no_permission_window_and_no_message(tmp_path, lang):
+    """The date is one «Current Date»: no file, clipboard or network action and no AI call is added to Critique."""
+    actions = build(tmp_path, lang)
+    starts = [i for i, a in enumerate(actions) if is_step(a, 'critique_start')]
+    assert len(starts) == 2
+    for start, end in ((starts[0], starts[1]), (starts[1], len(actions))):
+        block = actions[start:end]
+        step3 = next(i for i, a in enumerate(block) if is_step(a, 'critique_step3'))
+        compare = [i for i, a in enumerate(block) if i > step3 and kind(a) == 'ClaudeAppIntentsExtension'][:2]
+        kinds = [kind(a) for a in block[:compare[1] + 1]]   # up to the cut retry of step 3
+        for k in ('append', 'setclipboard', 'downloadurl'):
+            assert k not in kinds
+        # 2 ChatGPT calls (ask + retry) and 4 Claude calls (blind + retry, compare + cut retry)
+        assert kinds.count('AskIntent') == 2 and kinds.count('ClaudeAppIntentsExtension') == 4

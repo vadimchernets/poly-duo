@@ -10,6 +10,8 @@ import pytest
 
 ROOT = Path(__file__).resolve().parent.parent
 VERSION = json.loads((ROOT / 'releases' / 'version.json').read_text(encoding='utf-8'))
+sys.path.insert(0, str(ROOT / 'src'))
+from build_shortcut import LONG_TEXT  # noqa: E402
 LANGS = ['en', 'es', 'pt', 'ru', 'uk']
 
 
@@ -51,9 +53,14 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
     assert [(p['WFNumberValue'], p['WFAnotherNumber']) for p in weekly] == [(-7, 7)]
     assert [p['WFTimeUntilUnit'] for p in params(actions, 'gettimebetweendates')
             if p['WFTimeUntilUnit'] == 'Days'] == ['Days']
+    # Critique's long-request thresholds: the If right before the «long_text» step (instructions + LONG_DATA)
+    long_ifs = {id(a['WFWorkflowActionParameters']) for i, a in enumerate(actions[:-1])
+                if actions[i + 1]['WFWorkflowActionIdentifier'] == 'is.workflow.actions.comment'
+                and actions[i + 1]['WFWorkflowActionParameters'].get('WFCommentActionText') == 'Duo step: long_text'}
     newer = [p['WFNumberValue'] for p in params(actions, 'conditional') if p.get('WFCondition') == 2
-             and p['WFNumberValue'] not in (6000, 0, 1199)]  # 6000 = Claude's long-text threshold; 0 = Trio's sources
-    # count; 1199 = the long-question threshold (Yuri 10.11)
+             and id(p) not in long_ifs
+             and p['WFNumberValue'] not in (LONG_TEXT, 0, 1199)]  # LONG_TEXT = Trio's long-text threshold; 0 = Trio's
+    # sources count; 1199 = the long-question threshold (Yuri 10.11)
     assert newer == [VERSION[key]]
     keys = [p['WFDictionaryKey'] for p in params(actions, 'getvalueforkey')]
     assert f'{key}_{lang}' in keys

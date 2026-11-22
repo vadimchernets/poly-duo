@@ -10,19 +10,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added — «Both models may not know this» (KI Forum 226, post 1762, Karl, 22.11.2026)
 - **Critique no longer counts two matching guesses as a confirmation.** The comparing step is told today's date (from
-  the phone, `yyyy-MM-dd`, one «Current Date» action: no permission, no extra message) and a Freshness rule: when the
-  answer could have changed in about the last two years, or lies after today, and neither answer names a dated source,
-  the result opens with one line «⚠ Both models may not know this: <fact>. Check a fresh source that shows its date —
+  the phone, ISO 8601 `2026-11-22`, Gregorian on any calendar setting, one «Current Date» action: no permission, no
+  extra message) and a Freshness rule: when a fact may have changed since the models were trained, or lies after
+  today, and that would materially change the answer, and no answer cites dated material that supports it for the
+  period asked about (a bare link, a citation date or a preview does not count), the result opens with one line «⚠ Both models may not know this: <fact>. Check a fresh source that shows its date —
   <where>», the matched point is marked «(from memory — not confirmed)», the first ☐ says what to look for and where,
   the bottom line says the models may be out of date on it and the fact goes under «Not checked». A question about
   the future gets «⚠ This has not happened yet: both answers are forecasts, not facts»; a single answer gets «⚠ This
-  answer may be out of date». Ordinary questions (history, science, how-to, opinions, a pasted text, a year or
-  «today» in the question) get no line and no word about freshness. Written by the model in the language of the
+  answer may be out of date». An answer that says it searched and cites a recent source outweighs one that says it
+  cannot know. Ordinary questions (history, science, how-to, opinions, a pasted text, a date in the question or in an
+  answer) get no line and no word about freshness. Written by the model in the language of the
   question, 12 languages; English prompt and the Russian edition (`locales/ru/prompts/critique-blind.txt`). Same in
   My mode and in the by-hand check after a resumed draft. The two answering models do not see the rule.
-- Tests: `tests/test_freshness.py` (the rule and today's date reach all three comparing requests, never the
-  answering models; every prompt override keeps the English placeholders; the rule survives the cut retry);
-  the manual sheet `tests/behavior/en/freshness.md` (10 questions: fresh / timeless / opinion / mixed).
+- **The retry after an empty comparison keeps both answers.** It used to cut the whole request to its first 6000
+  characters, so Claude's own answer (it comes last) fell off; now the request is rebuilt with the question (400),
+  each answer (1200) and the numbers (200) cut on their own. The «Long text» notice counts the data only (2500
+  characters, as before), so the longer instructions do not make an ordinary run «long».
+- Tests: `tests/test_freshness.py` (the rule and today's date reach all five comparing requests, never the
+  answering models; every prompt override keeps the English placeholders; the retry carries both answers; without
+  the Freshness additions the English prompt equals the one before; the ⚠ line and the ☐ items survive
+  strip_markdown and reach Reminders; no new permission window or message); the manual sheet
+  `tests/behavior/en/freshness.md` (13 questions: fresh / timeless / opinion / mixed / pasted text / past result).
 - README: the agreement figures hold for what the models could have learned; after their training Duo does not count
   a match.
 

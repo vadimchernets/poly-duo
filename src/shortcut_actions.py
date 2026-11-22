@@ -391,10 +391,11 @@ def repeat_count_close(group):
             'WFWorkflowActionParameters': {'GroupingIdentifier': group, 'WFControlFlowMode': 2}}
 
 
-def set_text(var_name, template, refs=None):
-    """Set a variable to a text (a Text action first: a variable inside a string does not render)."""
+def set_text(var_name, template, refs=None, special=None):
+    """Set a variable to a text (a Text action first: a variable inside a string does not render). `special`: as in
+    text_token (e.g. a formatted date)."""
     uid = new_uuid()
-    return [act_text(text_token(template, refs), uid), act_set_variable(var_name, uid, 'Text')]
+    return [act_text(text_token(template, refs, special), uid), act_set_variable(var_name, uid, 'Text')]
 
 
 def if_item_missing(group, var_name, item_uid):

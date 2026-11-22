@@ -7,6 +7,10 @@ import pytest
 
 from test_first_run import LANGS, ROOT, assert_blank_guard, assert_duo_blank_guard, build, kind, guard_var, is_step
 
+import sys
+sys.path.insert(0, str(ROOT / 'src'))
+from build_shortcut import LONG_DATA, RETRY_CUT  # noqa: E402
+
 
 def params(a):
     return a['WFWorkflowActionParameters']
@@ -79,14 +83,16 @@ def test_oneshot_resume_long(tmp_path, lang):
     # --- U-08: one notification (no alert) for a long request, one retry with the cut text
     long_note = next(i for i, a in enumerate(actions) if is_step(a, 'long_text'))
     count = actions[long_note - 2]
-    assert kind(count) == 'count' and params(actions[long_note - 1])['WFNumberValue'] == 6000
+    # the threshold is the instructions plus LONG_DATA characters of data (test_freshness checks the sum)
+    assert kind(count) == 'count' and params(actions[long_note - 1])['WFNumberValue'] > LONG_DATA
     retries = [i for i, a in enumerate(actions) if is_step(a, 'claude_retry')]
-    # per block: step 2 (Claude's own answer) is re-asked as it was; step 3 is re-asked with the request cut
+    # per block: step 2 (Claude's own answer) is re-asked as it was; step 3 is re-asked with each part cut on its own
     cut = [i for i in retries if kind(actions[i + 1]) == 'match']
     assert len(retries) == 4 and len(cut) == 2
     for retry in cut:
-        assert params(actions[retry + 1])['WFMatchTextPattern'].endswith('{1,6000}')
-        assert kind(actions[retry + 2]) == 'ClaudeAppIntentsExtension'
+        assert [params(actions[retry + k])['WFMatchTextPattern'] for k in range(1, 5)] == \
+            ['(?s)^.{1,%d}' % RETRY_CUT[p] for p in ('QUESTION', 'GPT_ANSWER', 'CLAUDE_OWN', 'NUMS')]
+        assert kind(actions[retry + 5]) == 'gettext' and kind(actions[retry + 6]) == 'ClaudeAppIntentsExtension'
     alerts = [a for a in actions if kind(a) == 'alert']
     # (Yuri 13.11, No.53) the one shown only when no answer reached Duo at all, in two wordings: both AIs asked, or
     # only Claude (Advisor, «Ask Claude alone»). D-128: the first-run warning is the spoken Setup now, not an alert

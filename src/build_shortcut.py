@@ -114,6 +114,19 @@ LAST_ANSWER_CHARS = 200
 REPORT_URL = 'https://github.com/vadimchernets/poly-duo/issues/new?template=run-report.yml'
 FEEDBACK_URL = 'https://github.com/vadimchernets/poly-duo/issues/new?template=feedback.yml'
 LONG_TEXT = 6000
+# Critique's comparing request (step 3) is counted by its DATA, not by its whole length: the fixed instructions grew
+# with the Freshness rule (Karl, KI Forum 226/1762), and a whole-length limit would have flagged ordinary runs as long
+# and, on the retry, cut Claude's own answer off entirely. A request is long when the question, the two answers and
+# the numbers together pass LONG_DATA characters (as before the rule: 6000 minus the old instructions). The retry
+# after an empty comparison rebuilds the request from the same instructions with EACH part cut on its own, so both
+# answers always reach it.
+LONG_DATA = 2500
+RETRY_CUT = {'QUESTION': 400, 'GPT_ANSWER': 1200, 'CLAUDE_OWN': 1200, 'NUMS': 200}
+
+
+def compare_head_len(template):
+    """Characters of a comparing prompt without its data (placeholders out, {TODAY} as a 10-character date)."""
+    return len(re.sub(r'\{(?!TODAY\})[A-Z_0-9]+\}', '', template).replace('{TODAY}', '2026-11-22'))
 # A long question (Yuri 10.11, No.53, iPhone XR, iOS 18.7): with a question of ~1800 characters iOS stopped «Ask ChatGPT»
 # with «the action was interrupted because it did not finish in time» while ChatGPT was still writing a long answer; the
 # answer stayed in the ChatGPT app and the run never reached Claude. iOS gives an app action a time limit that a
@@ -545,9 +558,11 @@ def build(lang, ai=False):
         (g_retry, g_long, g_cretry, g_cok, g_oretry, g_n1, g_n2, g_need, g_skip, g_gdown, g_both, g_own1,
          g_loop, g_dsave, g_pa, g_pb, g_d1, g_oc) = ids(18)
         cr_wrap, cr_gpt, cr_prompt, cr_claude, cr_today = ids(5)
+        cr_cut_q, cr_cut_g, cr_cut_o, cr_cut_n = ids(4)
         RETRY_SKIP.update((cr_gpt, cr_gpt2))
         rule_prefix = 'Extra instruction from the user for this check (apply it): {RULE}\n\n' if rule_uid else ''
         rule_ref = {'RULE': (rule_uid, 'Variable')} if rule_uid else {}
+        compare_template = rule_prefix + L.prompt('critique-blind')
         item_name = INNER_REPEAT_ITEM if draft else 'Repeat Item'
         brief_acts, brief_get = brief_for_long(*qsrc)   # Yuri 10.11, No.53
 
@@ -625,24 +640,31 @@ def build(lang, ai=False):
             # today's date from the phone: the Freshness rule of critique-blind.txt (Karl, KI Forum 226/1762) needs it
             # to tell a fact that may have changed since the models were trained; no permission, no message
             act_date(cr_today),
-            act_text(text_token(rule_prefix + L.prompt('critique-blind'),
+            act_text(text_token(compare_template,
                                 {**QQUESTION, 'GPT_ANSWER': (cr_gpt_f, 'Variable'),
                                  'CLAUDE_OWN': (cr_own_f, 'Variable'), 'NUMS': (cr_numfin, 'Variable'),
                                  **rule_ref}, {'TODAY': ymd(cr_today)}), cr_prompt),
             act_set_variable(CHECK_VAR, cr_prompt, 'Text'),   # U-06: what the three fallbacks send
             act_step('critique_step3'),
-            # ---- A long request (U-08): one notification, not a window; and if Claude returns nothing, one
-            # automatic retry with the request cut to the first LONG_TEXT characters.
+            # ---- A long request (U-08): one notification, not a window, once the data passes LONG_DATA characters;
+            # and if Claude returns nothing, one automatic retry with each part cut on its own (RETRY_CUT).
             act_count_chars(cr_prompt, 'Text', cr_len),
-            if_output(g_long, cr_len, 'Count', 2, WFNumberValue=LONG_TEXT),
+            if_output(g_long, cr_len, 'Count', 2, WFNumberValue=compare_head_len(compare_template) + LONG_DATA),
             act_step('long_text'),
             if_close(g_long),
             act_claude(text_token('{P}', {'P': (cr_prompt, 'Text')}), cr_claude),
             act_set_variable(CLAUDE_VAR, cr_claude, 'Ask Claude'),
             *if_text(g_cretry, CLAUDE_VAR, present=False),
             act_step('claude_retry'),
-            act_first_chars(cr_prompt, 'Text', LONG_TEXT, cr_cut),
-            act_claude(text_token('{P}', {'P': (cr_cut, 'Matches')}), cr_claude2),
+            act_first_chars(qsrc[0], qsrc[1], RETRY_CUT['QUESTION'], cr_cut_q),
+            act_first_chars(cr_gpt_f, 'Variable', RETRY_CUT['GPT_ANSWER'], cr_cut_g),
+            act_first_chars(cr_own_f, 'Variable', RETRY_CUT['CLAUDE_OWN'], cr_cut_o),
+            act_first_chars(cr_numfin, 'Variable', RETRY_CUT['NUMS'], cr_cut_n),
+            act_text(text_token(compare_template,
+                                {'QUESTION': (cr_cut_q, 'Matches'), 'GPT_ANSWER': (cr_cut_g, 'Matches'),
+                                 'CLAUDE_OWN': (cr_cut_o, 'Matches'), 'NUMS': (cr_cut_n, 'Matches'),
+                                 **rule_ref}, {'TODAY': ymd(cr_today)}), cr_cut),
+            act_claude(text_token('{P}', {'P': (cr_cut, 'Text')}), cr_claude2),
             act_set_variable(CLAUDE_VAR, cr_claude2, 'Ask Claude'),
             if_close(g_cretry),
             act_get_variable(CLAUDE_VAR, cr_claude_f),
@@ -754,11 +776,9 @@ def build(lang, ai=False):
         def check_request():
             # the comparing prompt with ChatGPT's answer alone (it says how to treat a missing one)
             prompt = L.prompt('critique-blind').replace('{CLAUDE_OWN}', '').replace('{NUMS}', '')
-            today, text = u(), u()
-            return [act_date(today),
-                    act_text(text_token(prompt, {'QUESTION': (rq, 'Text'), 'GPT_ANSWER': (ra, 'Text')},
-                                        {'TODAY': ymd(today)}), text),
-                    act_set_variable(CHECK_VAR, text, 'Text')]
+            # today's date: the «Current Date» already taken for the draft's age (rnow), no second action
+            return set_text(CHECK_VAR, prompt, {'QUESTION': (rq, 'Text'), 'GPT_ANSWER': (ra, 'Text')},
+                            {'TODAY': ymd(rnow)})
         rline = u()
         return [
             if_shortcut_input(g_in),

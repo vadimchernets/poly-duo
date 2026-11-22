@@ -117,11 +117,12 @@ def hms(uid):
 def ymd(uid):
     """A «Current Date» output formatted yyyy-MM-dd: the comparing step of Critique is told today's date (KI Forum
     226, post 1762, Karl, 22.11.2026: two answers about events after the models' training are two guesses, not a
-    confirmation). One unambiguous form whatever the phone's region (22.11 vs 11/22); the same custom-format
-    attachment as hms()."""
+    confirmation). The «ISO 8601» date style without time: one unambiguous form whatever the phone's region (22.11 vs
+    11/22) and always the Gregorian year, also on a phone set to the Buddhist or Japanese calendar, where a custom
+    yyyy would give 2569 or 0008."""
     return {'OutputUUID': uid, 'Type': 'ActionOutput', 'OutputName': 'Date',
-            'Aggrandizements': [{'Type': 'WFDateFormatVariableAggrandizement', 'WFDateFormatStyle': 'Custom',
-                                 'WFDateFormat': 'yyyy-MM-dd'}]}
+            'Aggrandizements': [{'Type': 'WFDateFormatVariableAggrandizement', 'WFDateFormatStyle': 'ISO 8601',
+                                 'WFISO8601IncludeTime': False}]}
 
 
 def with_diag(actions):
