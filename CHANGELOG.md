@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.0.10] — next — Duo 6.10 (to be released as duo 16)
+
+Measured on an iPhone on 22.11.2026 (Shortcuts, the Claude and ChatGPT apps, ~35 timed calls; the report is
+LIMITS-6.10 in the promotion folder). Not released yet: raise `duo` in `releases/version.json`, rebuild, sign and make the
+iCloud links when releasing.
+
+### Changed — the length lines are now only what the measurements proved
+- **«Ask Claude» and «Ask ChatGPT» are both cut off at about 30 s** from the start of the call («Could not run the
+  action … unknown error» at 31-32 s, every time), whatever the answer length. Claude writes 20-35 words a second,
+  ChatGPT 40-70.
+- **Claude: about 300 words** (was 150). 300 came back in 10-22 s on every long and medium question (English and
+  Russian); 400 failed once in five and took up to 24 s; 500 and no cap failed on «detailed» questions.
+- **ChatGPT: about 600 words** (new; it had no line). 600 came back in 13-19 s; 800 took up to 25 s; no cap failed
+  three times in five on «detailed» questions.
+- **Gone from the line:** «do not search the web» (the Claude action has no web search at all), «do not think for
+  long» (no change in time: 17 s with it, 18 s without) and «only the result, the main disagreements and what to
+  check» (it cut Claude's own blind answer down to a comparison). Left: «no introduction» and the word cap.
+- 12 languages; zh and ja count characters (600 / 1200 字). The SVG image steps carry neither line.
+- New key `brief.chatgpt` in every `ui.json`; `set_gpt_brief` / `act_gpt(..., brief=True)` as for Claude.
+
 ## [1.0.9] — 2026-11-22 — Duo 6.9 (built-in number duo 15)
 
 Signed Duo files for 12 languages in `releases/` (SHA256SUMS), built from ca96a42 with duo 15; run on an iPhone by the

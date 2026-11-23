@@ -266,6 +266,7 @@
     "later": "Später"
   },
   "brief": {
-    "claude": "Antworte kurz: höchstens etwa 150 Wörter, ohne Einleitung. Nur das Ergebnis, die wichtigsten Abweichungen und was zu prüfen ist. Keine Websuche und kein langes Nachdenken."
+    "claude": "Ohne Einleitung, höchstens etwa 300 Wörter.",
+    "chatgpt": "Ohne Einleitung, höchstens etwa 600 Wörter."
   }
 }

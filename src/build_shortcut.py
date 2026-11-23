@@ -16,7 +16,7 @@ import uuid as uuidlib
 from pathlib import Path
 
 from shortcut_actions import *  # noqa: F401,F403,E402
-from shortcut_actions import ROOT, OBJ, Locale, set_claude_brief, POLY_URL, CLAUDE_INTENT  # noqa: F401,E402
+from shortcut_actions import ROOT, OBJ, Locale, set_claude_brief, set_gpt_brief, POLY_URL, CLAUDE_INTENT  # noqa: F401,E402
 
 # ---------------------------------------------------------------- weekly version check
 #
@@ -281,6 +281,7 @@ def build(lang, ai=False):
     import build_trio  # lazy: build_trio imports this module
     L = Locale(lang)
     set_claude_brief(L['brief.claude'])
+    set_gpt_brief(L['brief.chatgpt'])
     TRIO = ROOT / 'locales' / lang / 'trio.json'
     if ai and 'nokey.comment' not in json.loads(TRIO.read_text(encoding='utf-8') if TRIO.exists() else '{}'):
         print(f'{lang}: no Apple Intelligence words in trio.json — Duo with Apple Intelligence not built')
@@ -1284,7 +1285,7 @@ def build(lang, ai=False):
         menu_case(g_image, L['menu.image_items'][0]),
         act_step('image_step1'),
         act_text(text_token(L.prompt('image-svg-brief'), Q), i1_brief),
-        act_gpt(text_token('{P}', {'P': (i1_brief, 'Text')}), i1_gpt),
+        act_gpt(text_token('{P}', {'P': (i1_brief, 'Text')}), i1_gpt, brief=False),
         *keep_gpt(i1_gpt, 'Ask ChatGPT', 'image_step2'),
         act_claude(text_token('{P}', {'P': (i1_brief, 'Text')}), i1_claude, brief=False),
         act_text(text_token(IMAGE_GALLERY_HTML.replace('{TITLE}', L['output.image_html_title'])
@@ -1304,7 +1305,7 @@ def build(lang, ai=False):
         menu_case(g_image, L['menu.image_items'][1]),
         act_step('image_step1'),
         act_text(text_token(L.prompt('image-svg-brief'), Q), i2_brief),
-        act_gpt(text_token('{P}', {'P': (i2_brief, 'Text')}), i2_gpt),
+        act_gpt(text_token('{P}', {'P': (i2_brief, 'Text')}), i2_gpt, brief=False),
         *keep_gpt(i2_gpt, 'Ask ChatGPT', 'image_step2'),
         act_claude(text_token('{P}', {'P': (i2_brief, 'Text')}), i2_claude, brief=False),
         act_text(text_token(IMAGE_GALLERY_HTML.replace('{TITLE}', L['output.image_html_title'])

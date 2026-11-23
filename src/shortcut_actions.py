@@ -103,7 +103,13 @@ def act_ask(prompt, uid, default=None, prefill_from_share=False, default_from=No
             'WFWorkflowActionParameters': params}
 
 
-def act_gpt(prompt, uid):
+def act_gpt(prompt, uid, brief=True):
+    """22.11 live run (iPhone, Duo 6.10 limits): «Ask ChatGPT» is cut off with «unknown error» once the call passes about
+    30 s, as «Ask Claude» is; a «detailed» question without a length line came back with ~1900 words in 28 s once and
+    failed at 31-32 s three times. So every request to ChatGPT starts with «ui.brief.chatgpt» (a length cap only).
+    brief=False: the SVG image steps."""
+    if brief:
+        prompt = with_brief(prompt, GPT_BRIEF)
     return {'WFWorkflowActionIdentifier': 'com.openai.chat.AskIntent',
             'WFWorkflowActionParameters': {
                 'AppIntentDescriptor': {'TeamIdentifier': '2DC432GLL2',
@@ -116,13 +122,16 @@ def act_gpt(prompt, uid):
 
 
 CLAUDE_BRIEF = ''   # set per build from ui.json «brief.claude»; goes first in every request to Claude (14.11 live run)
+GPT_BRIEF = ''      # set per build from ui.json «brief.chatgpt»; goes first in every request to ChatGPT (22.11 live run)
 
 
-def with_brief(message):
-    """Put CLAUDE_BRIEF in front of a Text token, moving its attachments by the length of the line (UTF-16 units)."""
-    if not CLAUDE_BRIEF:
+def with_brief(message, line=None):
+    """Put `line` (default CLAUDE_BRIEF) in front of a Text token, moving its attachments by the length of the line
+    (UTF-16 units)."""
+    line = CLAUDE_BRIEF if line is None else line
+    if not line:
         return message
-    pre = CLAUDE_BRIEF + '\n\n'
+    pre = line + '\n\n'
     shift = len(pre.encode('utf-16-le')) // 2
     value = message['Value']
     moved = {}
@@ -134,9 +143,12 @@ def with_brief(message):
 
 
 def act_claude(message, uid, brief=True):
-    """14.11 live run (Critique, Opus 5.5): a long Claude answer made iOS fail «Ask Claude» with «unknown error» after
-    30-60 s although the answer was in the Claude app; short answers came back in 4-9 s. So every request to Claude
-    starts with the line «ui.brief.claude» (about 150 words, essentials only). brief=False: the SVG image steps."""
+    """14.11 live run (Critique, Opus 5.5): a long Claude answer made iOS fail «Ask Claude» with «unknown error»
+    although the answer was in the Claude app. 22.11 live run (iPhone, 20 timed calls): the action is cut off at about
+    30 s from its start, whatever the length; Claude writes 20-35 words a second. A 300-word cap came back in 10-19 s
+    on every question, 500 failed on a «detailed» one, no cap failed. So every request to Claude starts with the line
+    «ui.brief.claude» (a length cap only: the action has no web search, and «do not think long» changed nothing).
+    brief=False: the SVG image steps."""
     if brief:
         message = with_brief(message)
     return {'WFWorkflowActionIdentifier': CLAUDE_INTENT,
@@ -541,3 +553,9 @@ def set_claude_brief(text):
     """Per build: what goes first in every request to Claude."""
     global CLAUDE_BRIEF
     CLAUDE_BRIEF = text
+
+
+def set_gpt_brief(text):
+    """Per build: what goes first in every request to ChatGPT."""
+    global GPT_BRIEF
+    GPT_BRIEF = text

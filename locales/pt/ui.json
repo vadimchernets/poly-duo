@@ -266,6 +266,7 @@
     "later": "Agora não"
   },
   "brief": {
-    "claude": "Responda de forma breve: no máximo cerca de 150 palavras, sem introdução. Apenas o resultado, as principais divergências e o que verificar. Sem pesquisar na web e sem pensar por muito tempo."
+    "claude": "Sem introdução, no máximo cerca de 300 palavras.",
+    "chatgpt": "Sem introdução, no máximo cerca de 600 palavras."
   }
 }

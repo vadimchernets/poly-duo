@@ -808,6 +808,7 @@ def build(lang, nokey=False):
     # cleaning (raw entity[...] / image_group{...} markup; the answer goes on as a NEW text, see with_gpt_clean)
     import build_shortcut
     build_shortcut.set_claude_brief(L['brief.claude'])
+    build_shortcut.set_gpt_brief(L['brief.chatgpt'])
     T = json.loads(trio_file.read_text(encoding='utf-8'))
     if nokey and 'nokey.comment' not in T:
         print(f'{lang}: no nokey words in trio.json — Trio without a key not built for this language')
