@@ -268,5 +268,14 @@
   "brief": {
     "claude": "Sem introdução, no máximo cerca de 300 palavras.",
     "chatgpt": "Sem introdução, no máximo cerca de 600 palavras."
+  },
+  "search": {
+    "news": "hl=pt-BR&gl=BR&ceid=BR:pt-419",
+    "wiki": "pt",
+    "fresh_words": "hoje|ontem|agora|atualmente|atual|neste momento|último|última|recente|esta (?:semana|temporada)|este (?:mês|ano)|notícias|preço|cotação|taxa|quem é|quem ganhou|quem venceu|resultado|eleição|eleições|versão",
+    "age": "há {N} d",
+    "wiki_label": "Wikipédia (data da última edição)",
+    "sources_title": "Fontes — encontradas pelo próprio Duo; os números são os [N] do texto:",
+    "link_unread": "O Duo não conseguiu ler esta página."
   }
 }

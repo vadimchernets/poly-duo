@@ -268,5 +268,14 @@
   "brief": {
     "claude": "No introduction; at most about 300 words.",
     "chatgpt": "No introduction; at most about 600 words."
+  },
+  "search": {
+    "news": "hl=en-US&gl=US&ceid=US:en",
+    "wiki": "en",
+    "fresh_words": "today|tonight|yesterday|right now|currently|current|latest|this (?:week|month|year|season)|news|price|rate|who is|who won|score|result|standings|election|release|version",
+    "age": "{N} d ago",
+    "wiki_label": "Wikipedia (date of the last edit)",
+    "sources_title": "Sources — found by Duo itself; the numbers are the [N] in the text:",
+    "link_unread": "Duo could not read this page."
   }
 }

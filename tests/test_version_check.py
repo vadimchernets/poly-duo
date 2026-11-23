@@ -52,14 +52,15 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
               and p['WFAnotherNumber'] == 7]  # the 15-minute draft window of Critique is another check
     assert [(p['WFNumberValue'], p['WFAnotherNumber']) for p in weekly] == [(-7, 7)]
     assert [p['WFTimeUntilUnit'] for p in params(actions, 'gettimebetweendates')
-            if p['WFTimeUntilUnit'] == 'Days'] == ['Days']
+            if p['WFTimeUntilUnit'] == 'Days'] == ['Days'] * (3 if builder == 'build_shortcut.py' else 1)   # Duo 6.11: + the age of a source, in each Critique
     # Critique's long-request thresholds: the If right before the «long_text» step (instructions + LONG_DATA)
     long_ifs = {id(a['WFWorkflowActionParameters']) for i, a in enumerate(actions[:-1])
                 if actions[i + 1]['WFWorkflowActionIdentifier'] == 'is.workflow.actions.comment'
                 and actions[i + 1]['WFWorkflowActionParameters'].get('WFCommentActionText') == 'Duo step: long_text'}
     newer = [p['WFNumberValue'] for p in params(actions, 'conditional') if p.get('WFCondition') == 2
              and id(p) not in long_ifs
-             and p['WFNumberValue'] not in (LONG_TEXT, 0, 1199)]  # LONG_TEXT = Trio's long-text threshold; 0 = Trio's
+             and p['WFNumberValue'] not in (LONG_TEXT, 0, 1199, 5000)]  # 5000 = JUDGE_SPLIT (Duo 6.11)
+    #   # LONG_TEXT = Trio's long-text threshold; 0 = Trio's
     # sources count; 1199 = the long-question threshold (Yuri 10.11)
     assert newer == [VERSION[key]]
     keys = [p['WFDictionaryKey'] for p in params(actions, 'getvalueforkey')]
@@ -69,7 +70,8 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
                 if 'run-report' not in str(p) and 'template=feedback.yml' not in str(p) and 'polyhelper.ai' not in str(p) and 'apps.apple.com/app/id6473753684' not in str(p)]) == 1
     # the network goes first, by actions that never throw; a non-JSON answer is «no update»
     nets = [p['WFNetworkDetailsNetwork'] for p in params(actions, 'getwifi')]
-    assert nets == ['Wi-Fi', 'Cellular']
+    # Duo 6.11: the same guard stands in front of the search and of the link check, in each Critique
+    assert nets == ['Wi-Fi', 'Cellular'] * (5 if builder == 'build_shortcut.py' else 1)
     first_net = next(i for i, a in enumerate(actions) if a['WFWorkflowActionIdentifier'].endswith('getwifi'))
     first_get = next(i for i, a in enumerate(actions) if a['WFWorkflowActionIdentifier'].endswith('downloadurl')
                      and isinstance(a['WFWorkflowActionParameters']['WFURL'], str))

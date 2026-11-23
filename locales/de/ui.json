@@ -268,5 +268,14 @@
   "brief": {
     "claude": "Ohne Einleitung, höchstens etwa 300 Wörter.",
     "chatgpt": "Ohne Einleitung, höchstens etwa 600 Wörter."
+  },
+  "search": {
+    "news": "hl=de&gl=DE&ceid=DE:de",
+    "wiki": "de",
+    "fresh_words": "heute|gestern|jetzt|derzeit|aktuell|momentan|neueste|letzte|diese (?:woche|saison)|diesen monat|dieses jahr|nachrichten|preis|kurs|zins|wer ist|wer hat gewonnen|ergebnis|wahl|version",
+    "age": "vor {N} Tagen",
+    "wiki_label": "Wikipedia (Datum der letzten Bearbeitung)",
+    "sources_title": "Quellen — von Duo selbst gefunden; die Nummern sind die [N] im Text:",
+    "link_unread": "Duo konnte diese Seite nicht lesen."
   }
 }

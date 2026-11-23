@@ -89,7 +89,8 @@ def test_one_draft_save_runs_three_times(tmp_path, lang):
     # My mode (no loop) still reads «Repeat Item»
     before = [params(a)['WFVariable']['Value']['VariableName'] for a in actions[:loop_start]
               if kind(a) == 'getvariable' and params(a)['WFVariable']['Value']['VariableName'].startswith('Repeat Item')]
-    assert before == ['Repeat Item', 'Repeat Item']
+    # Duo 6.11: plus the search loops, all outside the draft loop — three feeds and the dating loop in each Critique
+    assert before == ['Repeat Item'] * 10
 
 
 @pytest.mark.parametrize('lang', LANGS)

@@ -32,7 +32,7 @@ def text_refs(node, found=None):
 @pytest.mark.parametrize('lang', LANGS)
 def test_claude_output_is_never_put_straight_into_a_text(tmp_path, lang):
     """No.52: an «Ask Claude» output is only ever stored by Set Variable; texts read it through Get Variable."""
-    actions = build(tmp_path, lang)
+    actions = build(tmp_path, lang, raw=True)
     claude = {params(a)['UUID'] for a in actions if kind(a) == CLAUDE}
     assert claude
     for a in actions:
@@ -93,7 +93,7 @@ def test_long_question_asks_for_a_shorter_answer(tmp_path, lang):
              and first_words in params(a)['WFTextActionText']['Value']['string']]
     briefed = [a for a in wraps if any(params(u[r]).get('WFVariable', {}).get('Value', {}).get('VariableName') == 'PolyBrief'
                                        for r in text_refs(params(a)) if r in u)]
-    assert len(briefed) == 3
+    assert len(briefed) == 5   # Duo 6.11: + Claude's request with Duo's sources, in each Critique
     for a in briefed:
         assert params(a)['WFTextActionText']['Value']['string'].startswith('￼' + first_words)
 
@@ -119,7 +119,8 @@ def test_markdown_is_taken_off_before_the_result_is_shown(tmp_path, lang):
     cleans = [i for i, a in enumerate(actions) if kind(a) == 'setvariable'
               and params(a)['WFVariableName'] == ui['variables']['result']
               and params(a)['WFInput']['Value'].get('OutputName') == 'Updated Text']
-    assert len(looks) == 2 and len(cleans) == 2 and all(c < l for c, l in zip(cleans, looks))
+    # Duo 6.11: the first clean-up of the tail takes a left-over [[MORE]] off
+    assert len(looks) == 2 and len(cleans) == 3 and all(c < l for c, l in zip(cleans[1:], looks))
 
 
 @pytest.mark.parametrize('lang', LANGS)

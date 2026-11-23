@@ -17,20 +17,26 @@ from build_shortcut import LONG_DATA, RETRY_CUT, compare_head_len  # noqa: E402
 from shortcut_actions import Locale  # noqa: E402
 
 PROMPTS = ROOT / 'locales'
-# the visible warning line of each prompt edition (ru in escapes: Cyrillic lives only in a language place)
-WARNING = {'en': 'Both models may not know this',
-           'ru': '\u041e\u0431\u0435 \u043c\u043e\u0434\u0435\u043b\u0438 '
-                 '\u043c\u043e\u0433\u0443\u0442 \u044d\u0442\u043e\u0433\u043e \u043d\u0435 \u0437\u043d\u0430\u0442\u044c'}
+# Duo 6.11 (the owner's decision 6 of 23.11): the warning no longer opens the result. A fresh fact from memory is marked
+# «(from memory)» where it stands and is the first ☐ with a concrete action; a dated source that confirms it counts.
 EN_CONTRACT = ('Today is {TODAY}', 'not a confirmation', 'materially change the answer', 'for the period asked about',
-               'a bare link, a citation date', 'merely because a date appears', 'says it searched',
-               'the rule above does not keep them', 'Not fresh: history', 'Never invent', 'never mention freshness',
-               '(from memory — not confirmed)', 'This answer may be out of date', 'This has not happened yet',
-               'this answer is a forecast', 'no line 0 at all', 'Outside the 220 words', 'A ⚠ fact is the first ☐',
-               'put any ⚠ fact under "Not checked"')
-# what the Freshness change added to the English prompt; without it the prompt is the one before, character for character
-EN_ADDED = ('; a ⚠ fact ends "(from memory — not confirmed)"', ' A ⚠ fact is the first ☐: what exactly to look for, and where.',
-            '; if there is a ⚠ line, the bottom line says the models may be out of date on it',
-            '; put any ⚠ fact under "Not checked"')
+               'a bare link, a citation date', 'merely because a date appears', 'the rule above does not keep them',
+               'Not fresh: history', 'Never invent', 'never mention freshness', '"(from memory)"',
+               'Do not open with a warning', 'your reply begins with section 1', 'add no warning',
+               'never a warning or a remark about the models', 'one concrete action', 'is the first ☐',
+               'check BOTH answers against them', 'Duo prints the list itself', 'use only numbers that stand in SOURCES',
+               'is called a forecast', 'goes under "Not checked"')
+GONE = ('Both models may not know this', 'This answer may be out of date', '\n0. ', '⚠',
+        '\u041e\u0431\u0435 \u043c\u043e\u0434\u0435\u043b\u0438 \u043c\u043e\u0433\u0443\u0442')
+
+
+class _Mark(dict):
+    """The first sentence of a language's comparing prompt: it names every comparing request in a built shortcut."""
+    def __missing__(self, lang):
+        return (PROMPTS / lang / 'prompts' / 'critique-blind.txt').read_text(encoding='utf-8').split('.')[0]
+
+
+WARNING = _Mark()
 
 
 def edition(lang):
@@ -48,14 +54,16 @@ def placeholders(text):
 @pytest.mark.parametrize('lang', LANGS)
 def test_compare_prompt_carries_the_freshness_rule(lang):
     text = template(lang)
-    assert WARNING[edition(lang)] in text and '{TODAY}' in text
-    # line 0 (the warning) comes right before section 1, and the skeleton of the three sections is kept
-    zero, one = text.index('\n0. '), text.index('\n1. ')
-    assert zero < one < text.index('\n2. ') < text.index('\n3. ') and '220' in text and '■' in text
-    # the rule sits in the head, before the data (the retry rebuilds the whole head, see test_retry_keeps_both_answers)
-    assert text.index('{TODAY}') < text.index('{NUMS}') < text.index('{QUESTION}')
+    assert '{TODAY}' in text
+    for gone in GONE:
+        assert gone not in text, gone   # no warning line in front of the result
+    # the skeleton of the three sections is kept, and nothing stands in front of section 1
+    one = text.index('\n1. ')
+    assert one < text.index('\n2. ') < text.index('\n3. ') and '220' in text and '■' in text and '☐' in text
+    # the rules sit in the head, before the data (the retry rebuilds the whole head, see test_retry_keeps_both_answers)
+    assert text.index('{TODAY}') < text.index('{SPLIT}') < text.index('{NUMS}') < text.index('{QUESTION}')
+    assert text.index('{QUESTION}') < text.index('{SOURCES}') < text.index('{LINKS}') < text.index('{GPT_ANSWER}')
     assert 'two years' not in text   # no arbitrary window: «since the models were trained» and «materially»
-    assert text.count('⚠') >= 5
     if edition(lang) == 'en':
         for phrase in EN_CONTRACT:
             assert phrase in text, phrase
@@ -127,19 +135,6 @@ def test_the_two_answering_models_never_see_the_rule(tmp_path, lang):
     assert 'Freshness' not in wrap and '⚠' not in wrap and '{TODAY}' not in wrap
 
 
-def test_ordinary_instruction_is_untouched():
-    """Without what Freshness added, the English comparing prompt is the one before it, character for character: the
-    ordinary run keeps its instruction."""
-    text = template('en')
-    lines = [line for line in text.split('\n') if not line.startswith(('- Freshness.', '0. '))]
-    text = '\n'.join(lines)
-    for added in EN_ADDED:
-        assert text.count(added) == 1, added
-        text = text.replace(added, '')
-    before = (ROOT / 'tests' / 'fixtures' / 'en' / 'critique-blind.before-freshness.txt').read_text(encoding='utf-8')
-    assert text == before
-
-
 @pytest.mark.parametrize('lang', LANGS)
 def test_long_text_notice_counts_the_data_only(tmp_path, lang):
     """The «Long text» notice comes when the question, the answers and the numbers pass LONG_DATA characters, as
@@ -183,14 +178,12 @@ def test_retry_keeps_both_answers(tmp_path, lang):
         assert kind(actions[index[full]]) == 'date'
 
 
-# a reply in the shape the rule asks for: the ⚠ line first, the fact marked, the ⚠ fact as the first ☐
-SAMPLE_REPLY = ('⚠ Both models may not know this: who chairs the ECB today. Check a fresh source that shows its date '
-                '— the ECB website, «Executive Board».\n\n'
-                '**1. Matched independently**\n- Christine Lagarde chairs the ECB (from memory — not confirmed).\n'
+# a reply in the shape the rule asks for: no warning in front, the fact marked, the fresh fact as the first ☐
+SAMPLE_REPLY = ('**1. Matched independently**\n- Christine Lagarde chairs the ECB (from memory).\n'
                 '**2. Did not match**\nNo differences.\n'
                 '**3. What to check yourself**\n☐ The current ECB President on ecb.europa.eu, page dated 2026.\n'
                 '☐ Her term end date in the same place.\n\n'
-                '■ **Final answer**\nBoth models may be out of date here: they name Christine Lagarde from memory.\n'
+                '■ **Final answer**\nChristine Lagarde chairs the ECB (from memory).\n'
                 'Checked against: none / Not checked: the current ECB President\n')
 
 
@@ -209,7 +202,7 @@ def test_output_keeps_the_warning_and_sends_the_check_to_reminders(tmp_path):
     for find, repl in reps:
         cleaned = re.sub(find, repl, cleaned)
     assert '**' not in cleaned
-    assert cleaned.split('\n')[0].startswith('⚠ Both models may not know this')
+    assert cleaned.split('\n')[0] == '1. Matched independently'   # the first line is a section, never a warning
     pattern = next(a['WFWorkflowActionParameters']['WFMatchTextPattern'] for a in actions
                    if kind(a) == 'match' and '☐' in a['WFWorkflowActionParameters'].get('WFMatchTextPattern', ''))
     items = re.findall(pattern, cleaned)
@@ -218,7 +211,9 @@ def test_output_keeps_the_warning_and_sends_the_check_to_reminders(tmp_path):
 
 @pytest.mark.parametrize('lang', LANGS)
 def test_freshness_adds_no_permission_window_and_no_message(tmp_path, lang):
-    """The date is one «Current Date»: no file, clipboard or network action and no AI call is added to Critique."""
+    """Critique writes no file but its draft and copies nothing. Duo 6.11: its AI calls on the ordinary path are
+    ChatGPT (+ retry), Claude's own answer (+ retry) and the comparison (+ cut retry); the search's query call and
+    the two link checks run only for a fresh question / an answer with links."""
     actions = build(tmp_path, lang)
     starts = [i for i, a in enumerate(actions) if is_step(a, 'critique_start')]
     assert len(starts) == 2
@@ -227,7 +222,7 @@ def test_freshness_adds_no_permission_window_and_no_message(tmp_path, lang):
         step3 = next(i for i, a in enumerate(block) if is_step(a, 'critique_step3'))
         compare = [i for i, a in enumerate(block) if i > step3 and kind(a) == 'ClaudeAppIntentsExtension'][:2]
         kinds = [kind(a) for a in block[:compare[1] + 1]]   # up to the cut retry of step 3
-        for k in ('append', 'setclipboard', 'downloadurl'):
+        for k in ('append', 'setclipboard'):
             assert k not in kinds
-        # 2 ChatGPT calls (ask + retry) and 4 Claude calls (blind + retry, compare + cut retry)
-        assert kinds.count('AskIntent') == 2 and kinds.count('ClaudeAppIntentsExtension') == 4
+        assert kinds.count('AskIntent') == 2 and kinds.count('ClaudeAppIntentsExtension') == 4 + 1 + 2
+

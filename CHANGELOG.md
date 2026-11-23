@@ -6,6 +6,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [Unreleased] — Duo 6.11 (candidate, branch search-fable)
+
+### Added — Duo searches by itself, without keys (the owner's decisions of 23.11.2026)
+- Critique and My mode: before any model is asked, Duo reads Google News RSS for the question («Get Items from RSS
+  Feed», the edition of the build's language and country); a fresh question gets two more searches with queries from
+  one short Claude call (the question's own words only); GDELT DOC API when the feed gave nothing, one Wikipedia
+  article (with its last edit date) when there is little. Offline or an unexpected answer: silently on, from memory.
+- Duo numbers the sources [1]…[5] itself (date, «N d ago», publisher, headline), one publisher and one headline once.
+  Claude's own answer and the comparison both get the packet as data; the models write only [N]; «Sources» under the
+  result is printed by Duo from its own list, for the numbers the text cites.
+- Pages ChatGPT cited: up to 2 are downloaded and each is checked by its own short Claude call (SUPPORTS /
+  CONTRADICTS / NOT FOUND); the comparison gets the one-line findings.
+- Answers in parts: every request keeps its measured cap (Claude ~300 words, ChatGPT ~600); an answer that does not
+  fit ends with [[MORE]] and is continued by a new call with its own 30 s (Critique: ChatGPT up to 2 parts, Claude up
+  to 3; other modes up to 2). Two long answers: the comparison is two calls (sections, then the final answer).
+
+### Changed
+- The comparing prompt no longer opens the result with «⚠ Both models may not know this»: the first line is the
+  answer; a fresh fact without a dated source is marked «(from memory)» and is the first ☐ with a concrete action; a
+  dated source for the period asked about counts as a confirmation, with no warning.
+
 ## [1.0.10] — 2026-11-23 — Duo 6.10 (built-in number duo 16)
 
 Signed Duo files for 12 languages in `releases/` (SHA256SUMS), built from dded14e with duo 16. Measured and run on the

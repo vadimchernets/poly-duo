@@ -103,13 +103,15 @@ def act_ask(prompt, uid, default=None, prefill_from_share=False, default_from=No
             'WFWorkflowActionParameters': params}
 
 
-def act_gpt(prompt, uid, brief=True):
+def act_gpt(prompt, uid, brief=True, split=True, parts=None):
     """22.11 live run (iPhone, Duo 6.10 limits): «Ask ChatGPT» is cut off with «unknown error» once the call passes about
     30 s, as «Ask Claude» is; a «detailed» question without a length line came back with ~1900 words in 28 s once and
     failed at 31-32 s three times. So every request to ChatGPT starts with «ui.brief.chatgpt» (a length cap only).
     brief=False: the SVG image steps."""
     if brief:
-        prompt = with_brief(prompt, GPT_BRIEF)
+        prompt = with_brief(prompt, GPT_BRIEF, split)
+        if split and MORE_LINE and parts:
+            PARTS[uid] = parts
     return {'WFWorkflowActionIdentifier': 'com.openai.chat.AskIntent',
             'WFWorkflowActionParameters': {
                 'AppIntentDescriptor': {'TeamIdentifier': '2DC432GLL2',
@@ -125,13 +127,26 @@ CLAUDE_BRIEF = ''   # set per build from ui.json «brief.claude»; goes first in
 GPT_BRIEF = ''      # set per build from ui.json «brief.chatgpt»; goes first in every request to ChatGPT (22.11 live run)
 
 
-def with_brief(message, line=None):
+MORE_MARK = '[[MORE]]'
+MORE_LINE = ''      # set per Duo build from prompts/more.txt: «does not fit → stop at a paragraph, end with [[MORE]]»
+PARTS = {}          # AI call UUID → how many parts its answer may have (default: shortcut_transforms.DEFAULT_PARTS)
+
+
+def brief_prefix(line, split=True):
+    """What stands in front of a request: the length line, then (Duo 6.11, a call whose answer may be continued by a
+    second call) the line about [[MORE]]."""
+    if not line:
+        return ''
+    return line + '\n\n' + (MORE_LINE + '\n\n' if split and MORE_LINE else '')
+
+
+def with_brief(message, line=None, split=False):
     """Put `line` (default CLAUDE_BRIEF) in front of a Text token, moving its attachments by the length of the line
     (UTF-16 units)."""
     line = CLAUDE_BRIEF if line is None else line
     if not line:
         return message
-    pre = line + '\n\n'
+    pre = brief_prefix(line, split)
     shift = len(pre.encode('utf-16-le')) // 2
     value = message['Value']
     moved = {}
@@ -142,7 +157,7 @@ def with_brief(message, line=None):
             'WFSerializationType': 'WFTextTokenString'}
 
 
-def act_claude(message, uid, brief=True):
+def act_claude(message, uid, brief=True, split=True, parts=None):
     """14.11 live run (Critique, Opus 5.5): a long Claude answer made iOS fail «Ask Claude» with «unknown error»
     although the answer was in the Claude app. 22.11 live run (iPhone, 20 timed calls): the action is cut off at about
     30 s from its start, whatever the length; Claude writes 20-35 words a second. A 300-word cap came back in 10-19 s
@@ -150,7 +165,9 @@ def act_claude(message, uid, brief=True):
     «ui.brief.claude» (a length cap only: the action has no web search, and «do not think long» changed nothing).
     brief=False: the SVG image steps."""
     if brief:
-        message = with_brief(message)
+        message = with_brief(message, None, split)
+        if split and MORE_LINE and parts:
+            PARTS[uid] = parts
     return {'WFWorkflowActionIdentifier': CLAUDE_INTENT,
             'WFWorkflowActionParameters': {
                 'AppIntentDescriptor': {'TeamIdentifier': 'Q6L2SF6YDW',
@@ -520,6 +537,7 @@ CLAUDE_INTENT = 'com.anthropic.claude.ClaudeAppIntentsExtension'
 
 
 def act_download(url, uid):
+    """`url`: a plain string or a text token."""
     return {'WFWorkflowActionIdentifier': 'is.workflow.actions.downloadurl',
             'WFWorkflowActionParameters': {'WFURL': url, 'UUID': uid}}
 
@@ -555,7 +573,73 @@ def set_claude_brief(text):
     CLAUDE_BRIEF = text
 
 
+def set_more_line(text):
+    """Per Duo build: the line that lets a long answer be continued by a second call ('' = no continuation)."""
+    global MORE_LINE
+    MORE_LINE = text
+    PARTS.clear()
+
+
 def set_gpt_brief(text):
     """Per build: what goes first in every request to ChatGPT."""
     global GPT_BRIEF
     GPT_BRIEF = text
+
+
+# ---------------------------------------------------------------- Duo 6.11: search without keys (shortcut_search.py)
+
+def act_urlencode(src_uid, src_name, uid):
+    """«URL Encode» (output «URL Encoded Text»); the same action «Report this run» uses."""
+    return {'WFWorkflowActionIdentifier': 'is.workflow.actions.urlencode',
+            'WFWorkflowActionParameters': {'WFEncodeMode': 'Encode', 'WFInput': attachment(src_uid, src_name),
+                                           'UUID': uid}}
+
+
+def act_rss(url_token, count, uid):
+    """«Get Items from RSS Feed» (output «Items from RSS Feed»: articles with Title, Published Date, URL)."""
+    return {'WFWorkflowActionIdentifier': 'is.workflow.actions.rss',
+            'WFWorkflowActionParameters': {'WFRSSFeedURL': url_token, 'WFRSSItemQuantity': count, 'UUID': uid}}
+
+
+def act_article_detail(src_uid, src_name, prop, uid):
+    """«Get Details of Articles»: one property of an article (output named after the property)."""
+    return {'WFWorkflowActionIdentifier': 'is.workflow.actions.properties.articles',
+            'WFWorkflowActionParameters': {'WFInput': attachment(src_uid, src_name),
+                                           'WFContentItemPropertyName': prop, 'UUID': uid}}
+
+
+def act_get_article(src_uid, src_name, uid):
+    """«Get Article using Safari Reader» (output «Article»): the readable text of a page."""
+    return {'WFWorkflowActionIdentifier': 'is.workflow.actions.getarticle',
+            'WFWorkflowActionParameters': {'WFWebPage': attachment(src_uid, src_name), 'UUID': uid}}
+
+
+def act_replace_regex_token(src_uid, src_name, find, replacement_token, uid):
+    """Replace Text (regex) whose replacement is a text token (`$1` groups plus inserted values)."""
+    action = act_replace_regex(src_uid, src_name, find, '', uid)
+    action['WFWorkflowActionParameters']['WFReplaceTextReplace'] = replacement_token
+    return action
+
+
+def iso_date(uid, name):
+    """An action's date output formatted yyyy-MM-dd (ISO 8601 without time; see shortcut_transforms.ymd)."""
+    return {'OutputUUID': uid, 'Type': 'ActionOutput', 'OutputName': name,
+            'Aggrandizements': [{'Type': 'WFDateFormatVariableAggrandizement', 'WFDateFormatStyle': 'ISO 8601',
+                                 'WFISO8601IncludeTime': False}]}
+
+
+def network_guard(var):
+    """Actions that never throw (the pattern of the weekly version check): `var` gets the Wi-Fi network name, else the
+    cellular radio technology; no value → offline, and nothing that needs the network may run («Get Contents of URL»
+    stops the whole shortcut offline; Shortcuts has no try/catch)."""
+    wifi, cell, g = new_uuid(), new_uuid(), new_uuid()
+    return [{'WFWorkflowActionIdentifier': 'is.workflow.actions.getwifi',
+             'WFWorkflowActionParameters': {'WFNetworkDetailsNetwork': 'Wi-Fi',
+                                            'WFWiFiDetail': 'Network Name', 'UUID': wifi}},
+            act_set_variable(var, wifi, 'Network Details'),
+            if_no_value(g, var),
+            {'WFWorkflowActionIdentifier': 'is.workflow.actions.getwifi',
+             'WFWorkflowActionParameters': {'WFNetworkDetailsNetwork': 'Cellular',
+                                            'WFCellularDetail': 'Radio Technology', 'UUID': cell}},
+            act_set_variable(var, cell, 'Network Details'),
+            if_close(g)]

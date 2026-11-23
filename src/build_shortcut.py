@@ -16,7 +16,8 @@ import uuid as uuidlib
 from pathlib import Path
 
 from shortcut_actions import *  # noqa: F401,F403,E402
-from shortcut_actions import ROOT, OBJ, Locale, set_claude_brief, set_gpt_brief, POLY_URL, CLAUDE_INTENT  # noqa: F401,E402
+from shortcut_actions import ROOT, OBJ, Locale, set_claude_brief, set_gpt_brief, set_more_line, POLY_URL, CLAUDE_INTENT  # noqa: F401,E402
+import shortcut_search as S  # noqa: E402
 
 # ---------------------------------------------------------------- weekly version check
 #
@@ -122,11 +123,25 @@ LONG_TEXT = 6000
 # answers always reach it.
 LONG_DATA = 2500
 RETRY_CUT = {'QUESTION': 400, 'GPT_ANSWER': 1200, 'CLAUDE_OWN': 1200, 'NUMS': 200}
+# Duo 6.11 (the owner's decisions of 23.11, item 4): an answer may come in parts, each call under its measured cap
+# (the 22.11 timings on the iPhone: Claude ~300 words in 10-22 s, ChatGPT ~600 words in 13-19 s) — see shortcut_transforms.with_continuation.
+# Critique's two answers: ChatGPT up to 2 parts (~1200 words), Claude up to 3 (~900 words). Once the two answers
+# together pass JUDGE_SPLIT characters, the comparing request is told to stop after its three sections; the final
+# answer then comes from a second call (prompts/judge-split.txt), so neither call writes more than its cap.
+GPT_PARTS, CLAUDE_PARTS = 2, 3
+JUDGE_SPLIT = 5000
+# a number that is a source mark («[2]», «[1, 3]») is not a number of the answer
+NUMBER_RX = r'(?<![\[\d])\d+(?:[.,:/-]\d+)*(?!\d*(?:\s*[,;]\s*\d+)*\])'
 
 
 def compare_head_len(template):
     """Characters of a comparing prompt without its data (placeholders out, {TODAY} as a 10-character date)."""
     return len(re.sub(r'\{(?!TODAY\})[A-Z_0-9]+\}', '', template).replace('{TODAY}', '2026-11-22'))
+
+
+def compare_blank(template):
+    """The comparing prompt for a request without sources, link checks or a split (a resumed draft's by-hand check)."""
+    return template.replace('{SOURCES}', '').replace('{LINKS}', '').replace('{SPLIT}', '')
 # A long question (Yuri 10.11, No.53, iPhone XR, iOS 18.7): with a question of ~1800 characters iOS stopped «Ask ChatGPT»
 # with «the action was interrupted because it did not finish in time» while ChatGPT was still writing a long answer; the
 # answer stayed in the ChatGPT app and the run never reached Claude. iOS gives an app action a time limit that a
@@ -290,12 +305,13 @@ def build(lang, ai=False):
     # no trio.json yet, its (brand-name and English) words are used
     T = json.loads((TRIO if TRIO.exists() else ROOT / 'locales' / 'en' / 'trio.json').read_text(encoding='utf-8'))
     TV = T['variables']
+    set_more_line(L.prompt('more'))   # Duo only; cleared again at the end of this build (Trio is built in the same process by the tests)
 
     def service_call(prompt_uid, uid):
         """The one cheap service call: (action, output name) — ChatGPT, or Use Model in the ai build."""
         if ai:
             return build_trio.act_use_model(prompt_uid, uid), 'Response'
-        return act_gpt(text_token('{P}', {'P': (prompt_uid, 'Text')}), uid), 'Ask ChatGPT'
+        return act_gpt(text_token('{P}', {'P': (prompt_uid, 'Text')}), uid, split=False), 'Ask ChatGPT'
 
     RESULT = L['variables.result']
     JOURNAL_EXTRA = L['variables.journal_extra']
@@ -560,12 +576,31 @@ def build(lang, ai=False):
          g_loop, g_dsave, g_pa, g_pb, g_d1, g_oc) = ids(18)
         cr_wrap, cr_gpt, cr_prompt, cr_claude, cr_today = ids(5)
         cr_cut_q, cr_cut_g, cr_cut_o, cr_cut_n = ids(4)
+        brief_acts, brief_get = brief_for_long(*qsrc)   # Yuri 10.11, No.53
+        (sr_today, sr_pk, g_pk, cr_wrap_s, cr_ow, cr_ow2, cr_pk, cr_lk, cr_sp, cr_both, cr_blen, g_split,
+         cr_pk2, cr_lk2, cr_sp2) = ids(15)
+        OWN_WRAP, SPLIT_VAR = 'PolyOwnRequest', 'PolyJudgeSplit'
+        ask_service = lambda p, uid: act_claude(text_token('{P}', {'P': (p, 'Text')}), uid, split=False)
+        # Duo 6.11: Duo's own search, before any model is asked; then Claude's request — with the numbered sources
+        # when there are any, the plain wrapped question otherwise. ChatGPT gets the plain question either way.
+        search = [
+            *S.search_block(L, qsrc, LONG_QUESTION, ask_service),
+            act_date(sr_today),
+            act_get_variable(S.PACKET, sr_pk),
+            *if_text(g_pk, S.PACKET),
+            act_text(text_token('{B}' + L.prompt('wrap-sources'),
+                                {**QQ, 'B': (brief_get, 'Variable'), 'SOURCES': (sr_pk, 'Variable')},
+                                {'TODAY': ymd(sr_today)}), cr_wrap_s),
+            act_set_variable(OWN_WRAP, cr_wrap_s, 'Text'),
+            if_else(g_pk),
+            act_set_variable(OWN_WRAP, cr_wrap, 'Text'),
+            if_close(g_pk),
+        ]
         RETRY_SKIP.update((cr_gpt, cr_gpt2))
         rule_prefix = 'Extra instruction from the user for this check (apply it): {RULE}\n\n' if rule_uid else ''
         rule_ref = {'RULE': (rule_uid, 'Variable')} if rule_uid else {}
         compare_template = rule_prefix + L.prompt('critique-blind')
         item_name = INNER_REPEAT_ITEM if draft else 'Repeat Item'
-        brief_acts, brief_get = brief_for_long(*qsrc)   # Yuri 10.11, No.53
 
         def number_pass(src_var_uid, other_var):
             """Every number of the answer `src_var_uid` (a Get Variable output) that does NOT stand, as a whole
@@ -575,7 +610,7 @@ def build(lang, ai=False):
             nums, item, esc, other, g_rep, g_miss, g_dup = ids(7)
             m_other, m_list, lst, add_get, add_txt = ids(5)
             return [
-                act_first_match(src_var_uid, 'Variable', r'\d+(?:[.,:/-]\d+)*', nums),
+                act_first_match(src_var_uid, 'Variable', NUMBER_RX, nums),
                 repeat_open(g_rep, nums, 'Matches'),
                 act_get_variable(item_name, item),
                 act_replace_text(item, 'Variable', '.', '\\.', esc),   # a dot in the number is a dot, not «any char»
@@ -598,12 +633,12 @@ def build(lang, ai=False):
         gate = [*if_text(g_need, GPT_VAR, present=False), *if_text(g_skip, SKIP_GPT, present=False)] if draft else []
         step1 = [
             *gate,
-            act_gpt(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_gpt),
+            act_gpt(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_gpt, parts=GPT_PARTS),
             act_set_variable(GPT_VAR, cr_gpt, 'Ask ChatGPT'),
             # an empty ChatGPT answer (often a false «logged out» or a dropped call): wait 3 s, ask once more
             *if_text(g_retry, GPT_VAR, present=False),
             act_delay(3),
-            act_gpt(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_gpt2),
+            act_gpt(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_gpt2, parts=GPT_PARTS),
             act_set_variable(GPT_VAR, cr_gpt2, 'Ask ChatGPT'),
             if_close(g_retry),
             # ChatGPT gave nothing (its limit, signed out, iOS cut the step): Claude answers alone, and the person is
@@ -618,11 +653,14 @@ def build(lang, ai=False):
         steps23 = [
             act_get_variable(GPT_VAR, cr_kget),
             *keep_gpt(cr_kget, 'Variable', 'critique_blind'),
-            act_claude(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_own),
+            # Claude's own answer: the question (and Duo's sources, if any) — never ChatGPT's answer
+            act_get_variable(OWN_WRAP, cr_ow),
+            act_claude(text_token('{P}', {'P': (cr_ow, 'Variable')}), cr_own, parts=CLAUDE_PARTS),
             act_set_variable(OWN_VAR, cr_own, 'Ask Claude'),
             *if_text(g_oretry, OWN_VAR, present=False),
             act_step('claude_retry'),
-            act_claude(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_own2),
+            act_get_variable(OWN_WRAP, cr_ow2),
+            act_claude(text_token('{P}', {'P': (cr_ow2, 'Variable')}), cr_own2, parts=CLAUDE_PARTS),
             act_set_variable(OWN_VAR, cr_own2, 'Ask Claude'),
             if_close(g_oretry),
             act_get_variable(GPT_VAR, cr_gpt_f),
@@ -638,12 +676,27 @@ def build(lang, ai=False):
             *number_pass(cr_own_f, GPT_VAR),
             if_close(g_n1),
             act_get_variable(NUMS_VAR, cr_numfin),
+            act_date(cr_today),
+            # Duo 6.11: the pages ChatGPT cited are read by Duo and checked one by one (only when it cited any)
+            *S.link_check_block(L, GPT_VAR, ask_service, RESUME_VAR, ymd(cr_today)),
+            act_get_variable(S.PACKET, cr_pk),
+            act_get_variable(S.LINKS, cr_lk),
+            # two long answers: the comparison stops after its three sections, the final answer is a second call
+            act_text(text_token('{G}{O}', {'G': (cr_gpt_f, 'Variable'), 'O': (cr_own_f, 'Variable')}), cr_both),
+            act_count_chars(cr_both, 'Text', cr_blen),
+            *set_text(SPLIT_VAR, '\n'),
+            if_output(g_split, cr_blen, 'Count', 2, WFNumberValue=JUDGE_SPLIT),
+            *set_text(SPLIT_VAR, L.prompt('judge-split')),
+            act_step('judge_split'),
+            if_close(g_split),
+            act_get_variable(SPLIT_VAR, cr_sp),
             # today's date from the phone: the Freshness rule of critique-blind.txt (Karl, KI Forum 226/1762) needs it
             # to tell a fact that may have changed since the models were trained; no permission, no message
-            act_date(cr_today),
             act_text(text_token(compare_template,
                                 {**QQUESTION, 'GPT_ANSWER': (cr_gpt_f, 'Variable'),
                                  'CLAUDE_OWN': (cr_own_f, 'Variable'), 'NUMS': (cr_numfin, 'Variable'),
+                                 'SOURCES': (cr_pk, 'Variable'), 'LINKS': (cr_lk, 'Variable'),
+                                 'SPLIT': (cr_sp, 'Variable'),
                                  **rule_ref}, {'TODAY': ymd(cr_today)}), cr_prompt),
             act_set_variable(CHECK_VAR, cr_prompt, 'Text'),   # U-06: what the three fallbacks send
             act_step('critique_step3'),
@@ -664,6 +717,8 @@ def build(lang, ai=False):
             act_text(text_token(compare_template,
                                 {'QUESTION': (cr_cut_q, 'Matches'), 'GPT_ANSWER': (cr_cut_g, 'Matches'),
                                  'CLAUDE_OWN': (cr_cut_o, 'Matches'), 'NUMS': (cr_cut_n, 'Matches'),
+                                 'SOURCES': (cr_pk, 'Variable'), 'LINKS': (cr_lk, 'Variable'),
+                                 'SPLIT': (cr_sp, 'Variable'),
                                  **rule_ref}, {'TODAY': ymd(cr_today)}), cr_cut),
             act_claude(text_token('{P}', {'P': (cr_cut, 'Text')}), cr_claude2),
             act_set_variable(CLAUDE_VAR, cr_claude2, 'Ask Claude'),
@@ -689,6 +744,8 @@ def build(lang, ai=False):
             if_close(g_oc),
             if_close(g_own1),
             if_close(g_both),
+            # Duo 6.11: «Sources» under the result — the entries whose [N] the text cites, printed by Duo itself
+            *S.append_sources(L, RESULT),
             act_get_variable(GPT_VAR, cr_jg),
             *journal_note(('critique', L['journal.critique']), {'X': (cr_jg, 'Variable')}),
         ]
@@ -702,6 +759,7 @@ def build(lang, ai=False):
                 # the wrapped question is needed by step 1 AND step 2, so it is built outside both
                 *brief_acts,
                 act_text(text_token('{B}' + L.prompt('wrap'), {**QQ, 'B': (brief_get, 'Variable')}), cr_wrap),
+                *search,
                 *step1,
                 *steps23,
             ]
@@ -715,6 +773,7 @@ def build(lang, ai=False):
             act_step('critique_start'),
             *brief_acts,
             act_text(text_token('{B}' + L.prompt('wrap'), {**QQ, 'B': (brief_get, 'Variable')}), cr_wrap),
+            *search,
             *set_text(DRAFT_VAR, DRAFT_STEP0 + '\n' + DRAFT_Q + '\n{Q}\n' + DRAFT_A + '\n', QQ),
             repeat_count_open(g_loop, 3),
             *if_text(g_dsave, DRAFT_VAR),
@@ -776,7 +835,7 @@ def build(lang, ai=False):
 
         def check_request():
             # the comparing prompt with ChatGPT's answer alone (it says how to treat a missing one)
-            prompt = L.prompt('critique-blind').replace('{CLAUDE_OWN}', '').replace('{NUMS}', '')
+            prompt = compare_blank(L.prompt('critique-blind')).replace('{CLAUDE_OWN}', '').replace('{NUMS}', '')
             # today's date: the «Current Date» already taken for the draft's age (rnow), no second action
             return set_text(CHECK_VAR, prompt, {'QUESTION': (rq, 'Text'), 'GPT_ANSWER': (ra, 'Text')},
                             {'TODAY': ymd(rnow)})
@@ -919,11 +978,11 @@ def build(lang, ai=False):
     # first Critique.
     setup_before = [act_speak(L['speak.first_run']),
                     act_text(text_token(SETUP_PING), su_ping),
-                    act_gpt(text_token('{P}', {'P': (su_ping, 'Text')}), su_gpt),
+                    act_gpt(text_token('{P}', {'P': (su_ping, 'Text')}), su_gpt, split=False),
                     act_text(text_token('{A}', {'A': (su_gpt, 'Ask ChatGPT')}), su_txt),
                     # the same shape as every real request (the brevity line + the text): iOS asked «send 2 text items to
                     # Claude» in the first Critique after a 1-item ping in the Setup
-                    act_claude(text_token('{P}', {'P': (su_txt, 'Text')}), su_claude)]
+                    act_claude(text_token('{P}', {'P': (su_txt, 'Text')}), su_claude, split=False)]
     setup_before.append(act_notify(L['speak.ready']))
     setup_after = [act_speak(L['speak.ready'])]
 
@@ -1443,6 +1502,7 @@ def build(lang, ai=False):
         # silently and the run stands still. The answer is shown; «Open Poly» and «Save to Notes» take it from there.
         # The Critique draft stays the run's one file write (rule No.7).
         *if_text(g_tlrem, RESULT),
+        *strip_more(RESULT),
         *strip_markdown(RESULT),   # Yuri 10.11, No.56: no raw «**» on the result screen or in its title
         act_notify(L['notify.tail_done']),
         if_close(g_tlrem),
@@ -1562,7 +1622,9 @@ def build(lang, ai=False):
         *version_check(L, VK, RELEASE_NAME, lang, stamp_name=SETUP_FILE),
     ]
 
-    actions = with_gpt_retry(actions, skip=RETRY_SKIP)
+    actions, continuing = with_continuation(actions, L.prompt('continue'))   # Duo 6.11: a long answer comes in parts
+    set_more_line('')
+    actions = with_gpt_retry(actions, skip=RETRY_SKIP | continuing)
     actions = with_gpt_clean(actions)
     actions = with_claude_vars(actions)
     diag = os.environ.get('C1_DIAG') == '1'

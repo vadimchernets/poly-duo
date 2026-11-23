@@ -268,5 +268,14 @@
   "brief": {
     "claude": "不要开场白，回答不超过约600字。",
     "chatgpt": "不要开场白，回答不超过约1200字。"
+  },
+  "search": {
+    "news": "hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+    "wiki": "zh",
+    "fresh_words": "今天|昨天|现在|目前|当前|最新|最近|本周|本月|今年|本赛季|新闻|价格|汇率|利率|谁赢|冠军|结果|选举|版本",
+    "age": "{N} 天前",
+    "wiki_label": "维基百科（最后编辑日期）",
+    "sources_title": "来源 — 由 Duo 自行找到；编号即正文中的 [N]：",
+    "link_unread": "Duo 无法读取此页面。"
   }
 }

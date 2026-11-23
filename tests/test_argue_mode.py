@@ -25,7 +25,8 @@ def build(tmp_path, lang):
     subprocess.run([sys.executable, str(ROOT / 'src' / 'build_shortcut.py'), lang], check=True,
                    cwd=ROOT, env=env, capture_output=True)
     name = ui(lang)['shortcut_names']['main']
-    return plistlib.loads((tmp_path / lang / f'{name}.shortcut').read_bytes())['WFWorkflowActions']
+    from test_first_run import fold_continuation
+    return fold_continuation(plistlib.loads((tmp_path / lang / f'{name}.shortcut').read_bytes())['WFWorkflowActions'])
 
 
 def test_prompts_carry_the_marker_and_the_three_sections():

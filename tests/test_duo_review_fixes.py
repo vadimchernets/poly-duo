@@ -50,16 +50,25 @@ def test_critique_blind_scheme_and_claude_down_is_reachable(tmp_path, lang):
     # exactly three messages in the happy path: ChatGPT, Claude (blind), Claude (compare)
     asks = [(i, kind(actions[i])) for i in range(start, s3 + 12) if kind(actions[i]) in ('AskIntent', 'ClaudeAppIntentsExtension')]
     # step 1: ChatGPT (+ its own retry), step 2: Claude (+ retry), step 3: Claude (+ cut retry)
-    assert [k for _, k in asks] == ['AskIntent', 'AskIntent', 'ClaudeAppIntentsExtension',
-                                    'ClaudeAppIntentsExtension', 'ClaudeAppIntentsExtension',
-                                    'ClaudeAppIntentsExtension'][:len(asks)]
+    # Duo 6.11: before them the search's query call; between step 2 and step 3 the two link checks
+    C = 'ClaudeAppIntentsExtension'
+    assert [k for _, k in asks] == [C, 'AskIntent', 'AskIntent', C, C, C, C, C, C][:len(asks)]
+    asks = asks[1:]
     gpt1 = asks[0][0]
     blind = next(i for i, k in asks if k == 'ClaudeAppIntentsExtension')
     by_uid = {params(a).get('UUID'): a for a in actions}
     # the blind step sends the SAME wrapped question that ChatGPT got, and that text has no ChatGPT answer in it
-    msg_blind = list(params(actions[blind])['message']['Value']['attachmentsByRange'].values())[0]['OutputUUID']
+    # Duo 6.11: Claude's request is read from PolyOwnRequest — the same wrapped question when Duo found no sources
+    # (the Otherwise branch), the question with the numbered sources when it did; never ChatGPT's answer
+    own = params(by_uid[list(params(actions[blind])['message']['Value']['attachmentsByRange'].values())[0]['OutputUUID']])
+    assert own['WFVariable']['Value']['VariableName'] == 'PolyOwnRequest'
     msg_gpt = list(params(actions[gpt1])['prompt']['Value']['attachmentsByRange'].values())[0]['OutputUUID']
-    assert msg_blind == msg_gpt
+    sets = [params(a)['WFInput']['Value']['OutputUUID'] for a in actions[start:blind]
+            if kind(a) == 'setvariable' and params(a)['WFVariableName'] == 'PolyOwnRequest']
+    assert len(sets) == 2 and sets[1] == msg_gpt
+    with_sources = params(by_uid[sets[0]])['WFTextActionText']['Value']
+    assert 'PolyChatGPTAnswer' not in json.dumps(with_sources)
+    msg_blind = msg_gpt
     wrap = by_uid[msg_blind]
     # the question is read from PolyQuestion (typed now, or from a resumed draft)
     question = [params(a)['UUID'] for a in actions if kind(a) == 'getvariable'
@@ -75,7 +84,8 @@ def test_critique_blind_scheme_and_claude_down_is_reachable(tmp_path, lang):
     prompt = params(by_uid[prompt_uid])['WFTextActionText']['Value']
     refs = [v['OutputUUID'] for v in prompt['attachmentsByRange'].values()]
     # question, ChatGPT's answer, Claude's own answer, numbers, today's date (the Freshness rule, Karl 22.11)
-    assert len(refs) == 5 and question in refs
+    # Duo 6.11: + Duo's sources, the link checks and the two-call line
+    assert len(refs) == 8 and question in refs
     assert sum(kind(by_uid[r]) == 'date' for r in refs) == 1
     # RESULT is set only inside «If PolyClaudeAnswer has any value», never from a text with a fixed header
     result_name = ui['variables']['result']
@@ -129,7 +139,8 @@ def test_debate_round_survives_empty_chatgpt_reply(tmp_path, lang):
 def test_ai_build_uses_existing_version_key(tmp_path):
     assert 'duo_ai' not in VERSION  # the test documents the interim rule: until the key exists, `duo` is used
     build(tmp_path, 'en')
-    ai = plistlib.loads((tmp_path / 'en' / 'ai' / 'Poly.shortcut').read_bytes())['WFWorkflowActions']
+    from test_first_run import fold_continuation
+    ai = fold_continuation(plistlib.loads((tmp_path / 'en' / 'ai' / 'Poly.shortcut').read_bytes())['WFWorkflowActions'])
     keys = [params(a)['WFDictionaryKey'] for a in ai if kind(a) == 'getvalueforkey']
     assert keys[keys.index('duo'):keys.index('duo') + 2] == ['duo', 'duo_en']  # the version check's two lookups
     assert 'duo_ai' not in keys

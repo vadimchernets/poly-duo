@@ -1,3 +1,5 @@
+> Duo 6.11 (23.11.2026): the ⚠ line no longer opens the result. A fresh fact from memory is marked «(from memory)» where it stands and is the first ☐ with a concrete action; a dated source found by Duo confirms it with [N] and no warning. The expectations below that name the ⚠ line describe Duo 6.9–6.10; see РЕЗУЛЬТАТ.md in the repository root for the 6.11 checks on the iPhone.
+
 # Freshness — the manual check on an iPhone
 
 What it checks: on a question whose answer may have changed after the models were trained, Critique says
