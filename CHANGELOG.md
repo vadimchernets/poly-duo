@@ -6,11 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-## [1.0.10] — next — Duo 6.10 (to be released as duo 16)
+## [1.0.10] — 2026-11-23 — Duo 6.10 (built-in number duo 16)
 
-Measured on an iPhone on 22.11.2026 (Shortcuts, the Claude and ChatGPT apps, ~35 timed calls; the report is
-LIMITS-6.10 in the promotion folder). Not released yet: raise `duo` in `releases/version.json`, rebuild, sign and make the
-iCloud links when releasing.
+Signed Duo files for 12 languages in `releases/` (SHA256SUMS), built from dded14e with duo 16. Measured and run on the
+owner's iPhone on 22.11.2026 (Shortcuts, the Claude and ChatGPT apps, ~35 timed calls; the report is LIMITS-6.10 in the
+promotion folder). The iCloud links in `releases/version.json`, README and `docs/*/install.md` are re-created from these
+files on a device (Share → Copy iCloud Link).
 
 ### Changed — the length lines are now only what the measurements proved
 - **«Ask Claude» and «Ask ChatGPT» are both cut off at about 30 s** from the start of the call («Could not run the
