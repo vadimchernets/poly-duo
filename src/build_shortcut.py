@@ -139,9 +139,16 @@ def compare_head_len(template):
     return len(re.sub(r'\{(?!TODAY\})[A-Z_0-9]+\}', '', template).replace('{TODAY}', '2026-11-22'))
 
 
-def compare_blank(template):
-    """The comparing prompt for a request without sources, link checks or a split (a resumed draft's by-hand check)."""
-    return template.replace('{SOURCES}', '').replace('{LINKS}', '').replace('{SPLIT}', '')
+def compare_blank(template, ending=''):
+    """The comparing prompt for a request without sources, link checks or a split (a resumed draft's by-hand check);
+    `ending`: what stands for {MAP} (the «checked against» line)."""
+    return (template.replace('{SOURCES}', '').replace('{LINKS}', '').replace('{SPLIT}', '')
+            .replace('{MAP}', ending))
+
+
+# the judge's SOURCES block when each model had its own set (shortcut_search: [C…] Claude's engines, [G…] ChatGPT's)
+SOURCES_BOTH = ('Set C — given to Claude for its own answer (Google News, Wikipedia, SearXNG):\n{C}\n'
+                'Set G — given to ChatGPT for its answer (Bing News, Bing web, DuckDuckGo):\n{G}')
 # A long question (Yuri 10.11, No.53, iPhone XR, iOS 18.7): with a question of ~1800 characters iOS stopped «Ask ChatGPT»
 # with «the action was interrupted because it did not finish in time» while ChatGPT was still writing a long answer; the
 # answer stayed in the ChatGPT app and the run never reached Claude. iOS gives an app action a time limit that a
@@ -554,7 +561,7 @@ def build(lang, ai=False):
             if_close(g_rd),
         ]
 
-    def critique_block(pre=(), rule_uid=None, qsrc=None, draft=False):
+    def critique_block(pre=(), rule_uid=None, qsrc=None, draft=False, deep=True):
         """Critique, blind scheme (D-41), 3 messages as before: ChatGPT answers the wrapped question; Claude answers
         the SAME wrapped question on its own, without seeing ChatGPT's answer; then Claude compares both in one
         message (critique-blind.txt: three blocks «matched independently / did not match / what to check yourself»,
@@ -579,22 +586,46 @@ def build(lang, ai=False):
         brief_acts, brief_get = brief_for_long(*qsrc)   # Yuri 10.11, No.53
         (sr_today, sr_pk, g_pk, cr_wrap_s, cr_ow, cr_ow2, cr_pk, cr_lk, cr_sp, cr_both, cr_blen, g_split,
          cr_pk2, cr_lk2, cr_sp2) = ids(15)
-        OWN_WRAP, SPLIT_VAR = 'PolyOwnRequest', 'PolyJudgeSplit'
+        cr_gw, cr_mp = ids(2)
+        OWN_WRAP, GPT_WRAP, SPLIT_VAR, MAP_VAR = 'PolyOwnRequest', 'PolyGptRequest', 'PolyJudgeSplit', 'PolyJudgeEnd'
         ask_service = lambda p, uid: act_claude(text_token('{P}', {'P': (p, 'Text')}), uid, split=False)
-        # Duo 6.11: Duo's own search, before any model is asked; then Claude's request — with the numbered sources
-        # when there are any, the plain wrapped question otherwise. ChatGPT gets the plain question either way.
+
+        def ask_model(model):
+            """The short call of one model (deep research: each model reads its own cards): (action, output name)."""
+            if model == 'C':
+                return lambda p, uid: (act_claude(text_token('{P}', {'P': (p, 'Text')}), uid, split=False), 'Ask Claude')
+            return lambda p, uid: (act_gpt(text_token('{P}', {'P': (p, 'Text')}), uid, split=False), 'Ask ChatGPT')
+
+        def request_for(model, var):
+            """The model's own request: the question with ITS numbered cards (and, in deep research, its notes from the
+            pages it read) when there are any; the plain wrapped question otherwise."""
+            side = S.side_of(model)
+            pk, nt, g, txt = ids(4)
+            return [act_get_variable(S.packet_var(side), pk),
+                    act_get_variable(S.notes_var(model), nt),
+                    *if_text(g, S.packet_var(side)),
+                    act_text(text_token('{B}' + L.prompt('wrap-sources'),
+                                        {**QQ, 'B': (brief_get, 'Variable'), 'SOURCES': (pk, 'Variable'),
+                                         'NOTES': (nt, 'Variable')}, {'TODAY': ymd(sr_today)}), txt),
+                    act_set_variable(var, txt, 'Text'),
+                    if_else(g),
+                    act_set_variable(var, cr_wrap, 'Text'),
+                    if_close(g)]
+
+        # Duo 6.11 (the owner's decision of 23.11: three depths): Duo's own search, before any model is asked — each
+        # model gets cards from its own engines; deep research reads pages first. Neither model sees the other's
+        # answer before the comparison.
+        g_deep = ids(1)[0]
         search = [
-            *S.search_block(L, qsrc, LONG_QUESTION, ask_service),
             act_date(sr_today),
-            act_get_variable(S.PACKET, sr_pk),
-            *if_text(g_pk, S.PACKET),
-            act_text(text_token('{B}' + L.prompt('wrap-sources'),
-                                {**QQ, 'B': (brief_get, 'Variable'), 'SOURCES': (sr_pk, 'Variable')},
-                                {'TODAY': ymd(sr_today)}), cr_wrap_s),
-            act_set_variable(OWN_WRAP, cr_wrap_s, 'Text'),
-            if_else(g_pk),
-            act_set_variable(OWN_WRAP, cr_wrap, 'Text'),
-            if_close(g_pk),
+            *S.search_block(L, qsrc, LONG_QUESTION, ask_service, sr_today, ymd(sr_today)),
+            # deep research is a depth of the main Critique only (My own checking rule runs at the default depth)
+            *([*if_text(g_deep, S.DEEP),
+               *S.research_block(L, 'C', S.side_of('C'), ask_model('C'), qsrc, sr_today, ymd(sr_today)),
+               *S.research_block(L, 'G', S.side_of('G'), ask_model('G'), qsrc, sr_today, ymd(sr_today)),
+               if_close(g_deep)] if deep else []),
+            *request_for('C', OWN_WRAP),
+            *request_for('G', GPT_WRAP),
         ]
         RETRY_SKIP.update((cr_gpt, cr_gpt2))
         rule_prefix = 'Extra instruction from the user for this check (apply it): {RULE}\n\n' if rule_uid else ''
@@ -628,17 +659,32 @@ def build(lang, ai=False):
                 repeat_close(g_rep),
             ]
 
+        def judge_sources(uid):
+            """The judge sees BOTH sets of cards, each under its own letters ([C…] Claude's, [G…] ChatGPT's), or the
+            one shared set."""
+            if S.SHARED_SOURCES:
+                return [act_get_variable(S.packet_var('S'), uid)]
+            c, g = ids(2)
+            return [act_get_variable(S.packet_var('C'), c),
+                    act_get_variable(S.packet_var('G'), g),
+                    act_text(text_token(SOURCES_BOTH, {'C': (c, 'Variable'), 'G': (g, 'Variable')}), uid)]
+
+        def quick_end():
+            g = ids(1)[0]
+            return [*if_text(g, S.QUICK), *set_text(MAP_VAR, L.prompt('judge-checked')), if_close(g)]
+
         # ---- Step 1: ChatGPT — in the main Critique, unless a resumed draft already holds its answer, or the person
         # chose «Claude alone» after ChatGPT's limit
         gate = [*if_text(g_need, GPT_VAR, present=False), *if_text(g_skip, SKIP_GPT, present=False)] if draft else []
         step1 = [
             *gate,
-            act_gpt(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_gpt, parts=GPT_PARTS),
+            act_get_variable(GPT_WRAP, cr_gw),
+            act_gpt(text_token('{P}', {'P': (cr_gw, 'Variable')}), cr_gpt, parts=GPT_PARTS),
             act_set_variable(GPT_VAR, cr_gpt, 'Ask ChatGPT'),
             # an empty ChatGPT answer (often a false «logged out» or a dropped call): wait 3 s, ask once more
             *if_text(g_retry, GPT_VAR, present=False),
             act_delay(3),
-            act_gpt(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_gpt2, parts=GPT_PARTS),
+            act_gpt(text_token('{P}', {'P': (cr_gw, 'Variable')}), cr_gpt2, parts=GPT_PARTS),
             act_set_variable(GPT_VAR, cr_gpt2, 'Ask ChatGPT'),
             if_close(g_retry),
             # ChatGPT gave nothing (its limit, signed out, iOS cut the step): Claude answers alone, and the person is
@@ -677,10 +723,18 @@ def build(lang, ai=False):
             if_close(g_n1),
             act_get_variable(NUMS_VAR, cr_numfin),
             act_date(cr_today),
-            # Duo 6.11: the pages ChatGPT cited are read by Duo and checked one by one (only when it cited any)
+            # Duo 6.11, check and deep research (not quick): the pages ChatGPT cited are read by Duo and checked one by
+            # one, and Duo searches where the two answers diverge or the conclusion rests on one date, number or
+            # condition — the primary source's page is read and checked claim by claim ([V1]…)
             *S.link_check_block(L, GPT_VAR, ask_service, RESUME_VAR, ymd(cr_today)),
-            act_get_variable(S.PACKET, cr_pk),
-            act_get_variable(S.LINKS, cr_lk),
+            *S.divergence_block(L, qsrc, (cr_gpt_f, 'Variable'), (cr_own_f, 'Variable'), ask_service, RESUME_VAR,
+                                ymd(cr_today)),
+            *judge_sources(cr_pk),
+            act_get_variable(S.CHECKS, cr_lk),
+            # the end of the comparison: an evidence map (check, deep research) or the «checked against» line (quick)
+            *set_text(MAP_VAR, L.prompt('evidence-map')),
+            *quick_end(),
+            act_get_variable(MAP_VAR, cr_mp),
             # two long answers: the comparison stops after its three sections, the final answer is a second call
             act_text(text_token('{G}{O}', {'G': (cr_gpt_f, 'Variable'), 'O': (cr_own_f, 'Variable')}), cr_both),
             act_count_chars(cr_both, 'Text', cr_blen),
@@ -696,7 +750,7 @@ def build(lang, ai=False):
                                 {**QQUESTION, 'GPT_ANSWER': (cr_gpt_f, 'Variable'),
                                  'CLAUDE_OWN': (cr_own_f, 'Variable'), 'NUMS': (cr_numfin, 'Variable'),
                                  'SOURCES': (cr_pk, 'Variable'), 'LINKS': (cr_lk, 'Variable'),
-                                 'SPLIT': (cr_sp, 'Variable'),
+                                 'SPLIT': (cr_sp, 'Variable'), 'MAP': (cr_mp, 'Variable'),
                                  **rule_ref}, {'TODAY': ymd(cr_today)}), cr_prompt),
             act_set_variable(CHECK_VAR, cr_prompt, 'Text'),   # U-06: what the three fallbacks send
             act_step('critique_step3'),
@@ -718,7 +772,7 @@ def build(lang, ai=False):
                                 {'QUESTION': (cr_cut_q, 'Matches'), 'GPT_ANSWER': (cr_cut_g, 'Matches'),
                                  'CLAUDE_OWN': (cr_cut_o, 'Matches'), 'NUMS': (cr_cut_n, 'Matches'),
                                  'SOURCES': (cr_pk, 'Variable'), 'LINKS': (cr_lk, 'Variable'),
-                                 'SPLIT': (cr_sp, 'Variable'),
+                                 'SPLIT': (cr_sp, 'Variable'), 'MAP': (cr_mp, 'Variable'),
                                  **rule_ref}, {'TODAY': ymd(cr_today)}), cr_cut),
             act_claude(text_token('{P}', {'P': (cr_cut, 'Text')}), cr_claude2),
             act_set_variable(CLAUDE_VAR, cr_claude2, 'Ask Claude'),
@@ -835,7 +889,8 @@ def build(lang, ai=False):
 
         def check_request():
             # the comparing prompt with ChatGPT's answer alone (it says how to treat a missing one)
-            prompt = compare_blank(L.prompt('critique-blind')).replace('{CLAUDE_OWN}', '').replace('{NUMS}', '')
+            prompt = compare_blank(L.prompt('critique-blind'), L.prompt('judge-checked')).replace(
+                '{CLAUDE_OWN}', '').replace('{NUMS}', '')
             # today's date: the «Current Date» already taken for the draft's age (rnow), no second action
             return set_text(CHECK_VAR, prompt, {'QUESTION': (rq, 'Text'), 'GPT_ANSWER': (ra, 'Text')},
                             {'TODAY': ymd(rnow)})
@@ -1141,10 +1196,20 @@ def build(lang, ai=False):
         menu_case(g_main, MAIN[0]),
         *set_text(CRIT_VAR, '1'),
 
+        # ---- Duo 6.11, the owner's decision of 23.11: the same Critique in two more depths. Quick: one set of cards
+        # per model, two answers, the comparison (no page is read). Deep research: each model reads pages of its own
+        # cards before it answers, a second round of search when it asks for one; then the check of Critique.
+        menu_case(g_main, MAIN[1]),
+        *set_text(CRIT_VAR, '1'),
+        *set_text(S.QUICK, '1'),
+        menu_case(g_main, MAIN[2]),
+        *set_text(CRIT_VAR, '1'),
+        *set_text(S.DEEP, '1'),
+
         # ---- Debate until agreement: ChatGPT takes a side, Claude objects, ChatGPT answers… up to three
         # rounds; a side that is convinced starts its reply with the marker and the debate stops there.
         # Then Claude, as a neutral recorder: where they agreed / what is still disputed / what you decide.
-        menu_case(g_main, MAIN[1]),
+        menu_case(g_main, MAIN[3]),
         act_step('argue_start'),
         # D-100: no drafts (each «Save File» is one more permission window on the first run), so no resume either
         *clear_variable(ARGUE_LOG),
@@ -1175,7 +1240,7 @@ def build(lang, ai=False):
         *journal_note(('argue', L['journal.argue'])),
 
         # ---- Advisor: Claude reviews the user's own text without rewriting it
-        menu_case(g_main, MAIN[2]),
+        menu_case(g_main, MAIN[4]),
         act_step('advisor_start'),
         *set_text(ONLY_CLAUDE, '1'),
         act_text(text_token(L.prompt('advisor').replace('{CRITIQUE}', MAIN[0].split(' · ')[0].split(' — ')[0]), Q), ad_prompt),
@@ -1184,7 +1249,7 @@ def build(lang, ai=False):
         *journal_note(('advisor', L['journal.advisor'])),
 
         # ---- Side by side: both answer independently, answers shown together
-        menu_case(g_main, MAIN[3]),
+        menu_case(g_main, MAIN[5]),
         act_step('survey_start'),
         *sb_brief,
         act_text(text_token('{B}' + L.prompt('wrap'), {**Q, 'B': (sb_brief_get, 'Variable')}), sb_wrap),
@@ -1219,7 +1284,7 @@ def build(lang, ai=False):
         *journal_note(('survey', L['journal.survey'])),
 
         # ---- Synthesis: both answer blind, then one of them anchors the assembly
-        menu_case(g_main, MAIN[4]),
+        menu_case(g_main, MAIN[6]),
         menu_open(g_anchor, L['menu.anchor_title'], L['menu.anchor_items']),
 
         menu_case(g_anchor, L['menu.anchor_items'][0]),
@@ -1252,7 +1317,7 @@ def build(lang, ai=False):
         menu_close(g_anchor),
 
         # ---- Auto: one classification call recommends the mode to use
-        menu_case(g_main, MAIN[5]),
+        menu_case(g_main, MAIN[7]),
         act_step('auto_start'),
         act_text(text_token(L.prompt('auto-router'), Q), au_prompt),
         service_call(au_prompt, au_gpt)[0],
@@ -1261,7 +1326,7 @@ def build(lang, ai=False):
         *journal_note(('auto', L['journal.auto'])),
 
         # ---- More…: the less frequent modes plus built-in help
-        menu_case(g_main, MAIN[6]),
+        menu_case(g_main, MAIN[8]),
         menu_open(g_extra, L['menu.extra_title'], EXTRA + [L['menu.back']]),
 
         # ---- Decision: fast view, cautious view, referee
@@ -1459,7 +1524,7 @@ def build(lang, ai=False):
             {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
             menu_close(g_mmenu),
             if_close(g_mm),
-            act_get_variable(MY_RULE, mm_rule)], rule_uid=mm_rule),
+            act_get_variable(MY_RULE, mm_rule)], rule_uid=mm_rule, deep=False),
         # Back (Yuri 13.11, No.67): the main mode menu again with the same question; no question field, nothing spent
         menu_case(g_extra, L['menu.back']),
         act_text(text_token(MODE_MARK + '{Q}', {'Q': (qpre, 'Variable')}), bk_text),

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SearXNG search: Apple CEO</title>
+    <link>https://searx.be/search?q=Apple%20CEO</link>
+    <description>Search results for "Apple CEO" - SearXNG</description>
+    <item>
+      <title>John Ternus becomes Apple CEO</title>
+      <type>result</type>
+      <link>https://www.reuters.com/technology/apple-ternus-ceo-2026-09-01/</link>
+      <description>John Ternus took over as chief executive of Apple on September 1.</description>
+      <pubDate>Tue, 1 Sep 2026 12:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Apple Inc. - Leadership</title>
+      <type>result</type>
+      <link>https://www.apple.com/leadership/</link>
+      <description>Apple leadership team.</description>
+    </item>
+  </channel>
+</rss>

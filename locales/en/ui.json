@@ -37,9 +37,11 @@
     "my_rule_sample": "Check only the numbers and dates"
   },
   "menu": {
-    "main_title": "Pick a mode; first time, Critique. Critique (3): both AIs check. Argue (3–8): until they agree. Advisor (1): your text. Compare (2): two answers. Synthesis (3): one answer. Auto (+1): Duo picks. Brackets: messages to the AIs.",
+    "main_title": "Pick a mode; first time, Critique. Critique (5–10): both AIs answer from sources Duo found, then Duo reads the pages where they differ. Quick (4): sources, two answers, one check, about a minute. Research (15–40): each AI reads pages first, 3–5 minutes. Argue (3–8): until they agree. Advisor (1): your text. Compare (2): two answers. Synthesis (3): one answer. Auto (+1): Duo picks. Brackets: messages to the AIs.",
     "main_items": [
       "Critique",
+      "Quick",
+      "Research",
       "Argue",
       "Advisor",
       "Compare",
@@ -272,10 +274,13 @@
   "search": {
     "news": "hl=en-US&gl=US&ceid=US:en",
     "wiki": "en",
-    "fresh_words": "today|tonight|yesterday|right now|currently|current|latest|this (?:week|month|year|season)|news|price|rate|who is|who won|score|result|standings|election|release|version",
     "age": "{N} d ago",
     "wiki_label": "Wikipedia (date of the last edit)",
     "sources_title": "Sources — found by Duo itself; the numbers are the [N] in the text:",
-    "link_unread": "Duo could not read this page."
+    "link_unread": "Duo could not read this page.",
+    "bing": "mkt=en-US",
+    "ddg": "kl=us-en",
+    "undated": "no date",
+    "claim_unfound": "Duo found no page on this."
   }
 }

@@ -48,7 +48,9 @@ def test_more_menu(tmp_path, lang):
 
     # numbers that stand in only one of the two independent answers: Match Text (a token STRING) → Repeat with Each →
     # whole-number Match Text in the OTHER answer (details: test_duo_review_fixes), in both directions, and only when both answers exist
-    nums = [i for i, a in enumerate(actions) if kind(a) == 'match' and 'd+' in params(a)['WFMatchTextPattern']]
+    # (Duo 6.11: the search's own patterns hold «\d+» too; the number pass is the one with NUMBER_RX)
+    import sys; sys.path.insert(0, str(ROOT / "src")); from build_shortcut import NUMBER_RX  # noqa: E702
+    nums = [i for i, a in enumerate(actions) if kind(a) == 'match' and params(a)['WFMatchTextPattern'] == NUMBER_RX]
     assert len(nums) == 4  # Critique and My mode, two directions each
     for num in nums:
         assert params(actions[num])['text']['WFSerializationType'] == 'WFTextTokenString'

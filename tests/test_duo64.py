@@ -89,8 +89,10 @@ def test_one_draft_save_runs_three_times(tmp_path, lang):
     # My mode (no loop) still reads «Repeat Item»
     before = [params(a)['WFVariable']['Value']['VariableName'] for a in actions[:loop_start]
               if kind(a) == 'getvariable' and params(a)['WFVariable']['Value']['VariableName'].startswith('Repeat Item')]
-    # Duo 6.11: plus the search loops, all outside the draft loop — three feeds and the dating loop in each Critique
-    assert before == ['Repeat Item'] * 10
+    # Duo 6.11: plus the search loops, all outside the draft loop — the card loop of each model's set in each
+    # Critique (2 + 2), and in the main Critique's deep research, per model, two page-reading loops and the card loop
+    # of the second round (2 × 3); My mode's two number passes make 12
+    assert before == ['Repeat Item'] * 12
 
 
 @pytest.mark.parametrize('lang', LANGS)

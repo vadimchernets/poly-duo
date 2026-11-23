@@ -24,8 +24,8 @@ EN_CONTRACT = ('Today is {TODAY}', 'not a confirmation', 'materially change the 
                'Not fresh: history', 'Never invent', 'never mention freshness', '"(from memory)"',
                'Do not open with a warning', 'your reply begins with section 1', 'add no warning',
                'never a warning or a remark about the models', 'one concrete action', 'is the first ☐',
-               'check BOTH answers against them', 'Duo prints the list itself', 'use only numbers that stand in SOURCES',
-               'is called a forecast', 'goes under "Not checked"')
+               'check BOTH answers against ALL the cards', 'Duo prints the list itself',
+               'use only codes that stand in SOURCES or CHECKS', 'is called a forecast', '{MAP}')
 GONE = ('Both models may not know this', 'This answer may be out of date', '\n0. ', '⚠',
         '\u041e\u0431\u0435 \u043c\u043e\u0434\u0435\u043b\u0438 \u043c\u043e\u0433\u0443\u0442')
 
@@ -67,6 +67,8 @@ def test_compare_prompt_carries_the_freshness_rule(lang):
     if edition(lang) == 'en':
         for phrase in EN_CONTRACT:
             assert phrase in text, phrase
+        # Duo 6.11: the ending is {MAP} — the evidence map (Critique, Research) or the «checked against» line (Quick)
+        assert 'goes under "Not checked"' in (PROMPTS / 'en' / 'prompts' / 'judge-checked.txt').read_text(encoding='utf-8')
 
 
 def test_every_prompt_override_keeps_the_english_placeholders():
@@ -224,5 +226,11 @@ def test_freshness_adds_no_permission_window_and_no_message(tmp_path, lang):
         kinds = [kind(a) for a in block[:compare[1] + 1]]   # up to the cut retry of step 3
         for k in ('append', 'setclipboard'):
             assert k not in kinds
-        assert kinds.count('AskIntent') == 2 and kinds.count('ClaudeAppIntentsExtension') == 4 + 1 + 2
+        # Duo 6.11: Claude — own answer and comparison (each + retry), the query call, the link checks, the claim
+        # finder and the claim checks of the divergence search; the main Critique adds deep research: per model two
+        # picks, a reading call per page part in each round, and «enough or a new query»
+        import sys; sys.path.insert(0, str(ROOT / 'src')); import shortcut_search as S  # noqa: E401,E702
+        research = 2 + 2 * S.CHUNKS + 1 if start == starts[1] else 0
+        assert kinds.count('AskIntent') == 2 + 2 * research   # each of ChatGPT's research calls has its retry
+        assert kinds.count('ClaudeAppIntentsExtension') == 4 + 1 + S.LINK_MAX + 1 + S.CLAIMS_MAX + research
 

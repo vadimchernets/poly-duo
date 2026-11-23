@@ -37,9 +37,11 @@
     "my_rule_sample": "Prüfe nur Zahlen und Datumsangaben"
   },
   "menu": {
-    "main_title": "Modus wählen; beim ersten Mal Kritik. Kritik (3): beide KIs prüfen. Streit (3–8): bis zur Einigung. Berater (1): dein Text. Vergleich (2): zwei Antworten. Synthese (3): eine Antwort. Auto (+1): Duo wählt. Klammern: Nachrichten an die KIs.",
+    "main_title": "Modus wählen; beim ersten Mal Kritik. Kritik (5–10): beide KIs antworten mit Quellen, die Duo gefunden hat, dann liest Duo die Seiten, wo sie abweichen. Schnell (4): Quellen, zwei Antworten, ein Abgleich, etwa eine Minute. Recherche (15–40): jede KI liest zuerst Seiten, 3–5 Minuten. Streit (3–8): bis zur Einigung. Berater (1): dein Text. Vergleich (2): zwei Antworten. Synthese (3): eine Antwort. Auto (+1): Duo wählt. Klammern: Nachrichten an die KIs.",
     "main_items": [
       "Kritik",
+      "Schnell",
+      "Recherche",
       "Streit",
       "Berater",
       "Vergleich",
@@ -272,10 +274,13 @@
   "search": {
     "news": "hl=de&gl=DE&ceid=DE:de",
     "wiki": "de",
-    "fresh_words": "heute|gestern|jetzt|derzeit|aktuell|momentan|neueste|letzte|diese (?:woche|saison)|diesen monat|dieses jahr|nachrichten|preis|kurs|zins|wer ist|wer hat gewonnen|ergebnis|wahl|version",
     "age": "vor {N} Tagen",
     "wiki_label": "Wikipedia (Datum der letzten Bearbeitung)",
     "sources_title": "Quellen — von Duo selbst gefunden; die Nummern sind die [N] im Text:",
-    "link_unread": "Duo konnte diese Seite nicht lesen."
+    "link_unread": "Duo konnte diese Seite nicht lesen.",
+    "bing": "mkt=de-DE",
+    "ddg": "kl=de-de",
+    "undated": "ohne Datum",
+    "claim_unfound": "Duo hat dazu keine Seite gefunden."
   }
 }

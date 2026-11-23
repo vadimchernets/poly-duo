@@ -36,7 +36,7 @@ def test_menu_items_are_short_plain_words(lang):
         assert len(set(m[key])) == len(m[key])
     # the title, read once, has no emoji either and names every mode it explains
     assert not EMOJI.search(m['main_title'])
-    assert all(item in m['main_title'] for item in m['main_items'][:6])
+    assert all(item in m['main_title'] for item in m['main_items'][:8])
     assert not EMOJI.search(m['finale_title'])
 
 

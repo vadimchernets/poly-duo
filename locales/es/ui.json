@@ -37,9 +37,11 @@
     "my_rule_sample": "Revisa solo las cifras y las fechas"
   },
   "menu": {
-    "main_title": "Elija un modo; la primera vez, Crítica. Crítica (3): revisan ambas IA. Discusión (3–8): hasta acordar. Asesor (1): su texto. En paralelo (2): dos respuestas. Síntesis (3): una respuesta. Auto (+1): elige Duo. Paréntesis: mensajes a las IA.",
+    "main_title": "Elija un modo; la primera vez, Crítica. Crítica (5–10): ambas IA responden con fuentes que encontró Duo y Duo lee las páginas donde difieren. Rápido (4): fuentes, dos respuestas, un cotejo, cerca de un minuto. Investigar (15–40): cada IA lee páginas primero, 3–5 minutos. Discusión (3–8): hasta acordar. Asesor (1): su texto. En paralelo (2): dos respuestas. Síntesis (3): una respuesta. Auto (+1): elige Duo. Paréntesis: mensajes a las IA.",
     "main_items": [
       "Crítica",
+      "Rápido",
+      "Investigar",
       "Discusión",
       "Asesor",
       "En paralelo",
@@ -272,10 +274,13 @@
   "search": {
     "news": "hl=es-419&gl=US&ceid=US:es-419",
     "wiki": "es",
-    "fresh_words": "hoy|ayer|ahora|actualmente|actual|en este momento|último|última|reciente|esta (?:semana|temporada)|este (?:mes|año)|noticias|precio|tipo de cambio|tasa|quién es|quién ganó|resultado|elecciones|versión",
     "age": "hace {N} d",
     "wiki_label": "Wikipedia (fecha de la última edición)",
     "sources_title": "Fuentes — las encontró Duo; los números son los [N] del texto:",
-    "link_unread": "Duo no pudo leer esta página."
+    "link_unread": "Duo no pudo leer esta página.",
+    "bing": "mkt=es-US",
+    "ddg": "kl=us-es",
+    "undated": "sin fecha",
+    "claim_unfound": "Duo no encontró ninguna página sobre esto."
   }
 }
