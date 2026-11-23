@@ -182,6 +182,35 @@ def test_every_claude_request_starts_with_brevity_line(tmp_path, lang):
             assert v['string'].encode('utf-16-le')[pos * 2:pos * 2 + 2].decode('utf-16-le') == '￼'
 
 
+@pytest.mark.parametrize('lang', LANGS)
+def test_every_chatgpt_request_starts_with_length_line(tmp_path, lang):
+    """22.11 live run (Duo 6.10 limits): «Ask ChatGPT» is cut off at about 30 s as «Ask Claude» is; every request
+    (except the SVG image steps) starts with ui.brief.chatgpt, and the attachments still point at their objects."""
+    line = ui_of(lang)['brief']['chatgpt']
+    actions = build(tmp_path, lang)
+    gpt = [a for a in actions if a['WFWorkflowActionIdentifier'] == 'com.openai.chat.AskIntent']
+    assert gpt
+    with_line = [a for a in gpt if params(a)['prompt']['Value']['string'].startswith(line + '\n\n')]
+    assert len(gpt) - len(with_line) == 4   # the two SVG image steps and their automatic retries
+    for a in with_line:
+        v = params(a)['prompt']['Value']
+        assert v['attachmentsByRange']
+        for key in v['attachmentsByRange']:
+            pos = int(key.strip('{}').split(',')[0])
+            assert v['string'].encode('utf-16-le')[pos * 2:pos * 2 + 2].decode('utf-16-le') == '\ufffc'
+
+
+@pytest.mark.parametrize('lang', LANGS)
+def test_length_lines_are_only_a_length_cap(lang):
+    """22.11 live run: only the length was proven to matter. No «do not search» (the Claude action has no search), no
+    «do not think long» (no change in time), no «only the result and what to check» (it cut the blind answer)."""
+    brief = ui_of(lang)['brief']
+    assert set(brief) == {'claude', 'chatgpt'}
+    for text in brief.values():
+        assert any(ch.isdigit() for ch in text)
+        assert len(text) < 90, text
+
+
 def test_run_name_follows_dated_diag_name(tmp_path):
     """15.11, No.67: Back / Another mode must run the SAME shortcut that is installed (Duo-diag-0154), not an old Duo-diag."""
     env = dict(os.environ, C1_DIST=str(tmp_path), C1_DIAG='1', C1_RUN_NAME='Duo-diag-0154')
