@@ -76,8 +76,11 @@ def test_first_run_setup_asks_everything_at_once(tmp_path, lang):
                                                     'notification')]
     # ChatGPT, Claude, the notification, both update addresses on the web, then the one file write (the stamp, last: a
     # Setup cut short runs again next time)
-    assert order[:3] == ['AskIntent', 'ClaudeAppIntentsExtension', 'notification'] and order[-1] == 'save'
-    assert order.count('downloadurl') == 3   # GitHub, the site as its fallback, and the site once more in the Setup
+    # (Duo 6.11: between Claude and the notification, each search host and the reader once — their «Allow» windows)
+    assert order[:8] == ['AskIntent', 'ClaudeAppIntentsExtension'] + ['downloadurl'] * 5 + ['notification']
+    assert order[-1] == 'save'
+    # GitHub, the site as its fallback, and the site once more in the Setup; plus the 5 warm-up addresses
+    assert order.count('downloadurl') == 3 + 5
     # every action that can ask for a permission on the main path sits in the Setup: no save, append or copy elsewhere
     # before the finale menu, and the Setup is gated by the file
     assert any(a['WFWorkflowActionParameters'].get('WFGetFilePath') == f"Duo-setup-{json.loads((ROOT / 'releases' / 'version.json').read_text())['duo']}.txt" for a in head[:first])

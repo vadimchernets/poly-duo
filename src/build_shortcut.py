@@ -60,6 +60,10 @@ DRAFT_MINUTES = 30
 # «contains», which may compare ignoring such characters.
 DRAFT_STEP0, DRAFT_STEP1, DRAFT_DONE = '\u2063\u2060\u2063', '\u2063\u2061\u2063', '\u2063\u2062\u2063'
 DRAFT_Q, DRAFT_A = '\u2064\u2060\u2064', '\u2064\u2061\u2064'
+# Duo 6.11 (the 6.11 check: opus, kimi): the step-1 draft also keeps the cards ChatGPT answered from (its packet and
+# the source list with links), so a Critique resumed after ChatGPT's answer prints and checks THOSE [G…] — the new
+# search of the resumed run finds another set, and its [G3] would be another page
+DRAFT_GP, DRAFT_GL = '\u2064\u2062\u2064', '\u2064\u2063\u2064'
 # «between −30 and 30 minutes» as TEXT: 0…30 with an optional minus. A Number made from «Time Between Dates» goes
 # through the phone's number format: in Ukrainian or Russian 4320 minutes read «4 320», which a Number may take for 4,
 # so a draft days old was offered as fresh (Yuri 13.11, No.62).
@@ -147,7 +151,7 @@ def compare_blank(template, ending=''):
 
 
 # the judge's SOURCES block when each model had its own set (shortcut_search: [C…] Claude's engines, [G…] ChatGPT's)
-SOURCES_BOTH = ('Set C — given to Claude for its own answer (Google News, Wikipedia, SearXNG):\n{C}\n'
+SOURCES_BOTH = ('Set C — given to Claude for its own answer (Google News, Wikipedia):\n{C}\n'
                 'Set G — given to ChatGPT for its answer (Bing News, Bing web, DuckDuckGo):\n{G}')
 # A long question (Yuri 10.11, No.53, iPhone XR, iOS 18.7): with a question of ~1800 characters iOS stopped «Ask ChatGPT»
 # with «the action was interrupted because it did not finish in time» while ChatGPT was still writing a long answer; the
@@ -349,6 +353,7 @@ def build(lang, ai=False):
     RESUME_VAR = 'PolyResume'        # set → this run goes on from a saved draft: no question field, no mode menu
     CRIT_VAR = 'PolyCritique'        # set → the shared Critique runs after the mode menu
     ONLY_CLAUDE = 'PolyOnlyClaude'   # set → only Claude was asked in this run (Advisor, «Ask Claude alone»)
+    KEEP_GP, KEEP_GL = 'PolyKeptCardsG', 'PolyKeptListG'   # a resumed Critique: ChatGPT's cards from the draft
     SKIP_GPT = 'PolySkipChatGPT'     # set → ChatGPT is not asked (it stopped on its limit last time)
     CLAUDE_DOWN = 'PolyClaudeDown'   # set → the «check with…» menu follows the answer in the shared tail
     DRAFT_VAR, DRAFT_PASS_A, DRAFT_PASS_B = 'PolyDraft', 'PolyDraftPassA', 'PolyDraftPassB'
@@ -586,7 +591,7 @@ def build(lang, ai=False):
         brief_acts, brief_get = brief_for_long(*qsrc)   # Yuri 10.11, No.53
         (sr_today, sr_pk, g_pk, cr_wrap_s, cr_ow, cr_ow2, cr_pk, cr_lk, cr_sp, cr_both, cr_blen, g_split,
          cr_pk2, cr_lk2, cr_sp2) = ids(15)
-        cr_gw, cr_mp = ids(2)
+        cr_gw, cr_mp, cr_gp1, cr_gl1 = ids(4)
         OWN_WRAP, GPT_WRAP, SPLIT_VAR, MAP_VAR = 'PolyOwnRequest', 'PolyGptRequest', 'PolyJudgeSplit', 'PolyJudgeEnd'
         ask_service = lambda p, uid: act_claude(text_token('{P}', {'P': (p, 'Text')}), uid, split=False)
 
@@ -615,15 +620,32 @@ def build(lang, ai=False):
         # Duo 6.11 (the owner's decision of 23.11: three depths): Duo's own search, before any model is asked — each
         # model gets cards from its own engines; deep research reads pages first. Neither model sees the other's
         # answer before the comparison.
-        g_deep = ids(1)[0]
+        # inside the draft's «Repeat 3 times» a «Repeat with Each» item is «Repeat Item 2»
+        item_name = INNER_REPEAT_ITEM if draft else 'Repeat Item'
+        g_deep, g_dres, g_kept, g_kgpt = ids(4)
+        kp_get, kl_get = ids(2)
         search = [
             act_date(sr_today),
-            *S.search_block(L, qsrc, LONG_QUESTION, ask_service, sr_today, ymd(sr_today)),
-            # deep research is a depth of the main Critique only (My own checking rule runs at the default depth)
+            *S.search_block(L, qsrc, LONG_QUESTION, ask_service, sr_today, ymd(sr_today), item=item_name),
+            # deep research is a depth of the main Critique only (My own checking rule runs at the default depth); a
+            # run resumed from a draft does not read pages again (a page that stopped the run once must not stop it
+            # again — the 6.11 check, opus)
             *([*if_text(g_deep, S.DEEP),
-               *S.research_block(L, 'C', S.side_of('C'), ask_model('C'), qsrc, sr_today, ymd(sr_today)),
-               *S.research_block(L, 'G', S.side_of('G'), ask_model('G'), qsrc, sr_today, ymd(sr_today)),
+               *if_text(g_dres, RESUME_VAR, present=False),
+               *S.research_block(L, 'C', S.side_of('C'), ask_model('C'), qsrc, sr_today, ymd(sr_today), item_name),
+               *S.research_block(L, 'G', S.side_of('G'), ask_model('G'), qsrc, sr_today, ymd(sr_today), item_name),
+               if_close(g_dres),
                if_close(g_deep)] if deep else []),
+            # a Critique resumed with ChatGPT's saved answer: ChatGPT's cards are the ones that answer was written
+            # from (kept in the draft), not the new search's
+            *([*if_text(g_kgpt, GPT_VAR),
+               *if_text(g_kept, KEEP_GL),
+               act_get_variable(KEEP_GP, kp_get),
+               act_set_variable(S.packet_var(S.side_of('G')), kp_get, 'Variable'),
+               act_get_variable(KEEP_GL, kl_get),
+               act_set_variable(S.list_var(S.side_of('G')), kl_get, 'Variable'),
+               if_close(g_kept),
+               if_close(g_kgpt)] if draft else []),
             *request_for('C', OWN_WRAP),
             *request_for('G', GPT_WRAP),
         ]
@@ -631,7 +653,6 @@ def build(lang, ai=False):
         rule_prefix = 'Extra instruction from the user for this check (apply it): {RULE}\n\n' if rule_uid else ''
         rule_ref = {'RULE': (rule_uid, 'Variable')} if rule_uid else {}
         compare_template = rule_prefix + L.prompt('critique-blind')
-        item_name = INNER_REPEAT_ITEM if draft else 'Repeat Item'
 
         def number_pass(src_var_uid, other_var):
             """Every number of the answer `src_var_uid` (a Get Variable output) that does NOT stand, as a whole
@@ -827,7 +848,6 @@ def build(lang, ai=False):
             act_step('critique_start'),
             *brief_acts,
             act_text(text_token('{B}' + L.prompt('wrap'), {**QQ, 'B': (brief_get, 'Variable')}), cr_wrap),
-            *search,
             *set_text(DRAFT_VAR, DRAFT_STEP0 + '\n' + DRAFT_Q + '\n{Q}\n' + DRAFT_A + '\n', QQ),
             repeat_count_open(g_loop, 3),
             *if_text(g_dsave, DRAFT_VAR),
@@ -838,12 +858,18 @@ def build(lang, ai=False):
             # the first pass: ChatGPT; the second: Claude; the third only saves «done»
             *if_text(g_pa, DRAFT_PASS_A, present=False),
             *set_text(DRAFT_PASS_A, '1'),
+            # Duo's search (and deep research) AFTER the step-0 draft is on disk (the 6.11 check, kimi, opus): a
+            # search or a page that stops the run leaves a draft the next run goes on from
+            *search,
             *step1,
             *clear_variable(DRAFT_VAR),
             *if_text(g_d1, GPT_VAR),
             act_get_variable(GPT_VAR, cr_g1),
-            *set_text(DRAFT_VAR, DRAFT_STEP1 + '\n' + DRAFT_Q + '\n{Q}\n' + DRAFT_A + '\n{A}',
-                      {**QQ, 'A': (cr_g1, 'Variable')}),
+            act_get_variable(S.packet_var(S.side_of('G')), cr_gp1),
+            act_get_variable(S.list_var(S.side_of('G')), cr_gl1),
+            *set_text(DRAFT_VAR, DRAFT_STEP1 + '\n' + DRAFT_Q + '\n{Q}\n' + DRAFT_A + '\n{A}\n' + DRAFT_GP + '\n{P}\n'
+                      + DRAFT_GL + '\n{L}', {**QQ, 'A': (cr_g1, 'Variable'), 'P': (cr_gp1, 'Variable'),
+                                             'L': (cr_gl1, 'Variable')}),
             # ChatGPT gave nothing: no second write, the step-0 draft already on disk stays as it is
             if_close(g_d1),
             if_else(g_pa),
@@ -868,7 +894,7 @@ def build(lang, ai=False):
         u = new_uuid
         g_in, g_f, g_age, g_q, g_1, g_0, g_m1, g_m0 = (u() for _ in range(8))
         rf, rt, rdate, rnow, rage, rnum, rqm, rq, ram, ra = (u() for _ in range(10))
-        rfresh, rs1, rs0 = u(), u(), u()
+        rfresh, rs1, rs0, rkp, rkl = u(), u(), u(), u(), u()
         I1, I0 = L['menu.resume1_items'], L['menu.resume0_items']
         A = {'A': (ra, 'Text')}
         diag = os.environ.get('C1_DIAG') == '1'
@@ -919,7 +945,7 @@ def build(lang, ai=False):
             *dlog('branch: age passed, looking for the question'),
             act_first_match(rt, 'Text', '(?s)(?<=' + DRAFT_Q + '\\n).*?(?=\\n' + DRAFT_A + ')', rqm),
             act_text(text_token('{M}', {'M': (rqm, 'Matches')}), rq),
-            act_first_match(rt, 'Text', '(?s)(?<=' + DRAFT_A + '\\n).*', ram),
+            act_first_match(rt, 'Text', '(?s)(?<=' + DRAFT_A + '\\n).*?(?=\\n' + DRAFT_GP + '|\\z)', ram),
             act_text(text_token('{M}', {'M': (ram, 'Matches')}), ra),
             *if_output_text(g_q, rq, 'Text'),
             *dlog('branch: question found in the draft'),
@@ -928,7 +954,12 @@ def build(lang, ai=False):
             *dlog('branch: step 1, resume menu shown'),
             menu_open(g_m1, L['menu.resume1_title'], I1),
             menu_case(g_m1, I1[0]),
-            *resumed(*set_text(GPT_VAR, '{A}', A), *set_text(CRIT_VAR, '1'), act_step('resume')),
+            *resumed(*set_text(GPT_VAR, '{A}', A), *set_text(CRIT_VAR, '1'), act_step('resume'),
+                     # the cards ChatGPT's saved answer was written from (none in a draft of 6.10)
+                     act_first_match(rt, 'Text', '(?s)(?<=' + DRAFT_GP + '\\n).*?(?=\\n' + DRAFT_GL + ')', rkp),
+                     act_set_variable(KEEP_GP, rkp, 'Matches'),
+                     act_first_match(rt, 'Text', '(?s)(?<=' + DRAFT_GL + '\\n).*', rkl),
+                     act_set_variable(KEEP_GL, rkl, 'Matches')),
             menu_case(g_m1, I1[1]),
             *resumed(*set_text(RESULT, L['output.claude_down'], A), *check_request(), *set_text(CLAUDE_DOWN, '1'),
                      *journal_note(('critique', L['journal.critique']), {'X': (ra, 'Text')})),
@@ -1037,7 +1068,10 @@ def build(lang, ai=False):
                     act_text(text_token('{A}', {'A': (su_gpt, 'Ask ChatGPT')}), su_txt),
                     # the same shape as every real request (the brevity line + the text): iOS asked «send 2 text items to
                     # Claude» in the first Critique after a 1-item ping in the Setup
-                    act_claude(text_token('{P}', {'P': (su_txt, 'Text')}), su_claude, split=False)]
+                    act_claude(text_token('{P}', {'P': (su_txt, 'Text')}), su_claude, split=False),
+                    # Duo 6.11 (the 6.11 check: fable, agy, opus): every site Duo's search and reader use is called once
+                    # here, so all their «Allow» windows come now, one after another, and none in the middle of an answer
+                    *S.warm_up(L)]
     setup_before.append(act_notify(L['speak.ready']))
     setup_after = [act_speak(L['speak.ready'])]
 

@@ -85,14 +85,14 @@ def test_one_draft_save_runs_three_times(tmp_path, lang):
     # the number pass inside the loop reads the inner loop's item: «Repeat Item 2» (checked on Shortcuts 28.10)
     inner = [params(a)['WFVariable']['Value']['VariableName'] for a in actions[loop_start:steps[2][0]]
              if kind(a) == 'getvariable' and params(a)['WFVariable']['Value']['VariableName'].startswith('Repeat Item')]
-    assert inner == ['Repeat Item 2', 'Repeat Item 2']
-    # My mode (no loop) still reads «Repeat Item»
+    # Duo 6.11 (after the check: the search runs inside the loop, after the step-0 draft is on disk): the main
+    # Critique's card loops (2), deep research's page-reading and second-round card loops (2 × 3) and the two
+    # number passes — every one of them reads «Repeat Item 2»
+    assert inner == ['Repeat Item 2'] * 10
+    # My mode (no loop) still reads «Repeat Item»: its two card loops and its two number passes
     before = [params(a)['WFVariable']['Value']['VariableName'] for a in actions[:loop_start]
               if kind(a) == 'getvariable' and params(a)['WFVariable']['Value']['VariableName'].startswith('Repeat Item')]
-    # Duo 6.11: plus the search loops, all outside the draft loop — the card loop of each model's set in each
-    # Critique (2 + 2), and in the main Critique's deep research, per model, two page-reading loops and the card loop
-    # of the second round (2 × 3); My mode's two number passes make 12
-    assert before == ['Repeat Item'] * 12
+    assert before == ['Repeat Item'] * 4
 
 
 @pytest.mark.parametrize('lang', LANGS)

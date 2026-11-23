@@ -5,7 +5,7 @@ iPhone), so Duo fetches the sources itself and hands them to the models as numbe
 
   * search (every depth): one short Claude call writes 2–3 queries from the question's own words (one in English) or
     NONE for a question the web cannot help (science, how-to, a pasted text) — then nothing is fetched. Each model
-    gets its OWN engines, all of them at once (no fallback chain): Claude — Google News RSS + Wikipedia + SearXNG,
+    gets its OWN engines, all of them at once (no fallback chain): Claude — Google News RSS + Wikipedia,
     ChatGPT — Bing News RSS + Bing web RSS + DuckDuckGo (SHARED_SOURCES: one common set for both). An engine that
     answers with a captcha, a rate limit or nothing is skipped without a word. Duo glues reprints (one link, one
     headline = one card), orders the cards by age (this week; this quarter and the undated web pages; older — not by
@@ -22,6 +22,8 @@ iPhone), so Duo fetches the sources itself and hands them to the models as numbe
 
 Every network step sits behind the guard that cannot throw (network_guard) and behind a test of the downloaded
 text; every AI call here is a short one (split=False, no [[MORE]]), each well under the 30 s iOS gives one action.
+Pages are read through one reader (READER), so a dead site, a PDF or a script page is text, not a stopped shortcut,
+and every site is one permission window; the Setup calls each host once (warm_up), so those windows come there.
 
 A record is one line: DATE<tab>PUBLISHER<tab>TITLE<tab>URL (DATE may be empty: a web page without a date). The
 regexes below are ICU (Shortcuts) and are written in the subset Python's `re` shares, so tests/test_search.py runs the
@@ -37,7 +39,10 @@ SHARED_SOURCES = os.environ.get('C1_SHARED_SOURCES') == '1'
 
 CARDS_MAX = 8             # cards in one model's packet (the owner: «not more than ~8 best cards»)
 ROUND2_MAX = 4            # deep research: cards added by the second round ([C9]…[C12])
-RECORDS_SEEN = 20         # records ordered by age before the cut to CARDS_MAX
+# the 6.11 check (fable, astra): one engine may not crowd the others out — each answer gives at most ENGINE_MAX
+# records BEFORE they are joined, and every record of a side (at most 7 answers × ENGINE_MAX) is ordered by age
+ENGINE_MAX = 4
+RECORDS_SEEN = 32         # records ordered by age before the cut to CARDS_MAX (above what the engines can give)
 QUERY_CHARS = 100         # the question's first line as the query when the query call gave nothing
 QUERY_MAX = 90            # one query from the model, at most this long
 LINK_MAX = 2              # check: pages ChatGPT cited that are read (each: one short Claude call)
@@ -57,6 +62,8 @@ ENGINES = {
     'gnews': {'side': 'C', 'url': 'https://news.google.com/rss/search?q={Q}&{LOC}', 'loc': 'search.news',
               'en': 'hl=en-US&gl=US&ceid=US:en', 'test': '<item', 'kind': 'rss', 'desc': False},
     'wiki': {'side': 'C', 'url': WIKI_URL, 'loc': 'search.wiki', 'en': None, 'test': '"fullurl"', 'kind': 'wiki'},
+    # SearXNG: the parser stays, the engine is off the default path (the 6.11 check: fable, agy, kimi) — the public
+    # searx.be answers with a browser check, and a server that does not answer at all stops the shortcut
     'searx': {'side': 'C', 'url': 'https://searx.be/search?q={Q}&format=rss&language={LOC}', 'loc': 'search.wiki',
               'en': None, 'test': '<item', 'kind': 'rss', 'desc': True},
     # ChatGPT's side
@@ -68,7 +75,7 @@ ENGINES = {
     'ddg': {'side': 'G', 'url': 'https://html.duckduckgo.com/html/?q={Q}&{LOC}', 'loc': 'search.ddg',
             'en': None, 'test': 'result__a', 'kind': 'ddg'},
 }
-SIDE_ENGINES = {'C': ('gnews', 'wiki', 'searx'), 'G': ('bingnews', 'bingweb', 'ddg')}
+SIDE_ENGINES = {'C': ('gnews', 'wiki'), 'G': ('bingnews', 'bingweb', 'ddg')}
 # the English query goes to the engines that have an English edition
 EN_ENGINES = ('gnews', 'bingnews', 'bingweb')
 # the divergence search looks for a primary source: the web index first, the news index when the web gave nothing
@@ -130,20 +137,28 @@ CLEAN_PAIRS = (
     (r'(?m)^ +| +$', ''),
     (NOT_RECORD_RX, ''),
 )
-# one origin once: a later line with the same link, or a headline that starts the same way — a reprint of one wire
-# story in five papers is one piece of evidence, not five. Two different stories of one publisher both stay: how many
-# DIFFERENT publishers report a thing is a signal the model reads from the cards, not a filter of Duo's.
+# one origin once: a later line with the same link, or the same headline (the WHOLE headline, the snippet after « — »
+# aside) — a reprint of one wire story in five papers is one piece of evidence, not five. Headlines that only start
+# alike («… decided to keep the rate» / «… decided to raise the rate») are different news and both stay (the 6.11
+# check, astra). Two different stories of one publisher both stay: how many DIFFERENT publishers report a thing is a
+# signal the model reads from the cards, not a filter of Duo's.
 SAME_URL_RX = (r'(?m)^([^\n]*\t(\S+)\n(?:[^\n]*\n)*?)[^\n]*\t\2\n', '$1')
-SAME_TITLE_RX = (r'(?im)^([^\t\n]*\t[^\t\n]*\t([^\t\n]{25})[^\n]*\n(?:[^\n]*\n)*?)[^\t\n]*\t[^\t\n]*\t\2[^\n]*\n',
-                 '$1')
+SAME_TITLE_RX = (r'(?im)^([^\t\n]*\t[^\t\n]*\t((?:(?! — )[^\t\n])+)(?: — [^\t\n]*)?\t[^\n]*\n(?:[^\n]*\n)*?)'
+                 r'[^\t\n]*\t[^\t\n]*\t\2(?: — [^\t\n]*)?\t[^\n]*\n', '$1')
 DEDUP_PASSES = 3
 SEEN_RX = r'\A(?:[^\n]*\n){1,%d}' % RECORDS_SEEN
+# one engine's answer: only record lines (three tabs) stay, at most ENGINE_MAX of them
+ENGINE_KEEP_RX = (r'(?m)^(?![^\n]*\t[^\n]*\t[^\n]*\t)[^\n]*(?:\n|\z)', '')
+ENGINE_CUT_RX = (r'(?s)\A((?:[^\n]*\n){%d}).*\z' % ENGINE_MAX, '$1')
+# the age the phone counts may come with a minus (which date is «later» differs between iOS versions): the size only
+AGE_SIGN_RX = (r'[-\u2212\u2012\u2013]', '')
 RECORD_LINES_RX = r'(?m)^[^\n]*\t[^\n]+$'
-MARK = '§ '               # stands where Duo puts the number
-NUMBER_RX = r'(?s)\A(.*?)§ '
+MARK = '§ '               # stands where Duo puts the number — at the start of a line, so a «§ 573 BGB» headline keeps it
+NUMBER_RX = r'(?ms)\A(.*?)^§ '
 
-# ---- the query call's answer: list marks and quotes off; NONE = no search
-QUERY_CLEAN_RX = r'(?m)^[\s\-\*•\d\.\)"«“„]+|["»”]+[ \t]*$'
+# ---- the query call's answer: list marks («1.», «2)», «-») and quotes off — a year or a number that starts a query
+# stays («2026 Formula 1 champion», the 6.11 check: fable, astra); NONE = no search
+QUERY_CLEAN_RX = r'(?m)^[ \t]*(?:(?:[-*•]+|\d{1,2}[.)])[ \t]+)?["«“„]*|["»”]+[ \t]*$'
 QUERY_LINE_RX = r'\A[^\n]{3,%d}' % QUERY_MAX
 QUERY_REST_RX = r'\A[^\n]*\n+'
 NONE_RX = r'\A\s*NONE\b'
@@ -153,28 +168,54 @@ QUESTION_RX = r'\A\s*[^\n]{1,%d}' % QUERY_CHARS
 _U = r'https?://[^\s\)\]>"\'»”]*[^\s\)\]>"\'»”.,;:!?]'
 LINK_RX = _U
 LINK1_RX = (r'(?s)\A.*?(' + _U + r').*\z', '$1')
-LINK2_RX = (r'(?s)\A.*?(' + _U + r').*?(?!\1)(' + _U + r').*\z', '$2')
-LINK2_TEST_RX = r'(?s)(' + _U + r').*?(?!\1)(' + _U + r')'
+# the second link: any link but the first one itself — a deeper page of the same site counts (the 6.11 check, agy)
+# (each link whole: it ends where a link ends, so neither can be cut short to look different)
+_END = r'(?=[.,;:!?]*(?:[\s\)\]>"\'»”]|\z))'
+_NOT_FIRST = r'(?!\1' + _END + r')'
+LINK2_RX = (r'(?s)\A.*?(' + _U + r')' + _END + r'.*?' + _NOT_FIRST + r'(' + _U + r')' + _END + r'.*\z', '$2')
+LINK2_TEST_RX = r'(?s)(' + _U + r')' + _END + r'.*?' + _NOT_FIRST + r'(' + _U + r')' + _END
 HTML_STRIP = ((r'(?is)<(script|style|noscript|svg|head)\b.*?</\1>', ' '), (r'(?s)<[^>]+>', ' '),
               (r'&nbsp;|&#160;', ' '), (r'\s{2,}', ' '))
+# The pages are read through ONE reader, r.jina.ai (the 6.11 check: fable, opus): one permission window for every site
+# instead of one per new site in the middle of an answer; a dead site, a 404, a PDF (eur-lex, cbr.ru) or a page behind
+# a script come back as the reader's TEXT — an answer «Get Contents of URL» never throws on — instead of a network error
+# that stops the shortcut. The direct download stays as the spare, only when the reader itself is out (its rate limit).
+READER = 'https://r.jina.ai/'
+READER_OK_RX = r'Markdown Content:'
+READER_DEAD_RX = r'Target URL returned error|"code":\s*4(?!29)\d\d'   # the page is gone: no direct attempt either
+MD_STRIP = ((r'(?m)^URL Source: \S*\s*', ''), (r'Markdown Content:\s*', ''),
+            (r'!\[[^\]\n]*\]\([^)\n]*\)', ''), (r'\[([^\]\n]*)\]\([^)\n]*\)', '$1'),
+            (r'(?m)^[ \t]*[#>|*-]+[ \t]+', ''), (r'\s{2,}', ' '))
+# Google News hands out its own address that reaches the article only through a script (and the reader is refused
+# there): such a card is found again by its headline in the web index, and that page is read
+GNEWS_LINK_RX = r'^https?://news\.google\.'
+ASKED_CHARS = 2500        # the page linked in the question (No.112): this much of it goes to each model
 PAGE_RX = r'(?s)\A.{1,%d}' % PAGE_CHARS
 CHUNK1_RX = r'(?s)\A.{1,%d}' % CHUNK
 CHUNK2_RX = (r'(?s)\A.{%d}(.{1,%d}).*\z' % (CHUNK, CHUNK), '$1')
 
 # ---- the divergence search: «claim || query || site» per line, at most CLAIMS_MAX lines
 CLAIM_LINE_RX = r'(?m)^[^\n|]{4,}\|\|[^\n|]{3,}(?:\|\|[^\n|]*)?$'
-CLAIM_REST_RX = r'\A[^\n]*\n+'
+# the claims answered: everything up to and including the claim line just used — also when it is the last line with
+# no line break after it, or when a line of other text stands before it (the 6.11 check, astra: one claim twice)
+CLAIM_REST_RX = r'\A(?:[^\n]*\n)*?[^\n|]{4,}\|\|[^\n|]{3,}(?:\|\|[^\n|]*)?(?:\n+|\z)'
 CLAIM_TEXT_RX = (r'\A\s*([^|]*?)\s*\|\|.*\z', '$1')
 CLAIM_QUERY_RX = (r'\A[^|]*\|\|\s*([^|]*?)\s*(?:\|\|.*)?\z', '$1')
-CLAIM_SITE_RX = (r'\A[^|]*\|\|[^|]*\|\|\s*(?:https?://)?(?:www\.)?([a-z0-9-]+(?:\.[a-z0-9-]+)+)\S*\s*\z', ' site:$1')
-CLAIM_NO_SITE_RX = r'\A[^|]*\|\|[^|]*\|\|\s*(?:https?://)?(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)+'
+# «Match Text» ignores case and the «Replace Text» here does not: both read the site the same way — any case, and
+# whatever follows the host («ecb.europa.eu (official site)», «ECB.europa.eu/press») (the 6.11 check, opus)
+CLAIM_SITE_RX = (r'(?i)\A[^|]*\|\|[^|]*\|\|\s*(?:https?://)?(?:www\.)?([a-z0-9-]+(?:\.[a-z0-9-]+)+)[^|\n]*\s*\z',
+                 ' site:$1')
+CLAIM_NO_SITE_RX = r'(?i)\A[^|]*\|\|[^|]*\|\|\s*(?:https?://)?(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)+'
 FIRST_RECORD_RX = r'\A[^\n]+'
 
 # ---- deep research: the card numbers a model picked, the line with its next query
 ENOUGH_RX = r'(?i)\A\s*(?:ENOUGH|NONE)\b'
 MORE_QUERY_RX = (r'(?is)\A\s*(?:QUERY\s*:\s*)?([^\n]{3,%d}).*\z' % QUERY_MAX, '$1')
 PICK_CODE_RX = r'\A\S+'
-PICK_URL_RX = r'\S+\z'
+# a picked line: «<code> <url> <headline>»
+PICK_LINE_RX = (r'(?m)^(\S+) (?:[^\n]*· )?([^\n]*)\n(\S+)$', '$1 $3 $2')
+PICK_URL_RX = (r'(?s)\A\S+ (\S+).*\z', '$1')
+PICK_TITLE_RX = (r'(?s)\A\S+ \S+ ?', '')
 
 # ---- variables
 NET, QUERIES = 'PolyNet', 'PolyQueries'
@@ -183,6 +224,9 @@ CHECKS, PAGE, VERDICT = 'PolyChecks', 'PolyPage', 'PolyVerdict'
 LIST_V = 'PolySourceListV'
 CLAIMS, PICKS, NEWCARDS = 'PolyClaims', 'PolyPicks', 'PolyNewCards'
 CITED = 'PolyCited'
+READ_URL = 'PolyReadUrl'
+NOWEB = 'PolyNoWeb'       # the query call said NONE: the web cannot help this question (no divergence search either)
+LIST_U = 'PolySourceListU'
 
 
 def prefixes():
@@ -293,15 +337,52 @@ def fetch(L, engine, query, target, english=False):
                             {'D': (date, 'Matches'), 'T': (title, 'Matches'), 'B': (body, 'Matches'),
                              'U': (link, 'Matches')})]
     else:
-        steps, last = pipeline((txt, 'Text'), parse_pairs(engine))
+        steps, last = pipeline((txt, 'Text'), (*parse_pairs(engine), ENGINE_KEEP_RX, ENGINE_CUT_RX))
         acts += [*steps, *append_to(target, '\n{R}\n', {'R': last})]
     return acts + [if_close(g)]
 
 
-def clean_records(var):
-    """The records of a side: one form, reprints glued, at most RECORDS_SEEN kept for ordering."""
+def sort_newest_first(var):
+    """The record lines of `var` sorted Z→A: «2026-11-22…» before «2026-11-02…», the undated lines (they start with a
+    tab) last — the order by age inside each bucket of `cards` (the 6.11 check, sol: the engines' own order is not an
+    age). «Filter Files» sorts any list by Name, a text's name being the text; should it give nothing on some iOS,
+    the lines stay in their first order."""
+    get, lines, srt, joined, g = (u() for _ in range(5))
+    return [act_get_variable(var, get),
+            {'WFWorkflowActionIdentifier': 'is.workflow.actions.text.split',
+             'WFWorkflowActionParameters': {'text': text_token('{T}', {'T': (get, 'Variable')}),
+                                            'WFTextSeparator': 'New Lines', 'UUID': lines}},
+            {'WFWorkflowActionIdentifier': 'is.workflow.actions.filter.files',
+             'WFWorkflowActionParameters': {'WFContentItemInputParameter': attachment(lines, 'Split Text'),
+                                            'WFContentItemSortProperty': 'Name',
+                                            'WFContentItemSortOrder': 'Z to A', 'UUID': srt}},
+            {'WFWorkflowActionIdentifier': 'is.workflow.actions.text.combine',
+             'WFWorkflowActionParameters': {'text': attachment(srt, 'Files'), 'WFTextSeparator': 'New Lines',
+                                            'UUID': joined}},
+            act_first_match(joined, 'Text', RECORD_LINES_RX, g),
+            *if_output_set(var, g, joined)]
+
+
+def if_output_set_plain(var, match_uid):
+    """`var` = the match, only when there is one."""
+    g = u()
+    return [if_output(g, match_uid, 'Matches', 100), act_set_variable(var, match_uid, 'Matches'), if_close(g)]
+
+
+def if_output_set(var, test_uid, joined_uid):
+    """`var` = the joined text (with a line break after it), only when the test found a record line in it."""
+    g, txt = u(), u()
+    return [if_output(g, test_uid, 'Matches', 100),
+            act_text(text_token('{J}\n', {'J': (joined_uid, 'Text')}), txt),
+            act_set_variable(var, txt, 'Text'),
+            if_close(g)]
+
+
+def clean_records(var, ordered=True):
+    """The records of a side: one form, reprints glued, newest first."""
     return [*replace_var(var, CLEAN_PAIRS),
-            *replace_var(var, (SAME_URL_RX, SAME_TITLE_RX), times=DEDUP_PASSES)]
+            *replace_var(var, (SAME_URL_RX, SAME_TITLE_RX), times=DEDUP_PASSES),
+            *(sort_newest_first(var) if ordered else [])]
 
 
 def cards(L, side, now, start, count, records=None, packet=None, listing=None, item='Repeat Item'):
@@ -314,6 +395,7 @@ def cards(L, side, now, start, count, records=None, packet=None, listing=None, i
     b_pack = ['PolyB%dP' % i for i in range(3)]
     b_list = ['PolyB%dL' % i for i in range(3)]
     get, seen, recs, g_rep, it, day, g_day, days, age, p_line, s_line, g_b1, g_b2, num = (u() for _ in range(14))
+    a_date, d_txt, d_abs = u(), u(), u()
     acts = [*(a for v in b_pack + b_list for a in clear_variable(v)),
             act_get_variable(records, get),
             act_first_match(get, 'Variable', SEEN_RX, seen),
@@ -322,14 +404,20 @@ def cards(L, side, now, start, count, records=None, packet=None, listing=None, i
             act_get_variable(item, it),
             act_first_match(it, 'Variable', r'^\d{4}-\d\d-\d\d', day),
             if_output(g_day, day, 'Matches', 100),
-            act_time_between(now, 'Date', day, 'Matches', 'Days', days),
-            act_text(text_token(L['search.age'], {'N': (days, 'Time Between Dates')}), age),
+            # «2026-11-22» made a date first (agy: a bare text may not read as one on every region setting), and the
+            # number of days taken without its sign (sol: the count came out negative, and every old record «fresh»)
+            {'WFWorkflowActionIdentifier': 'is.workflow.actions.detect.date',
+             'WFWorkflowActionParameters': {'WFInput': text_token('{D}', {'D': (day, 'Matches')}), 'UUID': a_date}},
+            act_time_between(now, 'Date', a_date, 'Dates', 'Days', days),
+            act_text(text_token('{N}', {'N': (days, 'Time Between Dates')}), d_txt),
+            act_replace_regex(d_txt, 'Text', AGE_SIGN_RX[0], AGE_SIGN_RX[1], d_abs),
+            act_text(text_token(L['search.age'], {'N': (d_abs, 'Updated Text')}), age),
             # for the models: no link (a model can neither open it nor is it to copy it)
             act_replace_regex_token(it, 'Variable', RECORD_RX,
                                     text_token(MARK + '$1 ({A}) · $2 · $3', {'A': (age, 'Text')}), p_line),
             act_replace_regex(it, 'Variable', RECORD_RX, MARK + '$1 · $2 · $3\n$4', s_line),
             # D-100: a number condition takes a Number (or a Count), never another action's output straight
-            act_number(days, 'Time Between Dates', num),
+            act_number(d_abs, 'Updated Text', num),
             if_output(g_b1, num, 'Number', 0, WFNumberValue=AGE_BUCKETS[0]),
             *append_to(b_pack[0], '{L}\n', {'L': (p_line, 'Updated Text')}),
             *append_to(b_list[0], '{L}\n', {'L': (s_line, 'Updated Text')}),
@@ -382,18 +470,20 @@ def query_lines(L, qsrc, ask_claude, today):
             *replace_var(QUERIES, ((QUERY_CLEAN_RX, ''),))]
 
 
-def search_block(L, qsrc, long_question, ask_claude, now, today):
+def search_block(L, qsrc, long_question, ask_claude, now, today, item='Repeat Item'):
     """Leaves, per side, the packet (for the model) and the source list (for the person) set or empty; with no
     network, a long pasted text or NONE from the query call, all stay empty and the run goes on from memory.
     `ask_claude(prompt_uid, uid)`: the short «Ask Claude» action; `now`: a Current Date action's uid; `today`: the
-    special attachment of today's date."""
+    special attachment of today's date; `item`: the name of a «Repeat with Each» item where the block runs (inside
+    the draft's «Repeat 3 times» it is «Repeat Item 2»)."""
     (q_txt, q_cnt, g_long, net_get, g_net, q_all, g_none, none_m, q1, g_q1, q_cut, q_rest, q2, g_q2, q_rest2, q3,
      g_q3, g_deep) = (u() for _ in range(18))
     sides = prefixes()
     acts = [*(a for s in ('C', 'G', 'S') for v in (records_var(s), packet_var(s), list_var(s))
               for a in clear_variable(v)),
             *(a for m in ('C', 'G') for a in clear_variable(notes_var(m))),
-            *clear_variable(CHECKS), *clear_variable(LIST_V), *clear_variable(QUERIES),
+            *clear_variable(CHECKS), *clear_variable(LIST_V), *clear_variable(QUERIES), *clear_variable(NOWEB),
+            *clear_variable(LIST_U),
             act_text(text_token('{Q}', {'Q': qsrc}), q_txt),
             act_count_chars(q_txt, 'Text', q_cnt),
             if_output(g_long, q_cnt, 'Count', 2, WFNumberValue=long_question - 1),
@@ -439,26 +529,58 @@ def search_block(L, qsrc, long_question, ask_claude, now, today):
         g_any = u()
         acts += [*clean_records(records_var(side)),
                  *if_text(g_any, records_var(side)),
-                 *cards(L, side, now, 1, CARDS_MAX),
+                 *cards(L, side, now, 1, CARDS_MAX, item=item),
                  if_close(g_any)]
-    return acts + [if_close(g_none), if_close(g_net), if_close(g_long)]
+    acts += [if_else(g_none), *set_text(NOWEB, '1'), if_close(g_none)]
+    return acts + [*asked_page(q_txt), if_close(g_net), if_close(g_long)]
+
+
+def asked_page(q_txt):
+    """No.112 (the 6.11 check: fable, sol, astra, kimi, opus): a link in the question itself is read FIRST, whatever the
+    query call said — «is this true? <link>» is about that page. Up to ASKED_CHARS of it go to BOTH models as source
+    [U1] (it is the question's own material, so the two answers stay independent); «Sources» lists its link."""
+    found, g, link, link_t, g_page, cut_get = (u() for _ in range(6))
+    acts = [act_first_match(q_txt, 'Text', LINK_RX, found),
+            if_output(g, found, 'Matches', 100),
+            act_step('asked_page'),
+            act_replace_regex(q_txt, 'Text', LINK1_RX[0], LINK1_RX[1], link),
+            act_text(text_token('{U}', {'U': (link, 'Updated Text')}), link_t),
+            *read_page((link_t, 'Text'), r'(?s)\A.{1,%d}' % ASKED_CHARS, 'PolyAskedPage'),
+            *if_text(g_page, 'PolyAskedPage'),
+            act_get_variable('PolyAskedPage', cut_get),
+            *set_text(LIST_U, '[U1] {U}\n', {'U': (link_t, 'Text')})]
+    for side in prefixes():
+        acts += append_to(packet_var(side), '[U1] (the page linked in the question) {P}\n',
+                          {'P': (cut_get, 'Variable')})
+    return acts + [if_close(g_page), if_close(g)]
 
 
 # ------------------------------------------------------------------ reading a page
 
 def read_page(url, cut_rx, target_var):
-    """«Get Contents of URL» → «Get Article using Safari Reader»; when the Reader gives nothing, the page's own text
-    with the tags taken off. `target_var` gets at most what `cut_rx` keeps (or stays empty)."""
-    page, art, art_t, g_blank, html, p_get, cut = (u() for _ in range(7))
-    return [act_download(text_token('{U}', {'U': url}), page),
-            act_get_article(page, 'Contents of URL', art),
-            act_text(text_token('{A}', {'A': (art, 'Article')}), art_t),
-            act_set_variable(PAGE, art_t, 'Text'),
-            *if_text(g_blank, PAGE, present=False),
+    """A page through the reader (READER): its text (title, date of publication, the page as plain text); a page that
+    is gone leaves `target_var` empty; only when the reader itself is out (no «Markdown Content:», no error of the
+    page) the page is downloaded directly and its tags taken off. No «Safari Reader» step: on a table, a PDF or an
+    error page it stops the shortcut instead of giving nothing (the 6.11 check, agy). `target_var` gets at most what
+    `cut_rx` keeps (or stays empty)."""
+    r_url, r_dl, r_txt, dead, g_dead, ok, g_ok, page, html, p_get, cut = (u() for _ in range(11))
+    return [*clear_variable(PAGE),
+            act_text(text_token(READER + '{U}', {'U': url}), r_url),
+            act_download(text_token('{U}', {'U': (r_url, 'Text')}), r_dl),
+            act_text(text_token('{C}', {'C': (r_dl, 'Contents of URL')}), r_txt),
+            act_first_match(r_txt, 'Text', READER_DEAD_RX, dead),
+            if_output(g_dead, dead, 'Matches', 101),
+            act_first_match(r_txt, 'Text', READER_OK_RX, ok),
+            if_output(g_ok, ok, 'Matches', 100),
+            act_set_variable(PAGE, r_txt, 'Text'),
+            *replace_var(PAGE, MD_STRIP),
+            if_else(g_ok),
+            act_download(text_token('{U}', {'U': url}), page),
             act_text(text_token('{C}', {'C': (page, 'Contents of URL')}), html),
             act_set_variable(PAGE, html, 'Text'),
             *replace_var(PAGE, HTML_STRIP),
-            if_close(g_blank),
+            if_close(g_ok),
+            if_close(g_dead),
             act_get_variable(PAGE, p_get),
             act_first_match(p_get, 'Variable', cut_rx, cut),
             act_set_variable(target_var, cut, 'Matches')]
@@ -521,8 +643,12 @@ def divergence_block(L, question, gpt_answer, claude_answer, claude_check, skip_
     depth, not on a resumed run. `question`, `gpt_answer`, `claude_answer`: (uid, output) refs."""
     g_quick, g_skip, net_get, g_net, prompt, call, g_any, c_all = (u() for _ in range(8))
     ga, ca = u(), u()
+    g_noweb = u()
     acts = [*if_text(g_quick, QUICK, present=False),
             *if_text(g_skip, skip_var, present=False),
+            # a question the web cannot help (NONE: why the sky is blue, how mRNA works) has nothing to look up
+            # (the 6.11 check, kimi)
+            *if_text(g_noweb, NOWEB, present=False),
             *network_guard(NET),
             act_get_variable(NET, net_get),
             if_output(g_net, net_get, 'Variable', 100),
@@ -593,12 +719,12 @@ def divergence_block(L, question, gpt_answer, claude_answer, claude_check, skip_
         src = (rest, 'Updated Text')
         closers.append(if_close(g_line))
     # the claims are nested (claim 2 only after a claim 1), so the Ifs close in reverse
-    return acts + closers[::-1] + [if_close(g_net), if_close(g_skip), if_close(g_quick)]
+    return acts + closers[::-1] + [if_close(g_net), if_close(g_noweb), if_close(g_skip), if_close(g_quick)]
 
 
 # ------------------------------------------------------------------ deep research
 
-def research_block(L, model, side, ask, qsrc, now, today):
+def research_block(L, model, side, ask, qsrc, now, today, item='Repeat Item'):
     """Deep research of one model (`model`: 'C' Claude or 'G' ChatGPT) on the cards of `side`: it picks up to
     PICK_MAX pages; Duo reads each in up to CHUNKS parts, each part one short call of that model that returns a dated
     note; the model then says ENOUGH or gives one new query; a second round searches the side's own engines, adds up
@@ -625,22 +751,41 @@ def research_block(L, model, side, ask, qsrc, now, today):
                 act_get_variable(list_var(side), lst)]
         for n in range(start, start + count):
             hit, g, entry = u(), u(), u()
-            out += [act_first_match(reply, 'Text', r'(?<![\d])%d(?![\d])' % n, hit),
+            out += [act_first_match(reply, 'Text', r'(?<![\dU])%d(?![\d])' % n, hit),
                     if_output(g, hit, 'Matches', 100),
                     act_first_match(lst, 'Variable', entry_url_rx(side, n), entry),
                     *append_to(PICKS, '%s%d {E}\n' % (side, n), {'E': (entry, 'Matches')}),
                     if_close(g)]
-        # «<code> <line>\n<url>» → «<code> <url>», at most `limit` pages
-        out += replace_var(PICKS, ((r'(?m)^(\S+) [^\n]*\n(\S+)$', '$1 $2'),))
+        # «<code> <line>\n<url>» → «<code> <url> <headline>», at most `limit` pages
+        out += replace_var(PICKS, (PICK_LINE_RX,))
         pk, firsts, lines, g_rep, it, code, url, cnt, g_more = (u() for _ in range(9))
+        title, g_gn, gn, rec, first, real, rd_get = (u() for _ in range(7))
+        resolve = 'PolyResolve'
         out += [act_get_variable(PICKS, pk),
                 act_first_match(pk, 'Variable', r'\A(?:[^\n]*\n?){1,%d}' % limit, firsts),
-                act_first_match(firsts, 'Matches', r'(?m)^\S+ https?://\S+$', lines),
+                act_first_match(firsts, 'Matches', r'(?m)^\S+ https?://[^\n]+$', lines),
                 repeat_open(g_rep, lines, 'Matches'),
-                act_get_variable('Repeat Item', it),
+                act_get_variable(item, it),
                 act_first_match(it, 'Variable', PICK_CODE_RX, code),
-                act_first_match(it, 'Variable', PICK_URL_RX, url),
-                *read_page((url, 'Matches'), r'(?s)\A.{1,%d}' % (CHUNK * CHUNKS), 'PolyResearchPage'),
+                act_replace_regex(it, 'Variable', PICK_URL_RX[0], PICK_URL_RX[1], url),
+                act_set_variable(READ_URL, url, 'Updated Text'),
+                # a Google News card (the 6.11 check: fable, agy, opus, kimi — read through its own link it gives
+                # nothing): its headline is looked up in the web index and that page is read
+                act_first_match(url, 'Updated Text', GNEWS_LINK_RX, gn),
+                if_output(g_gn, gn, 'Matches', 100),
+                act_replace_regex(it, 'Variable', PICK_TITLE_RX[0], PICK_TITLE_RX[1], title),
+                *clear_variable(resolve),
+                *fetch(L, 'bingweb', (title, 'Updated Text'), resolve),
+                *clean_records(resolve, ordered=False),
+                act_get_variable(resolve, rec),
+                act_first_match(rec, 'Variable', FIRST_RECORD_RX, first),
+                act_replace_regex(first, 'Matches', RECORD_RX, '$4', real),
+                act_first_match(real, 'Updated Text', r'\Ahttps?://\S+\z', rd_get),
+                *if_output_set_plain(READ_URL, rd_get),
+                if_close(g_gn)]
+        read_get = u()
+        out += [act_get_variable(READ_URL, read_get),
+                *read_page((read_get, 'Variable'), r'(?s)\A.{1,%d}' % (CHUNK * CHUNKS), 'PolyResearchPage'),
                 act_get_variable('PolyResearchPage', cnt)]
         g_page = u()
         out += [*if_text(g_page, 'PolyResearchPage')]
@@ -695,7 +840,7 @@ def research_block(L, model, side, ask, qsrc, now, today):
     g_new, new_get = u(), u()
     acts += [*clean_records(tmp),
              *if_text(g_new, tmp),
-             *cards(L, side, now, CARDS_MAX + 1, ROUND2_MAX, records=tmp),
+             *cards(L, side, now, CARDS_MAX + 1, ROUND2_MAX, records=tmp, item=item),
              act_get_variable(NEWCARDS, new_get),
              *pick_and_read((new_get, 'Variable'), CARDS_MAX + 1, ROUND2_MAX, PICK2_MAX),
              if_close(g_new),
@@ -704,12 +849,37 @@ def research_block(L, model, side, ask, qsrc, now, today):
     return acts + [if_close(g_net), if_close(g_have)]
 
 
+# ------------------------------------------------------------------ the first run
+
+def warm_up_addresses(L):
+    """One address on each host the search and the reader use (both Bing engines share www.bing.com)."""
+    hosts, out = set(), []
+    for side in ('C', 'G'):
+        for engine in SIDE_ENGINES[side]:
+            url = engine_address(L, engine).replace('{Q}', 'duo')
+            host = url.split('/')[2]
+            if host not in hosts:
+                hosts.add(host)
+                out.append(url)
+    return out + [READER + 'https://example.com/']
+
+
+def warm_up(L):
+    """The Setup: each host once (behind the network guard), so iOS asks for every site at the Setup — 5 windows,
+    then none in the middle of a run (a page is read through the reader's one host)."""
+    net_get, g_net = u(), u()
+    acts = [*network_guard(NET), act_get_variable(NET, net_get), if_output(g_net, net_get, 'Variable', 100)]
+    for url in warm_up_addresses(L):
+        acts.append(act_download(url, u()))
+    return acts + [if_close(g_net)]
+
+
 # ------------------------------------------------------------------ the sources under the result
 
 def card_numbers():
     """(prefix, highest number) of every list Duo may print."""
     top = CARDS_MAX + ROUND2_MAX
-    return [(p, top) for p in prefixes()] + [('V', CLAIMS_MAX)]
+    return [(p, top) for p in prefixes()] + [('V', CLAIMS_MAX), ('U', 1)]
 
 
 def append_sources(L, result_var):
@@ -721,7 +891,7 @@ def append_sources(L, result_var):
             act_get_variable(result_var, res)]
     for prefix, top in card_numbers():
         lst = u()
-        acts.append(act_get_variable(LIST_V if prefix == 'V' else list_var(prefix), lst))
+        acts.append(act_get_variable({'V': LIST_V, 'U': LIST_U}.get(prefix) or list_var(prefix), lst))
         for n in range(1, top + 1):
             hit, g, entry = u(), u(), u()
             acts += [act_first_match(res, 'Variable', cited_rx(prefix, n), hit),

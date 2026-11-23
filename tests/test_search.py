@@ -251,12 +251,14 @@ def test_each_model_gets_its_own_engines_all_at_once_before_any_answer(tmp_path,
     for start, end in critiques(actions):
         head = head_of(actions[start:end])
         addresses = [text_of(a) for a in head if kind(a) == 'gettext' and text_of(a).startswith('https://')]
-        hosts = {'news.google.com/rss/search': 0, '.wikipedia.org/w/api.php': 0, 'searx.be/search': 0,
+        hosts = {'news.google.com/rss/search': 0, '.wikipedia.org/w/api.php': 0,
                  'www.bing.com/news/search': 0, 'www.bing.com/search': 0, 'html.duckduckgo.com/html': 0}
+        # SearXNG is off the default path (the 6.11 check): searx.be answers with a browser check
+        assert not any('searx.be' in t for t in addresses)
         for t in addresses:
             for h in hosts:
                 hosts[h] += h in t
-        # query 1 to all six, the English query to the three with an English edition, query 3 (deep) to the same
+        # query 1 to all five, the English query to the three with an English edition, query 3 (deep) to the same
         # three; deep research's second round (main Critique only) to each side's own three engines
         assert all(hosts[h] >= 1 for h in hosts), hosts
         assert any(t.endswith(ui['news']) for t in addresses if 'news.google.com' in t)
@@ -270,6 +272,7 @@ def test_each_model_gets_its_own_engines_all_at_once_before_any_answer(tmp_path,
         # every network action sits behind the guard that cannot throw (Wi-Fi name, else the cellular radio)
         guard = next(i for i, a in enumerate(head) if kind(a) == 'getwifi')
         network = [i for i, a in enumerate(head) if kind(a) in ('downloadurl', 'getarticle')]
+        assert not any(kind(a) == 'getarticle' for a in head)      # no Safari Reader: it throws on a non-article
         assert network and min(network) > guard
         # the query call: Claude, before any engine, with only the question and today's date
         search = next(i for i, a in enumerate(head) if is_step(a, 'search_queries'))
@@ -360,7 +363,9 @@ def test_check_reads_pages_after_both_answers_and_never_in_quick(tmp_path, lang)
         web = [a for a in part if kind(a) == 'gettext' and text_of(a).startswith('https://www.bing.com/search?q=')]
         news = [a for a in part if kind(a) == 'gettext' and text_of(a).startswith('https://www.bing.com/news/search?q=')]
         assert len(web) == len(news) == S.CLAIMS_MAX
-        assert sum(kind(a) == 'getarticle' for a in part) == S.CLAIMS_MAX + S.LINK_MAX
+        # every page through the one reader (one host, one permission window), the direct download as its spare
+        reader = [a for a in part if kind(a) == 'gettext' and text_of(a).startswith(S.READER)]
+        assert len(reader) == S.CLAIMS_MAX + S.LINK_MAX and not any(kind(a) == 'getarticle' for a in part)
 
 
 def test_claim_lines_are_read_into_claim_query_and_site():
@@ -485,7 +490,7 @@ def test_every_answer_may_come_in_parts_and_service_calls_never_do(tmp_path, lan
     for i, a in continuing:
         opened = [j for j in range(i - 6, i) if kind(raw[j]) == 'conditional'
                   and params(raw[j]).get('WFCondition') == 100
-                  and kind(raw[j - 1]) == 'match' and params(raw[j - 1])['WFMatchTextPattern'] == MORE_RX]
+                  and kind(raw[j - 1]) == 'match' and params(raw[j - 1])['WFMatchTextPattern'].startswith(MORE_RX + '|')]
         assert opened, i
     folded = fold_continuation(raw)
     assert sum(kind(a) in key for a in folded) == len(calls) - len(continuing)

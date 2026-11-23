@@ -38,6 +38,18 @@ def with_gpt_retry(actions, skip=()):
 DEFAULT_PARTS = 2                       # an answer is one call, or two when it ends with [[MORE]]
 MORE_RX = r'\[\[MORE\]\]'
 MORE_STRIP_RX = r'\s*\[\[MORE\]\]\s*'
+# The 6.11 check (agy No.158, kimi): an answer cut off WITHOUT the marker — near the call's measured cap, its last
+# paragraph (40+ characters, not a list line) ending on a letter, a digit or a comma — is continued as if it had the
+# marker. A finished answer ends on a full stop, a bracket, a source code or a list line and costs no call.
+CUT_CHARS = {'Ask ChatGPT': 3200, 'Ask Claude': 1600}
+
+
+def cut_rx(chars):
+    return (r'\A(?=[\s\S]{%d})(?:[\s\S]*\n)?[^\n\-*•\d\s][^\n]{38,}(?:[^\W_]|[,;:–-])\s*\z' % chars)
+
+
+def more_or_cut_rx(output):
+    return MORE_RX + '|' + cut_rx(CUT_CHARS[output])
 
 
 def splice_token(template, inserts):
@@ -106,7 +118,7 @@ def with_continuation(actions, template):
             get, more, g, begin, ptxt, call, nxt, joined = (new_uuid() for _ in range(8))
             made.add(call)
             out += [act_get_variable(var, get),
-                    act_first_match(get, 'Variable', MORE_RX, more),
+                    act_first_match(get, 'Variable', more_or_cut_rx(output), more),
                     if_output(g, more, 'Matches', 100),
                     act_replace_regex(get, 'Variable', MORE_STRIP_RX, '', begin),
                     act_text(splice_token(template, {'REQUEST': request, 'BEGINNING': (begin, 'Updated Text')}), ptxt),

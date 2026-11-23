@@ -44,7 +44,10 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
             'https://polyhelper.ai/duo/version.json']
     if key == 'duo':
         # D-128: the first-run Setup (before the question) visits both addresses, the weekly check stays at the end
-        assert urls == pair + [pair[1]] + pair
+        # Duo 6.11: the Setup also calls each search host and the reader once (their «Allow» windows come there)
+        warm = [u for u in urls if u not in pair]
+        assert len(warm) == 5 and 'r.jina.ai' in warm[-1]
+        assert [u for u in urls if u in pair] == pair + [pair[1]] + pair
         actions = actions[max(i for i, a in enumerate(actions) if a['WFWorkflowActionIdentifier'].endswith('.ask')):]
         urls = [p['WFURL'] for p in params(actions, 'downloadurl') if isinstance(p['WFURL'], str)]
     assert urls == pair
