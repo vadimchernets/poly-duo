@@ -6,7 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-## [1.0.9] — not released — Duo 6.9 (built-in number duo 15 when released)
+## [1.0.9] — 2026-11-22 — Duo 6.9 (built-in number duo 15)
+
+Signed Duo files for 12 languages in `releases/` (SHA256SUMS), built from ca96a42 with duo 15; run on an iPhone by the
+owner (5 Critique questions: the ⚠ line came exactly where it should). Trio files are unchanged. The iCloud links in
+`releases/version.json`, README and `docs/*/install.md` are re-created from these files on a device (Share → Copy
+iCloud Link).
 
 ### Added — «Both models may not know this» (KI Forum 226, post 1762, Karl, 22.11.2026)
 - **Critique no longer counts two matching guesses as a confirmation.** The comparing step is told today's date (from
