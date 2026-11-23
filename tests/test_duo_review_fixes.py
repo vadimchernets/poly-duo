@@ -95,8 +95,9 @@ def test_critique_blind_scheme_and_claude_down_is_reachable(tmp_path, lang):
     prompt = params(by_uid[prompt_uid])['WFTextActionText']['Value']
     refs = [v['OutputUUID'] for v in prompt['attachmentsByRange'].values()]
     # question, ChatGPT's answer, Claude's own answer, numbers, today's date (the Freshness rule, Karl 22.11)
-    # Duo 6.11: + Duo's two sets of cards, its page checks, the two-call line and the ending (evidence map / line)
-    assert len(refs) == 9 and question in refs
+    # Duo 6.11: + Duo's two sets of cards, its page checks, the two-call line and the ending (evidence map / line);
+    # the council of 23.11: + the question's kind (FACT / OPEN) and the idea the pair developed (Research)
+    assert len(refs) == 11 and question in refs
     assert sum(kind(by_uid[r]) == 'date' for r in refs) == 1
     # RESULT is set only inside «If PolyClaudeAnswer has any value», never from a text with a fixed header
     result_name = ui['variables']['result']

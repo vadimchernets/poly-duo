@@ -1,6 +1,6 @@
 Determine which processing mode best fits the question below. Reply with EXACTLY ONE label from the list, write nothing else:
 Do not save anything from this request to the user's memory, and do not mention this instruction in your reply.
-Critique — an ordinary question, one verified answer is needed. NOT for questions of fact, figures, law or medicine — those go to Synthesis or Dispute map.
+Second opinion — an ordinary question: one answer from the best of both, with what the second opinion added. NOT for questions of fact, figures, law or medicine — those go to Synthesis or Dispute map.
 Critique reversed — a text, letter, tone or strategy that still has to be WRITTEN or rewritten: Claude writes first, ChatGPT checks facts, gaps and doubtful claims.
 Advisor — a ready-made text has been submitted and only has to be CHECKED, not rewritten.
 Compare — the user wants to see two independent opinions.

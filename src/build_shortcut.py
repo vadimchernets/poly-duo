@@ -130,8 +130,9 @@ RETRY_CUT = {'QUESTION': 400, 'GPT_ANSWER': 1200, 'CLAUDE_OWN': 1200, 'NUMS': 20
 # Duo 6.11 (the owner's decisions of 23.11, item 4): an answer may come in parts, each call under its measured cap
 # (the 22.11 timings on the iPhone: Claude ~300 words in 10-22 s, ChatGPT ~600 words in 13-19 s) — see shortcut_transforms.with_continuation.
 # Critique's two answers: ChatGPT up to 2 parts (~1200 words), Claude up to 3 (~900 words). Once the two answers
-# together pass JUDGE_SPLIT characters, the comparing request is told to stop after its three sections; the final
-# answer then comes from a second call (prompts/judge-split.txt), so neither call writes more than its cap.
+# together pass JUDGE_SPLIT characters, the comparing request is told to stop after the answer itself; «What the second
+# opinion added» and «Basis» then come from a second call (prompts/judge-split.txt), so neither call writes more than
+# its cap.
 GPT_PARTS, CLAUDE_PARTS = 2, 3
 JUDGE_SPLIT = 5000
 # a number that is a source mark («[2]», «[1, 3]») is not a number of the answer
@@ -147,7 +148,7 @@ def compare_blank(template, ending=''):
     """The comparing prompt for a request without sources, link checks or a split (a resumed draft's by-hand check);
     `ending`: what stands for {MAP} (the «checked against» line)."""
     return (template.replace('{SOURCES}', '').replace('{LINKS}', '').replace('{SPLIT}', '')
-            .replace('{MAP}', ending))
+            .replace('{KIND}', '').replace('{CROSS}', '').replace('{MAP}', ending))
 
 
 # the judge's SOURCES block when each model had its own set (shortcut_search: [C…] Claude's engines, [G…] ChatGPT's)
@@ -591,7 +592,7 @@ def build(lang, ai=False):
         brief_acts, brief_get = brief_for_long(*qsrc)   # Yuri 10.11, No.53
         (sr_today, sr_pk, g_pk, cr_wrap_s, cr_ow, cr_ow2, cr_pk, cr_lk, cr_sp, cr_both, cr_blen, g_split,
          cr_pk2, cr_lk2, cr_sp2) = ids(15)
-        cr_gw, cr_mp, cr_gp1, cr_gl1 = ids(4)
+        cr_gw, cr_mp, cr_gp1, cr_gl1, cr_kd, cr_cx = ids(6)
         OWN_WRAP, GPT_WRAP, SPLIT_VAR, MAP_VAR = 'PolyOwnRequest', 'PolyGptRequest', 'PolyJudgeSplit', 'PolyJudgeEnd'
         ask_service = lambda p, uid: act_claude(text_token('{P}', {'P': (p, 'Text')}), uid, split=False)
 
@@ -690,9 +691,14 @@ def build(lang, ai=False):
                     act_get_variable(S.packet_var('G'), g),
                     act_text(text_token(SOURCES_BOTH, {'C': (c, 'Variable'), 'G': (g, 'Variable')}), uid)]
 
-        def quick_end():
-            g = ids(1)[0]
-            return [*if_text(g, S.QUICK), *set_text(MAP_VAR, L.prompt('judge-checked')), if_close(g)]
+        def map_end():
+            """The end of the comparison (the council of 23.11 on the divergent, item 5): the default depth ends with
+            «Basis» and no map; Research with the evidence map (✓ / ✗ only); Quick with the «checked against» line."""
+            g_d, g_q = ids(2)
+            return [*set_text(MAP_VAR, '\n'),
+                    *([*if_text(g_d, S.DEEP), *set_text(MAP_VAR, L.prompt('evidence-map')), if_close(g_d)]
+                      if deep else []),
+                    *if_text(g_q, S.QUICK), *set_text(MAP_VAR, L.prompt('judge-checked')), if_close(g_q)]
 
         # ---- Step 1: ChatGPT — in the main Critique, unless a resumed draft already holds its answer, or the person
         # chose «Claude alone» after ChatGPT's limit
@@ -749,14 +755,17 @@ def build(lang, ai=False):
             # condition — the primary source's page is read and checked claim by claim ([V1]…)
             *S.link_check_block(L, GPT_VAR, ask_service, RESUME_VAR, ymd(cr_today)),
             *S.divergence_block(L, qsrc, (cr_gpt_f, 'Variable'), (cr_own_f, 'Variable'), ask_service, RESUME_VAR,
-                                ymd(cr_today)),
+                                ymd(cr_today), nums_var=NUMS_VAR),
+            # Research: Claude develops an idea only ChatGPT had («crossing»), the judge takes it into the answer
+            *(S.cross_block(L, qsrc, (cr_gpt_f, 'Variable'), (cr_own_f, 'Variable'), ask_service) if deep else []),
+            act_get_variable(S.KIND, cr_kd),
+            act_get_variable(S.CROSS, cr_cx),
             *judge_sources(cr_pk),
             act_get_variable(S.CHECKS, cr_lk),
-            # the end of the comparison: an evidence map (check, deep research) or the «checked against» line (quick)
-            *set_text(MAP_VAR, L.prompt('evidence-map')),
-            *quick_end(),
+            # the end of the comparison: nothing (the default), the evidence map (Research), «checked against» (Quick)
+            *map_end(),
             act_get_variable(MAP_VAR, cr_mp),
-            # two long answers: the comparison stops after its three sections, the final answer is a second call
+            # two long answers: the first call writes the answer only, the sections with ■ are a second call
             act_text(text_token('{G}{O}', {'G': (cr_gpt_f, 'Variable'), 'O': (cr_own_f, 'Variable')}), cr_both),
             act_count_chars(cr_both, 'Text', cr_blen),
             *set_text(SPLIT_VAR, '\n'),
@@ -772,6 +781,7 @@ def build(lang, ai=False):
                                  'CLAUDE_OWN': (cr_own_f, 'Variable'), 'NUMS': (cr_numfin, 'Variable'),
                                  'SOURCES': (cr_pk, 'Variable'), 'LINKS': (cr_lk, 'Variable'),
                                  'SPLIT': (cr_sp, 'Variable'), 'MAP': (cr_mp, 'Variable'),
+                                 'KIND': (cr_kd, 'Variable'), 'CROSS': (cr_cx, 'Variable'),
                                  **rule_ref}, {'TODAY': ymd(cr_today)}), cr_prompt),
             act_set_variable(CHECK_VAR, cr_prompt, 'Text'),   # U-06: what the three fallbacks send
             act_step('critique_step3'),
@@ -794,6 +804,7 @@ def build(lang, ai=False):
                                  'CLAUDE_OWN': (cr_cut_o, 'Matches'), 'NUMS': (cr_cut_n, 'Matches'),
                                  'SOURCES': (cr_pk, 'Variable'), 'LINKS': (cr_lk, 'Variable'),
                                  'SPLIT': (cr_sp, 'Variable'), 'MAP': (cr_mp, 'Variable'),
+                                 'KIND': (cr_kd, 'Variable'), 'CROSS': (cr_cx, 'Variable'),
                                  **rule_ref}, {'TODAY': ymd(cr_today)}), cr_cut),
             act_claude(text_token('{P}', {'P': (cr_cut, 'Text')}), cr_claude2),
             act_set_variable(CLAUDE_VAR, cr_claude2, 'Ask Claude'),

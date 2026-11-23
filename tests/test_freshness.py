@@ -17,16 +17,19 @@ from build_shortcut import LONG_DATA, RETRY_CUT, compare_head_len  # noqa: E402
 from shortcut_actions import Locale  # noqa: E402
 
 PROMPTS = ROOT / 'locales'
-# Duo 6.11 (the owner's decision 6 of 23.11): the warning no longer opens the result. A fresh fact from memory is marked
-# «(from memory)» where it stands and is the first ☐ with a concrete action; a dated source that confirms it counts.
-EN_CONTRACT = ('Today is {TODAY}', 'not a confirmation', 'materially change the answer', 'for the period asked about',
-               'a bare link, a citation date', 'merely because a date appears', 'the rule above does not keep them',
-               'Not fresh: history', 'Never invent', 'never mention freshness', '"(from memory)"',
-               'Do not open with a warning', 'your reply begins with section 1', 'add no warning',
-               'never a warning or a remark about the models', 'one concrete action', 'is the first ☐',
+# Duo 6.11, the council of 23.11 on the divergent: the answer first, then «What the second opinion added» and a short
+# «Basis»; no «(from memory)», no «What to check yourself ☐», no «selected, the originals differ». A dated source or a
+# check still decides a current fact, with its code.
+EN_CONTRACT = ('Today is {TODAY}', 'for the period asked about', 'A source that contradicts an answer outweighs the answer',
+               'Never invent', "Write nothing about the models' memory or accuracy",
+               'Your reply begins with the answer itself', 'never a warning or a remark about the models',
                'check BOTH answers against ALL the cards', 'Duo prints the list itself',
-               'use only codes that stand in SOURCES or CHECKS', 'is called a forecast', '{MAP}')
-GONE = ('Both models may not know this', 'This answer may be out of date', '\n0. ', '⚠',
+               'use only codes that stand in SOURCES or CHECKS', 'is called a forecast', '{MAP}', '{KIND}', '{CROSS}',
+               '"■ What the second opinion added"', '"■ Basis"', 'new option, new risk, new criterion, new step',
+               '"— not taken: ', '"Taken: ', '"Open: ', 'when in doubt take OPEN',
+               'the value of the pair, not a doubt', 'For a FACT question the first line is the exact answer')
+GONE = ('Both models may not know this', 'This answer may be out of date', '\n0. ', '⚠', '☐', 'from memory',
+        'What to check yourself', 'the originals differ', '\u043f\u043e \u043f\u0430\u043c\u044f\u0442\u0438',
         '\u041e\u0431\u0435 \u043c\u043e\u0434\u0435\u043b\u0438 \u043c\u043e\u0433\u0443\u0442')
 
 
@@ -57,18 +60,21 @@ def test_compare_prompt_carries_the_freshness_rule(lang):
     assert '{TODAY}' in text
     for gone in GONE:
         assert gone not in text, gone   # no warning line in front of the result
-    # the skeleton of the three sections is kept, and nothing stands in front of section 1
-    one = text.index('\n1. ')
-    assert one < text.index('\n2. ') < text.index('\n3. ') and '220' in text and '■' in text and '☐' in text
+    # the answer, then two short sections under «■ »; the sections have a word limit
+    assert '■ ' in text and '150' in text and '\n1. ' not in text
     # the rules sit in the head, before the data (the retry rebuilds the whole head, see test_retry_keeps_both_answers)
-    assert text.index('{TODAY}') < text.index('{SPLIT}') < text.index('{NUMS}') < text.index('{QUESTION}')
+    assert (text.index('{TODAY}') < text.index('{KIND}') < text.index('{SPLIT}') < text.index('{CROSS}')
+            < text.index('{NUMS}') < text.index('{QUESTION}'))
     assert text.index('{QUESTION}') < text.index('{SOURCES}') < text.index('{LINKS}') < text.index('{GPT_ANSWER}')
     assert 'two years' not in text   # no arbitrary window: «since the models were trained» and «materially»
     if edition(lang) == 'en':
         for phrase in EN_CONTRACT:
             assert phrase in text, phrase
         # Duo 6.11: the ending is {MAP} — the evidence map (Critique, Research) or the «checked against» line (Quick)
-        assert 'goes under "Not checked"' in (PROMPTS / 'en' / 'prompts' / 'judge-checked.txt').read_text(encoding='utf-8')
+        checked = (PROMPTS / 'en' / 'prompts' / 'judge-checked.txt').read_text(encoding='utf-8')
+        assert 'Checked against' in checked and 'Not checked' not in checked
+        evidence = (PROMPTS / 'en' / 'prompts' / 'evidence-map.txt').read_text(encoding='utf-8')
+        assert '"✓"' in evidence and '"✗"' in evidence and '○' not in evidence and 'Not checked' not in evidence
 
 
 def test_every_prompt_override_keeps_the_english_placeholders():
@@ -180,18 +186,14 @@ def test_retry_keeps_both_answers(tmp_path, lang):
         assert kind(actions[index[full]]) == 'date'
 
 
-# a reply in the shape the rule asks for: no warning in front, the fact marked, the fresh fact as the first ☐
-SAMPLE_REPLY = ('**1. Matched independently**\n- Christine Lagarde chairs the ECB (from memory).\n'
-                '**2. Did not match**\nNo differences.\n'
-                '**3. What to check yourself**\n☐ The current ECB President on ecb.europa.eu, page dated 2026.\n'
-                '☐ Her term end date in the same place.\n\n'
-                '■ **Final answer**\nChristine Lagarde chairs the ECB (from memory).\n'
-                'Checked against: none / Not checked: the current ECB President\n')
+# a reply in the shape the council of 23.11 asks for (a FACT question): the exact answer first, then «Basis»
+SAMPLE_REPLY = ('**Christine Lagarde** chairs the ECB [C1].\nHer term runs to October 2027 [C1].\n\n'
+                '■ **Basis**\nBoth answers name Lagarde independently [C1].\n')
 
 
-def test_output_keeps_the_warning_and_sends_the_check_to_reminders(tmp_path):
-    """The ⚠ line and the ☐ items survive strip_markdown as the phone runs it, the ⚠ line stays the first line (the
-    title of the result screen and of the note), and the ⚠ fact's ☐ reaches Reminders by the same pattern."""
+def test_output_opens_with_the_answer_and_sends_nothing_to_reminders(tmp_path):
+    """strip_markdown as the phone runs it keeps the answer as the first line (the title of the result screen and of
+    the note); the Second opinion has no ☐ items, so «What to check → Reminders» finds none in it."""
     actions = build(tmp_path, 'en')
     finds = (r'(?<![\*\w])\*\*(?=\S)(.+?)(?<=\S)\*\*(?![\*\w])',
              r'(?<![\*\w])\*(?=[^\s*])([^*\n]+?)(?<=[^\s*])\*(?![\*\w])', r'(?m)^[ \t]*#{1,6}[ \t]+')
@@ -204,11 +206,10 @@ def test_output_keeps_the_warning_and_sends_the_check_to_reminders(tmp_path):
     for find, repl in reps:
         cleaned = re.sub(find, repl, cleaned)
     assert '**' not in cleaned
-    assert cleaned.split('\n')[0] == '1. Matched independently'   # the first line is a section, never a warning
+    assert cleaned.split('\n')[0] == 'Christine Lagarde chairs the ECB [C1].'   # the answer, never a section or a warning
     pattern = next(a['WFWorkflowActionParameters']['WFMatchTextPattern'] for a in actions
                    if kind(a) == 'match' and '☐' in a['WFWorkflowActionParameters'].get('WFMatchTextPattern', ''))
-    items = re.findall(pattern, cleaned)
-    assert items[0] == '☐ The current ECB President on ecb.europa.eu, page dated 2026.' and len(items) == 2
+    assert re.findall(pattern, cleaned) == []
 
 
 @pytest.mark.parametrize('lang', LANGS)
@@ -230,7 +231,9 @@ def test_freshness_adds_no_permission_window_and_no_message(tmp_path, lang):
         # finder and the claim checks of the divergence search; the main Critique adds deep research: per model two
         # picks, a reading call per page part in each round, and «enough or a new query»
         import sys; sys.path.insert(0, str(ROOT / 'src')); import shortcut_search as S  # noqa: E401,E702
+        # (+1: the «crossing» call of Research, the dozapros of 23.11)
         research = 2 + 2 * S.CHUNKS + 1 if start == starts[1] else 0
+        cross = 1 if start == starts[1] else 0
         assert kinds.count('AskIntent') == 2 + 2 * research   # each of ChatGPT's research calls has its retry
-        assert kinds.count('ClaudeAppIntentsExtension') == 4 + 1 + S.LINK_MAX + 1 + S.CLAIMS_MAX + research
+        assert kinds.count('ClaudeAppIntentsExtension') == 4 + 1 + S.LINK_MAX + 1 + S.CLAIMS_MAX + research + cross
 

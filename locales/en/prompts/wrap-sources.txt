@@ -6,7 +6,6 @@ Today is {TODAY}. You have no web search here. Below the question are SOURCES th
 - Use a source only where it bears on the question; a headline proves only what it literally says, and the date of a Wikipedia entry is the date of its last edit, not of an event.
 - Weigh a source by what it is, not by how often it appears: different publishers with their own reporting count, a reprint of one wire story does not count twice; a primary source (an official page, a register, a table, the body that decided) outweighs a retelling; a newer dated report that contradicts an older one wins; an undated page proves no date.
 - Where a fact of your answer rests on a source or a note, put the source's code in square brackets right after the fact, like [C2] or [G2] — exactly as it stands in the list. Use only the codes given. Write no links and no list of sources: the program adds the list itself.
-- A fact that may have changed since you were trained (a recent event; a current price, rate, version, officeholder, law, schedule or result) and that no source below covers: give it, and add "(from memory)" right after it.
 - If the sources have nothing to do with the question, answer as if there were none and do not mention them.
 
 QUESTION:

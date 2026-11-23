@@ -162,6 +162,10 @@ QUERY_CLEAN_RX = r'(?m)^[ \t]*(?:(?:[-*•]+|\d{1,2}[.)])[ \t]+)?["«“„]*|["
 QUERY_LINE_RX = r'\A[^\n]{3,%d}' % QUERY_MAX
 QUERY_REST_RX = r'\A[^\n]*\n+'
 NONE_RX = r'\A\s*NONE\b'
+# the question's kind on the query call's first line (FACT / OPEN); the line is taken off before the queries are read
+# (case-sensitive and the whole line: a query that starts «Open source…» or «fact check…» is not a kind)
+KIND_FACT_RX = r'(?-i)\A[\s*#_]*FACT[\s*_.:]*(?:\n|\z)'
+KIND_LINE_RX = r'(?-i)\A[\s*#_]*(?:FACT|OPEN)[ \t*_.:]*(?:\n+|\z)'
 QUESTION_RX = r'\A\s*[^\n]{1,%d}' % QUERY_CHARS
 
 # ---- links and pages
@@ -226,6 +230,8 @@ CLAIMS, PICKS, NEWCARDS = 'PolyClaims', 'PolyPicks', 'PolyNewCards'
 CITED = 'PolyCited'
 READ_URL = 'PolyReadUrl'
 NOWEB = 'PolyNoWeb'       # the query call said NONE: the web cannot help this question (no divergence search either)
+KIND = 'PolyKind'         # the query call's first line: FACT or OPEN (agy, the dozapros of 23.11); empty — the judge decides
+CROSS = 'PolyCross'       # Research: Claude developed an idea only ChatGPT had («crossing», the dozapros of 23.11)
 LIST_U = 'PolySourceListU'
 
 
@@ -460,14 +466,22 @@ def cards(L, side, now, start, count, records=None, packet=None, listing=None, i
 
 
 def query_lines(L, qsrc, ask_claude, today):
-    """The query call: 2–3 queries from the question's words (line 2 in English), or NONE. Leaves QUERIES set
-    (cleaned) and returns the actions; the caller tests NONE."""
-    qp, qc = u(), u()
+    """The query call: the question's kind (FACT / OPEN) on its first line, then 2–3 queries from the question's words
+    (line 2 in English), or NONE. Leaves KIND (FACT, or OPEN for anything else — when in doubt OPEN) and QUERIES set
+    (the kind's line taken off, cleaned) and returns the actions; the caller tests NONE. The kind costs no call: it
+    rides on the call the search makes anyway (agy, the dozapros of 23.11)."""
+    qp, qc, qk, kf, g_fact = u(), u(), u(), u(), u()
     return [act_step('search_queries'),
             act_text(text_token(L.prompt('search-queries'), {'Q': qsrc}, {'TODAY': today}), qp),
             ask_claude(qp, qc),
             act_set_variable(QUERIES, qc, 'Ask Claude'),
-            *replace_var(QUERIES, ((QUERY_CLEAN_RX, ''),))]
+            *set_text(KIND, 'OPEN'),
+            act_get_variable(QUERIES, qk),
+            act_first_match(qk, 'Variable', KIND_FACT_RX, kf),
+            if_output(g_fact, kf, 'Matches', 100),
+            *set_text(KIND, 'FACT'),
+            if_close(g_fact),
+            *replace_var(QUERIES, ((KIND_LINE_RX, ''), (QUERY_CLEAN_RX, '')))]
 
 
 def search_block(L, qsrc, long_question, ask_claude, now, today, item='Repeat Item'):
@@ -483,6 +497,7 @@ def search_block(L, qsrc, long_question, ask_claude, now, today, item='Repeat It
               for a in clear_variable(v)),
             *(a for m in ('C', 'G') for a in clear_variable(notes_var(m))),
             *clear_variable(CHECKS), *clear_variable(LIST_V), *clear_variable(QUERIES), *clear_variable(NOWEB),
+            *clear_variable(KIND), *clear_variable(CROSS),
             *clear_variable(LIST_U),
             act_text(text_token('{Q}', {'Q': qsrc}), q_txt),
             act_count_chars(q_txt, 'Text', q_cnt),
@@ -634,29 +649,36 @@ def link_check_block(L, gpt_var, claude_check, skip_var, today):
     return acts + closers[::-1] + [if_close(g_net), if_close(g_has), if_close(g_skip), if_close(g_quick)]
 
 
-def divergence_block(L, question, gpt_answer, claude_answer, claude_check, skip_var, today):
-    """The owner's main idea of 23.11 (fable, agy, sol, astra): Duo searches where the two answers diverge, or where
-    the conclusion rests on one date, number or condition even when they agree. One short Claude call names at most
+def divergence_block(L, question, gpt_answer, claude_answer, claude_check, skip_var, today, nums_var=None):
+    """The owner's main idea of 23.11 (fable, agy, sol, astra): Duo searches where the two answers state a FACT
+    differently (a number, a date, a name) — never where they agree (the council of 23.11 on the divergent, item 6:
+    checking for checking's sake spends calls). `nums_var`: the numbers that stand in only one answer (found by rule);
+    none → no call at all; some → they go to the claim finder as a hint. One short Claude call names at most
     CLAIMS_MAX such claims («claim || query || site of the primary source»); for each Duo searches the web index (then
     the news index), reads the first page and asks Claude in its own short call whether the page supports the claim.
     The page becomes source [V<i>] of the list Duo prints; CHECKS gets «[V<i>] claim — verdict». Not in the quick
     depth, not on a resumed run. `question`, `gpt_answer`, `claude_answer`: (uid, output) refs."""
     g_quick, g_skip, net_get, g_net, prompt, call, g_any, c_all = (u() for _ in range(8))
     ga, ca = u(), u()
-    g_noweb = u()
+    g_noweb, g_nums, nums_get = u(), u(), u()
     acts = [*if_text(g_quick, QUICK, present=False),
             *if_text(g_skip, skip_var, present=False),
             # a question the web cannot help (NONE: why the sky is blue, how mRNA works) has nothing to look up
             # (the 6.11 check, kimi)
             *if_text(g_noweb, NOWEB, present=False),
+            # the answers agree on every number: no fact to settle, no call (the council of 23.11, item 6)
+            *(if_text(g_nums, nums_var) if nums_var else []),
             *network_guard(NET),
             act_get_variable(NET, net_get),
             if_output(g_net, net_get, 'Variable', 100),
             act_step('divergence'),
             act_first_chars(gpt_answer[0], gpt_answer[1], 2500, ga),
             act_first_chars(claude_answer[0], claude_answer[1], 2500, ca),
+            *([act_get_variable(nums_var, nums_get)] if nums_var else []),
             act_text(text_token(L.prompt('crux'), {'QUESTION': question, 'GPT_ANSWER': (ga, 'Matches'),
-                                                   'CLAUDE_OWN': (ca, 'Matches')}, {'TODAY': today}), prompt),
+                                                   'CLAUDE_OWN': (ca, 'Matches'),
+                                                   **({'NUMS': (nums_get, 'Variable')} if nums_var else {})},
+                                {'TODAY': today}), prompt),
             claude_check(prompt, call),
             act_set_variable(CLAIMS, call, 'Ask Claude'),
             act_get_variable(CLAIMS, c_all)]
@@ -719,7 +741,28 @@ def divergence_block(L, question, gpt_answer, claude_answer, claude_check, skip_
         src = (rest, 'Updated Text')
         closers.append(if_close(g_line))
     # the claims are nested (claim 2 only after a claim 1), so the Ifs close in reverse
-    return acts + closers[::-1] + [if_close(g_net), if_close(g_noweb), if_close(g_skip), if_close(g_quick)]
+    return acts + closers[::-1] + [if_close(g_net), *([if_close(g_nums)] if nums_var else []), if_close(g_noweb),
+                                   if_close(g_skip), if_close(g_quick)]
+
+
+def cross_block(L, question, gpt_answer, claude_answer, claude_check):
+    """«Crossing» (Opus; the dozapros of 23.11, 3 of 5): in Research only, ONE short Claude call takes the most useful
+    idea that only ChatGPT's answer has and develops it («yes, and…»); the judge takes it into the answer and names it
+    under «What the second opinion added». Leaves CROSS set, or empty (NONE, or not Research)."""
+    g_deep, ga, ca, prompt, call, out, g_none, none_m = (u() for _ in range(8))
+    return [*clear_variable(CROSS),
+            *if_text(g_deep, DEEP),
+            act_step('cross'),
+            act_first_chars(gpt_answer[0], gpt_answer[1], 2500, ga),
+            act_first_chars(claude_answer[0], claude_answer[1], 2500, ca),
+            act_text(text_token(L.prompt('cross'), {'QUESTION': question, 'GPT_ANSWER': (ga, 'Matches'),
+                                                    'CLAUDE_OWN': (ca, 'Matches')}), prompt),
+            claude_check(prompt, call),
+            act_first_match(call, 'Ask Claude', NONE_RX, none_m),
+            if_output(g_none, none_m, 'Matches', 101),
+            act_set_variable(CROSS, call, 'Ask Claude'),
+            if_close(g_none),
+            if_close(g_deep)]
 
 
 # ------------------------------------------------------------------ deep research

@@ -8,6 +8,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased] — Duo 6.11 (candidate, branch duo-search: the five search branches merged)
 
+### Changed — the divergent first (the council of 23.11.2026 on the owner's words; dozapros of the single votes)
+- **Critique → Second opinion** in all 12 languages (menu, «right away next time», notifications, journal, help,
+  Auto's list), each in its own language.
+- The judge's reply: the answer first (one answer from the best of both, no heading); then «■ What the second
+  opinion added» — 2–5 points only one model had, each labelled new option / new risk / new criterion / new step, an
+  idea not taken ends «— not taken: <reason>»; then «■ Basis» — what both reached independently with codes, a fact
+  stated differently as one «Taken: … — reason [code]» line, something substantial left open as one «Open:» line.
+  A FACT question: the exact answer first, «Basis» before the second opinion, which appears only if it added something.
+- The question's kind (FACT / OPEN) rides on the search's query call (first line; 0 extra calls); empty → the judge
+  decides, when in doubt OPEN.
+- Removed: «(from memory)» (judge and answering models), «What to check yourself ☐», «(selected, the originals
+  differ…)», the evidence map in the default depth and every «Not checked». Research keeps the map with ✓ / ✗ only;
+  Quick keeps one «Checked against» line, left out when nothing was checked.
+- The divergence search runs only when the two answers state a fact differently: no call when every number stands in
+  both answers; the claim finder gets those numbers and skips points they agree on (no more «even when they agree»).
+- Research: «crossing» — one short Claude call develops the most useful idea only ChatGPT had; the judge takes it
+  into the answer («ChatGPT → Claude · …»).
+
 ### Added — three depths in the mode menu (the owner's decision of 23.11.2026)
 - **Quick** (new item): Duo's own search, one set of cards per model, two answers, the comparison — about a minute.
 - **Critique** (the default, as before the first item) = the check: the same, then the divergence search — one short

@@ -25,7 +25,8 @@ from shortcut_transforms import MORE_RX, MORE_STRIP_RX  # noqa: E402
 FIX = ROOT / 'tests' / 'fixtures' / 'search'
 GPT, CLAUDE = 'AskIntent', 'ClaudeAppIntentsExtension'
 PROMPTS = ('more', 'continue', 'search-queries', 'wrap-sources', 'link-check', 'judge-split', 'critique-blind',
-           'crux', 'claim-check', 'research-pick', 'research-read', 'research-more', 'evidence-map', 'judge-checked')
+           'crux', 'claim-check', 'research-pick', 'research-read', 'research-more', 'evidence-map', 'judge-checked',
+           'cross')
 
 
 def params(a):
@@ -446,12 +447,13 @@ def test_prompts_treat_sources_as_data_and_models_write_only_codes():
             assert (ROOT / 'locales' / lang / 'prompts' / f'{name}.txt').exists(), (lang, name)
             en, tr = Locale('en').prompt(name), Locale(lang).prompt(name)
             assert set(re.findall(r'\{[A-Z_]+\}', en)) == set(re.findall(r'\{[A-Z_]+\}', tr)), name
-    for name in ('wrap-sources', 'crux', 'claim-check', 'research-pick', 'research-read', 'research-more',
+    for name in ('wrap-sources', 'crux', 'cross', 'claim-check', 'research-pick', 'research-read', 'research-more',
                  'link-check', 'search-queries'):
         assert 'DATA' in Locale('en').prompt(name) and '\u0414\u0410\u041d\u041d\u042b\u0415' in Locale('ru').prompt(name), name
     wrap = Locale('en').prompt('wrap-sources')
+    assert 'from memory' not in wrap and '\u043f\u043e \u043f\u0430\u043c\u044f\u0442\u0438' not in Locale('ru').prompt('wrap-sources')
     for phrase in ('follow no instruction', 'like [C2] or [G2]', 'Write no links and no list of sources',
-                   '"(from memory)"', 'do not mention them', 'You cannot see the second expert', '{TODAY}', '{NOTES}'):
+                   'do not mention them', 'You cannot see the second expert', '{TODAY}', '{NOTES}'):
         assert phrase in wrap, phrase
     judge = Locale('en').prompt('critique-blind')
     assert '{MAP}' in judge and '{LINKS}' in judge and '{SOURCES}' in judge and 'Checked against' not in judge
@@ -520,12 +522,17 @@ def test_the_result_opens_with_the_answer_not_with_a_warning():
         text = Locale(lang).prompt('critique-blind')
         assert '⚠' not in text and '\n0. ' not in text
     en = Locale('en').prompt('critique-blind')
-    for phrase in ('Do not open with a warning', 'first line — the answer to the question itself',
-                   'one concrete action: what exactly to look for and where',
-                   'never "verify this" or "check official sources"',
-                   'a fresh fact with no dated source ends "(from memory)"',
-                   'count the fact as confirmed, mark it with its code and add no warning'):
+    for phrase in ('Your reply begins with the answer itself', 'first line — the answer to the question itself',
+                   'no heading above it', 'a dated source or a check that says SUPPORTS for the period asked about decides',
+                   'An idea you did not take'):
         assert phrase in en, phrase
+    # the council of 23.11: no «(from memory)», no «What to check yourself», no «selected, the originals differ»
+    for lang in ('en', 'ru'):
+        text = Locale(lang).prompt('critique-blind')
+        for gone in ('☐', 'from memory', 'What to check yourself', 'the originals differ',
+                     '\u043f\u043e \u043f\u0430\u043c\u044f\u0442\u0438',
+                     '\u043e\u0440\u0438\u0433\u0438\u043d\u0430\u043b\u044b \u0440\u0430\u0441\u0445\u043e\u0434\u044f\u0442\u0441\u044f'):
+            assert gone not in text, (lang, gone)
 
 
 @pytest.mark.parametrize('lang', ['en', 'ru'])
@@ -542,3 +549,70 @@ def test_sources_are_glued_on_by_duo_from_its_own_lists(tmp_path, lang):
                     and isinstance(params(a)['WFMatchTextPattern'], str)}
         for prefix, top in S.card_numbers():
             assert all(S.cited_rx(prefix, n) in patterns for n in range(1, top + 1))
+
+
+# ------------------------------------------------------------------ the council of 23.11 on the divergent
+
+def test_the_query_call_names_the_kind_of_question_and_the_queries_stay_as_they_were():
+    """FACT / OPEN on the first line of the query call (agy; 0 extra calls). The line is taken off before the queries
+    are read; a query that starts «Open source…» is not a kind; anything but FACT is OPEN (when in doubt, OPEN)."""
+    def parse(reply):
+        kind_ = 'FACT' if re.search(icu(S.KIND_FACT_RX.replace('(?-i)', '')), reply) else 'OPEN'
+        clean = re.sub(S.QUERY_CLEAN_RX, '', re.sub(icu(S.KIND_LINE_RX.replace('(?-i)', '')), '', reply))
+        return kind_, clean
+    assert parse('FACT\n1. ECB deposit rate today\n- ECB key rates')[0] == 'FACT'
+    assert parse('FACT\n1. ECB deposit rate today\n- ECB key rates')[1].split('\n')[0] == 'ECB deposit rate today'
+    assert parse('**OPEN**\nNONE') == ('OPEN', 'NONE') and re.match(S.NONE_RX, parse('OPEN\nNONE')[1])
+    assert parse('Open source licences compared\nx')[1].startswith('Open source licences')
+    assert parse('fact check vaccine claim\nx') == ('OPEN', 'fact check vaccine claim\nx')
+    for pattern in (S.KIND_FACT_RX, S.KIND_LINE_RX):
+        assert pattern.startswith('(?-i)')   # Match Text and Replace Text run case-insensitive on the phone
+    for lang in ('en', 'ru'):
+        text = Locale(lang).prompt('search-queries')
+        assert 'FACT' in text and 'OPEN' in text
+
+
+@pytest.mark.parametrize('lang', ['en', 'ru'])
+def test_the_judge_gets_the_kind_and_the_crossing_and_the_map_only_in_research(tmp_path, lang):
+    actions = build(tmp_path, lang)
+    L = Locale(lang)
+    judge = L.prompt('critique-blind').split('.')[0]
+    cross = L.prompt('cross').split('.')[0]
+    evidence = L.prompt('evidence-map')
+    for n, (start, end) in enumerate(critiques(actions)):
+        block = actions[start:end]
+        reads = var_reads(block)
+        requests = [a for a in block if kind(a) == 'gettext' and judge in text_of(a)]
+        assert len(requests) == 2   # the request and its cut retry
+        for r in requests:
+            names = {reads.get(x) for x in refs_of(params(r))}
+            assert {S.KIND, S.CROSS} <= names
+        # «crossing»: one Claude call in the main Second opinion (Research only), none in My mode
+        crossing = [a for a in block if kind(a) == 'gettext' and cross in text_of(a)]
+        assert len(crossing) == (1 if n == 1 else 0)
+        # the evidence map stands behind «If Research»: the default ends with no map
+        for i, a in enumerate(block):
+            if kind(a) == 'gettext' and text_of(a) == evidence:
+                gate = next(block[j] for j in range(i - 1, 0, -1) if kind(block[j]) == 'conditional')
+                get = block[[k for k in range(i - 1, 0, -1) if kind(block[k]) == 'getvariable'][0]]
+                assert reads.get(params(get)['UUID']) == S.DEEP and gate
+        assert sum(kind(a) == 'gettext' and text_of(a) == evidence for a in block) == (1 if n == 1 else 0)
+
+
+@pytest.mark.parametrize('lang', ['en', 'ru'])
+def test_the_divergence_search_runs_only_when_the_answers_differ_in_a_number(tmp_path, lang):
+    """The council of 23.11, item 6: no claim finder when every number stands in both answers; when it runs, it gets
+    the numbers found by rule and looks only for facts stated differently."""
+    actions = build(tmp_path, lang)
+    L = Locale(lang)
+    crux_mark = L.prompt('crux').split('.')[0]
+    for start, end in critiques(actions):
+        block = actions[start:end]
+        reads = var_reads(block)
+        i = next(i for i, a in enumerate(block) if is_step(a, 'divergence'))
+        gets = [reads.get(params(block[j]).get('UUID')) for j in range(i - 12, i) if kind(block[j]) == 'getvariable']
+        assert 'PolyOnlyInOne' in gets
+        crux = next(a for a in block if kind(a) == 'gettext' and crux_mark in text_of(a))
+        assert 'PolyOnlyInOne' in {reads.get(x) for x in refs_of(params(crux))}
+    en = Locale('en').prompt('crux')
+    assert 'even where they agree' not in en and 'Where the answers agree there is nothing to search' in en
