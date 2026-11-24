@@ -112,6 +112,11 @@ MY_MODE_FILE = 'Poly-my-mode.txt'
 # the start, written by ONE «Save File» in the final «More actions» menu. Duo's own re-runs («Another mode», Recipes,
 # «go back») start with MENU_MARK, which is cut off again at once and forces the question box and the mode menu.
 PREFS_FILE = 'Duo-prefs.txt'
+# The owner's choice of 24.11: the Setup asks once «with search / without search» and says how many permission windows
+# each takes on the first use. SEARCH_WINDOWS: the run-4 count on the iPhone (fresh install: the Setup 5, the first
+# Critique 9, Quick 0 after it, Another mode 0, the first Research 24 → 38, rounded to tens); LOCAL_WINDOWS: the same
+# first uses without search, counted live on the iPhone (the owner's run notes of 24.11). Both go into the texts as {WEB} and {LOCAL}.
+SEARCH_WINDOWS, LOCAL_WINDOWS = 40, 4
 PREFS_HEAD = '⟦duo-prefs⟧\n'
 MENU_MARK = '⟦duo-menu⟧\n'
 # (Duo 6.1–6.11 remembered this much of its clipboard answer to tell it from a new question; since D5 of 24.11 the
@@ -381,6 +386,8 @@ def build(lang, ai=False):
     bk_text, bk_m, bk_rep, g_bk, g_keepq, bk_get = ids(6)
     KEEP_Q = 'PolyKeepQuestion'   # set by MODE_MARK: the question field is skipped, the mode menu is shown
     NOTE_MODE, NOTE_QUICK, NOTE_RESET = 'PolyNoteMode', 'PolyNoteQuick', 'PolyNoteReset'
+    NOTE_SEARCH = 'PolyNoteSearch'
+    g_pf3, pf_m3, g_srch_setup, g_srch_more, g_srch_note = ids(5)
     BRIEF_VAR, SIDE_CLAUDE = 'PolyBrief', 'PolySideClaude'   # Yuri 10.11: No.53 (long question), No.52 (Side by side)
 
     def journal_note(entry, refs=None):
@@ -433,6 +440,31 @@ def build(lang, ai=False):
         return [*if_text(g, off_var, present=False), act_get_variable(PREFS_BODY, get),
                 act_text(text_token('{B}' + line + '\n', {'B': (get, 'Variable')}), txt),
                 act_set_variable(PREFS_BODY, txt, 'Text'), if_close(g)]
+
+    def search_words(text):
+        return text.replace('{WEB}', str(SEARCH_WINDOWS)).replace('{LOCAL}', str(LOCAL_WINDOWS))
+
+    def search_menu(group):
+        """The owner's choice of 24.11: «with search» sets S.SEARCH_ON, «without search» clears it (the airplane-mode
+        path, see S.search_guard). The same two buttons in the Setup and in «More…»; Siri reads the title and takes
+        either button by voice, as in every menu of Duo."""
+        on, off = (search_words(x) for x in L['setup.search_items'])
+        return [menu_open(group, search_words(L['setup.search_text']), [on, off]),
+                menu_case(group, on), *set_text(S.SEARCH_ON, '1'),
+                menu_case(group, off), *clear_variable(S.SEARCH_ON),
+                menu_close(group)]
+
+    def prefs_save(save_uid):
+        """The prefs file rebuilt from the clean flags: the header, then one line for each option that is ON, and
+        SEARCH=0 when search is off."""
+        get, txt = new_uuid(), new_uuid()
+        return [*set_text(PREFS_BODY, PREFS_HEAD),
+                *append_line_when(MODE_OFF, 'MODE=critique'),
+                *append_line_when(QUICK_OFF, 'QUICK=1'),
+                *append_line_when(S.SEARCH_ON, 'SEARCH=0'),
+                act_get_variable(PREFS_BODY, get),
+                act_text(text_token('{B}', {'B': (get, 'Variable')}), txt),
+                act_save_file(PREFS_FILE, txt, save_uid)]
 
     def rerun_with_menu(src_uid, src_name):
         """Run Duo again with this question and MENU_MARK in front: the new run forces the question box and the
@@ -1068,7 +1100,12 @@ def build(lang, ai=False):
     # those windows are about, so the Setup passes ChatGPT's own reply on to Claude. A «Save File» is asked for per
     # action (a Save File in the Setup did not spare the draft's own window), so the draft's one window stays in the
     # first Critique.
-    setup_before = [act_speak(L['speak.first_run']),
+    # the owner's choice of 24.11: the Setup starts with «with search / without search», said aloud (Duo Voice, Siri,
+    # VoiceOver) and shown as a menu, and keeps it in the prefs file at once (read above, before the Setup)
+    setup_before = [act_speak(search_words(L['setup.search_text'])),
+                    *search_menu(g_srch_setup),
+                    *prefs_save(new_uuid()),
+                    act_speak(L['speak.first_run']),
                     act_text(text_token(SETUP_PING), su_ping),
                     act_gpt(text_token('{P}', {'P': (su_ping, 'Text')}), su_gpt, split=False),
                     act_text(text_token('{A}', {'A': (su_gpt, 'Ask ChatGPT')}), su_txt),
@@ -1090,14 +1127,13 @@ def build(lang, ai=False):
         # different steps. So, once: Duo says what is coming, then calls in a row every action that asks — ChatGPT,
         # Claude, the one file write (the stamp below), the update check on the web, the notification — and says it is
         # ready. A working run after that asks nothing. The two AI calls are one-word requests (one message each).
-        *version_check(L, VK, RELEASE_NAME, lang, setup=(setup_before, setup_after), stamp_name=SETUP_FILE),
 
         # D-29: the person's two optional shortcuts (C-1 «Critique right away», C-3 «ask without editing»), read from
         # ONE small file; a missing file (the default) is no value and nothing changes. Each run starts with them unset. READ BEFORE the resume menu (D-29 B-1):
         # on a run that goes on from a saved draft the final «More…» menu still saves these two switches, and an unset
         # «OFF» flag would read as «on» and write QUICK=1 / MODE=critique the person never chose.
         *clear_variable(FORCE_MENU), *clear_variable(SHARED_VAR), *clear_variable(PREFS_CHANGED),
-        *set_text(MODE_OFF, '1'), *set_text(QUICK_OFF, '1'),
+        *set_text(MODE_OFF, '1'), *set_text(QUICK_OFF, '1'), *set_text(S.SEARCH_ON, '1'),
         act_get_file(PREFS_FILE, pf_get),
         act_text(text_token('{F}', {'F': (pf_get, 'File')}), pf_txt),
         # whole lines only (Codex): «QUICK=10» or «XMODE=critique» switch nothing on
@@ -1109,7 +1145,14 @@ def build(lang, ai=False):
         if_output(g_pf2, pf_m2, 'Matches', 100),
         *clear_variable(QUICK_OFF),
         if_close(g_pf2),
+        act_first_match(pf_txt, 'Text', r'(?m)^SEARCH=0$', pf_m3),
+        if_output(g_pf3, pf_m3, 'Matches', 100),
+        *clear_variable(S.SEARCH_ON),
+        if_close(g_pf3),
         *clear_variable(PREFS_CHANGED),   # a plain Nothing right after the file's Ifs ends any chain from them
+
+        # the Setup comes after the prefs file is read: its search choice rewrites that file with the other two options
+        *version_check(L, VK, RELEASE_NAME, lang, setup=(setup_before, setup_after), stamp_name=SETUP_FILE),
 
         # ---- Duo 6.4: a Critique cut off by a message limit within DRAFT_MINUTES → go on from its draft (D-101)
         *resume_block(),
@@ -1680,15 +1723,14 @@ def build(lang, ai=False):
         act_clipboard(variable(RESULT)),   # D-128: Poly reads the answer from the clipboard; copied only on this pick
         act_get_variable(RESULT, op_get2),
         open_poly_url('duo'),
+        # the owner's choice of 24.11: «with search / without search» changed later, the same two buttons as the Setup
+        menu_case(g_more, L['menu.finale_more_items'][9]),
+        *search_menu(g_srch_more),
+        *set_text(PREFS_CHANGED, '1'), *set_text(NOTE_SEARCH, '1'),
         menu_close(g_more),
         *if_text(g_pc, PREFS_CHANGED),
         # the file is rebuilt from the two clean flags: the header, then one line for each option that is ON
-        *set_text(PREFS_BODY, PREFS_HEAD),
-        *append_line_when(MODE_OFF, 'MODE=critique'),
-        *append_line_when(QUICK_OFF, 'QUICK=1'),
-        act_get_variable(PREFS_BODY, pm_get),
-        act_text(text_token('{B}', {'B': (pm_get, 'Variable')}), pf_new),
-        act_save_file(PREFS_FILE, pf_new, pf_save),
+        *prefs_save(pf_save),
         # «Saved» is told only AFTER the file is written (a refused or failed save must not say it worked)
         *if_text(g_n1, NOTE_MODE),
         act_notify(L['notify.pref_mode']),
@@ -1699,6 +1741,9 @@ def build(lang, ai=False):
         *if_text(g_n3, NOTE_RESET),
         act_notify(L['notify.pref_reset']),
         if_close(g_n3),
+        *if_text(g_srch_note, NOTE_SEARCH),
+        act_notify(L['notify.pref_search']),
+        if_close(g_srch_note),
         if_close(g_pc),
         menu_close(g_finale),
 

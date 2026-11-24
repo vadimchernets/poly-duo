@@ -94,7 +94,8 @@
       "⚡ Geteilter Text: ohne Bearbeiten fragen",
       "↩️ Alle Menüs wieder zeigen",
       "💬 Hat geklappt / nicht geklappt / Idee — Formular auf GitHub",
-      "🔗 In Poly öffnen"
+      "🔗 In Poly öffnen",
+      "🌐 Mit Suche / ohne Suche"
     ],
     "recipes_title": "Was brauchen Sie?",
     "recipes_items": [
@@ -194,7 +195,8 @@
     "gpt_down": "ChatGPT hat Duo keine Antwort übergeben (Nachrichtenlimit, abgemeldet oder iOS hat einen langen Schritt abgebrochen; gab es eine Antwort, steht sie in seiner App). Claude antwortet allein; diesmal gibt es keinen Vergleich. (Meldet die ChatGPT-App, dass du abgemeldet bist: App öffnen, anmelden, dann Duo neu starten.)",
     "pref_mode": "📌 Gespeichert. Beim nächsten Mal geht Duo gleich zur Zweiten Meinung. Andere Modi: „Anderer Modus“ am Ende.",
     "pref_quick": "⚡ Gespeichert. Ein an Duo geteilter Text (3+ Wörter) geht ohne Fragefeld ab. „Anderer Modus“ zeigt es weiter.",
-    "pref_reset": "↩️ Erledigt. Duo zeigt wieder Fragefeld und Modusmenü."
+    "pref_reset": "↩️ Erledigt. Duo zeigt wieder Fragefeld und Modusmenü.",
+    "pref_search": "🌐 Erledigt. Deine Wahl zur Suche ist gespeichert."
   },
   "alert": {
     "multi_next_title": "Poly Multi — nächste KI",
@@ -282,5 +284,12 @@
     "ddg": "kl=de-de",
     "undated": "ohne Datum",
     "claim_unfound": "Duo hat dazu keine Seite gefunden."
+  },
+  "setup": {
+    "search_text": "Duo kann im Internet nach aktuellen Antworten suchen. Bei der ersten Frage bittet das iPhone um Erlaubnis — einmal, danach nie wieder.\nEs antworten ChatGPT und Claude.\nMit Suche — etwa {WEB} Erlaubnisse.\nOhne Suche — etwa {LOCAL} (also {LOCAL}-mal „Erlauben“ tippen).",
+    "search_items": [
+      "Mit Suche (≈{WEB})",
+      "Ohne Suche (≈{LOCAL})"
+    ]
   }
 }

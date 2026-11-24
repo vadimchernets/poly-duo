@@ -18,12 +18,13 @@ def ui_of(lang):
 
 
 @pytest.mark.parametrize('lang', LANGS)
-def test_prefs_file_is_read_once_and_written_once(tmp_path, lang):
+def test_prefs_file_is_read_once_and_written_by_the_setup_and_more(tmp_path, lang):
     actions = build(tmp_path, lang)
     gets = [a for a in actions if kind(a) == 'documentpicker.open' or params(a).get('WFGetFilePath') == 'Duo-prefs.txt']
     reads = [a for a in actions if params(a).get('WFGetFilePath') == 'Duo-prefs.txt']
     saves = [a for a in actions if params(a).get('WFFileDestinationPath') == 'Duo-prefs.txt']
-    assert len(reads) == 1 and len(saves) == 1 and gets
+    # 24.11: the Setup's search choice writes it at once; «More…» writes it when a switch changed
+    assert len(reads) == 1 and len(saves) == 2 and gets
     # the read comes before the question box; both options are off when the file is missing (default)
     ask = next(i for i, a in enumerate(actions) if kind(a) == 'ask')
     assert actions.index(reads[0]) < ask
@@ -61,8 +62,8 @@ def test_hint_moved_out_of_start_notifications(tmp_path, lang):
     else:
         assert 'logged out' not in n['gpt_down'] and 'logged out' not in ui['alert']['first_run_body']
     assert 'ChatGPT' in ui['notify']['critique_start'].split('.')[-2 if ui['notify']['critique_start'].endswith('.') else -1] or 'ChatGPT' in ui['notify']['critique_start'][-40:]
-    assert len(ui['menu']['finale_more_items']) == 9
-    for k in ('pref_mode', 'pref_quick', 'pref_reset'):
+    assert len(ui['menu']['finale_more_items']) == 10
+    for k in ('pref_mode', 'pref_quick', 'pref_reset', 'pref_search'):
         assert n[k].strip()
 
 
@@ -227,7 +228,7 @@ def test_prefs_are_known_before_the_resume_menu_and_every_more_item_is_safe(tmp_
             and params(a)['WFVariable']['Value'].get('VariableName') in ('PolyModeOff', 'PolyQuickOff')]
     assert uses and min(uses) > read
     # «Saved» is told after the file is written, once per switch
-    save = next(i for i, a in enumerate(actions) if params(a).get('WFFileDestinationPath') == 'Duo-prefs.txt')
+    save = [i for i, a in enumerate(actions) if params(a).get('WFFileDestinationPath') == 'Duo-prefs.txt'][-1]
     n = ui_of(lang)['notify']
     for key in ('pref_mode', 'pref_quick', 'pref_reset'):
         at = [i for i, a in enumerate(actions) if params(a).get('WFNotificationActionBody') == n[key]]

@@ -94,7 +94,8 @@
       "⚡ Texto compartilhado: perguntar sem editar",
       "↩️ Mostrar todos os menus de novo",
       "💬 Funcionou / não funcionou / ideia — formulário no GitHub",
-      "🔗 Abrir no Poly"
+      "🔗 Abrir no Poly",
+      "🌐 Com busca / sem busca"
     ],
     "recipes_title": "O que o senhor precisa?",
     "recipes_items": [
@@ -194,7 +195,8 @@
     "gpt_down": "O ChatGPT não entregou resposta ao Duo (limite de mensagens, saiu da conta ou o iOS cortou uma etapa longa; se respondeu, a resposta está no app dele). O Claude responde sozinho; desta vez não haverá comparação. (Se o app do ChatGPT disser que você saiu da conta: abra-o, entre na conta e rode o Duo de novo.)",
     "pref_mode": "📌 Salvo. Da próxima vez o Duo vai direto à Segunda opinião. Outros modos: «Outro modo» no final.",
     "pref_quick": "⚡ Salvo. Um texto compartilhado com o Duo (3+ palavras) segue sem a caixa de pergunta. «Outro modo» ainda a mostra.",
-    "pref_reset": "↩️ Pronto. O Duo volta a mostrar a caixa de pergunta e o menu de modos."
+    "pref_reset": "↩️ Pronto. O Duo volta a mostrar a caixa de pergunta e o menu de modos.",
+    "pref_search": "🌐 Pronto. Sua escolha de busca foi salva."
   },
   "alert": {
     "multi_next_title": "Poly Multi — próxima IA",
@@ -282,5 +284,12 @@
     "ddg": "kl=br-pt",
     "undated": "sem data",
     "claim_unfound": "O Duo não encontrou nenhuma página sobre isso."
+  },
+  "setup": {
+    "search_text": "O Duo pode buscar respostas atuais na internet. Na sua primeira pergunta, o iPhone pedirá permissão — uma vez só, depois não pede mais.\nRespondem o ChatGPT e o Claude.\nCom busca — cerca de {WEB} permissões.\nSem busca — cerca de {LOCAL} (ou seja, tocar em “Permitir” {LOCAL} vezes).",
+    "search_items": [
+      "Com busca (≈{WEB})",
+      "Sem busca (≈{LOCAL})"
+    ]
   }
 }

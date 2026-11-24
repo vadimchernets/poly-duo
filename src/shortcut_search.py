@@ -230,6 +230,11 @@ PICK_TITLE_RX = (r'(?s)\A\S+ \S+ ?', '')
 
 # ---- variables
 NET, QUERIES = 'PolyNet', 'PolyQueries'
+# The owner's choice of 24.11 («with search / without search», asked once in the Setup, kept in Duo-prefs.txt as the
+# line SEARCH=0): set to «1» at the start of every run and only CLEARED when the file says SEARCH=0 (the D-29 rule
+# for anything read from that file). Cleared → search_guard() clears NET too, and the run takes the airplane-mode
+# path: no query call, no engine, no page read; every mode answers from the models' own knowledge.
+SEARCH_ON = 'PolySearchOn'
 DEEP, QUICK = 'PolyDeep', 'PolyQuick'           # set by the menu; neither = the default depth, «check»
 CHECKS, PAGE, VERDICT = 'PolyChecks', 'PolyPage', 'PolyVerdict'
 LIST_V = 'PolySourceListV'
@@ -559,6 +564,13 @@ def cards(L, side, now, start, count, records=None, packet=None, listing=None, i
     return acts
 
 
+def search_guard():
+    """network_guard(NET), then «without search» clears NET as having no network does: every step behind NET is
+    skipped the same way offline. NET is still set OUTSIDE every condition and only cleared inside one."""
+    g = u()
+    return [*network_guard(NET), *if_text(g, SEARCH_ON, present=False), *clear_variable(NET), if_close(g)]
+
+
 def query_lines(L, qsrc, ask_claude, today):
     """The query call: the question's kind (FACT / OPEN) on its first line, then 2–3 queries from the question's words
     (line 2 in English), or NONE. Leaves KIND (FACT, or OPEN for anything else — when in doubt OPEN) and QUERIES set
@@ -597,7 +609,7 @@ def search_block(L, qsrc, long_question, ask_claude, now, today, item='Repeat It
             act_count_chars(q_txt, 'Text', q_cnt),
             if_output(g_long, q_cnt, 'Count', 2, WFNumberValue=long_question - 1),
             if_else(g_long),
-            *network_guard(NET),
+            *search_guard(),
             act_get_variable(NET, net_get),
             if_output(g_net, net_get, 'Variable', 100),
             *query_lines(L, qsrc, ask_claude, today),
@@ -711,7 +723,7 @@ def link_check_block(L, gpt_var, claude_check, skip_var, today, item='Repeat Ite
             act_get_variable(gpt_var, ans),
             act_first_match(ans, 'Variable', LINK_RX, found),
             if_output(g_has, found, 'Matches', 100),
-            *network_guard(NET),
+            *search_guard(),
             act_get_variable(NET, net_get),
             if_output(g_net, net_get, 'Variable', 100),
             act_step('link_check'),
@@ -773,7 +785,7 @@ def divergence_block(L, question, gpt_answer, claude_answer, claude_check, skip_
             *if_text(g_noweb, NOWEB, present=False),
             # the answers agree on every number: no fact to settle, no call (the council of 23.11, item 6)
             *(if_text(g_nums, nums_var) if nums_var else []),
-            *network_guard(NET),
+            *search_guard(),
             act_get_variable(NET, net_get),
             if_output(g_net, net_get, 'Variable', 100),
             act_step('divergence'),
@@ -901,7 +913,7 @@ def research_block(L, model, side, ask, qsrc, now, today, item='Repeat Item'):
     g_have, g_net, net_get = u(), u(), u()
     acts = [act_step('research'),
             *if_text(g_have, packet_var(side)),
-            *network_guard(NET),
+            *search_guard(),
             act_get_variable(NET, net_get),
             if_output(g_net, net_get, 'Variable', 100)]
 

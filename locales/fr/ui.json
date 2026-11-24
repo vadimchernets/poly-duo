@@ -94,7 +94,8 @@
       "⚡ Texte partagé : sans modifier la question",
       "↩️ Réafficher tous les menus",
       "💬 Ça marche / ça ne marche pas / idée — formulaire sur GitHub",
-      "🔗 Ouvrir dans Poly"
+      "🔗 Ouvrir dans Poly",
+      "🌐 Avec recherche / sans recherche"
     ],
     "recipes_title": "De quoi as-tu besoin ?",
     "recipes_items": [
@@ -194,7 +195,8 @@
     "gpt_down": "ChatGPT n'a pas transmis de réponse à Duo (limite de messages, déconnexion ou iOS a coupé une étape longue ; s'il a répondu, la réponse est dans son app). Claude répond seul ; pas de comparaison cette fois. (Si l’app ChatGPT indique que tu es déconnecté : ouvre-la, connecte-toi, puis relance Duo.)",
     "pref_mode": "📌 Enregistré. La prochaine fois, Duo ira droit au Second avis. Autres modes : « Autre mode » à la fin.",
     "pref_quick": "⚡ Enregistré. Un texte partagé vers Duo (3 mots ou plus) part sans la zone de question. « Autre mode » la montre encore.",
-    "pref_reset": "↩️ C’est fait. Duo affiche de nouveau la zone de question et le menu des modes."
+    "pref_reset": "↩️ C’est fait. Duo affiche de nouveau la zone de question et le menu des modes.",
+    "pref_search": "🌐 C’est fait. Votre choix de recherche est enregistré."
   },
   "alert": {
     "multi_next_title": "Poly Multi — IA suivante",
@@ -282,5 +284,12 @@
     "ddg": "kl=fr-fr",
     "undated": "sans date",
     "claim_unfound": "Duo n'a trouvé aucune page à ce sujet."
+  },
+  "setup": {
+    "search_text": "Duo peut chercher des réponses récentes sur internet. À votre première question, l’iPhone demandera l’autorisation — une seule fois, ensuite plus jamais.\nChatGPT et Claude répondent.\nAvec recherche — environ {WEB} autorisations.\nSans recherche — environ {LOCAL} (soit toucher « Autoriser » {LOCAL} fois).",
+    "search_items": [
+      "Avec recherche (≈{WEB})",
+      "Sans recherche (≈{LOCAL})"
+    ]
   }
 }

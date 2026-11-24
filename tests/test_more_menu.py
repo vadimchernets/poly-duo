@@ -14,7 +14,7 @@ def params(a):
 def test_more_menu(tmp_path, lang):
     ui = json.loads((ROOT / 'locales' / lang / 'ui.json').read_text(encoding='utf-8'))
     m = ui['menu']
-    assert (len(m['extra_items']), len(m['finale_items']), len(m['finale_more_items'])) == (10, 4, 9)   # D-29: +3 in «More actions» (Critique right away / ask without editing / reset)
+    assert (len(m['extra_items']), len(m['finale_items']), len(m['finale_more_items'])) == (10, 4, 10)   # D-29: +3 in «More actions» (Critique right away / ask without editing / reset); 24.11: + search on/off
     assert len(m['recipes_items']) == len(m['recipes_texts']) == 5
     actions = build(tmp_path, lang)
 

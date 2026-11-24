@@ -94,7 +94,8 @@
       "⚡ Shared text: ask without editing",
       "↩️ Show all menus again",
       "💬 Worked / didn't work / idea — form on GitHub",
-      "🔗 Open in Poly"
+      "🔗 Open in Poly",
+      "🌐 With search / without search"
     ],
     "recipes_title": "What do you need?",
     "recipes_items": [
@@ -194,7 +195,8 @@
     "gpt_down": "ChatGPT did not pass an answer to Duo (message limit, signed out, or iOS cut a long step; if it did answer, the answer is in its app). Claude answers alone; there is no comparison this time. (If the ChatGPT app says «logged out»: open it, sign in, then run Duo again.)",
     "pref_mode": "📌 Saved. Next time Duo goes straight to Second opinion. Other modes: «Another mode» at the end.",
     "pref_quick": "⚡ Saved. A text shared to Duo (3+ words) is sent without the question box. «Another mode» still shows it.",
-    "pref_reset": "↩️ Done. Duo shows the question box and the mode menu as before."
+    "pref_reset": "↩️ Done. Duo shows the question box and the mode menu as before.",
+    "pref_search": "🌐 Done. Your search choice is saved."
   },
   "alert": {
     "multi_next_title": "Poly Multi — next AI",
@@ -282,5 +284,12 @@
     "ddg": "kl=us-en",
     "undated": "no date",
     "claim_unfound": "Duo found no page on this."
+  },
+  "setup": {
+    "search_text": "Duo can search the web for fresh answers. On your first question, iPhone asks for permission — once, then never again.\nChatGPT and Claude answer.\nWith search — about {WEB} permissions.\nWithout search — about {LOCAL} (that is, tap “Allow” {LOCAL} times).",
+    "search_items": [
+      "With search (≈{WEB})",
+      "Without search (≈{LOCAL})"
+    ]
   }
 }

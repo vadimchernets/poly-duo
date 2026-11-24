@@ -154,7 +154,10 @@ def test_resume_menu_before_the_question(tmp_path, lang):
     assert 'PolySkipChatGPT' in alone and 'PolySkipChatGPT' not in again and 'PolyCritique' in again
     # nothing is asked of an AI and nothing is written before the question field
     # (the one save before them is the first-run notice's marker, as in Duo 6.3)
-    assert not any(kind(a) in ('AskIntent', 'ClaudeAppIntentsExtension', 'save', 'setclipboard') for a in actions[m1 - 40:ask])
+    # (24.11: the Setup — with its search choice — now ends right before the resume block; it is not part of it)
+    setup_end = max(i for i, a in enumerate(actions[:m1]) if str(params(a).get('WFFileDestinationPath', '')).startswith('Duo-setup'))
+    assert not any(kind(a) in ('AskIntent', 'ClaudeAppIntentsExtension', 'save', 'setclipboard')
+                   for a in actions[max(m1 - 40, setup_end + 1):ask])
     # the question field and the mode menu are skipped when resuming
     assert guard_var(actions, groups_open(actions, ask)[0]) == 'PolyResume'
 
