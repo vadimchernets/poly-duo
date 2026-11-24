@@ -113,10 +113,12 @@ MY_MODE_FILE = 'Poly-my-mode.txt'
 # «go back») start with MENU_MARK, which is cut off again at once and forces the question box and the mode menu.
 PREFS_FILE = 'Duo-prefs.txt'
 # The owner's choice of 24.11: the Setup asks once «with search / without search» and says how many permission windows
-# each takes on the first use. SEARCH_WINDOWS: the run-4 count on the iPhone (fresh install: the Setup 5, the first
-# Critique 9, Quick 0 after it, Another mode 0, the first Research 24 → 38, rounded to tens); LOCAL_WINDOWS: the same
-# first uses without search, counted live on the iPhone (the owner's run notes of 24.11). Both go into the texts as {WEB} and {LOCAL}.
-SEARCH_WINDOWS, LOCAL_WINDOWS = 40, 4
+# each takes on the first use of every mode. SEARCH_WINDOWS: the run-4 count on the iPhone (fresh install: the Setup 5,
+# the first Critique 9, Quick 0 after it, Another mode 0, the first Research 24 → 38, rounded to tens). LOCAL_WINDOWS:
+# the same without search, counted on the iPhone 24.11 (the Setup 5 — ChatGPT, Claude, notifications and the two
+# update addresses —, Quick 2, Critique 0, Research 1, Another mode 0 → 8; the second run asks nothing).
+# Both go into the texts as {WEB} and {LOCAL}.
+SEARCH_WINDOWS, LOCAL_WINDOWS = 40, 8
 PREFS_HEAD = '⟦duo-prefs⟧\n'
 MENU_MARK = '⟦duo-menu⟧\n'
 # (Duo 6.1–6.11 remembered this much of its clipboard answer to tell it from a new question; since D5 of 24.11 the
