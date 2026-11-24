@@ -268,7 +268,7 @@
     "later": "Ahora no"
   },
   "brief": {
-    "claude": "Sin introducción, como máximo unas 300 palabras.",
+    "claude": "Sin introducción, como máximo unas 220 palabras.",
     "chatgpt": "Sin introducción, como máximo unas 600 palabras."
   },
   "search": {

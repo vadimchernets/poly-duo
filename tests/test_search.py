@@ -359,7 +359,8 @@ def test_check_reads_pages_after_both_answers_and_never_in_quick(tmp_path, lang)
             assert any(var_reads(block).get(params(block[g - 2]).get('UUID')) == S.QUICK for g in gates
                        if kind(block[g - 2]) == 'getvariable'), key
         part = block[blind:step3]
-        assert sum(kind(a) == 'gettext' and claim in text_of(a) for a in part) == S.CLAIMS_MAX
+        # prog-4 fix: the claims are checked in ONE loop — one request text, one search per engine, one reader
+        assert sum(kind(a) == 'gettext' and claim in text_of(a) for a in part) == 1
         # (the second fix of 24.11: ChatGPT's links are read in one loop — one prompt, one reader, one call)
         assert sum(kind(a) == 'gettext' and link in text_of(a) for a in part) == 1
         crux = [a for a in part if kind(a) == 'gettext' and L.prompt('crux').split('.')[0] in text_of(a)]
@@ -368,11 +369,11 @@ def test_check_reads_pages_after_both_answers_and_never_in_quick(tmp_path, lang)
         # when the web gave nothing
         web = [a for a in part if kind(a) == 'gettext' and text_of(a).startswith('https://www.bing.com/search?q=')]
         news = [a for a in part if kind(a) == 'gettext' and text_of(a).startswith('https://www.bing.com/news/search?q=')]
-        assert len(web) == len(news) == S.CLAIMS_MAX
+        assert len(web) == len(news) == 1
         # every page through the one reader (one host, one permission window), the direct download as its spare
         reader = [a for a in part if kind(a) == 'gettext' and text_of(a).startswith(S.READER)]
         # (the second fix of 24.11: ChatGPT's links through one reader action in one loop)
-        assert len(reader) == S.CLAIMS_MAX + 1 and not any(kind(a) == 'getarticle' for a in part)
+        assert len(reader) == 1 + 1 and not any(kind(a) == 'getarticle' for a in part)
 
 
 def test_claim_lines_are_read_into_claim_query_and_site():

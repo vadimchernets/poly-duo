@@ -137,6 +137,9 @@ RETRY_CUT = {'QUESTION': 400, 'GPT_ANSWER': 1200, 'CLAUDE_OWN': 1200, 'NUMS': 20
 # opinion added» and «Basis» then come from a second call (prompts/judge-split.txt), so neither call writes more than
 # its cap.
 GPT_PARTS, CLAUDE_PARTS = 2, 3
+# prog-4 fix (iPhone 24.11): the judge's call took 25-30 s at the 300-word cap — the cap is 220 words a part now, and
+# the judge's answer may come in three parts instead of two (same length in all, each call far from iOS's 30 s)
+JUDGE_PARTS = 3
 JUDGE_SPLIT = 5000
 # a number that is a source mark («[2]», «[1, 3]») is not a number of the answer
 NUMBER_RX = r'(?<![\[\d])\d+(?:[.,:/-]\d+)*(?!\d*(?:\s*[,;]\s*\d+)*\])'
@@ -739,7 +742,7 @@ def build(lang, ai=False):
             # condition — the primary source's page is read and checked claim by claim ([V1]…)
             *S.link_check_block(L, GPT_VAR, ask_service, RESUME_VAR, ymd(cr_today), item=item_name),
             *S.divergence_block(L, qsrc, (cr_gpt_f, 'Variable'), (cr_own_f, 'Variable'), ask_service, RESUME_VAR,
-                                ymd(cr_today), nums_var=NUMS_VAR),
+                                ymd(cr_today), nums_var=NUMS_VAR, item=item_name),
             # Research: Claude develops an idea only ChatGPT had («crossing»), the judge takes it into the answer
             *(S.cross_block(L, qsrc, (cr_gpt_f, 'Variable'), (cr_own_f, 'Variable'), ask_service) if deep else []),
             act_get_variable(S.KIND, cr_kd),
@@ -775,7 +778,7 @@ def build(lang, ai=False):
             if_output(g_long, cr_len, 'Count', 2, WFNumberValue=compare_head_len(compare_template) + LONG_DATA),
             act_step('long_text'),
             if_close(g_long),
-            act_claude(text_token('{P}', {'P': (cr_prompt, 'Text')}), cr_claude),
+            act_claude(text_token('{P}', {'P': (cr_prompt, 'Text')}), cr_claude, parts=JUDGE_PARTS),
             act_set_variable(CLAUDE_VAR, cr_claude, 'Ask Claude'),
             *if_text(g_cretry, CLAUDE_VAR, present=False),
             act_step('claude_retry'),
@@ -790,7 +793,7 @@ def build(lang, ai=False):
                                  'SPLIT': (cr_sp, 'Variable'), 'MAP': (cr_mp, 'Variable'),
                                  'KIND': (cr_kd, 'Variable'), 'CROSS': (cr_cx, 'Variable'),
                                  **rule_ref}, {'TODAY': ymd(cr_today)}), cr_cut),
-            act_claude(text_token('{P}', {'P': (cr_cut, 'Text')}), cr_claude2),
+            act_claude(text_token('{P}', {'P': (cr_cut, 'Text')}), cr_claude2, parts=JUDGE_PARTS),
             act_set_variable(CLAUDE_VAR, cr_claude2, 'Ask Claude'),
             if_close(g_cretry),
             # D3 (iPhone 24.11): a closing heading with no line under it (the Russian or English «Evidence» alone at the

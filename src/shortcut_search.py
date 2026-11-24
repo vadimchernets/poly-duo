@@ -214,6 +214,10 @@ CLAIM_SITE_RX = (r'(?i)\A[^|]*\|\|[^|]*\|\|\s*(?:https?://)?(?:www\.)?([a-z0-9-]
                  ' site:$1')
 CLAIM_NO_SITE_RX = r'(?i)\A[^|]*\|\|[^|]*\|\|\s*(?:https?://)?(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)+'
 FIRST_RECORD_RX = r'\A[^\n]+'
+# a line of the claim list «<i>\t<claim line>»: the claim line, the number
+CLAIM_ITEM_RX = r'[^\t\n|]{4,}\|\|[^\n]*'
+CLAIM_INDEX_RX = (r'(?s)\A(\d)\t.*\z', '$1')
+CLAIM_LIST = 'PolyClaimList'
 
 # ---- deep research: the card numbers a model picked, the line with its next query
 ENOUGH_RX = r'(?i)\A\s*(?:ENOUGH|NONE)\b'
@@ -749,7 +753,8 @@ def link_check_block(L, gpt_var, claude_check, skip_var, today, item='Repeat Ite
     return acts + [if_close(g_net), if_close(g_has), if_close(g_skip), if_close(g_quick)]
 
 
-def divergence_block(L, question, gpt_answer, claude_answer, claude_check, skip_var, today, nums_var=None):
+def divergence_block(L, question, gpt_answer, claude_answer, claude_check, skip_var, today, nums_var=None,
+                     item='Repeat Item'):
     """The owner's main idea of 23.11 (fable, agy, sol, astra): Duo searches where the two answers state a FACT
     differently (a number, a date, a name) — never where they agree (the council of 23.11 on the divergent, item 6:
     checking for checking's sake spends calls). `nums_var`: the numbers that stand in only one answer (found by rule);
@@ -782,67 +787,86 @@ def divergence_block(L, question, gpt_answer, claude_answer, claude_check, skip_
             claude_check(prompt, call),
             act_set_variable(CLAIMS, call, 'Ask Claude'),
             act_get_variable(CLAIMS, c_all)]
+    # Prog-4 fix (iPhone 24.11, R1/R3): the claims are listed first (text only, no network), then ONE «Repeat with
+    # Each» searches, reads and checks them — one bing action, one news action, one reader action and one Claude call
+    # for every claim. Unrolled per claim, the second claim's actions were new places in the shortcut: they asked their
+    # own windows on whatever question first had two claims, and the run that stopped and the one that hung both did
+    # so on that second set of places.
     src = (c_all, 'Variable')
     closers = []
+    acts += clear_variable(CLAIM_LIST)
     for i in range(1, CLAIMS_MAX + 1):
-        line, g_line, claim, query, site, g_site, q_full, g_rec, rec, url, title_line, cut_get, g_page = \
-            (u() for _ in range(13))
-        p2, call2, g_v, v_get, nsite, title2 = u(), u(), u(), u(), u(), u()
-        tmp = 'PolyClaimRecords'
+        line, g_line, rest = u(), u(), u()
         acts += [act_first_match(src[0], src[1], CLAIM_LINE_RX, line),
                  if_output(g_line, line, 'Matches', 100),
-                 act_replace_regex(line, 'Matches', CLAIM_TEXT_RX[0], CLAIM_TEXT_RX[1], claim),
-                 act_replace_regex(line, 'Matches', CLAIM_QUERY_RX[0], CLAIM_QUERY_RX[1], query),
-                 *set_text('PolyClaimQuery', '{Q}', {'Q': (query, 'Updated Text')}),
-                 # a site named for the primary source narrows the web search to it
-                 act_first_match(line, 'Matches', CLAIM_NO_SITE_RX, nsite),
-                 if_output(g_site, nsite, 'Matches', 100),
-                 act_replace_regex(line, 'Matches', CLAIM_SITE_RX[0], CLAIM_SITE_RX[1], site),
-                 *set_text('PolyClaimQuery', '{Q}{S}', {'Q': (query, 'Updated Text'), 'S': (site, 'Updated Text')}),
-                 if_close(g_site),
-                 act_get_variable('PolyClaimQuery', q_full),
-                 *clear_variable(tmp)]
-        acts += fetch(L, CLAIM_ENGINES[0], (q_full, 'Variable'), tmp)
-        g_web = u()
-        acts += [*if_text(g_web, tmp, present=False),
-                 *fetch(L, CLAIM_ENGINES[1], (query, 'Updated Text'), tmp),
-                 if_close(g_web),
-                 *clean_records(tmp),
-                 *if_text(g_rec, tmp),
-                 act_get_variable(tmp, rec)]
-        first = u()
-        acts += [act_first_match(rec, 'Variable', FIRST_RECORD_RX, first),
-                 act_replace_regex(first, 'Matches', RECORD_RX, '$4', url),
-                 act_replace_regex(first, 'Matches', RECORD_RX, '[V%d] $1 · $2 · $3\n$4' % i, title_line),
-                 act_replace_regex(title_line, 'Updated Text', r'\]  · ', '] ', title2),   # an undated page
-                 *append_to(LIST_V, '{L}\n', {'L': (title2, 'Updated Text')}),
-                 *read_page((url, 'Updated Text'), PAGE_RX, 'PolyPageCut'),
-                 *if_text(g_page, 'PolyPageCut'),
-                 act_get_variable('PolyPageCut', cut_get),
-                 act_text(text_token(L.prompt('claim-check'),
-                                     {'CLAIM': (claim, 'Updated Text'), 'URL': (url, 'Updated Text'),
-                                      'PAGE': (cut_get, 'Variable')}, {'TODAY': today}), p2),
-                 claude_check(p2, call2),
-                 act_set_variable(VERDICT, call2, 'Ask Claude'),
-                 *if_text(g_v, VERDICT),
-                 act_get_variable(VERDICT, v_get),
-                 *append_to(CHECKS, '• [V%d] {C} — {V}\n' % i, {'C': (claim, 'Updated Text'),
-                                                               'V': (v_get, 'Variable')}),
-                 if_close(g_v),
-                 if_else(g_page),
-                 *append_to(CHECKS, '• [V%d] {C} — ' % i + L['search.link_unread'] + '\n',
-                            {'C': (claim, 'Updated Text')}),
-                 if_close(g_page),
-                 if_else(g_rec),
-                 *append_to(CHECKS, '• {C} — ' + L['search.claim_unfound'] + '\n', {'C': (claim, 'Updated Text')}),
-                 if_close(g_rec)]
-        rest = u()
-        acts.append(act_replace_regex(src[0], src[1], CLAIM_REST_RX, '', rest))
+                 *append_to(CLAIM_LIST, '%d\t{L}\n' % i, {'L': (line, 'Matches')}),
+                 act_replace_regex(src[0], src[1], CLAIM_REST_RX, '', rest)]
         src = (rest, 'Updated Text')
         closers.append(if_close(g_line))
     # the claims are nested (claim 2 only after a claim 1), so the Ifs close in reverse
-    return acts + closers[::-1] + [if_close(g_net), *([if_close(g_nums)] if nums_var else []), if_close(g_noweb),
-                                   if_close(g_skip), if_close(g_quick)]
+    acts += closers[::-1]
+    lv, split, g_rep, it, itt, line, g_line, idx = (u() for _ in range(8))
+    claim, query, site, g_site, q_full, g_rec, rec, url, title_line, cut_get, g_page = (u() for _ in range(11))
+    p2, call2, g_v, v_get, nsite, title2, first, g_web, vline = (u() for _ in range(9))
+    tmp = 'PolyClaimRecords'
+    acts += [act_get_variable(CLAIM_LIST, lv),
+             {'WFWorkflowActionIdentifier': 'is.workflow.actions.text.split',
+              'WFWorkflowActionParameters': {'text': text_token('{T}', {'T': (lv, 'Variable')}),
+                                             'WFTextSeparator': 'New Lines', 'UUID': split}},
+             repeat_open(g_rep, split, 'Split Text'),
+             act_get_variable(item, it),
+             act_text(text_token('{I}', {'I': (it, 'Variable')}), itt),
+             act_first_match(itt, 'Text', CLAIM_ITEM_RX, line),
+             if_output(g_line, line, 'Matches', 100),
+             act_replace_regex(itt, 'Text', CLAIM_INDEX_RX[0], CLAIM_INDEX_RX[1], idx),
+             act_replace_regex(line, 'Matches', CLAIM_TEXT_RX[0], CLAIM_TEXT_RX[1], claim),
+             act_replace_regex(line, 'Matches', CLAIM_QUERY_RX[0], CLAIM_QUERY_RX[1], query),
+             *set_text('PolyClaimQuery', '{Q}', {'Q': (query, 'Updated Text')}),
+             # a site named for the primary source narrows the web search to it
+             act_first_match(line, 'Matches', CLAIM_NO_SITE_RX, nsite),
+             if_output(g_site, nsite, 'Matches', 100),
+             act_replace_regex(line, 'Matches', CLAIM_SITE_RX[0], CLAIM_SITE_RX[1], site),
+             *set_text('PolyClaimQuery', '{Q}{S}', {'Q': (query, 'Updated Text'), 'S': (site, 'Updated Text')}),
+             if_close(g_site),
+             act_get_variable('PolyClaimQuery', q_full),
+             *clear_variable(tmp)]
+    acts += fetch(L, CLAIM_ENGINES[0], (q_full, 'Variable'), tmp)
+    acts += [*if_text(g_web, tmp, present=False),
+             *fetch(L, CLAIM_ENGINES[1], (query, 'Updated Text'), tmp),
+             if_close(g_web),
+             *clean_records(tmp),
+             *if_text(g_rec, tmp),
+             act_get_variable(tmp, rec),
+             act_first_match(rec, 'Variable', FIRST_RECORD_RX, first),
+             act_replace_regex(first, 'Matches', RECORD_RX, '$4', url),
+             act_replace_regex(first, 'Matches', RECORD_RX, '$1 · $2 · $3\n$4', title_line),
+             act_replace_regex(title_line, 'Updated Text', r'\A · ', '', title2),   # an undated page
+             act_text(text_token('[V{I}] {T}', {'I': (idx, 'Updated Text'), 'T': (title2, 'Updated Text')}), vline),
+             *append_to(LIST_V, '{L}\n', {'L': (vline, 'Text')}),
+             *read_page((url, 'Updated Text'), PAGE_RX, 'PolyPageCut'),
+             *if_text(g_page, 'PolyPageCut'),
+             act_get_variable('PolyPageCut', cut_get),
+             act_text(text_token(L.prompt('claim-check'),
+                                 {'CLAIM': (claim, 'Updated Text'), 'URL': (url, 'Updated Text'),
+                                  'PAGE': (cut_get, 'Variable')}, {'TODAY': today}), p2),
+             claude_check(p2, call2),
+             act_set_variable(VERDICT, call2, 'Ask Claude'),
+             *if_text(g_v, VERDICT),
+             act_get_variable(VERDICT, v_get),
+             *append_to(CHECKS, '• [V{I}] {C} — {V}\n', {'I': (idx, 'Updated Text'), 'C': (claim, 'Updated Text'),
+                                                         'V': (v_get, 'Variable')}),
+             if_close(g_v),
+             if_else(g_page),
+             *append_to(CHECKS, '• [V{I}] {C} — ' + L['search.link_unread'] + '\n',
+                        {'I': (idx, 'Updated Text'), 'C': (claim, 'Updated Text')}),
+             if_close(g_page),
+             if_else(g_rec),
+             *append_to(CHECKS, '• {C} — ' + L['search.claim_unfound'] + '\n', {'C': (claim, 'Updated Text')}),
+             if_close(g_rec),
+             if_close(g_line),
+             repeat_close(g_rep)]
+    return acts + [if_close(g_net), *([if_close(g_nums)] if nums_var else []), if_close(g_noweb),
+                   if_close(g_skip), if_close(g_quick)]
 
 
 def cross_block(L, question, gpt_answer, claude_answer, claude_check):

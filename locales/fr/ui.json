@@ -268,7 +268,7 @@
     "later": "Plus tard"
   },
   "brief": {
-    "claude": "Sans introduction, 300 mots environ au maximum.",
+    "claude": "Sans introduction, 220 mots environ au maximum.",
     "chatgpt": "Sans introduction, 600 mots environ au maximum."
   },
   "search": {

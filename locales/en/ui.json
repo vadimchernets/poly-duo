@@ -268,7 +268,7 @@
     "later": "Not now"
   },
   "brief": {
-    "claude": "No introduction; at most about 300 words.",
+    "claude": "No introduction; at most about 220 words.",
     "chatgpt": "No introduction; at most about 600 words."
   },
   "search": {

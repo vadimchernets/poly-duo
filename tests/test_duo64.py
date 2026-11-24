@@ -90,11 +90,13 @@ def test_one_draft_save_runs_three_times(tmp_path, lang):
     # number passes — every one of them reads «Repeat Item 2»
     # (the second fix of 24.11: + the search stage's one download loop, deep research's second-round one × 2 and the
     # one loop over ChatGPT's links)
-    assert inner == ['Repeat Item 2'] * 14
+    # (prog-4 fix: + the one loop over the divergence claims)
+    assert inner == ['Repeat Item 2'] * 15
     # My mode (no loop) still reads «Repeat Item»: its two card loops and its two number passes
     before = [params(a)['WFVariable']['Value']['VariableName'] for a in actions[:loop_start]
               if kind(a) == 'getvariable' and params(a)['WFVariable']['Value']['VariableName'].startswith('Repeat Item')]
-    assert before == ['Repeat Item'] * 6   # (+ the search stage's one download loop, the loop over ChatGPT's links)
+    assert before == ['Repeat Item'] * 7   # (+ the search stage's one download loop, the loop over ChatGPT's links,
+    #                                        the loop over the divergence claims)
 
 
 @pytest.mark.parametrize('lang', LANGS)

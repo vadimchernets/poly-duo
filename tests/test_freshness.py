@@ -235,5 +235,5 @@ def test_freshness_adds_no_permission_window_and_no_message(tmp_path, lang):
         research = 2 + 2 * S.CHUNKS + 1 if start == starts[1] else 0
         cross = 1 if start == starts[1] else 0
         assert kinds.count('AskIntent') == 2 + 2 * research   # each of ChatGPT's research calls has its retry
-        assert kinds.count('ClaudeAppIntentsExtension') == 4 + 1 + 1 + 1 + S.CLAIMS_MAX + research + cross   # (24.11: ChatGPT's links in one loop — one call)
+        assert kinds.count('ClaudeAppIntentsExtension') == 4 + 1 + 1 + 1 + 1 + research + cross   # (24.11: ChatGPT's links in one loop — one call; prog-4: the claims too)
 

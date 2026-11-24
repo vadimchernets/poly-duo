@@ -41,7 +41,7 @@ MORE_STRIP_RX = r'\s*\[\[MORE\]\]\s*'
 # The 6.11 check (agy No.158, kimi): an answer cut off WITHOUT the marker — near the call's measured cap, its last
 # paragraph (40+ characters, not a list line) ending on a letter, a digit or a comma — is continued as if it had the
 # marker. A finished answer ends on a full stop, a bracket, a source code or a list line and costs no call.
-CUT_CHARS = {'Ask ChatGPT': 3200, 'Ask Claude': 1600}
+CUT_CHARS = {'Ask ChatGPT': 3200, 'Ask Claude': 1150}   # Claude: 220 words a part (prog-4 fix)
 
 
 def cut_rx(chars):
