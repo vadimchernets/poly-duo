@@ -580,6 +580,7 @@ def build(lang, ai=False):
         (sr_today, sr_pk, g_pk, cr_wrap_s, cr_ow, cr_ow2, cr_pk, cr_lk, cr_sp, cr_both, cr_blen, g_split,
          cr_pk2, cr_lk2, cr_sp2) = ids(15)
         cr_gw, cr_mp, cr_gp1, cr_gl1, cr_kd, cr_cx = ids(6)
+        g_dd = ids(1)[0]
         OWN_WRAP, GPT_WRAP, SPLIT_VAR, MAP_VAR = 'PolyOwnRequest', 'PolyGptRequest', 'PolyJudgeSplit', 'PolyJudgeEnd'
         ask_service = lambda p, uid: act_claude(text_token('{P}', {'P': (p, 'Text')}), uid, split=False)
 
@@ -864,6 +865,10 @@ def build(lang, ai=False):
             *search,
             *step1,
             *clear_variable(DRAFT_VAR),
+            # prog-4 (iPhone 24.11): in Research the step-1 draft (ChatGPT's answer with its research cards) was the
+            # last thing done before «There was a problem running the shortcut», 4 runs of 4, the old build too; the
+            # file stayed at step 0. Research keeps the step-0 draft only (a cut-off run asks ChatGPT again).
+            *(if_text(g_dd, S.DEEP, present=False) if deep else []),
             *if_text(g_d1, GPT_VAR),
             act_get_variable(GPT_VAR, cr_g1),
             act_get_variable(S.packet_var(S.side_of('G')), cr_gp1),
@@ -873,6 +878,7 @@ def build(lang, ai=False):
                                              'L': (cr_gl1, 'Variable')}),
             # ChatGPT gave nothing: no second write, the step-0 draft already on disk stays as it is
             if_close(g_d1),
+            *([if_close(g_dd)] if deep else []),
             if_else(g_pa),
             *if_text(g_pb, DRAFT_PASS_B, present=False),
             *set_text(DRAFT_PASS_B, '1'),
