@@ -247,8 +247,8 @@ TAG_RX = r'(?s).+'
 
 def add_tag(src):
     """TAG += an empty text made from the output `src` ((uid, name)): its source joins every later address."""
-    e = u()
-    return [act_replace_regex(src[0], src[1], TAG_RX, '', e), *append_to(TAG, '{E}', {'E': (e, 'Updated Text')})]
+    # the second fix of 24.11: TAG only added the answers' apps to every address (more windows, not fewer) — off
+    return []
 
 
 def prefixes():
@@ -338,24 +338,13 @@ def engine_address(L, engine, english=False):
     return spec['url'].replace('{LOC}', loc).replace('{LANG}', L['search.wiki'])
 
 
-def fetch(L, engine, query, target, english=False):
-    """One search: the answer is read as text; only when it holds what a real answer holds (`test`: an RSS item, a
-    DDG result, a Wikipedia page — a captcha, a rate limit or an error page does not) it is turned into record lines
-    and added to the variable `target`. `query`: (uid, output) of the query text."""
+def parse_into(L, engine, txt, target):
+    """The answer text `txt` (a Text action's uid) of `engine` → record lines added to `target`, only when it holds what
+    a real answer holds (`test`: an RSS item, a DDG result, a Wikipedia page — a captcha, a rate limit or an error page
+    does not)."""
     spec = ENGINES[engine]
-    enc, url, dl, txt, g, tag, named = (u() for _ in range(7))
-    acts = [act_urlencode(query[0], query[1], enc),
-            act_get_variable(TAG, tag),
-            act_text(text_token(engine_address(L, engine, english) + '{TAG}',
-                                {'Q': (enc, 'URL Encoded Text'), 'TAG': (tag, 'Variable')}), url),
-            # (the dozapros of 24.11, OpenAI and Opus: the address as ONE attachment — the Mac run of 24.11 stopped with
-            # «a valid URL is required», so the address stays a text token)
-            act_download(text_token('{U}', {'U': (url, 'Text')}), dl),
-            # D2 (the Mac run of 24.11; Opus, agy): «Text» of an RSS answer is its FILE NAME («search»), of a
-            # DuckDuckGo page its visible words without tags; named «r.txt» first, the answer is read as it came
-            act_set_name(dl, 'Contents of URL', 'r.txt', named),
-            act_text(text_token('{C}', {'C': (named, 'Renamed Item')}), txt),
-            if_output(g, txt, 'Text', 99, WFConditionalActionString=spec['test'])]
+    g = u()
+    acts = [if_output(g, txt, 'Text', 99, WFConditionalActionString=spec['test'])]
     if spec['kind'] == 'wiki':
         title, date, link, body = u(), u(), u(), u()
         acts += [act_first_match(txt, 'Text', WIKI_TITLE_RX, title),
@@ -369,6 +358,70 @@ def fetch(L, engine, query, target, english=False):
         steps, last = pipeline((txt, 'Text'), (*parse_pairs(engine), ENGINE_KEEP_RX, ENGINE_CUT_RX))
         acts += [*steps, *append_to(target, '\n{R}\n', {'R': last})]
     return acts + [if_close(g)]
+
+
+def download_text(url_src):
+    """«Get Contents of URL» on the address `url_src` ((uid, name)) → (actions, uid of a Text of the answer as it came).
+    D2 (the Mac run of 24.11; Opus, agy): «Text» of an RSS answer is its FILE NAME («search»), of a DuckDuckGo page its
+    visible words without tags; named «r.txt» first, the answer is read as it came."""
+    dl, named, txt = u(), u(), u()
+    return [act_download(text_token('{U}', {'U': url_src}), dl),
+            act_set_name(dl, 'Contents of URL', 'r.txt', named),
+            act_text(text_token('{C}', {'C': (named, 'Renamed Item')}), txt)], txt
+
+
+def fetch(L, engine, query, target, english=False):
+    """One search with its own «Get Contents of URL» (the check and research steps; the search stage queues its
+    searches instead: queue_fetch / run_queue). `query`: (uid, output) of the query text."""
+    enc, url = u(), u()
+    acts = [act_urlencode(query[0], query[1], enc),
+            act_text(text_token(engine_address(L, engine, english), {'Q': (enc, 'URL Encoded Text')}), url)]
+    dl_acts, txt = download_text((url, 'Text'))
+    return acts + dl_acts + parse_into(L, engine, txt, target)
+
+
+# The second fix of 24.11 (Mac, «Shortcuts», DuoPermDiag): iOS and macOS remember «Always Allow» for ONE ACTION of the
+# shortcut (its own place in it) and the site — two «Get Contents of URL» actions sending the same thing to the same
+# site asked twice; ONE action asked once and then never again, whatever set of data later went through it. So the
+# search stage — every engine, every query (1, 2 in English, 3 in Research) — goes through ONE download action: the
+# searches are queued as lines «⟦k⟧address» and one «Repeat with Each» downloads them; ⟦k⟧ says which engine parses
+# the answer into which variable.
+NETQ = 'PolyNetQueue'
+QMARK = '\u27e6%d\u27e7'
+
+
+def queue_fetch(L, engine, query, target, routes, english=False):
+    """Queue one search (as fetch() would make it) in NETQ; `routes`: the list of (engine, target) of this queue —
+    the line's ⟦k⟧ is its index there."""
+    if (engine, target) not in routes:
+        routes.append((engine, target))
+    k = routes.index((engine, target))
+    enc = u()
+    return [act_urlencode(query[0], query[1], enc),
+            *append_to(NETQ, QMARK % k + engine_address(L, engine, english) + '\n', {'Q': (enc, 'URL Encoded Text')})]
+
+
+def run_queue(L, routes, item='Repeat Item'):
+    """Download every queued line with ONE «Get Contents of URL» and parse each answer by its route; NETQ is emptied.
+    `item`: the name of the «Repeat with Each» item at this place (see search_block)."""
+    qv, split, g_rep, iv, it, url, g_url = (u() for _ in range(7))
+    acts = [act_get_variable(NETQ, qv),
+            {'WFWorkflowActionIdentifier': 'is.workflow.actions.text.split',
+             'WFWorkflowActionParameters': {'text': text_token('{T}', {'T': (qv, 'Variable')}),
+                                            'WFTextSeparator': 'New Lines', 'UUID': split}},
+            repeat_open(g_rep, split, 'Split Text'),
+            act_get_variable(item, iv),
+            act_text(text_token('{I}', {'I': (iv, 'Variable')}), it),
+            act_first_match(it, 'Text', r'https?://\S+', url),
+            if_output(g_url, url, 'Matches', 100)]
+    dl_acts, txt = download_text((url, 'Matches'))
+    acts += dl_acts
+    for k, (engine, target) in enumerate(routes):
+        g_k = u()
+        acts += [if_output(g_k, it, 'Text', 99, WFConditionalActionString=QMARK % k),
+                 *parse_into(L, engine, txt, target),
+                 if_close(g_k)]
+    return acts + [if_close(g_url), repeat_close(g_rep), *clear_variable(NETQ)]
 
 
 def sort_newest_first(var):
@@ -557,18 +610,19 @@ def search_block(L, qsrc, long_question, ask_claude, now, today, item='Repeat It
             *set_text('PolyQ1', '{Q}', {'Q': (q_cut, 'Matches')}),
             if_close(g_q1)]
     q1_get = u()
-    acts.append(act_get_variable('PolyQ1', q1_get))
+    routes = []
+    acts += [*clear_variable(NETQ), act_get_variable('PolyQ1', q1_get)]
     for side in ('C', 'G'):
         target = records_var('S' if SHARED_SOURCES else side)
         for engine in SIDE_ENGINES[side]:
-            acts += fetch(L, engine, (q1_get, 'Variable'), target)
+            acts += queue_fetch(L, engine, (q1_get, 'Variable'), target, routes)
     # query 2 — English — to the engines with an English edition; query 3 (deep research only) to the same
     acts += [act_replace_regex(q_all, 'Variable', QUERY_REST_RX, '', q_rest),
              act_first_match(q_rest, 'Updated Text', QUERY_LINE_RX, q2),
              if_output(g_q2, q2, 'Matches', 100)]
     for engine in EN_ENGINES:
         side = 'S' if SHARED_SOURCES else ENGINES[engine]['side']
-        acts += fetch(L, engine, (q2, 'Matches'), records_var(side), english=True)
+        acts += queue_fetch(L, engine, (q2, 'Matches'), records_var(side), routes, english=True)
     acts += [if_close(g_q2),
              *if_text(g_deep, DEEP),
              act_replace_regex(q_rest, 'Updated Text', QUERY_REST_RX, '', q_rest2),
@@ -576,8 +630,8 @@ def search_block(L, qsrc, long_question, ask_claude, now, today, item='Repeat It
              if_output(g_q3, q3, 'Matches', 100)]
     for engine in EN_ENGINES:
         side = 'S' if SHARED_SOURCES else ENGINES[engine]['side']
-        acts += fetch(L, engine, (q3, 'Matches'), records_var(side))
-    acts += [if_close(g_q3), if_close(g_deep)]
+        acts += queue_fetch(L, engine, (q3, 'Matches'), records_var(side), routes)
+    acts += [if_close(g_q3), if_close(g_deep), *run_queue(L, routes, item)]
     for side in sides:
         g_any = u()
         acts += [*clean_records(records_var(side)),
@@ -618,8 +672,7 @@ def read_page(url, cut_rx, target_var):
     `cut_rx` keeps (or stays empty)."""
     r_url, r_dl, r_txt, dead, g_dead, ok, g_ok, p_get, cut, tag = (u() for _ in range(10))
     return [*clear_variable(PAGE),
-            act_get_variable(TAG, tag),
-            act_text(text_token(READER + '{U}{TAG}', {'U': url, 'TAG': (tag, 'Variable')}), r_url),
+            act_text(text_token(READER + '{U}', {'U': url}), r_url),
             act_download(text_token('{U}', {'U': (r_url, 'Text')}), r_dl),
             act_text(text_token('{C}', {'C': (r_dl, 'Contents of URL')}), r_txt),
             act_first_match(r_txt, 'Text', READER_DEAD_RX, dead),

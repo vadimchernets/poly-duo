@@ -650,19 +650,17 @@ def act_local_ip(uid, kind='IPv4'):
 
 def network_guard(var):
     """Actions that never throw: `var` is the constant «1» when the phone has a network, nothing offline («Get Contents
-    of URL» stops the whole shortcut offline; Shortcuts has no try/catch). The council of 24.11 (agy, OpenAI, Kimi,
-    Opus): the Wi-Fi network NAME is not read any more — iOS put it, with a line about the person's location, into
-    every permission window of the run, as one more data source of each request. The local IP address is asked
-    instead, and only a constant goes on (the D-29 pattern), never the address itself."""
+    of URL» stops the whole shortcut offline; Shortcuts has no try/catch). The local IP address is asked, never the
+    Wi-Fi name. The second fix of 24.11 (Mac, «Shortcuts», DuoPermDiag: a constant set INSIDE «If IP has any value»
+    carries the IP as a data source — «Network Info» stood in 67 of 134 windows of the iPhone run): `var` is set to
+    «1» OUTSIDE every condition and only CLEARED inside «If IPv4 and IPv6 have no value». Online that branch never
+    runs, and the Mac showed no IP in the windows after such a check."""
     ip, ip6, g, g6 = new_uuid(), new_uuid(), new_uuid(), new_uuid()
-    # (the check of 24.11, Opus: a cellular network that is IPv6 only has no IPv4 address — then IPv6 is asked)
-    return [*clear_variable(var),
+    return [*set_text(var, '1'),
             act_local_ip(ip),
-            if_output(g, ip, 'Current IP Address', 100),
-            *set_text(var, '1'),
-            if_else(g),
+            if_output(g, ip, 'Current IP Address', 101),
             act_local_ip(ip6, 'IPv6'),
-            if_output(g6, ip6, 'Current IP Address', 100),
-            *set_text(var, '1'),
+            if_output(g6, ip6, 'Current IP Address', 101),
+            *clear_variable(var),
             if_close(g6),
             if_close(g)]

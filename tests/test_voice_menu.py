@@ -76,19 +76,14 @@ def test_first_run_setup_asks_everything_at_once(tmp_path, lang):
                                                     'notification')]
     # ChatGPT, Claude, the notification, both update addresses on the web, then the one file write (the stamp, last: a
     # Setup cut short runs again next time)
-    # (Duo 6.11, the council of 24.11: between ChatGPT/Claude and the notification the REAL sets are warmed — the
-    # query call (Claude), the 5 engines and the reader; ChatGPT and Claude again; the 2 claim engines and the reader;
-    # ChatGPT and Claude with what the search brought)
+    # (the second fix of 24.11, Mac: «Always Allow» is kept per ACTION, so the warm-up of the first fix spared the real
+    # actions nothing — it is gone: ChatGPT, Claude, the notification, the update check, the stamp)
     assert order[:2] == ['AskIntent', 'ClaudeAppIntentsExtension']
     note = order.index('notification')
-    warm = order[2:note]
-    # (the check of 24.11: + a card's link through the reader at both stages, ddg at stage 3, and the sets of Claude's
-    # own answer, the judge and ChatGPT's continuation)
-    assert warm.count('downloadurl') == 5 + 1 + 1 + 3 + 1 + 1
-    assert warm.count('AskIntent') == 3 and warm.count('ClaudeAppIntentsExtension') == 5
+    assert order[2:note] == []
     assert order[-1] == 'save'
-    # GitHub, the site as its fallback, and the site once more in the Setup; plus the warm-up downloads
-    assert order.count('downloadurl') == 3 + 12
+    # GitHub, the site as its fallback, and the site once more in the Setup
+    assert order.count('downloadurl') == 3
     # every action that can ask for a permission on the main path sits in the Setup: no save, append or copy elsewhere
     # before the finale menu, and the Setup is gated by the file
     assert any(a['WFWorkflowActionParameters'].get('WFGetFilePath') == f"Duo-setup-{json.loads((ROOT / 'releases' / 'version.json').read_text())['duo']}.txt" for a in head[:first])

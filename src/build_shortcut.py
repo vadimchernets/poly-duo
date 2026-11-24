@@ -1068,13 +1068,10 @@ def build(lang, ai=False):
                     # the same shape as every real request (the brevity line + the text): iOS asked «send 2 text items to
                     # Claude» in the first Critique after a 1-item ping in the Setup
                     act_claude(text_token('{P}', {'P': (su_txt, 'Text')}), su_claude, split=False),
-                    # Duo 6.11 (the 6.11 check: fable, agy, opus): every site Duo's search and reader use is called once
-                    # here, so all their «Allow» windows come now, one after another, and none in the middle of an answer
-                    # (the one-word ChatGPT calls of the warm-up get no automatic retry, as the Setup's ping)
-                    *S.warm_up(L, lambda pr, uid: (RETRY_SKIP.add(uid),
-                                                   act_gpt(text_token('{P}', {'P': (pr, 'Text')}), uid, split=False))[1],
-                                lambda pr, uid: act_claude(text_token('{P}', {'P': (pr, 'Text')}), uid, split=False),
-                                SETUP_PING)]
+                    # (the second fix of 24.11, Mac: «Always Allow» is kept per ACTION of the shortcut, so the warm-up's
+                    # own downloads and calls never spared the real ones a window — the iPhone run-2: 25 windows in the
+                    # Setup, 15 more in the first question; the warm-up is gone, the real actions ask once each)
+                    ]
     setup_before.append(act_notify(L['speak.ready']))
     setup_after = [act_speak(L['speak.ready'])]
 

@@ -251,7 +251,9 @@ def test_each_model_gets_its_own_engines_all_at_once_before_any_answer(tmp_path,
     ui = ui_of(lang)['search']
     for start, end in critiques(actions):
         head = head_of(actions[start:end])
-        addresses = [text_of(a) for a in head if kind(a) == 'gettext' and text_of(a).startswith('https://')]
+        # (the second fix of 24.11: the search stage queues «⟦k⟧address» lines for its one download action)
+        addresses = [re.sub('^\ufffc?\u27e6\\d+\u27e7', '', text_of(a)) for a in head if kind(a) == 'gettext']
+        addresses = [t for t in addresses if t.startswith('https://')]
         hosts = {'news.google.com/rss/search': 0, '.wikipedia.org/w/api.php': 0,
                  'www.bing.com/news/search': 0, 'www.bing.com/search': 0, 'html.duckduckgo.com/html': 0}
         # SearXNG is off the default path (the 6.11 check): searx.be answers with a browser check

@@ -88,11 +88,12 @@ def test_one_draft_save_runs_three_times(tmp_path, lang):
     # Duo 6.11 (after the check: the search runs inside the loop, after the step-0 draft is on disk): the main
     # Critique's card loops (2), deep research's page-reading and second-round card loops (2 × 3) and the two
     # number passes — every one of them reads «Repeat Item 2»
-    assert inner == ['Repeat Item 2'] * 10
+    # (the second fix of 24.11: + the search stage's one download loop)
+    assert inner == ['Repeat Item 2'] * 11
     # My mode (no loop) still reads «Repeat Item»: its two card loops and its two number passes
     before = [params(a)['WFVariable']['Value']['VariableName'] for a in actions[:loop_start]
               if kind(a) == 'getvariable' and params(a)['WFVariable']['Value']['VariableName'].startswith('Repeat Item')]
-    assert before == ['Repeat Item'] * 4
+    assert before == ['Repeat Item'] * 5   # (+ the search stage's one download loop)
 
 
 @pytest.mark.parametrize('lang', LANGS)

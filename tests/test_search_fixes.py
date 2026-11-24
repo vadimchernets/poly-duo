@@ -187,8 +187,8 @@ def test_read_page_goes_through_the_reader_and_never_through_safari_reader():
     downloads = [i for i, a in enumerate(acts) if kind(a) == 'downloadurl']
     # the council of 24.11 (OpenAI, agy): the reader only — a direct download asked a NEW site's permission mid-answer
     assert len(downloads) == 1
-    # the run's TAG rides on the reader's address (one set of sources per stage)
-    assert '{TAG}' not in text_of(first_text) and S.TAG in str(acts)
+    # (the second fix of 24.11: no TAG on the reader's address — it only added the answers' apps to the windows)
+    assert S.TAG not in str(acts)
 
 
 # ------------------------------------------------------------------ 11. a resumed Critique keeps ChatGPT's cards (opus, kimi)
@@ -298,23 +298,39 @@ def test_a_link_in_the_question_is_read_first_and_given_to_both_models(tmp_path)
 # ------------------------------------------------------------------ the first run: every «Allow» window at the Setup
 
 @pytest.mark.parametrize('lang', ['en', 'ru'])
-def test_setup_calls_every_search_host_and_the_reader_once(tmp_path, lang):
-    """The council of 24.11: the Setup warms the REAL sets of sources — every engine through fetch() and the reader
-    through read_page(), with the query call's TAG (stage 1), then with ChatGPT's and Claude's (stage 3), then one
-    ChatGPT and one Claude call carry what the search brought — behind the local-IP guard, before «ready»."""
+def test_setup_has_no_warm_up_and_the_network_guard_never_carries_the_ip(tmp_path, lang):
+    """The second fix of 24.11 (Mac, «Shortcuts»): «Always Allow» is kept per action — the Setup's own downloads never
+    spared the real ones a window, so the Setup has none of its own (only the update check); and a constant set
+    INSIDE «If IP has any value» carried the IP into every window, so the guard sets «1» outside any condition and
+    only clears it inside «If IPv4 and IPv6 have no value»."""
     actions = build(tmp_path, lang)
-    assert len(S.warm_up_addresses(Locale(lang))) == 5
     ready = Locale(lang)['speak.ready']
     ready_at = next(i for i, a in enumerate(actions) if kind(a) == 'notification' and ready in str(params(a)))
-    setup = actions[max(0, ready_at - 1600):ready_at]
-    texts = [text_of(a) for a in setup if kind(a) == 'gettext']
-    wiki = ui_of(lang)['search']['wiki']
-    for host in ('news.google.com', f'{wiki}.wikipedia.org', 'www.bing.com/news', 'www.bing.com/search',
-                 'html.duckduckgo.com', 'r.jina.ai'):
-        assert any(t.startswith('https://' + host) for t in texts), host
-    assert any(kind(a) == 'getipaddress' for a in setup)
+    first = Locale(lang)['speak.first_run']
+    first_at = next(i for i, a in enumerate(actions) if kind(a) == 'speaktext' and first in str(params(a)))
+    assert not any(kind(a) == 'downloadurl' for a in actions[first_at:ready_at])
     assert not any(kind(a) == 'getwifi' for a in actions)
-    assert sum(kind(a) == 'setitemname' for a in setup) >= 7      # 5 engines + the 2 claim engines again
+    from shortcut_actions import network_guard
+    g = network_guard('PolyNet')
+    assert kind(g[0]) == 'gettext' and kind(g[1]) == 'setvariable'          # «1» first, outside any condition
+    conds = [params(a) for a in g if kind(a) == 'conditional' and params(a).get('WFControlFlowMode') == 0]
+    assert conds and all(c['WFCondition'] == 101 for c in conds)              # only «has no value» branches
+    sets_inside = [a for a in g[2:] if kind(a) == 'setvariable']
+    assert all(params(a)['WFInput']['Value']['OutputName'] == 'Nothing' for a in sets_inside)
+
+
+def test_the_search_stage_downloads_through_one_action(tmp_path):
+    """The second fix of 24.11: every engine and every query of the search stage go through ONE «Get Contents of
+    URL» (a queue of «⟦k⟧address» lines in one «Repeat with Each»), and each line is parsed by its own route."""
+    acts = S.search_block(Locale('en'), ('Q', 'Text'), 4000, lambda p, uid: {'WFWorkflowActionIdentifier':
+                          'com.anthropic.claude.ClaudeAppIntentsExtension', 'WFWorkflowActionParameters': {'UUID': uid}},
+                          'NOW', {'Type': 'CurrentDate'})
+    downloads = [a for a in acts if kind(a) == 'downloadurl']
+    reader = [a for a in downloads if S.READER in str(params(a))]
+    assert len(downloads) - len(reader) <= 1 + 1     # the queue's one action (+ the page linked in the question)
+    queued = [text_of(a) for a in acts if kind(a) == 'gettext' and '\u27e6' in text_of(a)]
+    for host in ('news.google.com', 'wikipedia.org', 'www.bing.com/news', 'www.bing.com/search', 'html.duckduckgo.com'):
+        assert any(host in q for q in queued), host
 
 
 # ------------------------------------------------------------------ No.158: an answer cut off without the marker
