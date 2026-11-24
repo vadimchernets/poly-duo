@@ -49,7 +49,13 @@ def cut_rx(chars):
 
 
 def more_or_cut_rx(output):
-    return MORE_RX + '|' + cut_rx(CUT_CHARS[output])
+    import shortcut_actions as SA
+    chars = CUT_CHARS[output]
+    # the 6.11 check of 24.11 (opus): ja/zh cap Claude at 450 characters, not 220 words — a cut answer there never
+    # reaches 1150 characters; the threshold follows the cap
+    if output == 'Ask Claude' and '字' in (SA.CLAUDE_BRIEF or ''):
+        chars = 380
+    return MORE_RX + '|' + cut_rx(chars)
 
 
 def splice_token(template, inserts):
