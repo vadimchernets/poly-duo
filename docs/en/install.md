@@ -11,7 +11,7 @@ C1M Duo is a "shortcut" for iPhone: ask one question, and it's handled by two AI
 
 ### Easiest — the iCloud link (one tap)
 
-On your iPhone, tap the link → the Shortcuts app opens → **Add**. **First run: about 5 quick taps on “Always Allow”, then one tap forever.** The shortcut asks permission once for each thing it does — tap **Always Allow** each time (about 20 seconds, once). Prompt gone before you tapped, no «Ask Claude», or Duo stops on its own: see [If something's wrong](#if-somethings-wrong). Had Duo before? Tap **Replace**, not **Keep Both**. If tapping is hard, ask someone to help you — this is only needed the first time.
+On your iPhone, tap the link → the Shortcuts app opens → **Add**. **First run: iPhone asks “Allow” about 8 times without search, about 40 with search — once, then one tap.** Tap **Always Allow** each time. Comparing once? Copy and paste does the job. Asking every day? Allow once, and every question after that is one tap. Prompt gone before you tapped, no «Ask Claude», or Duo stops on its own: see [If something's wrong](#if-somethings-wrong). Had Duo before? Tap **Replace**, not **Keep Both**. If tapping is hard, ask someone to help you — this is only needed the first time.
 
 - **Duo:** https://www.icloud.com/shortcuts/64b0d9d3c5b9442a8a7cc7c8c5df6625
 - **Trio, iPhone 15 Pro or newer — no key** (the third voice is Apple Intelligence; see below): https://www.icloud.com/shortcuts/0cf1cf3ec0b34511b42bd0620d2c4676
@@ -24,7 +24,7 @@ The signed `Duo.shortcut` and `Trio.shortcut` files are on [polyhelper.ai/duo/en
 1. Get the **`Duo.shortcut`** file any way you like: AirDrop, WhatsApp/Telegram, email, a USB drive — it doesn't matter.
 2. Tap the file. The Shortcuts app opens with a "Duo" card — tap **Add**. Done, Duo is installed.
    - If the file arrived in a messaging app, tap it there first, choose Share/"Open in…", then pick Shortcuts.
-3. **First run:** the shortcut asks for permissions — "Allow ChatGPT actions?" → Allow; "…send text to Claude?" → **Always Allow**; "…copy to clipboard?" → **Always Allow**. This only happens once. The first time, Duo asks once: **With search (≈40)** or **Without search (≈8)** — the number is how many times iPhone will ask «Allow» while every mode runs for the first time; after that it asks nothing. To switch later: **More** → **🌐 With search / without search**.
+3. **First run:** the shortcut asks for permissions — "Allow ChatGPT actions?" → Allow; "…send text to Claude?" → **Always Allow**; "…copy to clipboard?" → **Always Allow**. This only happens once. Comparing once? Copy and paste does the job. Asking every day? Allow once, and every question after that is one tap. The first time, Duo asks once: **With search (≈40)** or **Without search (≈8)** — the number is how many times iPhone will ask «Allow» while every mode runs for the first time; after that it asks nothing. To switch later: **More** → **🌐 With search / without search**.
 
 ## Home Screen icon (30 seconds, optional)
 

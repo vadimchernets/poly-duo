@@ -12,7 +12,7 @@
 
 ## Install in 60 seconds
 
-**First run: a few quick taps on “Always Allow”, and 1–4 more the first time you pick each mode; after that, one tap.** iPhone asks permission once for each thing Duo does (send your question to ChatGPT and to Claude, use the clipboard, save the journal). Keep the phone in your hand and tap **Always Allow** each time — about 20 seconds, once, only for Duo.
+**First run: iPhone asks “Allow” about 8 times without search, about 40 with search — once; after that, one tap.** iPhone asks permission once for each thing Duo does (send your question to ChatGPT and to Claude, use the clipboard, save the journal). Keep the phone in your hand and tap **Always Allow** each time, only for Duo. Comparing once? Copy and paste does the job. Asking every day? Allow once, and every question after that is one tap.
 
 **Step 1 — apps.** On iPhone (iOS 18+) install the free **ChatGPT** and **Claude** apps and sign in to both once. No Claude yet? [Get the Claude app in the App Store](https://apps.apple.com/app/id6473753684) (about a minute). Free accounts are enough.
 
@@ -39,7 +39,7 @@
 
 1. On your iPhone, open [`releases/`](releases) and pick your language — `en`, `es`, `pt`, `ru`, `uk`, `de`, `fr`, `hi`, `ja`, `ko`, `zh` or `ar`.
 2. Tap **`Duo.shortcut`** (or **`Trio.shortcut`**) → **Add**.
-3. Run it once and tap **Always Allow** each time it asks about ChatGPT, Claude and the clipboard (several times on the first run).
+3. Run it once and tap **Always Allow** each time it asks about ChatGPT, Claude and the clipboard (about 8 times without search, about 40 with search, on the first run only).
 
 The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (Duo 6.5) and in the [`releases/`](releases) folder of this repository (the same files that `releases/SHA256SUMS` lists). The [GitHub releases](https://github.com/vadimchernets/poly-duo/releases) page does not carry the current files: its only attached files, in v1.0.0–v1.0.4, are the old 1.0 builds named `Duo-en.shortcut` and so on. Do not use them: the name becomes the shortcut's name, and Siri and «another mode — same question» then cannot find it. Keep the file name
 `Duo.shortcut`: the name in Shortcuts comes from it, and Siri and «another mode — same question»

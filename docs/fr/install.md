@@ -9,7 +9,7 @@ C1M Duo est un « raccourci » pour iPhone : tu poses une seule question et elle
 
 ## Installation (une seule pression)
 
-**Le plus simple — le lien iCloud (une pression).** Sur l’iPhone, touche le lien → Raccourcis s’ouvre → **Ajouter le raccourci**. À la première exécution, le raccourci demande plusieurs autorisations ; touche à chaque fois **Toujours autoriser**. Si c’est difficile, demande à quelqu’un de t’aider ; c’est seulement nécessaire la première fois.
+**Le plus simple — le lien iCloud (une pression).** Sur l’iPhone, touche le lien → Raccourcis s’ouvre → **Ajouter le raccourci**. À la première exécution, l’iPhone demande l’autorisation environ 8 fois sans recherche, environ 40 fois avec recherche — une seule fois ; touche à chaque fois **Toujours autoriser**. Comparer une seule fois ? Copier-coller suffit. Poser des questions chaque jour ? Autorisez une fois, et chaque question suivante se fait d’une touche. Si c’est difficile, demande à quelqu’un de t’aider ; c’est seulement nécessaire la première fois.
 
 - **Duo :** https://www.icloud.com/shortcuts/017f766889ee44d49890bf0ec063eae7
 - **Trio, iPhone 15 Pro ou plus récent — sans clé (la troisième voix est Apple Intelligence) :** https://www.icloud.com/shortcuts/ba24ef12b27646bcb46e4d0307ba9e95
