@@ -943,6 +943,17 @@ def warm_up_addresses(L):
     return out + [READER + 'https://example.com/']
 
 
+def warm_card_link(warm):
+    """(The check of 24.11, Opus, OpenAI): in a run the reader also gets a link taken from a CARD (a site's answer):
+    the first record's link of what the warm-up search brought is read too."""
+    w, first, link = u(), u(), u()
+    return [*clean_records(warm, ordered=False),
+            act_get_variable(warm, w),
+            act_first_match(w, 'Variable', FIRST_RECORD_RX, first),
+            act_replace_regex(first, 'Matches', RECORD_RX, '$4', link),
+            *read_page((link, 'Updated Text'), PAGE_RX, 'PolyWarmPage')]
+
+
 def warm_up(L, ask_gpt=None, ask_claude=None, ping=None):
     """The Setup (the council of 24.11, all four families: warm the REAL sets of sources, not bare addresses). iOS
     remembers «Always Allow» for a host together with the sources of what is sent, so the Setup sends to every host
@@ -970,22 +981,34 @@ def warm_up(L, ask_gpt=None, ask_claude=None, ping=None):
             acts += fetch(L, engine, (q, 'Text'), warm)
     acts += [act_text(text_token('https://example.com/'), link),
              *read_page((link, 'Text'), PAGE_RX, 'PolyWarmPage'),
+             *warm_card_link(warm),
              # stage 3: ChatGPT's answer and Claude's (which saw ChatGPT's, as the comparison does) join TAG
              act_text(text_token(ping), p1), ask_gpt(p1, g1),
              act_text(text_token('{A}', {'A': (g1, 'Ask ChatGPT')}), g1t), *add_tag((g1t, 'Text')),
              act_text(text_token(ping + '{A}', {'A': (g1t, 'Text')}), p2), ask_claude(p2, c2),
              *add_tag((c2, 'Ask Claude'))]
-    for engine in CLAIM_ENGINES:
+    # (the check of 24.11, Opus: deep research's second round sends ChatGPT's new query to ALL its engines, ddg too)
+    for engine in dict.fromkeys(CLAIM_ENGINES + SIDE_ENGINES['G']):
         acts += fetch(L, engine, (q, 'Text'), warm)
     acts += [act_text(text_token('https://example.com/'), link2),
              *read_page((link2, 'Text'), PAGE_RX, 'PolyWarmPage'),
+             *warm_card_link(warm),
              # the answers: what the search brought (the cards) goes to ChatGPT and to Claude
              act_get_variable(warm, wg)]
-    e = u()
+    e, c2t, g3t, p5, c5, p6, c6, p7, g7 = (u() for _ in range(9))
     acts += [act_replace_regex(wg, 'Variable', TAG_RX, '', e),
+             act_text(text_token('{C}', {'C': (c2, 'Ask Claude')}), c2t),
              act_text(text_token(ping + '{E}', {'E': (e, 'Updated Text')}), p3), ask_gpt(p3, g3),
-             act_text(text_token(ping + '{E}{G}', {'E': (e, 'Updated Text'), 'G': (g3, 'Ask ChatGPT')}), p4),
+             act_text(text_token('{G}', {'G': (g3, 'Ask ChatGPT')}), g3t),
+             act_text(text_token(ping + '{E}{G}', {'E': (e, 'Updated Text'), 'G': (g3t, 'Text')}), p4),
              ask_claude(p4, c4),
+             # (the check of 24.11, Opus: the sets of a run — Claude's own answer from its cards alone; the judge and a
+             # continued answer from the cards, ChatGPT's and Claude's answers; ChatGPT's continuation from its cards
+             # and its own answer)
+             act_text(text_token(ping + '{E}', {'E': (e, 'Updated Text')}), p5), ask_claude(p5, c5),
+             act_text(text_token(ping + '{E}{G}{C}', {'E': (e, 'Updated Text'), 'G': (g3t, 'Text'),
+                                                      'C': (c2t, 'Text')}), p6), ask_claude(p6, c6),
+             act_text(text_token(ping + '{E}{G}', {'E': (e, 'Updated Text'), 'G': (g3t, 'Text')}), p7), ask_gpt(p7, g7),
              *clear_variable(warm), *clear_variable(TAG)]
     return acts + [if_close(g_net)]
 

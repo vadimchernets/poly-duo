@@ -114,7 +114,8 @@ MY_MODE_FILE = 'Poly-my-mode.txt'
 PREFS_FILE = 'Duo-prefs.txt'
 PREFS_HEAD = '⟦duo-prefs⟧\n'
 MENU_MARK = '⟦duo-menu⟧\n'
-# How much of the answer Duo left in the clipboard is remembered (files.last_answer), to recognise it next run
+# (Duo 6.1–6.11 remembered this much of its clipboard answer to tell it from a new question; since D5 of 24.11 the
+# clipboard never fills the question field, so nothing is remembered — the constant stays for the tests' history)
 LAST_ANSWER_CHARS = 200
 # D3: a closing heading left with nothing under it (the evidence map or «checked against» with no line) — cut off
 EMPTY_HEAD_RX = (r'(?:\n[ \t]*[#*_■]*[ \t]*(?:\u0414\u043e\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c\u0441\u0442\u0432\u0430|Evidence|\u0421\u0432\u0435\u0440\u0435\u043d\u043e|Checked against)[ \t*_:.]*)+\s*\z', '')
@@ -388,17 +389,6 @@ def build(lang, ai=False):
                 act_set_variable(JOURNAL_EXTRA, uid, 'Text'),
                 act_text(text_token(REPORT_MODES.get(mode, REPORT_MODES[None])), mid),
                 act_set_variable(MODE_VAR, mid, 'Text')]
-
-    def remember_answer(src_uid, src_name):
-        """Duo 6.1: the first LAST_ANSWER_CHARS characters of what Duo just put into the clipboard go to a small
-        file next to the journal, right after each clipboard write (before any screen that waits for the person or
-        any further AI call, so a run cut off later still leaves the file in step with the clipboard). On the next
-        run a clipboard whose first LAST_ANSWER_CHARS characters are the same text is Duo's own answer, not a new
-        question, and is NOT put into the question field (one «Done» would otherwise spend 2–4 messages on it)."""
-        cut, txt, save = new_uuid(), new_uuid(), new_uuid()
-        return [act_first_chars(src_uid, src_name, LAST_ANSWER_CHARS, cut),
-                act_text(text_token('{M}', {'M': (cut, 'Matches')}), txt),
-                act_save_file(L['files.last_answer'], txt, save)]
 
     def keep_gpt(src_uid, src_name, note=None):
         """D-98: ChatGPT's answer goes to the clipboard BEFORE the next Claude call. When Claude's own app throws
@@ -1055,7 +1045,6 @@ def build(lang, ai=False):
             menu_case(g_down, items[3]),
             act_get_variable(CHECK_VAR, man_get),
             act_clipboard(attachment(man_get, 'Variable')),
-            *remember_answer(man_get, 'Variable'),
             act_notify(L['notify.manual_copied']),
             # the request stays in the clipboard: the tail does not copy ChatGPT's answer over it (it is in the request)
             *clear_variable(RESULT),
@@ -1450,7 +1439,6 @@ def build(lang, ai=False):
                             {'C': (i1_claude, 'Ask Claude'), 'G': (i1_gpt, 'Ask ChatGPT')}), i1_codes),
         # the raw SVG code reaches the clipboard before the file is written
         act_clipboard(attachment(i1_codes, 'Text')),
-        *remember_answer(i1_codes, 'Text'),
         act_save_file(L['files.image_html'], i1_html, i1_file),
         act_quick_look(attachment(i1_file, 'Saved File')),
         act_set_variable(RESULT, i1_codes, 'Text'),
@@ -1469,7 +1457,6 @@ def build(lang, ai=False):
         act_text(text_token(L['output.image_codes'],
                             {'C': (i2_claude, 'Ask Claude'), 'G': (i2_gpt, 'Ask ChatGPT')}), i2_raw),
         act_clipboard(attachment(i2_raw, 'Text')),
-        *remember_answer(i2_raw, 'Text'),
         act_save_file(L['files.image_html'], i2_html, i2_file),
         act_quick_look(attachment(i2_file, 'Saved File')),
         act_step('image_judge'),
@@ -1616,7 +1603,6 @@ def build(lang, ai=False):
         menu_case(g_finale, L['menu.finale_items'][2]),
         act_clipboard(variable(RESULT)),
         act_get_variable(RESULT, op_get),
-        *remember_answer(op_get, 'Variable'),   # the next run must not take this answer for a new question
         open_poly_url('duo'),
         menu_case(g_finale, L['menu.finale_items'][3]),
         menu_open(g_more, L['menu.finale_more_title'], L['menu.finale_more_items']),
@@ -1689,7 +1675,6 @@ def build(lang, ai=False):
         menu_case(g_more, L['menu.finale_more_items'][8]),
         act_clipboard(variable(RESULT)),   # D-128: Poly reads the answer from the clipboard; copied only on this pick
         act_get_variable(RESULT, op_get2),
-        *remember_answer(op_get2, 'Variable'),
         open_poly_url('duo'),
         menu_close(g_more),
         *if_text(g_pc, PREFS_CHANGED),

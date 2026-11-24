@@ -306,7 +306,7 @@ def test_setup_calls_every_search_host_and_the_reader_once(tmp_path, lang):
     assert len(S.warm_up_addresses(Locale(lang))) == 5
     ready = Locale(lang)['speak.ready']
     ready_at = next(i for i, a in enumerate(actions) if kind(a) == 'notification' and ready in str(params(a)))
-    setup = actions[max(0, ready_at - 900):ready_at]
+    setup = actions[max(0, ready_at - 1600):ready_at]
     texts = [text_of(a) for a in setup if kind(a) == 'gettext']
     wiki = ui_of(lang)['search']['wiki']
     for host in ('news.google.com', f'{wiki}.wikipedia.org', 'www.bing.com/news', 'www.bing.com/search',

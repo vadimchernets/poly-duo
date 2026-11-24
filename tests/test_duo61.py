@@ -38,29 +38,11 @@ def test_own_answer_not_prefilled(tmp_path, lang):
                and params(a)['WFAskActionPrompt'] == ui['ask']['question'])
     assert not any(kind(a) == 'getclipboard' for a in actions[:ask])
 
-    # --- every text Duo leaves in the clipboard is remembered RIGHT AFTER it is written, before any screen that waits
-    # for the person and before any further AI call. D-128 (18.11, Siri run): the main path copies nothing any more
-    # (each «Copy to Clipboard» was a permission window Siri does not read); what is left is the person's own pick —
-    # the «by hand» check request, both Images, and «Open Poly» (twice: «What next?» and «More actions»).
-    all_saves = saves_of(actions, last)
+    # --- the copies left are the person's own picks (the «by hand» check request, both Images, «Open Poly» twice);
+    # since D5 nothing is remembered after them (no reader of files.last_answer is left: one «Save File» less)
     copies = [i for i, a in enumerate(actions) if kind(a) == 'setclipboard']
-    assert len(all_saves) == len(copies) == 5
-    waits = ('previewdocument', 'choosefrommenu', 'ask', 'alert', 'AskIntent', 'ClaudeAppIntentsExtension', 'askllm',
-             'openurl')
-    for s in all_saves:
-        txt, cut = actions[s - 1], actions[s - 2]
-        assert kind(txt) == 'gettext' and kind(cut) == 'match'
-        assert params(cut)['WFMatchTextPattern'] == '(?s)^.{1,200}'
-        assert ref(params(txt)['WFTextActionText']) == (params(cut)['UUID'], 'Matches')
-        assert ref(params(actions[s])['WFInput']) == (params(txt)['UUID'], 'Text')
-        assert params(actions[s])['WFSaveFileOverwrite'] is True and params(actions[s])['WFAskWhereToSave'] is False
-        copy = max(i for i in copies if i < s)
-        assert not any(kind(a) in waits and params(a).get('WFControlFlowMode', 0) == 0 for a in actions[copy:s]), \
-            'a screen or an AI call between the clipboard write and its save'
-    img1, img2, manual, poly1, poly2 = all_saves
-    assert params(actions[manual + 1]).get('WFNotificationActionBody') == ui['notify']['manual_copied']
-    for s in (poly1, poly2):
-        assert kind(actions[s + 1]) == 'openurl'
+    assert len(copies) == 5
+    assert not saves_of(actions, last)
     # no journal entry any more: one file write per run (rule No.7), the Critique draft
     assert not any(kind(a) == 'append' for a in actions)
 

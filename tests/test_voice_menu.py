@@ -82,11 +82,13 @@ def test_first_run_setup_asks_everything_at_once(tmp_path, lang):
     assert order[:2] == ['AskIntent', 'ClaudeAppIntentsExtension']
     note = order.index('notification')
     warm = order[2:note]
-    assert warm.count('downloadurl') == 5 + 1 + 2 + 1
-    assert warm.count('AskIntent') == 2 and warm.count('ClaudeAppIntentsExtension') == 3
+    # (the check of 24.11: + a card's link through the reader at both stages, ddg at stage 3, and the sets of Claude's
+    # own answer, the judge and ChatGPT's continuation)
+    assert warm.count('downloadurl') == 5 + 1 + 1 + 3 + 1 + 1
+    assert warm.count('AskIntent') == 3 and warm.count('ClaudeAppIntentsExtension') == 5
     assert order[-1] == 'save'
     # GitHub, the site as its fallback, and the site once more in the Setup; plus the warm-up downloads
-    assert order.count('downloadurl') == 3 + 9
+    assert order.count('downloadurl') == 3 + 12
     # every action that can ask for a permission on the main path sits in the Setup: no save, append or copy elsewhere
     # before the finale menu, and the Setup is gated by the file
     assert any(a['WFWorkflowActionParameters'].get('WFGetFilePath') == f"Duo-setup-{json.loads((ROOT / 'releases' / 'version.json').read_text())['duo']}.txt" for a in head[:first])

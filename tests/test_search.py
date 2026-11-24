@@ -612,7 +612,7 @@ def test_the_divergence_search_runs_only_when_the_answers_differ_in_a_number(tmp
         block = actions[start:end]
         reads = var_reads(block)
         i = next(i for i, a in enumerate(block) if is_step(a, 'divergence'))
-        gets = [reads.get(params(block[j]).get('UUID')) for j in range(i - 12, i) if kind(block[j]) == 'getvariable']
+        gets = [reads.get(params(block[j]).get('UUID')) for j in range(i - 20, i) if kind(block[j]) == 'getvariable']  # (24.11: the guard has an IPv6 branch)
         assert 'PolyOnlyInOne' in gets
         crux = next(a for a in block if kind(a) == 'gettext' and crux_mark in text_of(a))
         assert 'PolyOnlyInOne' in {reads.get(x) for x in refs_of(params(crux))}

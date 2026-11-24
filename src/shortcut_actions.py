@@ -640,11 +640,11 @@ def act_set_name(src_uid, src_name, name, uid):
                                            'WFDontIncludeFileExtension': False, 'UUID': uid}}
 
 
-def act_local_ip(uid):
+def act_local_ip(uid, kind='IPv4'):
     """«Get Current IP Address», the LOCAL one (no request to any host, no location): a value on Wi-Fi and on cellular,
     nothing offline."""
     return {'WFWorkflowActionIdentifier': 'is.workflow.actions.getipaddress',
-            'WFWorkflowActionParameters': {'WFIPAddressSourceOption': 'Local', 'WFIPAddressTypeOption': 'IPv4',
+            'WFWorkflowActionParameters': {'WFIPAddressSourceOption': 'Local', 'WFIPAddressTypeOption': kind,
                                            'UUID': uid}}
 
 
@@ -654,9 +654,15 @@ def network_guard(var):
     Opus): the Wi-Fi network NAME is not read any more — iOS put it, with a line about the person's location, into
     every permission window of the run, as one more data source of each request. The local IP address is asked
     instead, and only a constant goes on (the D-29 pattern), never the address itself."""
-    ip, g = new_uuid(), new_uuid()
+    ip, ip6, g, g6 = new_uuid(), new_uuid(), new_uuid(), new_uuid()
+    # (the check of 24.11, Opus: a cellular network that is IPv6 only has no IPv4 address — then IPv6 is asked)
     return [*clear_variable(var),
             act_local_ip(ip),
             if_output(g, ip, 'Current IP Address', 100),
             *set_text(var, '1'),
+            if_else(g),
+            act_local_ip(ip6, 'IPv6'),
+            if_output(g6, ip6, 'Current IP Address', 100),
+            *set_text(var, '1'),
+            if_close(g6),
             if_close(g)]
