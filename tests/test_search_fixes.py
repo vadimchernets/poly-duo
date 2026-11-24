@@ -53,8 +53,11 @@ def test_records_are_sorted_newest_first_before_the_cards(tmp_path):
     sort = next(a for a in acts if kind(a) == 'files')
     assert params(sort)['WFContentItemSortProperty'] == 'Name' and params(sort)['WFContentItemSortOrder'] == 'Z to A'
     # should the sort give nothing on some iOS, the variable keeps its first order (it is set only under an If)
+    # (the Mac run of 24.11: undated lines carry «0000-00-00» through the sort, set before and taken off after)
     sets = [i for i, a in enumerate(acts) if kind(a) == 'setvariable']
-    assert len(sets) == 1 and any(kind(a) == 'conditional' for a in acts[:sets[0]])
+    assert len(sets) == 3 and kind(acts[sets[1] - 1]) != 'setvariable'
+    assert any(kind(a) == 'conditional' for a in acts[sets[0] + 1:sets[1]])
+    assert sorted([S.UNDATED_MARK + l if l.startswith('\t') else l for l in lines], reverse=True)[-1].startswith(S.UNDATED_MARK)
     actions = build(tmp_path, 'en')
     for start, end in critiques(actions):
         block = actions[start:end]
@@ -182,11 +185,10 @@ def test_read_page_goes_through_the_reader_and_never_through_safari_reader():
     first_text = next(a for a in acts if kind(a) == 'gettext')
     assert text_of(first_text).startswith(S.READER)
     downloads = [i for i, a in enumerate(acts) if kind(a) == 'downloadurl']
-    assert len(downloads) == 2
-    # the direct download only in the Otherwise of «the reader gave a page»
-    otherwise = next(i for i, a in enumerate(acts) if kind(a) == 'conditional'
-                     and params(a)['WFControlFlowMode'] == 1)
-    assert downloads[0] < otherwise < downloads[1]
+    # the council of 24.11 (OpenAI, agy): the reader only — a direct download asked a NEW site's permission mid-answer
+    assert len(downloads) == 1
+    # the run's TAG rides on the reader's address (one set of sources per stage)
+    assert '{TAG}' not in text_of(first_text) and S.TAG in str(acts)
 
 
 # ------------------------------------------------------------------ 11. a resumed Critique keeps ChatGPT's cards (opus, kimi)
@@ -297,18 +299,22 @@ def test_a_link_in_the_question_is_read_first_and_given_to_both_models(tmp_path)
 
 @pytest.mark.parametrize('lang', ['en', 'ru'])
 def test_setup_calls_every_search_host_and_the_reader_once(tmp_path, lang):
+    """The council of 24.11: the Setup warms the REAL sets of sources — every engine through fetch() and the reader
+    through read_page(), with the query call's TAG (stage 1), then with ChatGPT's and Claude's (stage 3), then one
+    ChatGPT and one Claude call carry what the search brought — behind the local-IP guard, before «ready»."""
     actions = build(tmp_path, lang)
-    urls = [params(a)['WFURL'] for a in actions if kind(a) == 'downloadurl' and isinstance(params(a)['WFURL'], str)]
-    hosts = {u.split('/')[2] for u in urls}
-    wiki = ui_of(lang)['search']['wiki']
-    assert {'news.google.com', f'{wiki}.wikipedia.org', 'www.bing.com', 'html.duckduckgo.com', 'r.jina.ai'} <= hosts
     assert len(S.warm_up_addresses(Locale(lang))) == 5
-    # in the Setup (after the Claude ping, before «ready»), behind the network guard
     ready = Locale(lang)['speak.ready']
-    first = min(i for i, a in enumerate(actions) if kind(a) == 'downloadurl' and isinstance(params(a)['WFURL'], str)
-                and 'r.jina.ai' in params(a)['WFURL'])
-    assert any(kind(a) == 'getwifi' for a in actions[first - 20:first])
-    assert any(kind(a) == 'notification' and ready in str(params(a)) for a in actions[first:first + 5])
+    ready_at = next(i for i, a in enumerate(actions) if kind(a) == 'notification' and ready in str(params(a)))
+    setup = actions[max(0, ready_at - 900):ready_at]
+    texts = [text_of(a) for a in setup if kind(a) == 'gettext']
+    wiki = ui_of(lang)['search']['wiki']
+    for host in ('news.google.com', f'{wiki}.wikipedia.org', 'www.bing.com/news', 'www.bing.com/search',
+                 'html.duckduckgo.com', 'r.jina.ai'):
+        assert any(t.startswith('https://' + host) for t in texts), host
+    assert any(kind(a) == 'getipaddress' for a in setup)
+    assert not any(kind(a) == 'getwifi' for a in actions)
+    assert sum(kind(a) == 'setitemname' for a in setup) >= 7      # 5 engines + the 2 claim engines again
 
 
 # ------------------------------------------------------------------ No.158: an answer cut off without the marker

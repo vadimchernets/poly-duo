@@ -50,7 +50,7 @@ def actions(lang):
     day, date, now, days = u(), u(), u(), u()
     acts += [act_text(text_token('2026-11-22'), day),
              {'WFWorkflowActionIdentifier': 'is.workflow.actions.detect.date',
-              'WFWorkflowActionParameters': {'WFInput': text_token('{D}', {'D': (day, 'Text')}), 'UUID': date}},
+              'WFWorkflowActionParameters': {'WFInput': attachment(day, 'Text'), 'UUID': date}},
              act_date(now),
              act_time_between(now, 'Date', date, 'Dates', 'Days', days)]
     lines.append(('2026-11-22 → {D} days (Duo takes it without its sign)', {'D': (days, 'Time Between Dates')}))

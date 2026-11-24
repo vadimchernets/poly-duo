@@ -45,8 +45,8 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
     if key == 'duo':
         # D-128: the first-run Setup (before the question) visits both addresses, the weekly check stays at the end
         # Duo 6.11: the Setup also calls each search host and the reader once (their «Allow» windows come there)
-        warm = [u for u in urls if u not in pair]
-        assert len(warm) == 5 and 'r.jina.ai' in warm[-1]
+        # (the council of 24.11: the Setup warms the hosts through fetch()/read_page() with real sets — their addresses
+        # are text tokens now, see test_search_fixes.test_setup_calls_every_search_host_and_the_reader_once)
         assert [u for u in urls if u in pair] == pair + [pair[1]] + pair
         actions = actions[max(i for i, a in enumerate(actions) if a['WFWorkflowActionIdentifier'].endswith('.ask')):]
         urls = [p['WFURL'] for p in params(actions, 'downloadurl') if isinstance(p['WFURL'], str)]
@@ -72,12 +72,13 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
     assert len([p for p in params(actions, 'openurl')
                 if 'run-report' not in str(p) and 'template=feedback.yml' not in str(p) and 'polyhelper.ai' not in str(p) and 'apps.apple.com/app/id6473753684' not in str(p)]) == 1
     # the network goes first, by actions that never throw; a non-JSON answer is «no update»
-    nets = [p['WFNetworkDetailsNetwork'] for p in params(actions, 'getwifi')]
-    # Duo 6.11: the same guard stands in front of the search and of the link check, in each Critique
-    # Duo 6.11: + the network guard of the search, the link checks and the divergence search in each Critique, and of
-    # deep research (per model) in the main one
-    assert nets == ['Wi-Fi', 'Cellular'] * (9 if builder == 'build_shortcut.py' else 1)
-    first_net = next(i for i, a in enumerate(actions) if a['WFWorkflowActionIdentifier'].endswith('getwifi'))
+    # the council of 24.11: the guard reads the LOCAL IP address, never the Wi-Fi network name (a location source in
+    # every permission window); one guard in the version check, and in Duo those of the search, the link checks and
+    # the divergence search in each Critique, of deep research (per model) and of the Setup
+    assert not params(actions, 'getwifi')
+    nets = [p['WFIPAddressSourceOption'] for p in params(actions, 'getipaddress')]
+    assert set(nets) == {'Local'} and len(nets) >= (9 if builder == 'build_shortcut.py' else 1)
+    first_net = next(i for i, a in enumerate(actions) if a['WFWorkflowActionIdentifier'].endswith('getipaddress'))
     first_get = next(i for i, a in enumerate(actions) if a['WFWorkflowActionIdentifier'].endswith('downloadurl')
                      and isinstance(a['WFWorkflowActionParameters']['WFURL'], str))
     assert first_net < first_get

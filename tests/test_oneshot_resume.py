@@ -35,10 +35,9 @@ def test_oneshot_resume_long(tmp_path, lang):
                and params(a).get('WFInput', {}).get('Variable', {}).get('Value') == {'Type': 'ExtensionInput'})
     group = params(actions[shin])['GroupingIdentifier']
     same = [i for i, a in enumerate(actions) if params(a).get('GroupingIdentifier') == group]
-    assert len(same) == 3  # If / Otherwise / End If
-    clip = next(i for i, a in enumerate(actions) if kind(a) == 'getclipboard')
-    assert same[1] < clip < same[2]               # the clipboard is read only in «Otherwise»
-    assert not any(kind(a) == 'getclipboard' for a in actions[:same[1]])
+    # D5 (the council of 24.11): no «Otherwise» any more — the clipboard is never read for the question field
+    assert len(same) == 2  # If / End If
+    assert not any(kind(a) == 'getclipboard' for a in actions[:ask])
     # a picture from Share: text first (a text, URL, article, text PDF); a file-name-only result counts as no text;
     # «Get Images from Input» + OCR only while the question text is still empty
     dtext = next(i for i in range(shin, ask) if actions[i]['WFWorkflowActionIdentifier'].endswith('detect.text'))
@@ -49,12 +48,6 @@ def test_oneshot_resume_long(tmp_path, lang):
     assert dtext < img < ocr
     guard = params(actions[img - 1])
     assert guard['WFCondition'] == 101 and guard_var(actions, actions[img - 1]) == 'PolyStartText'
-    # the clipboard counts only when it holds three words
-    words = actions[clip + 1]
-    assert params(words)['WFMatchTextPattern'] == r'\S+\s+\S+\s+\S+'
-    assert params(actions[clip + 2])['WFCondition'] == 100
-    assert params(actions[clip + 2])['WFInput']['Variable']['Value']['OutputUUID'] == params(words)['UUID']
-    assert params(actions[clip + 3])['WFInput']['Value']['OutputUUID'] == params(actions[clip])['UUID']
     # Match Text takes a token STRING (as build_trio.act_match), never a bare attachment
     for a in actions:
         if kind(a) == 'match':
@@ -78,7 +71,7 @@ def test_oneshot_resume_long(tmp_path, lang):
     assert kind(actions[delay - 1]) == 'conditional' and params(actions[delay - 1])['WFCondition'] == 101
     assert sum(str(params(a).get('WFFileDestinationPath')).startswith('Duo-draft-') for a in actions) == 1
     same = [a for a in actions if kind(a) == 'conditional' and params(a).get('WFCondition') == 4]
-    assert len(same) == 1  # Duo's own answer (test_duo61)
+    assert len(same) == 0  # D5 (24.11): no clipboard prefill, so no «is Duo's own answer» test either
 
     # --- U-08: one notification (no alert) for a long request, one retry with the cut text
     long_note = next(i for i, a in enumerate(actions) if is_step(a, 'long_text'))

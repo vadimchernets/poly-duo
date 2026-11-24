@@ -32,40 +32,11 @@ def test_own_answer_not_prefilled(tmp_path, lang):
     last = ui['files']['last_answer']
     uid = {params(a).get('UUID'): i for i, a in enumerate(actions) if params(a).get('UUID')}
 
-    # --- at the start: clipboard (3+ words) → START; then, if the clipboard's first 200 characters are the same
-    # text as the remembered start of Duo's last clipboard write, START is emptied again. All of it inside the
-    # clipboard branch, before the question field.
-    clip = next(i for i, a in enumerate(actions) if kind(a) == 'getclipboard')
+    # --- D5 (iPhone 24.11, the council of 24.11): the question field is never filled from the clipboard any more (the
+    # clipboard came into every request as one more data source and iOS asked every permission again)
     ask = next(i for i, a in enumerate(actions) if kind(a) == 'ask'
                and params(a)['WFAskActionPrompt'] == ui['ask']['question'])
-    seq = [kind(a) for a in actions[clip:clip + 16]]
-    assert seq == ['getclipboard', 'match', 'conditional', 'setvariable',
-                   'open', 'gettext', 'conditional', 'match', 'gettext', 'conditional',
-                   'nothing', 'setvariable', 'conditional', 'conditional', 'conditional', 'conditional']
-    get = params(actions[clip + 4])
-    assert get['WFGetFilePath'] == last and get['WFFileErrorIfNotFound'] is False and get['WFShowFilePicker'] is False
-    file_text = params(actions[clip + 5])['UUID']
-    assert ref(params(actions[clip + 5])['WFTextActionText']) == (get['UUID'], 'File')
-    # a missing / empty file is «no value»: the clipboard is used as before
-    has = params(actions[clip + 6])
-    assert has['WFCondition'] == 100 and has['WFInput']['Variable']['Value']['OutputUUID'] == file_text
-    # the clipboard is cut exactly as the saved text was (same pattern, same Match Text → Text), then compared with «is»
-    cut = params(actions[clip + 7])
-    assert cut['WFMatchTextPattern'] == '(?s)^.{1,200}'
-    assert ref(cut['text']) == (params(actions[clip])['UUID'], 'Clipboard')
-    assert ref(params(actions[clip + 8])['WFTextActionText']) == (cut['UUID'], 'Matches')
-    mine = params(actions[clip + 9])
-    assert mine['WFCondition'] == 4
-    assert mine['WFInput']['Variable']['Value'] == {'OutputUUID': params(actions[clip + 8])['UUID'],
-                                                     'Type': 'ActionOutput', 'OutputName': 'Text'}
-    assert ref(mine['WFConditionalActionString']) == (file_text, 'Text')
-    assert kind(actions[clip + 10]) == 'nothing'   # D-100: emptied with «Nothing», not an empty Text
-    assert params(actions[clip + 11])['WFVariableName'] == 'PolyStartText'
-    groups = [params(actions[i])['GroupingIdentifier'] for i in (clip + 9, clip + 6, clip + 2)]
-    assert [params(actions[i])['GroupingIdentifier'] for i in (clip + 12, clip + 13, clip + 14)] == groups
-    assert clip + 15 < ask
-    # no screen and no tap are added: the only things the person sees before the field are the same as in Duo 6
-    assert not any(kind(a) in ('alert', 'choosefrommenu', 'ask') for a in actions[clip:ask])
+    assert not any(kind(a) == 'getclipboard' for a in actions[:ask])
 
     # --- every text Duo leaves in the clipboard is remembered RIGHT AFTER it is written, before any screen that waits
     # for the person and before any further AI call. D-128 (18.11, Siri run): the main path copies nothing any more

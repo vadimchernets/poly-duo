@@ -262,7 +262,7 @@ def test_each_model_gets_its_own_engines_all_at_once_before_any_answer(tmp_path,
         # query 1 to all five, the English query to the three with an English edition, query 3 (deep) to the same
         # three; deep research's second round (main Critique only) to each side's own three engines
         assert all(hosts[h] >= 1 for h in hosts), hosts
-        assert any(t.endswith(ui['news']) for t in addresses if 'news.google.com' in t)
+        assert any(ui['news'] in t for t in addresses if 'news.google.com' in t)   # (+ the run's TAG at the end)
         assert any('hl=en-US&gl=US&ceid=US:en' in t for t in addresses)
         assert any(ui['bing'] in t for t in addresses if 'bing.com' in t)
         assert any(f"https://{ui['wiki']}.wikipedia.org" in t for t in addresses)
@@ -270,8 +270,10 @@ def test_each_model_gets_its_own_engines_all_at_once_before_any_answer(tmp_path,
         tests = [params(a).get('WFConditionalActionString') for a in head if kind(a) == 'conditional'
                  and params(a).get('WFCondition') == 99]
         assert {'<item', 'result__a', '"fullurl"'} <= set(tests)
-        # every network action sits behind the guard that cannot throw (Wi-Fi name, else the cellular radio)
-        guard = next(i for i, a in enumerate(head) if kind(a) == 'getwifi')
+        # every network action sits behind the guard that cannot throw (the local IP address; the council of 24.11:
+        # never the Wi-Fi network name)
+        assert not any(kind(a) == 'getwifi' for a in head)
+        guard = next(i for i, a in enumerate(head) if kind(a) == 'getipaddress')
         network = [i for i, a in enumerate(head) if kind(a) in ('downloadurl', 'getarticle')]
         assert not any(kind(a) == 'getarticle' for a in head)      # no Safari Reader: it throws on a non-article
         assert network and min(network) > guard

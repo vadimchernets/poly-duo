@@ -76,11 +76,17 @@ def test_first_run_setup_asks_everything_at_once(tmp_path, lang):
                                                     'notification')]
     # ChatGPT, Claude, the notification, both update addresses on the web, then the one file write (the stamp, last: a
     # Setup cut short runs again next time)
-    # (Duo 6.11: between Claude and the notification, each search host and the reader once — their «Allow» windows)
-    assert order[:8] == ['AskIntent', 'ClaudeAppIntentsExtension'] + ['downloadurl'] * 5 + ['notification']
+    # (Duo 6.11, the council of 24.11: between ChatGPT/Claude and the notification the REAL sets are warmed — the
+    # query call (Claude), the 5 engines and the reader; ChatGPT and Claude again; the 2 claim engines and the reader;
+    # ChatGPT and Claude with what the search brought)
+    assert order[:2] == ['AskIntent', 'ClaudeAppIntentsExtension']
+    note = order.index('notification')
+    warm = order[2:note]
+    assert warm.count('downloadurl') == 5 + 1 + 2 + 1
+    assert warm.count('AskIntent') == 2 and warm.count('ClaudeAppIntentsExtension') == 3
     assert order[-1] == 'save'
-    # GitHub, the site as its fallback, and the site once more in the Setup; plus the 5 warm-up addresses
-    assert order.count('downloadurl') == 3 + 5
+    # GitHub, the site as its fallback, and the site once more in the Setup; plus the warm-up downloads
+    assert order.count('downloadurl') == 3 + 9
     # every action that can ask for a permission on the main path sits in the Setup: no save, append or copy elsewhere
     # before the finale menu, and the Setup is gated by the file
     assert any(a['WFWorkflowActionParameters'].get('WFGetFilePath') == f"Duo-setup-{json.loads((ROOT / 'releases' / 'version.json').read_text())['duo']}.txt" for a in head[:first])

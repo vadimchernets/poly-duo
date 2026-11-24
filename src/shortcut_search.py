@@ -119,6 +119,8 @@ WIKI_TEXT_RX = r'(?<="extract":")(?:[^"\\]|\\.)+'
 RECORD_RX = r'^(\d{4}-\d\d-\d\d)?\t([^\t\n]*)\t([^\t\n]+)\t(\S+)[ \t]*$'
 NOT_RECORD_RX = r'(?m)^(?!(?:\d{4}-\d\d-\d\d)?\t[^\t\n]*\t[^\t\n]+\t\S+[ \t]*$)[^\n]*\n?'
 CLEAN_PAIRS = (
+    # Wikipedia's JSON writes «https:\/\/…» (the Mac run of 24.11)
+    (r'\\/', '/'),
     *((r'(?m)^(\d{4})-%s-' % m, '$1-%02d-' % (i + 1)) for i, m in enumerate(MONTHS)),
     (r'(?m)^(\d{4}-\d\d)-(\d)\t', '$1-0$2\t'),
     (r'(?m)^--\t', '\t'),
@@ -151,8 +153,9 @@ SEEN_RX = r'\A(?:[^\n]*\n){1,%d}' % RECORDS_SEEN
 ENGINE_KEEP_RX = (r'(?m)^(?![^\n]*\t[^\n]*\t[^\n]*\t)[^\n]*(?:\n|\z)', '')
 ENGINE_CUT_RX = (r'(?s)\A((?:[^\n]*\n){%d}).*\z' % ENGINE_MAX, '$1')
 # the age the phone counts may come with a minus (which date is «later» differs between iOS versions): the size only
-AGE_SIGN_RX = (r'[-\u2212\u2012\u2013]', '')
+AGE_SIGN_RX = (r'[^0-9]', '')   # a minus and the space of «1 200» (agy, the dozapros of 24.11: 3 of 4)
 RECORD_LINES_RX = r'(?m)^[^\n]*\t[^\n]+$'
+UNDATED_RX, UNDATED_MARK = r'(?m)^\t', '0000-00-00'
 MARK = '§ '               # stands where Duo puts the number — at the start of a line, so a «§ 573 BGB» headline keeps it
 NUMBER_RX = r'(?ms)\A(.*?)^§ '
 
@@ -233,6 +236,19 @@ NOWEB = 'PolyNoWeb'       # the query call said NONE: the web cannot help this q
 KIND = 'PolyKind'         # the query call's first line: FACT or OPEN (agy, the dozapros of 23.11); empty — the judge decides
 CROSS = 'PolyCross'       # Research: Claude developed an idea only ChatGPT had («crossing», the dozapros of 23.11)
 LIST_U = 'PolySourceListU'
+# The council of 24.11 (Opus, Kimi): iOS remembers «Always Allow» for a host together with the SOURCES of what is sent
+# (an app's answer, the clipboard, a network name…). TAG holds an EMPTY text made from each AI answer of the run so far
+# (Replace «(?s).+» with nothing): it is added to every address Duo fetches, so a host gets the same set of sources at
+# the same stage of every run (search: the query call; the check: + ChatGPT's and Claude's answers) whichever branch
+# built the address — and the Setup can grant exactly those sets once (warm_up). Empty: no query or page changes.
+TAG = 'PolyTag'
+TAG_RX = r'(?s).+'
+
+
+def add_tag(src):
+    """TAG += an empty text made from the output `src` ((uid, name)): its source joins every later address."""
+    e = u()
+    return [act_replace_regex(src[0], src[1], TAG_RX, '', e), *append_to(TAG, '{E}', {'E': (e, 'Updated Text')})]
 
 
 def prefixes():
@@ -327,11 +343,18 @@ def fetch(L, engine, query, target, english=False):
     DDG result, a Wikipedia page — a captcha, a rate limit or an error page does not) it is turned into record lines
     and added to the variable `target`. `query`: (uid, output) of the query text."""
     spec = ENGINES[engine]
-    enc, url, dl, txt, g = (u() for _ in range(5))
+    enc, url, dl, txt, g, tag, named = (u() for _ in range(7))
     acts = [act_urlencode(query[0], query[1], enc),
-            act_text(text_token(engine_address(L, engine, english), {'Q': (enc, 'URL Encoded Text')}), url),
+            act_get_variable(TAG, tag),
+            act_text(text_token(engine_address(L, engine, english) + '{TAG}',
+                                {'Q': (enc, 'URL Encoded Text'), 'TAG': (tag, 'Variable')}), url),
+            # (the dozapros of 24.11, OpenAI and Opus: the address as ONE attachment — the Mac run of 24.11 stopped with
+            # «a valid URL is required», so the address stays a text token)
             act_download(text_token('{U}', {'U': (url, 'Text')}), dl),
-            act_text(text_token('{C}', {'C': (dl, 'Contents of URL')}), txt),
+            # D2 (the Mac run of 24.11; Opus, agy): «Text» of an RSS answer is its FILE NAME («search»), of a
+            # DuckDuckGo page its visible words without tags; named «r.txt» first, the answer is read as it came
+            act_set_name(dl, 'Contents of URL', 'r.txt', named),
+            act_text(text_token('{C}', {'C': (named, 'Renamed Item')}), txt),
             if_output(g, txt, 'Text', 99, WFConditionalActionString=spec['test'])]
     if spec['kind'] == 'wiki':
         title, date, link, body = u(), u(), u(), u()
@@ -354,7 +377,10 @@ def sort_newest_first(var):
     age). «Filter Files» sorts any list by Name, a text's name being the text; should it give nothing on some iOS,
     the lines stay in their first order."""
     get, lines, srt, joined, g = (u() for _ in range(5))
-    return [act_get_variable(var, get),
+    # the Mac run of 24.11: «Filter Files» sorts like Finder and skips the leading tab of an undated line, so the
+    # undated web pages came FIRST; for the sort they start with «0000-00-00», which sorts last, and get it off after
+    return [*replace_var(var, ((UNDATED_RX, UNDATED_MARK + '\t'),)),
+            act_get_variable(var, get),
             {'WFWorkflowActionIdentifier': 'is.workflow.actions.text.split',
              'WFWorkflowActionParameters': {'text': text_token('{T}', {'T': (get, 'Variable')}),
                                             'WFTextSeparator': 'New Lines', 'UUID': lines}},
@@ -366,7 +392,8 @@ def sort_newest_first(var):
              'WFWorkflowActionParameters': {'text': attachment(srt, 'Files'), 'WFTextSeparator': 'New Lines',
                                             'UUID': joined}},
             act_first_match(joined, 'Text', RECORD_LINES_RX, g),
-            *if_output_set(var, g, joined)]
+            *if_output_set(var, g, joined),
+            *replace_var(var, ((r'(?m)^' + UNDATED_MARK + r'\t', '\t'),))]
 
 
 def if_output_set_plain(var, match_uid):
@@ -401,7 +428,14 @@ def cards(L, side, now, start, count, records=None, packet=None, listing=None, i
     b_pack = ['PolyB%dP' % i for i in range(3)]
     b_list = ['PolyB%dL' % i for i in range(3)]
     get, seen, recs, g_rep, it, day, g_day, days, age, p_line, s_line, g_b1, g_b2, num = (u() for _ in range(14))
-    a_date, d_txt, d_abs = u(), u(), u()
+    a_date, d_txt, d_abs, g_ad = u(), u(), u(), u()
+
+    def undated():
+        p2, s2 = u(), u()
+        return [act_replace_regex(it, 'Variable', RECORD_RX, MARK + L['search.undated'] + ' · $2 · $3', p2),
+                act_replace_regex(it, 'Variable', RECORD_RX, MARK + L['search.undated'] + ' · $2 · $3\n$4', s2),
+                *append_to(b_pack[1], '{L}\n', {'L': (p2, 'Updated Text')}),
+                *append_to(b_list[1], '{L}\n', {'L': (s2, 'Updated Text')})]
     acts = [*(a for v in b_pack + b_list for a in clear_variable(v)),
             act_get_variable(records, get),
             act_first_match(get, 'Variable', SEEN_RX, seen),
@@ -411,9 +445,13 @@ def cards(L, side, now, start, count, records=None, packet=None, listing=None, i
             act_first_match(it, 'Variable', r'^\d{4}-\d\d-\d\d', day),
             if_output(g_day, day, 'Matches', 100),
             # «2026-11-22» made a date first (agy: a bare text may not read as one on every region setting), and the
-            # number of days taken without its sign (sol: the count came out negative, and every old record «fresh»)
+            # number of days taken without its sign (sol: the count came out negative, and every old record «fresh»).
+            # D1 (iPhone 24.11): the input is the match itself (an attachment, as «Count» takes it); a text token here
+            # is not accepted and iOS put the shortcut's own input in its place («the first date is invalid» on the probe)
             {'WFWorkflowActionIdentifier': 'is.workflow.actions.detect.date',
-             'WFWorkflowActionParameters': {'WFInput': text_token('{D}', {'D': (day, 'Matches')}), 'UUID': a_date}},
+             'WFWorkflowActionParameters': {'WFInput': attachment(day, 'Matches'), 'UUID': a_date}},
+            # a date the phone cannot read is an undated card, never a stopped run (agy, the dozapros of 24.11)
+            if_output(g_ad, a_date, 'Dates', 100),
             act_time_between(now, 'Date', a_date, 'Dates', 'Days', days),
             act_text(text_token('{N}', {'N': (days, 'Time Between Dates')}), d_txt),
             act_replace_regex(d_txt, 'Text', AGE_SIGN_RX[0], AGE_SIGN_RX[1], d_abs),
@@ -436,14 +474,13 @@ def cards(L, side, now, start, count, records=None, packet=None, listing=None, i
             *append_to(b_list[2], '{L}\n', {'L': (s_line, 'Updated Text')}),
             if_close(g_b2),
             if_close(g_b1),
+            if_else(g_ad),
+            *undated(),
+            if_close(g_ad),
             if_else(g_day)]
     # a record without a date (a web page: an official page, a register, an encyclopedia — what the web index holds
     # now): the middle bucket, «undated» instead of an age
-    p2, s2 = u(), u()
-    acts += [act_replace_regex(it, 'Variable', RECORD_RX, MARK + L['search.undated'] + ' · $2 · $3', p2),
-             act_replace_regex(it, 'Variable', RECORD_RX, MARK + L['search.undated'] + ' · $2 · $3\n$4', s2),
-             *append_to(b_pack[1], '{L}\n', {'L': (p2, 'Updated Text')}),
-             *append_to(b_list[1], '{L}\n', {'L': (s2, 'Updated Text')}),
+    acts += [*undated(),
              if_close(g_day),
              repeat_close(g_rep)]
     # newest first, cut to `count`, numbered by Duo; NEWCARDS keeps just these cards (deep research picks from them)
@@ -474,6 +511,7 @@ def query_lines(L, qsrc, ask_claude, today):
     return [act_step('search_queries'),
             act_text(text_token(L.prompt('search-queries'), {'Q': qsrc}, {'TODAY': today}), qp),
             ask_claude(qp, qc),
+            *add_tag((qc, 'Ask Claude')),
             act_set_variable(QUERIES, qc, 'Ask Claude'),
             *set_text(KIND, 'OPEN'),
             act_get_variable(QUERIES, qk),
@@ -498,7 +536,7 @@ def search_block(L, qsrc, long_question, ask_claude, now, today, item='Repeat It
             *(a for m in ('C', 'G') for a in clear_variable(notes_var(m))),
             *clear_variable(CHECKS), *clear_variable(LIST_V), *clear_variable(QUERIES), *clear_variable(NOWEB),
             *clear_variable(KIND), *clear_variable(CROSS),
-            *clear_variable(LIST_U),
+            *clear_variable(LIST_U), *clear_variable(TAG),
             act_text(text_token('{Q}', {'Q': qsrc}), q_txt),
             act_count_chars(q_txt, 'Text', q_cnt),
             if_output(g_long, q_cnt, 'Count', 2, WFNumberValue=long_question - 1),
@@ -574,13 +612,14 @@ def asked_page(q_txt):
 
 def read_page(url, cut_rx, target_var):
     """A page through the reader (READER): its text (title, date of publication, the page as plain text); a page that
-    is gone leaves `target_var` empty; only when the reader itself is out (no «Markdown Content:», no error of the
-    page) the page is downloaded directly and its tags taken off. No «Safari Reader» step: on a table, a PDF or an
+    is gone, or the reader itself is out, leaves `target_var` empty (no direct download: a new site would ask a
+    permission in the middle of an answer — the council of 24.11). No «Safari Reader» step: on a table, a PDF or an
     error page it stops the shortcut instead of giving nothing (the 6.11 check, agy). `target_var` gets at most what
     `cut_rx` keeps (or stays empty)."""
-    r_url, r_dl, r_txt, dead, g_dead, ok, g_ok, page, html, p_get, cut = (u() for _ in range(11))
+    r_url, r_dl, r_txt, dead, g_dead, ok, g_ok, p_get, cut, tag = (u() for _ in range(10))
     return [*clear_variable(PAGE),
-            act_text(text_token(READER + '{U}', {'U': url}), r_url),
+            act_get_variable(TAG, tag),
+            act_text(text_token(READER + '{U}{TAG}', {'U': url, 'TAG': (tag, 'Variable')}), r_url),
             act_download(text_token('{U}', {'U': (r_url, 'Text')}), r_dl),
             act_text(text_token('{C}', {'C': (r_dl, 'Contents of URL')}), r_txt),
             act_first_match(r_txt, 'Text', READER_DEAD_RX, dead),
@@ -589,11 +628,8 @@ def read_page(url, cut_rx, target_var):
             if_output(g_ok, ok, 'Matches', 100),
             act_set_variable(PAGE, r_txt, 'Text'),
             *replace_var(PAGE, MD_STRIP),
-            if_else(g_ok),
-            act_download(text_token('{U}', {'U': url}), page),
-            act_text(text_token('{C}', {'C': (page, 'Contents of URL')}), html),
-            act_set_variable(PAGE, html, 'Text'),
-            *replace_var(PAGE, HTML_STRIP),
+            # the council of 24.11 (OpenAI, agy): no direct download when the reader is out — it asked a permission
+            # for a NEW site in the middle of an answer; the page counts as unread instead
             if_close(g_ok),
             if_close(g_dead),
             act_get_variable(PAGE, p_get),
@@ -907,13 +943,50 @@ def warm_up_addresses(L):
     return out + [READER + 'https://example.com/']
 
 
-def warm_up(L):
-    """The Setup: each host once (behind the network guard), so iOS asks for every site at the Setup — 5 windows,
-    then none in the middle of a run (a page is read through the reader's one host)."""
+def warm_up(L, ask_gpt=None, ask_claude=None, ping=None):
+    """The Setup (the council of 24.11, all four families: warm the REAL sets of sources, not bare addresses). iOS
+    remembers «Always Allow» for a host together with the sources of what is sent, so the Setup sends to every host
+    what a run sends there, at each stage, through the same fetch() and read_page():
+      stage 1 (the search, a page linked in the question): TAG = the query call's answer (Claude);
+      stage 3 (the check): TAG + ChatGPT's and Claude's answers;
+    and then one short ChatGPT and one short Claude call carry what the search brought (an empty text made from the
+    answers of every host), as the answers and the comparison do in a run. `ask_gpt(prompt_uid, uid)` /
+    `ask_claude(prompt_uid, uid)` give the one-word calls; `ping`: the one-word request. Without them (the tests of
+    the old form) only the addresses are called."""
     net_get, g_net = u(), u()
     acts = [*network_guard(NET), act_get_variable(NET, net_get), if_output(g_net, net_get, 'Variable', 100)]
-    for url in warm_up_addresses(L):
-        acts.append(act_download(url, u()))
+    if not (ask_gpt and ask_claude and ping):
+        for url in warm_up_addresses(L):
+            acts.append(act_download(url, u()))
+        return acts + [if_close(g_net)]
+    warm = 'PolyWarm'
+    p0, c0, q, p1, g1, g1t, p2, c2, wg, p3, g3, p4, c4, link, link2 = (u() for _ in range(15))
+    acts += [*clear_variable(TAG), *clear_variable(warm),
+             # stage 1: the query call (Claude, a text of Duo's own) → every engine, the reader
+             act_text(text_token(ping), p0), ask_claude(p0, c0), *add_tag((c0, 'Ask Claude')),
+             act_text(text_token('duo'), q)]
+    for side in ('C', 'G'):
+        for engine in SIDE_ENGINES[side]:
+            acts += fetch(L, engine, (q, 'Text'), warm)
+    acts += [act_text(text_token('https://example.com/'), link),
+             *read_page((link, 'Text'), PAGE_RX, 'PolyWarmPage'),
+             # stage 3: ChatGPT's answer and Claude's (which saw ChatGPT's, as the comparison does) join TAG
+             act_text(text_token(ping), p1), ask_gpt(p1, g1),
+             act_text(text_token('{A}', {'A': (g1, 'Ask ChatGPT')}), g1t), *add_tag((g1t, 'Text')),
+             act_text(text_token(ping + '{A}', {'A': (g1t, 'Text')}), p2), ask_claude(p2, c2),
+             *add_tag((c2, 'Ask Claude'))]
+    for engine in CLAIM_ENGINES:
+        acts += fetch(L, engine, (q, 'Text'), warm)
+    acts += [act_text(text_token('https://example.com/'), link2),
+             *read_page((link2, 'Text'), PAGE_RX, 'PolyWarmPage'),
+             # the answers: what the search brought (the cards) goes to ChatGPT and to Claude
+             act_get_variable(warm, wg)]
+    e = u()
+    acts += [act_replace_regex(wg, 'Variable', TAG_RX, '', e),
+             act_text(text_token(ping + '{E}', {'E': (e, 'Updated Text')}), p3), ask_gpt(p3, g3),
+             act_text(text_token(ping + '{E}{G}', {'E': (e, 'Updated Text'), 'G': (g3, 'Ask ChatGPT')}), p4),
+             ask_claude(p4, c4),
+             *clear_variable(warm), *clear_variable(TAG)]
     return acts + [if_close(g_net)]
 
 

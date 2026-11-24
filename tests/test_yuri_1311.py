@@ -126,7 +126,9 @@ def test_chatgpt_output_is_cleaned_and_never_used_raw(tmp_path, lang):
         # the only user of the raw output is the Set Variable that starts the cleaning block
         assert [kind(actions[j]) for j in users] == ['setvariable'], (i, users)
         block = actions[users[0]:users[0] + 13]
-        replaces = [a for a in block if kind(a) == 'text.replace' or kind(a) == 'replace']
+        # (the council of 24.11: an empty text made from an answer — TAG, «(?s).+» → nothing — is not a cleaning step)
+        replaces = [a for a in block if (kind(a) == 'text.replace' or kind(a) == 'replace')
+                    and params(a).get('WFReplaceTextFind') != '(?s).+']
         assert len(replaces) == 4 and all(params(a)['WFReplaceTextRegularExpression'] for a in replaces)
     # no file action (Save File / Append to File) takes the output of an AI app directly
     ai_uids = {params(a)['UUID'] for a in actions if kind(a) in AI_KINDS}

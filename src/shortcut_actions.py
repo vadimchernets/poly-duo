@@ -589,9 +589,13 @@ def set_gpt_brief(text):
 # ---------------------------------------------------------------- Duo 6.11: search without keys (shortcut_search.py)
 
 def act_urlencode(src_uid, src_name, uid):
-    """«URL Encode» (output «URL Encoded Text»); the same action «Report this run» uses."""
+    """«URL Encode» (output «URL Encoded Text»); the same action «Report this run» uses.
+    D2 (24.11, run on the Mac's Shortcuts): with the input as an attachment the output is EMPTY, so every search went
+    out with an empty query (Google News 404, Wikipedia an API error, Bing and DuckDuckGo their start pages) and no
+    card was ever made. The input as a text token gives «Apple%20CEO»."""
     return {'WFWorkflowActionIdentifier': 'is.workflow.actions.urlencode',
-            'WFWorkflowActionParameters': {'WFEncodeMode': 'Encode', 'WFInput': attachment(src_uid, src_name),
+            'WFWorkflowActionParameters': {'WFEncodeMode': 'Encode',
+                                           'WFInput': text_token('{T}', {'T': (src_uid, src_name)}),
                                            'UUID': uid}}
 
 
@@ -628,18 +632,31 @@ def iso_date(uid, name):
                                  'WFISO8601IncludeTime': False}]}
 
 
+def act_set_name(src_uid, src_name, name, uid):
+    """«Set Name» (output «Renamed Item»): a downloaded answer named «r.txt» reads as its plain text (the Mac run of
+    24.11: RSS, HTML and JSON came through whole)."""
+    return {'WFWorkflowActionIdentifier': 'is.workflow.actions.setitemname',
+            'WFWorkflowActionParameters': {'WFInput': attachment(src_uid, src_name), 'WFName': name,
+                                           'WFDontIncludeFileExtension': False, 'UUID': uid}}
+
+
+def act_local_ip(uid):
+    """«Get Current IP Address», the LOCAL one (no request to any host, no location): a value on Wi-Fi and on cellular,
+    nothing offline."""
+    return {'WFWorkflowActionIdentifier': 'is.workflow.actions.getipaddress',
+            'WFWorkflowActionParameters': {'WFIPAddressSourceOption': 'Local', 'WFIPAddressTypeOption': 'IPv4',
+                                           'UUID': uid}}
+
+
 def network_guard(var):
-    """Actions that never throw (the pattern of the weekly version check): `var` gets the Wi-Fi network name, else the
-    cellular radio technology; no value → offline, and nothing that needs the network may run («Get Contents of URL»
-    stops the whole shortcut offline; Shortcuts has no try/catch)."""
-    wifi, cell, g = new_uuid(), new_uuid(), new_uuid()
-    return [{'WFWorkflowActionIdentifier': 'is.workflow.actions.getwifi',
-             'WFWorkflowActionParameters': {'WFNetworkDetailsNetwork': 'Wi-Fi',
-                                            'WFWiFiDetail': 'Network Name', 'UUID': wifi}},
-            act_set_variable(var, wifi, 'Network Details'),
-            if_no_value(g, var),
-            {'WFWorkflowActionIdentifier': 'is.workflow.actions.getwifi',
-             'WFWorkflowActionParameters': {'WFNetworkDetailsNetwork': 'Cellular',
-                                            'WFCellularDetail': 'Radio Technology', 'UUID': cell}},
-            act_set_variable(var, cell, 'Network Details'),
+    """Actions that never throw: `var` is the constant «1» when the phone has a network, nothing offline («Get Contents
+    of URL» stops the whole shortcut offline; Shortcuts has no try/catch). The council of 24.11 (agy, OpenAI, Kimi,
+    Opus): the Wi-Fi network NAME is not read any more — iOS put it, with a line about the person's location, into
+    every permission window of the run, as one more data source of each request. The local IP address is asked
+    instead, and only a constant goes on (the D-29 pattern), never the address itself."""
+    ip, g = new_uuid(), new_uuid()
+    return [*clear_variable(var),
+            act_local_ip(ip),
+            if_output(g, ip, 'Current IP Address', 100),
+            *set_text(var, '1'),
             if_close(g)]

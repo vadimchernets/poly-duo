@@ -10,7 +10,7 @@ RAW, JUDGE, PROMPTS = (os.path.join(HERE, d) for d in ("raw", "judge", "prompts"
 SANDBOX = os.path.join(HERE, "sandbox")  # empty folder given to every CLI as its workspace (ai-guard needs one; nothing to leak)
 for d in (RAW, JUDGE, PROMPTS, SANDBOX):
     os.makedirs(d, exist_ok=True)
-SRC = "~/Developer/c1m-duo/locales/en/prompts"
+SRC = "~/Developer/duo/c1m-duo/locales/en/prompts"
 WHERE = ""  # ai-guard accepts the folder flags (-C / --add-dir) instead of a "Где:" line; a Cyrillic line in the prompt switched answers to Russian
 LOG = open(os.path.join(HERE, "stand.log"), "a")
 LK = threading.Lock()

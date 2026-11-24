@@ -116,6 +116,8 @@ PREFS_HEAD = '⟦duo-prefs⟧\n'
 MENU_MARK = '⟦duo-menu⟧\n'
 # How much of the answer Duo left in the clipboard is remembered (files.last_answer), to recognise it next run
 LAST_ANSWER_CHARS = 200
+# D3: a closing heading left with nothing under it (the evidence map or «checked against» with no line) — cut off
+EMPTY_HEAD_RX = (r'(?:\n[ \t]*[#*_■]*[ \t]*(?:\u0414\u043e\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c\u0441\u0442\u0432\u0430|Evidence|\u0421\u0432\u0435\u0440\u0435\u043d\u043e|Checked against)[ \t*_:.]*)+\s*\z', '')
 REPORT_URL = 'https://github.com/vadimchernets/poly-duo/issues/new?template=run-report.yml'
 FEEDBACK_URL = 'https://github.com/vadimchernets/poly-duo/issues/new?template=feedback.yml'
 LONG_TEXT = 6000
@@ -225,18 +227,10 @@ def version_check(L, key, name, lang, setup=None, stamp_name=None):
                   WFNumberValue=-VERSION_DAYS, WFAnotherNumber=VERSION_DAYS),
         if_else(g_due),
         # Offline, «Get Contents of URL» stops the shortcut with a system error, and Shortcuts has
-        # no try/catch. So the network goes first, by actions that never throw: a Wi-Fi network
-        # name, else a cellular radio technology. Neither → no check this run, no stamp, no error.
-        {'WFWorkflowActionIdentifier': 'is.workflow.actions.getwifi',
-         'WFWorkflowActionParameters': {'WFNetworkDetailsNetwork': 'Wi-Fi',
-                                        'WFWiFiDetail': 'Network Name', 'UUID': wifi}},
-        act_set_variable(net_var, wifi, 'Network Details'),
-        if_no_value(g_wifi, net_var),
-        {'WFWorkflowActionIdentifier': 'is.workflow.actions.getwifi',
-         'WFWorkflowActionParameters': {'WFNetworkDetailsNetwork': 'Cellular',
-                                        'WFCellularDetail': 'Radio Technology', 'UUID': cell}},
-        act_set_variable(net_var, cell, 'Network Details'),
-        if_close(g_wifi),
+        # no try/catch. So the network goes first, by actions that never throw (the local IP address,
+        # see network_guard). None → no check this run, no stamp, no error.
+        # the council of 24.11: no Wi-Fi network name (a location source in every permission window), a constant
+        *network_guard(net_var),
         act_get_variable(net_var, net_get),
         if_output(g_net, net_get, 'Variable', 100),
         *([] if setup else [act_date(stamp_now), act_text(text_token('{D}', {'D': (stamp_now, 'Date')}), stamp),
@@ -753,6 +747,8 @@ def build(lang, ai=False):
             # Duo 6.11, check and deep research (not quick): the pages ChatGPT cited are read by Duo and checked one by
             # one, and Duo searches where the two answers diverge or the conclusion rests on one date, number or
             # condition — the primary source's page is read and checked claim by claim ([V1]…)
+            # the council of 24.11: ChatGPT's and Claude's answers join TAG, so the check's addresses carry one set
+            *S.add_tag((cr_gpt_f, 'Variable')), *S.add_tag((cr_own_f, 'Variable')),
             *S.link_check_block(L, GPT_VAR, ask_service, RESUME_VAR, ymd(cr_today)),
             *S.divergence_block(L, qsrc, (cr_gpt_f, 'Variable'), (cr_own_f, 'Variable'), ask_service, RESUME_VAR,
                                 ymd(cr_today), nums_var=NUMS_VAR),
@@ -809,6 +805,9 @@ def build(lang, ai=False):
             act_claude(text_token('{P}', {'P': (cr_cut, 'Text')}), cr_claude2),
             act_set_variable(CLAUDE_VAR, cr_claude2, 'Ask Claude'),
             if_close(g_cretry),
+            # D3 (iPhone 24.11): a closing heading with no line under it (the Russian or English «Evidence» alone at the
+            # end, when no source decided anything) is cut off — the prompt asks for it too, this is the guarantee
+            *S.replace_var(CLAUDE_VAR, (EMPTY_HEAD_RX,)),
             act_get_variable(CLAUDE_VAR, cr_claude_f),
             # the shared tail copies RESULT to the clipboard (D-100: one clipboard action, one permission window)
             *if_text(g_cok, CLAUDE_VAR),
@@ -1082,7 +1081,11 @@ def build(lang, ai=False):
                     act_claude(text_token('{P}', {'P': (su_txt, 'Text')}), su_claude, split=False),
                     # Duo 6.11 (the 6.11 check: fable, agy, opus): every site Duo's search and reader use is called once
                     # here, so all their «Allow» windows come now, one after another, and none in the middle of an answer
-                    *S.warm_up(L)]
+                    # (the one-word ChatGPT calls of the warm-up get no automatic retry, as the Setup's ping)
+                    *S.warm_up(L, lambda pr, uid: (RETRY_SKIP.add(uid),
+                                                   act_gpt(text_token('{P}', {'P': (pr, 'Text')}), uid, split=False))[1],
+                                lambda pr, uid: act_claude(text_token('{P}', {'P': (pr, 'Text')}), uid, split=False),
+                                SETUP_PING)]
     setup_before.append(act_notify(L['speak.ready']))
     setup_after = [act_speak(L['speak.ready'])]
 
@@ -1151,28 +1154,10 @@ def build(lang, ai=False):
         *if_text(g_sh, START_VAR),
         *set_text(SHARED_VAR, '1'),
         if_close(g_sh),
-        if_else(g_start),
-        act_clipboard_get(st_clip),
-        act_first_match(st_clip, 'Clipboard', r'\S+\s+\S+\s+\S+', st_words),
-        if_output(g_words, st_words, 'Matches', 100),
-        act_set_variable(START_VAR, st_clip, 'Clipboard'),
-        # Duo 6.1: Duo leaves its answer in the clipboard. If the person copied nothing new, that answer must not
-        # come back as the next question: when the clipboard's first LAST_ANSWER_CHARS characters are the same text
-        # as the start of Duo's last clipboard write (files.last_answer, see remember_answer; both sides cut by the
-        # same Match Text → Text), the field stays empty. «Is», not «contains»: a text that starts differently, or one
-        # that merely includes a short answer such as «Yes.», is still offered; a text that begins with the same 200
-        # characters (a Duo answer with the person's lines added after it) counts as Duo's and must be pasted. A
-        # missing file (first run) is no value, and the clipboard is used as before. Same screens, same taps.
-        act_get_file(L['files.last_answer'], st_last),
-        act_text(text_token('{F}', {'F': (st_last, 'File')}), st_last_t),
-        if_output(g_last, st_last_t, 'Text', 100),
-        act_first_chars(st_clip, 'Clipboard', LAST_ANSWER_CHARS, st_ccut),
-        act_text(text_token('{M}', {'M': (st_ccut, 'Matches')}), st_ctext),
-        if_output(g_mine, st_ctext, 'Text', 4, WFConditionalActionString=text_token('{F}', {'F': (st_last_t, 'Text')})),
-        *clear_variable(START_VAR),
-        if_close(g_mine),
-        if_close(g_last),
-        if_close(g_words),
+        # D5 (iPhone 24.11, the council of 24.11, all four families): the question field is NOT filled from the
+        # clipboard any more. A clipboard text came into every request as one more data source («Clipboard»), and iOS
+        # asked every permission again whenever the field had or had not been filled from it (the measurement: 13
+        # repeated windows). The field opens empty; a text shared to Duo still fills it.
         if_close(g_start),
         # D-29: Duo's own re-runs («Another mode», Recipes, «go back») start with MENU_MARK: cut it off, and show the
         # question box and the mode menu whatever the person's two optional shortcuts say.
