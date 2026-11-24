@@ -325,9 +325,11 @@ def test_the_search_stage_downloads_through_one_action(tmp_path):
     acts = S.search_block(Locale('en'), ('Q', 'Text'), 4000, lambda p, uid: {'WFWorkflowActionIdentifier':
                           'com.anthropic.claude.ClaudeAppIntentsExtension', 'WFWorkflowActionParameters': {'UUID': uid}},
                           'NOW', {'Type': 'CurrentDate'})
-    downloads = [a for a in acts if kind(a) == 'downloadurl']
-    reader = [a for a in downloads if S.READER in str(params(a))]
-    assert len(downloads) - len(reader) <= 1 + 1     # the queue's one action (+ the page linked in the question)
+    downloads = [i for i, a in enumerate(acts) if kind(a) == 'downloadurl']
+    # the queue's one action, inside its «Repeat with Each», and the page linked in the question (the reader)
+    assert len(downloads) == 2
+    loops = [i for i, a in enumerate(acts) if kind(a) == 'each']
+    assert sum(loops[0] < d for d in downloads) >= 1
     queued = [text_of(a) for a in acts if kind(a) == 'gettext' and '\u27e6' in text_of(a)]
     for host in ('news.google.com', 'wikipedia.org', 'www.bing.com/news', 'www.bing.com/search', 'html.duckduckgo.com'):
         assert any(host in q for q in queued), host
@@ -364,3 +366,16 @@ def test_the_probe_shortcut_is_small_and_reaches_every_host(tmp_path):
     for host in ('news.google.com', 'ru.wikipedia.org', 'www.bing.com', 'html.duckduckgo.com', 'r.jina.ai'):
         assert host in urls, host
     assert any(kind(a) == 'gettimebetweendates' for a in acts)
+
+
+def test_chatgpts_links_are_read_by_one_reader_action_and_one_claude_call():
+    """The second fix of 24.11 (the check, Opus and OpenAI): the links ChatGPT cited are read in ONE «Repeat with Each»
+    — one reader action and one Claude call, whichever link — never by unrolled copies."""
+    claude = lambda p, uid: {'WFWorkflowActionIdentifier': 'com.anthropic.claude.ClaudeAppIntentsExtension',
+                             'WFWorkflowActionParameters': {'UUID': uid}}
+    acts = S.link_check_block(Locale('en'), 'PolyGPT', claude, 'PolyResume', {'Type': 'CurrentDate'})
+    assert sum(kind(a) == 'downloadurl' for a in acts) == 1
+    assert sum(kind(a) == 'ClaudeAppIntentsExtension' for a in acts) == 1
+    each = [i for i, a in enumerate(acts) if kind(a) == 'each']
+    dl = next(i for i, a in enumerate(acts) if kind(a) == 'downloadurl')
+    assert each[0] < dl < each[1]

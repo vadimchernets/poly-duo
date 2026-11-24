@@ -737,9 +737,7 @@ def build(lang, ai=False):
             # Duo 6.11, check and deep research (not quick): the pages ChatGPT cited are read by Duo and checked one by
             # one, and Duo searches where the two answers diverge or the conclusion rests on one date, number or
             # condition — the primary source's page is read and checked claim by claim ([V1]…)
-            # the council of 24.11: ChatGPT's and Claude's answers join TAG, so the check's addresses carry one set
-            *S.add_tag((cr_gpt_f, 'Variable')), *S.add_tag((cr_own_f, 'Variable')),
-            *S.link_check_block(L, GPT_VAR, ask_service, RESUME_VAR, ymd(cr_today)),
+            *S.link_check_block(L, GPT_VAR, ask_service, RESUME_VAR, ymd(cr_today), item=item_name),
             *S.divergence_block(L, qsrc, (cr_gpt_f, 'Variable'), (cr_own_f, 'Variable'), ask_service, RESUME_VAR,
                                 ymd(cr_today), nums_var=NUMS_VAR),
             # Research: Claude develops an idea only ChatGPT had («crossing»), the judge takes it into the answer

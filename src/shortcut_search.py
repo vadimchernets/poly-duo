@@ -564,7 +564,6 @@ def query_lines(L, qsrc, ask_claude, today):
     return [act_step('search_queries'),
             act_text(text_token(L.prompt('search-queries'), {'Q': qsrc}, {'TODAY': today}), qp),
             ask_claude(qp, qc),
-            *add_tag((qc, 'Ask Claude')),
             act_set_variable(QUERIES, qc, 'Ask Claude'),
             *set_text(KIND, 'OPEN'),
             act_get_variable(QUERIES, qk),
@@ -589,7 +588,7 @@ def search_block(L, qsrc, long_question, ask_claude, now, today, item='Repeat It
             *(a for m in ('C', 'G') for a in clear_variable(notes_var(m))),
             *clear_variable(CHECKS), *clear_variable(LIST_V), *clear_variable(QUERIES), *clear_variable(NOWEB),
             *clear_variable(KIND), *clear_variable(CROSS),
-            *clear_variable(LIST_U), *clear_variable(TAG),
+            *clear_variable(LIST_U),
             act_text(text_token('{Q}', {'Q': qsrc}), q_txt),
             act_count_chars(q_txt, 'Text', q_cnt),
             if_output(g_long, q_cnt, 'Count', 2, WFNumberValue=long_question - 1),
@@ -670,7 +669,7 @@ def read_page(url, cut_rx, target_var):
     permission in the middle of an answer — the council of 24.11). No «Safari Reader» step: on a table, a PDF or an
     error page it stops the shortcut instead of giving nothing (the 6.11 check, agy). `target_var` gets at most what
     `cut_rx` keeps (or stays empty)."""
-    r_url, r_dl, r_txt, dead, g_dead, ok, g_ok, p_get, cut, tag = (u() for _ in range(10))
+    r_url, r_dl, r_txt, dead, g_dead, ok, g_ok, p_get, cut = (u() for _ in range(9))
     return [*clear_variable(PAGE),
             act_text(text_token(READER + '{U}', {'U': url}), r_url),
             act_download(text_token('{U}', {'U': (r_url, 'Text')}), r_dl),
@@ -692,11 +691,17 @@ def read_page(url, cut_rx, target_var):
 
 # ------------------------------------------------------------------ check: ChatGPT's links and the divergence search
 
-def link_check_block(L, gpt_var, claude_check, skip_var, today):
+def link_check_block(L, gpt_var, claude_check, skip_var, today, item='Repeat Item'):
     """ChatGPT cited pages → Duo downloads up to LINK_MAX of them and asks Claude about each in a separate short call
     whether the page supports what the answer says. CHECKS gets one line a page. Not in the quick depth; never on a
-    run resumed from a draft (`skip_var`): a page that stopped the run once must not stop it again."""
+    run resumed from a draft (`skip_var`): a page that stopped the run once must not stop it again.
+    (The second fix of 24.11, the check — Opus, OpenAI: «Always Allow» is kept per action, and the pages were read by
+    LINK_MAX unrolled copies — the second asked its own windows on whatever question first had two links. The links
+    are listed in PolyLinks and ONE «Repeat with Each» reads them: one reader action, one Claude call.) `item`: the
+    name of a «Repeat with Each» item at this place (inside the draft's loop «Repeat Item 2»)."""
     ans, found, g_has, g_skip, g_quick, net_get, g_net = (u() for _ in range(7))
+    links = 'PolyLinks'
+    link1, test, g_two, link2, lv, split, g_rep = (u() for _ in range(7))
     acts = [*if_text(g_quick, QUICK, present=False),
             *if_text(g_skip, skip_var, present=False),
             act_get_variable(gpt_var, ans),
@@ -705,37 +710,43 @@ def link_check_block(L, gpt_var, claude_check, skip_var, today):
             *network_guard(NET),
             act_get_variable(NET, net_get),
             if_output(g_net, net_get, 'Variable', 100),
-            act_step('link_check')]
-    closers = []
-    for n in range(1, LINK_MAX + 1):
-        link, link_t, g_page, prompt, call, g_v, v_get, cut_get = (u() for _ in range(8))
-        if n == 1:
-            acts.append(act_replace_regex(ans, 'Variable', LINK1_RX[0], LINK1_RX[1], link))
-        else:
-            test, g_two = u(), u()
-            acts += [act_first_match(ans, 'Variable', LINK2_TEST_RX, test),
-                     if_output(g_two, test, 'Matches', 100),
-                     act_replace_regex(ans, 'Variable', LINK2_RX[0], LINK2_RX[1], link)]
-            closers.append(if_close(g_two))
-        acts += [
-            act_text(text_token('{U}', {'U': (link, 'Updated Text')}), link_t),
-            *read_page((link_t, 'Text'), PAGE_RX, 'PolyPageCut'),
-            *if_text(g_page, 'PolyPageCut'),
-            act_get_variable('PolyPageCut', cut_get),
-            act_text(text_token(L.prompt('link-check'),
-                                {'URL': (link_t, 'Text'), 'ANSWER': (ans, 'Variable'), 'PAGE': (cut_get, 'Variable')},
-                                {'TODAY': today}), prompt),
-            claude_check(prompt, call),
-            act_set_variable(VERDICT, call, 'Ask Claude'),
-            *if_text(g_v, VERDICT),
-            act_get_variable(VERDICT, v_get),
-            *append_to(CHECKS, '• ChatGPT → {U} — {V}\n', {'U': (link_t, 'Text'), 'V': (v_get, 'Variable')}),
-            if_close(g_v),
-            if_else(g_page),
-            *append_to(CHECKS, '• ChatGPT → {U} — ' + L['search.link_unread'] + '\n', {'U': (link_t, 'Text')}),
-            if_close(g_page),
-        ]
-    return acts + closers[::-1] + [if_close(g_net), if_close(g_has), if_close(g_skip), if_close(g_quick)]
+            act_step('link_check'),
+            act_replace_regex(ans, 'Variable', LINK1_RX[0], LINK1_RX[1], link1),
+            *set_text(links, '{U}\n', {'U': (link1, 'Updated Text')})]
+    if LINK_MAX > 1:
+        acts += [act_first_match(ans, 'Variable', LINK2_TEST_RX, test),
+                 if_output(g_two, test, 'Matches', 100),
+                 act_replace_regex(ans, 'Variable', LINK2_RX[0], LINK2_RX[1], link2),
+                 *append_to(links, '{U}\n', {'U': (link2, 'Updated Text')}),
+                 if_close(g_two)]
+    it, link, link_t, g_link, g_page, prompt, call, g_v, v_get, cut_get = (u() for _ in range(10))
+    acts += [act_get_variable(links, lv),
+             {'WFWorkflowActionIdentifier': 'is.workflow.actions.text.split',
+              'WFWorkflowActionParameters': {'text': text_token('{T}', {'T': (lv, 'Variable')}),
+                                             'WFTextSeparator': 'New Lines', 'UUID': split}},
+             repeat_open(g_rep, split, 'Split Text'),
+             act_get_variable(item, it),
+             act_first_match(it, 'Variable', r'\Ahttps?://\S+', link),
+             if_output(g_link, link, 'Matches', 100),
+             act_text(text_token('{U}', {'U': (link, 'Matches')}), link_t),
+             *read_page((link_t, 'Text'), PAGE_RX, 'PolyPageCut'),
+             *if_text(g_page, 'PolyPageCut'),
+             act_get_variable('PolyPageCut', cut_get),
+             act_text(text_token(L.prompt('link-check'),
+                                 {'URL': (link_t, 'Text'), 'ANSWER': (ans, 'Variable'), 'PAGE': (cut_get, 'Variable')},
+                                 {'TODAY': today}), prompt),
+             claude_check(prompt, call),
+             act_set_variable(VERDICT, call, 'Ask Claude'),
+             *if_text(g_v, VERDICT),
+             act_get_variable(VERDICT, v_get),
+             *append_to(CHECKS, '• ChatGPT → {U} — {V}\n', {'U': (link_t, 'Text'), 'V': (v_get, 'Variable')}),
+             if_close(g_v),
+             if_else(g_page),
+             *append_to(CHECKS, '• ChatGPT → {U} — ' + L['search.link_unread'] + '\n', {'U': (link_t, 'Text')}),
+             if_close(g_page),
+             if_close(g_link),
+             repeat_close(g_rep)]
+    return acts + [if_close(g_net), if_close(g_has), if_close(g_skip), if_close(g_quick)]
 
 
 def divergence_block(L, question, gpt_answer, claude_answer, claude_check, skip_var, today, nums_var=None):

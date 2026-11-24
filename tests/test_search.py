@@ -360,7 +360,8 @@ def test_check_reads_pages_after_both_answers_and_never_in_quick(tmp_path, lang)
                        if kind(block[g - 2]) == 'getvariable'), key
         part = block[blind:step3]
         assert sum(kind(a) == 'gettext' and claim in text_of(a) for a in part) == S.CLAIMS_MAX
-        assert sum(kind(a) == 'gettext' and link in text_of(a) for a in part) == S.LINK_MAX
+        # (the second fix of 24.11: ChatGPT's links are read in one loop — one prompt, one reader, one call)
+        assert sum(kind(a) == 'gettext' and link in text_of(a) for a in part) == 1
         crux = [a for a in part if kind(a) == 'gettext' and L.prompt('crux').split('.')[0] in text_of(a)]
         assert len(crux) == 1
         # each claim: the web index first (its query may be narrowed to the primary source's site), the news index
@@ -370,7 +371,8 @@ def test_check_reads_pages_after_both_answers_and_never_in_quick(tmp_path, lang)
         assert len(web) == len(news) == S.CLAIMS_MAX
         # every page through the one reader (one host, one permission window), the direct download as its spare
         reader = [a for a in part if kind(a) == 'gettext' and text_of(a).startswith(S.READER)]
-        assert len(reader) == S.CLAIMS_MAX + S.LINK_MAX and not any(kind(a) == 'getarticle' for a in part)
+        # (the second fix of 24.11: ChatGPT's links through one reader action in one loop)
+        assert len(reader) == S.CLAIMS_MAX + 1 and not any(kind(a) == 'getarticle' for a in part)
 
 
 def test_claim_lines_are_read_into_claim_query_and_site():
