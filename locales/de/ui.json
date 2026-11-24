@@ -286,7 +286,7 @@
     "claim_unfound": "Duo hat dazu keine Seite gefunden."
   },
   "setup": {
-    "search_text": "Duo kann im Internet nach aktuellen Antworten suchen. Bei der ersten Frage bittet das iPhone um Erlaubnis — einmal, danach nie wieder.\nEs antworten ChatGPT und Claude.\nMit Suche — etwa {WEB} Erlaubnisse.\nOhne Suche — etwa {LOCAL} (also {LOCAL}-mal „Erlauben“ tippen).",
+    "search_text": "Duo kann im Internet nach aktuellen Antworten suchen. Bei der ersten Frage bittet das iPhone um Erlaubnis — einmal, danach nie wieder.\nEs antworten ChatGPT und Claude.\nMit Suche — etwa {WEB} Freigaben.\nOhne Suche — etwa {LOCAL} (also {LOCAL}-mal „Erlauben“ tippen).",
     "search_items": [
       "Mit Suche (≈{WEB})",
       "Ohne Suche (≈{LOCAL})"

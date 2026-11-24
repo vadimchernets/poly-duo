@@ -196,7 +196,7 @@
     "pref_mode": "📌 Enregistré. La prochaine fois, Duo ira droit au Second avis. Autres modes : « Autre mode » à la fin.",
     "pref_quick": "⚡ Enregistré. Un texte partagé vers Duo (3 mots ou plus) part sans la zone de question. « Autre mode » la montre encore.",
     "pref_reset": "↩️ C’est fait. Duo affiche de nouveau la zone de question et le menu des modes.",
-    "pref_search": "🌐 C’est fait. Votre choix de recherche est enregistré."
+    "pref_search": "🌐 C’est fait. Ton choix de recherche est enregistré."
   },
   "alert": {
     "multi_next_title": "Poly Multi — IA suivante",
@@ -286,7 +286,7 @@
     "claim_unfound": "Duo n'a trouvé aucune page à ce sujet."
   },
   "setup": {
-    "search_text": "Duo peut chercher des réponses récentes sur internet. À votre première question, l’iPhone demandera l’autorisation — une seule fois, ensuite plus jamais.\nChatGPT et Claude répondent.\nAvec recherche — environ {WEB} autorisations.\nSans recherche — environ {LOCAL} (soit toucher « Autoriser » {LOCAL} fois).",
+    "search_text": "Duo peut chercher des réponses récentes sur internet. À ta première question, l’iPhone demandera l’autorisation — une seule fois, ensuite plus jamais.\nChatGPT et Claude répondent.\nAvec recherche — environ {WEB} autorisations.\nSans recherche — environ {LOCAL} (soit toucher « Autoriser » {LOCAL} fois).",
     "search_items": [
       "Avec recherche (≈{WEB})",
       "Sans recherche (≈{LOCAL})"
