@@ -18,7 +18,7 @@
 
 **Step 2 — shortcut.** Tap the iCloud link for your language below → the Shortcuts app opens → **Add**.
 
-**Step 3 — first run: a short setup, keep the phone in your hand.** Duo says aloud that several windows will appear, one after another. In each one tap **Always Allow** (or **Allow** if there is no such button); if tapping is hard, ask someone to help. It applies only to Duo and only to your own apps. The first Critique asks twice more (saving its draft, sending text to Claude); after that Duo asks nothing and works by voice through Siri: «Hey Siri, Duo». **Then let it run for about a minute: stay in Shortcuts and do not lock the phone (leaving the app may stop the run on Apple's platform). A tap on the screen does not stop Duo.**
+**Step 3 — first run: a short setup, keep the phone in your hand.** Duo says aloud that several windows will appear, one after another. In each one tap **Always Allow** (or **Allow** if there is no such button); if tapping is hard, ask someone to help. It applies only to Duo and only to your own apps. The first time, Duo asks once: **With search (≈40)** or **Without search (≈8)** — the number is how many times iPhone will ask «Allow» while every mode runs for the first time; after that Duo asks nothing. To switch later: «➕ More…» → «🌐 With search / without search». Duo works by voice through Siri: «Hey Siri, Duo». **Then let it run for about a minute: stay in Shortcuts and do not lock the phone (leaving the app may stop the run on Apple's platform). A tap on the screen does not stop Duo.**
 
 | Language | Duo | Trio |
 |---|---|---|
@@ -45,7 +45,7 @@ The same signed files are on [polyhelper.ai/duo](https://polyhelper.ai/duo/) (Du
 `Duo.shortcut`: the name in Shortcuts comes from it, and Siri and «another mode — same question»
 find the shortcut by that name.
 
-**Faster next time (optional, off by default).** At the end of a run, «➕ More…» has three switches: «📌 Critique right away next time» (skips the mode menu), «⚡ Shared text: ask without editing» (a text shared to Duo with three words or more goes without the question box) and «↩️ Show all menus again». «🔁 Another mode» always shows the question box and the menu. The choice is one small file, `Duo-prefs.txt`, next to the journal in iCloud Drive → Shortcuts.
+**Faster next time (optional, off by default).** At the end of a run, «➕ More…» has three switches: «📌 Second opinion right away next time» (skips the mode menu), «⚡ Shared text: ask without editing» (a text shared to Duo with three words or more goes without the question box) and «↩️ Show all menus again». «🔁 Another mode» always shows the question box and the menu. The choice is one small file, `Duo-prefs.txt`, next to the journal in iCloud Drive → Shortcuts.
 
 <details>
 <summary><b>If it doesn't work</b></summary>
@@ -78,7 +78,7 @@ Have ChatGPT and Claude? Start right away. Have one? It helps you install the ot
 ![iOS 18+](https://img.shields.io/badge/iOS-18%2B-lightgrey.svg)
 
 <p align="center">
-  <img src="assets/demo.gif" alt="One run: tap the shortcut, ask a question, pick Critique, read the checked answer" width="320">
+  <img src="assets/demo.gif" alt="One run: tap the shortcut, ask a question, pick Second opinion, read the checked answer" width="320">
 </p>
 
 ## Limitations
@@ -128,9 +128,9 @@ Two measured pairs (different months and GPT reasoning settings); plans as of 26
 
 ### The research behind it
 
-Poly Duo builds on two papers accepted at NeurIPS 2026 workshops, on our October 2026 measurement of today's flagships, and on a re-analysis of our companion study's data. (0) October 2026 flagships (our measurement, 26 Oct 2026; channel: the vendors' own CLIs on regular subscriptions — Codex CLI, reasoning effort medium; Claude Code CLI, default — same frozen system prompt and answer parser as the August wave, one blind call per item, no web or tools, temperature not settable in either CLI). On a frozen set of 100 two-hop questions composed from Wikidata in August 2026 and never published, gpt-6.1-sol + claude-opus-5-5 agreed on 74/100; GPT's emitted answer was correct on 72/74 = 97.3% [Wilson 90.7, 99.3]; no item had both models confidently (≥ 80) giving the same wrong answer (0/100); GPT's confident-failure rate 4.0% → 1.4%. With claude-fable-5-1: coverage 78/100, emitted 76/78 = 97.4% [91.1, 99.3], shared confident failure on 1 item in 100. Alone on the same items: gpt-6.1-sol 95%, claude-opus-5-5 72%, claude-fable-5-1 77%. On a stratified 300-item SimpleQA subsample (297 graded for the Fable pair): emitted 96.3% (183/190, coverage 64.0%) and 97.9% (187/191, 65.0%), vs 98.0% for the August pair on the same items; on the full 106 WVA items (graded answers only): agreed answers correct 31/35 (with Opus 5.5) and 31/34 (with Fable 5.1); gpt-6.1-sol alone is 94.2% (98/104) there, so agreement adds little on these items. (1) Self-confidence is a weak signal (TAE workshop, doi:10.5281/zenodo.23197651): across nine API models of a 16-model blind collection (late July 2026; claude-haiku-4-5, gpt-5-mini, gemini-3.6-flash, grok-4-fast, deepseek-chat, qwen-plus, kimi-k3, glm-4.5, mistral-small-latest), stated confidence predicts a model's own correctness at AUROC 0.53–0.79; on the pre-specified headline panel (CN: DeepSeek, Alibaba, Moonshot), agreement with blindly elicited models reaches 0.83 vs 0.55 for self-confidence (Δ +0.29; 0.775 vs 0.545 under a label-free recoding). (2) Verification must be blind-first (Who Verifies the Agents? workshop, doi:10.5281/zenodo.23197641): in an exploratory conformity arm with six July 2026 API verifiers (Anthropic, OpenAI, Google, DeepSeek, Alibaba, Moonshot), verifiers that had disagreed blind endorsed the answer once shown it as a colleague's in 38.5% of cases (168/436); Poly Duo collects both answers blind before comparing them — in its default mode (Critique) and in Synthesis and Side by side. In the same paper, on the hardest quintile by population difficulty, the July 2026 API panels (one model per lab, labelled "frontier" there, budget/mid-tier for eight of nine) replicated 342 answers across 106 questions and, as originally graded, none was correct. (3) Post-hoc re-analysis (26 Oct 2026) of the released flagship-wave data of the companion study (doi:10.5281/zenodo.22166995; one flagship per lab, 5 Aug 2026 snapshot): the pair gpt-5.6-sol + claude-fable-5, 1,459 SimpleQA items, blind answers, GPT's answer emitted only on deterministic-equivalence agreement — coverage 69.6%, emitted answers correct 98.1% (985/1,004) [97.2, 98.9] vs 95.3% for GPT alone; confident-failure rate (conf ≥ 80, of confident answers) 4.6% → 1.9% for GPT and 10.3% → 2.8% for Claude; the two flagships made the same confident mistake on only 1 question in 100 (1.0%). On the 106 WVA items (hard for the July models) the flagship pair agreed on 37 and was right on 34. The mid-tier pair of the same labs (gpt-5-mini + claude-haiku-4-5, July 2026): coverage 8.6%, emitted answers correct 36.6%, 0/13 on the 106. A stronger pair wins on every practical axis: coverage ×8, emitted accuracy 37% → 98%, shared confident failures among emitted answers 8% → 1.5%. With ChatGPT Plus/Pro and Claude Pro/Max, Duo runs the strongest chat models those plans offer at no extra cost; figures in (0) are for the October 2026 pair measured through CLIs, figures in (3) for the 5 Aug 2026 pair.
+Poly Duo builds on two papers accepted at NeurIPS 2026 workshops, on our October 2026 measurement of today's flagships, and on a re-analysis of our companion study's data. (0) October 2026 flagships (our measurement, 26 Oct 2026; channel: the vendors' own CLIs on regular subscriptions — Codex CLI, reasoning effort medium; Claude Code CLI, default — same frozen system prompt and answer parser as the August wave, one blind call per item, no web or tools, temperature not settable in either CLI). On a frozen set of 100 two-hop questions composed from Wikidata in August 2026 and never published, gpt-6.1-sol + claude-opus-5-5 agreed on 74/100; GPT's emitted answer was correct on 72/74 = 97.3% [Wilson 90.7, 99.3]; no item had both models confidently (≥ 80) giving the same wrong answer (0/100); GPT's confident-failure rate 4.0% → 1.4%. With claude-fable-5-1: coverage 78/100, emitted 76/78 = 97.4% [91.1, 99.3], shared confident failure on 1 item in 100. Alone on the same items: gpt-6.1-sol 95%, claude-opus-5-5 72%, claude-fable-5-1 77%. On a stratified 300-item SimpleQA subsample (297 graded for the Fable pair): emitted 96.3% (183/190, coverage 64.0%) and 97.9% (187/191, 65.0%), vs 98.0% for the August pair on the same items; on the full 106 WVA items (graded answers only): agreed answers correct 31/35 (with Opus 5.5) and 31/34 (with Fable 5.1); gpt-6.1-sol alone is 94.2% (98/104) there, so agreement adds little on these items. (1) Self-confidence is a weak signal (TAE workshop, doi:10.5281/zenodo.23197651): across nine API models of a 16-model blind collection (late July 2026; claude-haiku-4-5, gpt-5-mini, gemini-3.6-flash, grok-4-fast, deepseek-chat, qwen-plus, kimi-k3, glm-4.5, mistral-small-latest), stated confidence predicts a model's own correctness at AUROC 0.53–0.79; on the pre-specified headline panel (CN: DeepSeek, Alibaba, Moonshot), agreement with blindly elicited models reaches 0.83 vs 0.55 for self-confidence (Δ +0.29; 0.775 vs 0.545 under a label-free recoding). (2) Verification must be blind-first (Who Verifies the Agents? workshop, doi:10.5281/zenodo.23197641): in an exploratory conformity arm with six July 2026 API verifiers (Anthropic, OpenAI, Google, DeepSeek, Alibaba, Moonshot), verifiers that had disagreed blind endorsed the answer once shown it as a colleague's in 38.5% of cases (168/436); Poly Duo collects both answers blind before comparing them — in its default mode (Second opinion, formerly Critique) and in Synthesis and Side by side. In the same paper, on the hardest quintile by population difficulty, the July 2026 API panels (one model per lab, labelled "frontier" there, budget/mid-tier for eight of nine) replicated 342 answers across 106 questions and, as originally graded, none was correct. (3) Post-hoc re-analysis (26 Oct 2026) of the released flagship-wave data of the companion study (doi:10.5281/zenodo.22166995; one flagship per lab, 5 Aug 2026 snapshot): the pair gpt-5.6-sol + claude-fable-5, 1,459 SimpleQA items, blind answers, GPT's answer emitted only on deterministic-equivalence agreement — coverage 69.6%, emitted answers correct 98.1% (985/1,004) [97.2, 98.9] vs 95.3% for GPT alone; confident-failure rate (conf ≥ 80, of confident answers) 4.6% → 1.9% for GPT and 10.3% → 2.8% for Claude; the two flagships made the same confident mistake on only 1 question in 100 (1.0%). On the 106 WVA items (hard for the July models) the flagship pair agreed on 37 and was right on 34. The mid-tier pair of the same labs (gpt-5-mini + claude-haiku-4-5, July 2026): coverage 8.6%, emitted answers correct 36.6%, 0/13 on the 106. A stronger pair wins on every practical axis: coverage ×8, emitted accuracy 37% → 98%, shared confident failures among emitted answers 8% → 1.5%. With ChatGPT Plus/Pro and Claude Pro/Max, Duo runs the strongest chat models those plans offer at no extra cost; figures in (0) are for the October 2026 pair measured through CLIs, figures in (3) for the 5 Aug 2026 pair.
 
-Limits: SimpleQA is public, and gpt-5.6-sol echoes the gold string on 61.6% of answers; on the 106 items it is 95.2% correct alone and echoes gold on 64.2% — hard for July models, not for it. The gate removes a smaller share of GPT's confident failures than the mid-tier gate (70.8% vs 92.3%). Flagship vs mid-tier is two measured points (different months; GPT reasoning effort medium vs minimal). Pair figures describe blind answers compared afterwards, the scheme Poly Duo uses in Critique, Synthesis and Side by side; they are not a measured accuracy of any Poly Duo mode. The WVA zero holds under population difficulty; under leave-panel-out difficulty it persists for the cross-bloc panel (0/116), not pooled (78/354). Crediting the defensible answers found by WVA's manual gold adjudication moves that zero to at most 13/342 (lift 0.98×). The conformity arm's reverse-prompt control ran on six local models. On TAE's US panel, pooled self-confidence leads (0.84 vs 0.70), a between-model effect (0.67 rank-normalised). Claude runs the app's default model; ChatGPT runs with `model: auto`, which on paid plans picks the plan's model (on Plus chat as of 26 Oct 2026: GPT-6 Sol; GPT-6.1 Sol is in Codex and ChatGPT Work). The October measurement is one run through CLIs, n = 100 on the fresh set; it is not a measured accuracy of a Poly Duo mode. On the fresh set the August GPT arm ran via API at reasoning effort none, so August vs October is not compared there. Data and papers: github.com/vadimchernets/papers · polyhelper.ai/research
+Limits: SimpleQA is public, and gpt-5.6-sol echoes the gold string on 61.6% of answers; on the 106 items it is 95.2% correct alone and echoes gold on 64.2% — hard for July models, not for it. The gate removes a smaller share of GPT's confident failures than the mid-tier gate (70.8% vs 92.3%). Flagship vs mid-tier is two measured points (different months; GPT reasoning effort medium vs minimal). Pair figures describe blind answers compared afterwards, the scheme Poly Duo uses in Second opinion (formerly Critique), Synthesis and Side by side; they are not a measured accuracy of any Poly Duo mode. The WVA zero holds under population difficulty; under leave-panel-out difficulty it persists for the cross-bloc panel (0/116), not pooled (78/354). Crediting the defensible answers found by WVA's manual gold adjudication moves that zero to at most 13/342 (lift 0.98×). The conformity arm's reverse-prompt control ran on six local models. On TAE's US panel, pooled self-confidence leads (0.84 vs 0.70), a between-model effect (0.67 rank-normalised). Claude runs the app's default model; ChatGPT runs with `model: auto`, which on paid plans picks the plan's model (on Plus chat as of 26 Oct 2026: GPT-6 Sol; GPT-6.1 Sol is in Codex and ChatGPT Work). The October measurement is one run through CLIs, n = 100 on the fresh set; it is not a measured accuracy of a Poly Duo mode. On the fresh set the August GPT arm ran via API at reasoning effort none, so August vs October is not compared there. Data and papers: github.com/vadimchernets/papers · polyhelper.ai/research
 
 - **Verification Theater** (accepted at a NeurIPS 2026 workshop, «Who Verifies the Agents?»): [doi:10.5281/zenodo.23197641](https://doi.org/10.5281/zenodo.23197641) · [OpenReview](https://openreview.net/forum?id=Mg9RtDWcK4) · [NeurIPS](https://neurips.cc/virtual/2026/loc/sydney/173020)
 - **Self-Confidence in LLM Evaluation** (accepted at a NeurIPS 2026 workshop, TAE): [doi:10.5281/zenodo.23197651](https://doi.org/10.5281/zenodo.23197651) · [OpenReview](https://openreview.net/forum?id=OyuZAAtv2q) · [NeurIPS](https://neurips.cc/virtual/2026/178299)
@@ -165,12 +165,12 @@ your question
      │
      ├──→  Claude answers on its own, without seeing ChatGPT
      │
-     └──→  Claude compares the two: matched / did not match / what to check
+     └──→  Claude compares the two: answer · what the second opinion added · basis
                     │
                     └──→  one final answer  →  screen · clipboard · journal
 ```
 
-That's **Critique**, the default mode and the only one you need on the first day. Eleven other modes
+That's **Second opinion**, the default mode and the only one you need on the first day. Eleven other modes
 put the two models against each other in different ways — a debate, a side-by-side, a map of
 where they disagree — and they stay out of your way until you want them.
 
@@ -179,7 +179,9 @@ where they disagree — and they stay out of your way until you want them.
 
 | Mode | What happens | Cost |
 |---|---|---|
-| ⚖️ **Critique** | ChatGPT and Claude each answer without seeing the other; Claude compares both and delivers the final, opened by three blocks: matched independently / did not match / what to check yourself. Your default. | 3 messages |
+| ⚖️ **Second opinion** | ChatGPT and Claude each answer without seeing the other; Claude compares both. You get one answer first (the best of both), then «■ What the second opinion added» (2–5 ideas only one of them had), then «■ Basis» (what both reached on their own). Your everyday driver. | 5–10 messages |
+| ⚡ **Quick** | Duo finds sources, both AIs answer, one check — about a minute. | 4 messages |
+| 🔎 **Research** | Deeper: each AI first reads the pages itself, 3–5 minutes. | 15–40 messages |
 | 🤝 **Debate to agreement** | ChatGPT and Claude each state a position without seeing the other, then argue up to 3 rounds until one concedes with a named reason; then where they agreed, what is still disputed, what is yours to decide. For life choices with no right answer. | 3–8 messages |
 | 🩺 **Advisor** | Claude reviews *your own* text without rewriting it: verdict, strongest objection first. | 1 message |
 | 👀 **Side by side** | Both answer independently, answers shown next to each other, nothing blended. | 2 messages |
@@ -201,8 +203,8 @@ badge on each entry shows the price (1–8 messages) before you choose. Which mo
 
 ## Trio — a third voice on a free key
 
-**Trio** is the Critique pair plus a third AI from a third company. ChatGPT answers, Claude answers the
-same question on its own without seeing ChatGPT's answer (the blind Critique scheme) — then a third
+**Trio** is the Second opinion pair plus a third AI from a third company. ChatGPT answers, Claude answers the
+same question on its own without seeing ChatGPT's answer (the blind Second opinion scheme) — then a third
 model reads the question and both independent answers and names **only the errors and gaps both of them missed**. If there are none, it says
 so in one line («Nothing both missed»). One more Claude message then compares the three answers (matched
 independently / did not match / what to check yourself, then the final answer); the third voice's words
@@ -239,8 +241,7 @@ On an iPhone with Apple Intelligence (iPhone 15 Pro or newer, iOS 26 or later) t
 
 - **Duo** — the pair. ChatGPT and Claude each answer on their own, without seeing each other; then
   Claude compares the two and writes one answer, on the screen and in the clipboard, in about a
-  minute. In the default mode, **Critique**, it opens with three blocks: matched independently /
-  did not match / what to check yourself. Eleven more
+  minute. In the default mode, **Second opinion**, you get one answer first, then what the second opinion added, then the basis. Eleven more
   modes (debate to agreement, side by side, dispute map, decision, …) sit in the same menu or under
   📂 More… — twelve in all. Spends 1–8 messages from your own ChatGPT and Claude plans per run; the ✉ price is shown
   before you choose.
@@ -304,7 +305,7 @@ name «Poly», so rename yours to «Poly» or edit the Run Shortcut step in each
 
 - **Duo Voice** — tap, dictate, hear the final answer read back.
 - **Poly Photo** — share a photo or PDF; the text is recognized on device, then answered.
-- **Poly Quiet** — the Critique pipeline with no screens at all: clipboard and journal only.
+- **Poly Quiet** — the Second opinion pipeline with no screens at all: clipboard and journal only.
 - **Poly Compress** — shrink a long text with Apple's on-device model before the pair sees it.
   This one needs Apple Intelligence hardware (A17 Pro / M-series or newer); nothing else does.
 - **Poly Multi** — the pair plus any other AIs you have, semi-manually: Poly writes the prompt,
@@ -364,7 +365,7 @@ journal (`Duo-journal.md`) is a plain text file in your own iCloud Drive; delete
 action or the file if you don't want a history. A paid iCloud plan is not required — without
 iCloud the answer still reaches your screen and clipboard, only the journal is skipped.
 
-Message consumption comes out of your own ChatGPT and Claude plans (free or paid), 1 to 8 per run (Critique 3, Debate to agreement 3–8, Advisor 1), from the
+Message consumption comes out of your own ChatGPT and Claude plans (free or paid), 1 to 8 per run (Second opinion 5–10, Debate to agreement 3–8, Advisor 1), from the
 same allowance as your normal chats — and the ✉ badge in the menu tells you the price before you
 pick a mode. The code is open source under the Apache License 2.0 — see [LICENSE](LICENSE).
 

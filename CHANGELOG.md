@@ -6,7 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-## [Unreleased] — Duo 6.11 (candidate, branch duo-search: the five search branches merged)
+## [1.0.11] — 2026-11-24 — Duo 6.11 (built-in number duo 17)
+
+Signed Duo files for 12 languages in `releases/` (SHA256SUMS), built from 495dc69 (branch duo-search, merged into main)
+with duo 17. Run on the owner's iPhone on 23–24.11.2026 (four full runs, every mode, both search choices); 894 tests
+pass. The iCloud links in `releases/version.json`, README and `docs/*/install.md` are re-created from these files.
+
+In short: search in three depths (Quick, Second opinion, Research), «Critique» is now «Second opinion», the answer comes
+first, then «What the second opinion added»; the first run asks once «with search / without search».
+
+### Added — «with search / without search», asked once (the owner, 24.11.2026)
+- The first-run Setup speaks the choice aloud, then shows two buttons: **With search (≈40)** / **Without search (≈8)**
+  — the number of «Allow» taps iOS asks for the first time each mode runs (counted on the iPhone; a second run asks
+  none). Siri takes the buttons by voice like every Duo menu. All 12 languages.
+- The choice is saved at once in `Duo-prefs.txt` (`SEARCH=0` for without search); «More» → «🌐 With search / without
+  search» changes it later; «Restore all menus» keeps it.
+- Without search every mode answers from the models' own knowledge: no query call, no engines, no page reading, no
+  link or divergence check, no Research rounds (`search_guard()` in `src/shortcut_search.py`, the same path as no
+  network).
 
 ### Changed — the divergent first (the council of 23.11.2026 on the owner's words; dozapros of the single votes)
 - **Critique → Second opinion** in all 12 languages (menu, «right away next time», notifications, journal, help,
@@ -28,7 +45,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added — three depths in the mode menu (the owner's decision of 23.11.2026)
 - **Quick** (new item): Duo's own search, one set of cards per model, two answers, the comparison — about a minute.
-- **Critique** (the default, as before the first item) = the check: the same, then the divergence search — one short
+- **Second opinion** (formerly Critique; the default, as before the first item) = the check: the same, then the divergence search — one short
   Claude call names at most 2 claims the answers diverge on or rest on (a date, a number, a condition — even when they
   agree); Duo searches each (Bing web, narrowed to the primary source's site when named; Bing News when the web gave
   nothing), reads the page and checks the claim in its own short call ([V1], [V2]); the pages ChatGPT cited are read
