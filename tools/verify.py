@@ -65,8 +65,8 @@ def check_locales():
             note = f', {len(overrides)} prompt overrides' if overrides else ', shared prompts'
             ok(f'{locale.name}: {len(base_keys)} ui keys{note}')
 
-        for name, items in (('main_items', 7), ('extra_items', 10), ('finale_items', 3),
-                            ('finale_more_items', 7), ('recipes_items', 5), ('recipes_texts', 5)):
+        for name, items in (('main_items', 9), ('extra_items', 10), ('finale_items', 4),
+                            ('finale_more_items', 10), ('recipes_items', 5), ('recipes_texts', 5)):
             if len(ui['menu'][name]) != items:
                 fail(f'{locale.name}: menu.{name} must hold exactly {items} entries')
 

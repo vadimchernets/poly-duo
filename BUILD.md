@@ -47,8 +47,8 @@ If a prompt genuinely needs to differ in your language, drop just that one file 
 `{GPT_ANSWER}`, `{CLAUDE_ANSWER}`, `{ANCHOR}`, `{DRAFT}`… — is wired to a value by the builder.
 Keep the same names in the same structural places; move the surrounding words freely.
 
-**Menu arrays keep their length and order.** `menu.main_items` has exactly 7 entries,
-`menu.extra_items` 10, `menu.finale_items` 3, `menu.finale_more_items` 7 and `menu.recipes_items` / `menu.recipes_texts` 5 each; the builder indexes into them. Translate the labels, keep the emoji
+**Menu arrays keep their length and order.** `menu.main_items` has exactly 9 entries,
+`menu.extra_items` 10, `menu.finale_items` 4, `menu.finale_more_items` 10 and `menu.recipes_items` / `menu.recipes_texts` 5 each; the builder indexes into them. Translate the labels, keep the emoji
 and the `· N✉` cost badge — that badge is how a user sees the price before choosing.
 
 **Prompt structure survives translation.** Numbered lists, section headers (`ORIGINAL QUESTION:`),
