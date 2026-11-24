@@ -967,8 +967,12 @@ def research_block(L, model, side, ask, qsrc, now, today, item='Repeat Item'):
              act_step('research_round2'),
              *clear_variable(tmp)]
     engines = SIDE_ENGINES[model] if not SHARED_SOURCES else SIDE_ENGINES['C'] + SIDE_ENGINES['G']
+    # (the second fix of 24.11: the second round's searches through ONE download action too)
+    routes = []
+    acts += clear_variable(NETQ)
     for engine in engines:
-        acts += fetch(L, engine, (q, 'Updated Text'), tmp)
+        acts += queue_fetch(L, engine, (q, 'Updated Text'), tmp, routes)
+    acts += run_queue(L, routes, item)
     g_new, new_get = u(), u()
     acts += [*clean_records(tmp),
              *if_text(g_new, tmp),
