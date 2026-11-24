@@ -6,7 +6,7 @@
 
 [![Watch Duo run on YouTube](https://img.youtube.com/vi/Oj8ZQ_rVtQc/hqdefault.jpg)](https://youtu.be/Oj8ZQ_rVtQc)
 
-**Install:** [iPhone — add the Duo shortcut](https://www.icloud.com/shortcuts/b26ac560c3724ec79937cc57b7206f7f) · [Android — Poly Duo on Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1) · [other languages](#install-in-60-seconds) · [polyhelper.ai/duo](https://polyhelper.ai/duo/)
+**Install:** [iPhone — add the Duo shortcut](https://www.icloud.com/shortcuts/64b0d9d3c5b9442a8a7cc7c8c5df6625) · [Android — Poly Duo on Google Play](https://play.google.com/store/apps/details?id=ai.polyhelper.a1) · [other languages](#install-in-60-seconds) · [polyhelper.ai/duo](https://polyhelper.ai/duo/)
 
 **Related research tool:** [memory-agreement-check](https://github.com/vadimchernets/memory-agreement-check) measures when two models from different companies agree on the same wrong answer.
 
@@ -22,18 +22,18 @@
 
 | Language | Duo | Trio |
 |---|---|---|
-| English | [Duo](https://www.icloud.com/shortcuts/b26ac560c3724ec79937cc57b7206f7f) | [Trio](https://www.icloud.com/shortcuts/73edfa30e400437fa48a792d04fdc2b8) |
-| Español | [Duo](https://www.icloud.com/shortcuts/c1fbe3d1b4d248f6aa94692470587311) | [Trio](https://www.icloud.com/shortcuts/ca7f36481f024fceb9ecca0de0ecb63c) |
-| Português | [Duo](https://www.icloud.com/shortcuts/1f9f1add03f04551ab044b63aae2fb79) | [Trio](https://www.icloud.com/shortcuts/4e72f237e8c54b118c4d38a4282db76a) |
-| Русский | [Duo](https://www.icloud.com/shortcuts/f5cdcd93b4d64a59bd365e9ef0b32ac2) | [Trio](https://www.icloud.com/shortcuts/55a359d379464fd9b710f7892f1fdc43) |
-| Українська | [Duo](https://www.icloud.com/shortcuts/6b8fd1804ef74058951d7413edf156a9) | [Trio](https://www.icloud.com/shortcuts/d3c86b63d73548339c6e4ebed0eb21b4) |
-| Deutsch | [Duo](https://www.icloud.com/shortcuts/b9e1b91c2c904c4ea9eaa04f58618831) | [Trio](https://www.icloud.com/shortcuts/6ee78cb376ad4520a01ee252d4eeb73a) |
-| Français | [Duo](https://www.icloud.com/shortcuts/1a17b026ac18420abebe17bf08d4864e) | [Trio](https://www.icloud.com/shortcuts/d4719ea732704249ae410b4a3e244735) |
-| हिन्दी | [Duo](https://www.icloud.com/shortcuts/0ac9699ffe774ad28f46b8f2e463ccbc) | [Trio](https://www.icloud.com/shortcuts/6f91f6b59c364fb3bbedbc2c69c0c2bb) |
-| 日本語 | [Duo](https://www.icloud.com/shortcuts/6b3e65672d4b4e09884d11332b0a7ef2) | [Trio](https://www.icloud.com/shortcuts/fa5484761d9c426ebcffa086ee3c7e7f) |
-| 한국어 | [Duo](https://www.icloud.com/shortcuts/46e4ef0b37a64ec2a7ca145f34139908) | [Trio](https://www.icloud.com/shortcuts/c3cd9618baa947669b7937442062f7af) |
-| 中文 | [Duo](https://www.icloud.com/shortcuts/f4ed344e956f4db58bb50f7b594ff230) | [Trio](https://www.icloud.com/shortcuts/eeec59ad082e47c69611bcca7da02745) |
-| العربية | [Duo](https://www.icloud.com/shortcuts/0b2a4db75c804d74a0e5ac4c66104525) | — |
+| English | [Duo](https://www.icloud.com/shortcuts/64b0d9d3c5b9442a8a7cc7c8c5df6625) | [Trio](https://www.icloud.com/shortcuts/73edfa30e400437fa48a792d04fdc2b8) |
+| Español | [Duo](https://www.icloud.com/shortcuts/889e23b0e9e647f2b6525424cf64fcde) | [Trio](https://www.icloud.com/shortcuts/ca7f36481f024fceb9ecca0de0ecb63c) |
+| Português | [Duo](https://www.icloud.com/shortcuts/2ec30c48f90b4aafbdeab2678168853a) | [Trio](https://www.icloud.com/shortcuts/4e72f237e8c54b118c4d38a4282db76a) |
+| Русский | [Duo](https://www.icloud.com/shortcuts/253dd14afce4487a9ce38be949c93db6) | [Trio](https://www.icloud.com/shortcuts/55a359d379464fd9b710f7892f1fdc43) |
+| Українська | [Duo](https://www.icloud.com/shortcuts/f0d04a0879e84fa3989a5d0f73b83e16) | [Trio](https://www.icloud.com/shortcuts/d3c86b63d73548339c6e4ebed0eb21b4) |
+| Deutsch | [Duo](https://www.icloud.com/shortcuts/8e1b37b22b8e4bf592b4ea1fc9a4f2bc) | [Trio](https://www.icloud.com/shortcuts/6ee78cb376ad4520a01ee252d4eeb73a) |
+| Français | [Duo](https://www.icloud.com/shortcuts/017f766889ee44d49890bf0ec063eae7) | [Trio](https://www.icloud.com/shortcuts/d4719ea732704249ae410b4a3e244735) |
+| हिन्दी | [Duo](https://www.icloud.com/shortcuts/39b2730928b145e78ff923fb4d4d94c2) | [Trio](https://www.icloud.com/shortcuts/6f91f6b59c364fb3bbedbc2c69c0c2bb) |
+| 日本語 | [Duo](https://www.icloud.com/shortcuts/31353ae57e584527bc04963c68b2d486) | [Trio](https://www.icloud.com/shortcuts/fa5484761d9c426ebcffa086ee3c7e7f) |
+| 한국어 | [Duo](https://www.icloud.com/shortcuts/dfc3f0a1057f4a7a9e9282f6e9c3e695) | [Trio](https://www.icloud.com/shortcuts/c3cd9618baa947669b7937442062f7af) |
+| 中文 | [Duo](https://www.icloud.com/shortcuts/3042c89835b1474783e5fe61740997d0) | [Trio](https://www.icloud.com/shortcuts/eeec59ad082e47c69611bcca7da02745) |
+| العربية | [Duo](https://www.icloud.com/shortcuts/4f51b8b9ed2640daa4aa10413e8d4f10) | — |
 
 **Backup: the signed file.**
 

@@ -11,7 +11,7 @@ C1M Duo iPhone के लिए एक «शॉर्टकट» है: आप 
 
 **सबसे आसान — iCloud लिंक (एक टैप)।** iPhone पर लिंक टैप करें → शॉर्टकट्स ऐप खुलता है → **शॉर्टकट जोड़ें**। पहली बार चलाने पर शॉर्टकट कई बार अनुमति माँगता है; हर बार **हमेशा अनुमति दें** टैप करें। अगर टैप करना मुश्किल हो, तो किसी से मदद माँग लें; यह सिर्फ़ पहली बार ज़रूरी है।
 
-- **Duo:** https://www.icloud.com/shortcuts/0ac9699ffe774ad28f46b8f2e463ccbc
+- **Duo:** https://www.icloud.com/shortcuts/39b2730928b145e78ff923fb4d4d94c2
 - **Trio, iPhone 15 Pro या नया — बिना कुंजी (तीसरी आवाज़ Apple Intelligence):** https://www.icloud.com/shortcuts/ecfdce5502664d76b2dffdce2f8ae21d
 - **Trio — मुफ़्त कुंजी (तीसरी आवाज़):** https://www.icloud.com/shortcuts/6f91f6b59c364fb3bbedbc2c69c0c2bb
 
