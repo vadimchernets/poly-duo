@@ -37,9 +37,11 @@
     "my_rule_sample": "Check only the numbers and dates"
   },
   "menu": {
-    "main_title": "Pick a mode; first time, Critique. Critique (3): both AIs check. Argue (3–8): until they agree. Advisor (1): your text. Compare (2): two answers. Synthesis (3): one answer. Auto (+1): Duo picks. Brackets: messages to the AIs.",
+    "main_title": "Pick a mode; first time, Second opinion. Second opinion (5–10): both AIs answer from sources Duo found, then Duo reads the pages where they differ. Quick (4): sources, two answers, one check, about a minute. Research (15–40): each AI reads pages first, 3–5 minutes. Argue (3–8): until they agree. Advisor (1): your text. Compare (2): two answers. Synthesis (3): one answer. Auto (+1): Duo picks. Brackets: messages to the AIs.",
     "main_items": [
-      "Critique",
+      "Second opinion",
+      "Quick",
+      "Research",
       "Argue",
       "Advisor",
       "Compare",
@@ -88,11 +90,12 @@
       "📝 Save to Notes",
       "☑️ What to check → Reminders",
       "🐞 Report this run",
-      "📌 Critique right away next time",
+      "📌 Second opinion right away next time",
       "⚡ Shared text: ask without editing",
       "↩️ Show all menus again",
       "💬 Worked / didn't work / idea — form on GitHub",
-      "🔗 Open in Poly"
+      "🔗 Open in Poly",
+      "🌐 With search / without search"
     ],
     "recipes_title": "What do you need?",
     "recipes_items": [
@@ -139,7 +142,7 @@
     "open_poly": "🔗 Open in Poly"
   },
   "notify": {
-    "critique_start": "⚖️ Critique: ChatGPT answers → Claude answers on its own → Claude compares both. 1–3 min, please wait, leave the phone as it is. Stuck? Open ChatGPT and sign in.",
+    "critique_start": "⚖️ Second opinion: ChatGPT answers → Claude answers on its own → Claude compares both. 1–3 min, please wait, leave the phone as it is. Stuck? Open ChatGPT and sign in.",
     "critique_step2": "[2/3] Claude is verifying and assembling the final answer…",
     "critique_blind": "[2/3] Claude answers on its own, without seeing ChatGPT's answer…",
     "gpt_kept": "📋 ChatGPT's answer is in the clipboard. If Duo stops before Claude answers, you can still paste it anywhere; Claude's answer, if it came, is in the Claude app.",
@@ -148,7 +151,7 @@
     "advisor_start": "🩺 Advisor: Claude reviews your text without rewriting it. 1–3 min, please wait, leave the screen as it is.",
     "survey_start": "👀 Side by side: asking both independently. 1–3 min, please wait, leave the phone as it is.",
     "survey_step2": "[2/2] Claude answers on its own, without seeing ChatGPT's answer…",
-    "long_question": "📏 A long question: I ask both AIs for shorter answers, so that iOS does not cut a step off. If Duo stops anyway, run it again within 30 min (a Critique goes on from where it stopped).",
+    "long_question": "📏 A long question: I ask both AIs for shorter answers, so that iOS does not cut a step off. If Duo stops anyway, run it again within 30 min (a Second opinion goes on from where it stopped).",
     "synthesis_claude_start": "🔀 Synthesis (Claude anchors): two blind answers → assembly. ≈1.5 min, please wait, leave the phone as it is.",
     "synthesis_gpt_start": "🔀 Synthesis (ChatGPT anchors): two blind answers → assembly. ≈1.5 min, please wait, leave the phone as it is.",
     "auto_start": "🧭 Auto: picking the right mode for your question… (+1 ChatGPT message)",
@@ -190,9 +193,10 @@
     "no_key_file": "There is no poly-key.txt in the Shortcuts folder of iCloud Drive. Save a free key there (see the install guide) or pick another option.",
     "resume_debate": "Continuing the debate from where it stopped — no new ChatGPT message is spent for the rounds already done.",
     "gpt_down": "ChatGPT did not pass an answer to Duo (message limit, signed out, or iOS cut a long step; if it did answer, the answer is in its app). Claude answers alone; there is no comparison this time. (If the ChatGPT app says «logged out»: open it, sign in, then run Duo again.)",
-    "pref_mode": "📌 Saved. Next time Duo goes straight to Critique. Other modes: «Another mode» at the end.",
+    "pref_mode": "📌 Saved. Next time Duo goes straight to Second opinion. Other modes: «Another mode» at the end.",
     "pref_quick": "⚡ Saved. A text shared to Duo (3+ words) is sent without the question box. «Another mode» still shows it.",
-    "pref_reset": "↩️ Done. Duo shows the question box and the mode menu as before."
+    "pref_reset": "↩️ Done. Duo shows the question box and the mode menu as before.",
+    "pref_search": "🌐 Done. Your search choice is saved."
   },
   "alert": {
     "multi_next_title": "Poly Multi — next AI",
@@ -232,7 +236,7 @@
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\nQUESTION: {Q}\n\n{R}\n",
     "entry_simple": "\n════════ {D} ════════\n{M}\nQUESTION: {Q}\n\n{R}\n",
-    "critique": "MODE: ⚖️ Critique\n—— raw: ChatGPT's answer ——\n{X}",
+    "critique": "MODE: ⚖️ Second opinion\n—— raw: ChatGPT's answer ——\n{X}",
     "critique_reverse": "MODE: ⚖️ Critique\n—— raw: Claude's answer ——\n{X}",
     "advisor": "MODE: 🩺 Advisor",
     "survey": "MODE: 👀 Side by side (the result IS the raw material)",
@@ -247,7 +251,7 @@
     "auto": "MODE: 🧭 Auto (recommendation)",
     "help": "MODE: ℹ️ Help (no AI calls)",
     "voice": "MODE: 🎧 Voice",
-    "quiet": "MODE: 🤫 Quiet (critique)",
+    "quiet": "MODE: 🤫 Quiet (second opinion)",
     "multi": "MODE: 🎼 Multi choir",
     "argue": "MODE: 🤝 Debate to agreement (the whole debate is in the result)"
   },
@@ -259,14 +263,33 @@
     "pc_notice_seen": "PCNoticeSeen",
     "argue_log": "DebateLog"
   },
-  "help": "ℹ️ WHAT IS DUO\n\nOne question — and two AIs (ChatGPT and Claude) work on it as a pair. It runs on your own subscriptions; the ✉ badge on a mode tells you how many messages it will spend.\n\nEVERYDAY MODES (main menu):\n⚖️ Critique — ChatGPT and Claude answer separately, without seeing each other; then Claude compares them: matched independently / did not match / what to check yourself, and gives the final answer. Your default.\n🤝 Argue — for life choices with no right answer («which to choose», «should I agree»): each gives its own view first, not seeing the other's; then they see each other and argue, up to 3 rounds until one concedes; then: where they agreed, what is still disputed, what is yours to decide.\n🩺 Advisor — Claude reviews YOUR text without rewriting it. The cheapest mode.\n👀 Compare — two independent opinions, no blending.\n🔀 Synthesis — both answer blind, then the best is assembled. For what matters.\n🧭 Auto — not sure what to pick? Duo chooses the mode for you.\n\nIn «More»:\n⚔️ Decision — first steps and risks. 🗺 Dispute map — where the AIs agree and where they don't.\n🥊 Debate — ChatGPT's draft and Claude's own answer, written separately → ChatGPT compares and revises → judge. For the hardest questions; expensive.\n❓ Clarify — asks you follow-up questions first (the only mode where you must touch the screen mid-run — just its dialog).\n➕ Additions (Delta) — a cheap stand-in for Synthesis: anchor + a list of additions. 🎨 Image — two vector sketches to choose from.\n✍️ Claude writes, ChatGPT checks — Claude drafts, ChatGPT edits tone and wording (editing, not a fact-check). 📝 My own checking rule — the same, with your own one-line instruction for the checker, read from the file Poly-my-mode.txt (Files → iCloud Drive → Shortcuts).\n\nThe result is shown on screen; to keep it: «More» → «📝 Save to Notes».\nWhile Duo is running — please wait, leave the phone as it is: stay in Shortcuts and do not lock the phone (a tap on the screen does not stop it). Details and troubleshooting: INSTALL.md in the kit.\n\nAt the end, «More» has three switches: «📌 Critique right away next time» (skips the mode menu), «⚡ Shared text: ask without editing» (a text shared to Duo goes without the question box; off by default) and «↩️ Show all menus again». «Another mode» always shows the question box and the menu. The choice is kept in Duo-prefs.txt (Files → iCloud Drive → Shortcuts).\n\n💻 On a laptop or PC, PolyHelper does more: folders, agents, channels, schedules, a council of several AIs. Duo on your phone is the light version, without the PC features.\n\nTap «Done» below, then pick «Another mode» on the next screen — Duo restarts with your question and you choose a mode.\n\n🔓 Open source on GitHub: https://github.com/vadimchernets/poly-duo",
+  "help": "ℹ️ WHAT IS DUO\n\nOne question — and two AIs (ChatGPT and Claude) work on it as a pair. It runs on your own subscriptions; the ✉ badge on a mode tells you how many messages it will spend.\n\nEVERYDAY MODES (main menu):\n⚖️ Second opinion — ChatGPT and Claude answer separately, without seeing each other; then Claude writes one answer from the best of both and shows what the second opinion added and what the answer rests on. Your default.\n🤝 Argue — for life choices with no right answer («which to choose», «should I agree»): each gives its own view first, not seeing the other's; then they see each other and argue, up to 3 rounds until one concedes; then: where they agreed, what is still disputed, what is yours to decide.\n🩺 Advisor — Claude reviews YOUR text without rewriting it. The cheapest mode.\n👀 Compare — two independent opinions, no blending.\n🔀 Synthesis — both answer blind, then the best is assembled. For what matters.\n🧭 Auto — not sure what to pick? Duo chooses the mode for you.\n\nIn «More»:\n⚔️ Decision — first steps and risks. 🗺 Dispute map — where the AIs agree and where they don't.\n🥊 Debate — ChatGPT's draft and Claude's own answer, written separately → ChatGPT compares and revises → judge. For the hardest questions; expensive.\n❓ Clarify — asks you follow-up questions first (the only mode where you must touch the screen mid-run — just its dialog).\n➕ Additions (Delta) — a cheap stand-in for Synthesis: anchor + a list of additions. 🎨 Image — two vector sketches to choose from.\n✍️ Claude writes, ChatGPT checks — Claude drafts, ChatGPT edits tone and wording (editing, not a fact-check). 📝 My own checking rule — the same, with your own one-line instruction for the checker, read from the file Poly-my-mode.txt (Files → iCloud Drive → Shortcuts).\n\nThe result is shown on screen; to keep it: «More» → «📝 Save to Notes».\nWhile Duo is running — please wait, leave the phone as it is: stay in Shortcuts and do not lock the phone (a tap on the screen does not stop it). Details and troubleshooting: INSTALL.md in the kit.\n\nAt the end, «More» has three switches: «📌 Second opinion right away next time» (skips the mode menu), «⚡ Shared text: ask without editing» (a text shared to Duo goes without the question box; off by default) and «↩️ Show all menus again». «Another mode» always shows the question box and the menu. The choice is kept in Duo-prefs.txt (Files → iCloud Drive → Shortcuts).\n\n💻 On a laptop or PC, PolyHelper does more: folders, agents, channels, schedules, a council of several AIs. Duo on your phone is the light version, without the PC features.\n\nTap «Done» below, then pick «Another mode» on the next screen — Duo restarts with your question and you choose a mode.\n\n🔓 Open source on GitHub: https://github.com/vadimchernets/poly-duo",
   "update": {
     "prompt": "A new version of {NAME} is out — install it?",
     "install": "Install",
     "later": "Not now"
   },
   "brief": {
-    "claude": "No introduction; at most about 300 words.",
+    "claude": "No introduction; at most about 220 words.",
     "chatgpt": "No introduction; at most about 600 words."
+  },
+  "search": {
+    "news": "hl=en-US&gl=US&ceid=US:en",
+    "wiki": "en",
+    "age": "{N} d ago",
+    "wiki_label": "Wikipedia (date of the last edit)",
+    "sources_title": "Sources — found by Duo itself; the numbers are the [N] in the text:",
+    "link_unread": "Duo could not read this page.",
+    "bing": "mkt=en-US",
+    "ddg": "kl=us-en",
+    "undated": "no date",
+    "claim_unfound": "Duo found no page on this."
+  },
+  "setup": {
+    "search_text": "Duo can search the web for fresh answers. On your first question, iPhone asks for permission — once, then never again.\nChatGPT and Claude answer.\nWith search — about {WEB} permissions.\nWithout search — about {LOCAL} (that is, tap “Allow” {LOCAL} times).",
+    "search_items": [
+      "With search (≈{WEB})",
+      "Without search (≈{LOCAL})"
+    ]
   }
 }

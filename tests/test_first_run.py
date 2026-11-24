@@ -16,11 +16,49 @@ LANGS = sorted(d.name for d in (ROOT / 'locales').iterdir() if (d / 'ui.json').e
 TRIO_LANGS = sorted(d.name for d in (ROOT / 'locales').iterdir() if (d / 'trio.json').exists())
 
 
-def build(tmp_path, lang, builder='build_shortcut.py', name='Poly.shortcut'):
+def build(tmp_path, lang, builder='build_shortcut.py', name='Poly.shortcut', raw=False):
+    """The built actions. Duo 6.11 puts a «continue a long answer» block behind every AI call (an If that runs only
+    when the answer ends with [[MORE]]); the tests written before it describe the ordinary run, so by default they get
+    the list with those blocks folded away (fold_continuation). tests/test_search.py checks the blocks themselves on
+    the list as built (raw=True)."""
     env = dict(os.environ, C1_DIST=str(tmp_path))
     subprocess.run([sys.executable, str(ROOT / 'src' / builder), lang], check=True, cwd=ROOT,
                    env=env, capture_output=True)
-    return plistlib.loads((tmp_path / lang / name).read_bytes())['WFWorkflowActions']
+    actions = plistlib.loads((tmp_path / lang / name).read_bytes())['WFWorkflowActions']
+    return actions if raw else fold_continuation(actions)
+
+
+def fold_continuation(actions):
+    """The list without the continuation blocks: from «Set Variable PolyParts<n>» to the «Get Variable PolyParts<n>»
+    that ends the block; whatever read that last Get Variable reads the block's input again."""
+    import re
+    out, rewrites, i = [], {}, 0
+
+    def rename(node):
+        if isinstance(node, dict):
+            if node.get('Type') == 'ActionOutput' and node.get('OutputUUID') in rewrites:
+                return {**node, **rewrites[node['OutputUUID']]}
+            return {k: rename(v) for k, v in node.items()}
+        if isinstance(node, list):
+            return [rename(v) for v in node]
+        return node
+
+    while i < len(actions):
+        a = actions[i]
+        p = a['WFWorkflowActionParameters']
+        if (a['WFWorkflowActionIdentifier'] == 'is.workflow.actions.setvariable'
+                and re.fullmatch(r'PolyParts\d+', p.get('WFVariableName', ''))):
+            var, source = p['WFVariableName'], rename(p['WFInput'])['Value']
+            j = max(k for k in range(i, len(actions))
+                    if actions[k]['WFWorkflowActionIdentifier'] == 'is.workflow.actions.getvariable'
+                    and actions[k]['WFWorkflowActionParameters']['WFVariable']['Value'].get('VariableName') == var)
+            rewrites[actions[j]['WFWorkflowActionParameters']['UUID']] = {
+                'OutputUUID': source['OutputUUID'], 'OutputName': source['OutputName']}
+            i = j + 1
+            continue
+        out.append(rename(a))
+        i += 1
+    return out
 
 
 def assert_blank_guard(actions, ui, prompt, message=None):

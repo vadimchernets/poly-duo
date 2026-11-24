@@ -85,11 +85,18 @@ def test_one_draft_save_runs_three_times(tmp_path, lang):
     # the number pass inside the loop reads the inner loop's item: «Repeat Item 2» (checked on Shortcuts 28.10)
     inner = [params(a)['WFVariable']['Value']['VariableName'] for a in actions[loop_start:steps[2][0]]
              if kind(a) == 'getvariable' and params(a)['WFVariable']['Value']['VariableName'].startswith('Repeat Item')]
-    assert inner == ['Repeat Item 2', 'Repeat Item 2']
-    # My mode (no loop) still reads «Repeat Item»
+    # Duo 6.11 (after the check: the search runs inside the loop, after the step-0 draft is on disk): the main
+    # Critique's card loops (2), deep research's page-reading and second-round card loops (2 × 3) and the two
+    # number passes — every one of them reads «Repeat Item 2»
+    # (the second fix of 24.11: + the search stage's one download loop, deep research's second-round one × 2 and the
+    # one loop over ChatGPT's links)
+    # (prog-4 fix: + the one loop over the divergence claims)
+    assert inner == ['Repeat Item 2'] * 15
+    # My mode (no loop) still reads «Repeat Item»: its two card loops and its two number passes
     before = [params(a)['WFVariable']['Value']['VariableName'] for a in actions[:loop_start]
               if kind(a) == 'getvariable' and params(a)['WFVariable']['Value']['VariableName'].startswith('Repeat Item')]
-    assert before == ['Repeat Item', 'Repeat Item']
+    assert before == ['Repeat Item'] * 7   # (+ the search stage's one download loop, the loop over ChatGPT's links,
+    #                                        the loop over the divergence claims)
 
 
 @pytest.mark.parametrize('lang', LANGS)
@@ -147,7 +154,10 @@ def test_resume_menu_before_the_question(tmp_path, lang):
     assert 'PolySkipChatGPT' in alone and 'PolySkipChatGPT' not in again and 'PolyCritique' in again
     # nothing is asked of an AI and nothing is written before the question field
     # (the one save before them is the first-run notice's marker, as in Duo 6.3)
-    assert not any(kind(a) in ('AskIntent', 'ClaudeAppIntentsExtension', 'save', 'setclipboard') for a in actions[m1 - 40:ask])
+    # (24.11: the Setup — with its search choice — now ends right before the resume block; it is not part of it)
+    setup_end = max(i for i, a in enumerate(actions[:m1]) if str(params(a).get('WFFileDestinationPath', '')).startswith('Duo-setup'))
+    assert not any(kind(a) in ('AskIntent', 'ClaudeAppIntentsExtension', 'save', 'setclipboard')
+                   for a in actions[max(m1 - 40, setup_end + 1):ask])
     # the question field and the mode menu are skipped when resuming
     assert guard_var(actions, groups_open(actions, ask)[0]) == 'PolyResume'
 

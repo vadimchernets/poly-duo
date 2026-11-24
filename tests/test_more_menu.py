@@ -14,7 +14,7 @@ def params(a):
 def test_more_menu(tmp_path, lang):
     ui = json.loads((ROOT / 'locales' / lang / 'ui.json').read_text(encoding='utf-8'))
     m = ui['menu']
-    assert (len(m['extra_items']), len(m['finale_items']), len(m['finale_more_items'])) == (10, 4, 9)   # D-29: +3 in «More actions» (Critique right away / ask without editing / reset)
+    assert (len(m['extra_items']), len(m['finale_items']), len(m['finale_more_items'])) == (10, 4, 10)   # D-29: +3 in «More actions» (Critique right away / ask without editing / reset); 24.11: + search on/off
     assert len(m['recipes_items']) == len(m['recipes_texts']) == 5
     actions = build(tmp_path, lang)
 
@@ -48,7 +48,9 @@ def test_more_menu(tmp_path, lang):
 
     # numbers that stand in only one of the two independent answers: Match Text (a token STRING) → Repeat with Each →
     # whole-number Match Text in the OTHER answer (details: test_duo_review_fixes), in both directions, and only when both answers exist
-    nums = [i for i, a in enumerate(actions) if kind(a) == 'match' and 'd+' in params(a)['WFMatchTextPattern']]
+    # (Duo 6.11: the search's own patterns hold «\d+» too; the number pass is the one with NUMBER_RX)
+    import sys; sys.path.insert(0, str(ROOT / "src")); from build_shortcut import NUMBER_RX  # noqa: E702
+    nums = [i for i, a in enumerate(actions) if kind(a) == 'match' and params(a)['WFMatchTextPattern'] == NUMBER_RX]
     assert len(nums) == 4  # Critique and My mode, two directions each
     for num in nums:
         assert params(actions[num])['text']['WFSerializationType'] == 'WFTextTokenString'

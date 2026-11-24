@@ -16,7 +16,8 @@ import uuid as uuidlib
 from pathlib import Path
 
 from shortcut_actions import *  # noqa: F401,F403,E402
-from shortcut_actions import ROOT, OBJ, Locale, set_claude_brief, set_gpt_brief, POLY_URL, CLAUDE_INTENT  # noqa: F401,E402
+from shortcut_actions import ROOT, OBJ, Locale, set_claude_brief, set_gpt_brief, set_more_line, POLY_URL, CLAUDE_INTENT  # noqa: F401,E402
+import shortcut_search as S  # noqa: E402
 
 # ---------------------------------------------------------------- weekly version check
 #
@@ -59,6 +60,10 @@ DRAFT_MINUTES = 30
 # «contains», which may compare ignoring such characters.
 DRAFT_STEP0, DRAFT_STEP1, DRAFT_DONE = '\u2063\u2060\u2063', '\u2063\u2061\u2063', '\u2063\u2062\u2063'
 DRAFT_Q, DRAFT_A = '\u2064\u2060\u2064', '\u2064\u2061\u2064'
+# Duo 6.11 (the 6.11 check: opus, kimi): the step-1 draft also keeps the cards ChatGPT answered from (its packet and
+# the source list with links), so a Critique resumed after ChatGPT's answer prints and checks THOSE [G…] — the new
+# search of the resumed run finds another set, and its [G3] would be another page
+DRAFT_GP, DRAFT_GL = '\u2064\u2062\u2064', '\u2064\u2063\u2064'
 # «between −30 and 30 minutes» as TEXT: 0…30 with an optional minus. A Number made from «Time Between Dates» goes
 # through the phone's number format: in Ukrainian or Russian 4320 minutes read «4 320», which a Number may take for 4,
 # so a draft days old was offered as fresh (Yuri 13.11, No.62).
@@ -107,10 +112,20 @@ MY_MODE_FILE = 'Poly-my-mode.txt'
 # the start, written by ONE «Save File» in the final «More actions» menu. Duo's own re-runs («Another mode», Recipes,
 # «go back») start with MENU_MARK, which is cut off again at once and forces the question box and the mode menu.
 PREFS_FILE = 'Duo-prefs.txt'
+# The owner's choice of 24.11: the Setup asks once «with search / without search» and says how many permission windows
+# each takes on the first use of every mode. SEARCH_WINDOWS: the run-4 count on the iPhone (fresh install: the Setup 5,
+# the first Critique 9, Quick 0 after it, Another mode 0, the first Research 24 → 38, rounded to tens). LOCAL_WINDOWS:
+# the same without search, counted on the iPhone 24.11 (the Setup 5 — ChatGPT, Claude, notifications and the two
+# update addresses —, Quick 2, Critique 0, Research 1, Another mode 0 → 8; the second run asks nothing).
+# Both go into the texts as {WEB} and {LOCAL}.
+SEARCH_WINDOWS, LOCAL_WINDOWS = 40, 8
 PREFS_HEAD = '⟦duo-prefs⟧\n'
 MENU_MARK = '⟦duo-menu⟧\n'
-# How much of the answer Duo left in the clipboard is remembered (files.last_answer), to recognise it next run
+# (Duo 6.1–6.11 remembered this much of its clipboard answer to tell it from a new question; since D5 of 24.11 the
+# clipboard never fills the question field, so nothing is remembered — the constant stays for the tests' history)
 LAST_ANSWER_CHARS = 200
+# D3: a closing heading left with nothing under it (the evidence map or «checked against» with no line) — cut off
+EMPTY_HEAD_RX = (r'(?:\n[ \t]*[#*_■]*[ \t]*(?:\u0414\u043e\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c\u0441\u0442\u0432\u0430|Evidence|\u0421\u0432\u0435\u0440\u0435\u043d\u043e|Checked against)[ \t*_:.]*)+\s*\z', '')
 REPORT_URL = 'https://github.com/vadimchernets/poly-duo/issues/new?template=run-report.yml'
 FEEDBACK_URL = 'https://github.com/vadimchernets/poly-duo/issues/new?template=feedback.yml'
 LONG_TEXT = 6000
@@ -122,11 +137,36 @@ LONG_TEXT = 6000
 # answers always reach it.
 LONG_DATA = 2500
 RETRY_CUT = {'QUESTION': 400, 'GPT_ANSWER': 1200, 'CLAUDE_OWN': 1200, 'NUMS': 200}
+# Duo 6.11 (the owner's decisions of 23.11, item 4): an answer may come in parts, each call under its measured cap
+# (the 22.11 timings on the iPhone: Claude ~300 words in 10-22 s, ChatGPT ~600 words in 13-19 s) — see shortcut_transforms.with_continuation.
+# Critique's two answers: ChatGPT up to 2 parts (~1200 words), Claude up to 3 (~900 words). Once the two answers
+# together pass JUDGE_SPLIT characters, the comparing request is told to stop after the answer itself; «What the second
+# opinion added» and «Basis» then come from a second call (prompts/judge-split.txt), so neither call writes more than
+# its cap.
+GPT_PARTS, CLAUDE_PARTS = 2, 3
+# prog-4 fix (iPhone 24.11): the judge's call took 25-30 s at the 300-word cap — the cap is 220 words a part now, and
+# the judge's answer may come in three parts instead of two (same length in all, each call far from iOS's 30 s)
+JUDGE_PARTS = 3
+JUDGE_SPLIT = 5000
+# a number that is a source mark («[2]», «[1, 3]») is not a number of the answer
+NUMBER_RX = r'(?<![\[\d])\d+(?:[.,:/-]\d+)*(?!\d*(?:\s*[,;]\s*\d+)*\])'
 
 
 def compare_head_len(template):
     """Characters of a comparing prompt without its data (placeholders out, {TODAY} as a 10-character date)."""
     return len(re.sub(r'\{(?!TODAY\})[A-Z_0-9]+\}', '', template).replace('{TODAY}', '2026-11-22'))
+
+
+def compare_blank(template, ending=''):
+    """The comparing prompt for a request without sources, link checks or a split (a resumed draft's by-hand check);
+    `ending`: what stands for {MAP} (the «checked against» line)."""
+    return (template.replace('{SOURCES}', '').replace('{LINKS}', '').replace('{SPLIT}', '')
+            .replace('{KIND}', '').replace('{CROSS}', '').replace('{MAP}', ending))
+
+
+# the judge's SOURCES block when each model had its own set (shortcut_search: [C…] Claude's engines, [G…] ChatGPT's)
+SOURCES_BOTH = ('Set C — given to Claude for its own answer (Google News, Wikipedia):\n{C}\n'
+                'Set G — given to ChatGPT for its answer (Bing News, Bing web, DuckDuckGo):\n{G}')
 # A long question (Yuri 10.11, No.53, iPhone XR, iOS 18.7): with a question of ~1800 characters iOS stopped «Ask ChatGPT»
 # with «the action was interrupted because it did not finish in time» while ChatGPT was still writing a long answer; the
 # answer stayed in the ChatGPT app and the run never reached Claude. iOS gives an app action a time limit that a
@@ -198,18 +238,10 @@ def version_check(L, key, name, lang, setup=None, stamp_name=None):
                   WFNumberValue=-VERSION_DAYS, WFAnotherNumber=VERSION_DAYS),
         if_else(g_due),
         # Offline, «Get Contents of URL» stops the shortcut with a system error, and Shortcuts has
-        # no try/catch. So the network goes first, by actions that never throw: a Wi-Fi network
-        # name, else a cellular radio technology. Neither → no check this run, no stamp, no error.
-        {'WFWorkflowActionIdentifier': 'is.workflow.actions.getwifi',
-         'WFWorkflowActionParameters': {'WFNetworkDetailsNetwork': 'Wi-Fi',
-                                        'WFWiFiDetail': 'Network Name', 'UUID': wifi}},
-        act_set_variable(net_var, wifi, 'Network Details'),
-        if_no_value(g_wifi, net_var),
-        {'WFWorkflowActionIdentifier': 'is.workflow.actions.getwifi',
-         'WFWorkflowActionParameters': {'WFNetworkDetailsNetwork': 'Cellular',
-                                        'WFCellularDetail': 'Radio Technology', 'UUID': cell}},
-        act_set_variable(net_var, cell, 'Network Details'),
-        if_close(g_wifi),
+        # no try/catch. So the network goes first, by actions that never throw (the local IP address,
+        # see network_guard). None → no check this run, no stamp, no error.
+        # the council of 24.11: no Wi-Fi network name (a location source in every permission window), a constant
+        *network_guard(net_var),
         act_get_variable(net_var, net_get),
         if_output(g_net, net_get, 'Variable', 100),
         *([] if setup else [act_date(stamp_now), act_text(text_token('{D}', {'D': (stamp_now, 'Date')}), stamp),
@@ -290,12 +322,13 @@ def build(lang, ai=False):
     # no trio.json yet, its (brand-name and English) words are used
     T = json.loads((TRIO if TRIO.exists() else ROOT / 'locales' / 'en' / 'trio.json').read_text(encoding='utf-8'))
     TV = T['variables']
+    set_more_line(L.prompt('more'))   # Duo only; cleared again at the end of this build (Trio is built in the same process by the tests)
 
     def service_call(prompt_uid, uid):
         """The one cheap service call: (action, output name) — ChatGPT, or Use Model in the ai build."""
         if ai:
             return build_trio.act_use_model(prompt_uid, uid), 'Response'
-        return act_gpt(text_token('{P}', {'P': (prompt_uid, 'Text')}), uid), 'Ask ChatGPT'
+        return act_gpt(text_token('{P}', {'P': (prompt_uid, 'Text')}), uid, split=False), 'Ask ChatGPT'
 
     RESULT = L['variables.result']
     JOURNAL_EXTRA = L['variables.journal_extra']
@@ -326,6 +359,7 @@ def build(lang, ai=False):
     RESUME_VAR = 'PolyResume'        # set → this run goes on from a saved draft: no question field, no mode menu
     CRIT_VAR = 'PolyCritique'        # set → the shared Critique runs after the mode menu
     ONLY_CLAUDE = 'PolyOnlyClaude'   # set → only Claude was asked in this run (Advisor, «Ask Claude alone»)
+    KEEP_GP, KEEP_GL = 'PolyKeptCardsG', 'PolyKeptListG'   # a resumed Critique: ChatGPT's cards from the draft
     SKIP_GPT = 'PolySkipChatGPT'     # set → ChatGPT is not asked (it stopped on its limit last time)
     CLAUDE_DOWN = 'PolyClaudeDown'   # set → the «check with…» menu follows the answer in the shared tail
     DRAFT_VAR, DRAFT_PASS_A, DRAFT_PASS_B = 'PolyDraft', 'PolyDraftPassA', 'PolyDraftPassB'
@@ -354,6 +388,8 @@ def build(lang, ai=False):
     bk_text, bk_m, bk_rep, g_bk, g_keepq, bk_get = ids(6)
     KEEP_Q = 'PolyKeepQuestion'   # set by MODE_MARK: the question field is skipped, the mode menu is shown
     NOTE_MODE, NOTE_QUICK, NOTE_RESET = 'PolyNoteMode', 'PolyNoteQuick', 'PolyNoteReset'
+    NOTE_SEARCH = 'PolyNoteSearch'
+    g_pf3, pf_m3, g_srch_setup, g_srch_more, g_srch_note = ids(5)
     BRIEF_VAR, SIDE_CLAUDE = 'PolyBrief', 'PolySideClaude'   # Yuri 10.11: No.53 (long question), No.52 (Side by side)
 
     def journal_note(entry, refs=None):
@@ -365,17 +401,6 @@ def build(lang, ai=False):
                 act_set_variable(JOURNAL_EXTRA, uid, 'Text'),
                 act_text(text_token(REPORT_MODES.get(mode, REPORT_MODES[None])), mid),
                 act_set_variable(MODE_VAR, mid, 'Text')]
-
-    def remember_answer(src_uid, src_name):
-        """Duo 6.1: the first LAST_ANSWER_CHARS characters of what Duo just put into the clipboard go to a small
-        file next to the journal, right after each clipboard write (before any screen that waits for the person or
-        any further AI call, so a run cut off later still leaves the file in step with the clipboard). On the next
-        run a clipboard whose first LAST_ANSWER_CHARS characters are the same text is Duo's own answer, not a new
-        question, and is NOT put into the question field (one «Done» would otherwise spend 2–4 messages on it)."""
-        cut, txt, save = new_uuid(), new_uuid(), new_uuid()
-        return [act_first_chars(src_uid, src_name, LAST_ANSWER_CHARS, cut),
-                act_text(text_token('{M}', {'M': (cut, 'Matches')}), txt),
-                act_save_file(L['files.last_answer'], txt, save)]
 
     def keep_gpt(src_uid, src_name, note=None):
         """D-98: ChatGPT's answer goes to the clipboard BEFORE the next Claude call. When Claude's own app throws
@@ -417,6 +442,31 @@ def build(lang, ai=False):
         return [*if_text(g, off_var, present=False), act_get_variable(PREFS_BODY, get),
                 act_text(text_token('{B}' + line + '\n', {'B': (get, 'Variable')}), txt),
                 act_set_variable(PREFS_BODY, txt, 'Text'), if_close(g)]
+
+    def search_words(text):
+        return text.replace('{WEB}', str(SEARCH_WINDOWS)).replace('{LOCAL}', str(LOCAL_WINDOWS))
+
+    def search_menu(group):
+        """The owner's choice of 24.11: «with search» sets S.SEARCH_ON, «without search» clears it (the airplane-mode
+        path, see S.search_guard). The same two buttons in the Setup and in «More…»; Siri reads the title and takes
+        either button by voice, as in every menu of Duo."""
+        on, off = (search_words(x) for x in L['setup.search_items'])
+        return [menu_open(group, search_words(L['setup.search_text']), [on, off]),
+                menu_case(group, on), *set_text(S.SEARCH_ON, '1'),
+                menu_case(group, off), *clear_variable(S.SEARCH_ON),
+                menu_close(group)]
+
+    def prefs_save(save_uid):
+        """The prefs file rebuilt from the clean flags: the header, then one line for each option that is ON, and
+        SEARCH=0 when search is off."""
+        get, txt = new_uuid(), new_uuid()
+        return [*set_text(PREFS_BODY, PREFS_HEAD),
+                *append_line_when(MODE_OFF, 'MODE=critique'),
+                *append_line_when(QUICK_OFF, 'QUICK=1'),
+                *append_line_when(S.SEARCH_ON, 'SEARCH=0'),
+                act_get_variable(PREFS_BODY, get),
+                act_text(text_token('{B}', {'B': (get, 'Variable')}), txt),
+                act_save_file(PREFS_FILE, txt, save_uid)]
 
     def rerun_with_menu(src_uid, src_name):
         """Run Duo again with this question and MENU_MARK in front: the new run forces the question box and the
@@ -538,7 +588,7 @@ def build(lang, ai=False):
             if_close(g_rd),
         ]
 
-    def critique_block(pre=(), rule_uid=None, qsrc=None, draft=False):
+    def critique_block(pre=(), rule_uid=None, qsrc=None, draft=False, deep=True):
         """Critique, blind scheme (D-41), 3 messages as before: ChatGPT answers the wrapped question; Claude answers
         the SAME wrapped question on its own, without seeing ChatGPT's answer; then Claude compares both in one
         message (critique-blind.txt: three blocks «matched independently / did not match / what to check yourself»,
@@ -560,12 +610,72 @@ def build(lang, ai=False):
          g_loop, g_dsave, g_pa, g_pb, g_d1, g_oc) = ids(18)
         cr_wrap, cr_gpt, cr_prompt, cr_claude, cr_today = ids(5)
         cr_cut_q, cr_cut_g, cr_cut_o, cr_cut_n = ids(4)
+        brief_acts, brief_get = brief_for_long(*qsrc)   # Yuri 10.11, No.53
+        (sr_today, sr_pk, g_pk, cr_wrap_s, cr_ow, cr_ow2, cr_pk, cr_lk, cr_sp, cr_both, cr_blen, g_split,
+         cr_pk2, cr_lk2, cr_sp2) = ids(15)
+        cr_gw, cr_mp, cr_gp1, cr_gl1, cr_kd, cr_cx = ids(6)
+        g_dd = ids(1)[0]
+        OWN_WRAP, GPT_WRAP, SPLIT_VAR, MAP_VAR = 'PolyOwnRequest', 'PolyGptRequest', 'PolyJudgeSplit', 'PolyJudgeEnd'
+        ask_service = lambda p, uid: act_claude(text_token('{P}', {'P': (p, 'Text')}), uid, split=False)
+
+        def ask_model(model):
+            """The short call of one model (deep research: each model reads its own cards): (action, output name)."""
+            if model == 'C':
+                return lambda p, uid: (act_claude(text_token('{P}', {'P': (p, 'Text')}), uid, split=False), 'Ask Claude')
+            return lambda p, uid: (act_gpt(text_token('{P}', {'P': (p, 'Text')}), uid, split=False), 'Ask ChatGPT')
+
+        def request_for(model, var):
+            """The model's own request: the question with ITS numbered cards (and, in deep research, its notes from the
+            pages it read) when there are any; the plain wrapped question otherwise."""
+            side = S.side_of(model)
+            pk, nt, g, txt = ids(4)
+            return [act_get_variable(S.packet_var(side), pk),
+                    act_get_variable(S.notes_var(model), nt),
+                    *if_text(g, S.packet_var(side)),
+                    act_text(text_token('{B}' + L.prompt('wrap-sources'),
+                                        {**QQ, 'B': (brief_get, 'Variable'), 'SOURCES': (pk, 'Variable'),
+                                         'NOTES': (nt, 'Variable')}, {'TODAY': ymd(sr_today)}), txt),
+                    act_set_variable(var, txt, 'Text'),
+                    if_else(g),
+                    act_set_variable(var, cr_wrap, 'Text'),
+                    if_close(g)]
+
+        # Duo 6.11 (the owner's decision of 23.11: three depths): Duo's own search, before any model is asked — each
+        # model gets cards from its own engines; deep research reads pages first. Neither model sees the other's
+        # answer before the comparison.
+        # inside the draft's «Repeat 3 times» a «Repeat with Each» item is «Repeat Item 2»
+        item_name = INNER_REPEAT_ITEM if draft else 'Repeat Item'
+        g_deep, g_dres, g_kept, g_kgpt = ids(4)
+        kp_get, kl_get = ids(2)
+        search = [
+            act_date(sr_today),
+            *S.search_block(L, qsrc, LONG_QUESTION, ask_service, sr_today, ymd(sr_today), item=item_name),
+            # deep research is a depth of the main Critique only (My own checking rule runs at the default depth); a
+            # run resumed from a draft does not read pages again (a page that stopped the run once must not stop it
+            # again — the 6.11 check, opus)
+            *([*if_text(g_deep, S.DEEP),
+               *if_text(g_dres, RESUME_VAR, present=False),
+               *S.research_block(L, 'C', S.side_of('C'), ask_model('C'), qsrc, sr_today, ymd(sr_today), item_name),
+               *S.research_block(L, 'G', S.side_of('G'), ask_model('G'), qsrc, sr_today, ymd(sr_today), item_name),
+               if_close(g_dres),
+               if_close(g_deep)] if deep else []),
+            # a Critique resumed with ChatGPT's saved answer: ChatGPT's cards are the ones that answer was written
+            # from (kept in the draft), not the new search's
+            *([*if_text(g_kgpt, GPT_VAR),
+               *if_text(g_kept, KEEP_GL),
+               act_get_variable(KEEP_GP, kp_get),
+               act_set_variable(S.packet_var(S.side_of('G')), kp_get, 'Variable'),
+               act_get_variable(KEEP_GL, kl_get),
+               act_set_variable(S.list_var(S.side_of('G')), kl_get, 'Variable'),
+               if_close(g_kept),
+               if_close(g_kgpt)] if draft else []),
+            *request_for('C', OWN_WRAP),
+            *request_for('G', GPT_WRAP),
+        ]
         RETRY_SKIP.update((cr_gpt, cr_gpt2))
         rule_prefix = 'Extra instruction from the user for this check (apply it): {RULE}\n\n' if rule_uid else ''
         rule_ref = {'RULE': (rule_uid, 'Variable')} if rule_uid else {}
         compare_template = rule_prefix + L.prompt('critique-blind')
-        item_name = INNER_REPEAT_ITEM if draft else 'Repeat Item'
-        brief_acts, brief_get = brief_for_long(*qsrc)   # Yuri 10.11, No.53
 
         def number_pass(src_var_uid, other_var):
             """Every number of the answer `src_var_uid` (a Get Variable output) that does NOT stand, as a whole
@@ -575,7 +685,7 @@ def build(lang, ai=False):
             nums, item, esc, other, g_rep, g_miss, g_dup = ids(7)
             m_other, m_list, lst, add_get, add_txt = ids(5)
             return [
-                act_first_match(src_var_uid, 'Variable', r'\d+(?:[.,:/-]\d+)*', nums),
+                act_first_match(src_var_uid, 'Variable', NUMBER_RX, nums),
                 repeat_open(g_rep, nums, 'Matches'),
                 act_get_variable(item_name, item),
                 act_replace_text(item, 'Variable', '.', '\\.', esc),   # a dot in the number is a dot, not «any char»
@@ -593,17 +703,37 @@ def build(lang, ai=False):
                 repeat_close(g_rep),
             ]
 
+        def judge_sources(uid):
+            """The judge sees BOTH sets of cards, each under its own letters ([C…] Claude's, [G…] ChatGPT's), or the
+            one shared set."""
+            if S.SHARED_SOURCES:
+                return [act_get_variable(S.packet_var('S'), uid)]
+            c, g = ids(2)
+            return [act_get_variable(S.packet_var('C'), c),
+                    act_get_variable(S.packet_var('G'), g),
+                    act_text(text_token(SOURCES_BOTH, {'C': (c, 'Variable'), 'G': (g, 'Variable')}), uid)]
+
+        def map_end():
+            """The end of the comparison (the council of 23.11 on the divergent, item 5): the default depth ends with
+            «Basis» and no map; Research with the evidence map (✓ / ✗ only); Quick with the «checked against» line."""
+            g_d, g_q = ids(2)
+            return [*set_text(MAP_VAR, '\n'),
+                    *([*if_text(g_d, S.DEEP), *set_text(MAP_VAR, L.prompt('evidence-map')), if_close(g_d)]
+                      if deep else []),
+                    *if_text(g_q, S.QUICK), *set_text(MAP_VAR, L.prompt('judge-checked')), if_close(g_q)]
+
         # ---- Step 1: ChatGPT — in the main Critique, unless a resumed draft already holds its answer, or the person
         # chose «Claude alone» after ChatGPT's limit
         gate = [*if_text(g_need, GPT_VAR, present=False), *if_text(g_skip, SKIP_GPT, present=False)] if draft else []
         step1 = [
             *gate,
-            act_gpt(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_gpt),
+            act_get_variable(GPT_WRAP, cr_gw),
+            act_gpt(text_token('{P}', {'P': (cr_gw, 'Variable')}), cr_gpt, parts=GPT_PARTS),
             act_set_variable(GPT_VAR, cr_gpt, 'Ask ChatGPT'),
             # an empty ChatGPT answer (often a false «logged out» or a dropped call): wait 3 s, ask once more
             *if_text(g_retry, GPT_VAR, present=False),
             act_delay(3),
-            act_gpt(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_gpt2),
+            act_gpt(text_token('{P}', {'P': (cr_gw, 'Variable')}), cr_gpt2, parts=GPT_PARTS),
             act_set_variable(GPT_VAR, cr_gpt2, 'Ask ChatGPT'),
             if_close(g_retry),
             # ChatGPT gave nothing (its limit, signed out, iOS cut the step): Claude answers alone, and the person is
@@ -618,11 +748,14 @@ def build(lang, ai=False):
         steps23 = [
             act_get_variable(GPT_VAR, cr_kget),
             *keep_gpt(cr_kget, 'Variable', 'critique_blind'),
-            act_claude(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_own),
+            # Claude's own answer: the question (and Duo's sources, if any) — never ChatGPT's answer
+            act_get_variable(OWN_WRAP, cr_ow),
+            act_claude(text_token('{P}', {'P': (cr_ow, 'Variable')}), cr_own, parts=CLAUDE_PARTS),
             act_set_variable(OWN_VAR, cr_own, 'Ask Claude'),
             *if_text(g_oretry, OWN_VAR, present=False),
             act_step('claude_retry'),
-            act_claude(text_token('{P}', {'P': (cr_wrap, 'Text')}), cr_own2),
+            act_get_variable(OWN_WRAP, cr_ow2),
+            act_claude(text_token('{P}', {'P': (cr_ow2, 'Variable')}), cr_own2, parts=CLAUDE_PARTS),
             act_set_variable(OWN_VAR, cr_own2, 'Ask Claude'),
             if_close(g_oretry),
             act_get_variable(GPT_VAR, cr_gpt_f),
@@ -638,12 +771,39 @@ def build(lang, ai=False):
             *number_pass(cr_own_f, GPT_VAR),
             if_close(g_n1),
             act_get_variable(NUMS_VAR, cr_numfin),
+            act_date(cr_today),
+            # Duo 6.11, check and deep research (not quick): the pages ChatGPT cited are read by Duo and checked one by
+            # one, and Duo searches where the two answers diverge or the conclusion rests on one date, number or
+            # condition — the primary source's page is read and checked claim by claim ([V1]…)
+            *S.link_check_block(L, GPT_VAR, ask_service, RESUME_VAR, ymd(cr_today), item=item_name),
+            *S.divergence_block(L, qsrc, (cr_gpt_f, 'Variable'), (cr_own_f, 'Variable'), ask_service, RESUME_VAR,
+                                ymd(cr_today), nums_var=NUMS_VAR, item=item_name),
+            # Research: Claude develops an idea only ChatGPT had («crossing»), the judge takes it into the answer
+            *(S.cross_block(L, qsrc, (cr_gpt_f, 'Variable'), (cr_own_f, 'Variable'), ask_service) if deep else []),
+            act_get_variable(S.KIND, cr_kd),
+            act_get_variable(S.CROSS, cr_cx),
+            *judge_sources(cr_pk),
+            act_get_variable(S.CHECKS, cr_lk),
+            # the end of the comparison: nothing (the default), the evidence map (Research), «checked against» (Quick)
+            *map_end(),
+            act_get_variable(MAP_VAR, cr_mp),
+            # two long answers: the first call writes the answer only, the sections with ■ are a second call
+            act_text(text_token('{G}{O}', {'G': (cr_gpt_f, 'Variable'), 'O': (cr_own_f, 'Variable')}), cr_both),
+            act_count_chars(cr_both, 'Text', cr_blen),
+            *set_text(SPLIT_VAR, '\n'),
+            if_output(g_split, cr_blen, 'Count', 2, WFNumberValue=JUDGE_SPLIT),
+            *set_text(SPLIT_VAR, L.prompt('judge-split')),
+            act_step('judge_split'),
+            if_close(g_split),
+            act_get_variable(SPLIT_VAR, cr_sp),
             # today's date from the phone: the Freshness rule of critique-blind.txt (Karl, KI Forum 226/1762) needs it
             # to tell a fact that may have changed since the models were trained; no permission, no message
-            act_date(cr_today),
             act_text(text_token(compare_template,
                                 {**QQUESTION, 'GPT_ANSWER': (cr_gpt_f, 'Variable'),
                                  'CLAUDE_OWN': (cr_own_f, 'Variable'), 'NUMS': (cr_numfin, 'Variable'),
+                                 'SOURCES': (cr_pk, 'Variable'), 'LINKS': (cr_lk, 'Variable'),
+                                 'SPLIT': (cr_sp, 'Variable'), 'MAP': (cr_mp, 'Variable'),
+                                 'KIND': (cr_kd, 'Variable'), 'CROSS': (cr_cx, 'Variable'),
                                  **rule_ref}, {'TODAY': ymd(cr_today)}), cr_prompt),
             act_set_variable(CHECK_VAR, cr_prompt, 'Text'),   # U-06: what the three fallbacks send
             act_step('critique_step3'),
@@ -653,7 +813,7 @@ def build(lang, ai=False):
             if_output(g_long, cr_len, 'Count', 2, WFNumberValue=compare_head_len(compare_template) + LONG_DATA),
             act_step('long_text'),
             if_close(g_long),
-            act_claude(text_token('{P}', {'P': (cr_prompt, 'Text')}), cr_claude),
+            act_claude(text_token('{P}', {'P': (cr_prompt, 'Text')}), cr_claude, parts=JUDGE_PARTS),
             act_set_variable(CLAUDE_VAR, cr_claude, 'Ask Claude'),
             *if_text(g_cretry, CLAUDE_VAR, present=False),
             act_step('claude_retry'),
@@ -664,10 +824,16 @@ def build(lang, ai=False):
             act_text(text_token(compare_template,
                                 {'QUESTION': (cr_cut_q, 'Matches'), 'GPT_ANSWER': (cr_cut_g, 'Matches'),
                                  'CLAUDE_OWN': (cr_cut_o, 'Matches'), 'NUMS': (cr_cut_n, 'Matches'),
+                                 'SOURCES': (cr_pk, 'Variable'), 'LINKS': (cr_lk, 'Variable'),
+                                 'SPLIT': (cr_sp, 'Variable'), 'MAP': (cr_mp, 'Variable'),
+                                 'KIND': (cr_kd, 'Variable'), 'CROSS': (cr_cx, 'Variable'),
                                  **rule_ref}, {'TODAY': ymd(cr_today)}), cr_cut),
-            act_claude(text_token('{P}', {'P': (cr_cut, 'Text')}), cr_claude2),
+            act_claude(text_token('{P}', {'P': (cr_cut, 'Text')}), cr_claude2, parts=JUDGE_PARTS),
             act_set_variable(CLAUDE_VAR, cr_claude2, 'Ask Claude'),
             if_close(g_cretry),
+            # D3 (iPhone 24.11): a closing heading with no line under it (the Russian or English «Evidence» alone at the
+            # end, when no source decided anything) is cut off — the prompt asks for it too, this is the guarantee
+            *S.replace_var(CLAUDE_VAR, (EMPTY_HEAD_RX,)),
             act_get_variable(CLAUDE_VAR, cr_claude_f),
             # the shared tail copies RESULT to the clipboard (D-100: one clipboard action, one permission window)
             *if_text(g_cok, CLAUDE_VAR),
@@ -689,6 +855,8 @@ def build(lang, ai=False):
             if_close(g_oc),
             if_close(g_own1),
             if_close(g_both),
+            # Duo 6.11: «Sources» under the result — the entries whose [N] the text cites, printed by Duo itself
+            *S.append_sources(L, RESULT),
             act_get_variable(GPT_VAR, cr_jg),
             *journal_note(('critique', L['journal.critique']), {'X': (cr_jg, 'Variable')}),
         ]
@@ -702,6 +870,7 @@ def build(lang, ai=False):
                 # the wrapped question is needed by step 1 AND step 2, so it is built outside both
                 *brief_acts,
                 act_text(text_token('{B}' + L.prompt('wrap'), {**QQ, 'B': (brief_get, 'Variable')}), cr_wrap),
+                *search,
                 *step1,
                 *steps23,
             ]
@@ -725,14 +894,25 @@ def build(lang, ai=False):
             # the first pass: ChatGPT; the second: Claude; the third only saves «done»
             *if_text(g_pa, DRAFT_PASS_A, present=False),
             *set_text(DRAFT_PASS_A, '1'),
+            # Duo's search (and deep research) AFTER the step-0 draft is on disk (the 6.11 check, kimi, opus): a
+            # search or a page that stops the run leaves a draft the next run goes on from
+            *search,
             *step1,
             *clear_variable(DRAFT_VAR),
+            # prog-4 (iPhone 24.11): in Research the step-1 draft (ChatGPT's answer with its research cards) was the
+            # last thing done before «There was a problem running the shortcut», 4 runs of 4, the old build too; the
+            # file stayed at step 0. Research keeps the step-0 draft only (a cut-off run asks ChatGPT again).
+            *(if_text(g_dd, S.DEEP, present=False) if deep else []),
             *if_text(g_d1, GPT_VAR),
             act_get_variable(GPT_VAR, cr_g1),
-            *set_text(DRAFT_VAR, DRAFT_STEP1 + '\n' + DRAFT_Q + '\n{Q}\n' + DRAFT_A + '\n{A}',
-                      {**QQ, 'A': (cr_g1, 'Variable')}),
+            act_get_variable(S.packet_var(S.side_of('G')), cr_gp1),
+            act_get_variable(S.list_var(S.side_of('G')), cr_gl1),
+            *set_text(DRAFT_VAR, DRAFT_STEP1 + '\n' + DRAFT_Q + '\n{Q}\n' + DRAFT_A + '\n{A}\n' + DRAFT_GP + '\n{P}\n'
+                      + DRAFT_GL + '\n{L}', {**QQ, 'A': (cr_g1, 'Variable'), 'P': (cr_gp1, 'Variable'),
+                                             'L': (cr_gl1, 'Variable')}),
             # ChatGPT gave nothing: no second write, the step-0 draft already on disk stays as it is
             if_close(g_d1),
+            *([if_close(g_dd)] if deep else []),
             if_else(g_pa),
             *if_text(g_pb, DRAFT_PASS_B, present=False),
             *set_text(DRAFT_PASS_B, '1'),
@@ -755,7 +935,7 @@ def build(lang, ai=False):
         u = new_uuid
         g_in, g_f, g_age, g_q, g_1, g_0, g_m1, g_m0 = (u() for _ in range(8))
         rf, rt, rdate, rnow, rage, rnum, rqm, rq, ram, ra = (u() for _ in range(10))
-        rfresh, rs1, rs0 = u(), u(), u()
+        rfresh, rs1, rs0, rkp, rkl = u(), u(), u(), u(), u()
         I1, I0 = L['menu.resume1_items'], L['menu.resume0_items']
         A = {'A': (ra, 'Text')}
         diag = os.environ.get('C1_DIAG') == '1'
@@ -776,7 +956,8 @@ def build(lang, ai=False):
 
         def check_request():
             # the comparing prompt with ChatGPT's answer alone (it says how to treat a missing one)
-            prompt = L.prompt('critique-blind').replace('{CLAUDE_OWN}', '').replace('{NUMS}', '')
+            prompt = compare_blank(L.prompt('critique-blind'), L.prompt('judge-checked')).replace(
+                '{CLAUDE_OWN}', '').replace('{NUMS}', '')
             # today's date: the «Current Date» already taken for the draft's age (rnow), no second action
             return set_text(CHECK_VAR, prompt, {'QUESTION': (rq, 'Text'), 'GPT_ANSWER': (ra, 'Text')},
                             {'TODAY': ymd(rnow)})
@@ -805,7 +986,7 @@ def build(lang, ai=False):
             *dlog('branch: age passed, looking for the question'),
             act_first_match(rt, 'Text', '(?s)(?<=' + DRAFT_Q + '\\n).*?(?=\\n' + DRAFT_A + ')', rqm),
             act_text(text_token('{M}', {'M': (rqm, 'Matches')}), rq),
-            act_first_match(rt, 'Text', '(?s)(?<=' + DRAFT_A + '\\n).*', ram),
+            act_first_match(rt, 'Text', '(?s)(?<=' + DRAFT_A + '\\n).*?(?=\\n' + DRAFT_GP + '|\\z)', ram),
             act_text(text_token('{M}', {'M': (ram, 'Matches')}), ra),
             *if_output_text(g_q, rq, 'Text'),
             *dlog('branch: question found in the draft'),
@@ -814,7 +995,12 @@ def build(lang, ai=False):
             *dlog('branch: step 1, resume menu shown'),
             menu_open(g_m1, L['menu.resume1_title'], I1),
             menu_case(g_m1, I1[0]),
-            *resumed(*set_text(GPT_VAR, '{A}', A), *set_text(CRIT_VAR, '1'), act_step('resume')),
+            *resumed(*set_text(GPT_VAR, '{A}', A), *set_text(CRIT_VAR, '1'), act_step('resume'),
+                     # the cards ChatGPT's saved answer was written from (none in a draft of 6.10)
+                     act_first_match(rt, 'Text', '(?s)(?<=' + DRAFT_GP + '\\n).*?(?=\\n' + DRAFT_GL + ')', rkp),
+                     act_set_variable(KEEP_GP, rkp, 'Matches'),
+                     act_first_match(rt, 'Text', '(?s)(?<=' + DRAFT_GL + '\\n).*', rkl),
+                     act_set_variable(KEEP_GL, rkl, 'Matches')),
             menu_case(g_m1, I1[1]),
             *resumed(*set_text(RESULT, L['output.claude_down'], A), *check_request(), *set_text(CLAUDE_DOWN, '1'),
                      *journal_note(('critique', L['journal.critique']), {'X': (ra, 'Text')})),
@@ -900,7 +1086,6 @@ def build(lang, ai=False):
             menu_case(g_down, items[3]),
             act_get_variable(CHECK_VAR, man_get),
             act_clipboard(attachment(man_get, 'Variable')),
-            *remember_answer(man_get, 'Variable'),
             act_notify(L['notify.manual_copied']),
             # the request stays in the clipboard: the tail does not copy ChatGPT's answer over it (it is in the request)
             *clear_variable(RESULT),
@@ -917,13 +1102,22 @@ def build(lang, ai=False):
     # those windows are about, so the Setup passes ChatGPT's own reply on to Claude. A «Save File» is asked for per
     # action (a Save File in the Setup did not spare the draft's own window), so the draft's one window stays in the
     # first Critique.
-    setup_before = [act_speak(L['speak.first_run']),
+    # the owner's choice of 24.11: the Setup starts with «with search / without search», said aloud (Duo Voice, Siri,
+    # VoiceOver) and shown as a menu, and keeps it in the prefs file at once (read above, before the Setup)
+    setup_before = [act_speak(search_words(L['setup.search_text'])),
+                    *search_menu(g_srch_setup),
+                    *prefs_save(new_uuid()),
+                    act_speak(L['speak.first_run']),
                     act_text(text_token(SETUP_PING), su_ping),
-                    act_gpt(text_token('{P}', {'P': (su_ping, 'Text')}), su_gpt),
+                    act_gpt(text_token('{P}', {'P': (su_ping, 'Text')}), su_gpt, split=False),
                     act_text(text_token('{A}', {'A': (su_gpt, 'Ask ChatGPT')}), su_txt),
                     # the same shape as every real request (the brevity line + the text): iOS asked «send 2 text items to
                     # Claude» in the first Critique after a 1-item ping in the Setup
-                    act_claude(text_token('{P}', {'P': (su_txt, 'Text')}), su_claude)]
+                    act_claude(text_token('{P}', {'P': (su_txt, 'Text')}), su_claude, split=False),
+                    # (the second fix of 24.11, Mac: «Always Allow» is kept per ACTION of the shortcut, so the warm-up's
+                    # own downloads and calls never spared the real ones a window — the iPhone run-2: 25 windows in the
+                    # Setup, 15 more in the first question; the warm-up is gone, the real actions ask once each)
+                    ]
     setup_before.append(act_notify(L['speak.ready']))
     setup_after = [act_speak(L['speak.ready'])]
 
@@ -935,14 +1129,13 @@ def build(lang, ai=False):
         # different steps. So, once: Duo says what is coming, then calls in a row every action that asks — ChatGPT,
         # Claude, the one file write (the stamp below), the update check on the web, the notification — and says it is
         # ready. A working run after that asks nothing. The two AI calls are one-word requests (one message each).
-        *version_check(L, VK, RELEASE_NAME, lang, setup=(setup_before, setup_after), stamp_name=SETUP_FILE),
 
         # D-29: the person's two optional shortcuts (C-1 «Critique right away», C-3 «ask without editing»), read from
         # ONE small file; a missing file (the default) is no value and nothing changes. Each run starts with them unset. READ BEFORE the resume menu (D-29 B-1):
         # on a run that goes on from a saved draft the final «More…» menu still saves these two switches, and an unset
         # «OFF» flag would read as «on» and write QUICK=1 / MODE=critique the person never chose.
         *clear_variable(FORCE_MENU), *clear_variable(SHARED_VAR), *clear_variable(PREFS_CHANGED),
-        *set_text(MODE_OFF, '1'), *set_text(QUICK_OFF, '1'),
+        *set_text(MODE_OFF, '1'), *set_text(QUICK_OFF, '1'), *set_text(S.SEARCH_ON, '1'),
         act_get_file(PREFS_FILE, pf_get),
         act_text(text_token('{F}', {'F': (pf_get, 'File')}), pf_txt),
         # whole lines only (Codex): «QUICK=10» or «XMODE=critique» switch nothing on
@@ -954,7 +1147,14 @@ def build(lang, ai=False):
         if_output(g_pf2, pf_m2, 'Matches', 100),
         *clear_variable(QUICK_OFF),
         if_close(g_pf2),
+        act_first_match(pf_txt, 'Text', r'(?m)^SEARCH=0$', pf_m3),
+        if_output(g_pf3, pf_m3, 'Matches', 100),
+        *clear_variable(S.SEARCH_ON),
+        if_close(g_pf3),
         *clear_variable(PREFS_CHANGED),   # a plain Nothing right after the file's Ifs ends any chain from them
+
+        # the Setup comes after the prefs file is read: its search choice rewrites that file with the other two options
+        *version_check(L, VK, RELEASE_NAME, lang, setup=(setup_before, setup_after), stamp_name=SETUP_FILE),
 
         # ---- Duo 6.4: a Critique cut off by a message limit within DRAFT_MINUTES → go on from its draft (D-101)
         *resume_block(),
@@ -992,28 +1192,10 @@ def build(lang, ai=False):
         *if_text(g_sh, START_VAR),
         *set_text(SHARED_VAR, '1'),
         if_close(g_sh),
-        if_else(g_start),
-        act_clipboard_get(st_clip),
-        act_first_match(st_clip, 'Clipboard', r'\S+\s+\S+\s+\S+', st_words),
-        if_output(g_words, st_words, 'Matches', 100),
-        act_set_variable(START_VAR, st_clip, 'Clipboard'),
-        # Duo 6.1: Duo leaves its answer in the clipboard. If the person copied nothing new, that answer must not
-        # come back as the next question: when the clipboard's first LAST_ANSWER_CHARS characters are the same text
-        # as the start of Duo's last clipboard write (files.last_answer, see remember_answer; both sides cut by the
-        # same Match Text → Text), the field stays empty. «Is», not «contains»: a text that starts differently, or one
-        # that merely includes a short answer such as «Yes.», is still offered; a text that begins with the same 200
-        # characters (a Duo answer with the person's lines added after it) counts as Duo's and must be pasted. A
-        # missing file (first run) is no value, and the clipboard is used as before. Same screens, same taps.
-        act_get_file(L['files.last_answer'], st_last),
-        act_text(text_token('{F}', {'F': (st_last, 'File')}), st_last_t),
-        if_output(g_last, st_last_t, 'Text', 100),
-        act_first_chars(st_clip, 'Clipboard', LAST_ANSWER_CHARS, st_ccut),
-        act_text(text_token('{M}', {'M': (st_ccut, 'Matches')}), st_ctext),
-        if_output(g_mine, st_ctext, 'Text', 4, WFConditionalActionString=text_token('{F}', {'F': (st_last_t, 'Text')})),
-        *clear_variable(START_VAR),
-        if_close(g_mine),
-        if_close(g_last),
-        if_close(g_words),
+        # D5 (iPhone 24.11, the council of 24.11, all four families): the question field is NOT filled from the
+        # clipboard any more. A clipboard text came into every request as one more data source («Clipboard»), and iOS
+        # asked every permission again whenever the field had or had not been filled from it (the measurement: 13
+        # repeated windows). The field opens empty; a text shared to Duo still fills it.
         if_close(g_start),
         # D-29: Duo's own re-runs («Another mode», Recipes, «go back») start with MENU_MARK: cut it off, and show the
         # question box and the mode menu whatever the person's two optional shortcuts say.
@@ -1082,10 +1264,20 @@ def build(lang, ai=False):
         menu_case(g_main, MAIN[0]),
         *set_text(CRIT_VAR, '1'),
 
+        # ---- Duo 6.11, the owner's decision of 23.11: the same Critique in two more depths. Quick: one set of cards
+        # per model, two answers, the comparison (no page is read). Deep research: each model reads pages of its own
+        # cards before it answers, a second round of search when it asks for one; then the check of Critique.
+        menu_case(g_main, MAIN[1]),
+        *set_text(CRIT_VAR, '1'),
+        *set_text(S.QUICK, '1'),
+        menu_case(g_main, MAIN[2]),
+        *set_text(CRIT_VAR, '1'),
+        *set_text(S.DEEP, '1'),
+
         # ---- Debate until agreement: ChatGPT takes a side, Claude objects, ChatGPT answers… up to three
         # rounds; a side that is convinced starts its reply with the marker and the debate stops there.
         # Then Claude, as a neutral recorder: where they agreed / what is still disputed / what you decide.
-        menu_case(g_main, MAIN[1]),
+        menu_case(g_main, MAIN[3]),
         act_step('argue_start'),
         # D-100: no drafts (each «Save File» is one more permission window on the first run), so no resume either
         *clear_variable(ARGUE_LOG),
@@ -1116,7 +1308,7 @@ def build(lang, ai=False):
         *journal_note(('argue', L['journal.argue'])),
 
         # ---- Advisor: Claude reviews the user's own text without rewriting it
-        menu_case(g_main, MAIN[2]),
+        menu_case(g_main, MAIN[4]),
         act_step('advisor_start'),
         *set_text(ONLY_CLAUDE, '1'),
         act_text(text_token(L.prompt('advisor').replace('{CRITIQUE}', MAIN[0].split(' · ')[0].split(' — ')[0]), Q), ad_prompt),
@@ -1125,7 +1317,7 @@ def build(lang, ai=False):
         *journal_note(('advisor', L['journal.advisor'])),
 
         # ---- Side by side: both answer independently, answers shown together
-        menu_case(g_main, MAIN[3]),
+        menu_case(g_main, MAIN[5]),
         act_step('survey_start'),
         *sb_brief,
         act_text(text_token('{B}' + L.prompt('wrap'), {**Q, 'B': (sb_brief_get, 'Variable')}), sb_wrap),
@@ -1160,7 +1352,7 @@ def build(lang, ai=False):
         *journal_note(('survey', L['journal.survey'])),
 
         # ---- Synthesis: both answer blind, then one of them anchors the assembly
-        menu_case(g_main, MAIN[4]),
+        menu_case(g_main, MAIN[6]),
         menu_open(g_anchor, L['menu.anchor_title'], L['menu.anchor_items']),
 
         menu_case(g_anchor, L['menu.anchor_items'][0]),
@@ -1193,7 +1385,7 @@ def build(lang, ai=False):
         menu_close(g_anchor),
 
         # ---- Auto: one classification call recommends the mode to use
-        menu_case(g_main, MAIN[5]),
+        menu_case(g_main, MAIN[7]),
         act_step('auto_start'),
         act_text(text_token(L.prompt('auto-router'), Q), au_prompt),
         service_call(au_prompt, au_gpt)[0],
@@ -1202,7 +1394,7 @@ def build(lang, ai=False):
         *journal_note(('auto', L['journal.auto'])),
 
         # ---- More…: the less frequent modes plus built-in help
-        menu_case(g_main, MAIN[6]),
+        menu_case(g_main, MAIN[8]),
         menu_open(g_extra, L['menu.extra_title'], EXTRA + [L['menu.back']]),
 
         # ---- Decision: fast view, cautious view, referee
@@ -1296,7 +1488,6 @@ def build(lang, ai=False):
                             {'C': (i1_claude, 'Ask Claude'), 'G': (i1_gpt, 'Ask ChatGPT')}), i1_codes),
         # the raw SVG code reaches the clipboard before the file is written
         act_clipboard(attachment(i1_codes, 'Text')),
-        *remember_answer(i1_codes, 'Text'),
         act_save_file(L['files.image_html'], i1_html, i1_file),
         act_quick_look(attachment(i1_file, 'Saved File')),
         act_set_variable(RESULT, i1_codes, 'Text'),
@@ -1315,7 +1506,6 @@ def build(lang, ai=False):
         act_text(text_token(L['output.image_codes'],
                             {'C': (i2_claude, 'Ask Claude'), 'G': (i2_gpt, 'Ask ChatGPT')}), i2_raw),
         act_clipboard(attachment(i2_raw, 'Text')),
-        *remember_answer(i2_raw, 'Text'),
         act_save_file(L['files.image_html'], i2_html, i2_file),
         act_quick_look(attachment(i2_file, 'Saved File')),
         act_step('image_judge'),
@@ -1400,7 +1590,7 @@ def build(lang, ai=False):
             {'WFWorkflowActionIdentifier': 'is.workflow.actions.exit', 'WFWorkflowActionParameters': {}},
             menu_close(g_mmenu),
             if_close(g_mm),
-            act_get_variable(MY_RULE, mm_rule)], rule_uid=mm_rule),
+            act_get_variable(MY_RULE, mm_rule)], rule_uid=mm_rule, deep=False),
         # Back (Yuri 13.11, No.67): the main mode menu again with the same question; no question field, nothing spent
         menu_case(g_extra, L['menu.back']),
         act_text(text_token(MODE_MARK + '{Q}', {'Q': (qpre, 'Variable')}), bk_text),
@@ -1443,6 +1633,7 @@ def build(lang, ai=False):
         # silently and the run stands still. The answer is shown; «Open Poly» and «Save to Notes» take it from there.
         # The Critique draft stays the run's one file write (rule No.7).
         *if_text(g_tlrem, RESULT),
+        *strip_more(RESULT),
         *strip_markdown(RESULT),   # Yuri 10.11, No.56: no raw «**» on the result screen or in its title
         act_notify(L['notify.tail_done']),
         if_close(g_tlrem),
@@ -1461,7 +1652,6 @@ def build(lang, ai=False):
         menu_case(g_finale, L['menu.finale_items'][2]),
         act_clipboard(variable(RESULT)),
         act_get_variable(RESULT, op_get),
-        *remember_answer(op_get, 'Variable'),   # the next run must not take this answer for a new question
         open_poly_url('duo'),
         menu_case(g_finale, L['menu.finale_items'][3]),
         menu_open(g_more, L['menu.finale_more_title'], L['menu.finale_more_items']),
@@ -1534,17 +1724,15 @@ def build(lang, ai=False):
         menu_case(g_more, L['menu.finale_more_items'][8]),
         act_clipboard(variable(RESULT)),   # D-128: Poly reads the answer from the clipboard; copied only on this pick
         act_get_variable(RESULT, op_get2),
-        *remember_answer(op_get2, 'Variable'),
         open_poly_url('duo'),
+        # the owner's choice of 24.11: «with search / without search» changed later, the same two buttons as the Setup
+        menu_case(g_more, L['menu.finale_more_items'][9]),
+        *search_menu(g_srch_more),
+        *set_text(PREFS_CHANGED, '1'), *set_text(NOTE_SEARCH, '1'),
         menu_close(g_more),
         *if_text(g_pc, PREFS_CHANGED),
         # the file is rebuilt from the two clean flags: the header, then one line for each option that is ON
-        *set_text(PREFS_BODY, PREFS_HEAD),
-        *append_line_when(MODE_OFF, 'MODE=critique'),
-        *append_line_when(QUICK_OFF, 'QUICK=1'),
-        act_get_variable(PREFS_BODY, pm_get),
-        act_text(text_token('{B}', {'B': (pm_get, 'Variable')}), pf_new),
-        act_save_file(PREFS_FILE, pf_new, pf_save),
+        *prefs_save(pf_save),
         # «Saved» is told only AFTER the file is written (a refused or failed save must not say it worked)
         *if_text(g_n1, NOTE_MODE),
         act_notify(L['notify.pref_mode']),
@@ -1555,6 +1743,9 @@ def build(lang, ai=False):
         *if_text(g_n3, NOTE_RESET),
         act_notify(L['notify.pref_reset']),
         if_close(g_n3),
+        *if_text(g_srch_note, NOTE_SEARCH),
+        act_notify(L['notify.pref_search']),
+        if_close(g_srch_note),
         if_close(g_pc),
         menu_close(g_finale),
 
@@ -1562,7 +1753,9 @@ def build(lang, ai=False):
         *version_check(L, VK, RELEASE_NAME, lang, stamp_name=SETUP_FILE),
     ]
 
-    actions = with_gpt_retry(actions, skip=RETRY_SKIP)
+    actions, continuing = with_continuation(actions, L.prompt('continue'))   # Duo 6.11: a long answer comes in parts
+    set_more_line('')
+    actions = with_gpt_retry(actions, skip=RETRY_SKIP | continuing)
     actions = with_gpt_clean(actions)
     actions = with_claude_vars(actions)
     diag = os.environ.get('C1_DIAG') == '1'

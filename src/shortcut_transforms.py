@@ -35,6 +35,119 @@ def with_gpt_retry(actions, skip=()):
     return out
 
 
+DEFAULT_PARTS = 2                       # an answer is one call, or two when it ends with [[MORE]]
+MORE_RX = r'\[\[MORE\]\]'
+MORE_STRIP_RX = r'\s*\[\[MORE\]\]\s*'
+# The 6.11 check (agy No.158, kimi): an answer cut off WITHOUT the marker — near the call's measured cap, its last
+# paragraph (40+ characters, not a list line) ending on a letter, a digit or a comma — is continued as if it had the
+# marker. A finished answer ends on a full stop, a bracket, a source code or a list line and costs no call.
+CUT_CHARS = {'Ask ChatGPT': 3200, 'Ask Claude': 1150}   # Claude: 220 words a part (prog-4 fix)
+
+
+def cut_rx(chars):
+    return (r'\A(?=[\s\S]{%d})(?:[\s\S]*\n)?[^\n\-*•\d\s][^\n]{38,}(?:[^\W_]|[,;:–-])\s*\z' % chars)
+
+
+def more_or_cut_rx(output):
+    import shortcut_actions as SA
+    chars = CUT_CHARS[output]
+    # the 6.11 check of 24.11 (opus): ja/zh cap Claude at 450 characters, not 220 words — a cut answer there never
+    # reaches 1150 characters; the threshold follows the cap
+    if output == 'Ask Claude' and '字' in (SA.CLAUDE_BRIEF or ''):
+        chars = 380
+    return MORE_RX + '|' + cut_rx(chars)
+
+
+def splice_token(template, inserts):
+    """A text token value from `template`: each {NAME} of `inserts` is replaced by a whole token value (its string and
+    attachments, moved to the new place) or by an (action, output) reference."""
+    out, attachments, last = '', {}, 0
+    for m in re.finditer(r'\{(' + '|'.join(re.escape(k) for k in inserts) + r')\}', template):
+        out += template[last:m.start()]
+        value, at = inserts[m.group(1)], len(out.encode('utf-16-le')) // 2
+        if isinstance(value, tuple):
+            attachments['{%d, 1}' % at] = {'OutputUUID': value[0], 'Type': 'ActionOutput', 'OutputName': value[1]}
+            out += OBJ
+        else:
+            for key, att in value['attachmentsByRange'].items():
+                pos, n = (int(x) for x in key.strip('{}').split(','))
+                attachments['{%d, %d}' % (pos + at, n)] = att
+            out += value['string']
+        last = m.end()
+    out += template[last:]
+    return {'Value': {'string': out, 'attachmentsByRange': attachments}, 'WFSerializationType': 'WFTextTokenString'}
+
+
+def cut_prefix(value, prefix):
+    """The token value without the `prefix` its string starts with (attachments moved back)."""
+    shift = len(prefix.encode('utf-16-le')) // 2
+    moved = {}
+    for key, att in value['attachmentsByRange'].items():
+        pos, n = (int(x) for x in key.strip('{}').split(','))
+        moved['{%d, %d}' % (pos - shift, n)] = att
+    return {'string': value['string'][len(prefix):], 'attachmentsByRange': moved}
+
+
+def with_continuation(actions, template):
+    """Duo 6.11 (the owner's decision 4 of 23.11): no AI call may run into the 30 s iOS gives one action, and a long
+    answer is not squeezed either — it is assembled from parts. Every request that carries the [[MORE]] line (see
+    shortcut_actions.brief_prefix) keeps its measured length cap; an answer that ends with [[MORE]] is continued by
+    a NEW call («here is the request and the beginning of your answer — go on», prompts/continue.txt), each call
+    with its own 30 s, and the parts are joined. Call → Set Variable → for each further part: If the text holds
+    [[MORE]] → the marker off → the continuing call → joined → End If → Get Variable; later references to the call's
+    output point at that last read. An answer without the marker (every ordinary one) costs no extra call and no
+    extra time. Runs BEFORE the retry, clean and variable transforms (they insert their steps between the call and
+    this block, so an empty first part is still retried and every part is cleaned). Returns the actions and the
+    UUIDs of the continuing calls: those get no retry of their own."""
+    import shortcut_actions as SA
+    kinds = {'com.openai.chat.AskIntent': ('prompt', 'Ask ChatGPT', act_gpt, lambda: SA.GPT_BRIEF),
+             CLAUDE_INTENT: ('message', 'Ask Claude', act_claude, lambda: SA.CLAUDE_BRIEF)}
+    out, rewrites, n, made = [], {}, 0, set()
+    for action in actions:
+        action = rename_outputs(action, rewrites)
+        out.append(action)
+        kind_ = action['WFWorkflowActionIdentifier']
+        if kind_ not in kinds or not SA.MORE_LINE:
+            continue
+        key, output, make, brief = kinds[kind_]
+        params = action['WFWorkflowActionParameters']
+        prefix = SA.brief_prefix(brief(), True)
+        if not params[key]['Value']['string'].startswith(prefix):
+            continue   # a service call (split=False) or an image step: its answer is never continued
+        uid = params['UUID']
+        n += 1
+        var, tmp = f'PolyParts{n}', f'PolyPart{n}'
+        request = cut_prefix(params[key]['Value'], prefix)
+        parts = SA.PARTS.get(uid, DEFAULT_PARTS)
+        out.append(act_set_variable(var, uid, output))
+        for part in range(2, parts + 1):
+            get, more, g, begin, ptxt, call, nxt, joined = (new_uuid() for _ in range(8))
+            made.add(call)
+            out += [act_get_variable(var, get),
+                    act_first_match(get, 'Variable', more_or_cut_rx(output), more),
+                    if_output(g, more, 'Matches', 100),
+                    act_replace_regex(get, 'Variable', MORE_STRIP_RX, '', begin),
+                    act_text(splice_token(template, {'REQUEST': request, 'BEGINNING': (begin, 'Updated Text')}), ptxt),
+                    # the last part may not ask for another one
+                    make(text_token('{P}', {'P': (ptxt, 'Text')}), call, split=part < parts),
+                    act_set_variable(tmp, call, output),
+                    act_get_variable(tmp, nxt),
+                    act_text(text_token('{A}\n\n{B}', {'A': (begin, 'Updated Text'), 'B': (nxt, 'Variable')}), joined),
+                    act_set_variable(var, joined, 'Text'),
+                    if_close(g)]
+        final = new_uuid()
+        out.append(act_get_variable(var, final))
+        rewrites[uid] = final
+    return out, made
+
+
+def strip_more(var):
+    """A [[MORE]] left in the text (the last part still asked to go on) is taken off before the text is shown."""
+    get, r = new_uuid(), new_uuid()
+    return [act_get_variable(var, get), act_replace_regex(get, 'Variable', MORE_STRIP_RX, '\n', r),
+            act_set_variable(var, r, 'Updated Text')]
+
+
 PUA = r'[\x{E000}-\x{F8FF}]'   # ChatGPT wraps its markup in private-use marker characters (U+E200..U+E206)
 GPT_MARKUP = [
     # entity["city","Ottawa","..."] -> Ottawa (the second argument is the name shown to the reader)

@@ -36,7 +36,8 @@ def test_ai_build_and_claude_down(tmp_path, lang):
     assert not any(a['WFWorkflowActionIdentifier'] == 'is.workflow.actions.askllm' for a in actions[:note])
 
     if ai_file.exists():
-        ai = plistlib.loads(ai_file.read_bytes())['WFWorkflowActions']
+        from test_first_run import fold_continuation
+        ai = fold_continuation(plistlib.loads(ai_file.read_bytes())['WFWorkflowActions'])
         llm = [a for a in ai[:ai.index(next(a for a in ai if params(a).get('WFNotificationActionBody')
                                            == ui['notify']['tail_empty']))]
                if a['WFWorkflowActionIdentifier'] == 'is.workflow.actions.askllm']

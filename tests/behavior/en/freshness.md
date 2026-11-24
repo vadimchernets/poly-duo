@@ -1,3 +1,6 @@
+> Duo 6.11, the council of 23.11.2026 on the divergent: «(from memory)», the ☐ list and «Not checked» are gone. On a current fact Second opinion (ex-Critique) now writes the exact answer first, with the code of a dated source or page check where Duo found one, and «■ Basis» under it; no line about the models' memory. The rows below describe Duo 6.9–6.10.
+> Duo 6.11 (23.11.2026): the ⚠ line no longer opens the result. A fresh fact from memory is marked «(from memory)» where it stands and is the first ☐ with a concrete action; a dated source found by Duo confirms it with [N] and no warning. The expectations below that name the ⚠ line describe Duo 6.9–6.10; the 6.11 checks on the iPhone are in the result note of the search-fable branch.
+
 # Freshness — the manual check on an iPhone
 
 What it checks: on a question whose answer may have changed after the models were trained, Critique says

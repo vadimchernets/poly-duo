@@ -50,16 +50,36 @@ def test_critique_blind_scheme_and_claude_down_is_reachable(tmp_path, lang):
     # exactly three messages in the happy path: ChatGPT, Claude (blind), Claude (compare)
     asks = [(i, kind(actions[i])) for i in range(start, s3 + 12) if kind(actions[i]) in ('AskIntent', 'ClaudeAppIntentsExtension')]
     # step 1: ChatGPT (+ its own retry), step 2: Claude (+ retry), step 3: Claude (+ cut retry)
-    assert [k for _, k in asks] == ['AskIntent', 'AskIntent', 'ClaudeAppIntentsExtension',
-                                    'ClaudeAppIntentsExtension', 'ClaudeAppIntentsExtension',
-                                    'ClaudeAppIntentsExtension'][:len(asks)]
-    gpt1 = asks[0][0]
-    blind = next(i for i, k in asks if k == 'ClaudeAppIntentsExtension')
+    # Duo 6.11: before them the search's query call and (inside «If PolyDeep») deep research's short calls; between
+    # step 2 and step 3 the link checks, the claim finder and the claim checks
+    C = 'ClaudeAppIntentsExtension'
     by_uid = {params(a).get('UUID'): a for a in actions}
-    # the blind step sends the SAME wrapped question that ChatGPT got, and that text has no ChatGPT answer in it
-    msg_blind = list(params(actions[blind])['message']['Value']['attachmentsByRange'].values())[0]['OutputUUID']
-    msg_gpt = list(params(actions[gpt1])['prompt']['Value']['attachmentsByRange'].values())[0]['OutputUUID']
-    assert msg_blind == msg_gpt
+
+    def reads(i, name):
+        node = params(actions[i]).get('prompt') or params(actions[i]).get('message')
+        return any(kind(by_uid[v['OutputUUID']]) == 'getvariable'
+                   and params(by_uid[v['OutputUUID']])['WFVariable']['Value']['VariableName'] == name
+                   for v in node['Value']['attachmentsByRange'].values() if v['OutputUUID'] in by_uid)
+    gpt1 = next(i for i, _ in asks if kind(actions[i]) == 'AskIntent' and reads(i, 'PolyGptRequest'))
+    assert kind(actions[asks[0][0]]) == C and asks[0][0] < gpt1          # the query call comes first
+    asks = [(i, k) for i, k in asks if i >= gpt1]
+    assert [k for _, k in asks][:4] == ['AskIntent', 'AskIntent', C, C]
+    blind = next(i for i, k in asks if k == C)
+    # the blind step's request is read from PolyOwnRequest, ChatGPT's from PolyGptRequest: each the question with
+    # its own model's numbered cards when Duo found any, the SAME wrapped question otherwise; never the other answer
+    own = params(by_uid[list(params(actions[blind])['message']['Value']['attachmentsByRange'].values())[0]['OutputUUID']])
+    assert own['WFVariable']['Value']['VariableName'] == 'PolyOwnRequest'
+    assert reads(gpt1, 'PolyGptRequest')
+    sets = {name: [params(a)['WFInput']['Value']['OutputUUID'] for a in actions[start:blind]
+                   if kind(a) == 'setvariable' and params(a)['WFVariableName'] == name]
+            for name in ('PolyOwnRequest', 'PolyGptRequest')}
+    assert all(len(v) == 2 for v in sets.values())
+    assert sets['PolyOwnRequest'][1] == sets['PolyGptRequest'][1]
+    for name in sets:
+        with_sources = params(by_uid[sets[name][0]])['WFTextActionText']['Value']
+        assert 'PolyChatGPTAnswer' not in json.dumps(with_sources) and 'PolyClaudeOwn' not in json.dumps(with_sources)
+    msg_gpt = sets['PolyGptRequest'][1]
+    msg_blind = msg_gpt
     wrap = by_uid[msg_blind]
     # the question is read from PolyQuestion (typed now, or from a resumed draft)
     question = [params(a)['UUID'] for a in actions if kind(a) == 'getvariable'
@@ -75,7 +95,9 @@ def test_critique_blind_scheme_and_claude_down_is_reachable(tmp_path, lang):
     prompt = params(by_uid[prompt_uid])['WFTextActionText']['Value']
     refs = [v['OutputUUID'] for v in prompt['attachmentsByRange'].values()]
     # question, ChatGPT's answer, Claude's own answer, numbers, today's date (the Freshness rule, Karl 22.11)
-    assert len(refs) == 5 and question in refs
+    # Duo 6.11: + Duo's two sets of cards, its page checks, the two-call line and the ending (evidence map / line);
+    # the council of 23.11: + the question's kind (FACT / OPEN) and the idea the pair developed (Research)
+    assert len(refs) == 11 and question in refs
     assert sum(kind(by_uid[r]) == 'date' for r in refs) == 1
     # RESULT is set only inside «If PolyClaudeAnswer has any value», never from a text with a fixed header
     result_name = ui['variables']['result']
@@ -129,7 +151,8 @@ def test_debate_round_survives_empty_chatgpt_reply(tmp_path, lang):
 def test_ai_build_uses_existing_version_key(tmp_path):
     assert 'duo_ai' not in VERSION  # the test documents the interim rule: until the key exists, `duo` is used
     build(tmp_path, 'en')
-    ai = plistlib.loads((tmp_path / 'en' / 'ai' / 'Poly.shortcut').read_bytes())['WFWorkflowActions']
+    from test_first_run import fold_continuation
+    ai = fold_continuation(plistlib.loads((tmp_path / 'en' / 'ai' / 'Poly.shortcut').read_bytes())['WFWorkflowActions'])
     keys = [params(a)['WFDictionaryKey'] for a in ai if kind(a) == 'getvalueforkey']
     assert keys[keys.index('duo'):keys.index('duo') + 2] == ['duo', 'duo_en']  # the version check's two lookups
     assert 'duo_ai' not in keys
@@ -202,7 +225,9 @@ def test_no_variable_is_emptied_with_an_empty_text(tmp_path, lang):
     starts = [i for i, a in enumerate(actions) if is_step(a, 'critique_start')]
     assert len(starts) == 2   # My mode, then the main Critique after the mode menu (Duo 6.4)
     for start in starts:
-        gpt = next(i for i in range(start, len(actions)) if kind(actions[i]) == 'AskIntent')
+        # Duo 6.11: the ChatGPT call that answers (deep research's short calls come before it)
+        gpt = next(i for i in range(start, len(actions)) if kind(actions[i]) == 'AskIntent'
+                   and 'PolyGptRequest' in json.dumps([params(a) for a in actions[i - 1:i]]))
         blind = next(i for i in range(gpt, len(actions)) if kind(actions[i]) == 'ClaudeAppIntentsExtension')
         # both blind answers are asked unless a resumed draft says otherwise (Duo 6.4): every If around the first
         # ChatGPT call and Claude's own answer tests a variable by its characters (Match Text `\S`), never «has any

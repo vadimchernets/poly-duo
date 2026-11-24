@@ -25,7 +25,8 @@ def build(tmp_path, lang):
     subprocess.run([sys.executable, str(ROOT / 'src' / 'build_shortcut.py'), lang], check=True,
                    cwd=ROOT, env=env, capture_output=True)
     name = ui(lang)['shortcut_names']['main']
-    return plistlib.loads((tmp_path / lang / f'{name}.shortcut').read_bytes())['WFWorkflowActions']
+    from test_first_run import fold_continuation
+    return fold_continuation(plistlib.loads((tmp_path / lang / f'{name}.shortcut').read_bytes())['WFWorkflowActions'])
 
 
 def test_prompts_carry_the_marker_and_the_three_sections():
@@ -44,7 +45,8 @@ def test_mode_sits_next_to_critique(lang):
     items = ui(lang)['menu']['main_items']
     # D-128: the item is one short word; what it is for and its price («3–8») are in the menu title
     title = ui(lang)['menu']['main_title']
-    assert len(items) == 7 and items[1] in title and re.search(r'3\s*[–〜~-]\s*8', title)
+    # Duo 6.11: Quick and Research stand right after Critique (its depths), Argue comes next
+    assert len(items) == 9 and items[3] in title and re.search(r'3\s*[–〜~-]\s*8', title)
     assert '🤝' in ui(lang)['help']
 
 
@@ -67,9 +69,9 @@ def test_three_rounds_that_stop_on_the_marker(tmp_path, lang):
         assert g['WFInput']['Variable']['Value'] == {'OutputUUID': txt['UUID'], 'Type': 'ActionOutput',
                                                     'OutputName': 'Text'}
     start = next(i for i, a in enumerate(actions)
-                 if a['WFWorkflowActionParameters'].get('WFMenuItemTitle') == ui(lang)['menu']['main_items'][1])
+                 if a['WFWorkflowActionParameters'].get('WFMenuItemTitle') == ui(lang)['menu']['main_items'][3])
     end = next(i for i, a in enumerate(actions)
-               if a['WFWorkflowActionParameters'].get('WFMenuItemTitle') == ui(lang)['menu']['main_items'][2])
+               if a['WFWorkflowActionParameters'].get('WFMenuItemTitle') == ui(lang)['menu']['main_items'][4])
     branch = [a['WFWorkflowActionIdentifier'] for a in actions[start:end]]
     assert branch.count('com.openai.chat.AskIntent') == 5          # opening + its one retry + three answers
     assert branch.count('com.anthropic.claude.ClaudeAppIntentsExtension') == 4   # three objections + summary

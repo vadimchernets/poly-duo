@@ -44,7 +44,10 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
             'https://polyhelper.ai/duo/version.json']
     if key == 'duo':
         # D-128: the first-run Setup (before the question) visits both addresses, the weekly check stays at the end
-        assert urls == pair + [pair[1]] + pair
+        # Duo 6.11: the Setup also calls each search host and the reader once (their «Allow» windows come there)
+        # (the council of 24.11: the Setup warms the hosts through fetch()/read_page() with real sets — their addresses
+        # are text tokens now, see test_search_fixes.test_setup_calls_every_search_host_and_the_reader_once)
+        assert [u for u in urls if u in pair] == pair + [pair[1]] + pair
         actions = actions[max(i for i, a in enumerate(actions) if a['WFWorkflowActionIdentifier'].endswith('.ask')):]
         urls = [p['WFURL'] for p in params(actions, 'downloadurl') if isinstance(p['WFURL'], str)]
     assert urls == pair
@@ -52,14 +55,15 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
               and p['WFAnotherNumber'] == 7]  # the 15-minute draft window of Critique is another check
     assert [(p['WFNumberValue'], p['WFAnotherNumber']) for p in weekly] == [(-7, 7)]
     assert [p['WFTimeUntilUnit'] for p in params(actions, 'gettimebetweendates')
-            if p['WFTimeUntilUnit'] == 'Days'] == ['Days']
+            if p['WFTimeUntilUnit'] == 'Days'] == ['Days'] * (7 if builder == 'build_shortcut.py' else 1)   # Duo 6.11: + the age of a card, per model set in each Critique (2 + 2) and in deep research's second round (2)
     # Critique's long-request thresholds: the If right before the «long_text» step (instructions + LONG_DATA)
     long_ifs = {id(a['WFWorkflowActionParameters']) for i, a in enumerate(actions[:-1])
                 if actions[i + 1]['WFWorkflowActionIdentifier'] == 'is.workflow.actions.comment'
                 and actions[i + 1]['WFWorkflowActionParameters'].get('WFCommentActionText') == 'Duo step: long_text'}
     newer = [p['WFNumberValue'] for p in params(actions, 'conditional') if p.get('WFCondition') == 2
              and id(p) not in long_ifs
-             and p['WFNumberValue'] not in (LONG_TEXT, 0, 1199)]  # LONG_TEXT = Trio's long-text threshold; 0 = Trio's
+             and p['WFNumberValue'] not in (LONG_TEXT, 0, 1199, 5000, 3500)]  # 5000 = JUDGE_SPLIT, 3500 = a page part of deep research (Duo 6.11)
+    #   # LONG_TEXT = Trio's long-text threshold; 0 = Trio's
     # sources count; 1199 = the long-question threshold (Yuri 10.11)
     assert newer == [VERSION[key]]
     keys = [p['WFDictionaryKey'] for p in params(actions, 'getvalueforkey')]
@@ -68,9 +72,13 @@ def test_shortcut_checks_its_version(tmp_path, lang, builder, name, key):
     assert len([p for p in params(actions, 'openurl')
                 if 'run-report' not in str(p) and 'template=feedback.yml' not in str(p) and 'polyhelper.ai' not in str(p) and 'apps.apple.com/app/id6473753684' not in str(p)]) == 1
     # the network goes first, by actions that never throw; a non-JSON answer is «no update»
-    nets = [p['WFNetworkDetailsNetwork'] for p in params(actions, 'getwifi')]
-    assert nets == ['Wi-Fi', 'Cellular']
-    first_net = next(i for i, a in enumerate(actions) if a['WFWorkflowActionIdentifier'].endswith('getwifi'))
+    # the council of 24.11: the guard reads the LOCAL IP address, never the Wi-Fi network name (a location source in
+    # every permission window); one guard in the version check, and in Duo those of the search, the link checks and
+    # the divergence search in each Critique, of deep research (per model) and of the Setup
+    assert not params(actions, 'getwifi')
+    nets = [p['WFIPAddressSourceOption'] for p in params(actions, 'getipaddress')]
+    assert set(nets) == {'Local'} and len(nets) >= (9 if builder == 'build_shortcut.py' else 1)
+    first_net = next(i for i, a in enumerate(actions) if a['WFWorkflowActionIdentifier'].endswith('getipaddress'))
     first_get = next(i for i, a in enumerate(actions) if a['WFWorkflowActionIdentifier'].endswith('downloadurl')
                      and isinstance(a['WFWorkflowActionParameters']['WFURL'], str))
     assert first_net < first_get

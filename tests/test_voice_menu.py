@@ -18,7 +18,7 @@ EMOJI = re.compile('[\U0001F000-\U0001FAFF☀-➿⬀-⯿←-⇿️‍]')
 # the person chose (help, a saved switch, a fallback); none of them reports a step of the run
 ALLOWED_SPEAK = ('ready',)   # the Setup's own notification (first run only): it asks for the permission there
 ALLOWED = ('tail_done', 'tail_empty', 'tail_empty_claude', 'gpt_down', 'empty_question', 'no_key_file',
-           'manual_copied', 'help', 'pref_mode', 'pref_quick', 'pref_reset')
+           'manual_copied', 'help', 'pref_mode', 'pref_quick', 'pref_reset', 'pref_search')
 
 
 def ui_of(lang):
@@ -36,7 +36,7 @@ def test_menu_items_are_short_plain_words(lang):
         assert len(set(m[key])) == len(m[key])
     # the title, read once, has no emoji either and names every mode it explains
     assert not EMOJI.search(m['main_title'])
-    assert all(item in m['main_title'] for item in m['main_items'][:6])
+    assert all(item in m['main_title'] for item in m['main_items'][:8])
     assert not EMOJI.search(m['finale_title'])
 
 
@@ -68,20 +68,30 @@ def test_first_run_setup_asks_everything_at_once(tmp_path, lang):
     head = actions[:ask]
     kinds = [kind(a) for a in head]
     speaks = [i for i, k in enumerate(kinds) if k == 'speaktext']
-    assert len(speaks) == 2
+    # 24.11: the Setup first says the search choice (the same words as its menu), then what is coming, then «ready»
+    assert len(speaks) == 3
     said = [head[i]['WFWorkflowActionParameters']['WFText']['Value']['string'] for i in speaks]
-    assert said == [ui['speak']['first_run'], ui['speak']['ready']]
-    first, ready = speaks
+    choice = next(a for a in head if kind(a) == 'choosefrommenu' and a['WFWorkflowActionParameters'].get('WFMenuPrompt'))
+    assert said == [choice['WFWorkflowActionParameters']['WFMenuPrompt'], ui['speak']['first_run'], ui['speak']['ready']]
+    assert speaks[0] < head.index(choice) < speaks[1]
+    _, first, ready = speaks
     order = [k for k in kinds[first:ready] if k in ('AskIntent', 'ClaudeAppIntentsExtension', 'save', 'downloadurl',
                                                     'notification')]
     # ChatGPT, Claude, the notification, both update addresses on the web, then the one file write (the stamp, last: a
     # Setup cut short runs again next time)
-    assert order[:3] == ['AskIntent', 'ClaudeAppIntentsExtension', 'notification'] and order[-1] == 'save'
-    assert order.count('downloadurl') == 3   # GitHub, the site as its fallback, and the site once more in the Setup
+    # (the second fix of 24.11, Mac: «Always Allow» is kept per ACTION, so the warm-up of the first fix spared the real
+    # actions nothing — it is gone: ChatGPT, Claude, the notification, the update check, the stamp)
+    assert order[:2] == ['AskIntent', 'ClaudeAppIntentsExtension']
+    note = order.index('notification')
+    assert order[2:note] == []
+    assert order[-1] == 'save'
+    # GitHub, the site as its fallback, and the site once more in the Setup
+    assert order.count('downloadurl') == 3
     # every action that can ask for a permission on the main path sits in the Setup: no save, append or copy elsewhere
     # before the finale menu, and the Setup is gated by the file
     assert any(a['WFWorkflowActionParameters'].get('WFGetFilePath') == f"Duo-setup-{json.loads((ROOT / 'releases' / 'version.json').read_text())['duo']}.txt" for a in head[:first])
-    assert sum(k == 'save' for k in kinds) == 1   # before the question: only the Setup's stamp
+    # before the question: the Setup's search choice (the prefs file) and its stamp
+    assert sum(k == 'save' for k in kinds) == 2
     for k in ('first_run', 'ready'):
         assert not EMOJI.search(ui['speak'][k])
 

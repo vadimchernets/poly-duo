@@ -47,8 +47,8 @@ If a prompt genuinely needs to differ in your language, drop just that one file 
 `{GPT_ANSWER}`, `{CLAUDE_ANSWER}`, `{ANCHOR}`, `{DRAFT}`… — is wired to a value by the builder.
 Keep the same names in the same structural places; move the surrounding words freely.
 
-**Menu arrays keep their length and order.** `menu.main_items` has exactly 7 entries,
-`menu.extra_items` 10, `menu.finale_items` 4, `menu.finale_more_items` 9 and `menu.recipes_items` / `menu.recipes_texts` 5 each; the builder indexes into them. Translate the labels, keep the emoji
+**Menu arrays keep their length and order.** `menu.main_items` has exactly 9 entries,
+`menu.extra_items` 10, `menu.finale_items` 4, `menu.finale_more_items` 10 and `menu.recipes_items` / `menu.recipes_texts` 5 each; the builder indexes into them. Translate the labels, keep the emoji
 and the `· N✉` cost badge — that badge is how a user sees the price before choosing.
 
 **Prompt structure survives translation.** Numbered lists, section headers (`ORIGINAL QUESTION:`),
@@ -72,3 +72,16 @@ present, menu arrays the right length, and — for anything already built — th
 match what the sources produce and stay structurally valid.
 
 iCloud links (README, docs/*/install.md, poly-a1 src/shortcutLinks.ts, the /duo site) are made from the current signed Duo/Trio files; if the shortcut file changes, recreate the links (Share → Copy iCloud Link) and replace them everywhere.
+
+## Builder settings for Duo's own search
+
+Duo 6.11 searches without keys before the models answer (`src/shortcut_search.py`). By default each model gets cards
+from its own engines — Claude from Google News, Wikipedia and SearXNG (`[C1]…`), ChatGPT from Bing News, Bing web and
+DuckDuckGo (`[G1]…`) — and the comparing step sees both sets.
+
+```
+C1_SHARED_SOURCES=1 ./tools/build.sh <lang>   # one shared set [S1]… for both models instead of two
+```
+
+The engine addresses, how many cards a model gets, how many pages the check and the deep research read and the size of
+a page part are constants at the top of `src/shortcut_search.py`.

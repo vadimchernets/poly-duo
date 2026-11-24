@@ -32,7 +32,7 @@ def text_refs(node, found=None):
 @pytest.mark.parametrize('lang', LANGS)
 def test_claude_output_is_never_put_straight_into_a_text(tmp_path, lang):
     """No.52: an «Ask Claude» output is only ever stored by Set Variable; texts read it through Get Variable."""
-    actions = build(tmp_path, lang)
+    actions = build(tmp_path, lang, raw=True)
     claude = {params(a)['UUID'] for a in actions if kind(a) == CLAUDE}
     assert claude
     for a in actions:
@@ -52,7 +52,7 @@ def test_side_by_side_names_its_step_and_keeps_chatgpt(tmp_path, lang):
     n = ui['notify']
     start = next(i for i, a in enumerate(actions) if is_step(a, 'survey_start'))
     end = next(i for i in range(start, len(actions)) if kind(actions[i]) == 'choosefrommenu'
-               and params(actions[i]).get('WFMenuItemTitle') == ui['menu']['main_items'][4])
+               and params(actions[i]).get('WFMenuItemTitle') == ui['menu']['main_items'][6])   # Duo 6.11: +Quick, +Research
     block = actions[start:end]
     gpt = next(i for i, a in enumerate(block) if kind(a) == 'AskIntent')
     first_claude = next(i for i, a in enumerate(block) if kind(a) == CLAUDE)
@@ -93,7 +93,7 @@ def test_long_question_asks_for_a_shorter_answer(tmp_path, lang):
              and first_words in params(a)['WFTextActionText']['Value']['string']]
     briefed = [a for a in wraps if any(params(u[r]).get('WFVariable', {}).get('Value', {}).get('VariableName') == 'PolyBrief'
                                        for r in text_refs(params(a)) if r in u)]
-    assert len(briefed) == 3
+    assert len(briefed) == 7   # Duo 6.11: + Claude's and ChatGPT's own requests with Duo's sources, in each Critique
     for a in briefed:
         assert params(a)['WFTextActionText']['Value']['string'].startswith('￼' + first_words)
 
@@ -119,7 +119,8 @@ def test_markdown_is_taken_off_before_the_result_is_shown(tmp_path, lang):
     cleans = [i for i, a in enumerate(actions) if kind(a) == 'setvariable'
               and params(a)['WFVariableName'] == ui['variables']['result']
               and params(a)['WFInput']['Value'].get('OutputName') == 'Updated Text']
-    assert len(looks) == 2 and len(cleans) == 2 and all(c < l for c, l in zip(cleans, looks))
+    # Duo 6.11: the first clean-up of the tail takes a left-over [[MORE]] off
+    assert len(looks) == 2 and len(cleans) == 3 and all(c < l for c, l in zip(cleans[1:], looks))
 
 
 @pytest.mark.parametrize('lang', LANGS)
@@ -142,7 +143,7 @@ def test_menu_says_what_each_mode_is_for(tmp_path, lang):
     title, read once; the items themselves are the bare mode names (test_voice_menu)."""
     ui = ui_of(lang)
     m = ui['menu']
-    for item in m['main_items'][:6]:
+    for item in m['main_items'][:8]:
         assert item in m['main_title']
     assert re.search(r'[(（]\+?1[)）]', m['main_title']) and re.search(r'[(（]3[)）]', m['main_title'])
     n = ui['notify']

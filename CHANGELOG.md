@@ -6,6 +6,60 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [Unreleased] — Duo 6.11 (candidate, branch duo-search: the five search branches merged)
+
+### Changed — the divergent first (the council of 23.11.2026 on the owner's words; dozapros of the single votes)
+- **Critique → Second opinion** in all 12 languages (menu, «right away next time», notifications, journal, help,
+  Auto's list), each in its own language.
+- The judge's reply: the answer first (one answer from the best of both, no heading); then «■ What the second
+  opinion added» — 2–5 points only one model had, each labelled new option / new risk / new criterion / new step, an
+  idea not taken ends «— not taken: <reason>»; then «■ Basis» — what both reached independently with codes, a fact
+  stated differently as one «Taken: … — reason [code]» line, something substantial left open as one «Open:» line.
+  A FACT question: the exact answer first, «Basis» before the second opinion, which appears only if it added something.
+- The question's kind (FACT / OPEN) rides on the search's query call (first line; 0 extra calls); empty → the judge
+  decides, when in doubt OPEN.
+- Removed: «(from memory)» (judge and answering models), «What to check yourself ☐», «(selected, the originals
+  differ…)», the evidence map in the default depth and every «Not checked». Research keeps the map with ✓ / ✗ only;
+  Quick keeps one «Checked against» line, left out when nothing was checked.
+- The divergence search runs only when the two answers state a fact differently: no call when every number stands in
+  both answers; the claim finder gets those numbers and skips points they agree on (no more «even when they agree»).
+- Research: «crossing» — one short Claude call develops the most useful idea only ChatGPT had; the judge takes it
+  into the answer («ChatGPT → Claude · …»).
+
+### Added — three depths in the mode menu (the owner's decision of 23.11.2026)
+- **Quick** (new item): Duo's own search, one set of cards per model, two answers, the comparison — about a minute.
+- **Critique** (the default, as before the first item) = the check: the same, then the divergence search — one short
+  Claude call names at most 2 claims the answers diverge on or rest on (a date, a number, a condition — even when they
+  agree); Duo searches each (Bing web, narrowed to the primary source's site when named; Bing News when the web gave
+  nothing), reads the page and checks the claim in its own short call ([V1], [V2]); the pages ChatGPT cited are read
+  the same way. The comparison ends with an evidence map: ✓ confirmed with its code and date, ✗ contradicted,
+  ○ open.
+- **Research** (new item): before the answers each model researches its own cards — picks up to 3 pages, Duo reads
+  them in parts (each part one short call of that model), the model says ENOUGH or gives a new query; the second
+  round adds up to 4 cards and reads up to 2 more pages; each model answers from its notes; then the check.
+
+### Added — Duo searches by itself, without keys
+- Each model gets its own engines, all at once, no fallback chain: Claude — Google News RSS + Wikipedia (MediaWiki,
+  last edit date) + SearXNG; ChatGPT — Bing News RSS + Bing web RSS + DuckDuckGo HTML. An engine that answers with a
+  captcha, a rate limit, an error or nothing is skipped without a word; offline or a long pasted text: no search.
+- Queries: one short Claude call writes 2–3 from the question's own words — line 2 in English (sent to the English
+  editions), line 3 a primary-source wording (deep research) — or NONE for a question the web cannot help; then
+  nothing is fetched.
+- Cards: reprints glued (one link, one headline = one card), ordered by age (this week; this quarter and undated web
+  pages; older), at most 8 per model, numbered by Duo: [C1]… Claude's, [G1]… ChatGPT's. Never counted or shown: how
+  many engines found a thing (popularity, not truth). The judge sees both sets; the models write only codes; «Sources»
+  under the result is printed by Duo from its own lists, for the codes the text cites.
+- Builder setting `C1_SHARED_SOURCES=1`: one shared set [S…] for both models instead of two (default: two).
+- Answers in parts (from search-fable): every request keeps its measured cap (Claude ~300 words, ChatGPT ~600); an
+  answer that does not fit ends with [[MORE]] and is continued by a new call with its own 30 s. Two long answers: the
+  comparison is two calls (sections, then the final answer).
+
+### Changed
+- The comparing prompt no longer opens the result with «⚠ Both models may not know this»: the first line is the
+  answer; a fresh fact without a dated source is marked «(from memory)» and is the first ☐ with a concrete action; a
+  dated source or a page check for the period asked about counts as a confirmation, with no warning.
+- The main menu has 9 items (Critique, Quick, Research, Argue, …); its title gives the price of each depth.
+
 ## [1.0.10] — 2026-11-23 — Duo 6.10 (built-in number duo 16)
 
 Signed Duo files for 12 languages in `releases/` (SHA256SUMS), built from dded14e with duo 16. Measured and run on the

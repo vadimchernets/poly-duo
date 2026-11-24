@@ -37,9 +37,11 @@
     "my_rule_sample": "Vérifie seulement les chiffres et les dates"
   },
   "menu": {
-    "main_title": "Choisis un mode ; la première fois, Critique. Critique (3) : les deux IA vérifient. Discussion (3–8) : jusqu’à l’accord. Conseil (1) : ton texte. Comparer (2) : deux réponses. Synthèse (3) : une réponse. Auto (+1) : Duo choisit. Parenthèses : messages aux IA.",
+    "main_title": "Choisis un mode ; la première fois, Second avis. Second avis (5–10) : les deux IA répondent avec les sources trouvées par Duo, puis Duo lit les pages là où elles divergent. Rapide (4) : sources, deux réponses, une vérification, environ une minute. Recherche (15–40) : chaque IA lit d’abord des pages, 3 à 5 minutes. Discussion (3–8) : jusqu’à l’accord. Conseil (1) : ton texte. Comparer (2) : deux réponses. Synthèse (3) : une réponse. Auto (+1) : Duo choisit. Parenthèses : messages aux IA.",
     "main_items": [
-      "Critique",
+      "Second avis",
+      "Rapide",
+      "Recherche",
       "Discussion",
       "Conseil",
       "Comparer",
@@ -88,11 +90,12 @@
       "📝 Enregistrer dans Notes",
       "☑️ À vérifier → Rappels",
       "🐞 Signaler cette exécution",
-      "📌 La prochaine fois, direct à Critique",
+      "📌 La prochaine fois, direct au Second avis",
       "⚡ Texte partagé : sans modifier la question",
       "↩️ Réafficher tous les menus",
       "💬 Ça marche / ça ne marche pas / idée — formulaire sur GitHub",
-      "🔗 Ouvrir dans Poly"
+      "🔗 Ouvrir dans Poly",
+      "🌐 Avec recherche / sans recherche"
     ],
     "recipes_title": "De quoi as-tu besoin ?",
     "recipes_items": [
@@ -139,7 +142,7 @@
     "open_poly": "🔗 Ouvrir dans Poly"
   },
   "notify": {
-    "critique_start": "⚖️ Critique : ChatGPT répond → Claude répond de son côté → Claude compare les deux. 1 à 3 min, patiente un instant et laisse le téléphone tranquille. Bloqué ? Ouvre ChatGPT et connecte-toi.",
+    "critique_start": "⚖️ Second avis : ChatGPT répond → Claude répond de son côté → Claude compare les deux. 1 à 3 min, patiente un instant et laisse le téléphone tranquille. Bloqué ? Ouvre ChatGPT et connecte-toi.",
     "critique_step2": "[2/3] Claude vérifie et assemble la réponse finale…",
     "critique_blind": "[2/3] Claude répond de son côté, sans voir la réponse de ChatGPT…",
     "gpt_kept": "📋 La réponse de ChatGPT est dans le presse-papiers. Si Duo s'arrête avant la réponse de Claude, vous pouvez quand même la coller où vous voulez ; la réponse de Claude, si elle est venue, est dans l'app Claude.",
@@ -148,7 +151,7 @@
     "advisor_start": "🩺 Conseil : Claude relit ton texte sans le réécrire. 1 à 3 min, patiente un instant et laisse l’écran tranquille.",
     "survey_start": "👀 Côte à côte : je les interroge séparément. 1 à 3 min, patiente un instant et laisse le téléphone tranquille.",
     "survey_step2": "[2/2] Claude répond de son côté, sans voir la réponse de ChatGPT…",
-    "long_question": "📏 Question longue : je demande aux deux IA des réponses plus courtes, pour qu’iOS ne coupe pas une étape. Si Duo s’arrête quand même, relance-le dans les 30 min (une Critique reprend là où elle s’est arrêtée).",
+    "long_question": "📏 Question longue : je demande aux deux IA des réponses plus courtes, pour qu’iOS ne coupe pas une étape. Si Duo s’arrête quand même, relance-le dans les 30 min (un Second avis reprend là où il s’est arrêté).",
     "synthesis_claude_start": "🔀 Synthèse (ancre : Claude) : deux réponses à l’aveugle → assemblage. ≈1,5 min, patiente un instant et laisse le téléphone tranquille.",
     "synthesis_gpt_start": "🔀 Synthèse (ancre : ChatGPT) : deux réponses à l’aveugle → assemblage. ≈1,5 min, patiente un instant et laisse le téléphone tranquille.",
     "auto_start": "🧭 Auto : je cherche le mode adapté à ta question… (+1 message ChatGPT)",
@@ -190,9 +193,10 @@
     "no_key_file": "Il n'y a pas de poly-key.txt dans le dossier Raccourcis d'iCloud Drive. Enregistre-y une clé gratuite (voir le guide d'installation) ou choisis une autre option.",
     "resume_debate": "Je reprends le débat là où il s'est arrêté : aucun nouveau message ChatGPT n'est dépensé pour les tours déjà faits.",
     "gpt_down": "ChatGPT n'a pas transmis de réponse à Duo (limite de messages, déconnexion ou iOS a coupé une étape longue ; s'il a répondu, la réponse est dans son app). Claude répond seul ; pas de comparaison cette fois. (Si l’app ChatGPT indique que tu es déconnecté : ouvre-la, connecte-toi, puis relance Duo.)",
-    "pref_mode": "📌 Enregistré. La prochaine fois, Duo ira droit à Critique. Autres modes : « Autre mode » à la fin.",
+    "pref_mode": "📌 Enregistré. La prochaine fois, Duo ira droit au Second avis. Autres modes : « Autre mode » à la fin.",
     "pref_quick": "⚡ Enregistré. Un texte partagé vers Duo (3 mots ou plus) part sans la zone de question. « Autre mode » la montre encore.",
-    "pref_reset": "↩️ C’est fait. Duo affiche de nouveau la zone de question et le menu des modes."
+    "pref_reset": "↩️ C’est fait. Duo affiche de nouveau la zone de question et le menu des modes.",
+    "pref_search": "🌐 C’est fait. Ton choix de recherche est enregistré."
   },
   "alert": {
     "multi_next_title": "Poly Multi — IA suivante",
@@ -232,7 +236,7 @@
   "journal": {
     "entry": "\n════════ {D} ════════\n{JX}\nQUESTION : {Q}\n\n{R}\n",
     "entry_simple": "\n════════ {D} ════════\n{M}\nQUESTION : {Q}\n\n{R}\n",
-    "critique": "MODE : ⚖️ Critique\n—— brut : réponse de ChatGPT ——\n{X}",
+    "critique": "MODE : ⚖️ Second avis\n—— brut : réponse de ChatGPT ——\n{X}",
     "critique_reverse": "MODE : ⚖️ Critique\n—— brut : réponse de Claude ——\n{X}",
     "advisor": "MODE : 🩺 Conseil",
     "survey": "MODE : 👀 Côte à côte (le résultat EST la matière brute)",
@@ -247,7 +251,7 @@
     "auto": "MODE : 🧭 Auto (recommandation)",
     "help": "MODE : ℹ️ Aide (aucun appel à l’IA)",
     "voice": "MODE : 🎧 Voix",
-    "quiet": "MODE : 🤫 Discret (critique)",
+    "quiet": "MODE : 🤫 Discret (second avis)",
     "multi": "MODE : 🎼 Chœur multi",
     "argue": "MODE : 🤝 Débat vers l’accord (tout le débat est dans le résultat)"
   },
@@ -259,14 +263,33 @@
     "pc_notice_seen": "AvisPC",
     "argue_log": "DerouleDebat"
   },
-  "help": "ℹ️ QU’EST-CE QUE DUO\n\nUne seule question — et deux IA (ChatGPT et Claude) la traitent en duo. Tout passe par tes propres abonnements ; la pastille ✉ d’un mode indique le nombre de messages qu’il va dépenser.\n\nMODES DU QUOTIDIEN (menu principal) :\n⚖️ Critique — ChatGPT et Claude répondent séparément, sans se voir ; puis Claude compare : concordances indépendantes / divergences / ce qu’il faut vérifier toi-même, et rédige la réponse finale. Ton mode par défaut.\n🤝 Discussion — pour les choix de vie sans bonne réponse (« que choisir », « accepter ou non ») : chacun donne d'abord son avis sans voir celui de l'autre ; ensuite ils se voient et débattent, jusqu'à 3 tours, jusqu'à ce que l'un cède ; à la fin : où ils s'accordent, ce qui reste en débat et ce que vous seul décidez.\n🩺 Conseil — Claude relit TON texte sans le réécrire. Le mode le moins cher.\n👀 Comparer — deux avis indépendants, sans mélange.\n🔀 Synthèse — les deux répondent à l’aveugle, puis on assemble le meilleur. Pour ce qui compte.\n🧭 Auto — tu hésites ? Duo choisit le mode à ta place.\n\nDans « Plus » :\n⚔️ Décision — premières étapes et risques. 🗺 Carte des désaccords — où les IA s’accordent et où elles divergent.\n🥊 Débat — brouillon de ChatGPT et réponse séparée de Claude → ChatGPT compare et révise → juge. Pour les questions les plus dures ; cher.\n❓ Clarification — te pose d’abord des questions complémentaires (le seul mode où tu dois toucher l’écran en cours de route — uniquement dans sa fenêtre).\n➕ Compléments (Delta) — un remplaçant économique de la Synthèse : ancre + liste d’ajouts. 🎨 Image — deux croquis vectoriels au choix.\n✍️ Claude écrit, ChatGPT relit — Claude rédige, ChatGPT corrige ton et formulation (relecture, pas vérification des faits). 📝 Ma propre règle de vérification — pareil, avec ta propre ligne pour le vérificateur, lue dans le fichier Poly-my-mode.txt (Fichiers → iCloud Drive → Raccourcis).\n\nLe résultat s’affiche à l’écran ; pour le garder : « Plus » → « 📝 Enregistrer dans Notes ».\nPendant que Duo tourne — patiente un instant et laisse le téléphone tranquille : reste dans Raccourcis et ne verrouille pas le téléphone (un contact sur l’écran ne l’arrête pas). Détails et dépannage : install.md, dans le kit.\n\nÀ la fin, « Plus » a trois réglages : « 📌 La prochaine fois, direct à Critique » (saute le menu des modes), « ⚡ Texte partagé : sans modifier la question » (un texte partagé vers Duo part sans la zone de question ; désactivé par défaut) et « ↩️ Réafficher tous les menus ». « Autre mode » montre toujours la zone de question et le menu. Le choix est gardé dans Duo-prefs.txt (Fichiers → iCloud Drive → Raccourcis).\n\n💻 Sur un ordinateur portable ou un PC, PolyHelper en fait plus : dossiers, agents, canaux, planification, un conseil de plusieurs IA. Duo sur le téléphone est la version légère, sans les fonctions PC.\n\nAppuie sur « Terminé » en bas, puis sur l’écran suivant choisis « Autre mode » : Duo redémarre avec ta question et tu choisis un mode.\n\n🔓 Open source sur GitHub: https://github.com/vadimchernets/poly-duo",
+  "help": "ℹ️ QU’EST-CE QUE DUO\n\nUne seule question — et deux IA (ChatGPT et Claude) la traitent en duo. Tout passe par tes propres abonnements ; la pastille ✉ d’un mode indique le nombre de messages qu’il va dépenser.\n\nMODES DU QUOTIDIEN (menu principal) :\n⚖️ Second avis — ChatGPT et Claude répondent séparément, sans se voir ; puis Claude rédige une seule réponse avec le meilleur des deux et montre ce que le second avis a apporté et sur quoi la réponse s’appuie. Ton mode par défaut.\n🤝 Discussion — pour les choix de vie sans bonne réponse (« que choisir », « accepter ou non ») : chacun donne d'abord son avis sans voir celui de l'autre ; ensuite ils se voient et débattent, jusqu'à 3 tours, jusqu'à ce que l'un cède ; à la fin : où ils s'accordent, ce qui reste en débat et ce que vous seul décidez.\n🩺 Conseil — Claude relit TON texte sans le réécrire. Le mode le moins cher.\n👀 Comparer — deux avis indépendants, sans mélange.\n🔀 Synthèse — les deux répondent à l’aveugle, puis on assemble le meilleur. Pour ce qui compte.\n🧭 Auto — tu hésites ? Duo choisit le mode à ta place.\n\nDans « Plus » :\n⚔️ Décision — premières étapes et risques. 🗺 Carte des désaccords — où les IA s’accordent et où elles divergent.\n🥊 Débat — brouillon de ChatGPT et réponse séparée de Claude → ChatGPT compare et révise → juge. Pour les questions les plus dures ; cher.\n❓ Clarification — te pose d’abord des questions complémentaires (le seul mode où tu dois toucher l’écran en cours de route — uniquement dans sa fenêtre).\n➕ Compléments (Delta) — un remplaçant économique de la Synthèse : ancre + liste d’ajouts. 🎨 Image — deux croquis vectoriels au choix.\n✍️ Claude écrit, ChatGPT relit — Claude rédige, ChatGPT corrige ton et formulation (relecture, pas vérification des faits). 📝 Ma propre règle de vérification — pareil, avec ta propre ligne pour le vérificateur, lue dans le fichier Poly-my-mode.txt (Fichiers → iCloud Drive → Raccourcis).\n\nLe résultat s’affiche à l’écran ; pour le garder : « Plus » → « 📝 Enregistrer dans Notes ».\nPendant que Duo tourne — patiente un instant et laisse le téléphone tranquille : reste dans Raccourcis et ne verrouille pas le téléphone (un contact sur l’écran ne l’arrête pas). Détails et dépannage : install.md, dans le kit.\n\nÀ la fin, « Plus » a trois réglages : « 📌 La prochaine fois, direct au Second avis » (saute le menu des modes), « ⚡ Texte partagé : sans modifier la question » (un texte partagé vers Duo part sans la zone de question ; désactivé par défaut) et « ↩️ Réafficher tous les menus ». « Autre mode » montre toujours la zone de question et le menu. Le choix est gardé dans Duo-prefs.txt (Fichiers → iCloud Drive → Raccourcis).\n\n💻 Sur un ordinateur portable ou un PC, PolyHelper en fait plus : dossiers, agents, canaux, planification, un conseil de plusieurs IA. Duo sur le téléphone est la version légère, sans les fonctions PC.\n\nAppuie sur « Terminé » en bas, puis sur l’écran suivant choisis « Autre mode » : Duo redémarre avec ta question et tu choisis un mode.\n\n🔓 Open source sur GitHub: https://github.com/vadimchernets/poly-duo",
   "update": {
     "prompt": "Une nouvelle version de {NAME} est disponible — l’installer ?",
     "install": "Installer",
     "later": "Plus tard"
   },
   "brief": {
-    "claude": "Sans introduction, 300 mots environ au maximum.",
+    "claude": "Sans introduction, 220 mots environ au maximum.",
     "chatgpt": "Sans introduction, 600 mots environ au maximum."
+  },
+  "search": {
+    "news": "hl=fr&gl=FR&ceid=FR:fr",
+    "wiki": "fr",
+    "age": "il y a {N} j",
+    "wiki_label": "Wikipédia (date de la dernière modification)",
+    "sources_title": "Sources — trouvées par Duo lui-même ; les numéros sont les [N] du texte :",
+    "link_unread": "Duo n'a pas pu lire cette page.",
+    "bing": "mkt=fr-FR",
+    "ddg": "kl=fr-fr",
+    "undated": "sans date",
+    "claim_unfound": "Duo n'a trouvé aucune page à ce sujet."
+  },
+  "setup": {
+    "search_text": "Duo peut chercher des réponses récentes sur internet. À ta première question, l’iPhone demandera l’autorisation — une seule fois, ensuite plus jamais.\nChatGPT et Claude répondent.\nAvec recherche — environ {WEB} autorisations.\nSans recherche — environ {LOCAL} (soit toucher « Autoriser » {LOCAL} fois).",
+    "search_items": [
+      "Avec recherche (≈{WEB})",
+      "Sans recherche (≈{LOCAL})"
+    ]
   }
 }
