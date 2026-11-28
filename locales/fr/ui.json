@@ -210,7 +210,7 @@
     "no_answer_claude_body": "Claude a peut-être répondu dans son app, mais iOS n’a pas transmis la réponse à Duo. Ouvrez l’app Claude pour la lire, ou lancez Duo avec Siri (« Dis Siri, Duo »)."
   },
   "speak": {
-    "first_run": "Plusieurs fenêtres vont s’afficher l’une après l’autre, avec les boutons « Toujours autoriser » ou « Autoriser ». Dans chaque fenêtre, touche « Toujours autoriser », ou « Autoriser » si ce bouton n’existe pas. Si c’est difficile, demande à quelqu’un de t’aider. Ce réglage se fait seulement maintenant, au premier lancement de Duo : ensuite, Duo ne demandera plus d’autorisations.",
+    "first_run": "Plusieurs fenêtres vont s’afficher l’une après l’autre, avec les boutons « Toujours autoriser » ou « Autoriser ». Dans chaque fenêtre, touche « Toujours autoriser », ou « Autoriser » si ce bouton n’existe pas. Ce réglage se fait seulement maintenant, au premier lancement de Duo : ensuite, Duo ne demandera plus d’autorisations.",
     "ready": "C’est prêt. Duo fonctionne maintenant à la voix."
   },
   "output": {

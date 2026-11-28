@@ -210,7 +210,7 @@
     "no_answer_claude_body": "O Claude pode ter respondido no app dele, mas o iOS não passou a resposta ao Duo. Abra o app do Claude para lê-la, ou rode o Duo pela Siri («E aí Siri, Duo»)."
   },
   "speak": {
-    "first_run": "Agora vão aparecer, uma depois da outra, várias janelas com os botões «Permitir Sempre» ou «Permitir». Em cada janela, toque em «Permitir Sempre» ou, se não houver esse botão, em «Permitir». Se for difícil tocar, peça ajuda a alguém. Essa configuração só é feita agora, na primeira vez que o Duo roda: depois, o Duo não vai mais pedir permissões.",
+    "first_run": "Agora vão aparecer, uma depois da outra, várias janelas com os botões «Permitir Sempre» ou «Permitir». Em cada janela, toque em «Permitir Sempre» ou, se não houver esse botão, em «Permitir». Essa configuração só é feita agora, na primeira vez que o Duo roda: depois, o Duo não vai mais pedir permissões.",
     "ready": "Pronto. Agora o Duo funciona por voz."
   },
   "output": {

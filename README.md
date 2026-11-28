@@ -18,7 +18,7 @@
 
 **Step 2 — shortcut.** Tap the iCloud link for your language below → the Shortcuts app opens → **Add**.
 
-**Step 3 — first run: a short setup, keep the phone in your hand.** Duo says aloud that several windows will appear, one after another. In each one tap **Always Allow** (or **Allow** if there is no such button); if tapping is hard, ask someone to help. It applies only to Duo and only to your own apps. The first time, Duo asks once: **With search (≈40)** or **Without search (≈8)** — the number is how many times iPhone will ask «Allow» while every mode runs for the first time; after that Duo asks nothing. To switch later: «➕ More…» → «🌐 With search / without search». Duo works by voice through Siri: «Hey Siri, Duo». **Then let it run for about a minute: stay in Shortcuts and do not lock the phone (leaving the app may stop the run on Apple's platform). A tap on the screen does not stop Duo.**
+**Step 3 — first run: a short setup, keep the phone in your hand.** Duo says aloud that several windows will appear, one after another. In each one tap **Always Allow** (or **Allow** if there is no such button). It applies only to Duo and only to your own apps. The first time, Duo asks once: **With search (≈40)** or **Without search (≈8)** — the number is how many times iPhone will ask «Allow» while every mode runs for the first time; after that Duo asks nothing. To switch later: «➕ More…» → «🌐 With search / without search». Duo works by voice through Siri: «Hey Siri, Duo». **Then let it run for about a minute: stay in Shortcuts and do not lock the phone (leaving the app may stop the run on Apple's platform). A tap on the screen does not stop Duo.**
 
 | Language | Duo | Trio |
 |---|---|---|

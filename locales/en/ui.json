@@ -210,7 +210,7 @@
     "no_answer_claude_body": "Claude may have answered in its own app, but iOS did not pass the answer to Duo. Open the Claude app to read it, or run Duo through Siri («Hey Siri, Duo»)."
   },
   "speak": {
-    "first_run": "Several windows will now appear, one after another, with the buttons «Always Allow» or «Allow». In each window, tap «Always Allow», or «Allow» if there is no such button. If tapping is hard, ask someone to help. You only go through this setup now, the first time you run Duo: after that, Duo will not ask for permissions again.",
+    "first_run": "Several windows will now appear, one after another, with the buttons «Always Allow» or «Allow». In each window, tap «Always Allow», or «Allow» if there is no such button. You only go through this setup now, the first time you run Duo: after that, Duo will not ask for permissions again.",
     "ready": "Done. Duo now works by voice."
   },
   "output": {

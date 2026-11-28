@@ -210,7 +210,7 @@
     "no_answer_claude_body": "Claude hat vielleicht in seiner App geantwortet, aber iOS hat die Antwort nicht an Duo übergeben. Öffne die Claude-App, um sie zu lesen, oder starte Duo über Siri („Hey Siri, Duo“)."
   },
   "speak": {
-    "first_run": "Gleich erscheinen nacheinander mehrere Fenster mit den Tasten „Immer erlauben“ oder „Erlauben“. Tippe in jedem Fenster auf „Immer erlauben“ oder, wenn es diese Taste nicht gibt, auf „Erlauben“. Wenn das Tippen schwerfällt, bitte jemanden um Hilfe. Diese Einrichtung machst du nur jetzt, beim ersten Start von Duo: danach fragt Duo nicht mehr nach Erlaubnis.",
+    "first_run": "Gleich erscheinen nacheinander mehrere Fenster mit den Tasten „Immer erlauben“ oder „Erlauben“. Tippe in jedem Fenster auf „Immer erlauben“ oder, wenn es diese Taste nicht gibt, auf „Erlauben“. Diese Einrichtung machst du nur jetzt, beim ersten Start von Duo: danach fragt Duo nicht mehr nach Erlaubnis.",
     "ready": "Fertig. Duo funktioniert jetzt per Stimme."
   },
   "output": {

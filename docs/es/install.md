@@ -11,7 +11,7 @@ C1M Duo es un «atajo» para iPhone: usted hace una sola pregunta y la trabajan 
 
 ### Lo más fácil — el enlace de iCloud (un toque)
 
-En su iPhone, toque el enlace → se abre la app Atajos → **Añadir**. En la primera ejecución el iPhone pide permiso unas 8 veces sin búsqueda y unas 40 con búsqueda — una sola vez; pulse **Permitir siempre** cada vez. ¿Comparar una sola vez? Copiar y pegar basta. ¿Preguntar a diario? Permita una vez, y cada pregunta después es un toque. Si le cuesta tocar, pida a alguien que le ayude; solo hace falta la primera vez.
+En su iPhone, toque el enlace → se abre la app Atajos → **Añadir**. En la primera ejecución el iPhone pide permiso unas 8 veces sin búsqueda y unas 40 con búsqueda — una sola vez; pulse **Permitir siempre** cada vez. ¿Comparar una sola vez? Copiar y pegar basta. ¿Preguntar a diario? Permita una vez, y cada pregunta después es un toque.
 
 - **Duo:** https://www.icloud.com/shortcuts/889e23b0e9e647f2b6525424cf64fcde
 - **Trio, iPhone 15 Pro o posterior — sin clave** (la tercera voz es Apple Intelligence; ver abajo): https://www.icloud.com/shortcuts/7b35ac3499ce4fcf88f2794baf191a59
